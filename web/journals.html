@@ -43,6 +43,10 @@ tbody tr:hover{background:var(--bg2)}
 .jname{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:23px}
 .jname a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:11px}
 .jname a:hover{color:var(--lime)}
+.arrowwrap{display:inline-flex;align-items:center;gap:1cm}
+.apidot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:#1f9d57;box-shadow:0 0 0 0 rgba(31,157,87,.6);animation:apipulse 1.5s infinite}
+.apidot.off{background:#c79a2e;animation:none;box-shadow:none}
+@keyframes apipulse{0%{box-shadow:0 0 0 0 rgba(31,157,87,.5)}70%{box-shadow:0 0 0 6px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}
 .jlogo{width:30px;height:30px;border-radius:7px;object-fit:contain;background:#fff;border:1px solid var(--line);padding:3px;flex:0 0 auto}
 .jc{white-space:nowrap;display:flex;align-items:center;gap:16px}
 .jc .arrowbtn{margin-inline-end:2px}
@@ -60,6 +64,17 @@ tbody tr:hover{background:var(--bg2)}
 .artm{font-size:13px;color:var(--mut);font-family:'Plex Mono'}
 .detailgrid{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
 @media(max-width:760px){.detailgrid{grid-template-columns:1fr}}
+.dinfo{display:flex;flex-direction:column;gap:16px}
+.infocard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.ic-title{font-family:Rubik;font-weight:800;font-size:16px;color:var(--green-d);margin-bottom:10px}
+.ic-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid #eef4ef;font-size:14.5px}
+.ic-row:last-of-type{border:0}
+.ic-k{color:var(--mut)}.ic-v{font-weight:700;color:var(--ink)}
+.ic-tags{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 4px}
+.ic-btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.ic-btn{font-family:Rubik;font-weight:700;font-size:13.5px;text-decoration:none;border-radius:9px;padding:9px 15px;border:1px solid #cfe6d8;color:var(--green-d);background:var(--tint)}
+.ic-btn.primary{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.ic-btn:hover{filter:brightness(1.05)}
 .coverwrap{text-align:center}
 .coverimg{width:100%;max-width:300px;border-radius:12px;box-shadow:0 14px 34px rgba(20,38,28,.22);border:1px solid var(--line)}
 .covercap{font-size:13px;color:var(--mut);margin-top:8px;font-family:'Plex Mono'}
@@ -94,6 +109,8 @@ tbody tr:hover{background:var(--bg2)}
       <span class="lg"><span class="dot d-a"></span> אקדמי · מדעי</span>
       <span class="lg"><span class="dot d-i"></span> תעשייה · חדשות</span>
       <span class="lg"><span class="dot d-il"></span> ישראלי</span>
+      <span class="lg"><span class="apidot" style="animation:apipulse 1.5s infinite"></span> API חי</span>
+      <span class="lg"><span class="apidot off"></span> ללא API</span>
     </div>
     <div class="filters">
       <button class="fbtn on" onclick="filt('all',this)">הכול</button>
@@ -106,7 +123,7 @@ tbody tr:hover{background:var(--bg2)}
   <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש פנימי: שם כתב עת, מדינה, נושא…" oninput="render(CUR)"></div>
   <div class="twrap">
     <table><thead><tr>
-      <th>כתב העת / מגזין</th><th>מדינה</th><th>שנת יסוד</th><th>נושאים</th><th>סוג</th>
+      <th>כתב העת / מגזין</th><th style="text-align:left">מדינה</th><th>שנת יסוד</th><th>נושאים</th><th>סוג</th>
     </tr></thead><tbody id="rows"></tbody></table>
   </div>
 </div>
@@ -135,17 +152,20 @@ const J=[
  {n:"GrowingIL",u:"https://www.growingil.com/",c:"🇮🇱 ישראל",y:2020,t:["קהילה","אגריפוד-טק"],k:"il"},
 ];
 const BADGE={a:['b-a','מדעי'],i:['b-i','תעשייה'],il:['b-il','ישראלי']};
+var LAST=[];
 let CUR='all';
 function dom(u){try{return new URL(u).hostname;}catch(e){return '';}}
 function render(f){
  CUR=f;
  const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
  const rows=J.filter(j=>(f==='all'||j.k===f) && (!q || (j.n+' '+j.c+' '+j.t.join(' ')).toLowerCase().includes(q))).sort((a,b)=>a.y-b.y);
+ LAST=rows;
  document.getElementById('rows').innerHTML = rows.length? rows.map((j,i)=>{
   const b=BADGE[j.k];
   const logo=`https://www.google.com/s2/favicons?domain=${dom(j.u)}&sz=64`;
+  const dot = j.s ? `<span class="apidot" title="API חי — מאמרים דרך Crossref"></span>` : `<span class="apidot off"></span>`;
   return `<tr><td class="jname"><a href="${j.u}" target="_blank" rel="noopener"><img class="jlogo" src="${logo}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">${j.n} ↗</a></td>
-   <td class="jc"><button class="arrowbtn" title="עמוד שער מודפס" onclick="loadDetail('${j.s||''}','${encodeURIComponent(j.u)}','${encodeURIComponent(j.n)}',${i},this)">▾</button><span class="jctx">${j.c}</span></td><td class="yr">${j.y}</td>
+   <td class="jc"><span class="arrowwrap">${dot}<button class="arrowbtn" title="עמוד שער מודפס" onclick="loadDetail('${j.s||''}','${encodeURIComponent(j.u)}','${encodeURIComponent(j.n)}',${i},this)">▾</button></span><span class="jctx">${j.c}</span></td><td class="yr">${j.y}</td>
    <td><div class="tags">${j.t.map(x=>`<span class="tag">${x}</span>`).join('')}</div></td>
    <td><span class="badge ${b[0]}">${b[1]}</span></td></tr>
    <tr class="artrow" id="artrow-${i}" style="display:none"><td colspan="5"><div class="artbox" id="artbox-${i}"></div></td></tr>`;
@@ -171,6 +191,17 @@ function designCover(name,url){
    +'<div class="dc-name">'+name+'</div>'
    +'<div class="dc-bottom">AgroData · כתבי עת ומחקרים</div></a>';
 }
+function infoCard(r){
+ if(!r)return '';
+ const bd=BADGE[r.k];
+ const rows=[['🌍 מדינה',r.c],['📅 שנת ייסוד',r.y],['🔖 ISSN',r.s||'—'],['🏷️ סוג',bd?bd[1]:'—']];
+ const meta=rows.map(function(x){return '<div class="ic-row"><span class="ic-k">'+x[0]+'</span><span class="ic-v">'+x[1]+'</span></div>';}).join('');
+ const tags=(r.t||[]).map(function(t){return '<span class="tag">'+t+'</span>';}).join('');
+ const cross=r.s?'<a class="ic-btn" href="https://search.crossref.org/?q='+encodeURIComponent(r.n)+'" target="_blank" rel="noopener">Crossref ↗</a>':'';
+ return '<div class="infocard"><div class="ic-title">על כתב העת</div>'+meta+
+   '<div class="ic-tags">'+tags+'</div>'+
+   '<div class="ic-btns"><a class="ic-btn primary" href="'+r.u+'" target="_blank" rel="noopener">לאתר המגזין ↗</a>'+cross+'</div></div>';
+}
 function loadDetail(issn,uenc,nenc,i,btn){
  var row=document.getElementById('artrow-'+i),box=document.getElementById('artbox-'+i);
  if(row.style.display!=='none'){row.style.display='none';btn.classList.remove('open');return;}
@@ -178,7 +209,7 @@ function loadDetail(issn,uenc,nenc,i,btn){
  if(box.dataset.loaded){return;}
  box.dataset.loaded='1';
  var url=decodeURIComponent(uenc),name=decodeURIComponent(nenc);
- box.innerHTML='<div class="detailgrid"><div class="coverwrap"><div class="artload">🖼️ טוען עמוד שער…</div></div><div class="artlist" id="artlist-'+i+'"></div></div>';
+ box.innerHTML='<div class="detailgrid"><div class="coverwrap"><div class="artload">🖼️ טוען עמוד שער…</div></div><div class="dinfo">'+infoCard(LAST[i])+'<div class="artlist" id="artlist-'+i+'"></div></div></div>';
  renderArticles(issn,document.getElementById('artlist-'+i));
  var cw=box.querySelector('.coverwrap');
  fetch('/api/ogimage?url='+encodeURIComponent(url)).then(function(r){return r.json();}).then(function(c){

@@ -121,6 +121,10 @@ const R=[
   d:"מחקר וחינוך בקיימות, אנרגיה מתחדשת ומים חוצי-גבולות.",t:["קיימות","אנרגיה","מים"]},
  {n:"אוניברסיטת חיפה — המכון לחקר הכנרת / מדעי הים",u:"https://www.haifa.ac.il/",k:"uni",loc:"חיפה",
   d:"מחקר במדעי הים, אקולוגיה של מים וחקלאות ימית.",t:["מדעי הים","אקולוגיה"]},
+ {n:"מו״פ גילת — צפון הנגב",u:"https://www.mopdarom.org.il/",k:"rd",loc:"גילת · צפון הנגב",
+  d:"מחקר חקלאי יישומי לצפון הנגב — גד״ש, מטעים, ירקות ומים בתנאי מדבר.",t:["צפון הנגב","גד״ש","מטעים"]},
+ {n:"מו״פ אשכול — מערב הנגב",u:"https://www.eshkol.muni.il/",k:"rd",loc:"אשכול · מערב הנגב",
+  d:"מו״פ אזורי לחקלאות מערב הנגב — ירקות, פרחים וגידולים בתנאי בשור.",t:["מערב הנגב","ירקות","פרחים"]},
 ];
 let CUR='all';
 function domain(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');var n=h.endsWith('.il')?3:2;return p.slice(-n).join('.');}catch(e){return '';}}
@@ -157,7 +161,7 @@ function loadImages(){
 function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
 const FB=[['all','הכול'],['uni','אקדמיה'],['inst','מכוני מחקר'],['rd','מו״פ אזורי']];
 document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[1]}</button>`).join('');
-const POS=[[76,134],[70,138],[100,214],[68,128],[92,44],[82,66],[64,120],[112,288],[98,204],[88,50],[110,322],[100,58]];
+const POS=[[76,134],[70,138],[100,214],[68,128],[92,44],[82,66],[64,120],[112,288],[98,204],[88,50],[110,322],[100,58],[93,196],[84,206]];
 R.forEach(function(r,i){r.xy=POS[i]||[85,120];});
 const TCOL={uni:'#1c6b45',inst:'#2b8fb0',rd:'#c79a2e'};
 document.getElementById('rpins').innerHTML=R.map(function(r){return '<a class="pin" href="'+r.u+'" target="_blank" rel="noopener"><circle cx="'+r.xy[0]+'" cy="'+r.xy[1]+'" r="4.5" fill="'+TCOL[r.k]+'" stroke="#fff" stroke-width="1.3"/><title>'+r.n+' · '+r.loc+'</title></a>';}).join('');

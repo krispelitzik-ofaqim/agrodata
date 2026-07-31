@@ -27,6 +27,20 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
 .dec{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.14s;text-decoration:none;color:inherit;border-inline-start:4px solid var(--gold)}
+/* search bar */
+.gsearchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:10px 16px;margin-bottom:18px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.gsearchbar span{font-size:17px}
+.gsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:15.5px;color:var(--ink);background:transparent}
+/* timeline — thin block-rows */
+.timeline{display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
+.trow{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:12px;padding:12px 18px;background:#fff;box-shadow:0 4px 12px rgba(20,38,28,.04);text-decoration:none;color:inherit;transition:.13s;border-inline-start:4px solid var(--gold)}
+.trow:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.08);transform:translateX(-2px)}
+.trow .tyr{font-family:'Plex Mono';font-weight:700;font-size:13px;color:#fff;background:var(--green);border-radius:8px;padding:5px 11px;flex:0 0 auto}
+.trow .tnum{font-family:'Plex Mono';font-size:13.5px;font-weight:700;color:var(--gold);flex:0 0 auto}
+.trow .ttitle{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:15.5px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trow .tmin{font-size:13px;color:var(--mut);flex:0 0 auto;white-space:nowrap}
+.trow .tarrow{color:var(--lime);font-weight:800;flex:0 0 auto}
+@media(max-width:720px){.trow .tmin{display:none}.trow .ttitle{white-space:normal}}
 .dec:hover{border-color:#bcdcc8;box-shadow:0 14px 30px rgba(20,38,28,.1);transform:translateY(-3px)}
 .dtop{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .dnum{font-family:'Plex Mono';font-size:13px;font-weight:700;color:#fff;background:var(--gold);border-radius:8px;padding:4px 10px}
@@ -63,8 +77,12 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
   </div>
 
   <div class="sech">🏛️ החלטות ממשלה רלוונטיות</div>
+  <div class="gsearchbar"><span>🔎</span><input id="gsearch" placeholder="חיפוש: מספר החלטה, נושא, משרד…" oninput="render()"></div>
   <div class="grid" id="grid"></div>
   <div class="note">⚠️ פירוט להדגמה — מספרי ההחלטות והתאריכים לאימות מול <b>אתר החלטות הממשלה (gov.il)</b>. ניתן לחבר משיכה אוטומטית.</div>
+
+  <div class="sech">🗓️ ציר זמן — כרונולוגי</div>
+  <div class="timeline" id="timeline"></div>
 
   <div class="sech">🔐 ממשל הנתונים של AgroData</div>
   <div class="gcards">
@@ -94,12 +112,35 @@ const DEC=[
  {n:"החלטה 1145",d:"2022",t:"עידוד יצוא תוצרת חקלאית וטכנולוגיה",m:"משרד הכלכלה · מכון היצוא",k:["innov","agri"],
   s:"תמיכה ביצואני אגרו-טק, משלחות ותערוכות בין-לאומיות והרחבת שווקים.",u:"https://www.export.gov.il/"},
  {n:"מדיניות נתונים פתוחים",d:"מתעדכן",t:"data.gov.il — נתוני ממשלה פתוחים",m:"מערך הדיגיטל הלאומי",k:["data"],
-  s:"פרסום מאגרי ממשלה פתוחים (מחירי שוק, חקלאות, סטטיסטיקה) לשימוש ציבורי ומסחרי.",u:"https://data.gov.il/"}
+  s:"פרסום מאגרי ממשלה פתוחים (מחירי שוק, חקלאות, סטטיסטיקה) לשימוש ציבורי ומסחרי.",u:"https://data.gov.il/"},
+ {n:"החלטה 2266",d:"2020",t:"תוכנית חוסן לביטחון תזונתי בעת משבר",m:"משרד החקלאות",k:["data","agri"],
+  s:"היערכות שרשרת אספקת המזון למשברים, מלאי חירום וניטור מחירים.",u:"https://www.gov.il/he/departments/ministry_of_agriculture"},
+ {n:"החלטה 4432",d:"2019",t:"עידוד חדשנות וחקלאות מדייקת",m:"רשות החדשנות · משרד החקלאות",k:["innov"],
+  s:"מענקי מו״פ לחקלאות מדייקת, חיישנים ואוטומציה בשדה.",u:"https://innovationisrael.org.il/"},
+ {n:"החלטה 3698",d:"2018",t:"תוכנית לאומית להתייעלות במים בחקלאות",m:"רשות המים",k:["water"],
+  s:"עידוד קולחים, טפטוף והתייעלות מים לצד הרחבת ההתפלה.",u:"https://www.gov.il/he/departments/water_authority"},
+ {n:"החלטה 2318",d:"2017",t:"פיתוח הפריפריה החקלאית והנגב",m:"משרד החקלאות · משרד הכלכלה",k:["negev","agri"],
+  s:"תמריצים לחקלאות בפריפריה, תשתיות ותעסוקה באזורי עדיפות לאומית.",u:"https://www.gov.il/he/departments/ministry_of_agriculture"},
+ {n:"החלטה 2025",d:"2016",t:"רפורמה בענפי החקלאות והוזלת תשומות",m:"משרד החקלאות ומשרד האוצר",k:["agri"],
+  s:"פתיחת שווקים, הפחתת מכסים על תשומות ותמיכה במעבר לחקלאות תחרותית.",u:"https://www.gov.il/he/departments/ministry_of_agriculture"},
+ {n:"החלטה 659",d:"2015",t:"תוכנית רב-שנתית לפיתוח הנגב והחקלאות",m:"משרד ראש הממשלה · משרד החקלאות",k:["negev"],
+  s:"השקעה בפיתוח הנגב — חקלאות, מו״פ, תשתיות ותעסוקה, בסיס לחזון אופקים.",u:"https://www.gov.il/he/departments/pmo"}
 ];
 let CUR='all';
+function decYear(d){var m=(d.d||'').match(/(20\d{2})/);return m?+m[1]:9999;}
 function render(){
- const rows=DEC.filter(d=>CUR==='all'||d.k.includes(CUR));
- document.getElementById('grid').innerHTML=rows.map(d=>`<a class="dec" href="${d.u}" target="_blank" rel="noopener">
+ const q=(document.getElementById('gsearch').value||'').trim().toLowerCase();
+ const rows=DEC.filter(d=>{
+   if(!(CUR==='all'||d.k.includes(CUR)))return false;
+   if(!q)return true;
+   const cats=d.k.map(x=>{var c=CATS.find(c=>c[0]===x);return c?c[1]:'';}).join(' ');
+   return (d.n+' '+d.t+' '+d.m+' '+d.s+' '+d.d+' '+cats).toLowerCase().includes(q);
+ });
+ const real=rows.map(decYear).filter(y=>y!==9999);
+ const maxY=real.length?Math.max.apply(null,real):9999;
+ const top=rows.filter(d=>decYear(d)>=maxY);   // latest year (+ "מתעדכן")
+ const old=rows.filter(d=>decYear(d)<maxY).sort((a,b)=>decYear(b)-decYear(a));
+ document.getElementById('grid').innerHTML=top.map(d=>`<a class="dec" href="${d.u}" target="_blank" rel="noopener">
    <div class="dtop"><span class="dnum">${d.n}</span><span class="ddate">${d.d}</span></div>
    <div class="dtitle">${d.t}</div>
    <div class="ddesc">${d.s}</div>
@@ -107,6 +148,14 @@ function render(){
    <div class="dtags">${d.k.map(x=>`<span class="dtag">${CATS.find(c=>c[0]===x)[1]}</span>`).join('')}</div>
    <div class="dlink">להחלטה המלאה ↗</div>
  </a>`).join('') || '<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:30px">אין החלטות בקטגוריה זו</div>';
+ const tl=old;
+ document.getElementById('timeline').innerHTML=tl.map(d=>`<a class="trow" href="${d.u}" target="_blank" rel="noopener">
+   <span class="tyr">${decYear(d)===9999?'מתעדכן':decYear(d)}</span>
+   <span class="tnum">${d.n}</span>
+   <span class="ttitle">${d.t}</span>
+   <span class="tmin">${d.m}</span>
+   <span class="tarrow">↗</span>
+ </a>`).join('') || '<div style="text-align:center;color:var(--mut);padding:20px">אין תוצאות</div>';
 }
 function filt(c,el){CUR=c;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
 document.getElementById('filters').innerHTML=CATS.map((c,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${c[0]}',this)">${c[1]}</button>`).join('');

@@ -55,6 +55,11 @@ body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
 .chip.on{background:var(--green);color:#fff;border-color:var(--green)}
 .btn{border:0;border-radius:11px;padding:11px 20px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap}
 .btn.g{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
+.credgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:640px){.credgrid{grid-template-columns:1fr}}
+.credgrid label{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:700;color:var(--mut)}
+.credgrid input{border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:Heebo;font-size:15px;color:var(--ink);outline:0}
+.credgrid input:focus{border-color:var(--green)}
 .btn.gold{background:linear-gradient(90deg,var(--gold),#e3c65a);color:#3a2c05}
 .btn.o{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
 .bars .bar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
@@ -110,6 +115,7 @@ tr:last-child td{border-bottom:0}
     <nav class="snav">
       <a class="on" onclick="go(this,'dashboard')"><span class="i">📊</span><span class="lbl">לוח בקרה</span></a>
       <a onclick="go(this,'users')"><span class="i">👥</span><span class="lbl">משתמשים</span></a>
+      <a onclick="go(this,'security')"><span class="i">🔐</span><span class="lbl">משתמשים וסיסמאות</span></a>
       <a onclick="go(this,'content')"><span class="i">📝</span><span class="lbl">תוכן ובלוג</span></a>
       <a onclick="go(this,'companies')"><span class="i">🏢</span><span class="lbl">חברות</span></a>
       <a onclick="go(this,'news')"><span class="i">📰</span><span class="lbl">חדשות</span></a>
@@ -126,6 +132,7 @@ tr:last-child td{border-bottom:0}
       <div><h1 id="scTitle">לוח בקרה</h1><div class="sm">Ofakim AgroData Center · <span id="today"></span></div></div>
       <div class="tright">
         <input class="tsearch" placeholder="חיפוש בניהול…">
+        <a class="btn g" href="index.html" target="_blank" rel="noopener" style="text-decoration:none">🌐 צפייה באתר ↗</a>
         <div class="iconbtn">🔔<span class="notdot"></span></div>
         <div class="avatar">א</div>
       </div>
@@ -150,6 +157,32 @@ tr:last-child td{border-bottom:0}
       <div class="card">
         <div class="toolbar"><input placeholder="חיפוש משתמש: שם, אימייל…"><span class="chip on">הכל</span><span class="chip">מגדל</span><span class="chip">חברה</span><span class="chip">מחקר</span><span class="chip">ממשלה</span><button class="btn g">+ משתמש חדש</button></div>
         <table><thead><tr><th>משתמש</th><th>אימייל</th><th>תחום</th><th>הצטרפות</th><th>סטטוס</th><th>פעולות</th></tr></thead><tbody id="usersT"></tbody></table>
+      </div>
+    </section>
+
+    <!-- SECURITY / ADMIN CREDENTIALS -->
+    <section class="screen" id="s-security">
+      <div class="card">
+        <h3 style="margin-bottom:4px">🔐 ניהול משתמשים וסיסמאות</h3>
+        <div class="sm" style="margin-bottom:16px">חשבונות צוות הניהול והרשאות הכניסה לזירה. כניסה דורשת שם משתמש ו-3 סיסמאות.</div>
+        <table><thead><tr><th>שם</th><th>תפקיד</th><th>שם משתמש</th><th>סטטוס</th><th>פעולות</th></tr></thead>
+          <tbody id="adminsT"></tbody></table>
+      </div>
+      <div class="card" id="credCard">
+        <h3 style="margin-bottom:12px">כרטיס כניסה — <span id="credName">איציק</span></h3>
+        <div class="credgrid">
+          <label>שם פרטי<input id="cFirst" value="Itzik"></label>
+          <label>שם משפחה (אנגלית)<input id="cLast" value="Krispel"></label>
+          <label>טלפון<input id="cPhone" placeholder="05X-XXXXXXX"></label>
+          <label>שם משתמש<input id="cUser" value="ofakim"></label>
+          <label>סיסמה 1<input id="cP1" value="agro1"></label>
+          <label>סיסמה 2<input id="cP2" value="data2"></label>
+          <label>סיסמה 3<input id="cP3" value="center3"></label>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+          <button class="btn g" onclick="saveCreds()">💾 שמירת פרטי כניסה</button>
+          <span id="credMsg" style="font-size:14px;color:var(--green)"></span>
+        </div>
       </div>
     </section>
 
@@ -266,6 +299,34 @@ tbl('bars',[["AgroMind",92],["AgroStock",78],["AgroPulse",64],["AgroMap",51],["A
 tbl('uKpis',[["👥","i-green","6,910","סה״כ משתמשים","+12%",1],["✅","i-teal","6,540","פעילים","+9%",1],["🆕","i-gold","214","חדשים החודש","+31%",1],["⏳","i-purple","12","ממתינים לאישור","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:''}</div>`).join(''));
 const USERS=[["דנה כהן","dana@agri.co.il","אגרונומית","12/07/26","ok","#2b8fb0"],["רון אבידן","ron@farm.il","מגדל","12/07/26","ok","#1c6b45"],["Equinom","hr@equinom.com","סטארטאפ","11/07/26","wait","#c79a2e"],["ד״ר מיכל ברק","barak@bgu.ac.il","מחקר","11/07/26","ok","#8b6fc0"],["משרד החקלאות","gov@moag.gov.il","ממשלה","10/07/26","ok","#5c6f63"],["עמית שרון","amit@negev.il","מגדל","09/07/26","ok","#1c6b45"],["נועה פרי","noa@startup.io","סטארטאפ","08/07/26","off","#c79a2e"],["פרופ׳ יעל גל","gal@volcani.gov.il","מחקר","07/07/26","ok","#8b6fc0"]];
 tbl('usersT',USERS.map(u=>`<tr><td><span class="uav" style="background:${u[5]}">${u[0][0]}</span> ${u[0]}</td><td class="mono" style="color:var(--mut);font-size:13px">${u[1]}</td><td>${u[2]}</td><td class="mono" style="color:var(--mut)">${u[3]}</td><td>${pill(u[4])}</td><td><span class="act">✏️</span><span class="act">🚫</span></td></tr>`).join(''));
+
+// security / admin credentials
+function loadCreds(){try{return JSON.parse(localStorage.getItem('agroAdmin'))||{};}catch(e){return {};}}
+function fillCreds(){
+ var c=loadCreds();
+ if(c.first)document.getElementById('cFirst').value=c.first;
+ if(c.last)document.getElementById('cLast').value=c.last;
+ if(c.phone)document.getElementById('cPhone').value=c.phone;
+ if(c.u)document.getElementById('cUser').value=c.u;
+ if(c.p1)document.getElementById('cP1').value=c.p1;
+ if(c.p2)document.getElementById('cP2').value=c.p2;
+ if(c.p3)document.getElementById('cP3').value=c.p3;
+ renderAdmins();
+}
+function renderAdmins(){
+ var v=function(id){return document.getElementById(id).value;};
+ var name=(v('cFirst')+' '+v('cLast')).trim();
+ document.getElementById('credName').textContent=name||'—';
+ tbl('adminsT','<tr><td><span class="uav" style="background:#1c6b45">'+((v('cFirst')||'?')[0])+'</span> '+name+'</td><td>מנהל ראשי</td><td class="mono">'+v('cUser')+'</td><td>'+pill('ok')+'</td><td><span class="act">✏️</span></td></tr>');
+}
+function saveCreds(){
+ var v=function(id){return document.getElementById(id).value;};
+ var c={first:v('cFirst'),last:v('cLast'),phone:v('cPhone'),u:v('cUser'),p1:v('cP1'),p2:v('cP2'),p3:v('cP3')};
+ localStorage.setItem('agroAdmin',JSON.stringify(c));
+ renderAdmins();
+ var m=document.getElementById('credMsg');m.textContent='נשמר ✅';setTimeout(function(){m.textContent='';},2500);
+}
+fillCreds();
 
 // content
 const CONTENT=[["המדריך המלא להשקיה מדייקת בעגבניות","מדריכים","צוות AgroData","31/07/26","2,340","pub"],["5 חיישני הקרקע המובילים ל-2026","טכנולוגיה","ד״ר מיכל ברק","29/07/26","1,890","pub"],["לאן הולכים מחירי החיטה?","ניתוח שוק","מחלקת אנליטיקה","27/07/26","1,120","pub"],["חקלאות מדבר: חוות מודל בנגב","קיימות","מו״פ רמת נגב","24/07/26","980","pub"],["ראיון: פרופ׳ יעל גל על ההשבחה","ראיונות","מערכת","22/07/26","1,450","pub"],["ESG בחקלאות — מדריך פחמן","קיימות","מחלקת קיימות","—","0","draft"],["פוד-טק ישראלי 2026","טכנולוגיה","צוות AgroData","—","0","draft"]];

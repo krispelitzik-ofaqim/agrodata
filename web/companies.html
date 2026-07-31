@@ -39,6 +39,27 @@ tbody td{padding:15px 22px;border-bottom:1px solid #eef4ef;font-size:16px;vertic
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:var(--bg2)}
 .cwrap{display:flex;align-items:center;gap:14px}
+.cind{display:inline-flex;align-items:center;gap:1cm;margin-inline-start:auto;flex:0 0 auto;padding-inline-start:10px}
+.cind .apidot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;background:#1f9d57;box-shadow:0 0 0 0 rgba(31,157,87,.6);animation:apipulse 1.5s infinite}
+.carrow{display:inline-grid;place-items:center;width:32px;height:32px;flex:0 0 auto;background:var(--tint);border:1px solid #cfe6d8;color:var(--green-d);border-radius:9px;font-size:15px;cursor:pointer;transition:.15s}
+.carrow:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.carrow.open{background:var(--green);color:#fff;border-color:var(--green)}
+@keyframes apipulse{0%{box-shadow:0 0 0 0 rgba(31,157,87,.5)}70%{box-shadow:0 0 0 6px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}
+.cbox{padding:6px 0 10px}
+.cdetail{display:grid;grid-template-columns:320px 1fr;gap:22px;align-items:start;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:18px}
+@media(max-width:760px){.cdetail{grid-template-columns:1fr}}
+.cimg{width:100%;border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--line);min-height:150px;display:grid;place-items:center}
+.cimg img{width:100%;display:block}
+.cload{color:var(--mut);font-size:14px;padding:30px}
+.ci-t{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d)}
+.ci-d{color:var(--ink);font-size:15.5px;margin:6px 0 10px}
+.ci-live{display:inline-flex;align-items:center;gap:7px;font-family:'Plex Mono';font-size:12.5px;color:#1f9d57;margin-bottom:10px}
+.ci-live .apidot{width:8px;height:8px;border-radius:50%;background:#1f9d57;animation:apipulse 1.5s infinite}
+.ci-og{font-size:14.5px;color:var(--mut);line-height:1.6;border-inline-start:3px solid #cfe6d8;padding-inline-start:12px;margin-bottom:12px}
+.ci-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.ctag{font-size:13px;color:var(--green-d);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.ci-btn{display:inline-block;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;text-decoration:none;font-family:Rubik;font-weight:800;font-size:14px;border-radius:11px;padding:11px 22px}
+.ci-btn:hover{filter:brightness(1.07)}
 .clogo{position:relative;width:50px;height:50px;border-radius:12px;background:var(--tint);border:1px solid var(--line);display:grid;place-items:center;flex:0 0 auto;font-family:Rubik;font-weight:800;color:var(--green);font-size:16px;overflow:hidden}
 .clogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6px;background:#fff}
 .jname{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:23px}
@@ -153,21 +174,42 @@ const C=[
  {n:"Vertical Field",u:"https://www.verticalfield.com/",y:2006,k:"urban",d:"חוות אנכיות עירוניות בגדלים משתנים",t:["חקלאות אנכית","עירוני"]},
  {n:"Growee",u:"https://growee.co/",y:2019,k:"urban",d:"אוטומציה להידרופוניקה ביתית",t:["הידרופוניקה"]},
 ];
-let CUR='all';
+let CUR='all';var LAST=[];
 function domain(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return '';}}
 function initials(n){var m=n.replace(/[^A-Za-zא-ת ]/g,'').trim().split(/\s+/);return ((m[0]||'')[0]||'')+((m[1]||'')[0]||'');}
 function render(f){
  CUR=f;
  const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
  const rows=C.filter(c=>(f==='all'||c.k===f) && (!q || (c.n+' '+c.d+' '+c.t.join(' ')+' '+CAT[c.k][1]).toLowerCase().includes(q))).sort((a,b)=>a.y-b.y);
- document.getElementById('rows').innerHTML = rows.length? rows.map(c=>{
+ LAST=rows;
+ document.getElementById('rows').innerHTML = rows.length? rows.map((c,i)=>{
   const b=CAT[c.k];
   const dm=domain(c.u), ini=initials(c.n);
   const logo=`<div class="clogo">${ini}${dm?`<img src="https://icons.duckduckgo.com/ip3/${dm}.ico" onerror="this.remove()" alt="">`:''}</div>`;
-  return `<tr><td><div class="cwrap">${logo}<div><div class="jname"><a href="${c.u}" target="_blank" rel="noopener">${c.n} ↗</a></div><div class="desc">${c.d}</div></div></div></td>
+  return `<tr><td><div class="cwrap">${logo}<div><div class="jname"><a href="${c.u}" target="_blank" rel="noopener">${c.n} ↗</a></div><div class="desc">${c.d}</div></div><span class="cind"><span class="apidot" title="API חי"></span><button class="carrow" title="תצוגה מקדימה" onclick="loadCompany('${encodeURIComponent(c.u)}','${encodeURIComponent(c.n)}',${i},this)">▾</button></span></div></td>
    <td><span class="cat ${b[0]}">${b[1]}</span></td><td class="yr">${c.y}</td>
-   <td><div class="tags" style="display:flex;gap:6px;flex-wrap:wrap">${c.t.map(x=>`<span style="font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px 11px">${x}</span>`).join('')}</div></td></tr>`;
+   <td><div class="tags" style="display:flex;gap:6px;flex-wrap:wrap">${c.t.map(x=>`<span style="font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px 11px">${x}</span>`).join('')}</div></td></tr>
+   <tr class="crow" id="crow-${i}" style="display:none"><td colspan="4"><div class="cbox" id="cbox-${i}"></div></td></tr>`;
  }).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--mut);padding:30px">לא נמצאו תוצאות</td></tr>';
+}
+function loadCompany(uenc,nenc,i,btn){
+ var row=document.getElementById('crow-'+i),box=document.getElementById('cbox-'+i);
+ if(row.style.display!=='none'){row.style.display='none';btn.classList.remove('open');return;}
+ row.style.display='';btn.classList.add('open');
+ if(box.dataset.loaded)return; box.dataset.loaded='1';
+ var url=decodeURIComponent(uenc),name=decodeURIComponent(nenc),r=LAST[i]||{};
+ box.innerHTML='<div class="cdetail"><div class="cimg"><div class="cload">🖼️ טוען תצוגה…</div></div>'+
+   '<div class="cinfo"><div class="ci-t">'+name+'</div><div class="ci-d">'+(r.d||'')+'</div>'+
+   '<div class="ci-live"><span class="apidot"></span>נשלף חי מאתר החברה · API</div>'+
+   '<div class="ci-extra" id="ci-extra-'+i+'"></div>'+
+   '<div class="ci-tags">'+((r.t||[]).map(function(t){return '<span class="ctag">'+t+'</span>';}).join(''))+'</div>'+
+   '<a class="ci-btn" href="'+url+'" target="_blank" rel="noopener">מעבר לאתר החברה ↗</a></div></div>';
+ fetch('/api/ogimage?url='+encodeURIComponent(url)).then(function(r2){return r2.json();}).then(function(c){
+  var im=box.querySelector('.cimg');
+  if(c.image){var pic=new Image();pic.onload=function(){im.innerHTML='<img src="'+c.image+'" alt="'+name+'">';};pic.onerror=function(){im.innerHTML='<div class="cload">אין תצוגה זמינה</div>';};pic.src=c.image;}
+  else{im.innerHTML='<div class="cload">אין תצוגה זמינה</div>';}
+  if(c.desc){document.getElementById('ci-extra-'+i).innerHTML='<div class="ci-og">"'+c.desc.slice(0,220)+'"</div>';}
+ }).catch(function(){box.querySelector('.cimg').innerHTML='<div class="cload">שגיאה בטעינה</div>';});
 }
 function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
 // build filters

@@ -145,6 +145,11 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .modal.open{display:flex}
 .modal-card{background:#fff;border-radius:20px;padding:32px 30px;width:100%;max-width:420px;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.35);text-align:center}
 .modal-x{position:absolute;top:12px;left:16px;background:none;border:0;font-size:26px;color:#9aab9f;cursor:pointer;line-height:1}
+.pwrap{position:relative;display:flex;align-items:center}
+.pwrap input{width:100%;padding-left:46px!important}
+.pwrap .eye{position:absolute;left:8px;top:50%;transform:translateY(-50%);background:none;border:0;font-size:18px;cursor:pointer;opacity:.55;padding:4px;line-height:1}
+.pwrap .eye:hover{opacity:1}
+.pwrap .eye.on{opacity:1}
 /* long green LIVE bar — full-width toggle button */
 .livebox{width:100%}
 .livebar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 26px;cursor:pointer;box-shadow:0 16px 38px rgba(20,38,28,.24);text-align:right;font-family:inherit;transition:border-radius .2s}
@@ -273,7 +278,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 </div></div>
 
 <!-- LIVE DISCUSSION ARENA (native board) -->
-<div class="wrap" style="max-width:100%;padding:0"><div class="sec" style="padding:20px 24px">
+<div class="wrap"><div class="sec" style="padding:20px 0">
   <div class="livebox">
     <button class="livebar" id="livebar" onclick="toggleLive()" aria-expanded="false">
       <span class="lb-l"><span class="lb-live"><span class="lb-dot"></span>LIVE</span><span class="lb-title">💬 זירת השיח החי</span></span>
@@ -380,7 +385,26 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M16.6 2h-3v13.2a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.6a5.6 5.6 0 1 0 4.8 5.6V8.5a7 7 0 0 0 4.1 1.3V6.7a4.1 4.1 0 0 1-4.1-4.1z"/></svg></a>
   </div>
   <div style="margin-top:16px"><span class="wm">Ofakim Agro<b>Data</b> Center</span> · <span class="ftag">זירת האגרו-טק של ישראל</span> · <span class="mono">demo v0.2 · 30-07-2026</span></div>
+  <div style="margin-top:12px"><a onclick="openAdmin()" style="cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-family:'Plex Mono';text-decoration:none">🔒 כניסת צוות ניהול</a></div>
 </div></div></div>
+
+<!-- ADMIN LOGIN MODAL (username + 3 passwords) -->
+<div id="adminmodal" class="modal" onclick="if(event.target===this)closeAdmin()">
+  <div class="modal-card">
+    <button class="modal-x" onclick="closeAdmin()">×</button>
+    <div class="kicker">Admin Access</div>
+    <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">🔒 כניסת צוות ניהול</h2>
+    <p style="color:var(--mut);font-size:14px;margin-bottom:18px">אזור מוגן — נדרש שם משתמש ו-3 סיסמאות.</p>
+    <div class="frm">
+      <input id="adUser" placeholder="שם משתמש">
+      <div class="pwrap"><input id="adP1" type="password" placeholder="סיסמה 1"><button type="button" class="eye" onclick="toggleEye('adP1',this)" title="הצג/הסתר">👁️</button></div>
+      <div class="pwrap"><input id="adP2" type="password" placeholder="סיסמה 2"><button type="button" class="eye" onclick="toggleEye('adP2',this)" title="הצג/הסתר">👁️</button></div>
+      <div class="pwrap"><input id="adP3" type="password" placeholder="סיסמה 3"><button type="button" class="eye" onclick="toggleEye('adP3',this)" title="הצג/הסתר">👁️</button></div>
+      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none" onclick="checkAdmin()">כניסה →</button>
+      <div id="adMsg" style="color:#c4562e;font-size:14px;min-height:18px;margin-top:8px;text-align:center"></div>
+    </div>
+  </div>
+</div>
 
 <!-- REGISTRATION MODAL -->
 <div id="regmodal" class="modal" onclick="if(event.target===this)closeReg()">
@@ -480,6 +504,18 @@ function postComment(){
 }
 loadComments();
 function scrollTopics(d){const t=document.querySelector('.topicbar .track');if(t)t.scrollBy({left:d*220,behavior:'smooth'});}
+/* admin gate — username + 3 passwords (reads saved creds from admin panel, falls back to defaults) */
+function adminCreds(){var d={u:"ofakim",p1:"agro1",p2:"data2",p3:"center3"};try{var s=JSON.parse(localStorage.getItem('agroAdmin'));if(s&&s.u)return {u:s.u,p1:s.p1,p2:s.p2,p3:s.p3};}catch(e){}return d;}
+var ADMIN=adminCreds();
+function toggleEye(id,btn){var el=document.getElementById(id);if(el.type==='password'){el.type='text';btn.classList.add('on');btn.textContent='🙈';}else{el.type='password';btn.classList.remove('on');btn.textContent='👁️';}}
+function openAdmin(){document.getElementById('adMsg').textContent='';document.getElementById('adminmodal').classList.add('open');}
+function closeAdmin(){document.getElementById('adminmodal').classList.remove('open');}
+function checkAdmin(){
+ var A=adminCreds();
+ var u=document.getElementById('adUser').value.trim(),p1=document.getElementById('adP1').value,p2=document.getElementById('adP2').value,p3=document.getElementById('adP3').value;
+ if(u===A.u&&p1===A.p1&&p2===A.p2&&p3===A.p3){document.getElementById('adMsg').style.color='var(--green)';document.getElementById('adMsg').textContent='מתחבר…';location.href='admin.html';}
+ else{document.getElementById('adMsg').style.color='#c4562e';document.getElementById('adMsg').textContent='שם משתמש או אחת הסיסמאות שגויים.';}
+}
 function openReg(){document.getElementById('regmodal').classList.add('open')}
 function closeReg(){document.getElementById('regmodal').classList.remove('open')}
 function openLogin(){document.getElementById('loginmodal').classList.add('open')}

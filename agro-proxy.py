@@ -59,20 +59,28 @@ def fetch_ogimage(u):
     with LOCK:
         if u in OGCACHE and now - OGCACHE[u][0] < OGTTL:
             return OGCACHE[u][1]
-    img = None
+    img = None; title = None; desc = None
+    def meta(raw, key):
+        for p in (r'<meta[^>]+property=["\']'+key+r'["\'][^>]+content=["\']([^"\']+)',
+                  r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']'+key+r'["\']',
+                  r'<meta[^>]+name=["\']'+key+r'["\'][^>]+content=["\']([^"\']+)'):
+            m = re.search(p, raw, re.I)
+            if m:
+                return m.group(1).replace("&amp;", "&").strip()
+        return None
     try:
         req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (compatible; AgroDataBot/1.0)"})
         raw = urllib.request.urlopen(req, timeout=10).read(500000).decode("utf-8", "ignore")
-        pats = [r'<meta[^>]+property=["\']og:image(?::url)?["\'][^>]+content=["\']([^"\']+)',
-                r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image',
-                r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)']
-        for p in pats:
-            m = re.search(p, raw, re.I)
-            if m:
-                img = urllib.parse.urljoin(u, m.group(1).replace("&amp;", "&")); break
+        im = meta(raw, "og:image") or meta(raw, "og:image:url") or meta(raw, "twitter:image")
+        if im: img = urllib.parse.urljoin(u, im)
+        title = meta(raw, "og:title") or meta(raw, "twitter:title")
+        desc = meta(raw, "og:description") or meta(raw, "description") or meta(raw, "twitter:description")
+        if not title:
+            mt = re.search(r'<title[^>]*>([^<]+)</title>', raw, re.I)
+            if mt: title = mt.group(1).strip()
     except Exception:
-        img = None
-    out = {"url": u, "image": img}
+        pass
+    out = {"url": u, "image": img, "title": title, "desc": desc}
     with LOCK:
         OGCACHE[u] = (now, out)
     return out
