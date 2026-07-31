@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מפת האגרו-טק · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:28px 0 6px;text-align:center;background:radial-gradient(780px 320px at 50% -12%,var(--tint),transparent)}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 8px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:7px}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}.fbtn:hover:not(.on){background:var(--tint)}
+.fbtn .sw{width:11px;height:11px;border-radius:3px}
+.split{display:grid;grid-template-columns:1.4fr 1fr;gap:26px;margin:16px 0 50px;align-items:start}
+@media(max-width:1000px){.split{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border-radius:14px;padding:10px;display:flex;justify-content:center}
+.mapbox svg{width:auto;height:620px;max-width:100%}
+.pin{cursor:pointer;transition:.1s}.pin:hover circle{r:7}
+.clist h3{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);margin-bottom:4px}
+.clist .sm{font-size:13px;color:var(--mut);margin-bottom:12px}
+.citem{display:flex;align-items:center;gap:11px;padding:9px 6px;border-bottom:1px solid #eef4ef;text-decoration:none;color:inherit;font-size:14.5px}
+.citem:hover{background:var(--bg2)}
+.cdot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
+.cn{font-weight:700;color:var(--green-d)}
+.cloc{font-family:'Plex Mono';font-size:12.5px;color:var(--mut);margin-inline-start:auto}
+.note{text-align:center;color:var(--mut);font-size:14px;margin-top:14px}
+.note a{color:var(--lime);font-weight:700;text-decoration:none}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGRITECH MAP · מפת האגרו-טק</div>
+    <h1>מפת <b>האגרו-טק</b></h1>
+    <div class="sub">חברות האגרו-טק של ישראל על המפה — לפי מיקום ותחום. לחצו על נקודה למעבר לאתר החברה.</div>
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <div class="split">
+    <div class="panel">
+      <div class="mapbox">
+        <svg viewBox="0 0 200 400">
+          <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="#dce9e0" stroke="#134a30" stroke-width="1.4" stroke-linejoin="round"/>
+          <g id="cityLabels" font-family="Rubik" font-size="7" font-weight="700" fill="#5c6f63">
+            <text x="70" y="64" text-anchor="middle">חיפה</text>
+            <text x="60" y="120" text-anchor="middle">ת״א</text>
+            <text x="124" y="134" text-anchor="start">י-ם</text>
+            <text x="90" y="212" text-anchor="middle">ב״ש</text>
+          </g>
+          <g id="pins"></g>
+        </svg>
+      </div>
+    </div>
+    <div class="panel clist">
+      <h3>החברות על המפה</h3>
+      <div class="sm" id="cnt">—</div>
+      <div id="list"></div>
+      <div class="note">לטבלה המלאה של 48 החברות → <a href="companies.html">חברות בישראל ↗</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מפת האגרו-טק · <span class="mono">agritech map</span></div></div></div>
+
+<script>
+const SC={water:["#2b8fb0","השקיה ומים"],sense:["#1c6b45","חישה מדייקת"],robot:["#6a45c0","רובוטיקה ואוטומציה"],seed:["#2e9e63","זרעים וגנטיקה"],input:["#c79a2e","דשן והגנת הצומח"],food:["#c4562e","פוד-טק"],aqua:["#158a94","חקלאות ימית"],urban:["#5a8f2e","עירונית/אנכית"]};
+const CO=[
+ {n:"Netafim",k:"water",loc:"חצרים · נגב",x:96,y:210,u:"https://www.netafim.com/"},
+ {n:"Rivulis",k:"water",loc:"גבעת עוז · צפון",x:88,y:74,u:"https://www.rivulis.com/"},
+ {n:"NaanDanJain",k:"water",loc:"נען · מרכז",x:80,y:130,u:"https://www.naandanjain.com/"},
+ {n:"N-Drip",k:"water",loc:"תל אביב",x:66,y:122,u:"https://n-drip.com/"},
+ {n:"Amiad",k:"water",loc:"גליל",x:90,y:50,u:"https://www.amiad.com/"},
+ {n:"CropX",k:"sense",loc:"תל אביב",x:70,y:116,u:"https://cropx.com/"},
+ {n:"Phytech",k:"sense",loc:"בית שמש",x:96,y:140,u:"https://www.phytech.com/"},
+ {n:"Taranis",k:"sense",loc:"תל אביב",x:74,y:118,u:"https://www.taranis.com/"},
+ {n:"Prospera",k:"sense",loc:"תל אביב",x:63,y:126,u:"https://valmontag.com/"},
+ {n:"SeeTree",k:"sense",loc:"תל אביב",x:72,y:128,u:"https://www.seetree.ai/"},
+ {n:"Agmatix",k:"input",loc:"באר שבע",x:99,y:203,u:"https://www.agmatix.com/"},
+ {n:"Saturas",k:"sense",loc:"יקנעם",x:86,y:84,u:"https://www.saturas-ag.com/"},
+ {n:"Tevel",k:"robot",loc:"גדרה",x:80,y:142,u:"https://www.tevel-tech.com/"},
+ {n:"FFRobotics",k:"robot",loc:"עמק חפר",x:74,y:100,u:"https://www.ffrobotics.com/"},
+ {n:"Metomotion",k:"robot",loc:"יקנעם",x:90,y:86,u:"https://metomotion.com/"},
+ {n:"Blue White",k:"robot",loc:"תל אביב",x:67,y:120,u:"https://www.bluewhite.co/"},
+ {n:"Greeneye",k:"robot",loc:"תל אביב",x:60,y:118,u:"https://www.greeneye-tech.com/"},
+ {n:"Beewise",k:"robot",loc:"בית העמק · גליל",x:82,y:48,u:"https://www.beewise.ag/"},
+ {n:"Evogene",k:"seed",loc:"רחובות",x:76,y:134,u:"https://www.evogene.com/"},
+ {n:"Equinom",k:"seed",loc:"גבעת ברנר",x:82,y:136,u:"https://equinom.com/"},
+ {n:"Hazera",k:"seed",loc:"ברורים · דרום",x:88,y:158,u:"https://www.hazera.com/"},
+ {n:"ICL",k:"input",loc:"ים המלח",x:124,y:172,u:"https://www.icl-group.com/"},
+ {n:"ADAMA",k:"input",loc:"איירפורט סיטי",x:72,y:128,u:"https://www.adama.com/"},
+ {n:"Haifa Group",k:"input",loc:"חיפה",x:78,y:66,u:"https://www.haifa-group.com/"},
+ {n:"Aleph Farms",k:"food",loc:"רחובות",x:74,y:137,u:"https://aleph-farms.com/"},
+ {n:"Redefine Meat",k:"food",loc:"רחובות",x:78,y:139,u:"https://www.redefinemeat.com/"},
+ {n:"Remilk",k:"food",loc:"רחובות",x:70,y:135,u:"https://www.remilk.com/"},
+ {n:"AquaMaof",k:"aqua",loc:"תל אביב",x:65,y:116,u:"https://aquamaof.com/"},
+ {n:"Vertical Field",k:"urban",loc:"רעננה",x:70,y:108,u:"https://www.verticalfield.com/"}
+];
+let CUR='all';
+function draw(){
+ const rows=CO.filter(c=>CUR==='all'||c.k===CUR);
+ document.getElementById('pins').innerHTML=rows.map(c=>{const col=SC[c.k][0];return `<a class="pin" href="${c.u}" target="_blank" rel="noopener"><circle cx="${c.x}" cy="${c.y}" r="4.5" fill="${col}" stroke="#fff" stroke-width="1.3"/><title>${c.n} · ${c.loc}</title></a>`;}).join('');
+ document.getElementById('cnt').textContent=rows.length+' חברות מוצגות';
+ document.getElementById('list').innerHTML=rows.map(c=>`<a class="citem" href="${c.u}" target="_blank" rel="noopener"><span class="cdot" style="background:${SC[c.k][0]}"></span><span class="cn">${c.n}</span><span class="cloc">${c.loc}</span></a>`).join('');
+}
+function filt(k,el){CUR=k;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');draw();}
+const FB=[["all","הכל","transparent"]].concat(Object.keys(SC).map(k=>[k,SC[k][1],SC[k][0]]));
+document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[2]!=='transparent'?`<span class="sw" style="background:${f[2]}"></span>`:''}${f[1]}</button>`).join('');
+draw();
+</script>
+</body></html>

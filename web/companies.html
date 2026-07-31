@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>חברות בישראל · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:30px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:62px;font-weight:800;margin:4px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:720px;margin:0 auto}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:22px 0 8px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 22px;text-align:center}
+.stat b{font-family:Rubik;font-size:26px;font-weight:800;color:var(--green);display:block}
+.stat span{font-size:14px;color:var(--mut)}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 20px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:.12s}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.fbtn:hover:not(.on){background:var(--tint)}
+.jsearchbar{display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto 22px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar span{font-size:18px}
+.jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;color:var(--ink);background:transparent}
+.jsearchbar input::placeholder{color:#9aab9f}
+.twrap{border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(20,38,28,.05);margin-bottom:20px}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--tint);color:var(--green-d);font-family:Rubik;font-size:16px;font-weight:700;text-align:right;padding:16px 22px;border-bottom:1px solid var(--line)}
+tbody td{padding:15px 22px;border-bottom:1px solid #eef4ef;font-size:16px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--bg2)}
+.cwrap{display:flex;align-items:center;gap:14px}
+.clogo{position:relative;width:50px;height:50px;border-radius:12px;background:var(--tint);border:1px solid var(--line);display:grid;place-items:center;flex:0 0 auto;font-family:Rubik;font-weight:800;color:var(--green);font-size:16px;overflow:hidden}
+.clogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6px;background:#fff}
+.jname{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:23px}
+.jname a{color:inherit;text-decoration:none}
+.jname a:hover{color:var(--lime)}
+.desc{font-size:14px;color:var(--mut);margin-top:2px;font-weight:400;font-family:Heebo}
+.yr{font-family:'Plex Mono';color:var(--mut);font-size:15.5px}
+.cat{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;border-radius:999px;padding:6px 14px;white-space:nowrap}
+.c-water{background:rgba(43,143,176,.12);color:var(--teal)}
+.c-sense{background:rgba(28,107,69,.12);color:var(--green)}
+.c-robot{background:rgba(120,80,200,.12);color:#6a45c0}
+.c-seed{background:rgba(46,158,99,.14);color:var(--lime)}
+.c-input{background:rgba(199,154,46,.16);color:#a67d1e}
+.c-food{background:rgba(214,90,60,.12);color:#c4562e}
+.c-aqua{background:rgba(30,140,150,.14);color:#158a94}
+.c-urban{background:rgba(90,150,60,.14);color:#5a8f2e}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.note{text-align:center;color:var(--mut);font-size:14px;margin-bottom:40px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">ISRAELI AGRITECH COMPANIES</div>
+    <h1>חברות <b>בישראל</b></h1>
+    <div class="sub">סקירת חברות האגרו-טק וההשקיה המובילות בישראל — לפי תחום, שנת הקמה ותיאור פעילות.</div>
+    <div class="stats">
+      <div class="stat"><b id="stTot">0</b><span>חברות בזירה</span></div>
+      <div class="stat"><b>8</b><span>תחומי פעילות</span></div>
+      <div class="stat"><b>#1</b><span>בעולם בהשקיה מדייקת</span></div>
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+
+  <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש חברה: שם, תחום, טכנולוגיה…" oninput="render(CUR)"></div>
+  <div class="twrap">
+    <table><thead><tr>
+      <th>חברה</th><th>תחום</th><th>הוקמה</th><th>תגיות</th>
+    </tr></thead><tbody id="rows"></tbody></table>
+  </div>
+  <div class="note">הרשימה לצורכי הדגמה — נבנית ומתעדכנת. חסרה חברה? עדכנו אותנו דרך ״צור קשר״.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · חברות בישראל · <span class="mono">Israeli AgriTech</span></div></div></div>
+
+<script>
+const CAT={
+ water:['c-water','השקיה ומים'], sense:['c-sense','חישה וחקלאות מדייקת'], robot:['c-robot','רובוטיקה ואוטומציה'],
+ seed:['c-seed','זרעים וגנטיקה'], input:['c-input','דשן והגנת הצומח'], food:['c-food','פוד-טק וחלבון חלופי'],
+ aqua:['c-aqua','חקלאות ימית'], urban:['c-urban','חקלאות עירונית/אנכית']
+};
+const C=[
+ {n:"Netafim",u:"https://www.netafim.com/",y:1965,k:"water",d:"חלוצת ההשקיה בטפטוף — מובילה עולמית",t:["טפטוף","קיבוץ חצרים"]},
+ {n:"Rivulis",u:"https://www.rivulis.com/",y:2014,k:"water",d:"פתרונות מיקרו-השקיה גלובליים",t:["מיקרו-השקיה"]},
+ {n:"NaanDanJain",u:"https://www.naandanjain.com/",y:1940,k:"water",d:"מערכות השקיה חקלאיות",t:["ממטרות","טפטוף"]},
+ {n:"N-Drip",u:"https://n-drip.com/",y:2016,k:"water",d:"טפטוף בכוח הכובד ללא אנרגיה",t:["גרביטציה","קיימות"]},
+ {n:"SupPlant",u:"https://supplant.me/",y:2013,k:"water",d:"השקיה חכמה מבוססת AI, ללא חיישנים",t:["AI","אקלים"]},
+ {n:"Manna Irrigation",u:"https://www.manna-irrigation.com/",y:2017,k:"water",d:"תוכנת המלצות השקיה מבוססת לוויין",t:["לוויין","תוכנה"]},
+ {n:"Amiad Water Systems",u:"https://www.amiad.com/",y:1962,k:"water",d:"סינון מים לחקלאות ותעשייה",t:["סינון","מים"]},
+ {n:"Bermad",u:"https://www.bermad.com/",y:1965,k:"water",d:"שסתומי בקרה הידראוליים למים",t:["שסתומים","בקרה"]},
+
+ {n:"CropX",u:"https://cropx.com/",y:2015,k:"sense",d:"חיישני קרקע וניתוח אגרונומי בענן",t:["חיישני קרקע","ניתוח"]},
+ {n:"Phytech",u:"https://www.phytech.com/",y:2007,k:"sense",d:"ניטור מבוסס-צמח לקבלת החלטות",t:["חישת צמח","IoT"]},
+ {n:"Prospera (Valmont)",u:"https://valmontag.com/",y:2014,k:"sense",d:"בינה מלאכותית לניטור גידולים",t:["AI","ראייה ממוחשבת"]},
+ {n:"Taranis",u:"https://www.taranis.com/",y:2015,k:"sense",d:"מודיעין שדה מתצלומי אוויר ברזולוציה גבוהה",t:["רחפנים","הדמיה"]},
+ {n:"SeeTree",u:"https://www.seetree.ai/",y:2017,k:"sense",d:"מודיעין לעצים ולמטעים",t:["מטעים","AI"]},
+ {n:"Agritask",u:"https://www.agritask.com/",y:2013,k:"sense",d:"פלטפורמת ניהול אגרונומי ושרשרת אספקה",t:["פלטפורמה","אגרונומיה"]},
+ {n:"Agmatix (ICL)",u:"https://www.agmatix.com/",y:2020,k:"sense",d:"מדע נתונים אגרונומי מבוסס דאטה",t:["דאטה","דשן"]},
+ {n:"Saturas",u:"https://www.saturas-ag.com/",y:2013,k:"sense",d:"חיישן פוטנציאל מים מוטמע בגזע",t:["חיישן גזע","מטעים"]},
+ {n:"Viridix",u:"https://viridix.com/",y:2017,k:"sense",d:"חיישני ״שורש מלאכותי״ להשקיה",t:["חיישני שורש"]},
+
+ {n:"Tevel Aerobotics",u:"https://www.tevel-tech.com/",y:2017,k:"robot",d:"רחפנים אוטונומיים לקטיף פרי",t:["קטיף","רחפנים"]},
+ {n:"FFRobotics",u:"https://www.ffrobotics.com/",y:2014,k:"robot",d:"רובוט קטיף אוטומטי לפרי טרי",t:["קטיף","זרוע רובוטית"]},
+ {n:"Metomotion",u:"https://metomotion.com/",y:2017,k:"robot",d:"רובוט חממות רב-תכליתי",t:["חממות"]},
+ {n:"Blue White Robotics",u:"https://www.bluewhite.co/",y:2017,k:"robot",d:"אוטונומיה לטרקטורים ולמכונות חקלאיות",t:["טרקטור אוטונומי"]},
+ {n:"Greeneye Technology",u:"https://www.greeneye-tech.com/",y:2017,k:"robot",d:"ריסוס מדייק מבוסס AI (See & Spray)",t:["ריסוס מדייק","AI"]},
+ {n:"Fieldin",u:"https://www.fieldin.com/",y:2013,k:"robot",d:"ניהול ואוטומציה של מכונות חקלאיות",t:["מיכון","ניהול"]},
+ {n:"BeeHero",u:"https://www.beehero.io/",y:2017,k:"robot",d:"האבקה מדייקת וניטור כוורות",t:["האבקה","דבורים"]},
+ {n:"Beewise",u:"https://www.beewise.ag/",y:2018,k:"robot",d:"כוורת רובוטית אוטונומית",t:["כוורת","רובוטיקה"]},
+ {n:"Edete",u:"https://www.edete.com/",y:2016,k:"robot",d:"האבקה מכנית מדייקת למטעים",t:["האבקה","מטעים"]},
+
+ {n:"Evogene",u:"https://www.evogene.com/",y:2002,k:"seed",d:"ביולוגיה חישובית לזרעים, הגנת הצומח ותרופות",t:["גנומיקה","AI"]},
+ {n:"Equinom",u:"https://equinom.com/",y:2012,k:"seed",d:"השבחת זרעים לחלבון צמחי איכותי",t:["השבחה","חלבון"]},
+ {n:"Hazera Seeds",u:"https://www.hazera.com/",y:1939,k:"seed",d:"פיתוח והשבחת זני ירקות",t:["זרעים","ירקות"]},
+ {n:"Rahan Meristem",u:"https://www.rahan.co.il/",y:1976,k:"seed",d:"תרביות רקמה לבננה ולגידולים",t:["תרבית רקמה","בננה"]},
+ {n:"Salicrop",u:"https://salicrop.com/",y:2018,k:"seed",d:"טיפול זרעים לעמידות מליחות ועקה",t:["עמידות עקה"]},
+ {n:"Kaiima",u:"https://www.kaiima.com/",y:2007,k:"seed",d:"טכנולוגיית השבחה להעלאת יבול",t:["השבחה","יבול"]},
+
+ {n:"ICL Group",u:"https://www.icl-group.com/",y:1968,k:"input",d:"דשנים מיוחדים ופתרונות תזונת צמח",t:["דשן","אשלג"]},
+ {n:"ADAMA",u:"https://www.adama.com/",y:1945,k:"input",d:"פתרונות הגנת הצומח גלובליים",t:["הגנת הצומח"]},
+ {n:"Haifa Group",u:"https://www.haifa-group.com/",y:1966,k:"input",d:"דשנים מיוחדים ותזונת צמח מדייקת",t:["דשן","ניטרט"]},
+ {n:"Groundwork BioAg",u:"https://www.groundworkbioag.com/",y:2013,k:"input",d:"תוספי מיקוריזה לשיפור קרקע ויבול",t:["מיקוריזה","קרקע"]},
+
+ {n:"Aleph Farms",u:"https://aleph-farms.com/",y:2017,k:"food",d:"בשר מתורבת מתאי בקר",t:["בשר מתורבת"]},
+ {n:"Believer Meats",u:"https://www.believermeats.com/",y:2018,k:"food",d:"בשר מתורבת בקנה מידה תעשייתי",t:["בשר מתורבת"]},
+ {n:"Redefine Meat",u:"https://www.redefinemeat.com/",y:2018,k:"food",d:"בשר צמחי בהדפסת תלת-ממד",t:["הדפסת בשר","צמחי"]},
+ {n:"Remilk",u:"https://www.remilk.com/",y:2019,k:"food",d:"חלבוני חלב מתסיסה ללא פרה",t:["תסיסה","חלב"]},
+ {n:"Imagindairy",u:"https://www.imagindairy.com/",y:2020,k:"food",d:"חלבוני חלב מדויקים מתסיסה",t:["תסיסה","חלב"]},
+ {n:"Steakholder Foods",u:"https://steakholderfoods.com/",y:2019,k:"food",d:"הדפסת תלת-ממד של בשר ודגים",t:["ביו-הדפסה"]},
+ {n:"Wilk",u:"https://www.wilktech.com/",y:2020,k:"food",d:"רכיבי חלב מתאים מתורבתים",t:["חלב מתורבת"]},
+ {n:"InnovoPro",u:"https://innovopro.com/",y:2013,k:"food",d:"חלבון חומוס בריכוז 70%",t:["חלבון חומוס"]},
+
+ {n:"AquaMaof",u:"https://aquamaof.com/",y:2010,k:"aqua",d:"מערכות מדגה במחזור מים (RAS)",t:["RAS","מדגה"]},
+ {n:"BioFishency",u:"https://biofishency.com/",y:2014,k:"aqua",d:"טיפול מים חסכוני לחקלאות ימית",t:["טיפול מים"]},
+
+ {n:"Vertical Field",u:"https://www.verticalfield.com/",y:2006,k:"urban",d:"חוות אנכיות עירוניות בגדלים משתנים",t:["חקלאות אנכית","עירוני"]},
+ {n:"Growee",u:"https://growee.co/",y:2019,k:"urban",d:"אוטומציה להידרופוניקה ביתית",t:["הידרופוניקה"]},
+];
+let CUR='all';
+function domain(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return '';}}
+function initials(n){var m=n.replace(/[^A-Za-zא-ת ]/g,'').trim().split(/\s+/);return ((m[0]||'')[0]||'')+((m[1]||'')[0]||'');}
+function render(f){
+ CUR=f;
+ const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
+ const rows=C.filter(c=>(f==='all'||c.k===f) && (!q || (c.n+' '+c.d+' '+c.t.join(' ')+' '+CAT[c.k][1]).toLowerCase().includes(q))).sort((a,b)=>a.y-b.y);
+ document.getElementById('rows').innerHTML = rows.length? rows.map(c=>{
+  const b=CAT[c.k];
+  const dm=domain(c.u), ini=initials(c.n);
+  const logo=`<div class="clogo">${ini}${dm?`<img src="https://icons.duckduckgo.com/ip3/${dm}.ico" onerror="this.remove()" alt="">`:''}</div>`;
+  return `<tr><td><div class="cwrap">${logo}<div><div class="jname"><a href="${c.u}" target="_blank" rel="noopener">${c.n} ↗</a></div><div class="desc">${c.d}</div></div></div></td>
+   <td><span class="cat ${b[0]}">${b[1]}</span></td><td class="yr">${c.y}</td>
+   <td><div class="tags" style="display:flex;gap:6px;flex-wrap:wrap">${c.t.map(x=>`<span style="font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px 11px">${x}</span>`).join('')}</div></td></tr>`;
+ }).join('') : '<tr><td colspan="4" style="text-align:center;color:var(--mut);padding:30px">לא נמצאו תוצאות</td></tr>';
+}
+function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
+// build filters
+const FB=[['all','הכול']].concat(Object.keys(CAT).map(k=>[k,CAT[k][1]]));
+document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[1]}</button>`).join('');
+document.getElementById('stTot').textContent=C.length;
+render('all');
+</script>
+</body></html>

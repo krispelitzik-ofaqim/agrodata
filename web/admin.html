@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לוח ניהול · AgroData Admin</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#8b6fc0;--ink:#14261c;--mut:#5c6f63;--line:#e6edea;--bg2:#f4f9f5;--tint:#eaf4ee;--up:#1f9d57;--down:#d24b4b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.app{display:flex;min-height:100vh}
+.side{width:250px;flex:0 0 auto;background:linear-gradient(180deg,#134a30,#0f3d28);color:#fff;padding:22px 16px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:8px;padding:6px 10px 18px}
+.brand .wm{font-size:22px}.brand .tag{font-size:11px;color:#8fe6ad;font-family:'Plex Mono'}
+.snav a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;color:rgba(255,255,255,.82);text-decoration:none;font-weight:600;font-size:15px;margin-bottom:4px;cursor:pointer}
+.snav a .i{font-size:18px}
+.snav a:hover{background:rgba(255,255,255,.08);color:#fff}
+.snav a.on{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
+.sfoot{position:absolute;bottom:18px;right:16px;left:16px;font-size:12px;color:rgba(255,255,255,.5)}
+.main{flex:1;min-width:0;padding:22px 28px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.top h1{font-family:Rubik;font-size:28px;font-weight:800;color:var(--green-d)}
+.top .sm{font-size:13.5px;color:var(--mut);margin-top:2px}
+.tright{display:flex;align-items:center;gap:14px}
+.tsearch{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 14px;font-family:Heebo;font-size:14px;outline:0;width:230px}
+.iconbtn{width:42px;height:42px;border-radius:11px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:18px;cursor:pointer;position:relative}
+.notdot{position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;display:grid;place-items:center;font-family:Rubik;font-weight:800}
+/* generic */
+.screen{display:none}.screen.on{display:block}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-bottom:20px}
+.kpis.k4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1300px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 6px 16px rgba(20,38,28,.04)}
+.kpi .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;margin-bottom:10px}
+.kpi .v{font-family:Rubik;font-size:26px;font-weight:800;color:var(--ink);line-height:1}
+.kpi .l{font-size:13px;color:var(--mut);margin-top:4px}
+.kpi .ch{font-family:'Plex Mono';font-size:13px;font-weight:700;margin-top:6px}
+.up{color:var(--up)}.down{color:var(--down)}
+.i-green{background:rgba(28,107,69,.12)}.i-teal{background:rgba(43,143,176,.12)}.i-gold{background:rgba(199,154,46,.16)}.i-purple{background:rgba(139,111,192,.14)}
+.row{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px}
+.row.eq{grid-template-columns:1fr 1fr}
+@media(max-width:1000px){.row,.row.eq{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 6px 16px rgba(20,38,28,.04);margin-bottom:20px}
+.card h3{font-family:Rubik;font-size:18px;font-weight:800;color:var(--green-d);margin-bottom:2px}
+.card .sm{font-size:13px;color:var(--mut);margin-bottom:14px}
+.toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar input{flex:1;min-width:180px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-family:Heebo;font-size:14.5px;outline:0}
+.chip{font-size:14px;font-weight:600;color:var(--green-d);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green)}
+.btn{border:0;border-radius:11px;padding:11px 20px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap}
+.btn.g{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
+.btn.gold{background:linear-gradient(90deg,var(--gold),#e3c65a);color:#3a2c05}
+.btn.o{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
+.bars .bar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.bars .bn{font-size:14.5px;font-weight:600;width:120px;flex:0 0 auto}
+.bars .bt{flex:1;height:12px;background:var(--bg2);border-radius:999px;overflow:hidden}
+.bars .bf{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--lime))}
+.bars .bv{font-family:'Plex Mono';font-size:13.5px;color:var(--green-d);font-weight:700;width:40px;text-align:left}
+.donut-wrap{display:flex;align-items:center;gap:22px}
+.donut{width:150px;height:150px;border-radius:50%;flex:0 0 auto;position:relative}
+.donut::after{content:"";position:absolute;inset:26px;background:#fff;border-radius:50%}
+.dlegend .dl{display:flex;align-items:center;gap:9px;font-size:14.5px;margin-bottom:9px}
+.dlegend .ds{width:13px;height:13px;border-radius:4px}
+.dlegend b{margin-inline-start:auto;font-family:'Plex Mono'}
+table{width:100%;border-collapse:collapse}
+th{font-size:12.5px;color:var(--mut);text-align:right;font-weight:700;padding:9px 8px;border-bottom:1px solid var(--line)}
+td{padding:12px 8px;border-bottom:1px solid #eef4ef;font-size:14.5px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.uav{width:34px;height:34px;border-radius:9px;display:inline-grid;place-items:center;color:#fff;font-family:Rubik;font-weight:800;font-size:13px;vertical-align:middle}
+.clogo{width:34px;height:34px;border-radius:9px;background:var(--tint);border:1px solid var(--line);display:inline-grid;place-items:center;overflow:hidden;position:relative;vertical-align:middle;font-family:Rubik;font-weight:800;color:var(--green);font-size:12px}
+.clogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:4px;background:#fff}
+.pill{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 11px;white-space:nowrap}
+.p-ok{background:rgba(31,157,87,.12);color:var(--up)}.p-wait{background:rgba(199,154,46,.16);color:#a67d1e}.p-off{background:rgba(210,75,75,.1);color:var(--down)}.p-draft{background:rgba(92,111,99,.12);color:var(--mut)}
+.act{cursor:pointer;font-size:16px;margin-inline-start:8px;opacity:.7}.act:hover{opacity:1}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tab{font-family:Rubik;font-weight:700;font-size:14.5px;color:var(--mut);padding:9px 18px;border-radius:10px;cursor:pointer}
+.tab.on{background:var(--tint);color:var(--green-d)}
+.setgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:800px){.setgrid{grid-template-columns:1fr}}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13.5px;font-weight:600;color:var(--green-d);margin-bottom:5px}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:Heebo;font-size:14.5px;outline:0}
+.toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eef4ef}
+.sw{width:44px;height:25px;border-radius:999px;background:var(--green);position:relative;cursor:pointer;flex:0 0 auto}
+.sw.off{background:#cdd6d1}
+.sw::after{content:"";position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.15s}
+.sw.off::after{right:auto;left:3px}
+.foot{padding:16px 0 4px;text-align:center;font-size:12.5px;color:var(--mut)}
+.modal{position:fixed;inset:0;background:rgba(15,40,26,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.modal.open{display:flex}
+.modal-card{background:#fff;border-radius:18px;max-width:540px;width:100%;padding:26px;box-shadow:0 30px 70px rgba(0,0,0,.3)}
+.modal-card h3{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);margin-bottom:16px}
+.modal-x{float:left;font-size:26px;line-height:1;cursor:pointer;color:var(--mut);border:0;background:none}
+.modal-card textarea{width:100%;min-height:92px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:Heebo;font-size:14.5px;outline:0;resize:vertical}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--green-d);color:#fff;padding:14px 28px;border-radius:12px;font-weight:700;box-shadow:0 14px 34px rgba(0,0,0,.28);display:none;z-index:60}
+.toast.show{display:block;animation:tin .3s ease}
+@keyframes tin{from{opacity:0;transform:translateX(-50%) translateY(12px)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div><div class="wm">Agro<b>Data</b></div><div class="tag">ADMIN · לוח ניהול</div></div></div>
+    <nav class="snav">
+      <a class="on" onclick="go(this,'dashboard')"><span class="i">📊</span><span class="lbl">לוח בקרה</span></a>
+      <a onclick="go(this,'users')"><span class="i">👥</span><span class="lbl">משתמשים</span></a>
+      <a onclick="go(this,'content')"><span class="i">📝</span><span class="lbl">תוכן ובלוג</span></a>
+      <a onclick="go(this,'companies')"><span class="i">🏢</span><span class="lbl">חברות</span></a>
+      <a onclick="go(this,'news')"><span class="i">📰</span><span class="lbl">חדשות</span></a>
+      <a onclick="go(this,'finance')"><span class="i">💹</span><span class="lbl">זירה פיננסית</span></a>
+      <a onclick="go(this,'maps')"><span class="i">🗺️</span><span class="lbl">מפות ו-GIS</span></a>
+      <a onclick="go(this,'analytics')"><span class="i">📈</span><span class="lbl">אנליטיקה</span></a>
+      <a onclick="go(this,'settings')"><span class="i">⚙️</span><span class="lbl">הגדרות</span></a>
+    </nav>
+    <div class="sfoot">v0.2 · מחובר · <span id="ct"></span></div>
+  </aside>
+
+  <main class="main">
+    <div class="top">
+      <div><h1 id="scTitle">לוח בקרה</h1><div class="sm">Ofakim AgroData Center · <span id="today"></span></div></div>
+      <div class="tright">
+        <input class="tsearch" placeholder="חיפוש בניהול…">
+        <div class="iconbtn">🔔<span class="notdot"></span></div>
+        <div class="avatar">א</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section class="screen on" id="s-dashboard">
+      <div class="kpis" id="kpis"></div>
+      <div class="row">
+        <div class="card"><h3>תנועה שבועית</h3><div class="sm">מבקרים ייחודים · 7 ימים אחרונים</div><svg id="area" viewBox="0 0 800 240" style="width:100%;height:auto"></svg></div>
+        <div class="card"><h3>התפלגות מנויים</h3><div class="sm">לפי סוג משתמש</div><div class="donut-wrap"><div class="donut" id="donut"></div><div class="dlegend" id="dlegend"></div></div></div>
+      </div>
+      <div class="row">
+        <div class="card"><h3>הרשמות אחרונות</h3><div class="sm">משתמשים חדשים שנרשמו לזירה</div><table><thead><tr><th>משתמש</th><th>תחום</th><th>תאריך</th><th>סטטוס</th></tr></thead><tbody id="recentU"></tbody></table></div>
+        <div class="card"><h3>מנועים מובילים</h3><div class="sm">שימוש לפי בלוק (השבוע)</div><div class="bars" id="bars"></div></div>
+      </div>
+    </section>
+
+    <!-- USERS -->
+    <section class="screen" id="s-users">
+      <div class="kpis k4" id="uKpis"></div>
+      <div class="card">
+        <div class="toolbar"><input placeholder="חיפוש משתמש: שם, אימייל…"><span class="chip on">הכל</span><span class="chip">מגדל</span><span class="chip">חברה</span><span class="chip">מחקר</span><span class="chip">ממשלה</span><button class="btn g">+ משתמש חדש</button></div>
+        <table><thead><tr><th>משתמש</th><th>אימייל</th><th>תחום</th><th>הצטרפות</th><th>סטטוס</th><th>פעולות</th></tr></thead><tbody id="usersT"></tbody></table>
+      </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="screen" id="s-content">
+      <div class="card">
+        <div class="tabs"><span class="tab on">בלוג</span><span class="tab">חדשות</span><span class="tab">כתבי עת</span></div>
+        <div class="toolbar"><input placeholder="חיפוש כותרת…"><button class="btn g">+ כתבה חדשה</button></div>
+        <table><thead><tr><th>כותרת</th><th>קטגוריה</th><th>מחבר</th><th>תאריך</th><th>צפיות</th><th>סטטוס</th><th>פעולות</th></tr></thead><tbody id="contentT"></tbody></table>
+      </div>
+    </section>
+
+    <!-- COMPANIES -->
+    <section class="screen" id="s-companies">
+      <div class="card">
+        <div class="toolbar"><input placeholder="חיפוש חברה…"><span class="chip on">הכל</span><span class="chip">השקיה</span><span class="chip">פוד-טק</span><span class="chip">חיישנים</span><button class="btn g">+ הוסף חברה</button></div>
+        <table><thead><tr><th>חברה</th><th>תחום</th><th>הוקמה</th><th>אתר</th><th>סטטוס</th><th>פעולות</th></tr></thead><tbody id="companiesT"></tbody></table>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="screen" id="s-news">
+      <div class="card">
+        <div class="toolbar"><input placeholder="חיפוש מבזק/כתבה…"><span class="chip on">הכל</span><span class="chip">מבזקים</span><span class="chip">כתבות</span><button class="btn g">+ מבזק חדש</button></div>
+        <table><thead><tr><th>כותרת</th><th>מקור</th><th>נושא</th><th>פורסם</th><th>סטטוס</th><th>פעולות</th></tr></thead><tbody id="newsT"></tbody></table>
+      </div>
+    </section>
+
+    <!-- FINANCE -->
+    <section class="screen" id="s-finance">
+      <div class="kpis k4" id="fKpis"></div>
+      <div class="row">
+        <div class="card"><h3>הכנסה חודשית (MRR)</h3><div class="sm">12 חודשים אחרונים · ₪ אלפים</div><svg id="rev" viewBox="0 0 800 240" style="width:100%;height:auto"></svg></div>
+        <div class="card"><h3>מקורות הכנסה</h3><div class="sm">התפלגות</div><div class="donut-wrap"><div class="donut" id="fdonut"></div><div class="dlegend" id="fdlegend"></div></div></div>
+      </div>
+      <div class="card"><h3>עסקאות אחרונות</h3><div class="sm">תשלומים ומנויים</div><table><thead><tr><th>לקוח</th><th>תוכנית</th><th>סכום</th><th>תאריך</th><th>סטטוס</th></tr></thead><tbody id="txT"></tbody></table></div>
+    </section>
+
+    <!-- MAPS -->
+    <section class="screen" id="s-maps">
+      <div class="kpis k4" id="mKpis"></div>
+      <div class="card"><h3>מקורות נתונים · GIS</h3><div class="sm">סטטוס חיבור שכבות</div><table><thead><tr><th>מקור</th><th>שכבה</th><th>עדכון אחרון</th><th>סטטוס</th></tr></thead><tbody id="mapsT"></tbody></table></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="screen" id="s-analytics">
+      <div class="card"><h3>תנועה · 30 יום</h3><div class="sm">מבקרים · צפיות עמוד</div><svg id="area2" viewBox="0 0 800 240" style="width:100%;height:auto"></svg></div>
+      <div class="row eq">
+        <div class="card"><h3>עמודים מובילים</h3><div class="sm">לפי צפיות</div><div class="bars" id="pagesB"></div></div>
+        <div class="card"><h3>מקורות תנועה</h3><div class="sm">מאיפה מגיעים</div><div class="donut-wrap"><div class="donut" id="srcDonut"></div><div class="dlegend" id="srcLegend"></div></div></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="screen" id="s-settings">
+      <div class="setgrid">
+        <div class="card"><h3>הגדרות כלליות</h3><div class="sm">פרטי הזירה</div>
+          <div class="field"><label>שם האתר</label><input value="Ofakim AgroData Center"></div>
+          <div class="field"><label>דומיין</label><input value="agrodata.co.il"></div>
+          <div class="field"><label>שפת ברירת מחדל</label><select><option>עברית</option><option>English</option></select></div>
+          <div class="field"><label>אזור זמן</label><select><option>ישראל (GMT+3)</option></select></div>
+          <button class="btn g">שמירה</button>
+        </div>
+        <div class="card"><h3>אינטגרציות ומפתחות</h3><div class="sm">חיבורי דאטה חיצוניים</div>
+          <div class="toggle"><span>Yahoo Finance · מדדים חיים</span><div class="sw"></div></div>
+          <div class="toggle"><span>data.gov.il · נתוני ממשלה</span><div class="sw off"></div></div>
+          <div class="toggle"><span>Google Earth Engine · מפות</span><div class="sw off"></div></div>
+          <div class="toggle"><span>מנוע AI (AgroMind)</span><div class="sw off"></div></div>
+          <div class="toggle"><span>ניוזלטר · דיוור</span><div class="sw"></div></div>
+          <div class="field" style="margin-top:16px"><label>מפתח API (AI)</label><input type="password" value="••••••••••••••••" ></div>
+          <button class="btn o">עדכון מפתחות</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · לוח ניהול פנימי · demo</div>
+  </main>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()">
+  <div class="modal-card">
+    <button class="modal-x" onclick="closeM()">&times;</button>
+    <h3 id="mTitle">עריכה</h3>
+    <div class="field"><label>כותרת / שם</label><input id="mName" placeholder="הזן שם…"></div>
+    <div class="field"><label>קטגוריה</label><select><option>כללי</option><option>מדריכים</option><option>טכנולוגיה</option><option>ניתוח שוק</option><option>קיימות</option><option>ראיונות</option></select></div>
+    <div class="field"><label>סטטוס</label><select><option>פורסם</option><option>טיוטה</option><option>מושהה</option></select></div>
+    <div class="field"><label>תיאור</label><textarea placeholder="תיאור התוכן…"></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:8px"><button class="btn g" onclick="saveM()">שמירה</button><button class="btn o" onclick="closeM()">ביטול</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+function go(el,s){document.querySelectorAll('.snav a').forEach(a=>a.classList.remove('on'));el.classList.add('on');document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));document.getElementById('s-'+s).classList.add('on');document.getElementById('scTitle').textContent=el.querySelector('.lbl').textContent.trim();window.scrollTo(0,0);}
+document.querySelectorAll('.chip,.tab').forEach(c=>c.addEventListener('click',function(){this.parentNode.querySelectorAll(this.className.split(' ')[0]==='tab'?'.tab':'.chip').forEach(x=>x.classList.remove('on'));this.classList.add('on');}));
+document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',function(){this.classList.toggle('off');}));
+function dom(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');return p.slice(-(h.endsWith('.il')?3:2)).join('.');}catch(e){return '';}}
+function areaChart(id,d,stroke){const w=800,h=240,pad=26,mn=Math.min(...d),mx=Math.max(...d),rx=(w-2*pad)/(d.length-1),ry=(h-2*pad)/((mx-mn)||1);const pts=d.map((v,i)=>[pad+i*rx,h-pad-(v-mn)*ry]);const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');const area=path+` L${pts[pts.length-1][0]},${h-pad} L${pad},${h-pad} Z`;let g=`<defs><linearGradient id="ag${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${stroke}" stop-opacity=".28"/><stop offset="1" stop-color="#c79a2e" stop-opacity="0"/></linearGradient></defs>`;for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#eef4ef"/>`;}g+=`<path d="${area}" fill="url(#ag${id})"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="3"/>`;pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#fff" stroke="#c79a2e" stroke-width="2.5"/>`);document.getElementById(id).innerHTML=g;}
+function barChart(id,val){const w=800,h=240,pad=30,mx=Math.max(...val.map(v=>v[1])),bw=(w-2*pad)/val.length*0.55,gap=(w-2*pad)/val.length;let g='';for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#eef4ef"/>`;}val.forEach((v,i)=>{const bh=(v[1]/mx)*(h-2*pad-14),x=pad+i*gap+(gap-bw)/2,y=h-pad-bh;g+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="url(#bg)"/><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" font-family="'Plex Mono'" font-size="12" fill="#5c6f63">${v[0]}</text>`;});g=`<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e9e63"/><stop offset="1" stop-color="#c79a2e"/></linearGradient></defs>`+g;document.getElementById(id).innerHTML=g;}
+function donut(id,lid,data){let acc=0,seg=[];data.forEach(s=>{seg.push(`${s[2]} ${acc}% ${acc+s[1]}%`);acc+=s[1];});document.getElementById(id).style.background=`conic-gradient(${seg.join(',')})`;document.getElementById(lid).innerHTML=data.map(s=>`<div class="dl"><span class="ds" style="background:${s[2]}"></span>${s[0]} <b>${s[1]}%</b></div>`).join('');}
+function tbl(id,html){document.getElementById(id).innerHTML=html;}
+function pill(s){return s==='ok'?'<span class="pill p-ok">פעיל</span>':s==='wait'?'<span class="pill p-wait">ממתין</span>':s==='off'?'<span class="pill p-off">מושהה</span>':s==='pub'?'<span class="pill p-ok">פורסם</span>':s==='draft'?'<span class="pill p-draft">טיוטה</span>':s;}
+
+// dashboard
+const KPI=[["👥","i-green","6,910","משתמשים רשומים","+12.4%",1],["🏢","i-teal","48","חברות בזירה","+3",1],["📝","i-gold","1,284","כתבות ותוכן","+48",1],["⭐","i-green","312","מנויים פעילים","+8.1%",1],["💰","i-gold","₪48.2K","הכנסה חודשית","+15%",1],["🔌","i-teal","1.2M","קריאות API","+22%",1]];
+tbl('kpis',KPI.map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div><div class="ch ${k[5]?'up':'down'}">${k[5]?'▲':'▼'} ${k[4]}</div></div>`).join(''));
+areaChart('area',[420,510,480,620,700,650,780],'#1c6b45');
+donut('donut','dlegend',[["מגדלים",45,"#1c6b45"],["חברות",28,"#2b8fb0"],["מחקר",17,"#c79a2e"],["ממשלה",10,"#8fe6ad"]]);
+const RU=[["דנה כהן","אגרונומית","היום","ok","#2b8fb0"],["רון אבידן","מגדל","היום","ok","#1c6b45"],["Equinom","סטארטאפ","אתמול","wait","#c79a2e"],["ד״ר מיכל ברק","מחקר","אתמול","ok","#8b6fc0"],["משרד החקלאות","ממשלה","לפני יומיים","ok","#5c6f63"]];
+tbl('recentU',RU.map(u=>`<tr><td><span class="uav" style="background:${u[4]}">${u[0][0]}</span> ${u[0]}</td><td>${u[1]}</td><td class="mono" style="color:var(--mut)">${u[2]}</td><td>${pill(u[3])}</td></tr>`).join(''));
+tbl('bars',[["AgroMind",92],["AgroStock",78],["AgroPulse",64],["AgroMap",51],["AgroDirectory",43],["AgroScholar",38]].map(b=>`<div class="bar"><span class="bn">${b[0]}</span><div class="bt"><div class="bf" style="width:${b[1]}%"></div></div><span class="bv">${b[1]}</span></div>`).join(''));
+
+// users
+tbl('uKpis',[["👥","i-green","6,910","סה״כ משתמשים","+12%",1],["✅","i-teal","6,540","פעילים","+9%",1],["🆕","i-gold","214","חדשים החודש","+31%",1],["⏳","i-purple","12","ממתינים לאישור","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:''}</div>`).join(''));
+const USERS=[["דנה כהן","dana@agri.co.il","אגרונומית","12/07/26","ok","#2b8fb0"],["רון אבידן","ron@farm.il","מגדל","12/07/26","ok","#1c6b45"],["Equinom","hr@equinom.com","סטארטאפ","11/07/26","wait","#c79a2e"],["ד״ר מיכל ברק","barak@bgu.ac.il","מחקר","11/07/26","ok","#8b6fc0"],["משרד החקלאות","gov@moag.gov.il","ממשלה","10/07/26","ok","#5c6f63"],["עמית שרון","amit@negev.il","מגדל","09/07/26","ok","#1c6b45"],["נועה פרי","noa@startup.io","סטארטאפ","08/07/26","off","#c79a2e"],["פרופ׳ יעל גל","gal@volcani.gov.il","מחקר","07/07/26","ok","#8b6fc0"]];
+tbl('usersT',USERS.map(u=>`<tr><td><span class="uav" style="background:${u[5]}">${u[0][0]}</span> ${u[0]}</td><td class="mono" style="color:var(--mut);font-size:13px">${u[1]}</td><td>${u[2]}</td><td class="mono" style="color:var(--mut)">${u[3]}</td><td>${pill(u[4])}</td><td><span class="act">✏️</span><span class="act">🚫</span></td></tr>`).join(''));
+
+// content
+const CONTENT=[["המדריך המלא להשקיה מדייקת בעגבניות","מדריכים","צוות AgroData","31/07/26","2,340","pub"],["5 חיישני הקרקע המובילים ל-2026","טכנולוגיה","ד״ר מיכל ברק","29/07/26","1,890","pub"],["לאן הולכים מחירי החיטה?","ניתוח שוק","מחלקת אנליטיקה","27/07/26","1,120","pub"],["חקלאות מדבר: חוות מודל בנגב","קיימות","מו״פ רמת נגב","24/07/26","980","pub"],["ראיון: פרופ׳ יעל גל על ההשבחה","ראיונות","מערכת","22/07/26","1,450","pub"],["ESG בחקלאות — מדריך פחמן","קיימות","מחלקת קיימות","—","0","draft"],["פוד-טק ישראלי 2026","טכנולוגיה","צוות AgroData","—","0","draft"]];
+tbl('contentT',CONTENT.map(c=>`<tr><td style="font-weight:600;max-width:320px">${c[0]}</td><td><span class="pill p-draft">${c[1]}</span></td><td>${c[2]}</td><td class="mono" style="color:var(--mut)">${c[3]}</td><td class="mono">${c[4]}</td><td>${pill(c[5])}</td><td><span class="act">✏️</span><span class="act">🗑️</span></td></tr>`).join(''));
+
+// companies
+const COMP=[["Netafim","https://netafim.com","השקיה ומים","1965","ok"],["CropX","https://cropx.com","חיישנים","2015","ok"],["Evogene","https://evogene.com","זרעים וגנטיקה","2002","ok"],["Aleph Farms","https://aleph-farms.com","פוד-טק","2017","ok"],["ADAMA","https://adama.com","הגנת הצומח","1945","ok"],["Tevel Aerobotics","https://tevel-tech.com","רובוטיקה","2017","wait"],["Beewise","https://beewise.ag","רובוטיקה","2018","ok"]];
+tbl('companiesT',COMP.map(c=>{const d=dom(c[1]);return `<tr><td><span class="clogo">${c[0][0]}<img src="https://icons.duckduckgo.com/ip3/${d}.ico" onerror="this.remove()"></span> <b>${c[0]}</b></td><td>${c[2]}</td><td class="mono" style="color:var(--mut)">${c[3]}</td><td class="mono" style="color:var(--teal);font-size:13px">${d}</td><td>${pill(c[4])}</td><td><span class="act">✏️</span><span class="act">🗑️</span></td></tr>`;}).join(''));
+
+// news
+const NEWS=[["וולקני: זן עגבנייה עמיד-חום +20% יבול","וולקני","גידולים","היום","pub"],["גיוס 40M$ לסטארטאפ השקיה","כלכליסט","השקעות","היום","pub"],["יצוא החקלאות שבר שיא","גלובס","שוק","אתמול","pub"],["רגולציה לרחפני ריסוס","רת״א","רחפנים","אתמול","pub"],["בשר מתורבת — אישור ייצור","TheMarker","פוד-טק","—","draft"]];
+tbl('newsT',NEWS.map(n=>`<tr><td style="font-weight:600;max-width:340px">${n[0]}</td><td>${n[1]}</td><td><span class="pill p-draft">${n[2]}</span></td><td class="mono" style="color:var(--mut)">${n[3]}</td><td>${pill(n[4])}</td><td><span class="act">✏️</span><span class="act">🗑️</span></td></tr>`).join(''));
+
+// finance
+tbl('fKpis',[["💰","i-gold","₪48.2K","MRR","+15%",1],["⭐","i-green","312","מנויים","+8%",1],["📊","i-teal","₪154","ARPU","+4%",1],["📉","i-purple","2.1%","נטישה","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:'<div class="ch down">▼ 0.3%</div>'}</div>`).join(''));
+barChart('rev',[["ינו",22],["פבר",26],["מרץ",25],["אפר",31],["מאי",34],["יונ",33],["יול",38],["אוג",41],["ספט",39],["אוק",44],["נוב",46],["דצמ",48]]);
+donut('fdonut','fdlegend',[["מנויים",62,"#c79a2e"],["עמלות סחר",20,"#1c6b45"],["API",12,"#2b8fb0"],["אחר",6,"#8fe6ad"]]);
+const TX=[["Netafim","Enterprise","₪4,200","31/07/26","ok"],["מו״פ ערבה","Pro","₪890","30/07/26","ok"],["Equinom","Startup","₪450","29/07/26","wait"],["פרופ׳ גל","Academic","₪120","28/07/26","ok"],["Trendlines","Enterprise","₪4,200","27/07/26","ok"]];
+tbl('txT',TX.map(t=>`<tr><td><b>${t[0]}</b></td><td><span class="pill p-draft">${t[1]}</span></td><td class="mono" style="font-weight:700">${t[2]}</td><td class="mono" style="color:var(--mut)">${t[3]}</td><td>${pill(t[4])}</td></tr>`).join(''));
+
+// maps
+tbl('mKpis',[["🗂️","i-green","4","שכבות פעילות","",1],["🛰️","i-teal","6","מקורות נתונים","",1],["🔄","i-gold","5 דק׳","עדכון אחרון","",1],["📡","i-purple","840","בקשות היום","+18%",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:''}</div>`).join(''));
+const MAPS=[["Sentinel-2","ירק · NDVI","לפני 5 דק׳","ok"],["CHIRPS","גשמים","לפני שעה","ok"],["MODIS LST","חום","לפני 20 דק׳","ok"],["Dynamic World","יבולים","לפני יום","ok"],["Google Earth Engine","חיבור מלא","—","off"],["Copernicus","גיבוי","לפני שעתיים","wait"]];
+tbl('mapsT',MAPS.map(m=>`<tr><td><b>${m[0]}</b></td><td>${m[1]}</td><td class="mono" style="color:var(--mut)">${m[2]}</td><td>${pill(m[3])}</td></tr>`).join(''));
+
+// analytics
+areaChart('area2',[300,420,380,510,470,560,620,590,680,720,700,780,760,830],'#2b8fb0');
+tbl('pagesB',[["דף הבית",100],["אגרו סטוק",72],["חדשות",58],["חברות",44],["מפות",36],["בלוג",29]].map(b=>`<div class="bar"><span class="bn">${b[0]}</span><div class="bt"><div class="bf" style="width:${b[1]}%"></div></div><span class="bv">${b[1]}</span></div>`).join(''));
+donut('srcDonut','srcLegend',[["ישיר",38,"#1c6b45"],["חיפוש",30,"#c79a2e"],["רשתות",20,"#2b8fb0"],["הפניות",12,"#8fe6ad"]]);
+
+function openM(t){document.getElementById('mTitle').textContent=t;document.getElementById('mName').value='';document.getElementById('modal').classList.add('open');}
+function closeM(){document.getElementById('modal').classList.remove('open');}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(function(){t.classList.remove('show');},2200);}
+function saveM(){closeM();toast('✅ נשמר בהצלחה');}
+document.querySelectorAll('.btn').forEach(function(b){var t=b.textContent.trim();if(t.charAt(0)==='+')b.onclick=function(){openM(t.replace('+','').trim());};else if(t==='שמירה'||t==='עדכון מפתחות')b.onclick=function(){toast('✅ '+t+' בוצע');};});
+document.addEventListener('click',function(e){if(e.target.classList&&e.target.classList.contains('act')){if(e.target.textContent==='✏️')openM('עריכת פריט');else if(confirm('למחוק פריט זה?'))toast('🗑️ נמחק');}});
+// clock
+(function(){var d=new Date(),p=n=>String(n).padStart(2,'0');document.getElementById('ct').textContent=p(d.getHours())+':'+p(d.getMinutes());var wd=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'],mo=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];document.getElementById('today').textContent='יום '+wd[d.getDay()]+', '+d.getDate()+' ב'+mo[d.getMonth()]+' '+d.getFullYear();})();
+(function(){var s=new URLSearchParams(location.search).get('s');if(s){document.querySelectorAll('.snav a').forEach(function(a){var oc=a.getAttribute('onclick')||'';if(oc.indexOf("'"+s+"'")>-1)go(a,s);});}})();
+</script>
+</body></html>

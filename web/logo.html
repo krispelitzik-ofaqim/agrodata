@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+body{margin:0;background:#fff;color:#14261c;font-family:Heebo,Arial;padding:34px}
+h1{font-family:Heebo;font-size:20px;margin:0 0 24px;color:#5c6f63;font-weight:700}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{border:1px solid #dbe8df;border-radius:18px;padding:26px;text-align:center}
+.tag{font-family:'Plex Mono';font-size:14px;color:#2e9e63;letter-spacing:.05em;margin-bottom:16px}
+.mark{height:130px;display:flex;align-items:center;justify-content:center}
+.lock{display:flex;align-items:center;justify-content:center;gap:11px;margin-top:20px;padding-top:18px;border-top:1px dashed #dbe8df}
+.wm{font-family:'Space Grotesk';font-weight:700;font-size:27px;letter-spacing:-.01em;color:#14261c}
+.wm b{color:#2e9e63}
+.small{margin-top:10px;color:#9aab9f;font-size:14px}
+.mini{display:inline-flex;gap:8px;align-items:center;margin-top:8px}
+</style></head>
+<body>
+<h1>Ofakim AgroData Center · כיווני לוגו (מארק + לוגוטייפ)</h1>
+<div class="row">
+
+  <!-- A: Neural Leaf -->
+  <div class="card">
+    <div class="tag">A · עלה נוירוני</div>
+    <div class="mark">
+      <svg width="118" height="118" viewBox="0 0 120 120">
+        <defs><linearGradient id="la" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3aa873"/><stop offset="1" stop-color="#1c6b45"/></linearGradient></defs>
+        <path d="M60,10 C92,36 92,78 60,112 C28,78 28,36 60,10 Z" fill="url(#la)"/>
+        <path d="M60,20 L60,104" stroke="#eafaf0" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <g stroke="#eafaf0" stroke-width="2.2" fill="none" stroke-linecap="round">
+          <path d="M60,42 L41,32"/><path d="M60,42 L79,32"/>
+          <path d="M60,66 L38,58"/><path d="M60,66 L82,58"/>
+          <path d="M60,88 L44,84"/><path d="M60,88 L76,84"/>
+        </g>
+        <g fill="#eafaf0"><circle cx="41" cy="32" r="4.4"/><circle cx="79" cy="32" r="4.4"/><circle cx="38" cy="58" r="4.4"/><circle cx="82" cy="58" r="4.4"/><circle cx="44" cy="84" r="4"/><circle cx="76" cy="84" r="4"/><circle cx="60" cy="20" r="4.6"/></g>
+      </svg>
+    </div>
+    <div class="lock"><span class="wm">Agro<b>Data</b></span></div>
+    <div class="small">עלה = חקלאות · צמתים = דאטה/מוח</div>
+  </div>
+
+  <!-- B: Sprout Hub -->
+  <div class="card">
+    <div class="tag">B · נבט-צומת</div>
+    <div class="mark">
+      <svg width="118" height="118" viewBox="0 0 120 120">
+        <defs><linearGradient id="lb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3aa873"/><stop offset="1" stop-color="#1c6b45"/></linearGradient></defs>
+        <path d="M60,20 L96,41 L96,79 L60,100 L24,79 L24,41 Z" fill="url(#lb)"/>
+        <!-- sprout -->
+        <path d="M60,84 L60,52" stroke="#eafaf0" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M60,60 C48,60 44,52 44,44 C54,44 60,50 60,60 Z" fill="#eafaf0"/>
+        <path d="M60,56 C72,56 76,48 76,40 C66,40 60,46 60,56 Z" fill="#cdeed9"/>
+        <!-- orbit nodes -->
+        <g stroke="#8fd0a0" stroke-width="1.6" fill="none"><path d="M24,60 L12,60"/><path d="M96,60 L108,60"/><path d="M60,20 L60,8"/></g>
+        <g fill="#2e9e63"><circle cx="10" cy="60" r="4.2"/><circle cx="110" cy="60" r="4.2"/><circle cx="60" cy="7" r="4.2"/></g>
+      </svg>
+    </div>
+    <div class="lock"><span class="wm">Agro<b>Data</b></span></div>
+    <div class="small">משושה = Hub/דאטה · נבט = צמיחה</div>
+  </div>
+
+  <!-- C: Brain Ring -->
+  <div class="card">
+    <div class="tag">C · מוח-טבעת</div>
+    <div class="mark">
+      <svg width="118" height="118" viewBox="0 0 120 120">
+        <defs><radialGradient id="lc"><stop offset="0" stop-color="#5fd191"/><stop offset="1" stop-color="#1c6b45"/></radialGradient></defs>
+        <g id="ring"></g>
+        <circle cx="60" cy="60" r="20" fill="url(#lc)"/>
+        <path d="M60,54 L60,45 M60,45 C55,45 53,41 53,37 C58,37 60,40 60,45" stroke="#eafaf0" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="lock"><span class="wm">Agro<b>Data</b></span></div>
+    <div class="small">טבעת צמתים סביב ליבה = המוח</div>
+  </div>
+</div>
+
+<script>
+const NS="http://www.w3.org/2000/svg",g=document.getElementById('ring'),CX=60,CY=60,R=44;
+for(let i=0;i<8;i++){const a=(-90+i*45)*Math.PI/180,x=CX+R*Math.cos(a),y=CY+R*Math.sin(a);
+  const l=document.createElementNS(NS,'path');l.setAttribute('d',`M${CX},${CY} L${x},${y}`);l.setAttribute('stroke','#bcdcc8');l.setAttribute('stroke-width','1.4');l.setAttribute('fill','none');g.appendChild(l);
+  const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r','5');c.setAttribute('fill', i===5?'#2b8fb0':'#2e9e63');g.appendChild(c);}
+</script>
+</body></html>

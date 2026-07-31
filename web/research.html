@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מחקר ואקדמיה · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:30px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:62px;font-weight:800;margin:4px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:740px;margin:0 auto}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 10px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:.12s}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.fbtn:hover:not(.on){background:var(--tint)}
+.jsearchbar{display:flex;align-items:center;gap:10px;max-width:680px;margin:6px auto 26px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar span{font-size:18px}
+.jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;color:var(--ink);background:transparent}
+.jsearchbar input::placeholder{color:#9aab9f}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:44px}
+.mappanel{border:1px solid var(--line);border-radius:18px;padding:18px;margin:0 0 30px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.mappanel .mh{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);text-align:center;margin-bottom:10px}
+.mappanel .mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border-radius:14px;padding:10px;display:flex;justify-content:center}
+.mappanel .mapbox svg{width:auto;height:540px;max-width:100%}
+.mappanel .pin{cursor:pointer}.mappanel .pin:hover circle{r:7}
+.mleg{text-align:center;font-size:14.5px;color:var(--mut);margin-top:12px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.rcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.14s;text-decoration:none;color:inherit}
+.rcard:hover{border-color:#bcdcc8;box-shadow:0 14px 30px rgba(20,38,28,.09);transform:translateY(-3px)}
+.rtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.rtype{font-size:14px;font-weight:700;border-radius:999px;padding:5px 13px}
+.t-uni{background:rgba(28,107,69,.12);color:var(--green)}
+.t-inst{background:rgba(43,143,176,.12);color:var(--teal)}
+.t-rd{background:rgba(199,154,46,.16);color:#a67d1e}
+.rloc{font-family:'Plex Mono';font-size:14px;color:var(--mut)}
+.rnamerow{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rlogo{position:relative;width:48px;height:48px;border-radius:12px;background:var(--tint);border:1px solid var(--line);display:grid;place-items:center;flex:0 0 auto;font-family:Rubik;font-weight:800;color:var(--green);font-size:15px;overflow:hidden}
+.rlogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6px;background:#fff}
+.rname{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);line-height:1.2}
+.rdesc{font-size:14.5px;color:var(--mut);line-height:1.55;margin-bottom:14px;flex:1}
+.rtags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.rtag{font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.rlink{font-family:Rubik;font-weight:700;font-size:14.5px;color:var(--lime)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">RESEARCH & ACADEMIA</div>
+    <h1>מחקר <b>ואקדמיה</b></h1>
+    <div class="sub">מוסדות המחקר והפקולטות המובילים באגרו-טק, מדעי הצמח והקיימות בישראל.</div>
+    <div class="filters" id="filters"></div>
+    <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש: מוסד, תחום מחקר, עיר…" oninput="render(CUR)"></div>
+  </div>
+
+  <div class="mappanel">
+    <h2 class="mh">🗺️ מפת המו״פים והמוסדות בישראל</h2>
+    <div class="mapbox"><svg viewBox="0 0 200 400">
+      <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="#dce9e0" stroke="#134a30" stroke-width="1.4" stroke-linejoin="round"/>
+      <g font-family="Rubik" font-size="7" font-weight="700" fill="#5c6f63"><text x="70" y="64" text-anchor="middle">חיפה</text><text x="60" y="120" text-anchor="middle">ת״א</text><text x="90" y="212" text-anchor="middle">ב״ש</text></g>
+      <g id="rpins"></g>
+    </svg></div>
+    <div class="mleg">🟢 אקדמיה · 🔵 מכוני מחקר · 🟡 מו״פ אזורי — לחצו על נקודה לאתר המוסד</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מחקר ואקדמיה · <span class="mono">Israeli Ag Research</span></div></div></div>
+
+<script>
+const TYPE={uni:['t-uni','אקדמיה'],inst:['t-inst','מכון מחקר'],rd:['t-rd','מו״פ אזורי']};
+const R=[
+ {n:"מכון ויצמן למדע",u:"https://www.weizmann.ac.il/",k:"inst",loc:"רחובות",
+  d:"מחקר בסיסי מוביל בביולוגיה של הצמח, גנטיקה, פוטוסינתזה ומדעי הסביבה.",t:["ביולוגיה של הצמח","גנטיקה","סביבה"]},
+ {n:"הפקולטה לחקלאות, מזון וסביבה ע״ש רוברט ה. סמית",u:"https://agri.huji.ac.il/",k:"uni",loc:"רחובות · האונ׳ העברית",
+  d:"הפקולטה המובילה בישראל לחקלאות — אגרונומיה, מדעי הצמח והחי, מזון וכלכלה חקלאית.",t:["אגרונומיה","מדעי המזון","כלכלה חקלאית"]},
+ {n:"אוניברסיטת בן-גוריון — המכונים לחקר המדבר ומדעי הקיימות",u:"https://in.bgu.ac.il/bidr/",k:"uni",loc:"שדה בוקר · הנגב",
+  d:"חקר חקלאות מדבר, מים, אנרגיה מתחדשת וקיימות בסביבה צחיחה במכוני בלאושטיין.",t:["חקלאות מדבר","קיימות","מים"]},
+ {n:"מכון וולקני — מרכז מחקר חקלאי (ARO)",u:"https://www.agri.gov.il/",k:"inst",loc:"ראשון לציון",
+  d:"זרוע המחקר של משרד החקלאות — גידולי שדה, הגנת הצומח, מיכון ומדעי בעלי חיים.",t:["גידולי שדה","הגנת הצומח","מיכון"]},
+ {n:"מיג״ל — מכון מחקר מדעי הגליל",u:"https://www.migal.org.il/",k:"inst",loc:"קריית שמונה",
+  d:"מחקר יישומי בביוטכנולוגיה חקלאית, מדעי הצמח, מים וסביבה בצפון.",t:["ביוטכנולוגיה","מים","צמח"]},
+ {n:"הטכניון — הפקולטה להנדסה ביוטכנולוגיה ומזון",u:"https://biotech.technion.ac.il/",k:"uni",loc:"חיפה",
+  d:"הנדסת מזון, ביוטכנולוגיה וטכנולוגיות ייצור מזון מתקדמות.",t:["הנדסת מזון","ביוטכנולוגיה"]},
+ {n:"אוניברסיטת תל אביב — בית הספר למדעי הצמח והביטחון התזונתי",u:"https://en-lifesci.tau.ac.il/",k:"uni",loc:"תל אביב",
+  d:"מחקר במדעי הצמח, גנומיקה, מולקולרית וביטחון תזונתי.",t:["מדעי הצמח","גנומיקה"]},
+ {n:"מו״פ ערבה תיכונה וצפונית",u:"https://www.arava.co.il/",k:"rd",loc:"ערבה",
+  d:"מו״פ יישומי לחקלאות מדברית — גידולים בתנאי מליחות, חום ומים מליחים.",t:["חקלאות מדבר","מליחות"]},
+ {n:"מו״פ רמת נגב",u:"https://www.rngr.co.il/",k:"rd",loc:"רמת נגב",
+  d:"מחקר חקלאי יישומי במים מליחים, גד״ש מדברי וחקלאות בת-קיימא.",t:["מים מליחים","נגב"]},
+ {n:"מו״פ צפון — מיג״ל",u:"https://www.migal.org.il/",k:"rd",loc:"גליל",
+  d:"פיתוח יישומי לחקלאי הצפון — מטעים, גד״ש, בעלי חיים ומים.",t:["מטעים","גליל"]},
+ {n:"מכון ערבה ללימודי סביבה",u:"https://arava.org/",k:"inst",loc:"קטורה · ערבה",
+  d:"מחקר וחינוך בקיימות, אנרגיה מתחדשת ומים חוצי-גבולות.",t:["קיימות","אנרגיה","מים"]},
+ {n:"אוניברסיטת חיפה — המכון לחקר הכנרת / מדעי הים",u:"https://www.haifa.ac.il/",k:"uni",loc:"חיפה",
+  d:"מחקר במדעי הים, אקולוגיה של מים וחקלאות ימית.",t:["מדעי הים","אקולוגיה"]},
+];
+let CUR='all';
+function domain(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');var n=h.endsWith('.il')?3:2;return p.slice(-n).join('.');}catch(e){return '';}}
+function initials(n){var m=n.replace(/[^A-Za-zא-ת ]/g,'').trim().split(/\s+/);return ((m[0]||'')[0]||'')+((m[1]||'')[0]||'');}
+function render(f){
+ CUR=f;
+ const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
+ const rows=R.filter(r=>(f==='all'||r.k===f) && (!q || (r.n+' '+r.d+' '+r.loc+' '+r.t.join(' ')).toLowerCase().includes(q)));
+ document.getElementById('grid').innerHTML = rows.length? rows.map(r=>{
+  const ty=TYPE[r.k];const dm=domain(r.u),ini=initials(r.n);
+  return `<a class="rcard" href="${r.u}" target="_blank" rel="noopener">
+    <div class="rtop"><span class="rtype ${ty[0]}">${ty[1]}</span><span class="rloc">${r.loc}</span></div>
+    <div class="rnamerow"><span class="rlogo">${ini}${dm?`<img src="https://www.google.com/s2/favicons?domain=${dm}&sz=128" onerror="this.remove()" alt="">`:''}</span><div class="rname">${r.n}</div></div>
+    <div class="rdesc">${r.d}</div>
+    <div class="rtags">${r.t.map(x=>`<span class="rtag">${x}</span>`).join('')}</div>
+    <div class="rlink">לאתר המוסד ↗</div>
+  </a>`;
+ }).join('') : '<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:40px">לא נמצאו תוצאות</div>';
+}
+function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
+const FB=[['all','הכול'],['uni','אקדמיה'],['inst','מכוני מחקר'],['rd','מו״פ אזורי']];
+document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[1]}</button>`).join('');
+const POS=[[76,134],[70,138],[100,214],[68,128],[92,44],[82,66],[64,120],[112,288],[98,204],[88,50],[110,322],[100,58]];
+R.forEach(function(r,i){r.xy=POS[i]||[85,120];});
+const TCOL={uni:'#1c6b45',inst:'#2b8fb0',rd:'#c79a2e'};
+document.getElementById('rpins').innerHTML=R.map(function(r){return '<a class="pin" href="'+r.u+'" target="_blank" rel="noopener"><circle cx="'+r.xy[0]+'" cy="'+r.xy[1]+'" r="4.5" fill="'+TCOL[r.k]+'" stroke="#fff" stroke-width="1.3"/><title>'+r.n+' · '+r.loc+'</title></a>';}).join('');
+render('all');
+</script>
+</body></html>

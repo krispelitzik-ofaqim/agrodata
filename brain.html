@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;background:#08201599;font-family:'Heebo','Assistant',Arial,sans-serif}
+  .stage{width:1000px;height:820px;position:relative;
+    background:radial-gradient(720px 620px at 50% 46%,#123f2a 0%,#0d2b1e 45%,#06180f 100%)}
+  .ttl{position:absolute;top:22px;left:0;right:0;text-align:center;color:#eaf3ec;z-index:5}
+  .ttl h1{margin:0;font-size:26px;font-weight:900}
+  .ttl h1 b{background:linear-gradient(90deg,#7bd88f,#63c7e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ttl p{margin:3px 0 0;color:#9fc0ac;font-size:14px;font-weight:600}
+  svg{position:absolute;inset:0;width:100%;height:100%}
+</style></head>
+<body>
+<div class="stage">
+  <div class="ttl"><h1>המוח הלאומי · Agro<b>Data</b></h1><p>ליבה אחת · כל תחום צומת · הנתונים זורמים, המוח חושב</p></div>
+  <svg id="brain" viewBox="0 0 1000 820"></svg>
+</div>
+<script>
+const NS="http://www.w3.org/2000/svg";
+const svg=document.getElementById('brain');
+const CX=500, CY=440, R=272;
+// domains around the ring (add more anytime)
+const domains=[
+ {t:"חיישני שדה · IoT", s:"קרקע · אקלים · יבול", c:"#7bd88f"},
+ {t:"לוויין ורחפנים", s:"היפר-ספקטרלי", c:"#7bd88f"},
+ {t:"מזג אוויר ואקלים", s:"תחזיות", c:"#7bd88f"},
+ {t:"קרקע ומים", s:"איכות · השקיה", c:"#7bd88f"},
+ {t:"שוק ושרשרת אספקה", s:"מחירים · לוגיסטיקה", c:"#8fd0a0"},
+ {t:"מחקר ואקדמיה", s:"דוקטורט · תזות · שאלות מחקר", c:"#63c7e6"},
+ {t:"בריאות הצומח", s:"מזיקים · מחלות", c:"#8fd0a0"},
+ {t:"גנטיקה וזנים", s:"טיפוח · השבחה", c:"#8fd0a0"},
+ {t:"כלכלה חקלאית", s:"תשואות · מדיניות", c:"#e6c15a"},
+];
+function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e;}
+// defs: glow + core gradient
+svg.innerHTML=`<defs>
+  <radialGradient id="core"><stop offset="0" stop-color="#c8ffd8"/><stop offset=".45" stop-color="#7bd88f"/><stop offset="1" stop-color="#1c6b45"/></radialGradient>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="soft"><feGaussianBlur stdDeviation="2.2"/></filter>
+</defs>`;
+const N=domains.length;
+const pts=domains.map((d,i)=>{const a=(-90 + i*360/N)*Math.PI/180;return {x:CX+R*Math.cos(a), y:CY+R*Math.sin(a), a, ...d};});
+// neural mesh between neighbors (faint)
+const gMesh=el('g',{stroke:"#7bd88f","stroke-opacity":".14","stroke-width":"1"});
+for(let i=0;i<N;i++){const p=pts[i],q=pts[(i+1)%N];
+  gMesh.appendChild(el('path',{d:`M${p.x},${p.y} Q${(p.x+q.x)/2+(CX-(p.x+q.x)/2)*.25},${(p.y+q.y)/2+(CY-(p.y+q.y)/2)*.25} ${q.x},${q.y}`,fill:"none"}));}
+svg.appendChild(gMesh);
+// synapses core -> node
+const gSyn=el('g',{fill:"none",filter:"url(#soft)"});
+pts.forEach(p=>{const mx=CX+(p.x-CX)*.5, my=CY+(p.y-CY)*.5;
+  gSyn.appendChild(el('path',{d:`M${CX},${CY} C${mx},${my} ${mx},${my} ${p.x},${p.y}`,stroke:p.c,"stroke-opacity":".45","stroke-width":"2.4"}));});
+svg.appendChild(gSyn);
+// pulsing halos
+[110,150,196].forEach((r,i)=>{const c=el('circle',{cx:CX,cy:CY,r,fill:"none",stroke:"#7bd88f","stroke-opacity":.12+ i*0,"stroke-width":"1.4"});
+  const an=el('animate',{attributeName:"stroke-opacity",values:"0.05;0.35;0.05",dur:(3+i)+"s",repeatCount:"indefinite"});c.appendChild(an);svg.appendChild(c);});
+// nodes + labels
+pts.forEach(p=>{
+  // little dot travelling? keep static for print
+  const node=el('circle',{cx:p.x,cy:p.y,r:"10",fill:p.c,filter:"url(#glow)"});
+  svg.appendChild(node);
+  svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:"17",fill:"none",stroke:p.c,"stroke-opacity":".4","stroke-width":"1.4"}));
+  const right = p.x>CX+8, left = p.x<CX-8;
+  const anchor = right?"start":left?"end":"middle";
+  const ox = right?24:left?-24:0;
+  const t1=el('text',{x:p.x+ox,y:p.y-2,"text-anchor":anchor,fill:"#eaf3ec",style:"font:800 15px Heebo"});t1.textContent=p.t;
+  const t2=el('text',{x:p.x+ox,y:p.y+16,"text-anchor":anchor,fill:"#a9cbb6",style:"font:600 12px Heebo"});t2.textContent=p.s;
+  svg.appendChild(t1);svg.appendChild(t2);
+});
+// CORE
+svg.appendChild(el('circle',{cx:CX,cy:CY,r:"92",fill:"none",stroke:"#7bd88f","stroke-opacity":".25","stroke-width":"1.5"}));
+const core=el('circle',{cx:CX,cy:CY,r:"70",fill:"url(#core)",filter:"url(#glow)"});svg.appendChild(core);
+const ct1=el('text',{x:CX,y:CY-4,"text-anchor":"middle",fill:"#08251a",style:"font:900 24px Heebo"});ct1.textContent="AgroData";
+const ct2=el('text',{x:CX,y:CY+20,"text-anchor":"middle",fill:"#0d3a26",style:"font:700 13px Heebo"});ct2.textContent="המוח הלאומי";
+svg.appendChild(ct1);svg.appendChild(ct2);
+</script>
+</body></html>

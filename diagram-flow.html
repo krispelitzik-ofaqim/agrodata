@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<style>
+  body{margin:0;background:#0d2b1e;font-family:'Heebo','Assistant',Arial,sans-serif}
+  .frame{width:1240px;padding:26px}
+  h1{color:#eaf3ec;font-size:26px;margin:0 0 2px;font-weight:900}
+  h1 b{background:linear-gradient(90deg,#7bd88f,#63c7e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sm{color:#9fc0ac;font-size:14px;margin:0 0 14px;font-weight:600}
+  svg{width:100%;height:auto;background:#0d2b1e}
+  .band{font:800 13px 'Heebo';fill:#7bd88f;letter-spacing:.06em}
+  .box{fill:rgba(28,107,69,.22);stroke:rgba(123,216,143,.4);stroke-width:1.4;rx:11}
+  .core{fill:url(#cg);stroke:#8ef0a6;stroke-width:2}
+  .lab{font:700 14px 'Heebo';fill:#eaf3ec}
+  .lab2{font:600 12px 'Heebo';fill:#c7e6d2}
+  .clab{font:900 20px 'Heebo';fill:#08251a}
+  .clab2{font:700 12px 'Heebo';fill:#0d3a26}
+  .gov{fill:rgba(230,193,90,.12);stroke:rgba(230,193,90,.5);stroke-width:1.4}
+  .govlab{font:800 14px 'Heebo';fill:#e6c15a}
+  .govsub{font:600 12px 'Heebo';fill:#d9c78a}
+</style></head>
+<body><div class="frame">
+  <h1>Agro<b>Data</b> · אפיון ארכיטקטורה — זרימת הנתונים</h1>
+  <p class="sm">מקורות → קליטה ועיבוד → מאגר לאומי (Data Lake) → אנליטיקת AI → משתמשים · מעל הכול: ממשל נתונים ומדיניות</p>
+  <svg viewBox="0 0 1240 660">
+    <defs>
+      <radialGradient id="cg"><stop offset="0" stop-color="#8ef0a6"/><stop offset="1" stop-color="#1c6b45"/></radialGradient>
+      <marker id="ar" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#7bd88f"/></marker>
+      <marker id="arg" markerWidth="11" markerHeight="11" refX="8" refY="3.2" orient="auto"><path d="M0,0 L8,3.2 L0,6.4 Z" fill="#e6c15a"/></marker>
+    </defs>
+
+    <!-- band titles -->
+    <text class="band" x="1150" y="40" text-anchor="middle">מקורות נתונים</text>
+    <text class="band" x="905"  y="40" text-anchor="middle">קליטה ועיבוד</text>
+    <text class="band" x="620"  y="40" text-anchor="middle">מאגר לאומי · הליבה</text>
+    <text class="band" x="360"  y="40" text-anchor="middle">אנליטיקת AI</text>
+    <text class="band" x="110"  y="40" text-anchor="middle">משתמשים</text>
+
+    <!-- SOURCES (right) -->
+    <g>
+      <rect class="box" x="1075" y="58"  width="158" height="44" rx="10"/><text class="lab" x="1154" y="78" text-anchor="middle">חיישני שדה · IoT</text><text class="lab2" x="1154" y="94" text-anchor="middle">קרקע · אקלים · יבול</text>
+      <rect class="box" x="1075" y="110" width="158" height="44" rx="10"/><text class="lab" x="1154" y="130" text-anchor="middle">לוויין ורחפנים</text><text class="lab2" x="1154" y="146" text-anchor="middle">היפר-ספקטרלי</text>
+      <rect class="box" x="1075" y="162" width="158" height="44" rx="10"/><text class="lab" x="1154" y="182" text-anchor="middle">מזג אוויר</text><text class="lab2" x="1154" y="198" text-anchor="middle">תחזיות ואקלים</text>
+      <rect class="box" x="1075" y="214" width="158" height="44" rx="10"/><text class="lab" x="1154" y="234" text-anchor="middle">קרקע ומים</text><text class="lab2" x="1154" y="250" text-anchor="middle">איכות והשקיה</text>
+      <rect class="box" x="1075" y="266" width="158" height="44" rx="10"/><text class="lab" x="1154" y="286" text-anchor="middle">שוק ושרשרת</text><text class="lab2" x="1154" y="302" text-anchor="middle">מחירים · אספקה</text>
+      <!-- NEW research domain (highlighted) -->
+      <rect x="1063" y="320" width="170" height="70" rx="12" fill="rgba(99,199,230,.14)" stroke="#63c7e6" stroke-width="1.8"/>
+      <text class="lab" x="1148" y="340" text-anchor="middle" style="fill:#bfeaf6">מחקר ואקדמיה</text>
+      <text class="lab2" x="1148" y="360" text-anchor="middle" style="fill:#cdeaf3">עבודות דוקטורט · תזות</text>
+      <text class="lab2" x="1148" y="378" text-anchor="middle" style="fill:#cdeaf3">שאלות מחקר · מאמרים</text>
+    </g>
+
+    <!-- INGESTION -->
+    <rect class="box" x="820" y="150" width="170" height="180" rx="14"/>
+    <text class="lab" x="905" y="182" text-anchor="middle">שכבת קליטה</text>
+    <text class="lab2" x="905" y="210" text-anchor="middle">APIs · חיבורים</text>
+    <text class="lab2" x="905" y="232" text-anchor="middle">ETL · תקנון</text>
+    <text class="lab2" x="905" y="254" text-anchor="middle">ניקוי ואימות</text>
+    <text class="lab2" x="905" y="276" text-anchor="middle">אבטחה בכניסה</text>
+    <text class="lab2" x="905" y="298" text-anchor="middle">זמן אמת + Batch</text>
+
+    <!-- CORE -->
+    <circle class="core" cx="620" cy="240" r="92"/>
+    <text class="clab" x="620" y="228" text-anchor="middle">AgroData</text>
+    <text class="clab" x="620" y="252" text-anchor="middle" style="font-size:14px">Data Lake לאומי</text>
+    <text class="clab2" x="620" y="274" text-anchor="middle">אחסון · קטלוג · ניהול</text>
+
+    <!-- AI -->
+    <rect class="box" x="270" y="150" width="180" height="180" rx="14"/>
+    <text class="lab" x="360" y="182" text-anchor="middle">מנוע AI</text>
+    <text class="lab2" x="360" y="210" text-anchor="middle">מודלים וחיזוי</text>
+    <text class="lab2" x="360" y="232" text-anchor="middle">זיהוי אנומליות</text>
+    <text class="lab2" x="360" y="254" text-anchor="middle">תובנות והמלצות</text>
+    <text class="lab2" x="360" y="276" text-anchor="middle">Dashboards</text>
+    <text class="lab2" x="360" y="298" text-anchor="middle">API לתוצרים</text>
+
+    <!-- USERS (left) -->
+    <g>
+      <rect class="box" x="30" y="70"  width="160" height="52" rx="11"/><text class="lab" x="110" y="92" text-anchor="middle">מגדלים</text><text class="lab2" x="110" y="110" text-anchor="middle">החלטות בשטח</text>
+      <rect class="box" x="30" y="140" width="160" height="52" rx="11"/><text class="lab" x="110" y="162" text-anchor="middle">חברות · סטארטאפים</text><text class="lab2" x="110" y="180" text-anchor="middle">מוצרים ושירותים</text>
+      <rect class="box" x="30" y="210" width="160" height="52" rx="11"/><text class="lab" x="110" y="232" text-anchor="middle">מחקר · אקדמיה</text><text class="lab2" x="110" y="250" text-anchor="middle">מודלים ומאמרים</text>
+      <rect class="box" x="30" y="280" width="160" height="52" rx="11"/><text class="lab" x="110" y="302" text-anchor="middle">קובעי מדיניות</text><text class="lab2" x="110" y="320" text-anchor="middle">תכנון לאומי</text>
+      <rect class="box" x="30" y="350" width="160" height="52" rx="11"/><text class="lab" x="110" y="372" text-anchor="middle">Hub · אקסלרטור</text><text class="lab2" x="110" y="390" text-anchor="middle">האצת פיילוטים</text>
+    </g>
+
+    <!-- arrows sources -> ingestion -->
+    <g fill="none" stroke="#7bd88f" stroke-width="2" marker-end="url(#ar)" opacity=".85">
+      <path d="M1073,80  C1030,110 1010,150 992,178"/>
+      <path d="M1073,132 C1035,150 1010,175 992,198"/>
+      <path d="M1073,184 C1035,195 1010,210 992,222"/>
+      <path d="M1073,236 C1035,238 1010,240 992,242"/>
+      <path d="M1073,288 C1035,280 1010,268 992,262"/>
+      <path d="M1061,355 C1030,320 1010,295 992,282" stroke="#63c7e6"/>
+      <!-- ingestion -> core -->
+      <path d="M818,240 C760,240 720,240 714,240" stroke-width="3"/>
+      <!-- core -> AI -->
+      <path d="M527,240 C500,240 470,240 452,240" stroke-width="3"/>
+      <!-- AI -> users -->
+      <path d="M268,175 C230,120 210,100 192,96"/>
+      <path d="M268,205 C230,180 210,170 192,166"/>
+      <path d="M268,235 C230,235 210,235 192,235"/>
+      <path d="M268,265 C230,290 210,300 192,306"/>
+      <path d="M268,295 C230,340 210,360 192,376"/>
+    </g>
+
+    <!-- governance band (cross-cutting) -->
+    <rect class="gov" x="30" y="470" width="1200" height="120" rx="16"/>
+    <text class="govlab" x="1210" y="500" text-anchor="end">שכבת-על: ממשל נתונים · מדיניות · אבטחה ופרטיות (Policy &amp; Governance)</text>
+    <g>
+      <rect class="gov" x="60"  y="520" width="210" height="48" rx="10"/><text class="govsub" x="165" y="549" text-anchor="middle">בעלות והרשאות</text>
+      <rect class="gov" x="300" y="520" width="210" height="48" rx="10"/><text class="govsub" x="405" y="549" text-anchor="middle">תקני נתונים · מטא-דאטה</text>
+      <rect class="gov" x="540" y="520" width="210" height="48" rx="10"/><text class="govsub" x="645" y="549" text-anchor="middle">פרטיות ואבטחה</text>
+      <rect class="gov" x="780" y="520" width="210" height="48" rx="10"/><text class="govsub" x="885" y="549" text-anchor="middle">רגולציה ותאימות</text>
+      <rect class="gov" x="1020" y="520" width="180" height="48" rx="10"/><text class="govsub" x="1110" y="549" text-anchor="middle">אמון וזמינות</text>
+    </g>
+    <!-- dotted links to governance -->
+    <g stroke="#e6c15a" stroke-width="1.4" stroke-dasharray="4 5" opacity=".5">
+      <path d="M905,332 L885,520"/><path d="M620,332 L645,520"/><path d="M360,332 L405,520"/>
+    </g>
+
+    <!-- roadmap strip -->
+    <text class="band" x="1210" y="628" text-anchor="end" style="fill:#63c7e6">מסלול:  POC איסוף  →  POC מורחב  →  פיילוט בקנה מידה  →  הרחבה לאומית  →  גיוס והמשכיות</text>
+  </svg>
+</div></body></html>

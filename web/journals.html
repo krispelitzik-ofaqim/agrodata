@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כתבי עת ומחקרים · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:30px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:62px;font-weight:800;margin:4px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px}
+/* legend */
+.legend{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:20px 0 8px}
+.lg{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--green-d);font-weight:600}
+.dot{width:12px;height:12px;border-radius:4px}
+.d-a{background:var(--green)}.d-i{background:var(--teal)}.d-il{background:var(--gold)}
+/* controls */
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 22px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+/* table */
+.jsearchbar{display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto 22px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar span{font-size:18px}
+.jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:15px;color:var(--ink);background:transparent}
+.jsearchbar input::placeholder{color:#9aab9f}
+.twrap{border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(20,38,28,.05);margin-bottom:40px}
+table{width:100%;border-collapse:collapse}
+thead th{background:var(--tint);color:var(--green-d);font-family:Rubik;font-size:16px;font-weight:700;text-align:right;padding:18px 22px;border-bottom:1px solid var(--line)}
+tbody td{padding:18px 22px;border-bottom:1px solid #eef4ef;font-size:16.5px;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--bg2)}
+.jname{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:23px}
+.jname a{color:inherit;text-decoration:none}
+.jname a:hover{color:var(--lime)}
+.yr{font-family:'Plex Mono';color:var(--mut);font-size:16px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:5px 13px}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;border-radius:999px;padding:6px 15px;white-space:nowrap}
+.b-a{background:rgba(28,107,69,.12);color:var(--green)}
+.b-i{background:rgba(43,143,176,.12);color:var(--teal)}
+.b-il{background:rgba(199,154,46,.14);color:var(--gold)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">JOURNALS & RESEARCH</div>
+    <h1>כתבי עת <b>ומחקרים</b></h1>
+    <div class="sub">מפת המקורות המובילים באגרו-טק בעולם — לפי מדינה, שנה ונושאים.</div>
+    <div class="legend">
+      <span class="lg"><span class="dot d-a"></span> אקדמי · מדעי</span>
+      <span class="lg"><span class="dot d-i"></span> תעשייה · חדשות</span>
+      <span class="lg"><span class="dot d-il"></span> ישראלי</span>
+    </div>
+    <div class="filters">
+      <button class="fbtn on" onclick="filt('all',this)">הכול</button>
+      <button class="fbtn" onclick="filt('a',this)">אקדמי</button>
+      <button class="fbtn" onclick="filt('i',this)">תעשייה</button>
+      <button class="fbtn" onclick="filt('il',this)">ישראלי</button>
+    </div>
+  </div>
+
+  <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש פנימי: שם כתב עת, מדינה, נושא…" oninput="render(CUR)"></div>
+  <div class="twrap">
+    <table><thead><tr>
+      <th>כתב העת / מגזין</th><th>מדינה</th><th>שנה</th><th>נושאים</th><th>סוג</th>
+    </tr></thead><tbody id="rows"></tbody></table>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · כתבי עת ומחקרים · <span class="mono">מקרא: מדעי · תעשייה · ישראלי</span></div></div></div>
+
+<script>
+const J=[
+ {n:"Nature Food",u:"https://www.nature.com/natfood/",c:"🇬🇧 בריטניה",y:2020,t:["מערכות מזון","חקלאות","תזונה"],k:"a"},
+ {n:"Nature Plants",u:"https://www.nature.com/nplants/",c:"🇬🇧 בריטניה",y:2015,t:["ביולוגיה של הצמח"],k:"a"},
+ {n:"Computers and Electronics in Agriculture",u:"https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture",c:"🇳🇱 הולנד",y:1985,t:["חקלאות דיגיטלית","AI","חישה"],k:"a"},
+ {n:"Precision Agriculture",u:"https://link.springer.com/journal/11119",c:"🇳🇱 הולנד",y:1999,t:["חקלאות מדייקת","GIS","חיישנים"],k:"a"},
+ {n:"Smart Agricultural Technology",u:"https://www.sciencedirect.com/journal/smart-agricultural-technology",c:"🇳🇱 הולנד",y:2021,t:["חקלאות חכמה","IoT","רובוטיקה"],k:"a"},
+ {n:"Agricultural Systems",u:"https://www.sciencedirect.com/journal/agricultural-systems",c:"🇬🇧 בריטניה",y:1976,t:["מערכות חקלאיות","מידול"],k:"a"},
+ {n:"Agricultural Water Management",u:"https://www.sciencedirect.com/journal/agricultural-water-management",c:"🇳🇱 הולנד",y:1976,t:["השקיה","מים"],k:"a"},
+ {n:"Field Crops Research",u:"https://www.sciencedirect.com/journal/field-crops-research",c:"🇳🇱 הולנד",y:1978,t:["גידולי שדה","יבול"],k:"a"},
+ {n:"Biosystems Engineering",u:"https://www.sciencedirect.com/journal/biosystems-engineering",c:"🇬🇧 בריטניה",y:2002,t:["הנדסה חקלאית"],k:"a"},
+ {n:"Frontiers in Plant Science",u:"https://www.frontiersin.org/journals/plant-science",c:"🇨🇭 שווייץ",y:2010,t:["מדעי הצמח","גנטיקה"],k:"a"},
+ {n:"AgFunderNews",u:"https://agfundernews.com/",c:"🇺🇸 ארה״ב",y:2013,t:["חדשות","השקעות","אגריפוד-טק"],k:"i"},
+ {n:"Future Farming",u:"https://www.futurefarming.com/",c:"🇳🇱 הולנד",y:2017,t:["חקלאות מדייקת","מכונות"],k:"i"},
+ {n:"PrecisionAg",u:"https://www.precisionag.com/",c:"🇺🇸 ארה״ב",y:2003,t:["חקלאות מדייקת","תעשייה"],k:"i"},
+ {n:"AgriBusiness Global",u:"https://www.agribusinessglobal.com/",c:"🇺🇸 ארה״ב",y:1911,t:["אגרו-כימיה","שוק"],k:"i"},
+ {n:"Modern Farmer",u:"https://modernfarmer.com/",c:"🇺🇸 ארה״ב",y:2013,t:["חקלאות","תרבות"],k:"i"},
+ {n:"The Spoon",u:"https://thespoon.tech/",c:"🇺🇸 ארה״ב",y:2016,t:["פוד-טק"],k:"i"},
+ {n:"Start-Up Nation Central (Finder)",u:"https://finder.startupnationcentral.org/",c:"🇮🇱 ישראל",y:2013,t:["אקוסיסטם","אגריפוד-טק"],k:"il"},
+ {n:"GrowingIL",u:"https://www.growingil.com/",c:"🇮🇱 ישראל",y:2020,t:["קהילה","אגריפוד-טק"],k:"il"},
+];
+const BADGE={a:['b-a','מדעי'],i:['b-i','תעשייה'],il:['b-il','ישראלי']};
+let CUR='all';
+function render(f){
+ CUR=f;
+ const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
+ const rows=J.filter(j=>(f==='all'||j.k===f) && (!q || (j.n+' '+j.c+' '+j.t.join(' ')).toLowerCase().includes(q))).sort((a,b)=>a.y-b.y);
+ document.getElementById('rows').innerHTML = rows.length? rows.map(j=>{
+  const b=BADGE[j.k];
+  return `<tr><td class="jname"><a href="${j.u}" target="_blank" rel="noopener">${j.n} ↗</a></td>
+   <td>${j.c}</td><td class="yr">${j.y}</td>
+   <td><div class="tags">${j.t.map(x=>`<span class="tag">${x}</span>`).join('')}</div></td>
+   <td><span class="badge ${b[0]}">${b[1]}</span></td></tr>`;
+ }).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:30px">לא נמצאו תוצאות</td></tr>';
+}
+function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
+render('all');
+</script>
+</body></html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מדריך מותג · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:36px 0 8px;text-align:center;background:radial-gradient(800px 340px at 50% -14%,var(--tint),transparent)}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+h1{font-family:Rubik;font-size:58px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:17px;max-width:720px;margin:0 auto}
+.sec{padding:34px 0}
+h2{font-family:Rubik;font-size:30px;font-weight:800;color:var(--green-d);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+h2::after{content:"";flex:1;height:3px;background:linear-gradient(90deg,var(--green),var(--gold),transparent);border-radius:2px;margin-inline-start:10px}
+.lead{color:var(--mut);font-size:15.5px;margin-bottom:20px}
+/* spectrum */
+.spectrum{height:64px;border-radius:16px;background:linear-gradient(90deg,#0d3a26,#134a30,#1c6b45,#2e9e63,#5bbf85,#8fe6ad,#d9edc8,#f0e0a0,#e3c65a,#c79a2e,#f6efd8,#ffffff);border:1px solid var(--line);box-shadow:0 10px 24px rgba(20,38,28,.08);margin-bottom:22px}
+.swgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+@media(max-width:900px){.swgrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.swgrid{grid-template-columns:repeat(2,1fr)}}
+.sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 6px 16px rgba(20,38,28,.05)}
+.sw .chip{height:90px}
+.sw .meta{padding:11px 13px}
+.sw .nm{font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--green-d)}
+.sw .hx{font-family:'Plex Mono';font-size:13px;color:var(--mut);margin-top:2px}
+.sw .role{font-size:12.5px;color:var(--mut);margin-top:4px}
+/* fonts */
+.fcard{border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:18px;background:linear-gradient(180deg,#fbfdfb,#fff);box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.frow{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+.fname{font-size:26px;font-weight:800;color:var(--green-d)}
+.fuse{font-size:14px;color:var(--gold);font-weight:700;font-family:'Plex Mono'}
+.fsample{font-size:40px;font-weight:800;color:var(--ink);line-height:1.3}
+.fsample .lt{color:var(--mut);font-weight:400;font-size:20px;display:block;margin-top:8px}
+.weights{margin-top:12px;font-size:15px;color:var(--mut);display:flex;gap:18px;flex-wrap:wrap}
+/* components */
+.comps{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{border:0;border-radius:12px;padding:13px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+.btn.g{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
+.btn.gold{background:linear-gradient(90deg,var(--gold),#e3c65a);color:#3a2c05}
+.btn.o{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
+.bdg{font-size:14px;font-weight:700;border-radius:999px;padding:6px 15px}
+.bdg.a{background:rgba(28,107,69,.12);color:var(--green)}.bdg.b{background:rgba(43,143,176,.12);color:var(--teal)}.bdg.c{background:rgba(199,154,46,.16);color:#a67d1e}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45);margin-top:20px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">Brand & Palette · מדריך מותג</div>
+    <h1>הפלטה <b>והגופנים</b></h1>
+    <div class="sub">שפת המותג של AgroData — מירוק כהה, דרך כל גווני הצמיחה, אל זהב הקציר והלבן הנקי.</div>
+  </div>
+
+  <div class="sec">
+    <h2>🎨 הספקטרום</h2>
+    <div class="lead">ירוק כהה → ירוק בהיר → זהב → לבן. ירוק = צמיחה וחקלאות · זהב = יבול, קציר ויוקרה · לבן = נקי, דאטה וטכנולוגיה.</div>
+    <div class="spectrum"></div>
+    <div class="swgrid" id="sw"></div>
+  </div>
+
+  <div class="sec">
+    <h2>🔤 הגופנים</h2>
+    <div class="lead">ארבע משפחות — כל אחת עם תפקיד ברור.</div>
+    <div class="fcard">
+      <div class="frow"><span class="fname wm">Space Grotesk</span><span class="fuse">WORDMARK · לוגו</span></div>
+      <div class="fsample wm">Agro<b style="color:var(--lime)">Data</b> <span class="lt">מותג · לוגו · מספרים גדולים</span></div>
+    </div>
+    <div class="fcard">
+      <div class="frow"><span class="fname" style="font-family:Rubik">Rubik</span><span class="fuse">HEADINGS · כותרות</span></div>
+      <div class="fsample" style="font-family:Rubik">זירת האגרו-טק <span class="lt">Headings · כותרות ראשיות ומשניות</span></div>
+      <div class="weights" style="font-family:Rubik"><span style="font-weight:400">Regular</span><span style="font-weight:600">Medium</span><span style="font-weight:800">Bold</span><span style="font-weight:900">Black</span></div>
+    </div>
+    <div class="fcard">
+      <div class="frow"><span class="fname" style="font-family:Heebo">Heebo</span><span class="fuse">BODY · גוף הטקסט</span></div>
+      <div class="fsample" style="font-family:Heebo;font-size:26px;font-weight:400">מרכז נתונים מבוססי מחקר וידע חקלאי מתעדכן. <span class="lt">Body text · פסקאות, תיאורים ותוכן שוטף</span></div>
+    </div>
+    <div class="fcard">
+      <div class="frow"><span class="fname mono">IBM Plex Mono</span><span class="fuse">NUMBERS · מספרים ונתונים</span></div>
+      <div class="fsample mono" style="font-size:30px">₪120M · 663.50 · +14.25% <span class="lt">Data · מחירים, אחוזים, תאריכים וקוד</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>🧩 רכיבים</h2>
+    <div class="lead">כפתורים, תגיות ורכיבים בשפת הפלטה.</div>
+    <div class="comps">
+      <button class="btn g">כפתור ראשי</button>
+      <button class="btn gold">כפתור זהב</button>
+      <button class="btn o">כפתור משני</button>
+      <span class="bdg a">ירוק</span>
+      <span class="bdg b">תכלת</span>
+      <span class="bdg c">זהב</span>
+    </div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מדריך מותג · <span class="mono">brand · palette · type</span></div></div></div>
+
+<script>
+const SW=[
+ ["Green Dark","#134a30","רקעים כהים · פוטר · פס עליון"],
+ ["Green","#1c6b45","צבע ראשי · כותרות · כפתורים"],
+ ["Lime","#2e9e63","הדגשה · לוגו · לינקים"],
+ ["Mint","#8fe6ad","הדגשה על כהה · אקצנט"],
+ ["Gold","#c79a2e","יבול · יוקרה · אקצנט צהוב"],
+ ["Teal","#2b8fb0","נתונים · תכלת משני"],
+ ["Ink","#14261c","טקסט ראשי"],
+ ["Muted","#5c6f63","טקסט משני"],
+ ["Tint","#eaf4ee","רקע בלוקים · צ׳יפים"],
+ ["BG2","#f4f9f5","רקע רך"],
+ ["Line","#dbe8df","גבולות · קווים"],
+ ["White","#ffffff","ליבה נקייה"]
+];
+document.getElementById('sw').innerHTML=SW.map(s=>`<div class="sw"><div class="chip" style="background:${s[1]};${s[1].toLowerCase()==='#ffffff'?'border-bottom:1px solid var(--line)':''}"></div><div class="meta"><div class="nm">${s[0]}</div><div class="hx">${s[1].toUpperCase()}</div><div class="role">${s[2]}</div></div></div>`).join('');
+</script>
+</body></html>

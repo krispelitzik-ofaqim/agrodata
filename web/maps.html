@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מפות ו-GIS · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:28px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
+.layers{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:24px 0 22px}
+.lbtn{display:inline-flex;align-items:center;gap:9px;font-family:Rubik;font-weight:700;font-size:17px;color:var(--green-d);background:var(--bg2);border:1.5px solid var(--line);border-radius:14px;padding:12px 20px;cursor:pointer;transition:.14s}
+.lbtn:hover{background:var(--tint)}
+.lbtn.on{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 10px 24px rgba(28,107,69,.25)}
+.mapwrap{margin-bottom:22px}
+.inforow{display:grid;grid-template-columns:1.3fr 1fr 1.2fr;gap:22px;margin-bottom:50px;align-items:stretch}
+@media(max-width:1000px){.inforow{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.maptop{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.maptop h2{font-family:Rubik;font-size:24px;font-weight:800;color:var(--green-d)}
+.maptop .live{display:inline-flex;align-items:center;gap:8px;font-family:'Plex Mono';font-size:14px;color:var(--mut)}
+.maptop .dot{width:10px;height:10px;border-radius:50%;background:#1f9d57;animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}
+.mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;justify-content:center}
+.mapbox svg{width:auto;height:780px;max-width:100%}
+.legend{margin-top:16px}
+.legbar{height:16px;border-radius:8px;border:1px solid var(--line)}
+.leglabels{display:flex;justify-content:space-between;font-size:14px;color:var(--mut);margin-top:6px;font-weight:600}
+.cats{display:flex;gap:16px;flex-wrap:wrap;margin-top:4px}
+.catitem{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;color:var(--ink);font-weight:600}
+.sw{width:16px;height:16px;border-radius:5px;border:1px solid rgba(0,0,0,.1)}
+.info h3{font-family:Rubik;font-size:20px;font-weight:800;color:var(--green-d);margin-bottom:4px}
+.info .desc{font-size:15px;color:var(--mut);line-height:1.6;margin-bottom:18px}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.mcard{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.mcard .k{font-size:13px;color:var(--mut);font-weight:600;margin-bottom:3px}
+.mcard .v{font-family:Rubik;font-size:16px;font-weight:700;color:var(--green-d)}
+.note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:14px;padding:18px 20px}
+.note b{color:#8fe6ad}
+.note .t{font-family:Rubik;font-weight:800;font-size:17px;margin-bottom:6px}
+.note .s{font-size:14px;line-height:1.55;color:rgba(255,255,255,.9)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.clbl{font-family:Rubik;font-size:11px;font-weight:700;fill:#134a30}
+.cdot{fill:#134a30}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">MAPS & GIS · שכבות לוויין</div>
+    <h1>מפות <b>ו-GIS</b></h1>
+    <div class="sub">שכבות גאו-מרחביות לחקלאות — ירק, גשמים, חום ויבולים, על גבי מפת ישראל. מוכן לחיבור ל-Google Earth Engine.</div>
+  </div>
+
+  <div class="layers" id="layers"></div>
+
+  <div class="panel mapwrap">
+      <div class="maptop"><h2 id="mapTitle">—</h2><span class="live"><span class="dot"></span> <span id="mapUpd">מעודכן</span></span></div>
+      <div class="mapbox">
+        <svg viewBox="0 0 200 400">
+          <defs>
+            <clipPath id="il"><path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z"/></clipPath>
+          </defs>
+          <g clip-path="url(#il)"><g id="cells"></g></g>
+          <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="none" stroke="#134a30" stroke-width="1.6" stroke-linejoin="round"/>
+          <g id="cities"></g>
+        </svg>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+  <div class="inforow">
+    <div class="panel info">
+      <h3 id="iName">—</h3>
+      <div class="desc" id="iDesc">—</div>
+    </div>
+    <div class="panel">
+      <div class="meta">
+        <div class="mcard"><div class="k">מקור נתונים</div><div class="v" id="iSrc">—</div></div>
+        <div class="mcard"><div class="k">רזולוציה</div><div class="v" id="iRes">—</div></div>
+        <div class="mcard"><div class="k">כיסוי</div><div class="v">ישראל · גלובלי</div></div>
+        <div class="mcard"><div class="k">תדירות עדכון</div><div class="v" id="iFreq">—</div></div>
+      </div>
+    </div>
+    <div class="note">
+      <div class="t">🛰️ מוכן לחיבור חי</div>
+      <div class="s">התצוגה הנוכחית להדגמה. חיבור אמיתי דרך <b>Google Earth Engine</b> (או Copernicus/Sentinel Hub) יזרים את השכבות בזמן אמת לפי קואורדינטות ותאריך.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מפות ו-GIS · <span class="mono">Earth Engine ready</span></div></div></div>
+
+<script>
+const CITIES=[["חיפה",78,66],["תל אביב",69,120],["ירושלים",114,133],["באר שבע",97,206],["אילת",111,386]];
+const LAYERS={
+ ndvi:{name:"ירק · NDVI",emoji:"🌿",title:"מדד צמחייה · NDVI",src:"Sentinel-2 · Landsat",res:"10–30 מ׳",freq:"5 ימים",seed:0.5,
+   desc:"מדד הצמחייה (NDVI) מודד את בריאות ועוצמת הכיסוי הצמחי — ערכים גבוהים = צמחייה בריאה וצפופה.",
+   legend:["קרקע חשופה","צמחייה דלילה","צמחייה בריאה"],colors:["#8a5a2b","#c9a13b","#e3d24a","#8fce6a","#2e9e63","#0d5a2e"]},
+ rain:{name:"גשמים",emoji:"🌧️",title:"משקעים · גשם",src:"CHIRPS · GPM",res:"5 ק״מ",freq:"יומי",seed:2.1,
+   desc:"מפת משקעים מצטברים — הצפון והרי הגליל מקבלים משקעים רבים יותר, הנגב והערבה יובשניים.",
+   legend:["יובש","גשם בינוני","גשם רב"],colors:["#f4fbff","#cdeaf7","#7cc4e8","#3a95c9","#1c6b9e","#0d3a6b"]},
+ heat:{name:"חום",emoji:"🌡️",title:"טמפ׳ פני קרקע (LST)",src:"MODIS LST · SMAP",res:"1 ק״מ",freq:"יומי",seed:4.0,
+   desc:"טמפרטורת פני הקרקע ולחות — הנגב והערבה חמים משמעותית. חיוני לתזמון השקיה והתראות עקת חום.",
+   legend:["קריר","ממוזג","חם מאוד"],colors:["#2b6cb0","#5aa9d6","#a9d4a0","#f2e04a","#eaa63a","#c4302e"]},
+ crop:{name:"יבולים",emoji:"🌾",title:"כיסוי קרקע · יבולים",src:"Dynamic World · ESA WorldCover",res:"10 מ׳",freq:"עונתי",seed:1.2,cat:true,
+   desc:"סיווג כיסוי הקרקע לסוגי גידול ושימושי קרקע — גד״ש, מטעים, ירקות, מרעה, שטח בנוי ומים.",
+   cats:[["גד״ש","#e0c34a"],["מטעים","#3f8f3a"],["ירקות","#7ec46a"],["מרעה","#c2cf94"],["בנוי","#b59a90"],["מים","#4f9fd6"]]}
+};
+function hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function lerp(stops,t){t=Math.max(0,Math.min(1,t));var n=stops.length-1,f=t*n,i=Math.floor(f),fr=f-i;if(i>=n)return stops[n];var a=hx(stops[i]),b=hx(stops[i+1]);return 'rgb('+Math.round(a[0]+(b[0]-a[0])*fr)+','+Math.round(a[1]+(b[1]-a[1])*fr)+','+Math.round(a[2]+(b[2]-a[2])*fr)+')';}
+function base(x,y,s){var nx=(x-52)/104,ny=(y-6)/388;var a=Math.sin(nx*6.2+s)+Math.cos(ny*5.1-s*1.3)+Math.sin((nx*3+ny*4)*2+s*2);return (a+3)/6;}
+function cellVal(k,x,y){var ny=(y-6)/388;var b=base(x,y,LAYERS[k].seed);if(k==='rain')b=b*0.5+(1-ny)*0.5;else if(k==='heat')b=b*0.5+ny*0.5;else if(k==='ndvi')b=b*0.68+(1-ny)*0.32;return Math.max(0,Math.min(1,b));}
+let CUR='ndvi';
+function draw(k){
+ CUR=k;const L=LAYERS[k];let c='';
+ for(let y=6;y<393;y+=11){for(let x=52;x<157;x+=6.6){
+   const v=cellVal(k,x+3,y+5);let f;
+   if(L.cat){f=L.cats[Math.min(L.cats.length-1,Math.floor(v*L.cats.length))][1];}
+   else f=lerp(L.colors,v);
+   c+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="7.2" height="11.6" fill="'+f+'"/>';
+ }}
+ document.getElementById('cells').innerHTML=c;
+ // title / info
+ document.getElementById('mapTitle').textContent=L.emoji+' '+L.title;
+ document.getElementById('iName').textContent=L.title;
+ document.getElementById('iDesc').textContent=L.desc;
+ document.getElementById('iSrc').textContent=L.src;
+ document.getElementById('iRes').textContent=L.res;
+ document.getElementById('iFreq').textContent=L.freq;
+ // legend
+ let lg;
+ if(L.cat){lg='<div class="cats">'+L.cats.map(c=>'<span class="catitem"><span class="sw" style="background:'+c[1]+'"></span>'+c[0]+'</span>').join('')+'</div>';}
+ else{lg='<div class="legbar" style="background:linear-gradient(90deg,'+L.colors.join(',')+')"></div><div class="leglabels"><span>'+L.legend[0]+'</span><span>'+L.legend[1]+'</span><span>'+L.legend[2]+'</span></div>';}
+ document.getElementById('legend').innerHTML=lg;
+ // buttons
+ document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+}
+// build buttons
+document.getElementById('layers').innerHTML=Object.keys(LAYERS).map(k=>'<button class="lbtn" data-k="'+k+'" onclick="draw(\''+k+'\')">'+LAYERS[k].emoji+' '+LAYERS[k].name+'</button>').join('');
+// cities
+document.getElementById('cities').innerHTML=CITIES.map(c=>'<circle class="cdot" cx="'+c[1]+'" cy="'+c[2]+'" r="2.1"/><text class="clbl" x="'+(c[1]-3.5)+'" y="'+(c[2]+0.5)+'" text-anchor="end">'+c[0]+'</text>').join('');
+// update time
+(function(){var d=new Date(),p=n=>String(n).padStart(2,'0');document.getElementById('mapUpd').textContent='מעודכן '+p(d.getHours())+':'+p(d.getMinutes());})();
+draw('ndvi');
+</script>
+</body></html>

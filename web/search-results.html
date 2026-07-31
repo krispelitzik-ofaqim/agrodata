@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תוצאות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+/* search restated */
+.sbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:16px;padding:8px 8px 8px 18px;box-shadow:0 12px 30px rgba(20,38,28,.08);margin:26px 0 8px}
+.sbar .plus{background:var(--tint);border:1px solid #cfe6d8;color:var(--green);width:38px;height:38px;border-radius:10px;font-size:24px;display:grid;place-items:center;flex:0 0 auto}
+.sbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;color:var(--ink);background:transparent}
+.sbar .go{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:12px;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+.meta{font-size:14px;color:var(--mut);margin-bottom:22px}
+/* AI answer */
+.summary{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;border-radius:18px;padding:22px 24px;margin-bottom:18px;box-shadow:0 14px 34px rgba(20,38,28,.2)}
+.sumhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.sumbadge{font-family:Rubik;font-weight:800;font-size:17px;color:#8fe6ad}
+.summary p{font-size:19px;line-height:1.8;white-space:pre-wrap}
+.summary .spk{background:rgba(255,255,255,.16);box-shadow:none;border:1px solid rgba(255,255,255,.3)}
+.summary .spk.on{background:linear-gradient(135deg,#c4562e,#a3401f);border-color:transparent}
+.aigrid{display:flex;flex-direction:column;gap:16px;margin-bottom:22px}
+.ai{background:linear-gradient(180deg,#f2faf5,#eaf6ee);border:1px solid #cfe6d8;border-radius:18px;padding:22px 24px}
+.ai.gem{background:linear-gradient(180deg,#f3f7fd,#eaf1fb);border-color:#cfddf0}
+.ai .badge{display:inline-flex;align-items:center;gap:7px;font-family:'Plex Mono';font-size:14px;color:var(--green);background:#fff;border:1px solid #cfe6d8;border-radius:999px;padding:5px 12px;margin-bottom:14px}
+.ai.gem .badge{color:#2b6cb0;border-color:#cfddf0}
+.ai h2{font-family:Rubik;font-size:20px;color:var(--green-d);margin-bottom:10px}
+.ai p{font-size:18px;line-height:1.85;color:var(--ink);white-space:pre-wrap}
+.ai p b{color:var(--green-d)}
+.gsec{margin-bottom:22px}
+.grow{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.gicon{display:inline-flex}
+.gtx{font-family:Rubik;font-weight:700;font-size:16px;color:var(--ink)}
+.grow{border-radius:14px 14px 0 0}
+.gresults{border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;padding:6px 16px 12px;background:#fff}
+.gresults .gsc-control-cse{font-family:Heebo,Arial,sans-serif!important;border:0!important;padding:0!important;background:transparent!important}
+.gresults .gsc-result{border:0!important;border-bottom:1px solid var(--line)!important;padding:12px 0!important}
+.gresults .gs-title{font-size:16px!important;height:auto!important}
+.gresults .gsc-webResult .gsc-result:hover{background:var(--bg2)!important}
+.gresults table.gsc-search-box,.gresults .gsc-search-button{display:none!important}
+.airow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.tools{display:flex;align-items:center;gap:8px}
+/* read-aloud (main) */
+.spk{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;padding:10px 18px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer;line-height:1;box-shadow:0 8px 18px rgba(20,38,28,.22)}
+.spk .spkico{display:inline-flex;align-items:center}
+.spk .spkico svg{width:19px;height:19px;display:block}
+.spk:hover{filter:brightness(1.08)}
+.spk.on{background:linear-gradient(135deg,#c4562e,#a3401f)}
+.spk.on .spkico{display:none}
+.spk .eq{display:none;align-items:flex-end;gap:3px;height:19px}
+.spk.on .eq{display:inline-flex}
+.spk .eq i{width:3.5px;background:#fff;border-radius:2px;height:6px;animation:eqbar .9s ease-in-out infinite}
+.spk .eq i:nth-child(2){animation-delay:.18s}
+.spk .eq i:nth-child(3){animation-delay:.36s}
+.spk .eq i:nth-child(4){animation-delay:.54s}
+@keyframes eqbar{0%,100%{height:5px}50%{height:17px}}
+/* small icon buttons */
+.tbtn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:#fff;border:1px solid #cfe6d8;border-radius:10px;color:var(--green-d);cursor:pointer;transition:.12s}
+.tbtn:hover{background:var(--tint);border-color:#bcdcc8}
+.tbtn svg{width:18px;height:18px}
+.tbtn.done{background:var(--green);border-color:var(--green);color:#fff}
+/* chatbot */
+.cbtn{position:fixed;bottom:26px;left:26px;z-index:60;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:999px;padding:14px 22px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 12px 30px rgba(20,38,28,.28);display:flex;align-items:center;gap:9px}
+.cpanel{position:fixed;bottom:26px;left:26px;z-index:61;width:380px;max-width:calc(100vw - 40px);height:560px;max-height:calc(100vh - 52px);background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 24px 60px rgba(20,38,28,.3);display:none;flex-direction:column;overflow:hidden}
+.cpanel.open{display:flex}
+.chead{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
+.chead b{font-family:Rubik;font-size:17px}.chead .x{background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer;line-height:1}
+.cbody{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg2)}
+.msg{max-width:86%;padding:11px 14px;border-radius:14px;font-size:15px;line-height:1.65;white-space:pre-wrap}
+.msg.u{align-self:flex-start;background:var(--green);color:#fff;border-bottom-right-radius:4px}
+.msg.b{align-self:flex-end;background:#fff;border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:4px}
+.msg.b .spk{margin-top:8px;height:30px;width:34px;font-size:15px}
+.cfoot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff}
+.cfoot input{flex:1;border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-family:Heebo;font-size:15px;outline:0}
+.cfoot button{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:11px;padding:0 18px;font-family:Rubik;font-weight:800;cursor:pointer}
+/* data cards */
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+@media(max-width:760px){.dgrid{grid-template-columns:repeat(2,1fr)}}
+.dcard{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px}
+.dcard .n{font-size:14px;color:var(--mut);font-weight:600}
+.dcard .v{font-family:'Plex Mono';font-size:22px;font-weight:600;color:var(--green);margin-top:4px}
+h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;display:flex;align-items:center;gap:9px}
+.tag{font-family:'Plex Mono';font-size:14px;color:var(--lime);background:var(--tint);border-radius:6px;padding:2px 8px}
+/* research list */
+.ritem{display:flex;gap:14px;padding:16px;border:1px solid var(--line);border-radius:14px;margin-bottom:12px;text-decoration:none;color:inherit;transition:.14s}
+.ritem:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.06)}
+.ricon{width:44px;height:44px;border-radius:11px;background:var(--tint);color:var(--green);display:grid;place-items:center;flex:0 0 auto}
+.ritem h4{font-size:15.5px;font-weight:700;margin-bottom:3px}
+.ritem .sub{font-size:14px;color:var(--mut)}
+.ritem .kind{font-family:'Plex Mono';font-size:14px;color:var(--green);border:1px solid #cfe6d8;border-radius:6px;padding:2px 7px;margin-inline-start:auto;align-self:center;white-space:nowrap}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin:6px 0 40px}
+.chip{font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:600;cursor:pointer}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45);color:rgba(255,255,255,.8)}
+.foot{padding:26px 0;text-align:center;font-size:14px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="sbar">
+    <div class="plus">+</div>
+    <input id="q" value="מהי כמות ההשקיה המיטבית לעגבניות באזור הערבה?" onkeydown="if(event.key==='Enter')reSearch()">
+    <button class="go" onclick="reSearch()">חפש</button>
+  </div>
+  <div class="meta">כ-<b>1,240</b> תוצאות · דאטה + מחקר · <span class="mono">0.28s</span></div>
+
+  <!-- FIXED SUMMARY -->
+  <div class="summary" id="summary">
+    <div class="sumhead">
+      <span class="sumbadge">📌 סיכום</span>
+      <button class="spk" title="הקראת הסיכום" onclick="speak('sumAnswer',this)"><span class="spkico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg></span><span class="eq"><i></i><i></i><i></i><i></i></span> <span class="spktx">הקראת הסיכום</span></button>
+    </div>
+    <p id="sumAnswer">🔎 מסכם…</p>
+  </div>
+
+  <!-- AI ANSWERS (Claude + Gemini side by side) -->
+  <div class="aigrid" id="aigrid">
+    <div class="ai" id="claudeBox" data-len="0">
+      <div class="airow"><span class="badge" id="claudeBadge">✦ תשובת AgroMind</span><div class="tools" data-target="claudeAnswer"></div></div>
+      <p id="claudeAnswer">🔎 טוען…</p>
+    </div>
+    <div class="ai gem" id="geminiBox" data-len="0">
+      <div class="airow"><span class="badge" id="geminiBadge">✦ תשובת AgroMind</span><div class="tools" data-target="geminiAnswer"></div></div>
+      <p id="geminiAnswer">🔎 טוען…</p>
+    </div>
+  </div>
+
+  <!-- GOOGLE WEB SEARCH (inline results) -->
+  <div class="gsec">
+    <div class="grow">
+      <span class="gicon"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.09a6.6 6.6 0 0 1 0-4.18V7.07H2.18a11 11 0 0 0 0 9.86l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg></span>
+      <span class="gtx">תוצאות מהאינטרנט</span>
+    </div>
+    <div class="gresults"><div class="gcse-searchresults-only" data-queryParameterName="q" data-gname="agweb"></div></div>
+  </div>
+
+  <!-- DATA -->
+  <div class="dgrid">
+    <div class="dcard"><div class="n">מים לעונה</div><div class="v">4–6 מ״ק/מ״ר</div></div>
+    <div class="dcard"><div class="n">טפטוף יומי (שיא)</div><div class="v">6–8 מ״מ</div></div>
+    <div class="dcard"><div class="n">מליחות מים · EC</div><div class="v">2–3 dS/m</div></div>
+    <div class="dcard"><div class="n">יבול צפוי</div><div class="v">120–160 ט'/ה'</div></div>
+  </div>
+
+  <!-- RESEARCH -->
+  <h3 class="sec">מחקרים מקושרים <span class="tag">מחקר ואקדמיה</span></h3>
+  <a class="ritem" href="#"><div class="ricon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/></svg></div><div><h4>אופטימיזציה של משטר השקיה בעגבניות בתנאי מליחות בערבה</h4><div class="sub">אוניברסיטת בן-גוריון · 2024 · ד״ר נ. לוי</div></div><span class="kind">דוקטורט</span></a>
+  <a class="ritem" href="#"><div class="ricon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/></svg></div><div><h4>השפעת פרטיגציה על יבול ואיכות פרי בעגבניות מדבר</h4><div class="sub">מכון וולקני · 2023 · תזה (מוסמך)</div></div><span class="kind">תזה</span></a>
+  <a class="ritem" href="#"><div class="ricon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><div><h4>ניטור לחות קרקע מבוסס חיישנים לחיסכון במים בחקלאות מדבר</h4><div class="sub">Agricultural Water Management · 2024 · מאמר</div></div><span class="kind">מאמר</span></a>
+
+  <!-- RELATED -->
+  <h3 class="sec">חיפושים קשורים</h3>
+  <div class="chips">
+    <span class="chip">מליחות מים בערבה</span><span class="chip">פרטיגציה בעגבניות</span><span class="chip">ניטור לחות קרקע</span><span class="chip">יבול עגבניות מדבר</span><span class="chip">חסכון במים בחקלאות</span>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · תוצאות דמו · <span class="mono">AI + Data + Research</span></div></div></div>
+
+<!-- CHATBOT -->
+<button class="cbtn" id="cbtn" onclick="toggleChat()">💬 שאל את AgroMind</button>
+<div class="cpanel" id="cpanel">
+  <div class="chead"><b>💬 AgroMind · צ׳אט</b><button class="x" onclick="toggleChat()">×</button></div>
+  <div class="cbody" id="cbody">
+    <div class="msg b">שלום! אני AgroMind 🌱 שאל אותי כל שאלה על האגרו-טק של ישראל, ואקריא לך את התשובה.</div>
+  </div>
+  <div class="cfoot">
+    <input id="cin" placeholder="כתוב שאלה…" onkeydown="if(event.key==='Enter')chatSend()">
+    <button onclick="chatSend()">שלח</button>
+  </div>
+</div>
+
+<script>
+var Q=new URLSearchParams(location.search).get('q');
+if(Q&&Q.trim()){document.getElementById('q').value=Q.trim();}
+function reSearch(){var v=(document.getElementById('q').value||'').trim();location.href='search-results.html?q='+encodeURIComponent(v);}
+/* Google web-search link */
+(function(){var g=document.getElementById('gLink');if(g)g.href='https://www.google.com/search?q='+encodeURIComponent((Q||'').trim());})();
+/* ===== toolbar (read-aloud + copy/print/mail/save/share) ===== */
+var ICO={
+ spk:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>',
+ copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+ print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="6" y="14" width="12" height="7"/><path d="M6 18H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/></svg>',
+ mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7L22 6"/></svg>',
+ save:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>',
+ share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5 8.6 10.5"/></svg>',
+ ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+};
+function txtOf(id){return (document.getElementById(id).textContent||'').trim();}
+function doCopy(id,btn){var t=txtOf(id);navigator.clipboard.writeText(t).then(function(){var h=btn.innerHTML;btn.innerHTML=ICO.ok;btn.classList.add('done');setTimeout(function(){btn.innerHTML=h;btn.classList.remove('done');},1200);});}
+function doPrint(id){var t=txtOf(id);var w=window.open('','_blank');w.document.write('<html dir="rtl"><head><meta charset="utf-8"><title>AgroData</title><style>body{font-family:Arial;font-size:16px;line-height:1.8;padding:40px;white-space:pre-wrap}h3{color:#134a30}</style></head><body><h3>תשובת AgroMind · AgroData</h3>'+t.replace(/</g,'&lt;')+'</body></html>');w.document.close();w.focus();setTimeout(function(){w.print();},300);}
+function doMail(id){var t=txtOf(id);location.href='mailto:?subject='+encodeURIComponent('תשובת AgroMind')+'&body='+encodeURIComponent(t);}
+function doSave(id){var t=txtOf(id);var blob=new Blob([t],{type:'text/plain;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='AgroMind.txt';a.click();}
+function doShare(id){var t=txtOf(id);if(navigator.share){navigator.share({title:'תשובת AgroMind',text:t});}else{doCopy(id,event.currentTarget);}}
+function buildTools(){
+ document.querySelectorAll('.tools').forEach(function(box){
+  var id=box.dataset.target;
+  box.innerHTML=''
+   +'<button class="spk" title="הקראה" onclick="speak(\''+id+'\',this)"><span class="spkico">'+ICO.spk+'</span><span class="eq"><i></i><i></i><i></i><i></i></span> <span class="spktx">הקראה</span></button>'
+   +'<button class="tbtn" title="העתק" onclick="doCopy(\''+id+'\',this)">'+ICO.copy+'</button>'
+   +'<button class="tbtn" title="הדפס" onclick="doPrint(\''+id+'\')">'+ICO.print+'</button>'
+   +'<button class="tbtn" title="שלח במייל" onclick="doMail(\''+id+'\')">'+ICO.mail+'</button>'
+   +'<button class="tbtn" title="שמור קובץ" onclick="doSave(\''+id+'\')">'+ICO.save+'</button>'
+   +'<button class="tbtn" title="שתף" onclick="doShare(\''+id+'\')">'+ICO.share+'</button>';
+ });
+}
+buildTools();
+function reorder(){
+ var g=document.getElementById('aigrid');
+ var boxes=[].slice.call(g.children);
+ boxes.sort(function(x,y){return (+y.dataset.len)-(+x.dataset.len);});
+ boxes.forEach(function(el){g.appendChild(el);});
+}
+function ask(engine,ansEl,badgeEl,q,label){
+ var a=document.getElementById(ansEl),b=document.getElementById(badgeEl);
+ a.textContent='🔎 מנתח את השאלה מעל מאגר AgroData…';
+ fetch('/api/ask?engine='+engine+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+  var txt=j.answer||'—';a.textContent=txt;
+  b.textContent='✦ תשובת AgroMind';
+  var box=a.closest('.ai');if(box){box.dataset.len=txt.length;reorder();}
+ }).catch(function(){a.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';});
+}
+function askSummary(q){
+ var a=document.getElementById('sumAnswer');
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent('סכם בתמצית ב-2-3 משפטים קצרים וברורים, ללא כותרות וללא סימני עיצוב, את התשובה לשאלה: '+q)).then(function(r){return r.json();}).then(function(j){
+  a.textContent=j.answer||'—';
+ }).catch(function(){a.textContent='—';});
+}
+function askAI(q){
+ askSummary(q);
+ ask('claude','claudeAnswer','claudeBadge',q,'קלוד · Claude');
+ ask('gemini','geminiAnswer','geminiBadge',q,'Gemini');
+}
+if(Q&&Q.trim()){askAI(Q.trim());}
+
+/* ===== read-aloud (TTS) ===== */
+function heVoice(){var vs=speechSynthesis.getVoices();return vs.find(function(v){return v.lang&&v.lang.indexOf('he')===0;})||null;}
+function speakText(t,btn){
+ if(!('speechSynthesis' in window)){return;}
+ if(speechSynthesis.speaking){speechSynthesis.cancel();document.querySelectorAll('.spk.on').forEach(function(b){b.classList.remove('on');});if(btn&&btn.dataset.was==='1'){btn.dataset.was='';return;}}
+ var u=new SpeechSynthesisUtterance(t);u.lang='he-IL';var v=heVoice();if(v)u.voice=v;u.rate=1;
+ if(btn){btn.classList.add('on');btn.dataset.was='1';u.onend=function(){btn.classList.remove('on');btn.dataset.was='';};}
+ speechSynthesis.speak(u);
+}
+function speak(id,btn){var t=(document.getElementById(id).textContent||'').trim();if(t)speakText(t,btn);}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=function(){};speechSynthesis.getVoices();}
+
+/* ===== chatbot ===== */
+function toggleChat(){var p=document.getElementById('cpanel'),b=document.getElementById('cbtn');var o=p.classList.toggle('open');b.style.display=o?'none':'flex';}
+function addMsg(cls,txt){
+ var body=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+cls;d.textContent=txt;body.appendChild(d);
+ if(cls==='b'){var s=document.createElement('button');s.className='spk';s.textContent='🔊';s.title='הקראה';s.onclick=function(){speakText(txt,s);};d.appendChild(document.createElement('br'));d.appendChild(s);}
+ body.scrollTop=body.scrollHeight;return d;
+}
+function chatSend(){
+ var inp=document.getElementById('cin');var q=(inp.value||'').trim();if(!q)return;inp.value='';
+ addMsg('u',q);var wait=addMsg('b','🔎 חושב…');
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+  wait.remove();var m=addMsg('b',j.answer||'—');speakText(j.answer||'',m.querySelector('.spk'));
+ }).catch(function(){wait.textContent='שגיאת חיבור לשרת.';});
+}
+</script>
+<script async src="https://cse.google.com/cse.js?cx=d3a38a06f89ae4056"></script>
+</body></html>

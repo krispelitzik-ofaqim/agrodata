@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סחר בינלאומי · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee;--up:#1f9d57;--down:#d24b4b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:28px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
+.stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:22px 0 20px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px 26px;text-align:center;min-width:170px}
+.stat b{font-family:Rubik;font-size:28px;font-weight:800;display:block}
+.stat.exp b{color:var(--up)}.stat.imp b{color:var(--teal)}.stat.bal b{color:var(--down)}
+.stat span{font-size:14px;color:var(--mut)}
+.toggle{display:flex;gap:0;justify-content:center;margin:6px 0 24px}
+.tbtn{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d);background:var(--bg2);border:1.5px solid var(--line);padding:13px 40px;cursor:pointer;transition:.14s}
+.tbtn:first-child{border-radius:0 14px 14px 0}.tbtn:last-child{border-radius:14px 0 0 14px;border-inline-start:0}
+.tbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.split{display:grid;grid-template-columns:1.5fr 1fr;gap:26px;margin-bottom:50px;align-items:start}
+@media(max-width:1000px){.split{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.panel h2{font-family:Rubik;font-size:23px;font-weight:800;color:var(--green-d);margin-bottom:4px}
+.panel .sm{font-size:14px;color:var(--mut);margin-bottom:18px}
+.prods{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:640px){.prods{grid-template-columns:1fr}}
+.prod{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:.14s}
+.prod:hover{border-color:#bcdcc8;box-shadow:0 8px 20px rgba(20,38,28,.06)}
+.pemoji{width:48px;height:48px;border-radius:12px;background:var(--tint);display:grid;place-items:center;font-size:26px;flex:0 0 auto}
+.pn{font-family:Rubik;font-weight:700;font-size:17px;color:var(--green-d)}
+.pv{font-family:'Plex Mono';font-size:14px;color:var(--mut);margin-top:2px}
+.pdest{font-size:20px;letter-spacing:2px;margin-top:3px}
+.pval{margin-inline-start:auto;text-align:left;flex:0 0 auto}
+.pval b{font-family:'Plex Mono';font-size:18px;font-weight:700;color:var(--ink)}
+.pval .ch{font-family:'Plex Mono';font-size:13px;font-weight:600}
+.up{color:var(--up)}.down{color:var(--down)}
+.pbar{display:flex;flex-direction:column;gap:14px}
+.prow{display:flex;align-items:center;gap:12px}
+.pflag{font-size:24px;flex:0 0 auto}
+.pcty{font-size:15.5px;font-weight:600;color:var(--ink);width:96px;flex:0 0 auto}
+.ptrack{flex:1;height:12px;background:var(--bg2);border-radius:999px;overflow:hidden}
+.pfill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--lime),var(--green))}
+.ppct{font-family:'Plex Mono';font-size:14px;color:var(--green-d);font-weight:700;width:46px;text-align:left}
+.worldmap{margin-bottom:30px}
+.wmtop{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.wmtop h2{font-family:Rubik;font-size:24px;font-weight:800;color:var(--green-d)}
+.commsel{display:flex;gap:8px;flex-wrap:wrap}
+.csbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;transition:.12s}
+.csbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.csbtn:hover:not(.on){background:var(--tint)}
+.wsvg{width:100%;height:auto;background:linear-gradient(180deg,#edf5fa,#e5eff4);border:1px solid var(--line);border-radius:14px;display:block}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.arc{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-dasharray:7 6;animation:flow 1s linear infinite;opacity:.9}
+.node-ex{fill:var(--green);stroke:#fff;stroke-width:1.5}
+.node-im{fill:var(--teal);stroke:#fff;stroke-width:1.5}
+.nlabel{font-family:'Plex Mono';font-size:12px;font-weight:700;fill:#0d3a26}
+.wlegend{font-size:14.5px;color:var(--mut);margin-top:12px;text-align:center}
+.wlists{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
+.wlists h4{font-family:Rubik;font-size:16px;color:var(--green-d);margin-bottom:8px}
+.wrow{display:flex;align-items:center;gap:10px;font-size:15.5px;margin-bottom:7px}
+.wrow .wf{font-size:20px}
+.teamsh{font-family:Rubik;font-size:28px;font-weight:800;color:var(--green-d);text-align:center;margin:8px 0 20px}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px}
+@media(max-width:900px){.tgrid{grid-template-columns:1fr 1fr}}
+.tcard{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;transition:.14s}
+.tcard:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.07);transform:translateY(-3px)}
+.tcard .ic{font-size:34px;margin-bottom:8px}
+.tcard h3{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);margin-bottom:6px}
+.tcard p{font-size:14.5px;color:var(--mut);line-height:1.55;margin-bottom:14px}
+.tbtn2{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:10px;padding:10px 20px;font-family:Rubik;font-weight:700;font-size:14.5px;cursor:pointer}
+.inq{max-width:840px;margin:0 auto 34px}
+.inq h2{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);margin-bottom:16px;text-align:center}
+.inq .frm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.inq .full{grid-column:1/-1}
+.inq input,.inq select,.inq textarea{width:100%;border:1.5px solid #cfe0d5;border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0}
+.inq input:focus,.inq textarea:focus,.inq select:focus{border-color:var(--green)}
+.inq textarea{min-height:96px;resize:vertical}
+.inq .send{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:11px;padding:13px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+.inq .ok{display:none;background:var(--tint);border:1px solid #cfe6d8;border-radius:11px;padding:14px;color:var(--green-d);font-weight:600}
+.note{background:var(--tint);border:1px solid #cfe6d8;border-radius:12px;padding:14px 18px;font-size:14px;color:var(--green-d);margin-bottom:40px}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">GLOBAL TRADE · יבוא ויצוא</div>
+    <h1>סחר <b>בינלאומי</b></h1>
+    <div class="sub">יבוא ויצוא של תוצרת חקלאית — המוצרים המובילים, שווקי היעד ושותפות הסחר של ישראל.</div>
+    <div class="stats">
+      <div class="stat exp"><b>$2.4B</b><span>יצוא חקלאי / שנה</span></div>
+      <div class="stat imp"><b>$6.1B</b><span>יבוא חקלאי / שנה</span></div>
+      <div class="stat bal"><b>-$3.7B</b><span>מאזן סחר</span></div>
+      <div class="stat"><b>🇪🇺</b><span>שותפת הסחר #1</span></div>
+    </div>
+    <div class="toggle">
+      <button class="tbtn on" id="tExp" onclick="setMode('exp')">📤 יצוא</button>
+      <button class="tbtn" id="tImp" onclick="setMode('imp')">📥 יבוא</button>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="panel">
+      <h2 id="pTitle">מוצרי היצוא המובילים</h2>
+      <div class="sm" id="pSub">תוצרת חקלאית ישראלית · שווי · שוק יעד · שינוי שנתי</div>
+      <div class="prods" id="prods"></div>
+    </div>
+    <div class="panel">
+      <h2 id="cTitle">שותפות סחר · יצוא</h2>
+      <div class="sm">נתח מהסחר החקלאי לפי מדינה/גוש</div>
+      <div class="pbar" id="partners"></div>
+    </div>
+  </div>
+  <div class="panel worldmap">
+    <div class="wmtop"><h2>🌍 מפת סחר עולמית — מי מייצר, מי קונה</h2><div class="commsel" id="commsel"></div></div>
+    <svg class="wsvg" viewBox="0 0 1000 500">
+      <g fill="#d7e6dc" opacity=".7" stroke="#c3ddcb" stroke-width="1">
+        <ellipse cx="205" cy="150" rx="95" ry="68"/><ellipse cx="322" cy="315" rx="46" ry="92"/><ellipse cx="520" cy="132" rx="62" ry="44"/><ellipse cx="548" cy="252" rx="72" ry="92"/><ellipse cx="748" cy="150" rx="152" ry="90"/><ellipse cx="862" cy="322" rx="56" ry="38"/>
+      </g>
+      <g id="warcs"></g>
+      <g id="wnodes"></g>
+    </svg>
+    <div class="wlegend">🟢 יצואן (גודל = נתח יצוא) · 🔵 יבואן · <span style="color:var(--gold);font-weight:700">— — —</span> זרימת סחר</div>
+    <div class="wlists"><div><h4>יצואניות מובילות</h4><div id="wexList"></div></div><div><h4>יבואניות מובילות</h4><div id="wimList"></div></div></div>
+  </div>
+
+  <h2 class="teamsh">💬 פנייה לצוותי הסחר</h2>
+  <div class="tgrid">
+    <div class="tcard"><div class="ic">📤</div><h3>צוות יצוא</h3><p>ליווי יצואנים חדשים, אישורים ושווקי יעד בחו״ל.</p><button class="tbtn2" onclick="pick('צוות יצוא')">פנייה →</button></div>
+    <div class="tcard"><div class="ic">📥</div><h3>צוות יבוא</h3><p>מקורות אספקה, מכסים, מכולות ולוגיסטיקה.</p><button class="tbtn2" onclick="pick('צוות יבוא')">פנייה →</button></div>
+    <div class="tcard"><div class="ic">📋</div><h3>רגולציה ותקינה</h3><p>עמידה בדרישות יבוא/יצוא ותקני שווקים בין-לאומיים.</p><button class="tbtn2" onclick="pick('רגולציה ותקינה')">פנייה →</button></div>
+    <div class="tcard"><div class="ic">🤝</div><h3>התאמת שווקים</h3><p>איתור קונים וספקים והתאמת עסקאות סחר.</p><button class="tbtn2" onclick="pick('התאמת שווקים')">פנייה →</button></div>
+  </div>
+
+  <div class="inq panel" id="inq">
+    <h2>השאירו פנייה — נחזור אליכם</h2>
+    <div class="frm">
+      <input id="q1" placeholder="שם מלא">
+      <input id="q2" type="email" placeholder="אימייל">
+      <input id="q3" class="full" placeholder="חברה / ארגון">
+      <select id="q4" class="full"><option>צוות יצוא</option><option>צוות יבוא</option><option>רגולציה ותקינה</option><option>התאמת שווקים</option></select>
+      <textarea id="q5" class="full" placeholder="פרטו את הפנייה — מוצר, שוק יעד, כמויות…"></textarea>
+      <button class="send full" onclick="sendInq()">שליחת פנייה →</button>
+      <div class="ok full" id="qok">✅ תודה! הפנייה התקבלה — צוות הסחר יחזור אליכם בהקדם.</div>
+    </div>
+  </div>
+
+  <div class="note">🔌 נתונים להדגמה מבוססי מגמות. ניתן לחבר <b>למכון היצוא</b>, <b>הלשכה המרכזית לסטטיסטיקה</b> ו-<b>UN Comtrade</b> לנתוני סחר חיים.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · סחר בינלאומי · <span class="mono">trade</span></div></div></div>
+
+<script>
+const DATA={
+ exp:{title:"מוצרי היצוא המובילים",sub:"תוצרת חקלאית ישראלית · שווי · שוק יעד · שינוי שנתי",ctitle:"שותפות סחר · יצוא",
+  prods:[
+   {n:"תמרים",em:"🌴",v:"מג׳הול · #1 בעולם",fl:"🇪🇺🇺🇸",val:"$310M",ch:"+8.4%"},
+   {n:"פלפל",em:"🫑",v:"מגידול מבוקר",fl:"🇪🇺🇷🇺",val:"$240M",ch:"+3.1%"},
+   {n:"אבוקדו",em:"🥑",v:"זני האס וגלים",fl:"🇪🇺",val:"$190M",ch:"+12.0%"},
+   {n:"עגבניות שרי",em:"🍅",v:"פיתוח ישראלי",fl:"🇪🇺",val:"$150M",ch:"+2.4%"},
+   {n:"פרחים וענפי נוי",em:"🌷",v:"יצוא אווירי",fl:"🇳🇱🇪🇺",val:"$120M",ch:"-1.8%"},
+   {n:"עשבי תיבול",em:"🌿",v:"בזיליקום, נענע",fl:"🇪🇺🇺🇸",val:"$95M",ch:"+6.7%"},
+   {n:"הדרים",em:"🍊",v:"אור, מור",fl:"🇪🇺",val:"$88M",ch:"+1.2%"},
+   {n:"גזר ובצל",em:"🥕",v:"תוצרת שדה",fl:"🇷🇺🇪🇺",val:"$70M",ch:"+4.0%"}
+  ],
+  partners:[["🇪🇺","האיחוד האירופי",58],["🇺🇸","ארה״ב",14],["🇷🇺","רוסיה",9],["🇬🇧","בריטניה",7],["🇳🇱","הולנד",6],["🌍","אחר",6]]},
+ imp:{title:"מוצרי היבוא המובילים",sub:"תשומות ומזון · שווי · מקור · שינוי שנתי",ctitle:"שותפות סחר · יבוא",
+  prods:[
+   {n:"חיטה ודגנים",em:"🌾",v:"מזון ומספוא",fl:"🇷🇺🇺🇦🇺🇸",val:"$1.2B",ch:"+9.5%"},
+   {n:"תירס",em:"🌽",v:"מספוא לבע״ח",fl:"🇺🇸🇧🇷",val:"$780M",ch:"+5.2%"},
+   {n:"פולי סויה",em:"🫘",v:"חלבון ומספוא",fl:"🇺🇸🇧🇷",val:"$640M",ch:"+3.8%"},
+   {n:"בשר בקר",em:"🥩",v:"טרי וקפוא",fl:"🇦🇷🇧🇷",val:"$520M",ch:"+7.1%"},
+   {n:"קפה",em:"☕",v:"פולים ירוקים",fl:"🇧🇷🇨🇴",val:"$180M",ch:"+11.0%"},
+   {n:"סוכר",em:"🧂",v:"גולמי ומזוקק",fl:"🇧🇷🇪🇺",val:"$160M",ch:"-2.3%"},
+   {n:"דגים ופירות ים",em:"🐟",v:"קפוא ומעובד",fl:"🇻🇳🇨🇳",val:"$140M",ch:"+4.4%"},
+   {n:"אגוזים ופירות יבשים",em:"🥜",v:"מעורב",fl:"🇺🇸🇹🇷",val:"$110M",ch:"+6.0%"}
+  ],
+  partners:[["🇺🇸","ארה״ב",24],["🇧🇷","ברזיל",18],["🇷🇺","רוסיה",12],["🇺🇦","אוקראינה",10],["🇦🇷","ארגנטינה",9],["🌍","אחר",27]]}
+};
+function render(mode){
+ const D=DATA[mode];
+ document.getElementById('pTitle').textContent=D.title;
+ document.getElementById('pSub').textContent=D.sub;
+ document.getElementById('cTitle').textContent=D.ctitle;
+ document.getElementById('prods').innerHTML=D.prods.map(p=>{const u=p.ch.trim().charAt(0)!=='-';return `<div class="prod"><div class="pemoji">${p.em}</div><div><div class="pn">${p.n}</div><div class="pv">${p.v}</div><div class="pdest">${p.fl}</div></div><div class="pval"><b>${p.val}</b><div class="ch ${u?'up':'down'}">${u?'▲':'▼'} ${p.ch.replace('-','')}</div></div></div>`;}).join('');
+ document.getElementById('partners').innerHTML=D.partners.map(c=>`<div class="prow"><span class="pflag">${c[0]}</span><span class="pcty">${c[1]}</span><div class="ptrack"><div class="pfill" style="width:${c[2]}%"></div></div><span class="ppct">${c[2]}%</span></div>`).join('');
+}
+function setMode(m){document.getElementById('tExp').classList.toggle('on',m==='exp');document.getElementById('tImp').classList.toggle('on',m==='imp');render(m);}
+render('exp');
+// ===== world trade map =====
+const CO={US:["ארה״ב",210,150,"🇺🇸"],CA:["קנדה",200,108,"🇨🇦"],BR:["ברזיל",330,300,"🇧🇷"],AR:["ארגנטינה",318,355,"🇦🇷"],RU:["רוסיה",730,112,"🇷🇺"],UA:["אוקראינה",560,142,"🇺🇦"],DE:["גרמניה · EU",524,128,"🇪🇺"],FR:["צרפת",506,144,"🇫🇷"],NL:["הולנד",514,122,"🇳🇱"],CN:["סין",792,166,"🇨🇳"],IN:["הודו",716,200,"🇮🇳"],IL:["ישראל",574,168,"🇮🇱"],AU:["אוסטרליה",862,320,"🇦🇺"],TR:["טורקיה",580,154,"🇹🇷"],VN:["וייטנאם",796,206,"🇻🇳"],CO:["קולומביה",296,238,"🇨🇴"],EG:["מצרים",560,178,"🇪🇬"],NG:["ניגריה",526,230,"🇳🇬"],MX:["מקסיקו",206,182,"🇲🇽"],SA:["מפרץ",602,182,"🇸🇦"]};
+const COMMOD={
+ wheat:{name:"חיטה",em:"🌾",ex:[["RU",28],["US",14],["CA",13],["UA",10],["FR",8]],im:["EG","CN","IN","IL","NG"],flows:[["RU","EG"],["RU","IL"],["US","CN"],["UA","EG"],["CA","IN"],["FR","NG"]]},
+ soy:{name:"סויה",em:"🫘",ex:[["BR",42],["US",34],["AR",10]],im:["CN","DE","IL"],flows:[["BR","CN"],["US","CN"],["BR","DE"],["AR","IL"]]},
+ corn:{name:"תירס",em:"🌽",ex:[["US",32],["BR",22],["AR",18],["UA",12]],im:["CN","IN","IL"],flows:[["US","CN"],["BR","IL"],["AR","IN"],["UA","CN"]]},
+ coffee:{name:"קפה",em:"☕",ex:[["BR",30],["VN",17],["CO",8]],im:["US","DE","IL"],flows:[["BR","US"],["BR","DE"],["VN","US"],["CO","IL"]]},
+ beef:{name:"בשר בקר",em:"🥩",ex:[["BR",23],["AU",15],["US",12],["AR",8]],im:["CN","IL","DE"],flows:[["BR","CN"],["AU","CN"],["US","IL"],["AR","IL"]]},
+ dates:{name:"תמרים",em:"🌴",ex:[["EG",18],["SA",16],["IL",12]],im:["DE","US","IN"],flows:[["IL","DE"],["IL","US"],["EG","IN"],["SA","IN"]]}
+};
+function wmap(k){
+ const D=COMMOD[k];let arcs='';
+ D.flows.forEach(f=>{const a=CO[f[0]],b=CO[f[1]];if(!a||!b)return;const cx=(a[1]+b[1])/2,cy=Math.min(a[2],b[2])-Math.abs(a[1]-b[1])*0.16-22;arcs+=`<path class="arc" d="M${a[1]} ${a[2]} Q${cx} ${cy.toFixed(0)} ${b[1]} ${b[2]}"/>`;});
+ document.getElementById('warcs').innerHTML=arcs;
+ const exs={};D.ex.forEach(e=>exs[e[0]]=e[1]);
+ const codes={};D.ex.forEach(e=>codes[e[0]]=1);D.im.forEach(c=>{codes[c]=codes[c]||1;});D.flows.forEach(f=>{codes[f[0]]=1;codes[f[1]]=codes[f[1]]||1;});
+ let nodes='';
+ Object.keys(codes).forEach(c=>{const p=CO[c];if(!p)return;const isEx=exs[c]!=null;const r=isEx?(6+exs[c]/3.5):6;nodes+=`<circle class="${isEx?'node-ex':'node-im'}" cx="${p[1]}" cy="${p[2]}" r="${r.toFixed(1)}"/><text class="nlabel" x="${p[1]}" y="${(p[2]-r-4).toFixed(0)}" text-anchor="middle">${c}</text>`;});
+ document.getElementById('wnodes').innerHTML=nodes;
+ document.getElementById('wexList').innerHTML=D.ex.map(e=>`<div class="wrow"><span class="wf">${CO[e[0]][3]}</span> ${CO[e[0]][0]} <b style="margin-inline-start:auto;font-family:'Plex Mono';color:var(--green)">${e[1]}%</b></div>`).join('');
+ document.getElementById('wimList').innerHTML=D.im.map(c=>`<div class="wrow"><span class="wf">${CO[c][3]}</span> ${CO[c][0]}</div>`).join('');
+ document.querySelectorAll('.csbtn').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+}
+document.getElementById('commsel').innerHTML=Object.keys(COMMOD).map((k,i)=>`<button class="csbtn ${i===0?'on':''}" data-k="${k}" onclick="wmap('${k}')">${COMMOD[k].em} ${COMMOD[k].name}</button>`).join('');
+wmap('wheat');
+function pick(team){var s=document.getElementById('q4');for(var i=0;i<s.options.length;i++){if(s.options[i].value===team)s.selectedIndex=i;}document.getElementById('inq').scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('q1').focus();}
+function sendInq(){var n=document.getElementById('q1').value.trim(),e=document.getElementById('q2').value.trim();if(!n||!e){alert('נא למלא שם ואימייל');return;}document.getElementById('qok').style.display='block';['q1','q2','q3','q5'].forEach(function(id){document.getElementById(id).value='';});}
+</script>
+</body></html>

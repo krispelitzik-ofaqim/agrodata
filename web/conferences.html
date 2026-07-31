@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כנסים ותערוכות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:28px 0 8px;text-align:center;background:radial-gradient(760px 320px at 50% -12%,var(--tint),transparent)}
+.cal.panel{background:linear-gradient(180deg,#f4faf6,#fff);border-color:#d3ead9}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px}
+/* two-column split */
+.split{display:grid;grid-template-columns:0.9fr 1.1fr;gap:30px;margin:26px 0 50px;align-items:start}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.side{position:sticky;top:18px}
+.side h3{font-family:Rubik;font-size:25px;font-weight:700;margin:18px 0 12px;color:var(--green-d)}
+.side h3:first-of-type{margin-top:6px}
+.searchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 8px 22px rgba(20,38,28,.06);margin-bottom:6px}
+.searchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16.5px;color:var(--ink);background:transparent}
+.chips{display:flex;gap:9px;flex-wrap:wrap}
+.chip{font-size:15.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-weight:600;cursor:pointer;transition:.12s}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green)}
+.chip:hover:not(.on){background:var(--tint)}
+/* agenda */
+.mgroup{margin-bottom:22px}
+.mtitle{font-family:Rubik;font-size:33px;font-weight:800;color:var(--green-d);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.mtitle .cnt{font-family:'Plex Mono';font-size:14px;color:var(--mut);font-weight:400}
+.conf{display:flex;gap:16px;padding:16px;border:1px solid var(--line);border-radius:14px;margin-bottom:12px;text-decoration:none;color:inherit;transition:.14s;background:#fff}
+.conf:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.07);transform:translateY(-2px)}
+.date{flex:0 0 auto;width:60px;text-align:center;background:var(--tint);border:1px solid #cfe6d8;border-radius:12px;padding:8px 0}
+.date .d{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);line-height:1}
+.date .m{font-family:'Plex Mono';font-size:14px;color:var(--green);margin-top:3px}
+.conf .info{min-width:0}
+.conf h4{font-family:Rubik;font-size:24px;font-weight:700;margin-bottom:4px}
+.conf .loc{font-size:15px;color:var(--mut);margin-bottom:7px}
+.conf .tags{display:flex;gap:6px;flex-wrap:wrap}
+.conf .t{font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.empty{color:var(--mut);text-align:center;padding:26px}
+.cal{margin:8px 0 6px}
+.cal .chead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal .chead h2{font-family:Rubik;font-size:35px;font-weight:800;color:var(--green-d)}
+.calnav{display:flex;align-items:center;gap:16px}
+.calarrow{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--green-d);font-size:23px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.14s}
+.calarrow:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.relbadge{display:inline-block;font-family:'Plex Mono';font-size:14px;font-weight:700;color:#fff;background:var(--green);border-radius:999px;padding:5px 13px;margin-inline-start:12px;vertical-align:middle}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.calgrid .dow{font-family:Rubik;font-size:15px;color:var(--green-d);text-align:center;font-weight:800;padding:10px 0;background:var(--tint);border-radius:9px;border:1px solid #d3ead9}
+.cell{min-height:98px;border:1px solid #e0eee5;border-radius:12px;padding:9px;background:var(--bg2)}
+.cell.blank{background:var(--bg2);border-style:dashed;opacity:.45}
+.cell .num{font-family:'Plex Mono';font-size:15px;color:var(--mut)}
+.cell.ev{border-color:#9fd0b0;background:linear-gradient(180deg,#e9f6ee,#d8efe0)}
+.cell.ev .num{color:var(--green-d);font-weight:700}
+.ev-tag{margin-top:7px;font-size:14px;font-weight:700;color:#fff;background:var(--green);border-radius:8px;padding:4px 8px;line-height:1.3;display:block}
+.cta{margin-top:18px;border-radius:14px;padding:16px 17px;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff}
+.cta.alt{background:linear-gradient(135deg,#2b8fb0,#1c6b7f)}
+.cta-t{font-family:Rubik;font-size:17px;font-weight:800;margin-bottom:5px}
+.cta-s{font-size:14px;line-height:1.5;color:rgba(255,255,255,.9);margin-bottom:12px}
+.cta-b{display:inline-block;background:#fff;color:var(--green-d);font-family:Rubik;font-weight:700;font-size:14.5px;text-decoration:none;border-radius:10px;padding:9px 18px;transition:.14s}
+.cta.alt .cta-b{color:#12566b}
+.cta-b:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45);color:rgba(255,255,255,.8)}
+.foot{padding:26px 0;text-align:center;font-size:14px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">CONFERENCES & EXPOS</div>
+    <h1>כנסים <b>ותערוכות</b></h1>
+    <div class="sub">יומן אירועי האגרו-טק בעולם — לפי חודש, מדינה ונושא.</div>
+  </div>
+
+  <div class="cal panel">
+    <div class="chead"><div class="calnav"><button class="calarrow" onclick="navMonth(-1)" aria-label="חודש קודם">›</button><h2 id="calMonth">יולי 2026</h2><button class="calarrow" onclick="navMonth(1)" aria-label="חודש הבא">‹</button></div><span class="mono" style="color:var(--mut);font-size:14px">לוח החודש · כנסי אגרו-טק</span></div>
+    <div class="calgrid" id="calgrid"></div>
+  </div>
+
+  <div class="split">
+    <!-- RIGHT: search + filters -->
+    <div class="panel side">
+      <div class="searchbar"><span>🔎</span><input id="q" placeholder="חיפוש כנס: שם, עיר, נושא…" oninput="render()"></div>
+      <h3>לפי מדינה</h3>
+      <div class="chips" id="cCountry"></div>
+      <h3>לפי נושא</h3>
+      <div class="chips" id="cTopic"></div>
+
+      <div class="cta">
+        <div class="cta-t">🇮🇱 משלחת ישראלית לתערוכה</div>
+        <div class="cta-s">הצטרפו למשלחת מאורגנת לתערוכה בחו״ל — טיסות, ביתן משותף ופגישות B2B.</div>
+        <a class="cta-b" href="#">הרשמה למשלחת</a>
+      </div>
+      <div class="cta alt">
+        <div class="cta-t">🎟️ הרשמה לתערוכה</div>
+        <div class="cta-s">רכשו כרטיס כניסה או הזמינו ביתן תצוגה ישירות דרך הזירה.</div>
+        <a class="cta-b" href="#">הרשם לתערוכה</a>
+      </div>
+    </div>
+    <!-- LEFT: agenda -->
+    <div id="agenda"></div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · כנסים ותערוכות · <span class="mono">agenda</span></div></div></div>
+
+<script>
+const CONF=[
+ // group: 0=this month, 1=next month, 2=later
+ {n:"GreenTech Amsterdam",d:14,m:"יולי",g:0,fl:"🇳🇱",cy:"הולנד",city:"אמסטרדם",t:["גננות","הידרופוניקה"],u:"https://www.greentech.nl/"},
+ {n:"AgriVest",d:22,m:"יולי",g:0,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["השקעות"],u:"#"},
+ {n:"Precision Ag Vision",d:28,m:"יולי",g:0,fl:"🇺🇸",cy:"ארה״ב",city:"בוסטון",t:["חקלאות מדייקת"],u:"#"},
+ {n:"Future Food-Tech",d:5,m:"אוגוסט",g:1,fl:"🇺🇸",cy:"ארה״ב",city:"סן פרנסיסקו",t:["פוד-טק","השקעות"],u:"https://futurefoodtechsf.com/"},
+ {n:"Watec",d:18,m:"אוגוסט",g:1,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["מים","השקיה"],u:"https://watec.com/"},
+ {n:"Farm Progress Show",d:25,m:"אוגוסט",g:1,fl:"🇺🇸",cy:"ארה״ב",city:"איווה",t:["חקלאות","מכונות"],u:"https://www.farmprogressshow.com/"},
+ {n:"World Agri-Tech Innovation Summit",d:0,m:"ספטמבר",g:2,fl:"🇬🇧",cy:"בריטניה",city:"לונדון",t:["השקעות","גלובלי"],u:"https://worldagritechinnovation.com/"},
+ {n:"FIRA USA",d:0,m:"אוקטובר",g:2,fl:"🇺🇸",cy:"ארה״ב",city:"קליפורניה",t:["רובוטיקה","אוטומציה"],u:"https://fira-usa.com/"},
+ {n:"Agritechnica",d:0,m:"נובמבר",g:2,fl:"🇩🇪",cy:"גרמניה",city:"הנובר",t:["מכונות","ציוד"],u:"https://www.agritechnica.com/"},
+ {n:"EIMA International",d:0,m:"נובמבר",g:2,fl:"🇮🇹",cy:"איטליה",city:"בולוניה",t:["מכונות","ציוד"],u:"https://www.eima.it/"},
+ {n:"Fruit Logistica",d:0,m:"פברואר",g:2,fl:"🇩🇪",cy:"גרמניה",city:"ברלין",t:["תוצרת","לוגיסטיקה"],u:"https://www.fruitlogistica.com/"},
+ {n:"FIRA",d:0,m:"פברואר",g:2,fl:"🇫🇷",cy:"צרפת",city:"טולוז",t:["רובוטיקה"],u:"https://fira-agtech.com/"},
+];
+const GROUPS=[{t:"החודש",s:"יולי 2026",c:"#1c6b45",bg:"rgba(28,107,69,.10)"},{t:"החודש הבא",s:"אוגוסט 2026",c:"#2b8fb0",bg:"rgba(43,143,176,.10)"},{t:"בהמשך",s:"ספטמבר 2026 ואילך",c:"#c79a2e",bg:"rgba(199,154,46,.12)"}];
+let fCountry=null, fTopic=null;
+const countries=[...new Set(CONF.map(c=>c.fl+' '+c.cy))];
+const topics=[...new Set(CONF.flatMap(c=>c.t))];
+function chip(label,active,on){return `<span class="chip ${active?'on':''}" onclick="${on}">${label}</span>`;}
+document.getElementById('cCountry').innerHTML=chip('הכול',!fCountry,"setC(null)")+countries.map(c=>chip(c,false,`setC('${c.split(' ')[1]}')`)).join('');
+document.getElementById('cTopic').innerHTML=chip('הכול',!fTopic,"setT(null)")+topics.map(t=>chip(t,false,`setT('${t}')`)).join('');
+function setC(c){fCountry=c;paintChips();render();}
+function setT(t){fTopic=t;paintChips();render();}
+function paintChips(){
+ document.getElementById('cCountry').innerHTML=chip('הכול',!fCountry,"setC(null)")+countries.map(c=>chip(c,fCountry===c.split(' ')[1],`setC('${c.split(' ')[1]}')`)).join('');
+ document.getElementById('cTopic').innerHTML=chip('הכול',!fTopic,"setT(null)")+topics.map(t=>chip(t,fTopic===t,`setT('${t}')`)).join('');
+}
+function render(){
+ const q=(document.getElementById('q').value||'').trim().toLowerCase();
+ const list=CONF.filter(c=>
+   (!fCountry||c.cy===fCountry)&&(!fTopic||c.t.includes(fTopic))&&
+   (!q||(c.n+' '+c.city+' '+c.cy+' '+c.t.join(' ')).toLowerCase().includes(q)));
+ let html='';
+ GROUPS.forEach((g,gi)=>{
+   const items=list.filter(c=>c.g===gi);
+   html+=`<div class="mgroup"><div class="mtitle" style="color:${g.c}">${g.t} <span class="cnt">${g.s} · ${items.length}</span></div>`;
+   html+= items.length? items.map(c=>`
+     <a class="conf" href="${c.u}" ${c.u!=='#'?'target="_blank" rel="noopener"':''}>
+       <div class="date" style="background:${g.bg};border-color:${g.c}55"><div class="d" style="color:${g.c}">${c.d||'—'}</div><div class="m" style="color:${g.c}">${c.m}</div></div>
+       <div class="info"><h4>${c.n}</h4><div class="loc">${c.fl} ${c.city}, ${c.cy}</div>
+       <div class="tags">${c.t.map(t=>`<span class="t">${t}</span>`).join('')}</div></div>
+     </a>`).join('') : '<div class="empty">אין אירועים תואמים</div>';
+   html+='</div>';
+ });
+ document.getElementById('agenda').innerHTML=html;
+}
+const HMON=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+const REL={y:2026,m:6}; // יולי 2026 = החודש הרלוונטי
+let curY=2026, curM=6;
+function buildCal(){
+ const DOW=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
+ const first=new Date(curY,curM,1).getDay();
+ const days=new Date(curY,curM+1,0).getDate();
+ const ev={}; CONF.filter(c=>c.m===HMON[curM]&&c.d>0).forEach(c=>ev[c.d]=c.n);
+ const isRel=(curY===REL.y&&curM===REL.m);
+ document.getElementById('calMonth').innerHTML=HMON[curM]+' '+curY+(isRel?' <span class="relbadge">● החודש</span>':'');
+ let g=DOW.map(d=>`<div class="dow">${d}</div>`).join('');
+ for(let i=0;i<first;i++) g+='<div class="cell blank"></div>';
+ for(let d=1;d<=days;d++){ const e=ev[d];
+   g+=`<div class="cell ${e?'ev':''}"><div class="num">${d}</div>${e?`<span class="ev-tag">${e}</span>`:''}</div>`; }
+ document.getElementById('calgrid').innerHTML=g;
+}
+function navMonth(dir){
+ let m=curM+dir,y=curY;
+ if(m<0){m=11;y--;} if(m>11){m=0;y++;}
+ if(y<REL.y||(y===REL.y&&m<REL.m)) return; // לא לפני החודש הרלוונטי
+ curY=y;curM=m;buildCal();
+}
+buildCal();
+render();
+</script>
+</body></html>

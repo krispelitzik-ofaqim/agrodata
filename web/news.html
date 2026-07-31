@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מאגר נתונים מרכזי · חדשות ומקורות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:28px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
+/* running news ticker */
+.ticker{margin:26px 0 34px;background:linear-gradient(135deg,#134a30,#1c6b45);border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center;box-shadow:0 14px 34px rgba(20,38,28,.16)}
+.ticker .live{flex:0 0 auto;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:16px;padding:22px 22px;display:flex;align-items:center;gap:9px;z-index:2}
+.ticker .live .pulse{width:11px;height:11px;border-radius:50%;background:#d24b4b;box-shadow:0 0 0 0 rgba(210,75,75,.6);animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(210,75,75,0)}100%{box-shadow:0 0 0 0 rgba(210,75,75,0)}}
+.ticker .mask{flex:1;overflow:hidden;position:relative}
+.flashwrap{padding:20px 28px;font-family:Rubik;font-size:21px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .4s ease,transform .4s ease}
+.flashwrap b{color:#8fe6ad;font-family:'Plex Mono';font-size:14px;font-weight:700;margin-inline-end:14px}
+.flashwrap.out{opacity:0;transform:translateY(-10px)}
+.fcount{font-family:'Plex Mono';font-size:13px;color:#5aa07f;margin-inline-start:14px}
+/* source filter */
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 24px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:.12s}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.fbtn:hover:not(.on){background:var(--tint)}
+/* articles grid */
+.secttl{font-family:Rubik;font-size:31px;font-weight:800;color:var(--green-d);margin:8px 0 18px;display:flex;align-items:center;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:48px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.art{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.15s;text-decoration:none;color:inherit}
+.art:hover{border-color:#bcdcc8;box-shadow:0 16px 34px rgba(20,38,28,.11);transform:translateY(-4px)}
+.thumb{position:relative;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;font-size:56px}
+.src{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.94);color:var(--green-d);font-family:Rubik;font-weight:700;font-size:14px;border-radius:999px;padding:5px 12px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.abody{padding:16px 17px 18px;display:flex;flex-direction:column;flex:1}
+.atop{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.topic{font-size:14px;font-weight:700;color:var(--green);background:var(--tint);border-radius:999px;padding:3px 10px}
+.adate{font-family:'Plex Mono';font-size:14px;color:var(--mut);margin-inline-start:auto}
+.atitle{font-family:Rubik;font-size:23px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:7px}
+.aexc{font-size:14px;color:var(--mut);line-height:1.5;flex:1}
+.alink{margin-top:12px;font-family:Rubik;font-weight:700;font-size:14px;color:var(--lime)}
+.note{text-align:center;color:var(--mut);font-size:14px;margin-bottom:40px}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">NEWS & CURRENT AFFAIRS</div>
+    <h1>חדשות <b>ואקטואליה</b></h1>
+    <div class="sub">אגרגטור החדשות של הזירה — כותרות רצות וכתבות עם תמונות ממקורות החקלאות והאגרו-טק המובילים בישראל.</div>
+  </div>
+
+  <div class="ticker">
+    <div class="live"><span class="pulse"></span> חדשות רצות</div>
+    <div class="mask"><div class="flashwrap" id="flash"></div></div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div class="secttl">📰 כתבות אחרונות</div>
+  <div class="grid" id="grid"></div>
+  <div class="note">הכתבות לצורכי הדגמה — ניתן לחבר את המאגר לפיד RSS חי מכל אתרי החדשות בארץ.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · חדשות ואקטואליה · <span class="mono">news aggregator</span></div></div></div>
+
+<script>
+const A=[
+ {t:"וולקני: זן עגבנייה עמיד-חום מעלה את היבול ב-20%",e:"פריצת דרך של מכון וולקני — זן חדש ששומר על תפוקה גם בגלי חום קיצוניים.",s:"השדה",u:"https://www.hasadeh.co.il/",topic:"גידולים",em:"🍅",g:"linear-gradient(135deg,#ff8a5b,#e14b2a)",d:"היום"},
+ {t:"סבב גיוס של 40M$ לסטארטאפ השקיה חכמה ישראלי",e:"המשקיעים מהמרים על אלגוריתם השקיה שחוסך מים ומגדיל יבול בו-זמנית.",s:"כלכליסט",u:"https://www.calcalist.co.il/",topic:"השקעות",em:"💧",g:"linear-gradient(135deg,#4fb3d9,#2b8fb0)",d:"אתמול"},
+ {t:"יצוא החקלאות הישראלי שבר שיא ברבעון האחרון",e:"עלייה חדה בייצוא ירקות, תמרים ופרחים לאירופה ולמזרח הרחוק.",s:"גלובס",u:"https://www.globes.co.il/",topic:"שוק ומחירים",em:"📈",g:"linear-gradient(135deg,#2e9e63,#1c6b45)",d:"אתמול"},
+ {t:"תוכנית לאומית לצמצום שימוש בחומרי הדברה",e:"משרד החקלאות משיק מסלול תמיכה למעבר להדברה ביולוגית ומשולבת.",s:"משרד החקלאות",u:"https://www.gov.il/he/departments/ministry_of_agriculture",topic:"הדברה",em:"🌿",g:"linear-gradient(135deg,#7bc96f,#3f8f3a)",d:"לפני יומיים"},
+ {t:"מפת האגריפוד-טק: כ-700 חברות פעילות בישראל",e:"דוח חדש של Start-Up Nation Central ממפה את האקוסיסטם הישראלי.",s:"SNC",u:"https://www.startupnationcentral.org/",topic:"סטארטאפים",em:"🗺️",g:"linear-gradient(135deg,#8a7bd8,#5a45c0)",d:"לפני יומיים"},
+ {t:"רחפני ריסוס: רגולציה חדשה מאפשרת טיסות אוטונומיות",e:"רת\"א מאשרת מסלול לתפעול רחפני ריסוס אוטונומיים בשטחים חקלאיים.",s:"מגזין חקלאות",u:"https://www.hasadeh.co.il/",topic:"רחפנים",em:"🚁",g:"linear-gradient(135deg,#5c6f7a,#33424c)",d:"לפני 3 ימים"},
+ {t:"בשר מתורבת: מפעל ראשון בישראל מקבל אישור ייצור",e:"שלב חדש בתעשיית הפוד-טק הישראלית עם קו ייצור מסחרי ראשון.",s:"TheMarker",u:"https://www.themarker.com/",topic:"פוד-טק",em:"🥩",g:"linear-gradient(135deg,#e07a8b,#c4425c)",d:"לפני 3 ימים"},
+ {t:"חיישני קרקע חוסכים 30% מים במטעים",e:"חקלאות מדייקת בשטח: ניטור לחות בזמן אמת מדייק את ההשקיה.",s:"יבול שיא",u:"https://www.yevulsia.co.il/",topic:"חיישנים",em:"📡",g:"linear-gradient(135deg,#3aa873,#1c6b45)",d:"לפני 4 ימים"},
+ {t:"פריצת דרך: חיידק שמגביר קליטת חנקן בקרקע",e:"מחקר של מכון וולקני עשוי להפחית תלות בדשן חנקני.",s:"וולקני",u:"https://www.agri.gov.il/",topic:"מחקר",em:"🔬",g:"linear-gradient(135deg,#4fb3d9,#1c6b7f)",d:"לפני 5 ימים"},
+ {t:"חלב ללא פרה של סטארטאפ ישראלי נכנס לרשתות",e:"חלבוני חלב מתסיסה מדויקת — מוצר מדף ראשון בסופרים.",s:"גלובס",u:"https://www.globes.co.il/",topic:"פוד-טק",em:"🥛",g:"linear-gradient(135deg,#7aa7e0,#3f6fc0)",d:"לפני שבוע"},
+ {t:"המלצות השקיה לגד\"ש לקראת גל החום",e:"שה\"מ מפרסם עדכון מקצועי לתזמון ההשקיה בגידולי שדה.",s:"שה\"מ",u:"https://www.gov.il/he/departments/units/extension_service",topic:"השקיה",em:"☀️",g:"linear-gradient(135deg,#f2b84b,#d98f1e)",d:"לפני שבוע"},
+ {t:"מחירי הירקות: מה עומד מאחורי העלייה בשוק הסיטונאי",e:"ניתוח: מזג אוויר, יבוא והיצע מקומי מזיזים את המחירים.",s:"TheMarker",u:"https://www.themarker.com/",topic:"השוק הסיטונאי",em:"🥬",g:"linear-gradient(135deg,#8fce6a,#5a9f34)",d:"לפני שבוע"}
+];
+// ticker
+const FLASH=[
+ ["וולקני","זן עגבנייה עמיד-חום מעלה את היבול ב-20%"],
+ ["כלכליסט","גיוס 40M$ לסטארטאפ השקיה חכמה ישראלי"],
+ ["גלובס","יצוא החקלאות הישראלי שבר שיא ברבעון"],
+ ["רת״א","רגולציה חדשה מאפשרת רחפני ריסוס אוטונומיים"],
+ ["SNC","כ-700 חברות אגריפוד-טק פעילות בישראל"],
+ ["TheMarker","בשר מתורבת: אישור ייצור מסחרי ראשון בישראל"],
+ ["גלובס","חלב ללא פרה של סטארטאפ ישראלי נכנס לרשתות"],
+ ["יבול שיא","חיישני קרקע חוסכים 30% מים במטעים"],
+ ["שה״מ","המלצות השקיה מעודכנות לקראת גל החום"],
+ ["TheMarker","מחירי הפלפל צנחו 30% בשוק הסיטונאי"],
+ ["וולקני","פריצת דרך: חיידק מגביר קליטת חנקן בקרקע"],
+ ["השדה","כפור צפוי בגליל בסופ״ש — התראה למגדלי הדרים"]
+];
+let fi=0;const fe=document.getElementById('flash');
+function showFlash(){fe.innerHTML='<b>'+FLASH[fi][0]+'</b> '+FLASH[fi][1]+'<span class="fcount">'+(fi+1)+'/'+FLASH.length+'</span>';}
+function nextFlash(){fe.classList.add('out');setTimeout(function(){fi=(fi+1)%FLASH.length;showFlash();fe.classList.remove('out');},400);}
+showFlash();setInterval(nextFlash,5000);
+// filters by source
+const SRC=['הכול',...[...new Set(A.map(a=>a.s))]];
+let CUR='הכול';
+function render(){
+ const grid=document.getElementById('grid');
+ const rows=A.filter(a=>CUR==='הכול'||a.s===CUR);
+ grid.innerHTML=rows.map((a,i)=>`<a class="art" href="${a.u}" target="_blank" rel="noopener">
+   <div class="thumb" data-topic="${a.topic}" data-i="${i}" style="background:${a.g}"><span class="src">${a.s}</span><span class="emoji">${a.em}</span></div>
+   <div class="abody">
+     <div class="atop"><span class="topic">${a.topic}</span><span class="adate">${a.d}</span></div>
+     <div class="atitle">${a.t}</div>
+     <div class="aexc">${a.e}</div>
+     <div class="alink">קרא באתר המקור ↗</div>
+   </div></a>`).join('');
+ loadImages();
+}
+const KW={"גידולים":"tomato,greenhouse","השקעות":"agriculture,technology","שוק ומחירים":"harvest,export","הדברה":"organic,farming","סטארטאפים":"agriculture,technology","רחפנים":"drone,field","פוד-טק":"food,laboratory","חיישנים":"orchard,farm","מחקר":"laboratory,plant","השקיה":"irrigation,water","השוק הסיטונאי":"vegetables,market"};
+function loadImages(){
+ document.querySelectorAll('.thumb[data-topic]').forEach(function(t){
+  var kw=KW[t.getAttribute('data-topic')]||'agriculture,field';
+  var url='https://loremflickr.com/600/380/'+encodeURIComponent(kw)+'?lock='+((+t.getAttribute('data-i'))+3);
+  var im=new Image();
+  im.onload=function(){t.style.backgroundImage='url("'+url+'")';t.style.backgroundSize='cover';t.style.backgroundPosition='center';var e=t.querySelector('.emoji');if(e)e.style.display='none';};
+  im.src=url;
+ });
+}
+function filt(s,el){CUR=s;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
+document.getElementById('filters').innerHTML=SRC.map((s,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${s}',this)">${s}</button>`).join('');
+render();
+</script>
+</body></html>

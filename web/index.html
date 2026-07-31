@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="fb:app_id" content="1365641238994519">
+<title>AgroData — מנוע החיפוש והמחקר לחקלאות</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{
+  --green:#1c6b45; --green-d:#134a30; --lime:#2e9e63; --teal:#2b8fb0; --gold:#c79a2e;
+  --ink:#14261c; --mut:#5c6f63; --line:#dbe8df;
+  --bg:#ffffff; --bg2:#f4f9f5; --tint:#eaf4ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
+.mono{font-family:'Plex Mono',monospace}
+.wm{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.01em}
+.wm b{color:var(--lime)}
+/* nav */
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+.nav .wm{font-size:24px;color:#fff}
+.nav .wm b{color:#8fe6ad}
+.nav .kick{color:#8fe6ad!important}
+.nav .links{display:flex;gap:30px;color:rgba(255,255,255,.92);font-size:20px;font-weight:600;flex-wrap:wrap}
+.nav .links span{cursor:pointer}
+.cta{background:#fff;color:var(--green-d);border:0;border-radius:11px;padding:11px 20px;font-family:Rubik;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.16)}
+.cta.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.42);box-shadow:none}
+.cta.ghost:hover{background:rgba(255,255,255,.12)}
+.navright{display:flex;align-items:center;gap:14px}
+.lang{position:relative}
+.langbtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.32);color:#fff;border-radius:9px;padding:9px 14px;font-family:Rubik;font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:7px}
+.langmenu{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 36px rgba(20,38,28,.18);padding:6px;min-width:158px;display:none;z-index:30}
+.langmenu.open{display:block}
+.langmenu a{display:block;padding:10px 12px;border-radius:8px;color:var(--ink);font-size:14px;font-weight:600;cursor:pointer}
+.langmenu a:hover{background:var(--tint);color:var(--green-d)}
+.langmenu a.on{color:var(--green-d);background:var(--tint)}
+/* hero — big, centered, symmetric */
+.hero{background:radial-gradient(900px 520px at 50% -6%,var(--tint),transparent);padding:36px 0 40px;text-align:center}
+.hero-c{display:flex;flex-direction:column;align-items:center}
+.tag{display:inline-block;font-family:'Plex Mono';font-size:14px;font-weight:500;color:var(--green);background:var(--tint);border:1px solid #cfe6d8;padding:7px 15px;border-radius:999px;letter-spacing:.03em}
+.h1big{font-family:Rubik;font-size:81px;font-weight:800;line-height:1.05;margin:18px 0 12px;letter-spacing:-.01em;max-width:900px}
+.h1big span{color:var(--lime)}
+.lede-c{font-size:20px;color:var(--mut);max-width:640px;line-height:1.6}
+.brainbox-big{width:100%;max-width:760px;height:520px;margin:6px auto -30px}
+.brainbox-big svg{width:100%;height:100%}
+/* search */
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:18px;padding:14px 16px;box-shadow:0 18px 44px rgba(20,38,28,.12)}
+.search-c{width:100%;max-width:900px}
+.liveline{display:inline-flex;align-items:center;gap:11px;margin:20px auto 0;font-family:'Plex Mono';font-size:17px;font-weight:700;color:var(--green-d)}
+.liveline b{color:var(--green);font-weight:800;letter-spacing:.08em;font-size:16px}
+.livedot{width:12px;height:12px;border-radius:50%;background:#1f9d57;box-shadow:0 0 0 0 rgba(31,157,87,.6);animation:livep 1.5s infinite}
+@keyframes livep{70%{box-shadow:0 0 0 11px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}
+.search .ic{font-size:20px}
+.plus{background:var(--tint);border:1px solid #cfe6d8;color:var(--green);width:56px;height:56px;border-radius:14px;font-size:32px;font-weight:400;cursor:pointer;display:grid;place-items:center;line-height:1;flex:0 0 auto;transition:.12s}
+.plus:hover{background:var(--green);color:#fff}
+.topicpanel{width:100%;max-width:900px;margin:14px auto 0;padding:6px 8px;display:none}
+.topicpanel.open{display:block}
+.topicpanel h4{font-family:Rubik;font-size:14px;color:var(--mut);margin-bottom:14px;text-align:center;font-weight:700}
+.scope{display:flex;justify-content:center;flex-wrap:wrap;margin-bottom:18px;font-family:Rubik}
+.scope a{color:var(--green-d);font-weight:800;font-size:18px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center}
+.scope a:not(:last-child)::after{content:"|";color:#bcdcc8;font-weight:400;margin:0 13px}
+.scope a:hover{color:var(--lime)}
+.topicpanel .grid{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.topicpanel .grid a{font-size:17px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:11px 20px;font-weight:600;cursor:pointer}
+.topicpanel .grid a:hover{background:var(--tint);border-color:#bcdcc8;color:var(--lime)}
+.search input{flex:1;background:transparent;border:0;outline:0;color:var(--ink);font-family:Heebo;font-size:19px;padding:24px 10px}
+.search input::placeholder{color:#9aab9f}
+.search .go{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:14px;padding:24px 40px;font-family:Rubik;font-weight:800;font-size:19px;cursor:pointer}
+.topicbar{position:relative;width:100%;max-width:720px;margin:16px auto 0;background:linear-gradient(90deg,#eaf6ee,#e2f2e8);border:1px solid #d3ebdc;border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(20,38,28,.05)}
+.topicbar .track{display:flex;align-items:center;overflow-x:auto;scroll-behavior:smooth;padding:13px 52px;white-space:nowrap;scrollbar-width:none;cursor:grab}
+.tarrow{position:absolute;top:50%;transform:translateY(-50%);z-index:4;direction:ltr;background:none;border:0;color:var(--green);font-size:26px;font-weight:800;cursor:pointer;line-height:1;padding:2px 4px}
+.tarrow:hover{color:var(--lime)}
+.tarrow.r{right:12px}.tarrow.l{left:12px}
+.topicbar .track::-webkit-scrollbar{display:none}
+.topicbar a{color:var(--green-d);font-weight:700;font-size:15px;padding:0 18px;border-inline-start:1px solid #c8e2d2;flex:0 0 auto;transition:.12s}
+.topicbar a:first-child{border-inline-start:0}
+.topicbar a:hover{color:var(--lime);transform:translateY(-1px)}
+.topicbar::before,.topicbar::after{content:"";position:absolute;top:0;bottom:0;width:38px;pointer-events:none;z-index:2}
+.topicbar::before{right:0;background:linear-gradient(to left,#e6f3ea,transparent)}
+.topicbar::after{left:0;background:linear-gradient(to right,#e6f3ea,transparent)}
+.stats-c{display:flex;gap:44px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.stat b{display:block;font-family:'Plex Mono';font-size:34px;font-weight:600;color:var(--green)}
+.stat span{font-size:15px;color:var(--mut)}
+/* sections */
+.sec{padding:56px 0;text-align:center}
+.kicker{font-family:'Plex Mono';font-size:16px;color:var(--lime);letter-spacing:.1em;text-transform:uppercase}
+.lead{font-family:Rubik;font-size:52px;font-weight:800;margin:8px 0 18px}
+.lead::after{content:"";display:block;width:70px;height:4px;background:var(--gold);border-radius:3px;margin:14px auto 30px}
+.subhead{font-family:Rubik;font-size:24px;font-weight:800;color:var(--green-d);margin:34px 0 3px}
+.subcap{font-size:15px;color:var(--mut);margin-bottom:20px}
+.lecwrap{position:relative;max-width:1320px;margin:0 auto;padding:0 6px}
+.lectors{display:flex;gap:14px;overflow-x:auto;scroll-behavior:smooth;padding:6px 2px;scrollbar-width:none;justify-content:center}
+.lectors::-webkit-scrollbar{display:none}
+.lcard{flex:0 0 192px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;background:linear-gradient(180deg,#f2f9fb,#e9f3f7);border:1px solid #cfe3ea;border-radius:14px;padding:20px 14px;transition:.14s}
+.lcard:hover{border-color:#9fcede;box-shadow:0 10px 22px rgba(43,143,176,.15);transform:translateY(-2px)}
+.lic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:#fff;border:1px solid #cfe3ea;color:#2b8fb0;flex:0 0 auto}
+.lic svg{width:20px;height:20px}
+.lcard h4{font-family:Rubik;font-size:16px;font-weight:700;color:var(--green-d);margin-bottom:3px}
+.lcard p{font-size:13.5px;color:var(--mut);line-height:1.45}
+.lecarrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;color:#2b8fb0;font-size:22px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(20,38,28,.12)}
+.lecarrow:hover{background:#2b8fb0;color:#fff;border-color:#2b8fb0}
+.lecarrow.r{right:-8px}.lecarrow.l{left:-8px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:right}
+.cards.eng{grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1200px){.cards.eng{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.cards.eng{grid-template-columns:1fr}}
+@media(max-width:900px){.cards{grid-template-columns:1fr}.h1big{font-size:55px}}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:24px;transition:.15s}
+.card:hover{background:linear-gradient(180deg,var(--green),var(--green-d))!important;border-color:var(--green-d);box-shadow:0 16px 34px rgba(28,107,69,.28);transform:translateY(-3px)}
+.card:hover h3{color:#fff}
+.card:hover p{color:rgba(255,255,255,.86)}
+.cbrand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--green-d);letter-spacing:-.01em;direction:ltr;text-align:right;margin-bottom:2px}
+.cbrand b{color:var(--lime)}
+.card:hover .cbrand{color:#fff}
+.card:hover .cbrand b{color:#8fe6ad}
+.mindtag{display:inline-flex;align-items:center;gap:9px;margin:4px auto 0;font-family:Heebo;font-size:16px;color:var(--mut)}
+.mindtag .wm{font-family:'Space Grotesk';font-weight:700;font-size:21px;color:var(--green-d)}
+.mindtag .wm b{color:var(--lime)}
+.card:hover .ic,.card:hover .av{background:rgba(255,255,255,.16);border-color:transparent}
+.card .ic{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;background:var(--tint);margin-bottom:14px;color:var(--green)}
+.card .ic svg,.tcard .av svg{width:26px;height:26px;display:block}
+.card:hover .ic{color:#fff}
+.tcard{text-align:right;display:flex;align-items:center;gap:13px;padding:16px 18px}
+.tcard .av{width:46px;height:46px;border-radius:50%;background:var(--tint);border:1px solid #d3ebdc;display:grid;place-items:center;margin:0;flex:0 0 auto}
+.tcard .av svg{width:22px;height:22px}
+.tcard .tinfo{min-width:0}
+.tcard h3{font-size:15.5px;margin-bottom:2px}
+.tcard p{color:var(--mut);font-size:14px;line-height:1.5}
+.card h3{font-family:Rubik;font-size:29px;font-weight:700;color:var(--green-d);margin-bottom:6px}
+.card p{font-size:16px;color:var(--mut);line-height:1.6}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:34px 0 46px;color:rgba(255,255,255,.8);font-size:14px;text-align:center}
+.foot .wm{color:#fff} .foot .wm b{color:#8fe6ad} .foot .mono{color:rgba(255,255,255,.5)}
+.fsocial{display:flex;gap:24px;justify-content:center;align-items:center;margin-bottom:6px}
+.fsocial svg{width:30px;height:30px}
+.fsocial a{color:rgba(255,255,255,.6);display:inline-flex;transition:.15s}
+.fsocial a:hover{color:#8fe6ad;transform:translateY(-2px)}
+.modal{position:fixed;inset:0;background:rgba(10,36,24,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal.open{display:flex}
+.modal-card{background:#fff;border-radius:20px;padding:32px 30px;width:100%;max-width:420px;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.35);text-align:center}
+.modal-x{position:absolute;top:12px;left:16px;background:none;border:0;font-size:26px;color:#9aab9f;cursor:pointer;line-height:1}
+/* long green LIVE bar — full-width toggle button */
+.livebox{width:100%}
+.livebar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 26px;cursor:pointer;box-shadow:0 16px 38px rgba(20,38,28,.24);text-align:right;font-family:inherit;transition:border-radius .2s}
+.livebar:hover{filter:brightness(1.07)}
+.livebar.open{border-radius:16px 16px 0 0}
+.lb-chev{font-size:20px;color:#8fe6ad;transition:transform .3s;margin-inline-start:4px}
+.livebar.open .lb-chev{transform:rotate(180deg)}
+.fbpanel{max-height:0;overflow:hidden;transition:max-height .45s ease;border-radius:0 0 16px 16px}
+.fbpanel.open{max-height:4000px;border:1px solid var(--line);border-top:0;background:var(--bg2)}
+.fbclose{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;background:#eef4ef;color:var(--green-d);border:0;border-top:1px solid var(--line);padding:14px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+.fbclose:hover{background:#e2eee7}
+.fbclose .cx{font-size:18px}
+.lb-l{display:flex;align-items:center;gap:14px}
+.lb-live{display:inline-flex;align-items:center;gap:7px;background:rgba(255,90,60,.95);color:#fff;font-family:'Space Grotesk',Rubik;font-weight:700;font-size:13px;letter-spacing:.06em;border-radius:999px;padding:5px 12px}
+.lb-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:lbpulse 1.3s infinite}
+@keyframes lbpulse{0%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}100%{opacity:1;transform:scale(1)}}
+.lb-title{font-family:Rubik;font-weight:800;font-size:20px}
+.lb-r{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.lb-stat{display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.lb-stat b{font-family:Rubik;font-weight:800;font-size:21px;color:#8fe6ad}
+.lb-stat span{font-size:12.5px;color:rgba(255,255,255,.82)}
+.lb-sep{width:1px;height:30px;background:rgba(255,255,255,.2)}
+@media(max-width:640px){.lb-title{font-size:17px}.livebar{padding:14px 18px}}
+/* built-in live discussion arena — 2 columns */
+.fbgrid{display:grid;grid-template-columns:1fr 500px;gap:24px;align-items:start;padding:20px 22px}
+@media(max-width:920px){.fbgrid{grid-template-columns:1fr;justify-items:center}}
+.fbcol-feed{width:500px;max-width:100%}
+.fbcol-feed .fb-page,.fbcol-feed .fb-page span,.fbcol-feed .fb-page iframe{max-width:100%!important}
+.fbcol-info{text-align:right;padding-top:6px}
+.fbcol-info h3{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d);margin-bottom:8px}
+.fbcol-info>p{color:var(--mut);font-size:16px;line-height:1.7;margin-bottom:20px}
+.fbstats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.fbstat{flex:1;min-width:100px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 12px;text-align:center}
+.fbstat b{display:block;font-family:Rubik;font-weight:800;font-size:26px;color:var(--green)}
+.fbstat span{font-size:13px;color:var(--mut)}
+.fbopen{display:flex;align-items:center;justify-content:center;gap:8px;background:#1877F2;color:#fff;text-decoration:none;font-family:Rubik;font-weight:800;font-size:15px;border-radius:12px;padding:14px 26px;box-shadow:0 12px 28px rgba(24,119,242,.28);margin-bottom:10px}
+.fbopen:hover{filter:brightness(1.06)}
+.fbopen.wa{background:#25D366;box-shadow:0 12px 28px rgba(37,211,102,.28)}
+.fbcomments{padding:8px 22px 24px;max-width:960px;margin:0 auto;width:100%}
+.fbcomments h3{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:4px;text-align:right}
+.fbcomments>p{color:var(--mut);font-size:15px;margin-bottom:16px;text-align:right}
+.fbcomments .fb-comments,.fbcomments .fb-comments span,.fbcomments .fb-comments iframe{width:100%!important}
+/* floating WhatsApp button */
+.wafab{position:fixed;bottom:26px;left:26px;z-index:90;background:#25D366;color:#fff;border:0;border-radius:999px;padding:15px 24px;font-family:Rubik;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 14px 34px rgba(37,211,102,.45);display:flex;align-items:center;gap:10px;text-decoration:none}
+.wafab:hover{filter:brightness(1.05)}
+.wafab svg{width:22px;height:22px}
+.frm{display:flex;flex-direction:column;gap:10px;text-align:right}
+.frm input,.frm select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:11px;font-family:Heebo;font-size:14.5px;color:var(--ink);outline:none;background:#fff}
+.frm input:focus,.frm select:focus{border-color:var(--lime)}
+.social{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;background:#fff;font-family:Heebo;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;transition:.12s}
+.sbtn:hover{background:var(--bg2);border-color:#bcdcc8}
+.sbtn b{font-family:'Space Grotesk';font-weight:800;font-size:16px}
+.ordiv{display:flex;align-items:center;gap:12px;color:var(--mut);font-size:14px;margin:6px 0 14px}
+.ordiv::before,.ordiv::after{content:"";flex:1;height:1px;background:var(--line)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+  <div class="nav">
+    <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="location.href='index.html'">
+      <svg width="40" height="40" viewBox="0 0 120 120" style="flex:0 0 auto"><defs><linearGradient id="lb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7f0c1"/><stop offset="1" stop-color="#3aa873"/></linearGradient></defs><path d="M60,18 L98,40 L98,80 L60,102 L22,80 L22,40 Z" fill="url(#lb)"/><path d="M60,86 L60,52" stroke="#0d3a26" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M60,60 C47,60 43,51 43,42 C54,42 60,49 60,60 Z" fill="#0d3a26"/><path d="M60,55 C73,55 77,46 77,37 C66,37 60,44 60,55 Z" fill="#134a30"/></svg>
+      <div style="display:inline-flex;flex-direction:column;line-height:1.04" dir="ltr">
+        <span class="wm" style="font-size:14px;color:#8fe6ad;align-self:flex-start;font-weight:600;letter-spacing:.01em">Ofakim</span>
+        <span class="wm" style="font-size:25px;color:#fff">Agro<b>Data</b></span>
+        <span class="wm" style="font-size:14px;color:#fff;align-self:flex-end;font-weight:600;letter-spacing:.01em">Center</span>
+      </div>
+    </div>
+    <div class="links"><span onclick="location.href='about.html'">מי אנחנו</span><span>מנויים</span><span onclick="location.href='contact.html'">צור קשר</span><span onclick="location.href='privacy.html'">מדיניות פרטיות</span><span onclick="location.href='terms.html'">תקנון</span><span style="color:#8fe6ad;font-weight:800;cursor:pointer" onclick="location.href='ofakim.html'">אופקים</span></div>
+    <div class="navright">
+      <div class="lang">
+        <button class="langbtn" onclick="toggleLang(event)">🌐 <span id="langlbl">עברית</span> ▾</button>
+        <div class="langmenu">
+          <a class="on" data-lang="he" onclick="setLang(this)">🇮🇱 עברית</a><a data-lang="en" onclick="setLang(this)">🇬🇧 English</a><a data-lang="de" onclick="setLang(this)">🇩🇪 Deutsch</a><a data-lang="fr" onclick="setLang(this)">🇫🇷 Français</a><a data-lang="zh" onclick="setLang(this)">🇨🇳 中文</a><a data-lang="ar" onclick="setLang(this)">🇸🇦 العربية</a>
+        </div>
+      </div>
+      <button class="cta ghost" onclick="openLogin()">התחברות</button>
+      <button class="cta" onclick="openReg()">הרשמה</button>
+    </div>
+  </div>
+</div></div>
+
+<div class="hero"><div class="wrap hero-c">
+  <div class="h1big">זירת <span>האגרו-טק</span> של ישראל</div>
+  <div class="subttl" style="font-family:Rubik;font-size:30px;font-weight:700;color:var(--green);margin:4px 0 22px">מרכז נתונים מבוססי מחקר וידע חקלאי מתעדכן</div>
+  <div class="mindtag"><span class="wm">Agro<b>Mind</b></span> · הקופיילוט שמבין את כל הזירה</div>
+  <div class="search search-c" style="margin-top:30px">
+    <button class="plus" onclick="toggleTopics()" title="כל הנושאים">+</button>
+    <input id="q" placeholder="שאל: מהו המשקל הסגולי האופטימלי להשקיה בעגבניות באזור הערבה?" onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="go" onclick="doSearch()">חפש</button>
+  </div>
+  <div class="liveline"><span class="livedot"></span> <b>LIVE</b> · מעודכן ליום <span id="liveTime">—</span></div>
+  <div id="topicpanel" class="topicpanel">
+    <div class="scope"><a onclick="setScope(this)">בית</a><a onclick="setScope(this)">שכונה</a><a onclick="setScope(this)">קהילה</a><a onclick="setScope(this)">עיר</a><a onclick="setScope(this)">חקלאי</a><a onclick="setScope(this)">מדינה</a><a onclick="setScope(this)">יבשת</a><a class="on" onclick="setScope(this)">גלובאלי</a></div>
+    <div class="grid">
+      <a>אנרגיה</a><a>אקלים</a><a>בריאות הצומח</a><a>גידולים</a><a>גנטיקה</a><a>דישון</a><a>הדברה</a><a>השבחה</a><a>השוק הסיטונאי</a><a>השקיה</a><a>זנים</a><a>זרעים</a><a>חיישנים</a><a>חממות</a><a>חקלאות ימית</a><a>חקלאות מדבר</a><a>טפטוף</a><a>יבול</a><a>יערות</a><a>כלכלה חקלאית</a><a>לוויין</a><a>מזיקים</a><a>מחקר</a><a>מים</a><a>עיור</a><a>ערים</a><a>פוד-טק</a><a>פקעות</a><a>פרחים</a><a>ציוד ומיכון חקלאי</a><a>קטיף</a><a>קרקע</a><a>רחפנים</a><a>ריסוס</a><a>שוק ומחירים</a><a>תבלינים</a>
+    </div>
+  </div>
+</div></div>
+
+<div style="background:#fff;border-top:1px solid var(--line)"><div class="wrap">
+  <div class="sec">
+    <div class="kicker">The Engines</div>
+    <div class="lead"><span class="wm" style="font-size:40px">Agro<b>Data</b></span></div>
+    <div class="cards eng">
+      <div class="card"><div class="ic" data-i="database"></div><div class="cbrand wm">Agro<b>Lake</b></div><h3>מאגר נתונים מרכזי</h3><p>Data Lake לאיסוף וניהול נתוני החקלאות — שליטה וחוסן על המידע.</p></div>
+      <a class="card" href="news.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="news"></div><div class="cbrand wm">Agro<b>Pulse</b></div><h3>חדשות ואקטואליה</h3><p>כותרות רצות וכתבות עם תמונות מכל מקורות החקלאות והאגרו-טק בישראל.</p></a>
+      <div class="card"><div class="ic" data-i="chip"></div><div class="cbrand wm">Agro<b>Mind</b></div><h3>אנליטיקת AI</h3><p>חיפוש סמנטי, חיזוי והמלצות מעל הדאטה והמחקר.</p></div>
+      <a class="card" href="research.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="grad"></div><div class="cbrand wm">Agro<b>Scholar</b></div><h3>מחקר ואקדמיה</h3><p>מכון ויצמן, הפקולטה לחקלאות, בן-גוריון ועוד — ידע אקדמי מקושר לדאטה.</p></a>
+      <a class="card" href="labs.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="flask"></div><div class="cbrand wm">Agro<b>Labs</b></div><h3>המדען הראשי וחממות</h3><p>מו״פ המדען הראשי, חממות טכנולוגיות וקבוצות ניסוי בשטח.</p></a>
+      <a class="card" href="research.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="hub"></div><div class="cbrand wm">Agro<b>RnD</b></div><h3>מו״פים · מרכזי מו״פ</h3><p>מרכזי מחקר ופיתוח אזוריים — ערבה, רמת נגב, צפון ועוד.</p></a>
+      <div class="card"><div class="ic" data-i="sensor"></div><div class="cbrand wm">Agro<b>Sense</b></div><h3>חיישנים ו-IoT</h3><p>רשת חיישני שדה שמזינה נתונים בזמן אמת.</p></div>
+      <a class="card" href="maps.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="map"></div><div class="cbrand wm">Agro<b>Map</b></div><h3>מפות ו-GIS</h3><p>שכבות לוויין — ירק (NDVI), גשמים, חום ויבולים, מוכן לחיבור ל-Earth Engine.</p></a>
+      <div class="card"><div class="ic" data-i="hub"></div><div class="cbrand wm">Agro<b>Hub</b></div><h3>Hub ואקסלרטור</h3><p>מפגש למגדלים, חברות ומחקר — והאצת פיילוטים.</p></div>
+      <a class="card" href="community.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="community"></div><div class="cbrand wm">Agro<b>Academy</b></div><h3>חינוך וקהילה</h3><p>הכשרות, קורסים וקהילת ידע — חיבור בין מגדלים, סטודנטים וחוקרים.</p></a>
+      <a class="card" href="gov.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="shield"></div><div class="cbrand wm">Agro<b>Gov</b></div><h3>מדיניות וממשל נתונים</h3><p>החלטות ממשלה, רגולציה ותקנים — ופרטיות ובעלות על הנתונים.</p></a>
+      <a class="card" href="conferences.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="calendar"></div><div class="cbrand wm">Agro<b>Expo</b></div><h3>כנסים ותערוכות</h3><p>יומן אירועי אגרו-טק — לפי חודש, מדינה ונושא, עם חיפוש.</p></a>
+      <div class="card"><div class="ic" data-i="rocket"></div><div class="cbrand wm">Agro<b>Scout</b></div><h3>סטארטאפים</h3><p>מפת הסטארטאפים בתחום — פרופילים, טכנולוגיות וחיבור להזדמנויות.</p></div>
+      <a class="card" href="companies.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="building"></div><div class="cbrand wm">Agro<b>Directory</b></div><h3>חברות בישראל</h3><p>מדריך חברות האגרו-טק בישראל — פעילות, מוצרים ושותפויות.</p></a>
+      <a class="card" href="trade.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="trade"></div><div class="cbrand wm">Agro<b>Trade</b></div><h3>סחר בינלאומי</h3><p>יבוא ויצוא תוצרת חקלאית — מוצרים מובילים, שווקי יעד ושותפות סחר.</p></a>
+      <a class="card" href="journals.html" style="text-decoration:none;color:inherit;display:block"><div class="ic" data-i="book"></div><div class="cbrand wm">Agro<b>Library</b></div><h3>כתבי עת ומחקרים</h3><p>טבלה מסודרת של המקורות המובילים באגרו-טק, עם חיפוש חכם וקישורים.</p></a>
+    </div>
+  </div>
+</div></div>
+
+<!-- LIVE DISCUSSION ARENA (built-in Facebook feed) -->
+<div id="fb-root"></div>
+<div class="wrap"><div class="sec" style="padding-top:20px;padding-bottom:20px">
+  <div class="livebox">
+    <button class="livebar" id="livebar" onclick="toggleLive()" aria-expanded="false">
+      <span class="lb-l"><span class="lb-live"><span class="lb-dot"></span>LIVE</span><span class="lb-title">💬 זירת השיח החי</span></span>
+      <span class="lb-r">
+        <span class="lb-stat"><b id="liveOnline" data-base="34">37</b><span>מחוברים כעת</span></span>
+        <span class="lb-sep"></span>
+        <span class="lb-stat"><b>1,240</b><span>חברים</span></span>
+        <span class="lb-sep"></span>
+        <span class="lb-stat"><b id="liveClock" class="mono">00:00:00</b><span>שעון הזירה</span></span>
+        <span class="lb-chev">▾</span>
+      </span>
+    </button>
+    <div class="fbpanel" id="fbpanel">
+      <div style="text-align:center;padding:22px 20px 4px">
+        <div class="kicker">Live Community</div>
+        <div class="lead">זירת השיח החי</div>
+        <p class="lede-c" style="margin:0 auto">הדיון החי של קהילת האגרו-טק — פוסטים, שאלות ותגובות בזמן אמת, ישירות מדף הפייסבוק הייעודי של הזירה.</p>
+      </div>
+      <div class="fbgrid">
+        <div class="fbcol-info">
+          <h3>הצטרפו לדיון 🌱</h3>
+          <p>כאן מתנהל השיח החי של קהילת האגרו-טק — שאלות מהשטח, עדכונים, שיתופי ידע ותגובות בזמן אמת.</p>
+          <div class="fbstats">
+            <div class="fbstat"><b>1,240</b><span>חברים בקהילה</span></div>
+            <div class="fbstat"><b id="liveOnline2" data-base="34">37</b><span>מחוברים כעת</span></div>
+            <div class="fbstat"><b>68</b><span>פוסטים החודש</span></div>
+          </div>
+          <a class="fbopen" href="https://www.facebook.com/ofaqim.co.il/" target="_blank" rel="noopener">💬 הצטרפו לשיח בפייסבוק ↗</a>
+          <a class="fbopen wa" href="https://wa.me/972500000000" target="_blank" rel="noopener">🟢 קבוצת הוואטסאפ ↗</a>
+        </div>
+        <div class="fbcol-feed">
+          <div class="fb-page" data-href="https://www.facebook.com/ofaqim.co.il/" data-tabs="timeline,messages" data-width="500" data-height="720" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
+        </div>
+      </div>
+      <div class="fbcomments">
+        <h3>💬 כתבו תגובה — השיח מתנהל כאן באתר</h3>
+        <p>התחברו עם פייסבוק וכתבו תגובה ישירות בעמוד, בלי לצאת מהאתר.</p>
+        <div class="fb-comments" data-href="https://agrodata.co.il/" data-width="100%" data-numposts="10" data-order-by="reverse_time"></div>
+      </div>
+      <button class="fbclose" onclick="toggleLive()"><span class="cx">▲</span> סגירת זירת השיח</button>
+    </div>
+  </div>
+</div></div>
+
+<!-- FINANCIAL ARENA -->
+<div style="background:linear-gradient(180deg,#eef7f1,#e6f3ea);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap"><div class="sec">
+  <div class="kicker">Financial Arena</div>
+  <div class="lead">הזירה הפיננסית</div>
+  <div class="cards">
+    <div class="card" style="background:#fff"><div class="ic" data-i="bank"></div><div class="cbrand wm">Agro<b>Bank</b></div><h3>אגרו בנק</h3><p>בנקאות, אשראי ומימון מותאמים למגדלים ולחברות אגרו-טק.</p></div>
+    <div class="card" style="background:#fff"><div class="ic" data-i="chart"></div><div class="cbrand wm">Agro<b>Invest</b></div><h3>אגרו אינווסט</h3><p>פלטפורמת השקעות בחדשנות חקלאית — מסטארטאפ ועד פרויקט שדה.</p></div>
+    <a class="card" href="agro-stock.html" style="background:#fff;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="candles"></div><div class="cbrand wm">Agro<b>Stock</b></div><h3>אגרו סטוק</h3><p>מסחר בסחורות חקלאיות ומדדי שוק בזמן אמת.</p></a>
+    <div class="card" style="background:#fff"><div class="ic" data-i="bulb"></div><div class="cbrand wm">Agro<b>Venture</b></div><h3>מרעיון למוצר</h3><p>ליווי מרעיון ראשוני ל-POC ולמוצר.</p></div>
+    <div class="card" style="background:#fff"><div class="ic" data-i="rocket"></div><div class="cbrand wm">Agro<b>Launch</b></div><h3>סטארטאפ בהמראה</h3><p>האצה, פיילוטים וכניסה לשוק.</p></div>
+    <div class="card" style="background:#fff"><div class="ic" data-i="chart"></div><div class="cbrand wm">Agro<b>Capital</b></div><h3>גיוס הון</h3><p>חיבור למשקיעים, קרנות ומענקים.</p></div>
+  </div>
+</div></div></div>
+
+<!-- TEAM -->
+<div class="wrap"><div class="sec">
+  <div class="kicker">The Team</div>
+  <div class="lead">צוות המומחים</div>
+  <div class="cards" style="text-align:center">
+    <div class="card tcard"><div class="av" data-i="flask"></div><div class="tinfo"><h3>מנהל/ת מדעי/ת ראשי/ת</h3><p>הובלת החזון המדעי, אמינות הנתונים והמתודולוגיה.</p></div></div>
+    <div class="card tcard"><div class="av" data-i="database"></div><div class="tinfo"><h3>ראש/ת דאטה והנדסה</h3><p>ארכיטקטורת המאגר, קליטה, אבטחה ותשתית.</p></div></div>
+    <div class="card tcard"><div class="av" data-i="leaf"></div><div class="tinfo"><h3>אגרונום/ית ראשי/ת</h3><p>הצומת בין המדע לשדה — צרכי המגדלים.</p></div></div>
+    <div class="card tcard"><div class="av" data-i="chip"></div><div class="tinfo"><h3>מומחה/ית AI ואנליטיקה</h3><p>מודלים, חיפוש סמנטי, חיזוי ותובנות.</p></div></div>
+    <div class="card tcard"><div class="av" data-i="grad"></div><div class="tinfo"><h3>קשרי אקדמיה ומחקר</h3><p>חיבור לדוקטורט, תזות ושיתופי מחקר.</p></div></div>
+    <div class="card tcard"><div class="av" data-i="people"></div><div class="tinfo"><h3>פיתוח עסקי ושותפויות</h3><p>חברות, משקיעים וגופי ממשלה.</p></div></div>
+  </div>
+  <div class="subhead">מועצת הלקטורים · חשיבה קבוצתית</div>
+  <div class="subcap">כל תוכן בזירה עובר ביקורת עמיתים של מועצה מדעית-אגרונומית</div>
+  <div class="lecwrap">
+    <button class="lecarrow r" onclick="scrollLec(-1)">›</button>
+    <div class="lectors" id="lectors">
+      <div class="lcard"><div class="lic" data-i="flask"></div><div><h4>לקטור מדעי</h4><p>אימות תקינות מדעית של תוכן ומחקרים.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="leaf"></div><div><h4>לקטור אגרונומי</h4><p>התאמה לשטח ולצרכי המגדל.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="shield"></div><div><h4>מומחה מדיניות ורגולציה</h4><p>עמידה בתקנים, פרטיות ורגולציה.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="people"></div><div><h4>נציג ארגוני החקלאים</h4><p>קול המגדלים והשטח.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="map"></div><div><h4>מומחה בין-לאומי</h4><p>פרספקטיבה גלובלית וחדשנות עולמית.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="book"></div><div><h4>משרדי פטנטים</h4><p>ליווי רישום פטנטים והגנת קניין רוחני לחדשנות אגרו-טק.</p></div></div>
+    </div>
+    <button class="lecarrow l" onclick="scrollLec(1)">‹</button>
+  </div>
+</div></div>
+
+<!-- INVESTMENT FUND -->
+<div style="background:linear-gradient(180deg,#eef7f1,#e6f3ea);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap"><div class="sec">
+  <div class="kicker">Investment Fund</div>
+  <div class="lead">קרן ההשקעות</div>
+  <p class="lede-c" style="margin:0 auto 8px">הזרוע הפיננסית של הזירה — משקיעה בסטארטאפים ובחדשנות אגרו-טק על גבי המאגר, מהרעיון ל-POC, פיילוט וצמיחה.</p>
+  <div class="stats-c">
+    <div class="stat"><b>₪120M</b><span>גובה הקרן</span></div>
+    <div class="stat"><b>24</b><span>חברות פורטפוליו</span></div>
+    <div class="stat"><b>Seed→A</b><span>סבבי השקעה</span></div>
+    <div class="stat"><b>18</b><span>שותפים אסטרטגיים</span></div>
+  </div>
+  <div style="margin-top:28px"><button class="cta" style="background:linear-gradient(90deg,var(--green),var(--lime));color:#fff">להצעת השקעה →</button></div>
+</div></div></div>
+
+<div class="footbar"><div class="wrap"><div class="foot">
+  <div class="fsocial">
+    <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.5zM9.8 15.3V8.7l5.7 3.3z"/></svg></a>
+    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+    <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M20.4 3H3.6A.6.6 0 0 0 3 3.6v16.8a.6.6 0 0 0 .6.6h16.8a.6.6 0 0 0 .6-.6V3.6a.6.6 0 0 0-.6-.6zM8.3 18.3H5.5V9.7h2.8zM6.9 8.5a1.6 1.6 0 1 1 0-3.3 1.6 1.6 0 0 1 0 3.3zm11.4 9.8h-2.8v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2v4.3H9.7V9.7h2.7v1.2h.04c.4-.7 1.3-1.4 2.6-1.4 2.8 0 3.3 1.8 3.3 4.2z"/></svg></a>
+    <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2A10 10 0 0 0 8.8 21.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.300-4.5-1.1-4.5-4.9 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.8-2.3 4.6-4.5 4.9.3.3.6.9.6 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a>
+    <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.6.1l-.9 1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.4.1-.6l.5-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.6-.5H8c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 5 4.3 2.5 1 3 .8 3.5.7.6 0 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a>
+    <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M21.9 4.3 2.9 11.6c-1.3.5-1.3 1.3-.2 1.6l4.8 1.5 1.8 5.8c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.6c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.2-.5-1.8-1.2-1.6zM9.5 14.2l9-5.7c.4-.3.8-.1.5.2l-7.5 6.8-.3 3z"/></svg></a>
+    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2 0 1.8.3 2.2.4.6.2 1 .4 1.4.9.5.4.7.8.9 1.4.1.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.8s0 3.6-.1 4.9c0 1.2-.3 1.8-.4 2.2-.2.6-.4 1-.9 1.4-.4.5-.8.7-1.4.9-.4.1-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.3-2.2-.4a3.6 3.6 0 0 1-1.4-.9 3.6 3.6 0 0 1-.9-1.4c-.1-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c0-1.2.3-1.8.4-2.2.2-.6.4-1 .9-1.4.4-.5.8-.7 1.4-.9.4-.1 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1 0-1.7.3-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.1.4-.3 1-.4 2.1C2.6 9.9 2.6 10.3 2.6 12s0 2.1.1 3.3c0 1.1.3 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.1 1 .3 2.1.4 1.2 0 1.6.1 4.7.1s3.5 0 4.7-.1c1.1 0 1.7-.3 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.1-.4.3-1 .4-2.1 0-1.2.1-1.6.1-3.3s0-2.1-.1-3.3c0-1.1-.3-1.7-.4-2.1a3.5 3.5 0 0 0-.8-1.3 3.5 3.5 0 0 0-1.3-.8c-.4-.1-1-.3-2.1-.4-1.2 0-1.6-.1-4.7-.1zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 8.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.4-8.4a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+    <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M16.6 2h-3v13.2a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.6a5.6 5.6 0 1 0 4.8 5.6V8.5a7 7 0 0 0 4.1 1.3V6.7a4.1 4.1 0 0 1-4.1-4.1z"/></svg></a>
+  </div>
+  <div style="margin-top:16px"><span class="wm">Ofakim Agro<b>Data</b> Center</span> · <span class="ftag">זירת האגרו-טק של ישראל</span> · <span class="mono">demo v0.2 · 30-07-2026</span></div>
+</div></div></div>
+
+<!-- REGISTRATION MODAL -->
+<div id="regmodal" class="modal" onclick="if(event.target===this)closeReg()">
+  <div class="modal-card">
+    <button class="modal-x" onclick="closeReg()">×</button>
+    <div class="kicker">Sign Up</div>
+    <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">הרשמה לפלטפורמה</h2>
+    <p style="color:var(--mut);font-size:14px;margin-bottom:18px">פתחו חשבון וקבלו גישה למאגר, לחיפוש ולמחקר.</p>
+    <div class="social">
+      <button class="sbtn"><b style="color:#4285F4">G</b> <span>הרשמה עם Google</span></button>
+      <button class="sbtn"><b style="color:#1877F2">f</b> <span>הרשמה עם Facebook</span></button>
+      <button class="sbtn"><b></b> <span>הרשמה עם Apple</span></button>
+    </div>
+    <div class="ordiv"><span>או במייל</span></div>
+    <div class="frm">
+      <input placeholder="שם מלא">
+      <input placeholder="אימייל" type="email">
+      <input placeholder="ארגון / חברה">
+      <select><option>תחום עיסוק…</option><option>מגדל/ת</option><option>חברה / סטארטאפ</option><option>מחקר / אקדמיה</option><option>ממשלה / רשות</option></select>
+      <input placeholder="סיסמה" type="password">
+      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none">הרשמה →</button>
+    </div>
+    <p style="text-align:center;color:var(--mut);font-size:14px;margin-top:14px"><span class="lsub">כבר רשומים?</span> <a style="color:var(--green);font-weight:700;cursor:pointer" onclick="closeReg();openLogin()">התחברות</a></p>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginmodal" class="modal" onclick="if(event.target===this)closeLogin()">
+  <div class="modal-card">
+    <button class="modal-x" onclick="closeLogin()">×</button>
+    <div class="kicker">Sign In</div>
+    <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">התחברות</h2>
+    <p style="color:var(--mut);font-size:14px;margin-bottom:18px">ברוכים השבים לזירת האגרו-טק.</p>
+    <div class="social">
+      <button class="sbtn"><b style="color:#4285F4">G</b> <span>התחברות עם Google</span></button>
+      <button class="sbtn"><b style="color:#1877F2">f</b> <span>התחברות עם Facebook</span></button>
+    </div>
+    <div class="ordiv"><span>או</span></div>
+    <div class="frm">
+      <input placeholder="שם משתמש / אימייל">
+      <input placeholder="סיסמה" type="password">
+      <div style="text-align:left;margin-top:-2px"><a style="color:var(--mut);font-size:14px;cursor:pointer">שכחת סיסמה?</a></div>
+      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none">התחברות →</button>
+    </div>
+    <p style="text-align:center;color:var(--mut);font-size:14px;margin-top:14px"><span class="lsub">אין חשבון?</span> <a style="color:var(--green);font-weight:700;cursor:pointer" onclick="closeLogin();openReg()">הרשמה</a></p>
+  </div>
+</div>
+
+<!-- FLOATING WHATSAPP -->
+<a class="wafab" href="https://wa.me/972500000000" target="_blank" rel="noopener" title="דברו איתנו בוואטסאפ"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.25 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43l-.48-.01c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg> וואטסאפ</a>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v21.0&appId=1365641238994519"></script>
+
+<script>
+/* live discussion arena bar: ticking clock + member/online counters */
+(function(){
+ var c=document.getElementById('liveClock');
+ function two(n){return (n<10?'0':'')+n;}
+ function tick(){if(!c)return;var d=new Date();c.textContent=two(d.getHours())+':'+two(d.getMinutes())+':'+two(d.getSeconds());}
+ tick();setInterval(tick,1000);
+ var ons=document.querySelectorAll('[id^="liveOnline"]');
+ if(ons.length){setInterval(function(){var base=34,v=base+Math.floor(Math.random()*9);ons.forEach(function(el){el.textContent=v;});},4000);}
+})();
+var _fbParsed=false;
+function toggleLive(){
+ var bar=document.getElementById('livebar'),panel=document.getElementById('fbpanel');
+ var open=panel.classList.toggle('open');bar.classList.toggle('open',open);bar.setAttribute('aria-expanded',open);
+ if(open&&!_fbParsed&&window.FB&&FB.XFBML){FB.XFBML.parse(panel);_fbParsed=true;}
+ if(open){setTimeout(function(){panel.scrollIntoView({behavior:'smooth',block:'nearest'});},260);}
+}
+function scrollTopics(d){const t=document.querySelector('.topicbar .track');if(t)t.scrollBy({left:d*220,behavior:'smooth'});}
+function openReg(){document.getElementById('regmodal').classList.add('open')}
+function closeReg(){document.getElementById('regmodal').classList.remove('open')}
+function openLogin(){document.getElementById('loginmodal').classList.add('open')}
+function closeLogin(){document.getElementById('loginmodal').classList.remove('open')}
+function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
+const DICT={
+"מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",
+"התחברות":"Sign In","הרשמה":"Sign Up","חפש":"Search",
+"מרכז נתונים מבוססי מחקר וידע חקלאי מתעדכן":"An up-to-date research-based agricultural data & knowledge hub",
+"בית":"Home","שכונה":"Neighborhood","קהילה":"Community","עיר":"City","חקלאי":"Farm","מדינה":"Country","יבשת":"Continent","גלובאלי":"Global",
+"אנרגיה":"Energy","אקלים":"Climate","בריאות הצומח":"Plant health","גידולים":"Crops","גנטיקה":"Genetics","דישון":"Fertilization","הדברה":"Pest control","השבחה":"Breeding","השוק הסיטונאי":"Wholesale market","השקיה":"Irrigation","זנים":"Varieties","זרעים":"Seeds","חיישנים":"Sensors","חממות":"Greenhouses","חקלאות ימית":"Marine agriculture","חקלאות מדבר":"Desert agriculture","טפטוף":"Drip irrigation","יבול":"Yield","יערות":"Forests","כלכלה חקלאית":"Ag economics","לוויין":"Satellite","מזיקים":"Pests","מחקר":"Research","מים":"Water","עיור":"Urbanization","ערים":"Cities","פוד-טק":"Food-tech","פקעות":"Bulbs","פרחים":"Flowers","ציוד ומיכון חקלאי":"Ag equipment & machinery","קטיף":"Harvesting","קרקע":"Soil","רחפנים":"Drones","ריסוס":"Spraying","שוק ומחירים":"Market & prices","תבלינים":"Spices",
+"מאגר נתונים מרכזי":"Central Data Repository","חדשות ואקטואליה":"News & Current Affairs","חינוך וקהילה":"Education & Community","הכשרות, קורסים וקהילת ידע — חיבור בין מגדלים, סטודנטים וחוקרים.":"Training, courses and a knowledge community — connecting growers, students and researchers.","מפות ו-GIS":"Maps & GIS","המדען הראשי וחממות":"Chief Scientist & Incubators","מו״פ המדען הראשי, חממות טכנולוגיות וקבוצות ניסוי בשטח.":"Chief Scientist R&D, tech incubators and field trial groups.","מו״פים · מרכזי מו״פ":"R&D Centers","מרכזי מחקר ופיתוח אזוריים — ערבה, רמת נגב, צפון ועוד.":"Regional R&D centers — Arava, Ramat Negev, North and more.","סחר בינלאומי":"International Trade","יבוא ויצוא תוצרת חקלאית — מוצרים מובילים, שווקי יעד ושותפות סחר.":"Import & export of agricultural produce — top products, target markets and trade partners.","שכבות לוויין — ירק (NDVI), גשמים, חום ויבולים, מוכן לחיבור ל-Earth Engine.":"Satellite layers — vegetation (NDVI), rainfall, heat and crops, ready to connect to Earth Engine.","כותרות רצות וכתבות עם תמונות מכל מקורות החקלאות והאגרו-טק בישראל.":"Running headlines and illustrated articles from all of Israel's agriculture and agri-tech sources.","Data Lake לאיסוף וניהול נתוני החקלאות — שליטה וחוסן על המידע.":"A Data Lake for collecting and managing agricultural data — control and resilience over information.",
+"אנליטיקת AI":"AI Analytics","חיפוש סמנטי, חיזוי והמלצות מעל הדאטה והמחקר.":"Semantic search, prediction and recommendations over the data and research.",
+"מחקר ואקדמיה":"Research & Academia","מכון ויצמן, הפקולטה לחקלאות, בן-גוריון ועוד — ידע אקדמי מקושר לדאטה.":"Weizmann Institute, the Faculty of Agriculture, Ben-Gurion and more — academic knowledge linked to the data.",
+"חיישנים ו-IoT":"Sensors & IoT","רשת חיישני שדה שמזינה נתונים בזמן אמת.":"A field-sensor network feeding real-time data.",
+"Hub ואקסלרטור":"Hub & Accelerator","מפגש למגדלים, חברות ומחקר — והאצת פיילוטים.":"A meeting point for growers, companies and research — accelerating pilots.",
+"מדיניות וממשל נתונים":"Policy & Data Governance","פרטיות, בעלות ותקנים — מסגרת מסודרת.":"Privacy, ownership and standards — an orderly framework.",
+"כנסים ותערוכות":"Conferences & Expos","יומן אירועי אגרו-טק — לפי חודש, מדינה ונושא, עם חיפוש.":"A calendar of agri-tech events — by month, country and topic, with search.",
+"סטארטאפים":"Startups","מפת הסטארטאפים בתחום — פרופילים, טכנולוגיות וחיבור להזדמנויות.":"The field's startup map — profiles, technologies and connections to opportunities.",
+"חברות בישראל":"Companies in Israel","מדריך חברות האגרו-טק בישראל — פעילות, מוצרים ושותפויות.":"A guide to Israel's agri-tech companies — activity, products and partnerships.",
+"כתבי עת ומחקרים":"Journals & Research","טבלה מסודרת של המקורות המובילים באגרו-טק, עם חיפוש חכם וקישורים.":"An organized table of the leading agri-tech sources, with smart search and links.",
+"הזירה הפיננסית":"The Financial Arena",
+"אגרו בנק":"AgroBank","בנקאות, אשראי ומימון מותאמים למגדלים ולחברות אגרו-טק.":"Banking, credit and financing tailored to growers and agri-tech companies.",
+"אגרו אינווסט":"AgroInvest","פלטפורמת השקעות בחדשנות חקלאית — מסטארטאפ ועד פרויקט שדה.":"An investment platform for agricultural innovation — from startup to field project.",
+"אגרו סטוק":"AgroStock","מסחר בסחורות חקלאיות ומדדי שוק בזמן אמת.":"Trading agricultural commodities and market indices in real time.",
+"מרעיון למוצר":"From Idea to Product","ליווי מרעיון ראשוני ל-POC ולמוצר.":"Guidance from initial idea to POC and product.",
+"סטארטאפ בהמראה":"Startup Takeoff","האצה, פיילוטים וכניסה לשוק.":"Acceleration, pilots and market entry.",
+"גיוס הון":"Fundraising","חיבור למשקיעים, קרנות ומענקים.":"Connection to investors, funds and grants.",
+"צוות המומחים":"The Expert Team","מועצת הלקטורים · חשיבה קבוצתית":"Review Board · Group Thinking","כל תוכן בזירה עובר ביקורת עמיתים של מועצה מדעית-אגרונומית":"All content is peer-reviewed by a scientific-agronomic board.","לקטור מדעי":"Scientific Reviewer","אימות תקינות מדעית של תוכן ומחקרים.":"Verifying the scientific validity of content and research.","לקטור אגרונומי":"Agronomic Reviewer","התאמה לשטח ולצרכי המגדל.":"Fit to the field and to growers\u2019 needs.","מומחה מדיניות ורגולציה":"Policy & Regulation Expert","עמידה בתקנים, פרטיות ורגולציה.":"Compliance with standards, privacy and regulation.","נציג ארגוני החקלאים":"Farmer Organizations Rep","קול המגדלים והשטח.":"The voice of growers and the field.","מומחה בין-לאומי":"International Expert","פרספקטיבה גלובלית וחדשנות עולמית.":"Global perspective and worldwide innovation.","משרדי פטנטים":"Patent Offices","ליווי רישום פטנטים והגנת קניין רוחני לחדשנות אגרו-טק.":"Patent registration and IP protection for agri-tech innovation.",
+"מנהל/ת מדעי/ת ראשי/ת":"Chief Scientific Officer","הובלת החזון המדעי, אמינות הנתונים והמתודולוגיה.":"Leading the scientific vision, data integrity and methodology.",
+"ראש/ת דאטה והנדסה":"Head of Data & Engineering","ארכיטקטורת המאגר, קליטה, אבטחה ותשתית.":"Repository architecture, ingestion, security and infrastructure.",
+"אגרונום/ית ראשי/ת":"Chief Agronomist","הצומת בין המדע לשדה — צרכי המגדלים.":"The junction between science and the field — growers' needs.",
+"מומחה/ית AI ואנליטיקה":"AI & Analytics Expert","מודלים, חיפוש סמנטי, חיזוי ותובנות.":"Models, semantic search, prediction and insights.",
+"קשרי אקדמיה ומחקר":"Academic & Research Relations","חיבור לדוקטורט, תזות ושיתופי מחקר.":"Connecting to PhDs, theses and research collaborations.",
+"פיתוח עסקי ושותפויות":"Business Development & Partnerships","חברות, משקיעים וגופי ממשלה.":"Companies, investors and government bodies.",
+"קרן ההשקעות":"The Investment Fund",
+"הזרוע הפיננסית של הזירה — משקיעה בסטארטאפים ובחדשנות אגרו-טק על גבי המאגר, מהרעיון ל-POC, פיילוט וצמיחה.":"The arena's financial arm — investing in startups and agri-tech innovation on top of the repository, from idea to POC, pilot and growth.",
+"גובה הקרן":"Fund size","חברות פורטפוליו":"Portfolio companies","סבבי השקעה":"Investment rounds","שותפים אסטרטגיים":"Strategic partners",
+"להצעת השקעה →":"Submit an investment proposal →",
+"זירת האגרו-טק של ישראל":"Israel's AgriTech Arena",
+"הרשמה לפלטפורמה":"Sign up to the platform","פתחו חשבון וקבלו גישה למאגר, לחיפוש ולמחקר.":"Open an account and get access to the repository, search and research.",
+"הרשמה עם Google":"Sign up with Google","הרשמה עם Facebook":"Sign up with Facebook","הרשמה עם Apple":"Sign up with Apple","או במייל":"or by email","הרשמה →":"Sign up →","כבר רשומים?":"Already registered?",
+"ברוכים השבים לזירת האגרו-טק.":"Welcome back to the AgriTech Arena.","התחברות עם Google":"Sign in with Google","התחברות עם Facebook":"Sign in with Facebook","או":"or","שכחת סיסמה?":"Forgot password?","התחברות →":"Sign in →","אין חשבון?":"No account?",
+"מגדל/ת":"Grower","חברה / סטארטאפ":"Company / startup","מחקר / אקדמיה":"Research / academia","ממשלה / רשות":"Government / authority","תחום עיסוק…":"Field of work…"
+};
+const PH={
+"שאל: מהו המשקל הסגולי האופטימלי להשקיה בעגבניות באזור הערבה?":"Ask: what is the optimal specific gravity for tomato irrigation in the Arava region?",
+"שם מלא":"Full name","אימייל":"Email","ארגון / חברה":"Organization / company","סיסמה":"Password","שם משתמש / אימייל":"Username / email"
+};
+const TXT_SEL='.links span, .lcard h4, .lcard p, .subttl, .scope a, .topicpanel .grid a, .lead, .card h3, .card p, .tinfo h3, .tinfo p, .stat span, .modal-card .rk, .modal-card > p, .sbtn span, .ordiv span, button, option, .lede-c, .ftag, .lsub, .modal-card p a, .frm a';
+function applyLang(lang){
+ const en=lang==='en';
+ const H=document.documentElement; H.lang=en?'en':'he'; H.dir=en?'ltr':'rtl';
+ document.querySelectorAll(TXT_SEL).forEach(el=>{
+  if(el.children.length) return;
+  if(!el.hasAttribute('data-he')) el.setAttribute('data-he',el.textContent);
+  const he=el.getAttribute('data-he'),k=he.trim();
+  el.textContent = (en&&DICT[k]!=null)? DICT[k] : he;
+ });
+ document.querySelectorAll('[placeholder]').forEach(el=>{
+  if(!el.hasAttribute('data-heph')) el.setAttribute('data-heph',el.getAttribute('placeholder'));
+  const he=el.getAttribute('data-heph');
+  el.setAttribute('placeholder',(en&&PH[he]!=null)?PH[he]:he);
+ });
+ const hb=document.querySelector('.h1big');
+ if(hb){ if(!hb.hasAttribute('data-hehtml')) hb.setAttribute('data-hehtml',hb.innerHTML);
+  hb.innerHTML = en? "Israel's <span>AgriTech</span> Arena" : hb.getAttribute('data-hehtml'); }
+}
+function setLang(a){document.getElementById('langlbl').textContent=a.textContent.trim();document.querySelectorAll('.langmenu a').forEach(x=>x.classList.remove('on'));a.classList.add('on');document.querySelector('.langmenu').classList.remove('open');applyLang(a.getAttribute('data-lang')||'he');}
+document.addEventListener('click',function(){var m=document.querySelector('.langmenu');if(m)m.classList.remove('open');});
+function toggleTopics(){var p=document.getElementById('topicpanel');var b=document.querySelector('.plus');var open=p.classList.toggle('open');b.textContent=open?'−':'+';b.title=open?'סגור':'כל הנושאים';}
+function doSearch(){var q=(document.getElementById('q').value||'').trim();location.href='search-results.html?q='+encodeURIComponent(q);}
+function updLive(){var d=new Date();var wd=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];var mo=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];var p=n=>String(n).padStart(2,'0');var el=document.getElementById('liveTime');if(el)el.textContent='יום '+wd[d.getDay()]+', '+d.getDate()+' ב'+mo[d.getMonth()]+' '+d.getFullYear()+' · '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}
+updLive();setInterval(updLive,1000);
+// scope-based topic filtering (בית=0 … גלובאלי=7)
+const TMIN={"אנרגיה":3,"אקלים":5,"בריאות הצומח":0,"גידולים":0,"גנטיקה":5,"דישון":0,"הדברה":0,"השבחה":5,"השוק הסיטונאי":3,"השקיה":0,"זנים":2,"זרעים":0,"חיישנים":1,"חממות":0,"חקלאות ימית":5,"חקלאות מדבר":5,"טפטוף":0,"יבול":2,"יערות":6,"כלכלה חקלאית":5,"לוויין":5,"מזיקים":0,"מחקר":5,"מים":0,"עיור":3,"ערים":3,"פוד-טק":4,"פקעות":1,"פרחים":0,"ציוד ומיכון חקלאי":4,"קטיף":2,"קרקע":0,"רחפנים":4,"ריסוס":2,"שוק ומחירים":3,"תבלינים":0};
+document.querySelectorAll('.topicpanel .grid a').forEach(function(a){var m=TMIN[a.textContent.trim()];a.dataset.min=(m==null?0:m);});
+function applyScope(idx){document.querySelectorAll('.topicpanel .grid a').forEach(function(a){a.style.display=(+a.dataset.min<=idx)?'':'none';});}
+function setScope(el){var items=[].slice.call(document.querySelectorAll('.scope a'));var idx=items.indexOf(el);items.forEach(function(a){a.classList.remove('on');});el.classList.add('on');applyScope(idx);}
+applyScope([].slice.call(document.querySelectorAll('.scope a')).indexOf(document.querySelector('.scope a.on')));
+function scrollLec(d){var el=document.getElementById('lectors');if(el)el.scrollBy({left:d*262,behavior:'smooth'});}
+function chkLec(){var el=document.getElementById('lectors');if(!el)return;var ov=el.scrollWidth>el.clientWidth+4;document.querySelectorAll('.lecarrow').forEach(function(a){a.style.display=ov?'flex':'none';});}
+chkLec();window.addEventListener('resize',chkLec);
+const ICONS={
+database:'<ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v14c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>',
+chip:'<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 7V4M14 7V4M10 20v-3M14 20v-3M7 10H4M7 14H4M20 10h-3M20 14h-3"/>',
+grad:'<path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/>',
+sensor:'<circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 000 7M15.5 8.5a5 5 0 010 7M6 6a9 9 0 000 12M18 6a9 9 0 010 12"/>',
+hub:'<circle cx="12" cy="12" r="2.6"/><circle cx="5" cy="5" r="1.8"/><circle cx="19" cy="5" r="1.8"/><circle cx="5" cy="19" r="1.8"/><circle cx="19" cy="19" r="1.8"/><path d="M6.4 6.4l3.4 3.4M17.6 6.4l-3.4 3.4M6.4 17.6l3.4-3.4M17.6 17.6l-3.4-3.4"/>',
+shield:'<path d="M12 3l7 3v5c0 4.4-3 8-7 10-4-2-7-5.6-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
+calendar:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/>',
+rocket:'<path d="M9 15l-3-3c1-5 5-9 11-9 0 6-4 10-9 11z"/><path d="M5 15c-1 1-1.4 4-1.4 4s3-.4 4-1.4c.9-.9.9-2.3 0-3.1a2.2 2.2 0 00-3.1 0z"/><circle cx="14.5" cy="9.5" r="1.4"/>',
+building:'<rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/>',
+bank:'<path d="M3 9l9-5 9 5"/><path d="M5 9.5v8.5M9.5 9.5v8.5M14.5 9.5v8.5M19 9.5v8.5M3.5 21h17"/>',
+chart:'<path d="M4 20V4M4 20h16"/><path d="M7 14l3-4 3 2 5-7"/><path d="M18 5h2v2"/>',
+candles:'<path d="M7 4v3M7 15v4M17 3v4M17 16v4"/><rect x="5.5" y="7" width="3" height="8" rx="1"/><rect x="15.5" y="7" width="3" height="9" rx="1"/>',
+flask:'<path d="M9 3v6l-4.5 8a2 2 0 001.8 3h9.4a2 2 0 001.8-3L13 9V3"/><path d="M8 3h8M7.5 15h9"/>',
+leaf:'<path d="M4 20c0-8 6-14 16-14 0 10-6 15-14 15"/><path d="M4 20c4-6 8-8 12-9"/>',
+people:'<circle cx="8" cy="9" r="2.6"/><circle cx="16" cy="9" r="2.6"/><path d="M3.5 19c0-3 2-4.5 4.5-4.5s4.5 1.5 4.5 4.5M13 19c.2-2.6 2-4 4-4s3.8 1.4 4 4"/>',
+bulb:'<path d="M9.5 18h5M10.5 21h3"/><path d="M12 3a6 6 0 00-3.8 10.7c.7.6 1.3 1.4 1.3 2.3h5c0-.9.6-1.7 1.3-2.3A6 6 0 0012 3z"/>',
+book:'<path d="M4 5a2 2 0 012-2h13v15H6a2 2 0 00-2 2z"/><path d="M4 20a2 2 0 012-2h13"/><path d="M8.5 7.5h6M8.5 11h6"/>',
+news:'<path d="M4 5h13v13a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M17 8h2a1 1 0 011 1v9a2 2 0 01-2 2"/><path d="M7 9h7M7 12.5h7M7 16h4"/>',
+community:'<circle cx="8.5" cy="8" r="2.3"/><circle cx="15.5" cy="8" r="2.3"/><path d="M4 18c0-2.5 2-4 4.5-4s4.5 1.5 4.5 4"/><path d="M13.2 14.3c.7-.2 1.5-.3 2.3-.3 2.5 0 4.5 1.5 4.5 4"/>',
+map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
+trade:'<path d="M3 8h13M13 5l3 3-3 3"/><path d="M21 16H8M11 13l-3 3 3 3"/>'};
+document.querySelectorAll('[data-i]').forEach(e=>{const k=e.getAttribute('data-i');if(ICONS[k])e.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+ICONS[k]+'</svg>';});
+(function(){var p=new URLSearchParams(location.search).get('lang');if(p){var a=document.querySelector('.langmenu a[data-lang="'+p+'"]');if(a)setLang(a);}})();
+</script>
+</body></html>

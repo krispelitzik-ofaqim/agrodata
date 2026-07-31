@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: agrodata
+    runtime: python
+    plan: free
+    buildCommand: "echo no-deps"
+    startCommand: "python3 agro-proxy.py"
+    envVars:
+      - key: HOST
+        value: "0.0.0.0"

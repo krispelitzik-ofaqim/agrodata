@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המדען הראשי וחממות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1560px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:28px 0 6px;text-align:center;background:radial-gradient(780px 340px at 50% -14%,var(--tint),transparent)}
+.card.b-food{border-top:4px solid #d5653c;background:linear-gradient(180deg,#fdf3ef,#fff)}
+.card.b-agri{border-top:4px solid var(--green);background:linear-gradient(180deg,#f1faf4,#fff)}
+.card.b-desert{border-top:4px solid #c79a2e;background:linear-gradient(180deg,#fbf6e9,#fff)}
+.card.b-deep{border-top:4px solid var(--teal);background:linear-gradient(180deg,#eef7fb,#fff)}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:820px;margin:0 auto}
+.sech{font-family:Rubik;font-size:26px;font-weight:800;color:var(--green-d);margin:34px 0 16px;display:flex;align-items:center;gap:10px}
+.gov{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:10px}
+@media(max-width:820px){.gov{grid-template-columns:1fr}}
+.gcard{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(180deg,#f4faf6,#fff);text-decoration:none;color:inherit;transition:.14s}
+.gcard:hover{border-color:#bcdcc8;box-shadow:0 12px 26px rgba(20,38,28,.08)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px}
+.lfilters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.lsearch{display:flex;align-items:center;gap:10px;max-width:560px;background:#fff;border:1.5px solid #cfe0d5;border-radius:12px;padding:11px 15px;margin-bottom:14px;box-shadow:0 8px 20px rgba(20,38,28,.06)}
+.lsearch input{flex:1;border:0;outline:0;font-family:Heebo;font-size:15px;color:var(--ink);background:transparent}
+.lfilters .flab{font-family:Rubik;font-weight:800;font-size:14px;color:var(--mut);margin-inline-end:4px}
+.lfilters .fbtn{font-family:Rubik;font-weight:600;font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 15px;cursor:pointer;transition:.12s}
+.lfilters .fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.lfilters .fbtn:hover:not(.on){background:var(--tint)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s}
+.card:hover{border-color:#bcdcc8;box-shadow:0 14px 30px rgba(20,38,28,.1);transform:translateY(-3px)}
+.chead{display:flex;align-items:center;gap:13px;margin-bottom:12px}
+.logo{position:relative;width:52px;height:52px;border-radius:13px;background:var(--tint);border:1px solid var(--line);display:grid;place-items:center;flex:0 0 auto;font-family:Rubik;font-weight:800;color:var(--green);font-size:17px;overflow:hidden}
+.logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7px;background:#fff}
+.cn{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);line-height:1.2}
+.cloc{font-family:'Plex Mono';font-size:13px;color:var(--mut);margin-top:3px}
+.cd{font-size:14.5px;color:var(--mut);line-height:1.55;flex:1;margin-bottom:12px}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.tag{font-size:13px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.partners{font-size:13.5px;color:var(--mut);margin-bottom:10px}
+.partners b{color:var(--green-d)}
+.link{font-family:Rubik;font-weight:700;font-size:14px;color:var(--lime)}
+.badge{font-size:13px;font-weight:700;border-radius:999px;padding:4px 12px;white-space:nowrap}
+.b-food{background:rgba(214,90,60,.12);color:#c4562e}.b-agri{background:rgba(28,107,69,.12);color:var(--green)}.b-desert{background:rgba(199,154,46,.16);color:#a67d1e}.b-deep{background:rgba(43,143,176,.12);color:var(--teal)}
+.note{background:var(--tint);border:1px solid #cfe6d8;border-radius:12px;padding:14px 18px;font-size:14px;color:var(--green-d);margin:14px 0 40px}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">CHIEF SCIENTIST & INCUBATORS</div>
+    <h1>המדען הראשי <b>וחממות</b></h1>
+    <div class="sub">גופי החדשנות הממשלתיים וחממות האגרי-פוד-טק בישראל — הזרוע שממנת, מדגירה ומלווה חדשנות מהרעיון ועד השוק.</div>
+  </div>
+
+  <div class="sech">🏛️ גופי המדען הראשי והחדשנות</div>
+  <div class="gov" id="gov"></div>
+
+  <div class="sech">🧪 חממות אגרי-פוד-טק</div>
+  <div class="lsearch"><span>🔎</span><input id="lq" placeholder="חיפוש חממה: שם, תחום, שותף…" oninput="curQ=this.value;renderGrid()"></div>
+  <div class="lfilters" id="tfilters"></div>
+  <div class="lfilters" id="rfilters"></div>
+  <div class="grid" id="grid"></div>
+  <div class="note">🔌 רשימה מבוססת מקורות ציבוריים, להדגמה ועדכון. ניתן לחבר ל-<b>רשות החדשנות</b> ולמאגר החממות הרשמי לנתונים חיים.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · המדען הראשי וחממות · <span class="mono">innovation</span></div></div></div>
+
+<script>
+function domain(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');var n=h.endsWith('.il')?3:2;return p.slice(-n).join('.');}catch(e){return '';}}
+function initials(n){var m=n.replace(/[^A-Za-zא-ת ]/g,'').trim().split(/\s+/);return ((m[0]||'')[0]||'')+((m[1]||'')[0]||'');}
+function logoHTML(u,n){var dm=domain(u);return `<span class="logo">${initials(n)}${dm?`<img src="https://www.google.com/s2/favicons?domain=${dm}&sz=128" onerror="this.remove()" alt="">`:''}</span>`;}
+const GOV=[
+ {n:"רשות החדשנות",u:"https://innovationisrael.org.il/",d:"הגוף הלאומי לחדשנות — מפעיל את תוכנית החממות הטכנולוגיות, מענקי מו״פ, מגנ״ט וקרנות. מה שהיה ״לשכת המדען הראשי״."},
+ {n:"המדען הראשי — משרד החקלאות",u:"https://www.gov.il/he/departments/units/moag_chief_scientist",d:"מממן מחקר חקלאי יישומי, מכון וולקני, המו״פים האזוריים ושירות ההדרכה (שה״מ)."}
+];
+const LABS=[
+ {n:"Fresh Start",u:"https://www.freshstart.org.il/",loc:"קריית שמונה",k:["food","פוד-טק"],p:"תנובה · טמפו · Finistere · OurCrowd · מיג״ל",d:"חממת הפוד-טק המובילה בישראל — מדגירה סטארטאפים של מזון וחקלאות עם תעשיית המזון.",bk:"b-food",bl:"פוד-טק"},
+ {n:"The Kitchen Hub",u:"https://www.thekitchenhub.com/",loc:"אשדוד",k:["food","אגריפוד"],p:"שטראוס",d:"חממת פוד-טק של שטראוס — חלבון חלופי, בריאות ומזון בר-קיימא.",bk:"b-food",bl:"פוד-טק"},
+ {n:"Trendlines Agrifood",u:"https://trendlines.com/",loc:"מסגב",k:["agri","אגריפוד","השקעות"],p:"Trendlines Group",d:"חממה וקרן להשקעה בסטארטאפים של אגרו-טק ופוד-טק בשלבים מוקדמים.",bk:"b-agri",bl:"אגרי-פוד"},
+ {n:"Millennium Food-Tech",u:"https://www.millennium-foodtech.com/",loc:"תל אביב",k:["food","בורסאי"],p:"שותפות ציבורית",d:"שותפות השקעות פוד-טק נסחרת — מהמעבדה ועד המדף.",bk:"b-food",bl:"פוד-טק"},
+ {n:"Arava Innovation",u:"https://aravainnovation.com/",loc:"ערבה",k:["desert","חקלאות מדבר","מים"],p:"מרכז מו״פ ערבה",d:"חדשנות לחקלאות מדברית — מים מליחים, גידולים עמידי-חום וקיימות.",bk:"b-desert",bl:"חקלאות מדבר"},
+ {n:"Capital Nature",u:"https://www.capitalnature.com/",loc:"ארצי",k:["deep","אקלים","אנרגיה"],p:"אשכול טכנולוגיות אקלים",d:"מדגירה חדשנות באנרגיה מתחדשת, מים ואגרי-אקלים.",bk:"b-deep",bl:"אקלים-טק"},
+ {n:"Incubit (אלביט)",u:"https://www.incubit.co/",loc:"תל אביב",k:["deep","דיפ-טק","AI"],p:"Elbit Systems",d:"חממת דיפ-טק — AI, חישה ורובוטיקה, כולל יישומים חקלאיים.",bk:"b-deep",bl:"דיפ-טק"},
+ {n:"NGT3 VC",u:"https://www.ngt3.co.il/",loc:"נצרת",k:["deep","ביו-טק"],p:"רשות החדשנות",d:"חממה טכנולוגית בגליל — ביו-קונברג׳נס וטכנולוגיות עמוקות.",bk:"b-deep",bl:"ביו-טק"},
+ {n:"GrowingIL",u:"https://www.growingil.com/",loc:"ארצי",k:["agri","קהילה"],p:"אקוסיסטם אגריפוד",d:"פלטפורמת קהילה ומיזמים לחיבור האקוסיסטם החקלאי-מזוני בישראל.",bk:"b-agri",bl:"אגרי-פוד"}
+];
+document.getElementById('gov').innerHTML=GOV.map(g=>`<a class="gcard" href="${g.u}" target="_blank" rel="noopener">${logoHTML(g.u,g.n)}<div><div class="cn">${g.n}</div><div class="cd" style="margin:6px 0 8px">${g.d}</div><div class="link">לאתר הרשמי ↗</div></div></a>`).join('');
+const REG={"Fresh Start":"צפון","The Kitchen Hub":"מרכז","Trendlines Agrifood":"צפון","Millennium Food-Tech":"מרכז","Arava Innovation":"ערבה","Capital Nature":"מרכז","Incubit (אלביט)":"מרכז","NGT3 VC":"צפון","GrowingIL":"מרכז"};
+LABS.forEach(function(l){l.r=REG[l.n]||"מרכז";});
+let curT='הכל',curR='הכל',curQ='';
+function renderGrid(){
+ var rows=LABS.filter(function(l){var qq=curQ.trim().toLowerCase();return (curT==='הכל'||l.bl===curT)&&(curR==='הכל'||l.r===curR)&&(!qq||(l.n+' '+l.d+' '+l.p+' '+l.loc).toLowerCase().indexOf(qq)>-1);});
+ document.getElementById('grid').innerHTML=rows.map(l=>`<a class="card ${l.bk}" href="${l.u}" target="_blank" rel="noopener">
+  <div class="chead">${logoHTML(l.u,l.n)}<div><div class="cn">${l.n}</div><div class="cloc">📍 ${l.loc} · ${l.r}</div></div><span class="badge ${l.bk}" style="margin-inline-start:auto">${l.bl}</span></div>
+  <div class="cd">${l.d}</div>
+  <div class="partners">שותפים: <b>${l.p}</b></div>
+  <div class="tags">${l.k.filter(x=>/[֐-׿]/.test(x)).map(x=>`<span class="tag">${x}</span>`).join('')}</div>
+  <div class="link">לאתר החממה ↗</div>
+</a>`).join('')||'<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:34px">אין חממות בסינון זה</div>';
+}
+function mark(id,el){document.getElementById(id).querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');}
+function setT(t,el){curT=t;mark('tfilters',el);renderGrid();}
+function setR(r,el){curR=r;mark('rfilters',el);renderGrid();}
+var TOPICS=['הכל'].concat(Array.from(new Set(LABS.map(function(l){return l.bl;}))));
+var REGIONS=['הכל','צפון','מרכז','דרום','ערבה'];
+document.getElementById('tfilters').innerHTML='<span class="flab">נושא:</span>'+TOPICS.map(function(t,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="setT(\''+t+'\',this)">'+t+'</button>';}).join('');
+document.getElementById('rfilters').innerHTML='<span class="flab">אזור:</span>'+REGIONS.map(function(r,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="setR(\''+r+'\',this)">'+r+'</button>';}).join('');
+renderGrid();
+</script>
+</body></html>
