@@ -37,7 +37,14 @@ h1{font-family:Rubik;font-size:62px;font-weight:800;margin:4px 0 8px}h1 b{color:
 .mleg{text-align:center;font-size:14.5px;color:var(--mut);margin-top:12px}
 @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.grid{grid-template-columns:1fr}}
-.rcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.14s;text-decoration:none;color:inherit}
+.rcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;padding:0 0 22px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.14s;text-decoration:none;color:inherit}
+.rcard>*:not(.rimg){margin-inline:22px}
+.rcard .rtop{margin-top:16px}
+.rimg{height:130px;background-position:center;background-size:cover;background-repeat:no-repeat;display:grid;place-items:center;position:relative}
+.rimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.18))}
+.rimg.uni{background-color:#1c6b45}.rimg.inst{background-color:#2b8fb0}.rimg.rd{background-color:#c79a2e}
+.rimg .rimgini{font-family:'Space Grotesk',Rubik;font-weight:700;font-size:40px;color:rgba(255,255,255,.9);z-index:1}
+.rimg.has .rimgini{display:none}
 .rcard:hover{border-color:#bcdcc8;box-shadow:0 14px 30px rgba(20,38,28,.09);transform:translateY(-3px)}
 .rtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .rtype{font-size:14px;font-weight:700;border-radius:999px;padding:5px 13px}
@@ -125,6 +132,7 @@ function render(f){
  document.getElementById('grid').innerHTML = rows.length? rows.map(r=>{
   const ty=TYPE[r.k];const dm=domain(r.u),ini=initials(r.n);
   return `<a class="rcard" href="${r.u}" target="_blank" rel="noopener">
+    <div class="rimg ${ty[0]}" data-url="${encodeURIComponent(r.u)}"><span class="rimgini">${ini}</span></div>
     <div class="rtop"><span class="rtype ${ty[0]}">${ty[1]}</span><span class="rloc">${r.loc}</span></div>
     <div class="rnamerow"><span class="rlogo">${ini}${dm?`<img src="https://www.google.com/s2/favicons?domain=${dm}&sz=128" onerror="this.remove()" alt="">`:''}</span><div class="rname">${r.n}</div></div>
     <div class="rdesc">${r.d}</div>
@@ -132,6 +140,19 @@ function render(f){
     <div class="rlink">לאתר המוסד ↗</div>
   </a>`;
  }).join('') : '<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:40px">לא נמצאו תוצאות</div>';
+ loadImages();
+}
+var IMG={};
+function loadImages(){
+ document.querySelectorAll('.rimg[data-url]').forEach(function(el){
+  var u=decodeURIComponent(el.getAttribute('data-url'));
+  el.removeAttribute('data-url');
+  function apply(src){var im=new Image();im.onload=function(){el.style.backgroundImage='url("'+src+'")';el.classList.add('has');};im.src=src;}
+  if(IMG[u]){if(IMG[u]!=='none')apply(IMG[u]);return;}
+  fetch('/api/ogimage?url='+encodeURIComponent(u)).then(function(r){return r.json();}).then(function(c){
+   IMG[u]=c.image||'none';if(c.image)apply(c.image);
+  }).catch(function(){IMG[u]='none';});
+ });
 }
 function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
 const FB=[['all','הכול'],['uni','אקדמיה'],['inst','מכוני מחקר'],['rd','מו״פ אזורי']];
