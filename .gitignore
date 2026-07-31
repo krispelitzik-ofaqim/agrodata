@@ -4,3 +4,4 @@ __pycache__/
 scratchpad/
 *.log
 word.app/
+comments.json

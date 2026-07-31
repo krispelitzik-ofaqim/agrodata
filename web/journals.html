@@ -41,8 +41,27 @@ tbody td{padding:18px 22px;border-bottom:1px solid #eef4ef;font-size:16.5px;vert
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover{background:var(--bg2)}
 .jname{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:23px}
-.jname a{color:inherit;text-decoration:none}
+.jname a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:11px}
 .jname a:hover{color:var(--lime)}
+.jlogo{width:30px;height:30px;border-radius:7px;object-fit:contain;background:#fff;border:1px solid var(--line);padding:3px;flex:0 0 auto}
+.thc{text-align:center;width:64px}
+.arrowcell{text-align:center;width:64px}
+.arrowbtn{width:34px;height:34px;border-radius:9px;background:var(--tint);border:1px solid #cfe6d8;color:var(--green-d);font-size:16px;line-height:1;cursor:pointer;transition:.15s;display:inline-grid;place-items:center}
+.arrowbtn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.arrowbtn.open{transform:rotate(180deg);background:var(--green);color:#fff;border-color:var(--green)}
+.artbox{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:2px 0 6px}
+.arthd{font-family:'Plex Mono';font-size:12.5px;color:var(--lime);margin-bottom:8px}
+.artload{color:var(--mut);font-size:14px;padding:8px 0}
+.artitem{display:flex;flex-direction:column;gap:2px;padding:9px 0;border-bottom:1px solid #e8f0ea;text-decoration:none;color:inherit}
+.artitem:last-child{border:0}
+.artitem:hover .artt{color:var(--lime)}
+.artt{font-size:15px;font-weight:600;color:var(--green-d);line-height:1.4}
+.artm{font-size:13px;color:var(--mut);font-family:'Plex Mono'}
+.detailgrid{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
+@media(max-width:760px){.detailgrid{grid-template-columns:1fr}}
+.coverwrap{text-align:center}
+.coverimg{width:100%;max-width:300px;border-radius:12px;box-shadow:0 14px 34px rgba(20,38,28,.22);border:1px solid var(--line)}
+.covercap{font-size:13px;color:var(--mut);margin-top:8px;font-family:'Plex Mono'}
 .yr{font-family:'Plex Mono';color:var(--mut);font-size:16px}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
 .tag{font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:5px 13px}
@@ -81,7 +100,7 @@ tbody tr:hover{background:var(--bg2)}
   <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש פנימי: שם כתב עת, מדינה, נושא…" oninput="render(CUR)"></div>
   <div class="twrap">
     <table><thead><tr>
-      <th>כתב העת / מגזין</th><th>מדינה</th><th>שנה</th><th>נושאים</th><th>סוג</th>
+      <th>כתב העת / מגזין</th><th>מדינה</th><th>שנת יסוד</th><th>נושאים</th><th>סוג</th><th class="thc">שער</th>
     </tr></thead><tbody id="rows"></tbody></table>
   </div>
 </div>
@@ -90,16 +109,16 @@ tbody tr:hover{background:var(--bg2)}
 
 <script>
 const J=[
- {n:"Nature Food",u:"https://www.nature.com/natfood/",c:"🇬🇧 בריטניה",y:2020,t:["מערכות מזון","חקלאות","תזונה"],k:"a"},
- {n:"Nature Plants",u:"https://www.nature.com/nplants/",c:"🇬🇧 בריטניה",y:2015,t:["ביולוגיה של הצמח"],k:"a"},
- {n:"Computers and Electronics in Agriculture",u:"https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture",c:"🇳🇱 הולנד",y:1985,t:["חקלאות דיגיטלית","AI","חישה"],k:"a"},
- {n:"Precision Agriculture",u:"https://link.springer.com/journal/11119",c:"🇳🇱 הולנד",y:1999,t:["חקלאות מדייקת","GIS","חיישנים"],k:"a"},
- {n:"Smart Agricultural Technology",u:"https://www.sciencedirect.com/journal/smart-agricultural-technology",c:"🇳🇱 הולנד",y:2021,t:["חקלאות חכמה","IoT","רובוטיקה"],k:"a"},
- {n:"Agricultural Systems",u:"https://www.sciencedirect.com/journal/agricultural-systems",c:"🇬🇧 בריטניה",y:1976,t:["מערכות חקלאיות","מידול"],k:"a"},
- {n:"Agricultural Water Management",u:"https://www.sciencedirect.com/journal/agricultural-water-management",c:"🇳🇱 הולנד",y:1976,t:["השקיה","מים"],k:"a"},
- {n:"Field Crops Research",u:"https://www.sciencedirect.com/journal/field-crops-research",c:"🇳🇱 הולנד",y:1978,t:["גידולי שדה","יבול"],k:"a"},
- {n:"Biosystems Engineering",u:"https://www.sciencedirect.com/journal/biosystems-engineering",c:"🇬🇧 בריטניה",y:2002,t:["הנדסה חקלאית"],k:"a"},
- {n:"Frontiers in Plant Science",u:"https://www.frontiersin.org/journals/plant-science",c:"🇨🇭 שווייץ",y:2010,t:["מדעי הצמח","גנטיקה"],k:"a"},
+ {n:"Nature Food",u:"https://www.nature.com/natfood/",c:"🇬🇧 בריטניה",y:2020,t:["מערכות מזון","חקלאות","תזונה"],k:"a",s:"2662-1355"},
+ {n:"Nature Plants",u:"https://www.nature.com/nplants/",c:"🇬🇧 בריטניה",y:2015,t:["ביולוגיה של הצמח"],k:"a",s:"2055-0278"},
+ {n:"Computers and Electronics in Agriculture",u:"https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture",c:"🇳🇱 הולנד",y:1985,t:["חקלאות דיגיטלית","AI","חישה"],k:"a",s:"0168-1699"},
+ {n:"Precision Agriculture",u:"https://link.springer.com/journal/11119",c:"🇳🇱 הולנד",y:1999,t:["חקלאות מדייקת","GIS","חיישנים"],k:"a",s:"1385-2256"},
+ {n:"Smart Agricultural Technology",u:"https://www.sciencedirect.com/journal/smart-agricultural-technology",c:"🇳🇱 הולנד",y:2021,t:["חקלאות חכמה","IoT","רובוטיקה"],k:"a",s:"2772-3755"},
+ {n:"Agricultural Systems",u:"https://www.sciencedirect.com/journal/agricultural-systems",c:"🇬🇧 בריטניה",y:1976,t:["מערכות חקלאיות","מידול"],k:"a",s:"0308-521X"},
+ {n:"Agricultural Water Management",u:"https://www.sciencedirect.com/journal/agricultural-water-management",c:"🇳🇱 הולנד",y:1976,t:["השקיה","מים"],k:"a",s:"0378-3774"},
+ {n:"Field Crops Research",u:"https://www.sciencedirect.com/journal/field-crops-research",c:"🇳🇱 הולנד",y:1978,t:["גידולי שדה","יבול"],k:"a",s:"0378-4290"},
+ {n:"Biosystems Engineering",u:"https://www.sciencedirect.com/journal/biosystems-engineering",c:"🇬🇧 בריטניה",y:2002,t:["הנדסה חקלאית"],k:"a",s:"1537-5110"},
+ {n:"Frontiers in Plant Science",u:"https://www.frontiersin.org/journals/plant-science",c:"🇨🇭 שווייץ",y:2010,t:["מדעי הצמח","גנטיקה"],k:"a",s:"1664-462X"},
  {n:"AgFunderNews",u:"https://agfundernews.com/",c:"🇺🇸 ארה״ב",y:2013,t:["חדשות","השקעות","אגריפוד-טק"],k:"i"},
  {n:"Future Farming",u:"https://www.futurefarming.com/",c:"🇳🇱 הולנד",y:2017,t:["חקלאות מדייקת","מכונות"],k:"i"},
  {n:"PrecisionAg",u:"https://www.precisionag.com/",c:"🇺🇸 ארה״ב",y:2003,t:["חקלאות מדייקת","תעשייה"],k:"i"},
@@ -111,17 +130,48 @@ const J=[
 ];
 const BADGE={a:['b-a','מדעי'],i:['b-i','תעשייה'],il:['b-il','ישראלי']};
 let CUR='all';
+function dom(u){try{return new URL(u).hostname;}catch(e){return '';}}
 function render(f){
  CUR=f;
  const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
  const rows=J.filter(j=>(f==='all'||j.k===f) && (!q || (j.n+' '+j.c+' '+j.t.join(' ')).toLowerCase().includes(q))).sort((a,b)=>a.y-b.y);
- document.getElementById('rows').innerHTML = rows.length? rows.map(j=>{
+ document.getElementById('rows').innerHTML = rows.length? rows.map((j,i)=>{
   const b=BADGE[j.k];
-  return `<tr><td class="jname"><a href="${j.u}" target="_blank" rel="noopener">${j.n} ↗</a></td>
+  const logo=`https://www.google.com/s2/favicons?domain=${dom(j.u)}&sz=64`;
+  return `<tr><td class="jname"><a href="${j.u}" target="_blank" rel="noopener"><img class="jlogo" src="${logo}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">${j.n} ↗</a></td>
    <td>${j.c}</td><td class="yr">${j.y}</td>
    <td><div class="tags">${j.t.map(x=>`<span class="tag">${x}</span>`).join('')}</div></td>
-   <td><span class="badge ${b[0]}">${b[1]}</span></td></tr>`;
- }).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--mut);padding:30px">לא נמצאו תוצאות</td></tr>';
+   <td><span class="badge ${b[0]}">${b[1]}</span></td>
+   <td class="arrowcell"><button class="arrowbtn" title="עמוד שער מודפס" onclick="loadDetail('${j.s||''}','${encodeURIComponent(j.u)}',${i},this)">▾</button></td></tr>
+   <tr class="artrow" id="artrow-${i}" style="display:none"><td colspan="6"><div class="artbox" id="artbox-${i}"></div></td></tr>`;
+ }).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:30px">לא נמצאו תוצאות</td></tr>';
+}
+function renderArticles(issn,el){
+ if(!issn){el.innerHTML='<div class="artload">מאמרים אוטומטיים זמינים לכתבי עת מדעיים.</div>';return;}
+ el.innerHTML='<div class="artload">🔎 מושך מאמרים מ-Crossref…</div>';
+ fetch('/api/journal?issn='+encodeURIComponent(issn)).then(function(r){return r.json();}).then(function(j){
+  var items=j.items||[];
+  if(!items.length){el.innerHTML='<div class="artload">לא נמצאו מאמרים כרגע.</div>';return;}
+  el.innerHTML='<div class="arthd">מאמרים אחרונים · מקור: Crossref</div>'+items.map(function(a){
+   var au=a.authors?(' · '+a.authors):'';var yr=a.year?(' · '+a.year):'';
+   return '<a class="artitem" href="'+(a.url||'#')+'" target="_blank" rel="noopener"><span class="artt">'+a.title+' ↗</span><span class="artm">'+ (au+yr).replace(/^ · /,'') +'</span></a>';
+  }).join('');
+ }).catch(function(){el.innerHTML='<div class="artload">שגיאת חיבור — ודא שהשרת רץ.</div>';});
+}
+function loadDetail(issn,uenc,i,btn){
+ var row=document.getElementById('artrow-'+i),box=document.getElementById('artbox-'+i);
+ if(row.style.display!=='none'){row.style.display='none';btn.classList.remove('open');return;}
+ row.style.display='';btn.classList.add('open');
+ if(box.dataset.loaded){return;}
+ box.dataset.loaded='1';
+ var url=decodeURIComponent(uenc);
+ box.innerHTML='<div class="detailgrid"><div class="coverwrap"><div class="artload">🖼️ טוען עמוד שער…</div></div><div class="artlist" id="artlist-'+i+'"></div></div>';
+ renderArticles(issn,document.getElementById('artlist-'+i));
+ fetch('/api/ogimage?url='+encodeURIComponent(url)).then(function(r){return r.json();}).then(function(c){
+  var cw=box.querySelector('.coverwrap');
+  if(c.image){cw.innerHTML='<a href="'+url+'" target="_blank" rel="noopener"><img class="coverimg" src="'+c.image+'" alt="עמוד שער" onerror="this.parentNode.parentNode.innerHTML=\'<div class=&quot;artload&quot;>אין תמונת שער זמינה</div>\'"></a><div class="covercap">עמוד השער · הגיליון הנוכחי ↗</div>';}
+  else{cw.innerHTML='<div class="artload">אין תמונת שער זמינה</div>';}
+ }).catch(function(){box.querySelector('.coverwrap').innerHTML='<div class="artload">שגיאה בטעינת השער</div>';});
 }
 function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
 render('all');

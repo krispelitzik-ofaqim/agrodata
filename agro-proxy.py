@@ -8,6 +8,31 @@ PORT = int(os.environ.get("PORT", 8787))   # Render מזריק PORT; מקומי�
 HOST = os.environ.get("HOST", "127.0.0.1") # באחסון נגדיר HOST=0.0.0.0
 CACHE = {}; TTL = 60; LOCK = threading.Lock()
 
+# ---- native discussion board (name + message, no login) ----
+COMMENTS_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "comments.json")
+CLOCK = threading.Lock()
+def load_comments():
+    try:
+        with open(COMMENTS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+def save_comments(items):
+    with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(items, f, ensure_ascii=False)
+def add_comment(name, text):
+    name = (name or "").strip()[:40] or "אנונימי"
+    text = (text or "").strip()[:1000]
+    if not text:
+        return None
+    item = {"name": name, "text": text, "ts": int(time.time())}
+    with CLOCK:
+        items = load_comments()
+        items.append(item)
+        items = items[-500:]
+        save_comments(items)
+    return item
+
 def fetch_symbol(sym):
     now = time.time()
     with LOCK:
@@ -120,6 +145,30 @@ def ask_gemini(q):
             msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
         return {"answer": msg, "demo": True, "err": code}
 
+def fetch_journal(issn):
+    issn = re.sub(r"[^0-9Xx\-]", "", issn or "")[:9]
+    if not issn:
+        return {"items": []}
+    url = ("https://api.crossref.org/journals/" + issn +
+           "/works?rows=6&sort=published&order=desc"
+           "&select=title,author,URL,DOI,published")
+    req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0 (mailto:krispelitzik@gmail.com)"})
+    try:
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+        out = []
+        for it in d.get("message", {}).get("items", []):
+            title = (it.get("title") or [""])[0]
+            if not title:
+                continue
+            authors = ", ".join((a.get("family") or a.get("name") or "") for a in (it.get("author") or [])[:3])
+            parts = ((it.get("published") or {}).get("date-parts") or [[None]])[0]
+            year = parts[0] if parts else None
+            link = it.get("URL") or (("https://doi.org/" + it["DOI"]) if it.get("DOI") else "")
+            out.append({"title": title, "authors": authors, "year": year, "url": link})
+        return {"items": out}
+    except Exception as e:
+        return {"items": [], "err": str(getattr(e, "code", "") or type(e).__name__)}
+
 class H(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
         super().__init__(*a, directory=WEB, **k)
@@ -152,6 +201,22 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/journal"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_journal(qs.get("issn", [""])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/comments"):
+            body = json.dumps({"comments": load_comments()[-200:]}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/ogimage"):
             q = urllib.parse.urlparse(self.path).query
             u = urllib.parse.parse_qs(q).get("url", [""])[0]
@@ -163,6 +228,22 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
+    def do_POST(self):
+        if self.path.startswith("/api/comments"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            item = add_comment(data.get("name"), data.get("text"))
+            out = {"ok": bool(item), "comment": item}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200 if item else 400)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        self.send_response(404); self.end_headers()
 
 socketserver.ThreadingTCPServer.allow_reuse_address = True
 with socketserver.ThreadingTCPServer((HOST, PORT), H) as httpd:
