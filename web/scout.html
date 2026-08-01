@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סטארטאפים · AgroScout · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:38px 0 6px;text-align:center;background:radial-gradient(800px 320px at 50% -12%,var(--tint),transparent)}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:54px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:17px;max-width:720px;margin:0 auto}
+.jsearchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:10px 18px;margin:26px auto 6px;max-width:640px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;color:var(--ink);background:transparent}
+.sec{margin:34px 0 10px}
+.sech{font-family:Rubik;font-size:32px;font-weight:800;color:var(--green-d);display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.sech .cnt{font-family:'Plex Mono';font-size:15px;color:var(--mut);font-weight:400}
+.sub2{color:var(--mut);font-size:15px;margin-bottom:20px}
+.foodhead .sech{color:#a3401f}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.scard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:18px;background:#fff;box-shadow:0 8px 20px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:4px solid var(--lime)}
+.scard.food{border-top-color:var(--gold)}
+.scard:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(20,38,28,.1);border-color:#bcdcc8}
+.stop{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.slogo{width:46px;height:46px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-family:Rubik;font-weight:800;color:var(--green);flex:0 0 auto;position:relative}
+.slogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7px;background:#fff}
+.sname{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d)}
+.syr{font-family:'Plex Mono';font-size:12px;color:var(--mut)}
+.sdesc{font-size:14px;color:var(--mut);line-height:1.5;flex:1;margin-bottom:12px}
+.stags{display:flex;flex-wrap:wrap;gap:6px}
+.stag{font-size:12px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:999px;padding:3px 10px}
+.scard.food .stag{color:#a3401f;background:rgba(199,154,46,.12);border-color:rgba(199,154,46,.3)}
+.slink{margin-top:12px;font-family:'Plex Mono';font-size:12.5px;color:var(--lime)}
+.foodbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:24px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROSCOUT · מפת הסטארטאפים</div>
+    <h1>סטארטאפים <b>ישראליים</b></h1>
+    <div class="sub">מפת הסטארטאפים של האגרו-טק והפוד-טק בישראל — לפי תחום, שנת הקמה וטכנולוגיה. לחצו על כרטיס למעבר לאתר החברה.</div>
+    <div class="jsearchbar"><span>🔎</span><input id="q" placeholder="חיפוש: שם, תחום, טכנולוגיה…" oninput="render()"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sech">🌱 אגרו-טק <span class="cnt" id="agCnt"></span></div>
+    <div class="sub2">חדשנות חקלאית — חישה, רובוטיקה, השקיה, זרעים, בינה מלאכותית ומיכון.</div>
+    <div class="grid" id="agGrid"></div>
+  </div>
+
+  <div class="sec foodhead">
+    <div class="sech">🍽️ פוד-טק <span class="cnt" id="fdCnt"></span></div>
+    <div class="sub2">חלבון חלופי, בשר מתורבת, מוצרי חלב מתסיסה, מרכיבים ותחליפים.</div>
+    <div class="grid" id="fdGrid"></div>
+  </div>
+</div>
+
+<div class="foodbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · AgroScout · <span class="mono">Israeli AgriTech & FoodTech startups</span></div></div></div>
+
+<script>
+const AG=[
+ {n:"CropX",u:"https://cropx.com/",y:2015,d:"חיישני קרקע וניתוח אגרונומי בענן.",t:["חיישני קרקע","AI"]},
+ {n:"Taranis",u:"https://www.taranis.com/",y:2015,d:"מודיעין שדה מתצלומי אוויר ברזולוציה גבוהה.",t:["הדמיה","רחפנים"]},
+ {n:"Prospera (Valmont)",u:"https://valmontag.com/",y:2014,d:"בינה מלאכותית לניטור גידולים.",t:["AI","ראייה ממוחשבת"]},
+ {n:"Tevel Aerobotics",u:"https://www.tevel-tech.com/",y:2017,d:"רחפני קטיף אוטונומיים למטעים.",t:["רובוטיקה","קטיף"]},
+ {n:"Beewise",u:"https://www.beewise.ag/",y:2018,d:"כוורות רובוטיות אוטונומיות לגידול דבורים.",t:["רובוטיקה","דבורים"]},
+ {n:"SeeTree",u:"https://www.seetree.ai/",y:2017,d:"מודיעין לעצים ולמטעים מבוסס AI.",t:["מטעים","AI"]},
+ {n:"Greeneye",u:"https://www.greeneye-tech.com/",y:2017,d:"ריסוס מדייק מבוסס בינה מלאכותית.",t:["ריסוס","AI"]},
+ {n:"Agritask",u:"https://www.agritask.com/",y:2013,d:"פלטפורמת ניהול אגרונומי ושרשרת אספקה.",t:["פלטפורמה","אגרונומיה"]},
+ {n:"SupPlant",u:"https://supplant.me/",y:2013,d:"השקיה חכמה מבוססת AI, ללא חיישנים.",t:["השקיה","AI"]},
+ {n:"N-Drip",u:"https://n-drip.com/",y:2016,d:"טפטוף בכוח הכובד ללא אנרגיה.",t:["השקיה","קיימות"]},
+ {n:"Phytech",u:"https://www.phytech.com/",y:2007,d:"ניטור מבוסס-צמח לקבלת החלטות השקיה.",t:["חישת צמח","IoT"]},
+ {n:"Saturas",u:"https://www.saturas-ag.com/",y:2013,d:"חיישן פוטנציאל מים מוטמע בגזע.",t:["חיישן גזע","מטעים"]},
+ {n:"Viridix",u:"https://viridix.com/",y:2017,d:"חיישני ״שורש מלאכותי״ להשקיה מדייקת.",t:["חיישני שורש"]},
+ {n:"Blue White Robotics",u:"https://www.bluewhite.co/",y:2017,d:"טרקטורים אוטונומיים והמרת ציוד חקלאי.",t:["רובוטיקה","אוטונומי"]},
+ {n:"Metomotion",u:"https://metomotion.com/",y:2017,d:"רובוט רב-תכליתי לחממות.",t:["רובוטיקה","חממות"]},
+ {n:"FieldIn",u:"https://www.fieldin.com/",y:2013,d:"פלטפורמת ניהול פעולות שדה וציוד.",t:["פלטפורמה","מיכון"]},
+ {n:"Agmatix",u:"https://www.agmatix.com/",y:2020,d:"מדע נתונים אגרונומי מבוסס דאטה.",t:["דאטה","דשן"]},
+ {n:"FFRobotics",u:"https://www.ffrobotics.com/",y:2014,d:"רובוט קטיף פירות אוטומטי.",t:["רובוטיקה","קטיף"]}
+];
+const FD=[
+ {n:"Aleph Farms",u:"https://aleph-farms.com/",y:2017,d:"בשר בקר מתורבת מתאים.",t:["בשר מתורבת"]},
+ {n:"Redefine Meat",u:"https://www.redefinemeat.com/",y:2018,d:"בשר צמחי מודפס בתלת-ממד.",t:["בשר צמחי","הדפסה"]},
+ {n:"Remilk",u:"https://www.remilk.com/",y:2019,d:"חלבוני חלב מתסיסה — ללא פרות.",t:["חלב","תסיסה"]},
+ {n:"Believer Meats",u:"https://www.believermeats.com/",y:2018,d:"בשר מתורבת בקנה מידה תעשייתי.",t:["בשר מתורבת"]},
+ {n:"Imagindairy",u:"https://imagindairy.com/",y:2020,d:"חלבוני חלב מתסיסת דיוק.",t:["חלב","תסיסה"]},
+ {n:"Steakholder Foods",u:"https://steakholderfoods.com/",y:2019,d:"הדפסת תלת-ממד של בשר ודגים.",t:["בשר","הדפסה"]},
+ {n:"Wilk",u:"https://www.wilktech.com/",y:2020,d:"שומני וחלבוני חלב מתורבתים.",t:["חלב","תרבית תאים"]},
+ {n:"InnovoPro",u:"https://innovopro.com/",y:2013,d:"חלבון חומוס 70% למוצרי מזון.",t:["חלבון","חומוס"]},
+ {n:"Yofix",u:"https://www.yofix.co/",y:2017,d:"מוצרי חלב צמחיים מותססים.",t:["חלב צמחי"]},
+ {n:"Zero Egg",u:"https://www.zeroegg.co/",y:2018,d:"תחליף ביצים על בסיס צמחי.",t:["ביצים","צמחי"]},
+ {n:"Incredo (DouxMatok)",u:"https://www.incredo.co/",y:2014,d:"מערכת להפחתת סוכר תוך שמירת טעם.",t:["סוכר","מרכיבים"]},
+ {n:"Chunk Foods",u:"https://www.chunkfoods.com/",y:2022,d:"סטייק שלם על בסיס צמחי בתסיסה.",t:["בשר צמחי"]},
+ {n:"More Foods",u:"https://www.more-foods.com/",y:2020,d:"חלבון בשרי צמחי עשיר.",t:["בשר צמחי","חלבון"]},
+ {n:"Forsea Foods",u:"https://www.forsea-foods.com/",y:2021,d:"דגים מתורבתים בשיטת אורגנואידים.",t:["דגים","מתורבת"]}
+];
+function dom(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return '';}}
+function ini(n){return (n.replace(/[^A-Za-zא-ת ]/g,'').trim()[0]||'?');}
+function card(c,food){
+ var d=dom(c.u);
+ return '<a class="scard'+(food?' food':'')+'" href="'+c.u+'" target="_blank" rel="noopener">'
+  +'<div class="stop"><span class="slogo">'+ini(c.n)+(d?'<img src="https://www.google.com/s2/favicons?domain='+d+'&sz=128" onerror="this.remove()" alt="">':'')+'</span>'
+  +'<div><div class="sname">'+c.n+'</div><div class="syr">נוסד '+c.y+'</div></div></div>'
+  +'<div class="sdesc">'+c.d+'</div>'
+  +'<div class="stags">'+c.t.map(function(t){return '<span class="stag">'+t+'</span>';}).join('')+'</div>'
+  +'<div class="slink">לאתר החברה ↗</div></a>';
+}
+function render(){
+ var q=(document.getElementById('q').value||'').trim().toLowerCase();
+ function f(arr){return arr.filter(function(c){return !q||(c.n+' '+c.d+' '+c.t.join(' ')).toLowerCase().includes(q);});}
+ var ag=f(AG), fd=f(FD);
+ document.getElementById('agGrid').innerHTML=ag.length?ag.map(function(c){return card(c,false);}).join(''):'<div class="empty">לא נמצאו תוצאות</div>';
+ document.getElementById('fdGrid').innerHTML=fd.length?fd.map(function(c){return card(c,true);}).join(''):'<div class="empty">לא נמצאו תוצאות</div>';
+ document.getElementById('agCnt').textContent='· '+ag.length+' סטארטאפים';
+ document.getElementById('fdCnt').textContent='· '+fd.length+' סטארטאפים';
+}
+render();
+</script>
+</body></html>

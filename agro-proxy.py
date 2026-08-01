@@ -174,6 +174,53 @@ def ask_gemini(q):
             msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
         return {"answer": msg, "demo": True, "err": code}
 
+NEWSCACHE = {}
+def fetch_news(q, region):
+    q = (q or 'agritech OR agtech OR "agriculture technology" OR "food tech"').strip()
+    key = region + "|" + q
+    now = time.time()
+    if key in NEWSCACHE and now - NEWSCACHE[key][0] < 300:   # 5-min cache
+        return NEWSCACHE[key][1]
+    if region == "il":
+        url = "https://news.google.com/rss/search?q=%s&hl=iw-IL&gl=IL&ceid=IL:iw"
+    else:
+        url = "https://news.google.com/rss/search?q=%s&hl=en-US&gl=US&ceid=US:en"
+    url = url % urllib.parse.quote(q)
+    out = []
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; AgroDataBot/1.0)"})
+        raw = urllib.request.urlopen(req, timeout=20).read().decode("utf-8", "ignore")
+        for it in re.findall(r"<item>(.*?)</item>", raw, re.S)[:100]:
+            def g(tag):
+                m = re.search(r"<" + tag + r"[^>]*>(.*?)</" + tag + r">", it, re.S)
+                return (m.group(1).strip() if m else "")
+            title = re.sub(r"^<!\[CDATA\[|\]\]>$", "", g("title"))
+            link = g("link"); pub = g("pubDate")
+            ms = re.search(r'<source[^>]*url="([^"]*)"[^>]*>(.*?)</source>', it, re.S)
+            surl = ms.group(1) if ms else ""
+            src = ms.group(2).strip() if ms else ""
+            host = urllib.parse.urlparse(surl).netloc.lower()
+            if region == "il":
+                if not host.endswith(".il"):
+                    continue   # Israel feed = Israeli sources only
+            else:
+                # World feed = real press only — drop PR / press-release wires & junk
+                BADSRC = ("einpresswire", "globenewswire", "prnewswire", "businesswire", "accesswire",
+                          "stocktitan", "benzinga", "marketscreener", "streetinsider", "prweb", "openpr",
+                          "digitaljournal", "manilatimes", "finanznachrichten", "prlog", "issuewire", "newsfilecorp")
+                if any(b in host for b in BADSRC):
+                    continue
+            if src and title.endswith(" - " + src):
+                title = title[:-(len(src) + 3)]
+            title = title.replace("&amp;", "&").replace("&#39;", "'").replace("&quot;", '"')
+            if title and link:
+                out.append({"title": title, "link": link, "source": src, "date": pub})
+    except Exception:
+        pass
+    res = {"items": out}
+    NEWSCACHE[key] = (now, res)
+    return res
+
 def scan_sitemap():
     pages = []
     try:
@@ -248,6 +295,15 @@ class H(http.server.SimpleHTTPRequestHandler):
             if not q.strip(): out = {"answer": "נא להזין שאלה.", "demo": True}
             elif eng == "claude": out = ask_claude(q)
             else: out = ask_gemini(q)
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/news"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_news(qs.get("q", [""])[0], qs.get("region", ["world"])[0])
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

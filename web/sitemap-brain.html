@@ -204,7 +204,7 @@ function loadMap(manual){
   var pages=data.pages||[], apis=data.apis||[];
   // 1) every curated cube (even empty) always appears
   var covered={};
-  var LIVE={'AgroMind · AI':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1};
+  var LIVE={'AgroMind · AI':1,'AgroPulse · חדשות':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1};
   BRANCHES.forEach(function(b,i){ b.n=DEF[i].nodes.map(function(nd){ if(nd.file)covered[nd.file]=1; return {label:short(nd.label),file:nd.file||'',live:LIVE[nd.label]?1:0}; }); });
   // 2) merge any NEW scanned page not already covered (auto-discovery)
   pages.forEach(function(p){ if(p.file==='sitemap-brain.html'||covered[p.file])return; BRANCHES[branchIdxFor(p.file)].n.push({label:short(p.title||p.file),file:p.file}); });
