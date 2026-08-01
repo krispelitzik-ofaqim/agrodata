@@ -153,6 +153,30 @@ def ask_gemini(q):
             msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
         return {"answer": msg, "demo": True, "err": code}
 
+def scan_sitemap():
+    pages = []
+    try:
+        for f in sorted(os.listdir(WEB)):
+            if f.endswith(".html"):
+                title = f
+                try:
+                    raw = open(os.path.join(WEB, f), encoding="utf-8").read(8000)
+                    m = re.search(r"<title[^>]*>([^<]+)</title>", raw, re.I)
+                    if m:
+                        title = re.sub(r"\s*·\s*AgroData.*$", "", m.group(1).strip()) or m.group(1).strip()
+                except Exception:
+                    pass
+                pages.append({"file": f, "title": title})
+    except Exception:
+        pass
+    apis = []
+    try:
+        src = open(os.path.join(HERE, "agro-proxy.py"), encoding="utf-8").read()
+        apis = sorted(set(re.findall(r"/api/[a-z]+", src)))
+    except Exception:
+        pass
+    return {"pages": pages, "apis": apis, "count": len(pages)}
+
 def fetch_journal(issn):
     issn = re.sub(r"[^0-9Xx\-]", "", issn or "")[:9]
     if not issn:
@@ -204,6 +228,13 @@ class H(http.server.SimpleHTTPRequestHandler):
             elif eng == "claude": out = ask_claude(q)
             else: out = ask_gemini(q)
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/sitemap"):
+            body = json.dumps(scan_sitemap(), ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")

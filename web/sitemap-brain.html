@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מפת חשיבה · איפיון האתר · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#6a45c0;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#0f2419;color:#eaf4ee}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}
+.topbar{background:linear-gradient(135deg,#0c1c13,#134a30);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.8);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--lime);letter-spacing:.1em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#fff}h1 b{color:var(--lime)}
+.sub{color:rgba(234,244,238,.6);font-size:16px;max-width:640px;margin:0 auto}
+.panel{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:16px;margin:26px 0}
+.mapbox{width:100%;overflow-x:auto}
+svg.brain{width:100%;min-width:900px;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:14px 0 4px}
+.lg{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(234,244,238,.8)}
+.lg .sw{width:12px;height:12px;border-radius:4px}
+.h2{font-family:Rubik;font-size:28px;font-weight:800;color:#fff;text-align:center;margin:44px 0 6px}
+.h2 span{color:var(--lime)}
+.h2sub{text-align:center;color:rgba(234,244,238,.55);font-size:15px;margin-bottom:22px}
+/* flow layers */
+.flow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:820px){.flow{grid-template-columns:1fr}}
+.layer{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:18px}
+.layer h3{font-family:Rubik;font-size:17px;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.layer .cap{font-size:12.5px;color:rgba(234,244,238,.5);margin-bottom:14px;font-family:'Plex Mono'}
+.chip{display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:8px 12px;font-size:13.5px;margin:0 0 8px 8px;color:#eaf4ee}
+.chip b{color:var(--lime)}
+.arrow{text-align:center;color:var(--lime);font-size:26px;margin:6px 0}
+.footbar{background:linear-gradient(135deg,#0c1c13,#134a30);margin-top:40px}
+.foot{padding:24px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.6)}
+.node-t{cursor:pointer}
+.node-t.hot rect{stroke-width:2.6!important}
+.node-t.child.hot rect{fill:rgba(255,255,255,.22)!important}
+.node-t.hot text{font-weight:700}
+.livebar2{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:22px}
+.livebadge{display:inline-flex;align-items:center;gap:9px;background:rgba(46,158,99,.14);border:1px solid rgba(46,158,99,.4);color:#8fe6ad;font-family:Rubik;font-weight:800;font-size:14px;border-radius:999px;padding:9px 18px}
+.livebadge .ldot{width:9px;height:9px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,.7);animation:lpulse 1.6s infinite}
+@keyframes lpulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.6)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.upd{font-family:'Plex Mono';font-size:13.5px;color:rgba(234,244,238,.7)}.upd b{color:#fff}
+.refbtn{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:11px;padding:10px 20px;font-family:Rubik;font-weight:800;font-size:14px;cursor:pointer}
+.refbtn:hover{filter:brightness(1.1)}.refbtn.spin{opacity:.6}
+.exportbar{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:36px 0 10px}
+.exlbl{font-family:Rubik;font-weight:700;color:rgba(234,244,238,.7);font-size:15px}
+.expbtn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#eaf4ee;font-family:Rubik;font-weight:800;font-size:14.5px;border-radius:12px;padding:12px 22px;cursor:pointer;transition:.14s}
+.expbtn:hover{background:rgba(255,255,255,.12)}
+.expbtn.xl{background:linear-gradient(135deg,#1c6b45,#134a30);border-color:transparent}
+/* live "pulsing brain" mode */
+.synapse{stroke-width:1.6;stroke-dasharray:5 12;opacity:0}
+/* OFF state: green dot visible & static, no pulsing */
+.halo{transform-box:fill-box;transform-origin:center;opacity:0}
+.livedot{opacity:1}
+@keyframes ping{0%{opacity:.85;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+@keyframes dotpulse{0%,100%{r:4.5;opacity:1}50%{r:9;opacity:.3}}
+@keyframes nodeglow{0%,100%{fill:rgba(255,255,255,.06);stroke-width:1.5}50%{fill:rgba(74,222,128,.32);stroke-width:3.2}}
+@keyframes flow{to{stroke-dashoffset:-34}}
+/* ON (live mode) only: everything pulses */
+.brain.live .halo{animation:ping 1.4s ease-out infinite}
+.brain.live .livedot{animation:dotpulse 1.2s ease-in-out infinite}
+.brain.live .livenode > a rect, .brain.live .livenode > rect:not(.halo){animation:nodeglow 1.5s ease-in-out infinite}
+.brain.live .synapse{opacity:.55;animation:flow 1.4s linear infinite}
+.brain.live .conn{stroke-dasharray:7 9;animation:flow 1.7s linear infinite}
+.brain.live .core{filter:drop-shadow(0 0 20px rgba(143,230,173,.9))}
+.brain.live .core{animation:corepulse 1.9s ease-in-out infinite}
+@keyframes corepulse{0%,100%{stroke-width:3.5;filter:drop-shadow(0 0 4px rgba(143,230,173,.4))}50%{stroke-width:7;filter:drop-shadow(0 0 24px rgba(143,230,173,.95))}}
+.expbtn.liveon{background:linear-gradient(135deg,#c4562e,#8a3a1c)!important;border-color:transparent!important}
+@media print{
+ body{background:#fff!important;color:#14261c!important}
+ .topbar,.footbar,.livebar2,.exportbar,.back{display:none!important}
+ .panel,.layer{background:#fff!important;border-color:#dbe8df!important}
+ h1,.h2,.layer h3{color:#134a30!important}
+ .sub,.h2sub,.cap{color:#5c6f63!important}
+ .chip{color:#14261c!important;border-color:#cfe0d5!important}
+}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b style="color:#8fe6ad">Data</b></span></a>
+  <a class="back" href="admin.html">→ חזרה ללוח הניהול</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">SITE BLUEPRINT · מפת חשיבה</div>
+    <h1>המוח של <b>AgroData</b></h1>
+    <div class="sub">איפיון מלא של הזירה — כל המנועים, המקורות והחיבורים במפה אחת. מבנה, זרימת נתונים ותחומי-חפיפה.</div>
+  </div>
+
+  <div class="livebar2">
+    <span class="livebadge"><span class="ldot"></span> חי · מתעדכן כל 5 דקות</span>
+    <span class="upd">מעודכן ל־ <b id="lastUpd">—</b></span>
+    <button class="refbtn" onclick="loadMap(true)">🔄 רענון ידני</button>
+  </div>
+
+  <!-- RADIAL BRAIN MAP -->
+  <div class="panel">
+    <div class="mapbox"><svg class="brain" id="brain" viewBox="0 0 1960 1960" preserveAspectRatio="xMidYMid meet"></svg></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <!-- VENN -->
+  <div class="h2">שלושת <span>מוקדי המוח</span></div>
+  <div class="h2sub">כל יכולת בזירה נשענת על שילוב של דאטה, מחקר וקהילה — ובמרכז יושב AgroMind (ה-AI).</div>
+  <div class="panel" style="display:flex;justify-content:center">
+    <svg width="600" height="480" viewBox="0 0 560 470" style="max-width:100%">
+      <circle cx="220" cy="180" r="150" fill="rgba(46,158,99,.28)" stroke="#2e9e63" stroke-width="2"/>
+      <circle cx="340" cy="180" r="150" fill="rgba(43,143,176,.28)" stroke="#2b8fb0" stroke-width="2"/>
+      <circle cx="280" cy="280" r="150" fill="rgba(199,154,46,.26)" stroke="#c79a2e" stroke-width="2"/>
+      <text x="150" y="140" fill="#eaf4ee" font-family="Rubik" font-weight="800" font-size="22" text-anchor="middle">דאטה</text>
+      <text x="150" y="164" fill="rgba(234,244,238,.7)" font-family="Heebo" font-size="12" text-anchor="middle">מאגר · מדדים · מפות</text>
+      <text x="410" y="140" fill="#eaf4ee" font-family="Rubik" font-weight="800" font-size="22" text-anchor="middle">מחקר</text>
+      <text x="410" y="164" fill="rgba(234,244,238,.7)" font-family="Heebo" font-size="12" text-anchor="middle">אקדמיה · כתבי עת · מו״פ</text>
+      <text x="280" y="360" fill="#eaf4ee" font-family="Rubik" font-weight="800" font-size="22" text-anchor="middle">קהילה</text>
+      <text x="280" y="384" fill="rgba(234,244,238,.7)" font-family="Heebo" font-size="12" text-anchor="middle">שיח · חברות · כנסים</text>
+      <circle cx="280" cy="215" r="52" fill="#134a30" stroke="#8fe6ad" stroke-width="2"/>
+      <text x="280" y="210" fill="#8fe6ad" font-family="Space Grotesk" font-weight="700" font-size="16" text-anchor="middle">AgroMind</text>
+      <text x="280" y="230" fill="#fff" font-family="Heebo" font-size="12" text-anchor="middle">AI · הקופיילוט</text>
+    </svg>
+  </div>
+
+  <!-- DATA FLOW -->
+  <div class="h2">זרימת <span>הנתונים</span></div>
+  <div class="h2sub">מהמשתמש, דרך מנוע הזירה (Proxy), אל מקורות הנתונים החיים.</div>
+  <div class="flow">
+    <div class="layer">
+      <h3>🖥️ ממשק · Frontend</h3>
+      <div class="cap" id="capPages">web/ · HTML</div>
+      <div id="flowPages"></div>
+    </div>
+    <div class="layer">
+      <h3>⚙️ מנוע · Proxy API</h3>
+      <div class="cap">agro-proxy.py</div>
+      <div id="flowApis"></div>
+    </div>
+    <div class="layer">
+      <h3>🌐 מקורות · Data</h3>
+      <div class="cap">External / Live</div>
+      <span class="chip">Gemini</span><span class="chip">Claude</span><span class="chip">Yahoo Finance</span><span class="chip">Google CSE</span><span class="chip">gov.il</span>
+      <span class="chip">📄 כתבי עת · <b>Crossref</b></span><span class="chip">🎓 אקדמיה</span><span class="chip">🔬 מכוני מחקר</span><span class="chip">🌱 מכוני מו״פ</span><span class="chip">🏢 אתרי חברות · <b>og</b></span>
+    </div>
+  </div>
+  <div class="exportbar">
+    <button class="expbtn" id="liveBtn" onclick="toggleLive(this)">🧠 מצב ויזואלי חי</button>
+    <span class="exlbl">· ייצוא:</span>
+    <button class="expbtn" onclick="exportPDF()">📄 PDF</button>
+    <button class="expbtn xl" onclick="exportExcel()">📊 Excel</button>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b style="color:#8fe6ad">Data</b></span> Center · מפת חשיבה ואיפיון · <span class="mono">blueprint</span></div></div></div>
+
+<script>
+var CX=980, CY=980, BR=280, CR=320, RGAP=140;
+/* every cube on the site is a node here (even if empty). scan adds NEW pages on top. */
+var DEF=[
+ {key:'eng',c:'#2e9e63',t:'מנועי הזירה',nodes:[
+   {label:'AgroLake · מאגר'},{label:'AgroMind · AI',file:'search-results.html'},{label:'AgroPulse · חדשות',file:'news.html'},
+   {label:'AgroSense · חיישנים'},{label:'AgroMap · מפות',file:'maps.html'},{label:'AgroDirectory · חברות',file:'companies.html'},
+   {label:'AgroScout · סטארטאפים'},{label:'AgroHub · האב'},{label:'מפת האגרו-טק',file:'agromap.html'}]},
+ {key:'res',c:'#2b8fb0',t:'מחקר וידע',nodes:[
+   {label:'AgroScholar · אקדמיה',file:'research.html'},{label:'AgroLibrary · כתבי עת',file:'journals.html'},
+   {label:'AgroLabs · מדען ראשי',file:'labs.html'},{label:'AgroRnD · מו״פים',file:'research.html'}]},
+ {key:'fin',c:'#c79a2e',t:'זירה פיננסית',nodes:[
+   {label:'אגרו בנק'},{label:'אגרו אינווסט'},{label:'אגרו סטוק',file:'agro-stock.html'},
+   {label:'אגרו ונצ׳ר'},{label:'אגרו לאנץ׳'},{label:'אגרו קפיטל'}]},
+ {key:'ofa',c:'#6a45c0',t:'אופקים · AgroCity',nodes:[
+   {label:'חזון'},{label:'אקוסיסטם'},{label:'מהנגב לעולם'},{label:'מרכז החדשנות',file:'labs.html'},{label:'אגרו קמפוס',file:'research.html'},
+   {label:'חוות ניסויים'},{label:'אגרו-סייט'},{label:'אזור תעשייה'},{label:'בי״ס רגבים'},{label:'בי״ס תיכון'},{label:'אופקים',file:'ofakim.html'}]},
+ {key:'com',c:'#c4562e',t:'קהילה ותוכן',nodes:[
+   {label:'זירת שיח'},{label:'הבלוג',file:'community.html'},{label:'AgroExpo · כנסים',file:'conferences.html'},
+   {label:'AgroTrade · סחר',file:'trade.html'},{label:'AgroGov · מדיניות',file:'gov.html'}]},
+ {key:'exp',c:'#158a94',t:'צוות המומחים',nodes:[
+   {label:'לקטור מדעי'},{label:'לקטור אגרונומי'},{label:'מומחה מדיניות ורגולציה'},
+   {label:'נציג ארגוני החקלאים'},{label:'מומחה בין-לאומי'},{label:'משרדי פטנטים'}]},
+ {key:'adm',c:'#5c6f63',t:'ניהול ומנויים',nodes:[
+   {label:'לוח ניהול',file:'admin.html'},{label:'כניסת מנהלים'},{label:'משתמשים וסיסמאות'},{label:'מסלולי מנוי',file:'pricing.html'},
+   {label:'אנליטיקה'},{label:'מפת חשיבה',file:'sitemap-brain.html'},{label:'מי אנחנו',file:'about.html'},{label:'צור קשר',file:'contact.html'}]}
+];
+var KW={research:'res',journals:'res',labs:'res','agro-stock':'fin',ofakim:'ofa',community:'com',conferences:'com',gov:'com',trade:'com',
+ admin:'adm',pricing:'adm',brand:'adm',about:'adm',contact:'adm',privacy:'adm',terms:'adm',companies:'eng',agromap:'eng',maps:'eng',news:'eng',network:'eng',brain:'eng',index:'eng','search-results':'eng',logo:'eng','diagram-flow':'eng'};
+function branchIdxFor(file){var b=file.replace('.html','');for(var kw in KW){if(b.indexOf(kw)>=0){for(var i=0;i<DEF.length;i++)if(DEF[i].key===KW[kw])return i;}}return DEF.length-1;}
+function short(s){s=s.replace(/·.*$/,'').trim();return s.length>22?s.slice(0,21)+'…':s;}
+var BRANCHES=DEF.map(function(d){return {c:d.c,t:d.t,n:[]};});
+function pol(cx,cy,r,a){return [cx+r*Math.cos(a), cy+r*Math.sin(a)];}
+
+function two(n){return (n<10?'0':'')+n;}
+function stamp(){var d=new Date();return two(d.getHours())+':'+two(d.getMinutes())+':'+two(d.getSeconds());}
+function loadMap(manual){
+ var btn=document.querySelector('.refbtn');if(manual&&btn)btn.classList.add('spin');
+ fetch('/api/sitemap',{cache:'no-store'}).then(function(r){return r.json();}).then(function(data){
+  LASTDATA=data;
+  var pages=data.pages||[], apis=data.apis||[];
+  // 1) every curated cube (even empty) always appears
+  var covered={};
+  var LIVE={'AgroMind · AI':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1};
+  BRANCHES.forEach(function(b,i){ b.n=DEF[i].nodes.map(function(nd){ if(nd.file)covered[nd.file]=1; return {label:short(nd.label),file:nd.file||'',live:LIVE[nd.label]?1:0}; }); });
+  // 2) merge any NEW scanned page not already covered (auto-discovery)
+  pages.forEach(function(p){ if(p.file==='sitemap-brain.html'||covered[p.file])return; BRANCHES[branchIdxFor(p.file)].n.push({label:short(p.title||p.file),file:p.file}); });
+  renderBrain();
+  document.getElementById('capPages').textContent='web/ · '+pages.length+' עמודים (סריקה חיה)';
+  document.getElementById('flowPages').innerHTML=pages.map(function(p){return '<a class="chip" href="'+p.file+'" target="_blank" rel="noopener" style="text-decoration:none">'+short(p.title||p.file)+'</a>';}).join('');
+  document.getElementById('flowApis').innerHTML=apis.map(function(a){return '<span class="chip"><b>'+a+'</b></span>';}).join('');
+  document.getElementById('lastUpd').textContent=stamp();
+  if(btn)btn.classList.remove('spin');
+ }).catch(function(){ renderBrain(); document.getElementById('capPages').textContent='web/ · (השרת לא פעיל — הרץ agro-proxy.py)'; document.getElementById('lastUpd').textContent='—'; if(btn)btn.classList.remove('spin'); });
+}
+var LASTDATA={pages:[],apis:[]};
+function toggleLive(btn){var on=document.getElementById('brain').classList.toggle('live');btn.classList.toggle('liveon',on);btn.textContent=on?'🧠 מצב חי · פעיל':'🧠 מצב ויזואלי חי';}
+function exportPDF(){window.print();}
+function exportExcel(){
+ var rows=[['קטגוריה','קובייה / רכיב','קובץ']];
+ BRANCHES.forEach(function(b){ b.n.forEach(function(nm){ rows.push([b.t, nm.label, nm.file||'(רכיב · ללא עמוד)']); }); });
+ rows.push([]); rows.push(['APIs (מנוע)','','']);
+ (LASTDATA.apis||[]).forEach(function(a){rows.push([a,'','']);});
+ var csv=rows.map(function(r){return r.map(function(c){return '"'+String(c||'').replace(/"/g,'""')+'"';}).join(',');}).join('\r\n');
+ var blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='AgroData-sitemap.csv';a.click();
+}
+(function(){
+ var brain=document.getElementById('brain');
+ brain.addEventListener('mouseover',function(e){
+  var g=e.target.closest&&e.target.closest('.node-t'); if(!g)return;
+  var cx=g.getAttribute('data-cx'), cy=g.getAttribute('data-cy'); if(!cx)return;
+  g.setAttribute('transform','translate('+cx+' '+cy+') scale(3) translate(-'+cx+' -'+cy+')');
+  g.classList.add('hot');
+  if(g.nextSibling)g.parentNode.appendChild(g); // bring to front (only if not already last)
+ });
+ brain.addEventListener('mouseout',function(e){
+  var g=e.target.closest&&e.target.closest('.node-t'); if(!g)return;
+  if(e.relatedTarget&&g.contains(e.relatedTarget))return; // moving within same node — ignore
+  g.removeAttribute('transform'); g.classList.remove('hot');
+ });
+})();
+loadMap();
+setInterval(loadMap, 300000); // auto-refresh every 5 minutes
+
+function renderBrain(){
+var svg='';
+// connectors first
+BRANCHES.forEach(function(b,i){
+ var a=(-90 + i*(360/BRANCHES.length))*Math.PI/180;
+ var bp=pol(CX,CY,BR,a);
+ svg+='<line class="conn" x1="'+CX+'" y1="'+CY+'" x2="'+bp[0].toFixed(1)+'" y2="'+bp[1].toFixed(1)+'" stroke="'+b.c+'" stroke-width="3" opacity="0.55"/>';
+ var k=b.n.length, RINGS=k<=3?1:(k<=8?2:3);
+ b.n.forEach(function(nm,j){
+  var half=Math.min((Math.PI/BRANCHES.length)*0.94,0.11*(k-1));
+  var off=(k>1?(j/(k-1)-0.5)*2:0)*half;
+  var cp=pol(bp[0],bp[1],CR+(j%RINGS)*RGAP,a+off);
+  svg+='<line class="conn" x1="'+bp[0].toFixed(1)+'" y1="'+bp[1].toFixed(1)+'" x2="'+cp[0].toFixed(1)+'" y2="'+cp[1].toFixed(1)+'" stroke="'+b.c+'" stroke-width="1.5" opacity="0.3"/>';
+ });
+});
+var SYN=[];
+// branch + child nodes
+BRANCHES.forEach(function(b,i){
+ var a=(-90 + i*(360/BRANCHES.length))*Math.PI/180;
+ var bp=pol(CX,CY,BR,a);
+ var k=b.n.length, RINGS=k<=3?1:(k<=8?2:3);
+ b.n.forEach(function(nm,j){
+  var half=Math.min((Math.PI/BRANCHES.length)*0.94,0.11*(k-1));
+  var off=(k>1?(j/(k-1)-0.5)*2:0)*half;
+  var cp=pol(bp[0],bp[1],CR+(j%RINGS)*RGAP,a+off);
+  var w=Math.max(120, nm.label.length*10);
+  var open=nm.file?'<a href="'+nm.file+'" target="_blank" rel="noopener">':'', close=nm.file?'</a>':'';
+  var cls='node-t child'+(nm.live?' livenode':'');
+  if(nm.live)SYN.push([cp[0],cp[1],b.c]);
+  svg+='<g class="'+cls+'" data-cx="'+cp[0].toFixed(1)+'" data-cy="'+cp[1].toFixed(1)+'">'
+     +(nm.live?'<rect class="halo" x="'+(cp[0]-w/2).toFixed(1)+'" y="'+(cp[1]-19).toFixed(1)+'" width="'+w+'" height="38" rx="10" fill="none" stroke="#4ade80" stroke-width="2"/>':'')
+     +open+'<rect x="'+(cp[0]-w/2).toFixed(1)+'" y="'+(cp[1]-19).toFixed(1)+'" width="'+w+'" height="38" rx="10" fill="rgba(255,255,255,.06)" stroke="'+b.c+'" stroke-width="1.5"/>'
+     +(nm.live?'<circle class="livedot" cx="'+(cp[0]+w/2-6).toFixed(1)+'" cy="'+(cp[1]-13).toFixed(1)+'" r="4.5" fill="#4ade80"/>':'')
+     +'<text x="'+cp[0].toFixed(1)+'" y="'+(cp[1]+5).toFixed(1)+'" fill="#eaf4ee" font-family="Heebo" font-size="15" text-anchor="middle">'+nm.label+'</text>'+close+'</g>';
+ });
+ // branch node
+ var bw=Math.max(150,b.t.length*13);
+ svg+='<g class="node-t" data-cx="'+bp[0].toFixed(1)+'" data-cy="'+bp[1].toFixed(1)+'"><rect x="'+(bp[0]-bw/2).toFixed(1)+'" y="'+(bp[1]-24).toFixed(1)+'" width="'+bw+'" height="48" rx="12" fill="'+b.c+'"/>'
+    +'<text x="'+bp[0].toFixed(1)+'" y="'+(bp[1]+7).toFixed(1)+'" fill="#fff" font-family="Rubik" font-weight="800" font-size="19" text-anchor="middle">'+b.t+'</text></g>';
+});
+// synapses (core → each live node) — only visible in live mode
+SYN.forEach(function(s){ svg+='<line class="synapse" x1="'+CX+'" y1="'+CY+'" x2="'+s[0].toFixed(1)+'" y2="'+s[1].toFixed(1)+'" stroke="#8fe6ad"/>'; });
+// core
+svg+='<circle class="core" cx="'+CX+'" cy="'+CY+'" r="95" fill="#134a30" stroke="#8fe6ad" stroke-width="3.5"/>'
+   +'<text x="'+CX+'" y="'+(CY-8)+'" fill="#8fe6ad" font-family="Space Grotesk" font-weight="700" font-size="28" text-anchor="middle">AgroData</text>'
+   +'<text x="'+CX+'" y="'+(CY+20)+'" fill="#fff" font-family="Heebo" font-size="16" text-anchor="middle">🧠 המוח</text>';
+document.getElementById('brain').innerHTML=svg;
+document.getElementById('legend').innerHTML=BRANCHES.map(function(b){return '<span class="lg"><span class="sw" style="background:'+b.c+'"></span>'+b.t+'</span>';}).join('');
+}
+</script>
+</body></html>
