@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מענקי מחקר ומימון · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#6a45c0;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:36px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:52px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:17px;max-width:740px;margin:0 auto}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0 8px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.12s}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}.fbtn:hover:not(.on){background:var(--tint)}
+.jsearchbar{display:flex;align-items:center;gap:10px;max-width:640px;margin:14px auto 6px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:26px 0 40px}
+@media(max-width:980px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.gcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:5px solid var(--c)}
+.gcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,38,28,.1);border-color:#bcdcc8}
+.gtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.gtag{font-family:'Plex Mono';font-size:12px;font-weight:700;border-radius:999px;padding:4px 11px;color:#fff;background:var(--c)}
+.glogo{width:44px;height:44px;border-radius:11px;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;position:relative;flex:0 0 auto}
+.glogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7px;background:#fff}
+.gn{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin-bottom:4px}
+.gd{font-size:14.5px;color:var(--mut);line-height:1.55;flex:1;margin-bottom:12px}
+.gmeta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.gm{font-size:12.5px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:999px;padding:3px 10px}
+.glink{font-family:'Plex Mono';font-size:13px;color:var(--lime);font-weight:700}
+.note{text-align:center;color:var(--mut);font-size:13.5px;margin-bottom:40px}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">RESEARCH GRANTS & FUNDING · מענקים ומימון</div>
+    <h1>מענקי <b>מחקר ומימון</b></h1>
+    <div class="sub">מפת מקורות המימון למחקר ולחדשנות אגרו-טק — ממשלתי, דו-לאומי, אירופי ופרטי. איפה מגישים, למי, ובשביל מה. חלק ממאגר הידע של הזירה.</div>
+    <div class="filters" id="filters"></div>
+    <div class="jsearchbar"><span>🔎</span><input id="q" placeholder="חיפוש: שם קרן, סוג מימון, גוף…" oninput="render()"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="note">📋 מדריך מקורות המימון — לאימות מועדים וקולות קוראים באתרי הגופים. ניתן לחבר עדכון קולות קוראים חיים בהמשך.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מענקי מחקר ומימון · <span class="mono">grants & funding</span></div></div></div>
+
+<script>
+var CATS=[['all','הכל'],['gov','ממשלתי'],['bi','דו-לאומי'],['eu','אירופי'],['priv','פרטי/קרנות']];
+var COL={gov:'#1c6b45',bi:'#2b8fb0',eu:'#6a45c0',priv:'#c79a2e'};
+var CATN={gov:'ממשלתי',bi:'דו-לאומי',eu:'אירופי',priv:'פרטי'};
+var G=[
+ {n:'המדען הראשי · משרד החקלאות',u:'https://www.gov.il/he/departments/units/moag_chief_scientist',k:'gov',d:'מימון מחקר חקלאי יישומי — קולות קוראים שנתיים למוסדות מחקר, מו״פים ואקדמיה.',m:['מחקר חקלאי','מוסדות ומו״פ']},
+ {n:'רשות החדשנות',u:'https://innovationisrael.org.il/',k:'gov',d:'מסלולי מו״פ, חממות טכנולוגיות, פיילוטים ותמיכה בסטארטאפים — כולל אגרי-פוד-טק.',m:['סטארטאפים','מו״פ','חממות']},
+ {n:'תוכניות קמין ונופר',u:'https://innovationisrael.org.il/',k:'gov',d:'מימון מחקר אקדמי יישומי בדרך למסחור (Kamin) והבשלת טכנולוגיה (Nofar).',m:['אקדמיה→תעשייה']},
+ {n:'הקרן הלאומית למדע (ISF)',u:'https://www.isf.org.il/',k:'gov',d:'מענקי מחקר בסיסי מתחרותיים לחוקרים באוניברסיטאות — כולל מדעי החקלאות והצמח.',m:['מחקר בסיסי','אקדמיה']},
+ {n:'קרן BARD',u:'https://www.bard-isus.com/',k:'bi',d:'קרן דו-לאומית ארה״ב–ישראל למחקר ופיתוח חקלאי — המקור המרכזי לשיתופי מחקר חקלאי.',m:['ארה״ב–ישראל','חקלאות']},
+ {n:'קרן BSF',u:'https://www.bsf.org.il/',k:'bi',d:'הקרן הדו-לאומית למדע ארה״ב–ישראל — מחקר מדעי משותף בכל התחומים.',m:['ארה״ב–ישראל','מדע']},
+ {n:'קרן GIF',u:'https://www.gif.org.il/',k:'bi',d:'הקרן הגרמנית-ישראלית למחקר ופיתוח מדעי — כולל סביבה וחקלאות.',m:['גרמניה–ישראל']},
+ {n:'Horizon Europe',u:'https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/home',k:'eu',d:'תוכנית המסגרת של האיחוד האירופי — קונסורציומים בחקלאות, מזון וקיימות (Cluster 6).',m:['אירופה','קונסורציום','€']},
+ {n:'EIT Food',u:'https://www.eitfood.eu/',k:'eu',d:'קהילת החדשנות האירופית לפוד-טק — מענקים, האצה ופיילוטים לסטארטאפים.',m:['פוד-טק','האצה']},
+ {n:'מכון היצוא',u:'https://www.export.gov.il/',k:'gov',d:'סיוע ומענקים ליצואני אגרו-טק — משלחות, תערוכות והרחבת שווקים.',m:['יצוא','שווקים']},
+ {n:'הרשות לפיתוח הנגב',u:'https://www.gov.il/he/departments/negev_development_authority',k:'gov',d:'מענקים ותמריצים לפרויקטים ומיזמים בנגב — כולל חקלאות וחדשנות.',m:['נגב','פריפריה']},
+ {n:'PLANTS / GEF ומענקי סביבה',u:'https://www.gov.il/he/departments/ministry_of_environmental_protection',k:'priv',d:'מענקים בתחומי קיימות, אקלים וסביבה — רלוונטי לחקלאות מתחדשת ובת-קיימא.',m:['קיימות','אקלים']}
+];
+var CUR='all';
+function dom(u){try{return new URL(u).hostname.replace(/^www\./,'');}catch(e){return '';}}
+function render(){
+ var q=(document.getElementById('q').value||'').trim().toLowerCase();
+ var rows=G.filter(function(g){return (CUR==='all'||g.k===CUR)&&(!q||(g.n+' '+g.d+' '+g.m.join(' ')+' '+CATN[g.k]).toLowerCase().includes(q));});
+ document.getElementById('grid').innerHTML=rows.length?rows.map(function(g){var d=dom(g.u);
+  return '<a class="gcard" style="--c:'+COL[g.k]+'" href="'+g.u+'" target="_blank" rel="noopener">'
+   +'<div class="gtop"><span class="glogo">'+(g.n[0])+(d?'<img src="https://www.google.com/s2/favicons?domain='+d+'&sz=128" onerror="this.remove()">':'')+'</span><span class="gtag">'+CATN[g.k]+'</span></div>'
+   +'<div class="gn">'+g.n+'</div><div class="gd">'+g.d+'</div>'
+   +'<div class="gmeta">'+g.m.map(function(x){return '<span class="gm">'+x+'</span>';}).join('')+'</div>'
+   +'<div class="glink">לאתר הקרן / הגשה ↗</div></a>';
+ }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:40px">לא נמצאו תוצאות</div>';
+}
+function filt(k,el){CUR=k;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+document.getElementById('filters').innerHTML=CATS.map(function(c,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="filt(\''+c[0]+'\',this)">'+c[1]+'</button>';}).join('');
+render();
+</script>
+</body></html>

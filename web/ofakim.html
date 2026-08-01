@@ -58,6 +58,18 @@ h1{font-family:Rubik;font-size:65px;font-weight:800;margin:6px 0 8px}h1 b{color:
 .pstat{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 11px;white-space:nowrap}
 .pstat.ok{background:rgba(31,157,87,.12);color:#1f9d57}
 .pstat.part{background:rgba(199,154,46,.16);color:#a67d1e}
+.senshead{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);text-align:center;margin:26px 0 14px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.senslive{display:inline-flex;align-items:center;gap:7px;background:rgba(31,157,87,.14);color:#1f9d57;font-family:'Plex Mono';font-size:14px;font-weight:700;border-radius:999px;padding:4px 12px;vertical-align:middle}
+.senslive .sdot{width:9px;height:9px;border-radius:50%;background:#4ade80;animation:sglow 1.4s ease-in-out infinite}
+@keyframes sglow{0%,100%{box-shadow:0 0 5px 1px rgba(74,222,128,.85)}50%{box-shadow:0 0 12px 4px rgba(74,222,128,1)}}
+.sensors{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:10px}
+@media(max-width:900px){.sensors{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.sensors{grid-template-columns:repeat(2,1fr)}}
+.scard2{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 14px;text-align:center;box-shadow:0 8px 20px rgba(20,38,28,.05);border-top:4px solid var(--c)}
+.scard2 .si{font-size:26px}
+.scard2 .sv{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d);margin-top:6px;line-height:1}
+.scard2 .sl{font-size:13px;color:var(--mut);margin-top:6px}
+.senscap{text-align:center;color:var(--mut);font-size:13px;margin-bottom:44px;font-family:'Plex Mono'}
 .pblock{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:30px 24px;margin:6px 0 44px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
 .partners{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start}
 .pt{display:flex;flex-direction:column;align-items:center;gap:10px;width:120px;text-align:center;font-size:14px;color:var(--ink);font-weight:600;line-height:1.3}
@@ -85,6 +97,10 @@ h1{font-family:Rubik;font-size:65px;font-weight:800;margin:6px 0 8px}h1 b{color:
     <div class="crown">בירת האגרו-טק של ישראל</div>
     <div class="sub">העיר שמובילה את זירת האגרו-טק של ישראל — חדשנות, מחקר וחקלאות מהנגב אל העולם.</div>
   </div>
+
+  <div class="senshead">🌡️ מזג אוויר וסביבה · אופקים · <span class="senslive"><span class="sdot"></span>LIVE · בזמן אמת</span></div>
+  <div class="sensors" id="sensors"></div>
+  <div class="senscap" id="senscap"></div>
 
   <div class="videowrap">
     <iframe src="https://www.youtube-nocookie.com/embed/m06pYkUvvGQ?autoplay=1&mute=1&rel=0&modestbranding=1"
@@ -137,6 +153,25 @@ h1{font-family:Rubik;font-size:65px;font-weight:800;margin:6px 0 8px}h1 b{color:
 <script>
 function openVid(){document.getElementById('vframe').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/OYcfk03NBcs?autoplay=1&rel=0&modestbranding=1" title="אזור התעשייה" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';document.getElementById('vmodal').classList.add('open');}
 function closeVid(){document.getElementById('vmodal').classList.remove('open');document.getElementById('vframe').innerHTML='';}
+/* live environment for Ofakim (open-meteo, real data) */
+function loadSensors(){
+ fetch('/api/weather?lat=31.31&lon=34.62',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok||!j.current){document.getElementById('sensors').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:20px">נתונים לא זמינים כרגע.</div>';return;}
+  var c=j.current;
+  var cards=[
+   ['🌡️','#c4562e',Math.round(c.temperature_2m)+'°','טמפרטורה'],
+   ['💧','#2b8fb0',Math.round(c.relative_humidity_2m)+'%','לחות אוויר'],
+   ['🌧️','#2e9e63',(c.precipitation||0)+' מ״מ','משקעים'],
+   ['💨','#6a45c0',Math.round(c.wind_speed_10m)+' קמ״ש','רוח'],
+   ['🌱','#c79a2e',Math.round(c.soil_temperature_0cm)+'°','טמפ׳ קרקע'],
+   ['🪴','#158a94',Math.round((c.soil_moisture_0_to_1cm||0)*100)+'%','לחות קרקע']
+  ];
+  document.getElementById('sensors').innerHTML=cards.map(function(s){return '<div class="scard2" style="--c:'+s[1]+'"><div class="si">'+s[0]+'</div><div class="sv">'+s[2]+'</div><div class="sl">'+s[3]+'</div></div>';}).join('');
+  var t=(c.time||'').replace('T',' ');
+  document.getElementById('senscap').textContent='📍 אופקים · נמשך חי מ-open-meteo · עודכן '+t;
+ }).catch(function(){document.getElementById('sensors').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:20px">שגיאת חיבור לשרת.</div>';});
+}
+loadSensors();setInterval(loadSensors,300000);
 </script>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · אופקים · <span class="mono">home</span></div></div></div>

@@ -20,6 +20,40 @@ def load_comments():
 def save_comments(items):
     with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False)
+APPS_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "applications.json")
+def save_application(data):
+    rec = {}
+    for k in ("name", "email", "phone", "role", "linkedin", "company", "website", "sector",
+              "stage", "founded", "location", "about", "problem", "amount", "valuation",
+              "use", "instrument", "equity", "shares", "notes"):
+        rec[k] = str(data.get(k, ""))[:2000]
+    f = data.get("file")
+    if isinstance(f, dict) and f.get("data"):
+        try:
+            m = re.match(r"data:[^;]+;base64,(.+)$", f.get("data"), re.S)
+            if m:
+                raw = base64.b64decode(m.group(1))
+                if len(raw) <= 8 * 1024 * 1024:
+                    updir = os.path.join(WEB, "uploads", "apply")
+                    os.makedirs(updir, exist_ok=True)
+                    ext = re.sub(r"[^a-zA-Z0-9]", "", (f.get("name", "file").rsplit(".", 1) + ["bin"])[-1])[:5] or "bin"
+                    fn = "app" + str(int(time.time())) + "_" + os.urandom(4).hex() + "." + ext
+                    with open(os.path.join(updir, fn), "wb") as fh:
+                        fh.write(raw)
+                    rec["file"] = "uploads/apply/" + fn
+                    rec["file_name"] = str(f.get("name", ""))[:120]
+        except Exception:
+            pass
+    rec["ts"] = int(time.time())
+    with CLOCK:
+        try:
+            items = json.load(open(APPS_FILE, encoding="utf-8"))
+        except Exception:
+            items = []
+        items.append(rec)
+        json.dump(items, open(APPS_FILE, "w", encoding="utf-8"), ensure_ascii=False)
+    return rec
+
 def save_image(dataurl):
     try:
         m = re.match(r"data:image/(png|jpe?g|gif|webp);base64,(.+)$", dataurl or "", re.I | re.S)
@@ -221,6 +255,46 @@ def fetch_news(q, region):
     NEWSCACHE[key] = (now, res)
     return res
 
+def fetch_research(q, frm):
+    frm = re.sub(r"[^0-9\-]", "", frm or "")[:10] or "2021-01-01"
+    base = ("https://api.openalex.org/works?filter=institutions.country_code:IL,"
+            "concepts.id:C118518473,from_publication_date:" + frm +
+            "&sort=publication_date:desc&per-page=30&mailto=krispelitzik@gmail.com")
+    if q and q.strip():
+        base += "&search=" + urllib.parse.quote(q.strip())
+    try:
+        req = urllib.request.Request(base, headers={"User-Agent": "AgroData/1.0 (mailto:krispelitzik@gmail.com)"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+        out = []
+        for w in d.get("results", []):
+            title = w.get("title") or ""
+            if not title:
+                continue
+            authors = ", ".join((a.get("author", {}) or {}).get("display_name", "") for a in (w.get("authorships") or [])[:3])
+            inst = ""
+            for a in (w.get("authorships") or []):
+                for it in (a.get("institutions") or []):
+                    if it.get("country_code") == "IL":
+                        inst = it.get("display_name", ""); break
+                if inst:
+                    break
+            url = w.get("doi") or (w.get("primary_location", {}) or {}).get("landing_page_url") or w.get("id") or ""
+            out.append({"title": title, "authors": authors, "year": w.get("publication_year"),
+                        "inst": inst, "type": w.get("type", ""), "url": url})
+        return {"items": out, "count": d.get("meta", {}).get("count")}
+    except Exception as e:
+        return {"items": [], "err": str(getattr(e, "code", "") or type(e).__name__)}
+
+def fetch_weather(lat, lon):
+    url = ("https://api.open-meteo.com/v1/forecast?latitude=" + str(lat) + "&longitude=" + str(lon) +
+           "&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,soil_temperature_0cm,soil_moisture_0_to_1cm&timezone=auto")
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=15))
+        return {"ok": True, "current": d.get("current", {}), "units": d.get("current_units", {})}
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__)}
+
 def scan_sitemap():
     pages = []
     try:
@@ -301,6 +375,25 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/research"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_research(qs.get("q", [""])[0], qs.get("from", ["2021-01-01"])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/weather"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            lat = qs.get("lat", ["31.31"])[0]; lon = qs.get("lon", ["34.62"])[0]
+            out = fetch_weather(lat, lon)
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/news"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_news(qs.get("q", [""])[0], qs.get("region", ["world"])[0])
@@ -345,6 +438,19 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/api/apply"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            rec = save_application(data)
+            body = json.dumps({"ok": True, "id": rec.get("ts")}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/comments"):
             try:
                 n = int(self.headers.get("Content-Length", 0))

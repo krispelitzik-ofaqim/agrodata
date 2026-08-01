@@ -38,16 +38,16 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .mgroup{margin-bottom:22px}
 .mtitle{font-family:Rubik;font-size:33px;font-weight:800;color:var(--green-d);margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .mtitle .cnt{font-family:'Plex Mono';font-size:14px;color:var(--mut);font-weight:400}
-.conf{display:flex;gap:16px;padding:16px;border:1px solid var(--line);border-radius:14px;margin-bottom:12px;text-decoration:none;color:inherit;transition:.14s;background:#fff}
+.conf{display:flex;align-items:center;gap:14px;height:80px;overflow:hidden;padding:12px 14px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;text-decoration:none;color:inherit;transition:.14s;background:#fff}
 .conf:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.07);transform:translateY(-2px)}
-.date{flex:0 0 auto;width:60px;text-align:center;background:var(--tint);border:1px solid #cfe6d8;border-radius:12px;padding:8px 0}
-.date .d{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);line-height:1}
-.date .m{font-family:'Plex Mono';font-size:14px;color:var(--green);margin-top:3px}
-.conf .info{min-width:0}
-.conf h4{font-family:Rubik;font-size:24px;font-weight:700;margin-bottom:4px}
-.conf .loc{font-size:15px;color:var(--mut);margin-bottom:7px}
-.conf .tags{display:flex;gap:6px;flex-wrap:wrap}
-.conf .t{font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.date{flex:0 0 auto;width:54px;text-align:center;background:var(--tint);border:1px solid #cfe6d8;border-radius:11px;padding:7px 0}
+.date .d{font-family:Rubik;font-size:20px;font-weight:800;color:var(--green-d);line-height:1}
+.date .m{font-family:'Plex Mono';font-size:12.5px;color:var(--green);margin-top:3px}
+.conf .info{min-width:0;flex:1}
+.conf h4{font-family:Rubik;font-size:18px;font-weight:700;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conf .loc{font-size:13.5px;color:var(--mut);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conf .tags{display:flex;gap:6px;flex-wrap:nowrap;overflow:hidden}
+.conf .t{font-size:12.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:2px 9px;white-space:nowrap}
 .empty{color:var(--mut);text-align:center;padding:26px}
 .cal{margin:8px 0 6px}
 .cal .chead{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
@@ -57,13 +57,13 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .calarrow:hover{background:var(--green);color:#fff;border-color:var(--green)}
 .relbadge{display:inline-block;font-family:'Plex Mono';font-size:14px;font-weight:700;color:#fff;background:var(--green);border-radius:999px;padding:5px 13px;margin-inline-start:12px;vertical-align:middle}
 .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.calgrid .dow{font-family:Rubik;font-size:15px;color:var(--green-d);text-align:center;font-weight:800;padding:10px 0;background:var(--tint);border-radius:9px;border:1px solid #d3ead9}
-.cell{min-height:98px;border:1px solid #e0eee5;border-radius:12px;padding:9px;background:var(--bg2)}
-.cell.blank{background:var(--bg2);border-style:dashed;opacity:.45}
+.calgrid .dow{font-family:Rubik;font-size:15px;color:#fff;text-align:center;font-weight:800;padding:11px 0;background:linear-gradient(135deg,#1c6b45,#134a30);border-radius:9px;border:0}
+.cell{min-height:98px;border:1px solid #e0eee5;border-radius:12px;padding:9px;background:#fff}
+.cell.blank{background:var(--bg2);border-style:dashed;opacity:.4}
 .cell .num{font-family:'Plex Mono';font-size:15px;color:var(--mut)}
-.cell.ev{border-color:#9fd0b0;background:linear-gradient(180deg,#e9f6ee,#d8efe0)}
-.cell.ev .num{color:var(--green-d);font-weight:700}
-.ev-tag{margin-top:7px;font-size:14px;font-weight:700;color:#fff;background:var(--green);border-radius:8px;padding:4px 8px;line-height:1.3;display:block}
+.cell.ev{border:2px solid var(--gold);background:linear-gradient(180deg,#fff8e8,#fdefcf);box-shadow:0 6px 16px rgba(199,154,46,.18)}
+.cell.ev .num{color:#a67d1e;font-weight:800}
+.ev-tag{margin-top:7px;font-size:13px;font-weight:700;color:#3a2c05;background:linear-gradient(135deg,#c79a2e,#e3c65a);border-radius:8px;padding:4px 8px;line-height:1.3;display:block}
 .cta{margin-top:18px;border-radius:14px;padding:16px 17px;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff}
 .cta.alt{background:linear-gradient(135deg,#2b8fb0,#1c6b7f)}
 .cta-t{font-family:Rubik;font-size:17px;font-weight:800;margin-bottom:5px}
@@ -71,6 +71,19 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .cta-b{display:inline-block;background:#fff;color:var(--green-d);font-family:Rubik;font-weight:700;font-size:14.5px;text-decoration:none;border-radius:10px;padding:9px 18px;transition:.14s}
 .cta.alt .cta-b{color:#12566b}
 .cta-b:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.vidsec{margin:36px 0 40px}
+.vsh{font-family:Rubik;font-size:32px;font-weight:800;color:var(--green-d);text-align:center}
+.vsub{text-align:center;color:var(--mut);font-size:15px;margin-bottom:22px}
+.vidgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.vidgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.vidgrid{grid-template-columns:1fr}}
+.vcard{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;cursor:pointer;box-shadow:0 12px 28px rgba(20,38,28,.14);text-decoration:none;display:block;background:var(--c)}
+.vcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.55))}
+.vcard .play{position:absolute;inset:0;margin:auto;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--green-d);display:grid;place-items:center;font-size:24px;padding-inline-start:5px;z-index:2;transition:.14s}
+.vcard:hover .play{transform:scale(1.12);background:#fff}
+.vcard .vinfo{position:absolute;bottom:0;inset-inline:0;padding:14px 16px;z-index:2;color:#fff}
+.vcard .vn{font-family:Rubik;font-weight:800;font-size:18px}
+.vcard .vc{font-size:13px;opacity:.85;font-family:'Plex Mono'}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45);color:rgba(255,255,255,.8)}
 .foot{padding:26px 0;text-align:center;font-size:14px}
 </style>
@@ -116,6 +129,12 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <!-- LEFT: agenda -->
     <div id="agenda"></div>
   </div>
+
+  <div class="vidsec">
+    <h2 class="vsh">🎬 סרטונים מתערוכות</h2>
+    <div class="vsub">הצצה לתערוכות ולכנסים המובילים באגרו-טק בעולם.</div>
+    <div class="vidgrid" id="vidgrid"></div>
+  </div>
 </div>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · כנסים ותערוכות · <span class="mono">agenda</span></div></div></div>
@@ -125,6 +144,7 @@ const CONF=[
  // group: 0=this month, 1=next month, 2=later
  {n:"GreenTech Amsterdam",d:14,m:"יולי",g:0,fl:"🇳🇱",cy:"הולנד",city:"אמסטרדם",t:["גננות","הידרופוניקה"],u:"https://www.greentech.nl/"},
  {n:"AgriVest",d:22,m:"יולי",g:0,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["השקעות"],u:"#"},
+ {n:"Agromashov · אגרומשוב",d:0,m:"פברואר",g:2,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["תוצרת","חקלאות"],u:"https://www.agromashov.com/"},
  {n:"Precision Ag Vision",d:28,m:"יולי",g:0,fl:"🇺🇸",cy:"ארה״ב",city:"בוסטון",t:["חקלאות מדייקת"],u:"#"},
  {n:"Future Food-Tech",d:5,m:"אוגוסט",g:1,fl:"🇺🇸",cy:"ארה״ב",city:"סן פרנסיסקו",t:["פוד-טק","השקעות"],u:"https://futurefoodtechsf.com/"},
  {n:"Watec",d:18,m:"אוגוסט",g:1,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["מים","השקיה"],u:"https://watec.com/"},
@@ -135,7 +155,25 @@ const CONF=[
  {n:"EIMA International",d:0,m:"נובמבר",g:2,fl:"🇮🇹",cy:"איטליה",city:"בולוניה",t:["מכונות","ציוד"],u:"https://www.eima.it/"},
  {n:"Fruit Logistica",d:0,m:"פברואר",g:2,fl:"🇩🇪",cy:"גרמניה",city:"ברלין",t:["תוצרת","לוגיסטיקה"],u:"https://www.fruitlogistica.com/"},
  {n:"FIRA",d:0,m:"פברואר",g:2,fl:"🇫🇷",cy:"צרפת",city:"טולוז",t:["רובוטיקה"],u:"https://fira-agtech.com/"},
+ {n:"evokeAG",d:0,m:"פברואר",g:2,fl:"🇦🇺",cy:"אוסטרליה",city:"מלבורן",t:["אגרו-טק","השקעות"],u:"https://www.evokeag.com/"},
+ {n:"Ag in Motion",d:0,m:"יולי",g:2,fl:"🇨🇦",cy:"קנדה",city:"סאסקצ׳ואן",t:["מכונות","חקלאות"],u:"https://www.aginmotion.ca/"},
+ {n:"CIAME · China Int'l Agri Machinery",d:0,m:"אוקטובר",g:2,fl:"🇨🇳",cy:"סין",city:"ווהאן",t:["מכונות","ציוד"],u:"http://www.ciame.com.cn/"},
+ {n:"Agrishow",d:0,m:"אפריל",g:2,fl:"🇧🇷",cy:"ברזיל",city:"ריביראו פרטו",t:["חקלאות","מכונות"],u:"https://www.agrishow.com.br/"},
+ {n:"NAMPO Harvest Day",d:0,m:"מאי",g:2,fl:"🇿🇦",cy:"דרום אפריקה",city:"בות׳אוויל",t:["חקלאות","מכונות"],u:"https://www.grainsa.co.za/pages/nampo"},
+ {n:"Agri Week Tokyo",d:0,m:"אוקטובר",g:2,fl:"🇯🇵",cy:"יפן",city:"טוקיו",t:["אגרו-טק","חממות"],u:"https://www.agri-week.jp/"},
+ {n:"Agri Asia",d:0,m:"ספטמבר",g:2,fl:"🇮🇳",cy:"הודו",city:"גנדינגר",t:["חקלאות","זרעים"],u:"https://www.agriasia.in/"},
+ {n:"EuroTier",d:0,m:"נובמבר",g:2,fl:"🇩🇪",cy:"גרמניה",city:"הנובר",t:["בעלי חיים","חלב","עופות"],u:"https://www.eurotier.com/"},
+ {n:"VIV Asia",d:0,m:"מרץ",g:2,fl:"🇹🇭",cy:"תאילנד",city:"בנגקוק",t:["בעלי חיים","עופות"],u:"https://www.vivasia.nl/"},
+ {n:"BioFach",d:0,m:"פברואר",g:2,fl:"🇩🇪",cy:"גרמניה",city:"נירנברג",t:["אורגני","מזון"],u:"https://www.biofach.de/"},
+ {n:"Aquaculture Europe",d:0,m:"ספטמבר",g:2,fl:"🇪🇺",cy:"אירופה",city:"מתחלף",t:["חקלאות ימית","דגה"],u:"https://aquaeas.org/"},
+ {n:"Vinitech-Sifel",d:0,m:"דצמבר",g:2,fl:"🇫🇷",cy:"צרפת",city:"בורדו",t:["גפן ויין","תוצרת"],u:"https://www.vinitech-sifel.com/"},
+ {n:"Unified Wine & Grape Symposium",d:0,m:"ינואר",g:2,fl:"🇺🇸",cy:"ארה״ב",city:"קליפורניה",t:["גפן ויין"],u:"https://www.unifiedsymposium.org/"},
+ {n:"SIMEI",d:0,m:"נובמבר",g:2,fl:"🇮🇹",cy:"איטליה",city:"מילאנו",t:["גפן ויין","ציוד"],u:"https://www.simei.it/"},
+ {n:"MJBizCon",d:0,m:"דצמבר",g:2,fl:"🇺🇸",cy:"ארה״ב",city:"לאס וגאס",t:["קנביס"],u:"https://mjbizconference.com/"},
+ {n:"Spannabis",d:0,m:"מרץ",g:2,fl:"🇪🇸",cy:"ספרד",city:"ברצלונה",t:["קנביס"],u:"https://spannabis.com/"},
+ {n:"CannaTech",d:0,m:"מאי",g:2,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["קנביס","חדשנות"],u:"#"},
 ];
+const TCOL={'מים':'#2b8fb0','השקיה':'#2b8fb0','הידרופוניקה':'#2b8fb0','פוד-טק':'#c4562e','מכונות':'#c79a2e','ציוד':'#c79a2e','תוצרת':'#c79a2e','לוגיסטיקה':'#c79a2e','רובוטיקה':'#6a45c0','אוטומציה':'#6a45c0','גלובלי':'#6a45c0','חדשנות':'#6a45c0','השקעות':'#134a30','חקלאות מדייקת':'#2e9e63','חקלאות':'#1c6b45','גננות':'#2e9e63','חממות':'#2e9e63','זרעים':'#2e9e63','גפן ויין':'#8a1f47','קנביס':'#4f8f3a','בעלי חיים':'#a05a2c','חלב':'#a05a2c','עופות':'#a05a2c','אורגני':'#5a8f2e','חקלאות ימית':'#158a94','דגה':'#158a94'};
 const GROUPS=[{t:"החודש",s:"יולי 2026",c:"#1c6b45",bg:"rgba(28,107,69,.10)"},{t:"החודש הבא",s:"אוגוסט 2026",c:"#2b8fb0",bg:"rgba(43,143,176,.10)"},{t:"בהמשך",s:"ספטמבר 2026 ואילך",c:"#c79a2e",bg:"rgba(199,154,46,.12)"}];
 let fCountry=null, fTopic=null;
 const countries=[...new Set(CONF.map(c=>c.fl+' '+c.cy))];
@@ -158,12 +196,14 @@ function render(){
  GROUPS.forEach((g,gi)=>{
    const items=list.filter(c=>c.g===gi);
    html+=`<div class="mgroup"><div class="mtitle" style="color:${g.c}">${g.t} <span class="cnt">${g.s} · ${items.length}</span></div>`;
-   html+= items.length? items.map(c=>`
-     <a class="conf" href="${c.u}" ${c.u!=='#'?'target="_blank" rel="noopener"':''}>
-       <div class="date" style="background:${g.bg};border-color:${g.c}55"><div class="d" style="color:${g.c}">${c.d||'—'}</div><div class="m" style="color:${g.c}">${c.m}</div></div>
-       <div class="info"><h4>${c.n}</h4><div class="loc">${c.fl} ${c.city}, ${c.cy}</div>
-       <div class="tags">${c.t.map(t=>`<span class="t">${t}</span>`).join('')}</div></div>
-     </a>`).join('') : '<div class="empty">אין אירועים תואמים</div>';
+   html+= items.length? items.map(c=>{
+     const col=TCOL[c.t[0]]||'#1c6b45';
+     return `
+     <a class="conf" href="${c.u}" ${c.u!=='#'?'target="_blank" rel="noopener"':''} style="border-inline-start:6px solid ${col}">
+       <div class="date" style="background:${col};border-color:${col}"><div class="d" style="color:#fff">${c.d||'●'}</div><div class="m" style="color:rgba(255,255,255,.9)">${c.m.slice(0,3)}</div></div>
+       <div class="info"><h4>${c.fl} ${c.n}</h4><div class="loc">📍 ${c.city}, ${c.cy}</div>
+       <div class="tags">${c.t.map(t=>`<span class="t" style="color:#fff;background:${TCOL[t]||col};border-color:${TCOL[t]||col}">${t}</span>`).join('')}</div></div>
+     </a>`;}).join('') : '<div class="empty">אין אירועים תואמים</div>';
    html+='</div>';
  });
  document.getElementById('agenda').innerHTML=html;
@@ -192,5 +232,19 @@ function navMonth(dir){
 }
 buildCal();
 render();
+
+// video gallery from expos (opens YouTube search in new tab)
+var VIDS=[
+ ['GreenTech Amsterdam','🇳🇱 הולנד','linear-gradient(135deg,#2e9e63,#134a30)'],
+ ['Agritechnica','🇩🇪 גרמניה','linear-gradient(135deg,#c79a2e,#8a6a16)'],
+ ['World Agri-Tech Summit','🇬🇧 בריטניה','linear-gradient(135deg,#6a45c0,#3a2680)'],
+ ['Fruit Logistica Berlin','🇩🇪 גרמניה','linear-gradient(135deg,#c4562e,#8a3a1c)'],
+ ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)'],
+ ['MJBizCon · קנביס','🇺🇸 ארה״ב','linear-gradient(135deg,#4f8f3a,#2f5a22)']
+];
+document.getElementById('vidgrid').innerHTML=VIDS.map(function(v){
+ var q='https://www.youtube.com/results?search_query='+encodeURIComponent(v[0]+' agritech expo');
+ return '<a class="vcard" style="--c:'+v[2].match(/#[0-9a-f]{6}/i)[0]+';background:'+v[2]+'" href="'+q+'" target="_blank" rel="noopener"><span class="play">▶</span><div class="vinfo"><div class="vn">'+v[0]+'</div><div class="vc">'+v[1]+'</div></div></a>';
+}).join('');
 </script>
 </body></html>

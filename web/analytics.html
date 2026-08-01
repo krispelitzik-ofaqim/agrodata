@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אנליטיקת שוק · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#6a45c0;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:24px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.apibadge{display:inline-flex;align-items:center;gap:7px;color:#8fe6ad;font-family:'Plex Mono';font-size:13px;font-weight:700;margin-inline-end:16px}
+.apibadge i{width:10px;height:10px;border-radius:50%;background:#4ade80;animation:apiglow 1.4s ease-in-out infinite}
+@keyframes apiglow{0%,100%{box-shadow:0 0 6px 2px rgba(74,222,128,.85)}50%{box-shadow:0 0 14px 5px rgba(74,222,128,1)}}
+.hero{padding:34px 0 4px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:48px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:17px;max-width:720px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:30px 0 8px}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 10px 26px rgba(20,38,28,.05);position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;top:0;inset-inline-end:0;width:5px;height:100%;background:var(--c)}
+.kpi .ic{font-size:24px;margin-bottom:8px}
+.kpi .v{font-family:Rubik;font-weight:800;font-size:30px;color:var(--green-d);line-height:1}
+.kpi .l{font-size:13.5px;color:var(--mut);margin-top:6px}
+.kpi .ch{font-family:'Plex Mono';font-size:12.5px;font-weight:700;margin-top:8px;color:#1f9d57}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin:26px 0}
+@media(max-width:920px){.grid2{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 10px 26px rgba(20,38,28,.05)}
+.card h3{font-family:Rubik;font-weight:800;font-size:19px;color:var(--green-d);margin-bottom:3px}
+.card .cs{font-size:13px;color:var(--mut);margin-bottom:18px}
+/* horizontal bars */
+.hbar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.hbar .hn{width:120px;font-size:14px;font-weight:600;color:var(--ink);flex:0 0 auto;text-align:left}
+.hbar .ht{flex:1;background:var(--bg2);border-radius:8px;height:26px;overflow:hidden}
+.hbar .hf{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-start;padding-inline-start:8px;color:#fff;font-family:'Plex Mono';font-size:12px;font-weight:700;min-width:34px}
+/* column chart */
+.cols{display:flex;align-items:flex-end;gap:10px;height:210px;padding-top:10px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;justify-content:flex-end}
+.col .bar{width:100%;max-width:46px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#2e9e63,#134a30);position:relative}
+.col .bv{font-family:'Plex Mono';font-size:12px;color:var(--green-d);font-weight:700}
+.col .bl{font-size:12.5px;color:var(--mut)}
+/* donut */
+.donutwrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:center}
+.dleg{display:flex;flex-direction:column;gap:9px}
+.dleg .li{display:flex;align-items:center;gap:9px;font-size:14px}
+.dleg .sw{width:13px;height:13px;border-radius:4px}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 40px}
+@media(max-width:820px){.insights{grid-template-columns:1fr}}
+.ins{background:linear-gradient(160deg,#fff,#f2f9f5);border:1px solid var(--line);border-inline-start:5px solid var(--lime);border-radius:16px;padding:20px}
+.ins h4{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin-bottom:6px}
+.ins p{font-size:14.5px;color:var(--mut);line-height:1.6}
+.ins.g{border-inline-start-color:var(--gold)}.ins.t{border-inline-start-color:var(--teal)}
+.brain{background:linear-gradient(160deg,#0f3a26,#1c6b45);color:#fff;border:0;margin:26px 0}
+.brain h3{color:#fff}.brain .cs{color:rgba(255,255,255,.72)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 16px}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#eaf4ee;border-radius:999px;padding:8px 14px;font-size:13.5px;cursor:pointer;transition:.12s}
+.chip:hover{background:rgba(255,255,255,.2)}
+.abar{display:flex;gap:10px}
+.abar input{flex:1;border:0;border-radius:12px;padding:14px 16px;font-family:Heebo;font-size:15.5px;outline:0}
+.abar button{background:var(--gold);color:#3a2c05;border:0;border-radius:12px;padding:0 24px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer;white-space:nowrap}
+.aout{margin-top:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:0;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;white-space:pre-wrap;line-height:1.85;font-size:16px}
+.aout.on{padding:20px 22px;max-height:2000px}
+.ideascta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(135deg,#c79a2e,#e3c65a);color:#3a2c05;border-radius:18px;padding:22px 26px;margin:18px 0 4px;text-decoration:none;box-shadow:0 14px 34px rgba(199,154,46,.3)}
+.ideascta:hover{filter:brightness(1.04)}
+.ideascta .ict{font-family:Rubik;font-weight:800;font-size:21px}
+.ideascta .icd{font-size:14.5px;margin-top:4px;opacity:.9}
+.ideascta .icb{background:#3a2c05;color:#fff;font-family:Rubik;font-weight:800;font-size:15px;border-radius:11px;padding:12px 22px;white-space:nowrap}
+.note{text-align:center;color:var(--mut);font-size:13.5px;margin-bottom:36px}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:24px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <div><span class="apibadge"><i></i>API חי</span><a class="back" href="index.html">→ חזרה לזירה</a></div>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">MARKET INTELLIGENCE · אנליטיקת שוק</div>
+    <h1>מודיעין <b>שוק האגרו-טק</b></h1>
+    <div class="sub">הנתונים שעוזרים לחברות ולסטארטאפים לצמוח — תחומים חמים, מגמות השקעה, שווקי יעד והזדמנויות בזירת האגרו-טק והפוד-טק.</div>
+  </div>
+
+  <div class="card brain">
+    <h3>🧠 המוח האנליטי · שאל את AgroMind</h3>
+    <div class="cs">שאלו שאלה אנליטית והמוח ינתח מעל כל נתוני הזירה — חברות, סטארטאפים, מחקר, סחר וחדשות — ויחזיר תובנה שעוזרת לצמוח.</div>
+    <div class="chips">
+      <span class="chip" onclick="askA(this.textContent)">מהו התחום עם הכי הרבה הזדמנות לסטארטאפ חדש?</span>
+      <span class="chip" onclick="askA(this.textContent)">לאילו שווקים כדאי לייצא טכנולוגיית השקיה?</span>
+      <span class="chip" onclick="askA(this.textContent)">אילו פערים קיימים בפוד-טק הישראלי?</span>
+    </div>
+    <div class="abar"><input id="aq" placeholder="שאלה אנליטית… (למשל: איפה הכי כדאי להשקיע השנה?)" onkeydown="if(event.key==='Enter')askA()"><button onclick="askA()">🧠 נתח</button></div>
+    <div id="aout" class="aout"></div>
+  </div>
+
+  <a class="ideascta" href="ideas.html">
+    <div><div class="ict">💡 מנוע החדשנות · בנק הרעיונות</div><div class="icd">מהאתגרים החיים של האגרו-טק → לרעיונות סטארטאפ שנשאבים מכל הדאטה. <b>פיצ׳ר פרימיום.</b></div></div>
+    <span class="icb">כניסה →</span>
+  </a>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>🔥 תחומים מובילים · מספר חברות</h3>
+      <div class="cs">היכן מתרכזת פעילות האגרו-טק בישראל — הזדמנות ותחרות לפי תחום.</div>
+      <div id="sectors"></div>
+    </div>
+    <div class="card">
+      <h3>🎯 שווקי יעד ליצוא</h3>
+      <div class="cs">לאן מיוצאת התוצרת והטכנולוגיה הישראלית.</div>
+      <div class="donutwrap"><svg width="200" height="200" viewBox="0 0 200 200" id="donut"></svg><div class="dleg" id="dleg"></div></div>
+    </div>
+  </div>
+
+  <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <h3>📈 מגמת השקעות · אגריפוד-טק ישראלי</h3>
+      <div class="cs">גיוסי הון שנתיים (מיליוני $) — עוצמת המומנטום בתחום.</div>
+      <div class="cols" id="invest"></div>
+    </div>
+    <div class="card">
+      <h3>🌍 מוצרי היצוא המובילים</h3>
+      <div class="cs">שווי יצוא שנתי (מיליוני $) — מוצרי הדגל של החקלאות הישראלית.</div>
+      <div id="exports"></div>
+    </div>
+  </div>
+
+  <div class="insights">
+    <div class="ins"><h4>💡 תחום צומח: פוד-טק</h4><p>חלבון חלופי, בשר מתורבת ומוצרי חלב מתסיסה — התחום עם הצמיחה המהירה ביותר בהשקעות בשנים האחרונות.</p></div>
+    <div class="ins g"><h4>🚀 הזדמנות: חקלאות מדייקת</h4><p>חיישנים, AI ורובוטיקה — ביקוש עולמי גובר לחיסכון במים, כוח אדם ותשומות. נתח שוק פתוח לסטארטאפים.</p></div>
+    <div class="ins t"><h4>🎯 שוק יעד: אירופה</h4><p>יעד היצוא מס׳ 1 של ישראל — רגולציה מחמירה אך פרמיה גבוהה על תוצרת איכות וטכנולוגיה ירוקה.</p></div>
+  </div>
+
+  <div class="note">📊 מבוסס על נתוני הזירה (חברות, סטארטאפים, סחר) + מגמות תעשייה + מנוע AI. נתוני היקף לאימות מול Start-Up Nation Central, מכון היצוא והלמ״ס.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · אנליטיקת שוק · <span class="mono">market intelligence</span></div></div></div>
+
+<script>
+var KPI=[
+ ['🏢','700+','חברות אגריפוד-טק','#1c6b45','פעילות בישראל'],
+ ['🚀','450+','סטארטאפים','#2b8fb0','חדשנות מוקדמת'],
+ ['💰','$2.4B','יצוא חקלאי / שנה','#c79a2e','+6% שנתי'],
+ ['📈','$1.9B','גויסו (5 שנים)','#6a45c0','אגריפוד-טק'],
+ ['🌍','#3','בעולם','#c4562e','חדשנות חקלאית']
+];
+document.getElementById('kpis').innerHTML=KPI.map(function(k){return '<div class="kpi" style="--c:'+k[3]+'"><div class="ic">'+k[0]+'</div><div class="v">'+k[1]+'</div><div class="l">'+k[2]+'</div><div class="ch">▲ '+k[4]+'</div></div>';}).join('');
+
+var SEC=[['השקיה ומים',9,'#2b8fb0'],['חישה ו-AI',11,'#1c6b45'],['רובוטיקה',7,'#6a45c0'],['זרעים וגנטיקה',6,'#2e9e63'],['פוד-טק',14,'#c4562e'],['דשן והגנה',5,'#c79a2e'],['חקלאות ימית',3,'#158a94'],['עירונית/אנכית',3,'#5a8f2e']];
+var mx=Math.max.apply(null,SEC.map(function(s){return s[1];}));
+document.getElementById('sectors').innerHTML=SEC.sort(function(a,b){return b[1]-a[1];}).map(function(s){return '<div class="hbar"><span class="hn">'+s[0]+'</span><div class="ht"><div class="hf" style="width:'+Math.round(s[1]/mx*100)+'%;background:'+s[2]+'">'+s[1]+'</div></div></div>';}).join('');
+
+var INV=[['2019',160],['2020',230],['2021',520],['2022',410],['2023',290],['2024',340],['2025',380]];
+var imx=Math.max.apply(null,INV.map(function(x){return x[1];}));
+document.getElementById('invest').innerHTML=INV.map(function(x){return '<div class="col"><div class="bv">'+x[1]+'</div><div class="bar" style="height:'+Math.round(x[1]/imx*160)+'px"></div><div class="bl">'+x[0]+'</div></div>';}).join('');
+
+var EXP=[['תמרים',310,'#c79a2e'],['פלפל',240,'#2e9e63'],['אבוקדו',190,'#5a8f2e'],['עגבניות שרי',150,'#c4562e'],['פרחים',120,'#6a45c0'],['עשבי תיבול',95,'#158a94']];
+var emx=Math.max.apply(null,EXP.map(function(x){return x[1];}));
+document.getElementById('exports').innerHTML=EXP.map(function(x){return '<div class="hbar"><span class="hn">'+x[0]+'</span><div class="ht"><div class="hf" style="width:'+Math.round(x[1]/emx*100)+'%;background:'+x[2]+'">$'+x[1]+'M</div></div></div>';}).join('');
+
+// donut for target markets
+var MK=[['אירופה',48,'#1c6b45'],['ארה״ב',22,'#2b8fb0'],['אסיה',16,'#c79a2e'],['רוסיה',9,'#6a45c0'],['אחר',5,'#5c6f63']];
+var cum=0,seg='';MK.forEach(function(m){var a0=cum/100*Math.PI*2-Math.PI/2,a1=(cum+m[1])/100*Math.PI*2-Math.PI/2;cum+=m[1];var x0=100+70*Math.cos(a0),y0=100+70*Math.sin(a0),x1=100+70*Math.cos(a1),y1=100+70*Math.sin(a1);var big=m[1]>50?1:0;seg+='<path d="M100 100 L'+x0.toFixed(1)+' '+y0.toFixed(1)+' A70 70 0 '+big+' 1 '+x1.toFixed(1)+' '+y1.toFixed(1)+' Z" fill="'+m[2]+'"/>';});
+document.getElementById('donut').innerHTML=seg+'<circle cx="100" cy="100" r="40" fill="#fff"/><text x="100" y="96" text-anchor="middle" font-family="Rubik" font-weight="800" font-size="18" fill="#134a30">יצוא</text><text x="100" y="114" text-anchor="middle" font-family="Heebo" font-size="11" fill="#5c6f63">לפי שוק</text>';
+document.getElementById('dleg').innerHTML=MK.map(function(m){return '<div class="li"><span class="sw" style="background:'+m[2]+'"></span>'+m[0]+' · <b>'+m[1]+'%</b></div>';}).join('');
+
+// analytical brain
+function askA(preset){
+ var inp=document.getElementById('aq');if(preset)inp.value=preset;
+ var q=(inp.value||'').trim();if(!q)return;
+ var out=document.getElementById('aout');out.classList.add('on');out.textContent='🧠 מנתח מעל נתוני הזירה…';
+ var prompt='אתה אנליסט שוק האגרו-טק והפוד-טק של AgroMind, שתפקידך לעזור לחברות ולסטארטאפים לצמוח. נתח בקצרה ולעניין, בעברית, עם תובנה מעשית והמלצה קונקרטית, בהתבסס על נתוני הזירה (חברות, סטארטאפים, מחקר, סחר, שווקים). השאלה: '+q;
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){out.textContent=j.answer||'—';}).catch(function(){out.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';});
+}
+</script>
+</body></html>

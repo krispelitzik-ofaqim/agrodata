@@ -167,7 +167,7 @@ var CX=980, CY=980, BR=280, CR=320, RGAP=140;
 var DEF=[
  {key:'eng',c:'#2e9e63',t:'מנועי הזירה',nodes:[
    {label:'AgroLake · מאגר'},{label:'AgroMind · AI',file:'search-results.html'},{label:'AgroPulse · חדשות',file:'news.html'},
-   {label:'AgroSense · חיישנים'},{label:'AgroMap · מפות',file:'maps.html'},{label:'AgroDirectory · חברות',file:'companies.html'},
+   {label:'AgroInnovate · רעיונות',file:'ideas.html'},{label:'AgroSense · חיישנים'},{label:'AgroMap · מפות',file:'maps.html'},{label:'AgroDirectory · חברות',file:'companies.html'},
    {label:'AgroScout · סטארטאפים'},{label:'AgroHub · האב'},{label:'מפת האגרו-טק',file:'agromap.html'}]},
  {key:'res',c:'#2b8fb0',t:'מחקר וידע',nodes:[
    {label:'AgroScholar · אקדמיה',file:'research.html'},{label:'AgroLibrary · כתבי עת',file:'journals.html'},
@@ -188,7 +188,7 @@ var DEF=[
    {label:'לוח ניהול',file:'admin.html'},{label:'כניסת מנהלים'},{label:'משתמשים וסיסמאות'},{label:'מסלולי מנוי',file:'pricing.html'},
    {label:'אנליטיקה'},{label:'מפת חשיבה',file:'sitemap-brain.html'},{label:'מי אנחנו',file:'about.html'},{label:'צור קשר',file:'contact.html'}]}
 ];
-var KW={research:'res',journals:'res',labs:'res','agro-stock':'fin',ofakim:'ofa',community:'com',conferences:'com',gov:'com',trade:'com',
+var KW={research:'res',journals:'res',labs:'res','agro-stock':'fin',grants:'fin',scholarships:'fin',ofakim:'ofa',community:'com',conferences:'com',gov:'com',trade:'com',ideas:'eng',analytics:'eng',scout:'eng',
  admin:'adm',pricing:'adm',brand:'adm',about:'adm',contact:'adm',privacy:'adm',terms:'adm',companies:'eng',agromap:'eng',maps:'eng',news:'eng',network:'eng',brain:'eng',index:'eng','search-results':'eng',logo:'eng','diagram-flow':'eng'};
 function branchIdxFor(file){var b=file.replace('.html','');for(var kw in KW){if(b.indexOf(kw)>=0){for(var i=0;i<DEF.length;i++)if(DEF[i].key===KW[kw])return i;}}return DEF.length-1;}
 function short(s){s=s.replace(/·.*$/,'').trim();return s.length>22?s.slice(0,21)+'…':s;}
@@ -204,7 +204,7 @@ function loadMap(manual){
   var pages=data.pages||[], apis=data.apis||[];
   // 1) every curated cube (even empty) always appears
   var covered={};
-  var LIVE={'AgroMind · AI':1,'AgroPulse · חדשות':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1};
+  var LIVE={'AgroMind · AI':1,'AgroInnovate · רעיונות':1,'AgroPulse · חדשות':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1};
   BRANCHES.forEach(function(b,i){ b.n=DEF[i].nodes.map(function(nd){ if(nd.file)covered[nd.file]=1; return {label:short(nd.label),file:nd.file||'',live:LIVE[nd.label]?1:0}; }); });
   // 2) merge any NEW scanned page not already covered (auto-discovery)
   pages.forEach(function(p){ if(p.file==='sitemap-brain.html'||covered[p.file])return; BRANCHES[branchIdxFor(p.file)].n.push({label:short(p.title||p.file),file:p.file}); });
