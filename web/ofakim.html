@@ -48,6 +48,10 @@ h1{font-family:Rubik;font-size:65px;font-weight:800;margin:6px 0 8px}h1 b{color:
 .pstat{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 11px;white-space:nowrap}
 .pstat.ok{background:rgba(31,157,87,.12);color:#1f9d57}
 .pstat.part{background:rgba(199,154,46,.16);color:#a67d1e}
+.partners{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start;margin:6px 0 44px}
+.pt{display:flex;flex-direction:column;align-items:center;gap:10px;width:120px;text-align:center;font-size:14px;color:var(--ink);font-weight:600;line-height:1.3}
+.pt .plogo{width:80px;height:80px;border-radius:16px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;box-shadow:0 6px 16px rgba(20,38,28,.06);font-family:Rubik;font-weight:800;color:var(--green);font-size:26px;position:relative}
+.pt .plogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:13px;background:#fff}
 .landcta{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:16px;padding:26px;text-align:center;margin-bottom:44px}
 .landcta .t{font-family:Rubik;font-weight:800;font-size:21px;margin-bottom:6px}
 .landcta .s{font-size:15px;color:rgba(255,255,255,.9);margin-bottom:16px}
@@ -83,16 +87,26 @@ h1{font-family:Rubik;font-size:65px;font-weight:800;margin:6px 0 8px}h1 b{color:
     <div class="card imgcard"><div class="cover" style="background-image:url('img/vision.jpg')"></div><div class="cbody"><h3>חזון</h3><p>להפוך את אופקים למרכז הידע והחדשנות החקלאית של ישראל — זירה שמחברת מגדלים, חוקרים, חברות ומשקיעים.</p></div></div>
     <div class="card imgcard"><div class="cover" style="background-image:url('img/ecosystem.jpg')"></div><div class="cbody"><h3>אקוסיסטם</h3><p>מאגר נתונים, מחקר ואקדמיה, חברות אגרו-טק וזירה פיננסית — הכל תחת קורת גג אחת.</p></div></div>
     <div class="card imgcard"><div class="cover" style="background-image:url('img/negev.jpg')"></div><div class="cbody"><h3>מהנגב לעולם</h3><p>חקלאות מדבר, השקיה חכמה וטכנולוגיה ישראלית — פתרונות שמיוצאים לכל העולם.</p></div></div>
-    <a class="card imgcard" href="labs.html" style="text-decoration:none;color:inherit"><div class="cover" style="background-image:url('img/innovation.jpg')"></div><div class="cbody"><h3>מרכז החדשנות ↗</h3><p>האצה, פיילוטים וחממות — חיבור בין מגדלים, סטארטאפים ומחקר במרכז חדשנות אזורי.</p></div></a>
+    <div class="card imgcard"><div class="cover" style="background-image:url('img/innovation.jpg')"></div><div class="cbody"><h3>מרכז החדשנות העירוני</h3><p>מרכז החדשנות של העיר אופקים — מיזמים עירוניים, יזמות מקומית וקהילה. (המדען הראשי והחממות מנוהלים ב-AgroData)</p></div></div>
     <a class="card imgcard" href="agromap.html" style="text-decoration:none;color:inherit"><div class="cover" style="background:#fff url('img/map.jpg') center/contain no-repeat"></div><div class="cbody"><h3>מפת האגרו-טק ↗</h3><p>מיפוי החברות, הסטארטאפים והמחקר באזור אופקים והנגב — האקוסיסטם המקומי.</p></div></a>
     <a class="card imgcard" href="research.html" style="text-decoration:none;color:inherit"><div class="cover" style="background-image:url('img/campus.jpg');background-position:center 60%"></div><div class="cbody"><h3>אגרו קמפוס ↗</h3><p>קמפוס הכשרה, קורסים והסמכות — הדור הבא של החקלאות והאגרו-טק.</p></div></a>
     <div class="card imgcard"><div class="cover" style="background:linear-gradient(135deg,#2e9e63,#134a30);display:grid;place-items:center;font-size:52px">🌾</div><div class="cbody"><h3>חוות ניסויים</h3><p>ניסויי שדה ופיילוטים על עד 100 דונם — קרקע לס ומים מותפלים/קולחים, בשיתוף מו״פים וחממות. <b style="color:#1f9d57">פעיל</b></p></div></div>
     <div class="card imgcard"><div class="cover" style="background:linear-gradient(135deg,#2b8fb0,#134a30);display:grid;place-items:center;font-size:52px">🔬</div><div class="cbody"><h3>אגרו-סייט · AgroSite</h3><p>קמפוס אגרו-טק וחדשנות בהקמה — מעבדות, חממות ומשרדים לסטארטאפים וחוקרים, בחיבור לרשות החדשנות ולמו״פ. <b style="color:#a67d1e">בהקמה</b></p></div></div>
-    <div class="card imgcard"><div class="cover" style="background:linear-gradient(135deg,#c79a2e,#8a6a16);display:grid;place-items:center;font-size:52px">🏭</div><div class="cbody"><h3>אזור תעשייה לחקלאות</h3><p>מגרשים למפעלי אגרו-טק ופוד-טק — מים, חשמל ולוגיסטיקה, באזור עדיפות לאומית. <b style="color:#a67d1e">משווק</b></p></div></div>
-    <div class="card imgcard"><div class="cover" style="background:linear-gradient(135deg,#2e9e63,#1c6b45);display:grid;place-items:center;font-size:52px">🌱</div><div class="cbody"><h3>בי״ס יסודי ״רגבים״</h3><p>בית ספר יסודי לחקלאות — חוות לימודית ומגמות אגרו, חינוך הדור הבא בחיבור לאגרו קמפוס ולמו״פ. <b style="color:#1f9d57">פעיל</b></p></div></div>
+    <div class="card imgcard"><div class="cover" style="background:#fff url('img/agrosite-plan.jpg') center/cover no-repeat"></div><div class="cbody"><h3>אזור תעשייה לחקלאות</h3><p>מגרשים למפעלי אגרו-טק ופוד-טק — מים, חשמל ולוגיסטיקה, באזור עדיפות לאומית. <b style="color:#a67d1e">משווק</b></p></div></div>
+    <div class="card imgcard"><div class="cover" style="background-image:url('img/regavim.jpg')"></div><div class="cbody"><h3>בי״ס יסודי ״רגבים״</h3><p>בית ספר יסודי לחקלאות — חוות לימודית ומגמות אגרו, חינוך הדור הבא בחיבור לאגרו קמפוס ולמו״פ. <b style="color:#1f9d57">פעיל</b></p></div></div>
     <div class="card imgcard"><div class="cover" style="background:linear-gradient(135deg,#2b8fb0,#1c6b45);display:grid;place-items:center;font-size:52px">🎓</div><div class="cbody"><h3>בי״ס תיכון לחקלאות</h3><p>בית ספר תיכון לחקלאות בהקמה (שם טרם נקבע) — חינוך על-יסודי טכנולוגי, בחיבור לקמפוס, למו״פ ולתעשייה. <b style="color:#a67d1e">בהקמה</b></p></div></div>
   </div>
   <div class="landcta"><div class="t">🌱 מחפשים קרקע לפיילוט או מגרש לתעשייה?</div><div class="s">נתאים לכם חלקת ניסוי או מגרש באזור התעשייה החקלאי של אופקים.</div><a href="contact.html">פנייה והתאמה →</a></div>
+
+  <h2 class="sech2">🤝 שותפי האקוסיסטם</h2>
+  <div class="sublead">מוסדות המחקר, האקדמיה והממשל שמחוברים לאקוסיסטם האגרו-טק של אופקים.</div>
+  <div class="partners">
+    <div class="pt"><span class="plogo">מ<img src="https://www.google.com/s2/favicons?domain=moag.gov.il&sz=128" onerror="this.remove()" alt=""></span>המטב״ח</div>
+    <div class="pt"><span class="plogo"><img src="img/logo-volcani.png" alt="מכון וולקני"></span>מכון וולקני</div>
+    <div class="pt"><span class="plogo"><img src="img/logo-agri.jpg" alt="הפקולטה לחקלאות"></span>הפקולטה לחקלאות</div>
+    <div class="pt"><span class="plogo">ו<img src="https://www.google.com/s2/favicons?domain=weizmann.ac.il&sz=128" onerror="this.remove()" alt=""></span>מכון ויצמן</div>
+    <div class="pt"><span class="plogo">ב<img src="https://www.google.com/s2/favicons?domain=bgu.ac.il&sz=128" onerror="this.remove()" alt=""></span>אונ׳ בן-גוריון</div>
+  </div>
 
   <div class="videowrap" style="margin-top:36px">
     <iframe src="https://maps.google.com/maps?q=%D7%90%D7%95%D7%A4%D7%A7%D7%99%D7%9D&z=13&hl=iw&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

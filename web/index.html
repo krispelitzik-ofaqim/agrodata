@@ -183,11 +183,18 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .binput,.btext{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px;background:var(--bg2)}
 .binput:focus,.btext:focus{border-color:var(--green);background:#fff}
 .btext{resize:vertical;min-height:70px}
+.brow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.battach{display:inline-flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--line);color:var(--green-d);border-radius:11px;padding:11px 16px;font-family:Rubik;font-weight:700;font-size:14px;cursor:pointer}
+.battach:hover{background:var(--tint)}
+.bpreview{margin-top:10px}
+.bpreview img{max-width:180px;max-height:140px;border-radius:10px;border:1px solid var(--line);display:block}
+.bpreview .rm{display:inline-block;margin-top:6px;font-size:13px;color:#c4562e;cursor:pointer}
+.bimg{max-width:100%;border-radius:10px;border:1px solid var(--line);margin-top:8px;display:block}
 .bsend{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:11px;padding:12px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
 .bsend:hover{filter:brightness(1.07)}
 .bmsg{font-size:14px;color:var(--green);margin-top:8px;min-height:18px}
 .blist{display:flex;flex-direction:column;gap:12px}
-.bitem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.bitem{background:#fff;border:1px solid var(--line);border-inline-start:4px solid var(--line);border-radius:14px;padding:14px 16px}
 .bitem .bhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .bitem .bav{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2e9e63,#1c6b45);color:#fff;display:grid;place-items:center;font-family:Rubik;font-weight:800;font-size:15px;flex:0 0 auto}
 .bitem .bn{font-family:Rubik;font-weight:800;color:var(--green-d);font-size:15px}
@@ -307,7 +314,11 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
           <div class="bform">
             <input id="bName" class="binput" maxlength="40" placeholder="השם שלך">
             <textarea id="bText" class="btext" maxlength="1000" rows="4" placeholder="כתבו הודעה…"></textarea>
-            <button class="bsend" onclick="postComment()">פרסום תגובה ↗</button>
+            <div class="brow">
+              <label class="battach">📎 צרף תמונה<input type="file" id="bFile" accept="image/*" onchange="previewImg()" hidden></label>
+              <button class="bsend" onclick="postComment()">פרסום תגובה ↗</button>
+            </div>
+            <div id="bPreview" class="bpreview"></div>
             <div id="bMsg" class="bmsg"></div>
           </div>
         </div>
@@ -354,6 +365,9 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
       <div class="lcard"><div class="lic" data-i="people"></div><div><h4>נציג ארגוני החקלאים</h4><p>קול המגדלים והשטח.</p></div></div>
       <div class="lcard"><div class="lic" data-i="map"></div><div><h4>מומחה בין-לאומי</h4><p>פרספקטיבה גלובלית וחדשנות עולמית.</p></div></div>
       <div class="lcard"><div class="lic" data-i="book"></div><div><h4>משרדי פטנטים</h4><p>ליווי רישום פטנטים והגנת קניין רוחני לחדשנות אגרו-טק.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="trade"></div><div><h4>קשרים גלובאליים</h4><p>חיבור לשווקים, שותפים ומשקיעים בעולם — הרחבת פעילות בין-לאומית.</p></div></div>
+      <div class="lcard"><div class="lic" data-i="chart"></div><div><h4>בחינת ייצוא</h4><p>הערכת פוטנציאל ייצוא, רגולציה, תקנים ושווקי יעד לתוצרת ולטכנולוגיה.</p></div></div>
+      <a class="lcard" href="contact.html" style="text-decoration:none;background:linear-gradient(180deg,#eef7f1,#e2f0e8);border-color:#bcdcc8"><div class="lic" data-i="bulb"></div><div><h4>תוכנית עסקית</h4><p>ייעוץ וכתיבת תוכנית עסקית — <b style="color:var(--green)">קבלו ייעוץ והצעת מחיר ↗</b></p></div></a>
     </div>
     <button class="lecarrow l" onclick="scrollLec(1)">‹</button>
   </div>
@@ -475,30 +489,42 @@ function toggleLive(){
 }
 /* ===== native discussion board ===== */
 function fmtTs(ts){var d=new Date(ts*1000);function p(n){return(n<10?'0':'')+n;}return p(d.getDate())+'/'+p(d.getMonth()+1)+' '+p(d.getHours())+':'+p(d.getMinutes());}
+function colorFor(name){var h=0;name=(name||'אנונימי').trim();for(var i=0;i<name.length;i++){h=name.charCodeAt(i)+((h<<5)-h);}var hue=Math.abs(h)%360;return 'hsl('+hue+',52%,42%)';}
 function renderComments(items){
  var list=document.getElementById('bList');list.innerHTML='';
  if(!items||!items.length){var e=document.createElement('div');e.className='bempty';e.textContent='עדיין אין הודעות — היו הראשונים לכתוב! 🌱';list.appendChild(e);return;}
  items.slice().reverse().forEach(function(c){
-  var it=document.createElement('div');it.className='bitem';
+  var col=colorFor(c.name);
+  var it=document.createElement('div');it.className='bitem';it.style.borderInlineStartColor=col;
   var head=document.createElement('div');head.className='bhead';
-  var av=document.createElement('div');av.className='bav';av.textContent=(c.name||'?').trim().charAt(0);
-  var nm=document.createElement('div');nm.className='bn';nm.textContent=c.name||'אנונימי';
+  var av=document.createElement('div');av.className='bav';av.textContent=(c.name||'?').trim().charAt(0);av.style.background=col;
+  var nm=document.createElement('div');nm.className='bn';nm.textContent=c.name||'אנונימי';nm.style.color=col;
   var tm=document.createElement('div');tm.className='bt';tm.textContent=fmtTs(c.ts);
   head.appendChild(av);head.appendChild(nm);head.appendChild(tm);
   var body=document.createElement('div');body.className='bbody';body.textContent=c.text||'';
-  it.appendChild(head);it.appendChild(body);list.appendChild(it);
+  it.appendChild(head);it.appendChild(body);
+  if(c.img){var im=document.createElement('img');im.className='bimg';im.src=c.img;im.loading='lazy';it.appendChild(im);}
+  list.appendChild(it);
  });
 }
 function loadComments(){
  fetch('/api/comments').then(function(r){return r.json();}).then(function(j){renderComments(j.comments);}).catch(function(){});
 }
+var _bImg=null;
+function previewImg(){
+ var f=document.getElementById('bFile').files[0],pv=document.getElementById('bPreview');
+ if(!f){_bImg=null;pv.innerHTML='';return;}
+ if(f.size>4*1024*1024){document.getElementById('bMsg').style.color='#c4562e';document.getElementById('bMsg').textContent='תמונה גדולה מדי (עד 4MB).';document.getElementById('bFile').value='';return;}
+ var rd=new FileReader();rd.onload=function(){_bImg=rd.result;pv.innerHTML='<img src="'+rd.result+'"><span class="rm" onclick="clearImg()">✕ הסר תמונה</span>';};rd.readAsDataURL(f);
+}
+function clearImg(){_bImg=null;document.getElementById('bFile').value='';document.getElementById('bPreview').innerHTML='';}
 function postComment(){
  var name=document.getElementById('bName').value,text=document.getElementById('bText').value,msg=document.getElementById('bMsg');
- if(!(text||'').trim()){msg.style.color='#c4562e';msg.textContent='כתבו הודעה לפני הפרסום.';return;}
+ if(!(text||'').trim()&&!_bImg){msg.style.color='#c4562e';msg.textContent='כתבו הודעה או צרפו תמונה.';return;}
  msg.style.color='var(--green)';msg.textContent='מפרסם…';
- fetch('/api/comments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,text:text})})
+ fetch('/api/comments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,text:text,image:_bImg})})
   .then(function(r){return r.json();}).then(function(j){
-   if(j.ok){document.getElementById('bText').value='';msg.textContent='התגובה פורסמה! ✅';loadComments();setTimeout(function(){msg.textContent='';},2500);}
+   if(j.ok){document.getElementById('bText').value='';clearImg();msg.textContent='התגובה פורסמה! ✅';loadComments();setTimeout(function(){msg.textContent='';},2500);}
    else{msg.style.color='#c4562e';msg.textContent='שגיאה — נסו שוב.';}
   }).catch(function(){msg.style.color='#c4562e';msg.textContent='שגיאת חיבור לשרת.';});
 }

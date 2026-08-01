@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """AgroData local server + live-quote proxy (Yahoo Finance v8). Serves web/ and /api/quote."""
-import http.server, socketserver, json, urllib.request, urllib.parse, time, threading, os, re
+import http.server, socketserver, json, urllib.request, urllib.parse, time, threading, os, re, base64
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WEB  = os.path.join(HERE, "web")
@@ -20,12 +20,33 @@ def load_comments():
 def save_comments(items):
     with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False)
-def add_comment(name, text):
+def save_image(dataurl):
+    try:
+        m = re.match(r"data:image/(png|jpe?g|gif|webp);base64,(.+)$", dataurl or "", re.I | re.S)
+        if not m:
+            return None
+        ext = m.group(1).lower().replace("jpeg", "jpg")
+        raw = base64.b64decode(m.group(2))
+        if len(raw) > 4 * 1024 * 1024:   # 4MB cap
+            return None
+        updir = os.path.join(WEB, "uploads")
+        os.makedirs(updir, exist_ok=True)
+        fn = "c" + str(int(time.time())) + "_" + os.urandom(4).hex() + "." + ext
+        with open(os.path.join(updir, fn), "wb") as f:
+            f.write(raw)
+        return "uploads/" + fn
+    except Exception:
+        return None
+
+def add_comment(name, text, image=None):
     name = (name or "").strip()[:40] or "אנונימי"
     text = (text or "").strip()[:1000]
-    if not text:
+    img = save_image(image) if image else None
+    if not text and not img:
         return None
     item = {"name": name, "text": text, "ts": int(time.time())}
+    if img:
+        item["img"] = img
     with CLOCK:
         items = load_comments()
         items.append(item)
@@ -274,7 +295,7 @@ class H(http.server.SimpleHTTPRequestHandler):
                 data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
             except Exception:
                 data = {}
-            item = add_comment(data.get("name"), data.get("text"))
+            item = add_comment(data.get("name"), data.get("text"), data.get("image"))
             out = {"ok": bool(item), "comment": item}
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200 if item else 400)
