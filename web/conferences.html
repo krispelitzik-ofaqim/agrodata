@@ -61,9 +61,23 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .cell{min-height:98px;border:1px solid #e0eee5;border-radius:12px;padding:9px;background:#fff}
 .cell.blank{background:var(--bg2);border-style:dashed;opacity:.4}
 .cell .num{font-family:'Plex Mono';font-size:15px;color:var(--mut)}
-.cell.ev{border:2px solid var(--gold);background:linear-gradient(180deg,#fff8e8,#fdefcf);box-shadow:0 6px 16px rgba(199,154,46,.18)}
-.cell.ev .num{color:#a67d1e;font-weight:800}
-.ev-tag{margin-top:7px;font-size:13px;font-weight:700;color:#3a2c05;background:linear-gradient(135deg,#c79a2e,#e3c65a);border-radius:8px;padding:4px 8px;line-height:1.3;display:block}
+.cell.ev{border:1px solid #bcdcc8;background:#f4faf6}
+.cell.ev .num{color:var(--green-d);font-weight:700}
+.ev-tag{margin-top:7px;font-size:12.5px;font-weight:700;color:#fff;background:var(--green);border-radius:7px;padding:4px 8px;line-height:1.3;display:block;cursor:pointer;transition:.12s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev-tag:hover{background:var(--green-d)}
+.exmodal{position:fixed;inset:0;background:rgba(10,26,17,.6);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
+.exmodal.open{display:flex}
+.excard{background:#fff;border-radius:20px;padding:28px;max-width:560px;width:100%;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.exx{position:absolute;top:14px;left:16px;background:none;border:0;font-size:26px;color:#9aab9f;cursor:pointer;line-height:1}
+.ex-title{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d);margin-bottom:6px;padding-inline-end:20px}
+.ex-meta{font-family:'Plex Mono';font-size:14px;color:var(--mut);margin-bottom:12px}
+.ex-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.ex-t{font-size:13px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:999px;padding:4px 12px}
+.ex-actions{display:flex;gap:10px;flex-wrap:wrap}
+.ex-ai{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;padding:12px 20px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer}
+.ex-link{background:var(--gold);color:#3a2c05;text-decoration:none;font-family:Rubik;font-weight:800;font-size:14.5px;border-radius:12px;padding:12px 20px}
+.ex-out{margin-top:16px;font-size:15.5px;line-height:1.8;color:var(--ink);white-space:pre-wrap}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45);color:rgba(255,255,255,.8)}
 .cta{margin-top:18px;border-radius:14px;padding:16px 17px;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff}
 .cta.alt{background:linear-gradient(135deg,#2b8fb0,#1c6b7f)}
 .cta-t{font-family:Rubik;font-size:17px;font-weight:800;margin-bottom:5px}
@@ -71,6 +85,12 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .cta-b{display:inline-block;background:#fff;color:var(--green-d);font-family:Rubik;font-weight:700;font-size:14.5px;text-decoration:none;border-radius:10px;padding:9px 18px;transition:.14s}
 .cta.alt .cta-b{color:#12566b}
 .cta-b:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.vidmodal{position:fixed;inset:0;background:rgba(8,20,13,.86);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
+.vidmodal.open{display:flex}
+.vidbox{width:100%;max-width:960px;position:relative}
+.vidframe{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5);background:#000}
+.vidframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vidx{position:absolute;top:-46px;left:0;background:transparent;border:0;color:#fff;font-size:34px;cursor:pointer;line-height:1}
 .vidsec{margin:36px 0 40px}
 .vsh{font-family:Rubik;font-size:32px;font-weight:800;color:var(--green-d);text-align:center}
 .vsub{text-align:center;color:var(--mut);font-size:15px;margin-bottom:22px}
@@ -137,6 +157,26 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
   </div>
 </div>
 
+<!-- VIDEO MODAL -->
+<div class="vidmodal" id="vidmodal" onclick="if(event.target===this)closeVidModal()">
+  <div class="vidbox"><button class="vidx" onclick="closeVidModal()">×</button><div class="vidframe" id="vframe"></div></div>
+</div>
+
+<!-- EXPO MODAL -->
+<div class="exmodal" id="exmodal" onclick="if(event.target===this)closeExpo()">
+  <div class="excard">
+    <button class="exx" onclick="closeExpo()">×</button>
+    <div class="ex-title" id="exTitle"></div>
+    <div class="ex-meta" id="exMeta"></div>
+    <div class="ex-tags" id="exTags"></div>
+    <div class="ex-actions">
+      <button class="ex-ai" onclick="explainExpo()">🧠 הסבר AI על התערוכה</button>
+      <a class="ex-link" id="exLink" href="#" target="_blank" rel="noopener">לאתר הרשמי ↗</a>
+    </div>
+    <div class="ex-out" id="exAI"></div>
+  </div>
+</div>
+
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · כנסים ותערוכות · <span class="mono">agenda</span></div></div></div>
 
 <script>
@@ -199,14 +239,31 @@ function render(){
    html+= items.length? items.map(c=>{
      const col=TCOL[c.t[0]]||'#1c6b45';
      return `
-     <a class="conf" href="${c.u}" ${c.u!=='#'?'target="_blank" rel="noopener"':''} style="border-inline-start:6px solid ${col}">
-       <div class="date" style="background:${col};border-color:${col}"><div class="d" style="color:#fff">${c.d||'●'}</div><div class="m" style="color:rgba(255,255,255,.9)">${c.m.slice(0,3)}</div></div>
-       <div class="info"><h4>${c.fl} ${c.n}</h4><div class="loc">📍 ${c.city}, ${c.cy}</div>
-       <div class="tags">${c.t.map(t=>`<span class="t" style="color:#fff;background:${TCOL[t]||col};border-color:${TCOL[t]||col}">${t}</span>`).join('')}</div></div>
+     <a class="conf" href="${c.u}" ${c.u!=='#'?'target="_blank" rel="noopener"':''} style="border-inline-start:3px solid ${col}">
+       <div class="date"><div class="d">${c.d||'●'}</div><div class="m">${c.m.slice(0,3)}</div></div>
+       <div class="info"><h4>${c.fl} ${c.n}</h4><div class="loc">${c.city}, ${c.cy}</div>
+       <div class="tags">${c.t.map(t=>`<span class="t">${t}</span>`).join('')}</div></div>
      </a>`;}).join('') : '<div class="empty">אין אירועים תואמים</div>';
    html+='</div>';
  });
  document.getElementById('agenda').innerHTML=html;
+}
+var CALEV={};
+function showExpo(d){
+ var c=CALEV[d];if(!c)return;
+ document.getElementById('exTitle').textContent=c.fl+' '+c.n;
+ document.getElementById('exMeta').textContent='📅 '+c.d+' '+c.m+' · 📍 '+c.city+', '+c.cy;
+ document.getElementById('exTags').innerHTML=c.t.map(function(t){return '<span class="ex-t">'+t+'</span>';}).join('');
+ document.getElementById('exLink').href=c.u; document.getElementById('exLink').style.display=(c.u&&c.u!=='#')?'inline-block':'none';
+ document.getElementById('exAI').textContent='';
+ document.getElementById('exmodal').classList.add('open');
+ document.getElementById('exmodal').dataset.q=c.n+' ('+c.cy+')';
+}
+function closeExpo(){document.getElementById('exmodal').classList.remove('open');}
+function explainExpo(){
+ var q=document.getElementById('exmodal').dataset.q,out=document.getElementById('exAI');
+ out.textContent='🧠 AgroMind מסביר…';
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent('הסבר בקצרה (3-4 משפטים) בעברית מהי תערוכת/כנס האגרו-טק הבא, למי היא מיועדת ומה מציגים בה: '+q)).then(function(r){return r.json();}).then(function(j){out.textContent=j.answer||'—';}).catch(function(){out.textContent='שגיאת חיבור לשרת.';});
 }
 const HMON=["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
 const REL={y:2026,m:6}; // יולי 2026 = החודש הרלוונטי
@@ -215,13 +272,13 @@ function buildCal(){
  const DOW=["ראשון","שני","שלישי","רביעי","חמישי","שישי","שבת"];
  const first=new Date(curY,curM,1).getDay();
  const days=new Date(curY,curM+1,0).getDate();
- const ev={}; CONF.filter(c=>c.m===HMON[curM]&&c.d>0).forEach(c=>ev[c.d]=c.n);
+ CALEV={}; CONF.filter(c=>c.m===HMON[curM]&&c.d>0).forEach(c=>CALEV[c.d]=c); const ev=CALEV;
  const isRel=(curY===REL.y&&curM===REL.m);
  document.getElementById('calMonth').innerHTML=HMON[curM]+' '+curY+(isRel?' <span class="relbadge">● החודש</span>':'');
  let g=DOW.map(d=>`<div class="dow">${d}</div>`).join('');
  for(let i=0;i<first;i++) g+='<div class="cell blank"></div>';
  for(let d=1;d<=days;d++){ const e=ev[d];
-   g+=`<div class="cell ${e?'ev':''}"><div class="num">${d}</div>${e?`<span class="ev-tag">${e}</span>`:''}</div>`; }
+   g+=`<div class="cell ${e?'ev':''}"><div class="num">${d}</div>${e?`<span class="ev-tag" onclick="showExpo(${d})">${e.n}</span>`:''}</div>`; }
  document.getElementById('calgrid').innerHTML=g;
 }
 function navMonth(dir){
@@ -235,16 +292,21 @@ render();
 
 // video gallery from expos (opens YouTube search in new tab)
 var VIDS=[
- ['GreenTech Amsterdam','🇳🇱 הולנד','linear-gradient(135deg,#2e9e63,#134a30)'],
- ['Agritechnica','🇩🇪 גרמניה','linear-gradient(135deg,#c79a2e,#8a6a16)'],
- ['World Agri-Tech Summit','🇬🇧 בריטניה','linear-gradient(135deg,#6a45c0,#3a2680)'],
- ['Fruit Logistica Berlin','🇩🇪 גרמניה','linear-gradient(135deg,#c4562e,#8a3a1c)'],
- ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)'],
- ['MJBizCon · קנביס','🇺🇸 ארה״ב','linear-gradient(135deg,#4f8f3a,#2f5a22)']
+ ['GreenTech Amsterdam','🇳🇱 הולנד','linear-gradient(135deg,#2e9e63,#134a30)','rJd-6ICRFns'],
+ ['Agritechnica','🇩🇪 גרמניה','linear-gradient(135deg,#c79a2e,#8a6a16)','CLNsND6hPqU'],
+ ['World Agri-Tech Summit','🇬🇧 בריטניה','linear-gradient(135deg,#6a45c0,#3a2680)','2gWjXAKfPNM'],
+ ['MJBizCon · קנביס','🇺🇸 ארה״ב','linear-gradient(135deg,#4f8f3a,#2f5a22)','Fc-z_NZP2M8'],
+ ['אגרומשוב · Agromashov','🇮🇱 ישראל','linear-gradient(135deg,#1c6b45,#0f3a26)','Kv6huzbNwGk'],
+ ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)','']
 ];
-document.getElementById('vidgrid').innerHTML=VIDS.map(function(v){
- var q='https://www.youtube.com/results?search_query='+encodeURIComponent(v[0]+' agritech expo');
- return '<a class="vcard" style="--c:'+v[2].match(/#[0-9a-f]{6}/i)[0]+';background:'+v[2]+'" href="'+q+'" target="_blank" rel="noopener"><span class="play">▶</span><div class="vinfo"><div class="vn">'+v[0]+'</div><div class="vc">'+v[1]+'</div></div></a>';
+document.getElementById('vidgrid').innerHTML=VIDS.map(function(v,i){
+ return '<a class="vcard" style="--c:'+v[2].match(/#[0-9a-f]{6}/i)[0]+';background:'+v[2]+'" href="#" onclick="playVid('+i+');return false"><span class="play">▶</span><div class="vinfo"><div class="vn">'+v[0]+'</div><div class="vc">'+v[1]+'</div></div></a>';
 }).join('');
+function playVid(i){
+ var v=VIDS[i];
+ if(v[3]){document.getElementById('vframe').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v[3]+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';document.getElementById('vidmodal').classList.add('open');}
+ else{window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(v[0]+' agritech expo'),'_blank');}
+}
+function closeVidModal(){document.getElementById('vidmodal').classList.remove('open');document.getElementById('vframe').innerHTML='';}
 </script>
 </body></html>

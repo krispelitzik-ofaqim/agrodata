@@ -57,6 +57,10 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .idea .it{font-family:Rubik;font-weight:800;font-size:17px;color:#fff;margin-bottom:8px}
 .idea .row{font-size:14px;color:rgba(234,244,238,.85);line-height:1.6;margin-bottom:4px}
 .idea .row b{color:#8fe6ad}
+.nsteps{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}
+.nslbl{font-family:'Plex Mono';font-size:12px;color:rgba(234,244,238,.6)}
+.nsteps a{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#eaf4ee;text-decoration:none;font-family:Rubik;font-weight:700;font-size:13px;border-radius:9px;padding:6px 12px;transition:.12s}
+.nsteps a:hover{background:#8fe6ad;color:#134a30}
 .bankempty{color:rgba(234,244,238,.6);text-align:center;padding:26px;font-size:15px}
 .thinking{display:flex;align-items:center;justify-content:center;gap:12px;color:#8fe6ad;padding:26px;font-size:16px}
 .dots i{display:inline-block;width:8px;height:8px;margin:0 2px;border-radius:50%;background:#8fe6ad;animation:think 1s infinite}
@@ -182,7 +186,10 @@ function gen(problem,label){
    var parts=l.split('|').map(function(p){return p.replace(/^\[|\]$/g,'').trim();});
    var name=parts[0]||'רעיון';
    var body=parts.slice(1).map(function(p){var kv=p.split(':');return kv.length>1?'<div class="row"><b>'+kv[0].trim()+':</b> '+kv.slice(1).join(':').trim()+'</div>':'<div class="row">'+p+'</div>';}).join('');
-   return '<div class="idea"><div class="it">💡 '+name+'</div>'+body+'</div>';
+   return '<div class="idea"><div class="it">💡 '+name+'</div>'+body
+    +'<div class="nsteps"><span class="nslbl">הצעדים הבאים:</span>'
+    +'<a href="grants.html">💰 מענק</a><a href="scholarships.html">🎓 צוות</a><a href="ofakim.html">🚀 האצה</a><a href="analytics.html">📊 שוק</a></div>'
+    +'</div>';
   }).join('');
  }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.</div>';});
 }

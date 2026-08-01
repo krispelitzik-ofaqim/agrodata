@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצעה להשקעה · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:34px 0 8px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:640px;margin:0 auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin:20px 0;box-shadow:0 10px 26px rgba(20,38,28,.05)}
+.sectt{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin-bottom:16px;display:flex;align-items:center;gap:9px}
+.frm{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.frm{grid-template-columns:1fr}}
+.frm .full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:700;color:var(--mut)}
+input,select,textarea{border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;color:var(--ink);outline:0;background:#fff}
+input:focus,select:focus,textarea:focus{border-color:var(--green)}
+textarea{resize:vertical;min-height:80px}
+.filebox{border:1.6px dashed #cfe0d5;border-radius:12px;padding:16px;text-align:center;background:var(--bg2);cursor:pointer;font-size:14.5px;color:var(--green-d)}
+.filebox b{color:var(--green)}
+.fname{margin-top:8px;font-size:13px;color:var(--mut)}
+.submitbar{text-align:center;margin:6px 0 44px}
+.subbtn{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:14px;padding:16px 48px;font-family:Rubik;font-weight:800;font-size:17px;cursor:pointer;box-shadow:0 14px 30px rgba(28,107,69,.28)}
+.subbtn:hover{filter:brightness(1.06)}
+.msg{text-align:center;font-size:15px;min-height:22px;margin-top:12px}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.done{text-align:center;padding:60px 20px}
+.done .big{font-size:56px}
+.done h2{font-family:Rubik;font-weight:800;font-size:30px;color:var(--green-d);margin:12px 0 8px}
+.done p{color:var(--mut);font-size:16px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap" id="page">
+  <div class="hero">
+    <div class="kick">INVESTMENT PROPOSAL · הצעה להשקעה</div>
+    <h1>הגשת <b>הצעה להשקעה</b></h1>
+    <div class="sub">קרן ההשקעות של הזירה משקיעה בסטארטאפים ובחדשנות אגרו-טק. מלאו את הפרטים — צוות ההשקעות יבחן ויחזור אליכם.</div>
+  </div>
+
+  <div class="card">
+    <div class="sectt">👤 פרטים אישיים</div>
+    <div class="frm">
+      <label>שם מלא<input id="name"></label>
+      <label>תפקיד<input id="role" placeholder="מנכ״ל / מייסד…"></label>
+      <label>אימייל<input id="email" type="email"></label>
+      <label>טלפון<input id="phone"></label>
+      <label class="full">לינקדאין (אופציונלי)<input id="linkedin" placeholder="https://linkedin.com/in/…"></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sectt">🏢 החברה / הסטארטאפ</div>
+    <div class="frm">
+      <label>שם החברה<input id="company"></label>
+      <label>אתר<input id="website" placeholder="https://…"></label>
+      <label>תחום<select id="sector"><option value="">בחרו…</option><option>השקיה ומים</option><option>חישה ו-AI</option><option>רובוטיקה</option><option>זרעים וגנטיקה</option><option>פוד-טק</option><option>דשן והגנת הצומח</option><option>חקלאות ימית</option><option>עירונית/אנכית</option><option>אחר</option></select></label>
+      <label>שלב<select id="stage"><option value="">בחרו…</option><option>רעיון</option><option>POC</option><option>Pre-Seed</option><option>Seed</option><option>Series A</option><option>Series B+</option></select></label>
+      <label>שנת הקמה<input id="founded" placeholder="2024"></label>
+      <label>מיקום<input id="location" placeholder="עיר / מדינה"></label>
+      <label class="full">תיאור קצר של החברה והפתרון<textarea id="about"></textarea></label>
+      <label class="full">איזו בעיה אתם פותרים?<textarea id="problem"></textarea></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sectt">💰 הבקשה והתמורה</div>
+    <div class="frm">
+      <label>סכום נדרש ($)<input id="amount" placeholder="500,000"></label>
+      <label>שווי חברה · Valuation ($)<input id="valuation" placeholder="4,000,000"></label>
+      <label>מכשיר השקעה<select id="instrument"><option value="">בחרו…</option><option>Equity (מניות)</option><option>SAFE</option><option>Convertible Note</option><option>הלוואה</option><option>אחר</option></select></label>
+      <label>אחוזים מוצעים בתמורה (%)<input id="equity" placeholder="10"></label>
+      <label>מספר מניות (אם רלוונטי)<input id="shares"></label>
+      <label class="full">שימוש מתוכנן בכספים<textarea id="use" placeholder="פיתוח, שיווק, גיוס עובדים…"></textarea></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sectt">📎 קבצים והערות</div>
+    <div class="frm">
+      <div class="full">
+        <label style="margin-bottom:8px">מצגת / תוכנית עסקית (PDF/PPT)</label>
+        <div class="filebox" onclick="document.getElementById('file').click()">📎 <b>לחצו לצירוף קובץ</b> · עד 8MB<input type="file" id="file" accept=".pdf,.ppt,.pptx,.doc,.docx" hidden onchange="pickFile()"></div>
+        <div class="fname" id="fname"></div>
+      </div>
+      <label class="full">הערות נוספות<textarea id="notes"></textarea></label>
+    </div>
+  </div>
+
+  <div class="submitbar">
+    <button class="subbtn" onclick="submitApp()">שליחת הצעת ההשקעה →</button>
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · קרן ההשקעות · <span class="mono">investment proposal</span></div></div></div>
+
+<script>
+var FILE=null;
+function pickFile(){
+ var f=document.getElementById('file').files[0];
+ if(!f){FILE=null;document.getElementById('fname').textContent='';return;}
+ if(f.size>8*1024*1024){document.getElementById('msg').style.color='#c4562e';document.getElementById('msg').textContent='קובץ גדול מדי (עד 8MB).';document.getElementById('file').value='';return;}
+ var rd=new FileReader();rd.onload=function(){FILE={name:f.name,data:rd.result};document.getElementById('fname').textContent='✓ '+f.name;};rd.readAsDataURL(f);
+}
+function submitApp(){
+ function v(id){return document.getElementById(id).value;}
+ var msg=document.getElementById('msg');
+ if(!v('name').trim()||!v('email').trim()||!v('company').trim()){msg.style.color='#c4562e';msg.textContent='נא למלא לפחות שם, אימייל ושם חברה.';return;}
+ msg.style.color='var(--green)';msg.textContent='שולח…';
+ var data={type:'investment',name:v('name'),role:v('role'),email:v('email'),phone:v('phone'),linkedin:v('linkedin'),
+  company:v('company'),website:v('website'),sector:v('sector'),stage:v('stage'),founded:v('founded'),location:v('location'),
+  about:v('about'),problem:v('problem'),amount:v('amount'),valuation:v('valuation'),instrument:v('instrument'),
+  equity:v('equity'),shares:v('shares'),use:v('use'),notes:v('notes'),file:FILE};
+ fetch('/api/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+  .then(function(r){return r.json();}).then(function(j){
+   if(j.ok){document.getElementById('page').innerHTML='<div class="done"><div class="big">✅</div><h2>ההצעה התקבלה!</h2><p>צוות ההשקעות של הזירה יבחן את הפנייה ויחזור אליכם. תודה 🌱</p></div>';}
+   else{msg.style.color='#c4562e';msg.textContent='שגיאה — נסו שוב.';}
+  }).catch(function(){msg.style.color='#c4562e';msg.textContent='שגיאת חיבור לשרת.';});
+}
+</script>
+</body></html>
