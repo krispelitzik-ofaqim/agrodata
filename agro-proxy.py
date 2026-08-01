@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """AgroData local server + live-quote proxy (Yahoo Finance v8). Serves web/ and /api/quote."""
-import http.server, socketserver, json, urllib.request, urllib.parse, time, threading, os, re, base64
+import http.server, socketserver, json, urllib.request, urllib.parse, time, threading, os, re, base64, datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WEB  = os.path.join(HERE, "web")
@@ -54,6 +54,166 @@ def save_application(data):
         json.dump(items, open(APPS_FILE, "w", encoding="utf-8"), ensure_ascii=False)
     return rec
 
+# ---- AgroInvest crowdfunding ----
+CAMP_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "campaigns.json")
+def load_campaigns():
+    try:
+        return json.load(open(CAMP_FILE, encoding="utf-8"))
+    except Exception:
+        return None
+def save_campaigns(items):
+    json.dump(items, open(CAMP_FILE, "w", encoding="utf-8"), ensure_ascii=False)
+def seed_campaigns():
+    now = int(time.time()); day = 86400
+    seed = [
+     {"id":"c_solar","title":"חממה סולארית חכמה לנגב","cat":"אנרגיה וסביבה","owner":"אגרו-סולאר בע\"מ",
+      "tagline":"חממה אוטונומית שמייצרת את החשמל שלה ומגדלת ירקות כל השנה במים ממוחזרים.",
+      "story":"פיילוט באופקים: חממה 1,000 מ\"ר עם פאנלים דו-פנים, בקרת אקלים AI והשקיה במחזור סגור. המטרה — 40% חיסכון אנרגיה ופי-3 יבול. הכספים ישמשו להקמת החממה הראשונה ולניטור שנה מלאה.",
+      "image":"https://loremflickr.com/800/500/greenhouse,solar/all","video":"OYcfk03NBcs",
+      "goal":250000,"raised":168400,"backers":214,"deadline":now+18*day,"contact":"solar@agro.il",
+      "rewards":[{"amount":100,"title":"תומך","desc":"עדכונים מהשטח + שם בעמוד התודות"},
+                 {"amount":500,"title":"שותף","desc":"סל ירקות מהקציר הראשון + סיור בחממה"},
+                 {"amount":2500,"title":"משקיע-מייסד","desc":"תג מייסד, ביקור VIP ודו\"ח תוצאות מלא"}]},
+     {"id":"c_drone","title":"רחפן ניטור מחלות לגד\"ש","cat":"רחפנים ו-AI","owner":"SkyAgro",
+      "tagline":"רחפן שמזהה מחלות ומזיקים 10 ימים לפני העין האנושית, וחוסך ריסוס מיותר.",
+      "story":"מצלמה מולטי-ספקטרלית + מודל AI שסורק שדות ומתריע נקודתית. גיוס לפיתוח הדור הבא ולפיילוט אצל 20 מגדלים.",
+      "image":"https://loremflickr.com/800/500/drone,field/all","video":"","goal":180000,"raised":92300,"backers":131,
+      "deadline":now+27*day,"contact":"fly@skyagro.il",
+      "rewards":[{"amount":150,"title":"חבר קהילה","desc":"גישה מוקדמת לדוחות הניטור"},
+                 {"amount":1000,"title":"מגדל-פיילוט","desc":"סריקת שדה חינם לעונה שלמה"}]},
+     {"id":"c_algae","title":"חוות אצות ספירולינה עירונית","cat":"פוד-טק","owner":"BlueGreen Foods",
+      "tagline":"חלבון-על בר-קיימא מגדלים באמצע העיר, בפוטוביוריאקטורים קומפקטיים.",
+      "story":"מערכת מודולרית לגידול ספירולינה טרייה לצריכה מקומית — ללא קרקע וכמעט ללא מים. הכספים להרחבת קו הייצור.",
+      "image":"https://loremflickr.com/800/500/algae,green/all","video":"","goal":120000,"raised":120000,"backers":298,
+      "deadline":now+5*day,"contact":"hello@bluegreen.il",
+      "rewards":[{"amount":80,"title":"טועם","desc":"אריזת ספירולינה טרייה"},
+                 {"amount":600,"title":"מאמץ","desc":"מנוי חודשי לשנה + סדנת תזונה"}]},
+     {"id":"c_robot","title":"רובוט קטיף אוטונומי לחממות","cat":"רובוטיקה","owner":"HarvestBot",
+      "tagline":"זרוע רובוטית עם ראייה ממוחשבת שקוטפת עגבניות ופלפלים 24/7 — פותרת את מחסור העובדים.",
+      "story":"מחסור חמור בידיים עובדות מייקר את התוצרת. הרובוט שלנו מזהה פרי בשל, קוטף בעדינות וממיין — בעלות של שליש מעבודת אדם. הגיוס למימון 5 רובוטים לפיילוט אצל מגדלים בבשור ובערבה.",
+      "image":"https://loremflickr.com/800/500/robot,greenhouse/all","video":"","goal":320000,"raised":141200,"backers":176,
+      "deadline":now+22*day,"contact":"team@harvestbot.il",
+      "rewards":[{"amount":120,"title":"עוקב","desc":"עדכוני פיתוח + סרטוני קטיף"},
+                 {"amount":1800,"title":"מגדל-פיילוט","desc":"עדיפות בתור לפיילוט + הדרכה"}]},
+     {"id":"c_seeds","title":"בנק זרעי מורשת קהילתי","cat":"זרעים וגנטיקה","owner":"עמותת זרעי הארץ",
+      "tagline":"שימור זני ירקות ותבלינים מקומיים בסכנת הכחדה — בנק זרעים פתוח לקהילה.",
+      "story":"עשרות זני מורשת נעלמים. אנו אוספים, מרבים ומחלקים זרעים פתוחי-האבקה לחקלאים ולגננים, עם מאגר ידע דיגיטלי. הכספים להקמת חדר קירור, מעבדת נביטה ופלטפורמת שיתוף.",
+      "image":"https://loremflickr.com/800/500/seeds,vegetables/all","video":"","goal":90000,"raised":38700,"backers":163,
+      "deadline":now+34*day,"contact":"seeds@zeraim.il",
+      "rewards":[{"amount":60,"title":"גנן","desc":"ערכת 5 זני מורשת לגינה"},
+                 {"amount":360,"title":"שומר זרעים","desc":"ערכה מורחבת + סדנת ריבוי זרעים"}]},
+     {"id":"c_vertical","title":"חוות ירק אנכית עירונית","cat":"חקלאות עירונית","owner":"UrbanGreens",
+      "tagline":"עלים טריים גדלים בלב העיר, קרוב לצרכן, בלי קרקע וכמעט בלי מים.","story":"מדפי גידול הידרופוניים בקומות עם תאורת LED חכמה. הכספים להקמת חוות הדגל הראשונה.",
+      "image":"https://loremflickr.com/800/500/vertical,farm/all","video":"","goal":140000,"raised":51000,"backers":88,"deadline":now+29*day,"contact":"u@urbangreens.il",
+      "rewards":[{"amount":70,"title":"תומך","desc":"סל עלים טרי"},{"amount":500,"title":"שותף","desc":"מנוי חודשי + סיור"}]},
+     {"id":"c_bee","title":"כוורות חכמות לדבש הנגב","cat":"אנרגיה וסביבה","owner":"BeeSmart",
+      "tagline":"חיישנים שמנטרים את בריאות הכוורת ומגדילים תנובת דבש ב-30%.","story":"מערכת ניטור IoT לכוורתנים — טמפרטורה, משקל ורעש. גיוס להרחבה ל-200 כוורות.",
+      "image":"https://loremflickr.com/800/500/bee,honey/all","video":"","goal":75000,"raised":41800,"backers":142,"deadline":now+16*day,"contact":"b@beesmart.il",
+      "rewards":[{"amount":90,"title":"אוהב דבש","desc":"צנצנת דבש נגב"},{"amount":450,"title":"מאמץ כוורת","desc":"כוורת על שמך + דבש שנתי"}]},
+     {"id":"c_water","title":"בקרת השקיה חכמה מבוססת AI","cat":"השקיה ומים","owner":"AquaMind",
+      "tagline":"אלגוריתם שמחליט מתי וכמה להשקות — חיסכון של 35% מים ויבול גבוה יותר.","story":"חיבור לחיישני קרקע ותחזית מזג אוויר. גיוס לפיתוח והרחבת פיילוטים.",
+      "image":"https://loremflickr.com/800/500/irrigation,water/all","video":"","goal":200000,"raised":77500,"backers":109,"deadline":now+31*day,"contact":"a@aquamind.il",
+      "rewards":[{"amount":110,"title":"עוקב","desc":"גישה מוקדמת לאפליקציה"},{"amount":1200,"title":"מגדל-פיילוט","desc":"התקנה חינם לחלקה"}]},
+     {"id":"c_mush","title":"חוות פטריות גורמה","cat":"פוד-טק","owner":"FungiFarm",
+      "tagline":"פטריות מאכל מיוחדות (שיטאקה, צדפה, רעמת האריה) בגידול מבוקר מקומי.","story":"מצע גידול ממחזור פסולת חקלאית. גיוס להקמת חדרי גידול ומעבדה.",
+      "image":"https://loremflickr.com/800/500/mushroom,farm/all","video":"","goal":85000,"raised":29400,"backers":74,"deadline":now+25*day,"contact":"m@fungifarm.il",
+      "rewards":[{"amount":75,"title":"טועם","desc":"סל פטריות טרי"},{"amount":420,"title":"מגדל ביתי","desc":"ערכת גידול ביתית + ליווי"}]},
+     {"id":"c_olive","title":"שיקום כרם זיתים עתיק","cat":"כללי","owner":"משפחת אבו-חמד",
+      "tagline":"החייאת מטע זיתים בן 300 שנה והפקת שמן זית כתית מעולה.","story":"גיזום, השקיה ובית בד קהילתי. הכספים לשיקום העצים ולציוד הפקה.",
+      "image":"https://loremflickr.com/800/500/olive,tree/all","video":"","goal":65000,"raised":52100,"backers":211,"deadline":now+9*day,"contact":"o@olivefarm.il",
+      "rewards":[{"amount":85,"title":"אוהב שמן","desc":"בקבוק שמן זית מהבציר"},{"amount":390,"title":"מאמץ עץ","desc":"עץ על שמך + שמן שנתי"}]},
+     {"id":"c_fish","title":"אקוופוניקה קהילתית","cat":"פוד-טק","owner":"AquaLoop",
+      "tagline":"מערכת שמגדלת דגים וירקות יחד במחזור מים סגור, לקהילה עירונית.","story":"חממת אקוופוניקה חינוכית-מסחרית. גיוס להקמה ולתוכנית חינוכית.",
+      "image":"https://loremflickr.com/800/500/aquaponics,fish/all","video":"","goal":110000,"raised":33600,"backers":91,"deadline":now+37*day,"contact":"a@aqualoop.il",
+      "rewards":[{"amount":95,"title":"חבר","desc":"סל ירקות + סיור"},{"amount":550,"title":"שותף","desc":"שם על הקיר + סדנה"}]},
+     {"id":"c_past","title":"מייבש שמש לתוצרת חקלאית","cat":"אנרגיה וסביבה","owner":"SunDry",
+      "tagline":"ייבוש פירות וירקות באנרגיית שמש — הארכת חיי מדף בלי חשמל.","story":"קמפיין שהסתיים ולא הגיע ליעד — דוגמה לסטטוס ׳לא הצליח׳.",
+      "image":"https://loremflickr.com/800/500/dried,fruit/all","video":"","goal":100000,"raised":42000,"backers":97,
+      "deadline":now-4*day,"contact":"s@sundry.il",
+      "rewards":[{"amount":80,"title":"תומך","desc":"חבילת פירות מיובשים"}]}]
+    save_campaigns(seed); return seed
+def list_campaigns():
+    items = load_campaigns()
+    if items is None:
+        items = seed_campaigns()
+    now = int(time.time())
+    out = []
+    for c in items:
+        d = dict(c)
+        goal = max(1, int(c.get("goal", 1)))
+        d["pct"] = min(100, round(int(c.get("raised", 0)) * 100 / goal))
+        left = int(c.get("deadline", now)) - now
+        d["daysleft"] = max(0, left // 86400)
+        d.pop("contact", None)
+        out.append(d)
+    out.sort(key=lambda x: x.get("pct", 0), reverse=True)
+    return {"items": out}
+def create_campaign(data):
+    items = load_campaigns()
+    if items is None:
+        items = seed_campaigns()
+    img = data.get("image")
+    imgpath = ""
+    if isinstance(img, str) and img.startswith("data:"):
+        imgpath = save_image(img) or ""
+    elif isinstance(img, str):
+        imgpath = img[:400]
+    try:
+        goal = max(1000, min(5000000, int(float(data.get("goal") or 0))))
+    except Exception:
+        goal = 50000
+    try:
+        days = max(1, min(120, int(float(data.get("days") or 30))))
+    except Exception:
+        days = 30
+    rewards = []
+    for r in (data.get("rewards") or [])[:6]:
+        try:
+            rewards.append({"amount": int(float(r.get("amount") or 0)),
+                            "title": str(r.get("title", ""))[:60],
+                            "desc": str(r.get("desc", ""))[:200]})
+        except Exception:
+            pass
+    vid = str(data.get("video", ""))[:200]
+    m = re.search(r"(?:v=|youtu\.be/|embed/)([A-Za-z0-9_-]{11})", vid)
+    if m:
+        vid = m.group(1)
+    c = {"id": "u_" + os.urandom(5).hex(),
+         "title": str(data.get("title", ""))[:120] or "קמפיין ללא שם",
+         "cat": str(data.get("cat", ""))[:40] or "כללי",
+         "owner": str(data.get("owner", ""))[:80],
+         "tagline": str(data.get("tagline", ""))[:200],
+         "story": str(data.get("story", ""))[:4000],
+         "image": imgpath, "video": vid,
+         "goal": goal, "raised": 0, "backers": 0,
+         "deadline": int(time.time()) + days * 86400,
+         "contact": str(data.get("contact", ""))[:120], "rewards": rewards,
+         "ts": int(time.time())}
+    with CLOCK:
+        items.append(c); items = items[-200:]; save_campaigns(items)
+    return c
+def pledge_campaign(cid, amount, name):
+    try:
+        amount = max(1, min(1000000, int(float(amount))))
+    except Exception:
+        return None
+    with CLOCK:
+        items = load_campaigns()
+        if items is None:
+            return None
+        hit = None
+        for c in items:
+            if c.get("id") == cid:
+                c["raised"] = int(c.get("raised", 0)) + amount
+                c["backers"] = int(c.get("backers", 0)) + 1
+                hit = c; break
+        if not hit:
+            return None
+        save_campaigns(items)
+    goal = max(1, int(hit.get("goal", 1)))
+    return {"ok": True, "raised": hit["raised"], "backers": hit["backers"],
+            "pct": min(100, round(hit["raised"] * 100 / goal))}
+
 def save_image(dataurl):
     try:
         m = re.match(r"data:image/(png|jpe?g|gif|webp);base64,(.+)$", dataurl or "", re.I | re.S)
@@ -72,19 +232,22 @@ def save_image(dataurl):
     except Exception:
         return None
 
-def add_comment(name, text, image=None):
+def add_comment(name, text, image=None, parent=None):
     name = (name or "").strip()[:40] or "אנונימי"
     text = (text or "").strip()[:1000]
     img = save_image(image) if image else None
     if not text and not img:
         return None
-    item = {"name": name, "text": text, "ts": int(time.time())}
+    item = {"id": os.urandom(6).hex(), "name": name, "text": text, "ts": int(time.time())}
     if img:
         item["img"] = img
     with CLOCK:
         items = load_comments()
+        parent = (parent or "").strip()[:16]
+        if parent and any(c.get("id") == parent for c in items):
+            item["parent"] = parent
         items.append(item)
-        items = items[-500:]
+        items = items[-800:]
         save_comments(items)
     return item
 
@@ -295,6 +458,256 @@ def fetch_weather(lat, lon):
     except Exception as e:
         return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__)}
 
+# ---- AgroLake: central agricultural data repository (real open sources) ----
+LAKECACHE = {}
+WB = {  # World Bank indicators for Israel (ISR)
+  "yield":  ("AG.YLD.CREL.KG",   "יבול דגנים",            "ק\"ג/הקטר",   "AG.YLD.CREL.KG"),
+  "land":   ("AG.LND.AGRI.ZS",   "שטח חקלאי",             "% משטח הארץ", "AG.LND.AGRI.ZS"),
+  "arable": ("AG.LND.ARBL.HA",   "אדמה בת-עיבוד",         "הקטר",        "AG.LND.ARBL.HA"),
+  "water":  ("ER.H2O.FWAG.ZS",   "צריכת מים לחקלאות",     "% מכלל המים", "ER.H2O.FWAG.ZS"),
+  "export": ("TX.VAL.FOOD.ZS.UN", "יצוא מזון",            "% מכלל היצוא", "TX.VAL.FOOD.ZS.UN"),
+}
+# World Bank indicators for other markets (country-specific)
+WBC = {
+  "br_yield": ("AG.YLD.CREL.KG", "BRA", "יבול דגנים · ברזיל",   "ק\"ג/הקטר"),
+  "ar_yield": ("AG.YLD.CREL.KG", "ARG", "יבול דגנים · ארגנטינה", "ק\"ג/הקטר"),
+  "ru_yield": ("AG.YLD.CREL.KG", "RUS", "יבול דגנים · רוסיה",    "ק\"ג/הקטר"),
+  "cn_yield": ("AG.YLD.CREL.KG", "CHN", "יבול דגנים · סין",      "ק\"ג/הקטר"),
+  "us_yield": ("AG.YLD.CREL.KG", "USA", "יבול דגנים · ארה\"ב",   "ק\"ג/הקטר"),
+  "cn_land":  ("AG.LND.AGRI.ZS", "CHN", "שטח חקלאי · סין",       "% משטח"),
+  "br_land":  ("AG.LND.AGRI.ZS", "BRA", "שטח חקלאי · ברזיל",     "% משטח"),
+}
+def _wb(ind, country="ISR"):
+    url = ("https://api.worldbank.org/v2/country/" + country + "/indicator/" + ind +
+           "?format=json&per_page=80")
+    req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
+    d = json.load(urllib.request.urlopen(req, timeout=20))
+    rows = [(r.get("date"), r.get("value")) for r in (d[1] or []) if r.get("value") is not None]
+    rows.sort(key=lambda x: x[0])
+    return rows[-24:]
+def _climate():
+    end = datetime.date.today()
+    start = end - datetime.timedelta(days=730)
+    url = ("https://archive-api.open-meteo.com/v1/archive?latitude=31.31&longitude=34.62"
+           "&start_date=" + start.isoformat() + "&end_date=" + end.isoformat() +
+           "&daily=temperature_2m_mean,precipitation_sum&timezone=auto")
+    req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
+    d = json.load(urllib.request.urlopen(req, timeout=25))
+    dl = d.get("daily", {})
+    dates = dl.get("time", []); temps = dl.get("temperature_2m_mean", []); prec = dl.get("precipitation_sum", [])
+    mon = {}
+    for i, dt in enumerate(dates):
+        m = dt[:7]
+        mon.setdefault(m, [[], 0.0])
+        if temps[i] is not None: mon[m][0].append(temps[i])
+        if prec[i] is not None: mon[m][1] += prec[i]
+    labels = sorted(mon.keys())
+    tavg = [round(sum(mon[m][0]) / len(mon[m][0]), 1) if mon[m][0] else None for m in labels]
+    psum = [round(mon[m][1], 1) for m in labels]
+    return labels, [{"name": "טמפ' ממוצעת (°C)", "data": tavg},
+                    {"name": "משקעים (מ\"מ)", "data": psum, "unit": "מ\"מ"}]
+# Eurostat (EU open statistics, JSON-stat, no key)
+EU = {
+  "eu_cereal": ("apro_cpsh1", {"crops": "C0000", "strucpro": "HPRD_HUMD_EU_THS_T", "geo": "EU27_2020"},
+                "ייצור דגנים · האיחוד האירופי", "אלף טון"),
+  "eu_area":   ("apro_cpsh1", {"crops": "C0000", "strucpro": "AR_THS_HA", "geo": "EU27_2020"},
+                "שטח דגנים · האיחוד האירופי", "אלף הקטר"),
+}
+def fetch_eurostat(code, params):
+    url = ("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/" + code +
+           "?format=JSON&" + urllib.parse.urlencode(params))
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+    d = json.load(urllib.request.urlopen(req, timeout=25))
+    ids = d["id"]; sizes = d["size"]
+    strides = [1] * len(sizes)
+    for i in range(len(sizes) - 2, -1, -1):
+        strides[i] = strides[i + 1] * sizes[i + 1]
+    tdim = ids.index("time")
+    tcat = d["dimension"]["time"]["category"]["index"]
+    years = sorted(tcat, key=lambda k: tcat[k])
+    vals = d["value"]
+    labels = []; series = []
+    for y in years:
+        pos = [0] * len(ids); pos[tdim] = tcat[y]
+        idx = sum(pos[i] * strides[i] for i in range(len(ids)))
+        v = vals.get(str(idx))
+        if v is not None:
+            labels.append(y); series.append(round(v, 2))
+    return labels, series
+
+def fetch_lake(ds):
+    now = time.time()
+    if ds in LAKECACHE and now - LAKECACHE[ds][0] < 3600:
+        return LAKECACHE[ds][1]
+    try:
+        if ds == "climate":
+            labels, series = _climate()
+            out = {"ok": True, "id": ds, "title": "אקלים וקרקע · אופקים", "unit": "",
+                   "source": "Open-Meteo (ERA5)", "source_url": "https://open-meteo.com/",
+                   "note": "ממוצע חודשי · 24 חודשים אחרונים", "labels": labels, "series": series}
+        elif ds in EU:
+            code, params, title, unit = EU[ds]
+            labels, vals = fetch_eurostat(code, params)
+            out = {"ok": True, "id": ds, "title": title, "unit": unit,
+                   "source": "Eurostat", "source_url": "https://ec.europa.eu/eurostat",
+                   "note": "נתונים שנתיים · " + unit + " · EU27",
+                   "labels": labels,
+                   "series": [{"name": title + " (" + unit + ")", "data": vals, "unit": unit}]}
+        elif ds in WBC:
+            ind, cc, title, unit = WBC[ds]
+            rows = _wb(ind, cc)
+            out = {"ok": True, "id": ds, "title": title, "unit": unit,
+                   "source": "World Bank Open Data", "source_url": "https://data.worldbank.org",
+                   "note": "נתונים שנתיים · " + unit,
+                   "labels": [r[0] for r in rows],
+                   "series": [{"name": title + " (" + unit + ")",
+                               "data": [round(r[1], 2) for r in rows], "unit": unit}]}
+        elif ds in WB:
+            ind, title, unit, _ = WB[ds]
+            rows = _wb(ind)
+            out = {"ok": True, "id": ds, "title": title + " · ישראל", "unit": unit,
+                   "source": "World Bank Open Data", "source_url": "https://data.worldbank.org/country/israel",
+                   "note": "נתונים שנתיים · " + unit,
+                   "labels": [r[0] for r in rows],
+                   "series": [{"name": title + " (" + unit + ")",
+                               "data": [round(r[1], 2) for r in rows], "unit": unit}]}
+        else:
+            return {"ok": False, "err": "unknown dataset"}
+        LAKECACHE[ds] = (now, out)
+        return out
+    except Exception as e:
+        return {"ok": False, "id": ds, "err": str(getattr(e, "code", "") or type(e).__name__)}
+
+# ---- data.gov.il — Israeli government open data (CKAN, no key) ----
+GOVCACHE = {}
+def fetch_govdata(q):
+    q = (q or "חקלאות").strip()
+    now = time.time()
+    if q in GOVCACHE and now - GOVCACHE[q][0] < 900:   # 15-min cache
+        return GOVCACHE[q][1]
+    url = ("https://data.gov.il/api/3/action/package_search?rows=24&q=" +
+           urllib.parse.quote(q))
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+        res = d.get("result", {})
+        out = []
+        for x in res.get("results", []):
+            org = (x.get("organization") or {}).get("title") or ""
+            resfmts = sorted(set((r.get("format") or "").upper() for r in x.get("resources", []) if r.get("format")))
+            out.append({
+                "title": x.get("title") or x.get("name"),
+                "org": org,
+                "notes": (x.get("notes") or "").strip()[:220],
+                "url": "https://data.gov.il/dataset/" + (x.get("name") or ""),
+                "formats": resfmts,
+                "resources": len(x.get("resources", [])),
+                "updated": (x.get("metadata_modified") or "")[:10],
+            })
+        result = {"ok": True, "count": res.get("count", len(out)), "items": out}
+        GOVCACHE[q] = (now, result)
+        return result
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "items": []}
+
+# ---- UN Comtrade — world trade flows (free preview, no key) ----
+COMTRADE_PARTNERS = {}
+TRADECACHE = {}
+def _load_partners():
+    if COMTRADE_PARTNERS:
+        return COMTRADE_PARTNERS
+    try:
+        req = urllib.request.Request("https://comtradeapi.un.org/files/v1/app/reference/partnerAreas.json",
+                                     headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=25))
+        if isinstance(d, dict):
+            d = d.get("results", [])
+        for r in d:
+            COMTRADE_PARTNERS[str(r.get("PartnerCode"))] = r.get("text") or r.get("PartnerDesc")
+    except Exception:
+        pass
+    return COMTRADE_PARTNERS
+def fetch_trade(cmd, flow, reporter="376", period="2023"):
+    key = (cmd, flow, reporter, period)
+    now = time.time()
+    if key in TRADECACHE and now - TRADECACHE[key][0] < 3600:
+        return TRADECACHE[key][1]
+    url = ("https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=" + reporter +
+           "&period=" + period + "&cmdCode=" + cmd + "&flowCode=" + flow)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+        d = None
+        for att in range(3):
+            try:
+                d = json.load(urllib.request.urlopen(req, timeout=25)); break
+            except urllib.error.HTTPError as he:
+                if he.code == 429 and att < 2:
+                    time.sleep(2 + att * 2); continue
+                raise
+        names = _load_partners()
+        rows = []
+        for it in d.get("data", []):
+            pc = str(it.get("partnerCode"))
+            if pc == "0":            # skip World aggregate
+                continue
+            val = it.get("primaryValue")
+            if not val:
+                continue
+            nm = names.get(pc, pc)
+            if nm and ("nes" in nm or "not elsewhere" in nm.lower()):
+                continue
+            rows.append((nm, val))
+        rows.sort(key=lambda x: x[1], reverse=True)
+        rows = rows[:12]
+        flowname = "יצוא" if flow == "X" else "יבוא"
+        out = {"ok": True, "id": "trade", "title": flowname + " · " + period,
+               "unit": "USD", "source": "UN Comtrade", "source_url": "https://comtrade.un.org",
+               "note": "ערך סחר בדולרים · " + period + " · " + flowname + " (12 השותפים המובילים)",
+               "labels": [r[0] for r in rows],
+               "series": [{"name": "ערך סחר ($)", "data": [round(r[1]) for r in rows], "unit": "USD"}]}
+        if not rows:
+            out["ok"] = False; out["err"] = "no-data"
+        TRADECACHE[key] = (now, out)
+        return out
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__)}
+
+# ---- AgroIndex: Israeli agri-tech ecosystem index, computed from our own data ----
+AIDX_DEALS = [("IrriSense", 12, "השקיה ומים"), ("SkyAgro", 34, "רובוטיקה"), ("BeeHive Data", 8, "חישה ו-AI"),
+              ("SoilX", 27, "חישה ו-AI"), ("FreshChain", 60, "פוד-טק"), ("AlgaeProtein", 15, "פוד-טק"),
+              ("CropVision AI", 22, "חישה ו-AI"), ("VertiFarm", 18, "פוד-טק"), ("SeedGen", 48, "זרעים וגנטיקה"),
+              ("AquaLoop", 9, "פוד-טק")]
+AIDX_SECTORS = ["חישה ו-AI", "פוד-טק", "השקיה ומים", "רובוטיקה", "זרעים וגנטיקה", "ביו והגנת הצומח"]
+AIDX_CAMPSEC = {"אנרגיה וסביבה": "ביו והגנת הצומח", "רחפנים ו-AI": "רובוטיקה", "פוד-טק": "פוד-טק",
+                "רובוטיקה": "רובוטיקה", "השקיה ומים": "השקיה ומים", "חקלאות עירונית": "פוד-טק",
+                "זרעים וגנטיקה": "זרעים וגנטיקה", "כללי": "ביו והגנת הצומח"}
+def compute_agroindex():
+    camps = load_campaigns() or []
+    sec = {s: 0.0 for s in AIDX_SECTORS}
+    deal_total = 0.0
+    top = []
+    for n, amt, s in AIDX_DEALS:
+        v = amt * 1e6
+        sec[s] += v; deal_total += v; top.append((n, s, v))
+    camp_raised = 0; backers = 0
+    for c in camps:
+        r = int(c.get("raised", 0)); camp_raised += r; backers += int(c.get("backers", 0))
+        cs = AIDX_CAMPSEC.get(c.get("cat"), "ביו והגנת הצומח")
+        if cs in sec:
+            sec[cs] += r
+        top.append((c.get("title"), c.get("cat"), r))
+    total = deal_total + camp_raised
+    sectors = [{"name": s, "pct": (round(sec[s] / total * 100) if total else 0)} for s in AIDX_SECTORS]
+    deals_count = len(AIDX_DEALS) + len(camps)
+    idx = round(100 + deals_count * 2.2 + backers * 0.02 + camp_raised / 1e6 * 0.6 + deal_total / 1e6 * 0.12, 1)
+    top.sort(key=lambda x: x[2], reverse=True)
+    top = [{"name": t[0], "sector": t[1], "amount": t[2]} for t in top[:8]]
+    return {"ok": True, "index": idx,
+            "kpis": {"funding": total, "startups": 712, "deals": deals_count,
+                     "backers": backers, "avg": (round(total / deals_count) if deals_count else 0)},
+            "sectors": sectors, "top": top,
+            "note": "מחושב חי מנתוני הזירה — AgroCapital + AgroInvest"}
+
 def scan_sitemap():
     pages = []
     try:
@@ -394,6 +807,48 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/agroindex"):
+            body = json.dumps(compute_agroindex(), ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/campaigns"):
+            body = json.dumps(list_campaigns(), ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/trade"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_trade(qs.get("cmd", ["1001"])[0], qs.get("flow", ["X"])[0],
+                              qs.get("reporter", ["376"])[0], qs.get("period", ["2023"])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/govdata"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_govdata(qs.get("q", ["חקלאות"])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/lake"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_lake(qs.get("ds", ["climate"])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/news"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_news(qs.get("q", [""])[0], qs.get("region", ["world"])[0])
@@ -451,13 +906,29 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/campaign") or self.path.startswith("/api/pledge"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            if self.path.startswith("/api/pledge"):
+                out = pledge_campaign(data.get("id"), data.get("amount"), data.get("name")) or {"ok": False}
+            else:
+                c = create_campaign(data); out = {"ok": True, "id": c.get("id")}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200 if out.get("ok") else 400)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/comments"):
             try:
                 n = int(self.headers.get("Content-Length", 0))
                 data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
             except Exception:
                 data = {}
-            item = add_comment(data.get("name"), data.get("text"), data.get("image"))
+            item = add_comment(data.get("name"), data.get("text"), data.get("image"), data.get("parent"))
             out = {"ok": bool(item), "comment": item}
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200 if item else 400)

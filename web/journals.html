@@ -187,6 +187,11 @@ function renderArticles(issn,el){
   }).join('');
  }).catch(function(){el.innerHTML='<div class="artload">שגיאת חיבור — ודא שהשרת רץ.</div>';});
 }
+var COVERS={
+ "Nature Food":"img/journals/nature-food.png",
+ "Nature Plants":"img/journals/nature-plants.png",
+ "אגרו משוב (Mashov)":"img/journals/agromashov.jpg"
+};
 function designCover(name,url){
  var initials=(name||'?').replace(/[^A-Za-z֐-׿ ]/g,'').split(' ').filter(Boolean).slice(0,2).map(function(w){return w[0];}).join('').toUpperCase();
  return '<a href="'+url+'" target="_blank" rel="noopener" class="dcover">'
@@ -216,6 +221,13 @@ function loadDetail(issn,uenc,nenc,i,btn){
  box.innerHTML='<div class="detailgrid"><div class="coverwrap"><div class="artload">🖼️ טוען עמוד שער…</div></div><div class="dinfo">'+infoCard(LAST[i])+'<div class="artlist" id="artlist-'+i+'"></div></div></div>';
  renderArticles(issn,document.getElementById('artlist-'+i));
  var cw=box.querySelector('.coverwrap');
+ if(COVERS[name]){
+  var lc=new Image();
+  lc.onload=function(){cw.innerHTML='<a href="'+url+'" target="_blank" rel="noopener"><img class="coverimg" src="'+COVERS[name]+'" alt="עמוד שער"></a><div class="covercap">עמוד השער · הגיליון הנוכחי ↗</div>';};
+  lc.onerror=function(){cw.innerHTML=designCover(name,url)+'<div class="covercap">שער מעוצב · '+name+'</div>';};
+  lc.src=COVERS[name];
+  return;
+ }
  fetch('/api/ogimage?url='+encodeURIComponent(url)).then(function(r){return r.json();}).then(function(c){
   if(c.image){
    var img=new Image();

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroVenture · מרעיון למוצר · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#e0e9e3;--bg2:#f4f9f6;--tint:#eef6f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}.mono{font-family:'Plex Mono',monospace}
+.top{background:linear-gradient(135deg,#0f3a26,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13.5px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:600px;margin:0 auto}
+.flow{padding:30px 0 60px}
+.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;box-shadow:0 10px 26px rgba(20,38,28,.06);display:flex;gap:18px;align-items:flex-start}
+.step .num{flex:0 0 auto;width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:24px;color:#fff}
+.step .ic{font-size:22px;margin-inline-start:4px}
+.step h3{font-family:Rubik;font-weight:800;font-size:21px;color:var(--green-d);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.step .ph{font-family:'Plex Mono';font-size:12px;color:var(--mut);letter-spacing:.04em}
+.step p{color:#41544a;font-size:14.5px;line-height:1.65;margin:6px 0 10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips a{text-decoration:none;background:var(--tint);color:var(--green-d);border:1px solid #d5e8dc;border-radius:16px;padding:5px 12px;font-size:12.5px;font-weight:700}
+.chips a:hover{background:#dff0e6;border-color:#bfe0cc}
+.arrow{display:flex;justify-content:center;margin:2px 0}
+.arrow svg{display:block}
+.arrow .stem{stroke-dasharray:4 5}
+.end{text-align:center;margin-top:26px}
+.end .cta{display:inline-block;text-decoration:none;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:13px;padding:14px 34px;font-family:Rubik;font-weight:800;font-size:16px;box-shadow:0 12px 28px rgba(28,107,69,.25)}
+.foot{background:#0f3a26;color:#a9c6b8;padding:24px 0;text-align:center;font-size:13.5px;margin-top:20px}
+.foot a{color:#8fe6ad;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Venture</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROVENTURE · IDEA → PRODUCT</div>
+    <h1>מרעיון <b>למוצר</b></h1>
+    <div class="sub">המסלול המלא של חדשנות אגרו-טק — משלב הרעיון ועד מוצר בשוק. בכל שלב, הזירה מחברת אתכם לכלים, לידע ולמימון.</div>
+  </div>
+  <div class="flow" id="flow"></div>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · AgroVenture · <span class="mono">idea to product</span></div>
+
+<script>
+var STEPS=[
+ {n:1,ic:"💡",t:"רעיון",ph:"IDEA",c:"#8fd6a8",d:"זיהוי בעיה חקלאית אמיתית וניסוח החזון. מהצורך בשטח אל הרעיון שפותר אותו.",links:[["מנוע החדשנות","ideas.html"],["שיח הקהילה","index.html"]]},
+ {n:2,ic:"🔍",t:"אימות והיתכנות",ph:"VALIDATION",c:"#5cb87f",d:"מחקר שוק, בדיקת מתחרים, גודל הזדמנות והיתכנות ראשונית — מבוסס דאטה ומחקר.",links:[["מאגר נתונים","agrolake.html"],["אנליטיקת AI","analytics.html"],["מחקר ואקדמיה","research.html"]]},
+ {n:3,ic:"🧪",t:"אב-טיפוס · POC",ph:"PROTOTYPE",c:"#2e9e63",d:"הוכחת היתכנות טכנולוגית — בניית אב-טיפוס ראשוני וניסויי מעבדה מבוקרים.",links:[["המדען הראשי וחממות","labs.html"],["מו״פים","research.html"]]},
+ {n:4,ic:"🌱",t:"פיילוט בשדה",ph:"FIELD PILOT",c:"#1c8a55",d:"בדיקת המוצר בתנאי אמת אצל מגדלים — מרכזי מו״פ אזוריים וקבוצות ניסוי.",links:[["מו״פ אזורי","research.html"],["חקלאות מבוקרת","agrogrow.html"]]},
+ {n:5,ic:"📦",t:"מוצר · MVP",ph:"PRODUCT",c:"#187a4a",d:"גרסת מוצר ראשונה מוכנה לשוק — עם משוב לקוחות ראשונים ומודל עסקי.",links:[["ליווי תוכנית עסקית","contact.html"],["סטארטאפים","scout.html"]]},
+ {n:6,ic:"💰",t:"מימון וגיוס",ph:"FUNDING",c:"#c79a2e",d:"גיוס ההון לצמיחה — קרן השקעות, גיוס המונים, מענקי מו״פ ואשראי חקלאי.",links:[["קרן ההשקעות","invest-apply.html"],["גיוס המונים","agroinvest.html"],["מענקים","grants.html"],["AgroBank","agrobank.html"]]},
+ {n:7,ic:"🚀",t:"השקה וצמיחה",ph:"LAUNCH & SCALE",c:"#0f3a26",d:"כניסה לשוק, האצה, פיילוטים מסחריים והרחבה בין-לאומית — מסטארטאפ להצלחה.",links:[["האצה והשקה","index.html"],["סחר בין-לאומי","trade.html"],["כנסים ותערוכות","conferences.html"]]}
+];
+function arrow(col){
+ return '<div class="arrow"><svg width="30" height="40" viewBox="0 0 30 40"><line class="stem" x1="15" y1="2" x2="15" y2="26" stroke="'+col+'" stroke-width="3" stroke-linecap="round"/><path d="M6 24 L15 36 L24 24" fill="none" stroke="'+col+'" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+}
+document.getElementById('flow').innerHTML=STEPS.map(function(s,i){
+ var chips=s.links.map(function(l){return '<a href="'+l[1]+'">'+l[0]+' ↗</a>';}).join('');
+ var block='<div class="step" style="border-inline-start:5px solid '+s.c+'">'+
+  '<div class="num" style="background:'+s.c+'">'+s.n+'</div>'+
+  '<div style="flex:1"><div class="ph">שלב '+s.n+' · '+s.ph+'</div>'+
+  '<h3><span class="ic">'+s.ic+'</span>'+s.t+'</h3>'+
+  '<p>'+s.d+'</p><div class="chips">'+chips+'</div></div></div>';
+ return block+(i<STEPS.length-1?arrow(STEPS[i+1].c):'');
+}).join('')+'<div class="end"><a class="cta" href="invest-apply.html">יש לכם רעיון? דברו איתנו ←</a></div>';
+</script>
+</body></html>

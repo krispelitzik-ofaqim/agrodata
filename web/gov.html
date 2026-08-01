@@ -76,6 +76,28 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <div class="filters" id="filters"></div>
   </div>
 
+  <style>@keyframes gpulse{0%{box-shadow:0 0 0 0 rgba(62,232,126,.65)}70%{box-shadow:0 0 0 9px rgba(62,232,126,0)}100%{box-shadow:0 0 0 0 rgba(62,232,126,0)}}
+  #govwrap input{width:100%;border:1px solid #dbe8df;border-radius:11px;padding:11px 14px;font-family:Heebo;font-size:15px;margin-bottom:14px;outline:0}
+  .gds{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(max-width:700px){.gds{grid-template-columns:1fr}}
+  .gd{background:#fff;border:1px solid #dbe8df;border-radius:14px;padding:15px 17px;text-decoration:none;color:inherit;display:block;transition:.15s}
+  .gd:hover{border-color:#bfe0cc;box-shadow:0 10px 24px rgba(20,38,28,.08)}
+  .gd b{font-family:Rubik;color:#134a30;font-size:15.5px;line-height:1.4}
+  .gd .gmeta{font-size:12px;color:#5c6f63;margin-top:5px}
+  .gd .gfmt{display:inline-block;background:#eaf4ee;color:#1c6b45;border-radius:9px;padding:1px 8px;font-size:11px;font-weight:700;margin-inline-start:6px}
+  .livebox{background:linear-gradient(135deg,#f0faf3,#eaf7ee);border:1.6px solid #bfe6cd;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 10px 26px rgba(20,80,50,.06)}
+  .livehead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:4px}
+  .livedot{display:inline-flex;align-items:center;gap:7px;background:#127a43;color:#fff;border-radius:16px;padding:4px 13px;font-size:12.5px;font-weight:800}
+  .livedot i{width:9px;height:9px;border-radius:50%;background:#8dffb6;box-shadow:0 0 0 0 rgba(141,255,182,.7);animation:gpulse 1.6s infinite}
+  .livesub{color:#4c6957;font-size:14px;margin:2px 0 14px}</style>
+  <div class="livebox">
+    <div class="livehead">📡 מאגרי ממשלה חיים · data.gov.il <span class="livedot"><i></i>API חי</span></div>
+    <div class="livesub">חיבור חי ל-CKAN API של data.gov.il — מאגרי ממשלה אמיתיים מתעדכנים בזמן אמת.</div>
+    <div id="govwrap">
+      <input id="govq" placeholder="🔎 חיפוש מאגרי ממשלה (חקלאות, מים, מחירים…)" onkeydown="if(event.key==='Enter')loadGov()">
+      <div class="gds" id="govlist"><div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:24px">📡 טוען מאגרים חיים מ-data.gov.il…</div></div>
+    </div>
+  </div>
+
   <div class="sech">🏛️ החלטות ממשלה רלוונטיות</div>
   <div class="gsearchbar"><span>🔎</span><input id="gsearch" placeholder="חיפוש: מספר החלטה, נושא, משרד…" oninput="render()"></div>
   <div class="grid" id="grid"></div>
@@ -160,5 +182,18 @@ function render(){
 function filt(c,el){CUR=c;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
 document.getElementById('filters').innerHTML=CATS.map((c,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${c[0]}',this)">${c[1]}</button>`).join('');
 render();
+function loadGov(){
+ var q=(document.getElementById('govq').value||'').trim()||'חקלאות';
+ var list=document.getElementById('govlist');
+ list.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:24px">📡 מושך מאגרים חיים…</div>';
+ fetch('/api/govdata?q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok||!j.items||!j.items.length){list.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:24px">לא נמצאו מאגרים — נסו מונח אחר.</div>';return;}
+  list.innerHTML=j.items.map(function(d){
+   var fmt=(d.formats||[]).slice(0,3).map(function(f){return '<span class="gfmt">'+f+'</span>';}).join('');
+   return '<a class="gd" href="'+d.url+'" target="_blank" rel="noopener"><b>'+d.title+'</b> ↗<div class="gmeta">'+(d.org||'')+' · עודכן '+(d.updated||'—')+' · '+d.resources+' קבצים'+fmt+'</div></a>';
+  }).join('');
+ }).catch(function(){list.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:24px">שגיאת חיבור לשרת.</div>';});
+}
+loadGov();
 </script>
 </body></html>

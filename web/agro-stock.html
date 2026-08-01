@@ -58,6 +58,19 @@ td.num,th.num{font-family:'Plex Mono';text-align:left}
 .apibadge{display:inline-flex;align-items:center;gap:7px;color:#8fe6ad;font-family:'Plex Mono';font-size:13px;font-weight:700;margin-inline-end:16px}
 .apibadge i{width:10px;height:10px;border-radius:50%;background:#4ade80;animation:apiglow 1.4s ease-in-out infinite}
 @keyframes apiglow{0%,100%{box-shadow:0 0 6px 2px rgba(74,222,128,.85)}50%{box-shadow:0 0 14px 5px rgba(74,222,128,1)}}
+tr.ilrow td{background:#eef6fb;box-shadow:inset 3px 0 0 #2b8fb0}
+tr.ilrow:hover td{background:#e3f0f7}
+.idxacc{background:#fff;border:1px solid #e0e9e3;border-radius:14px;margin:14px 0;overflow:hidden;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.idxacc-head{width:100%;background:none;border:0;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;text-align:right;font-family:Heebo}
+.idxacc-head .chev{font-size:16px;color:#5c6f63;transition:transform .2s;flex:0 0 auto}
+.idxacc.open .idxacc-head .chev{transform:rotate(180deg)}
+.idxacc-body{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 20px}
+.idxacc.open .idxacc-body{max-height:340px;padding:0 20px 18px}
+.idxkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:520px){.idxkpis{grid-template-columns:1fr 1fr}}
+.idxkpis .ik{background:#f4f9f6;border:1px solid #e0e9e3;border-radius:11px;padding:12px;text-align:center}
+.idxkpis .ik b{display:block;font-family:Rubik;font-weight:800;font-size:20px;color:#134a30}
+.idxkpis .ik span{font-size:12px;color:#5c6f63}
 </style>
 </head>
 <body>
@@ -87,15 +100,31 @@ td.num,th.num{font-family:'Plex Mono';text-align:left}
 
   <div class="grid2">
     <div class="panel">
-      <h3>סחורות חקלאיות</h3><div class="sm">מחיר · שינוי · מקור · מגמה</div>
+      <h3>סחורות חקלאיות <span style="font-size:13px;background:#eef6f0;color:#1c6b45;border:1px solid #cfe6d8;border-radius:12px;padding:2px 9px;font-weight:700;vertical-align:middle">מחירים ב-$ USD</span></h3><div class="sm">מחיר · שינוי · מקור · מגמה</div>
       <table><thead><tr><th>סחורה</th><th>מקור · בורסה</th><th class="num">מחיר</th><th class="num">שינוי</th><th>מגמה</th></tr></thead><tbody id="commTable"></tbody></table>
     </div>
     <div class="panel">
-      <h3>מניות אגרו-טק</h3><div class="sm">מחיר · שינוי · מדינה</div>
+      <h3>מניות אגרו-טק <span style="font-size:13px;background:#eef6f0;color:#1c6b45;border:1px solid #cfe6d8;border-radius:12px;padding:2px 9px;font-weight:700;vertical-align:middle">מחירים ב-$ USD</span></h3><div class="sm">מחיר · שינוי · מדינה</div>
       <table><thead><tr><th>סימול</th><th>חברה</th><th>מדינה · בורסה</th><th class="num">מחיר</th><th class="num">שינוי</th></tr></thead><tbody id="stockTable"></tbody></table>
     </div>
   </div>
 
+  <div class="idxacc" id="idxacc">
+    <button class="idxacc-head" onclick="document.getElementById('idxacc').classList.toggle('open')">
+      <span><span style="font-family:'Plex Mono';font-size:11px;color:var(--muted,#5c6f63)">ISRAELI AGRITECH INDEX</span><br><b style="font-family:Rubik;font-size:17px;color:#134a30">📊 מדד האגרו-טק הישראלי</b> · <b style="color:#1c9e5a">148.2 ▲ +9.4%</b></span>
+      <span class="chev">▾</span>
+    </button>
+    <div class="idxacc-body">
+      <div class="idxkpis">
+        <div class="ik"><b>₪4.6B</b><span>סך גיוסים (5ש׳)</span></div>
+        <div class="ik"><b>712</b><span>סטארטאפים</span></div>
+        <div class="ik"><b>85</b><span>סבבים (12ח׳)</span></div>
+        <div class="ik"><b>41</b><span>אקזיטים</span></div>
+      </div>
+      <div style="font-size:13.5px;color:#5c6f63;margin:10px 0">ברומטר אקוסיסטם — לא מדד מניות אלא מדד חוסן וצמיחה (מימון · חדשנות · כוח אדם · בשלות).</div>
+      <a href="agroindex.html" style="display:inline-block;text-decoration:none;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:11px;padding:11px 22px;font-family:Rubik;font-weight:800;font-size:14.5px">לדף המדד המלא ←</a>
+    </div>
+  </div>
   <div class="note">🔌 <b>מקור חי:</b> Yahoo Finance (סחורות ומניות) דרך שרת מקומי <span class="mono">agro-proxy.py</span>. אם רואים ״דמו״ — הרץ את השרת ופתח דרך <span class="mono">http://localhost:8787/agro-stock.html</span>. להוספת <b>World Bank</b> (מדדים חודשיים) או מקור מנוי — ניתן לחבר.</div>
 </div>
 
@@ -105,18 +134,19 @@ td.num,th.num{font-family:'Plex Mono';text-align:left}
 const fmt=n=>(n==null||isNaN(n)?'—':Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}));
 function mock(b,n){const a=[];for(let i=0;i<n;i++)a.push(b+b*0.03*Math.sin(i/1.7)+b*0.012*Math.cos(i/0.9));return a;}
 const COMM=[
- {n:"חיטה",sym:"ZW=F",src:"🇺🇸 CBOT",b:640},{n:"תירס",sym:"ZC=F",src:"🇺🇸 CBOT",b:490},
- {n:"סויה",sym:"ZS=F",src:"🇺🇸 CBOT",b:1320},{n:"קפה (Arabica)",sym:"KC=F",src:"🇺🇸 ICE",b:230},
- {n:"סוכר",sym:"SB=F",src:"🇺🇸 ICE",b:20},{n:"כותנה",sym:"CT=F",src:"🇺🇸 ICE",b:70},
- {n:"קקאו",sym:"CC=F",src:"🇺🇸 ICE",b:7500},{n:"אורז גס",sym:"ZR=F",src:"🇺🇸 CBOT",b:16}];
+ {n:"חיטה",e:"Wheat",sym:"ZW=F",src:"🇺🇸 CBOT",b:640},{n:"תירס",e:"Corn",sym:"ZC=F",src:"🇺🇸 CBOT",b:490},
+ {n:"סויה",e:"Soybean",sym:"ZS=F",src:"🇺🇸 CBOT",b:1320},{n:"קפה",e:"Coffee (Arabica)",sym:"KC=F",src:"🇺🇸 ICE",b:230},
+ {n:"סוכר",e:"Sugar",sym:"SB=F",src:"🇺🇸 ICE",b:20},{n:"כותנה",e:"Cotton",sym:"CT=F",src:"🇺🇸 ICE",b:70},
+ {n:"קקאו",e:"Cocoa",sym:"CC=F",src:"🇺🇸 ICE",b:7500},{n:"אורז גס",e:"Rough Rice",sym:"ZR=F",src:"🇺🇸 CBOT",b:16}];
 const STOCKS=[
- {t:"DE",n:"John Deere",sym:"DE",c:"🇺🇸 NYSE",b:600},{t:"CTVA",n:"Corteva",sym:"CTVA",c:"🇺🇸 NYSE",b:58},
- {t:"NTR",n:"Nutrien",sym:"NTR",c:"🇨🇦 TSX",b:52},{t:"ADM",n:"Archer-Daniels",sym:"ADM",c:"🇺🇸 NYSE",b:60},
- {t:"BG",n:"Bunge",sym:"BG",c:"🇺🇸 NYSE",b:97},{t:"ICL",n:"ICL",sym:"ICL",c:"🇮🇱/🇺🇸",b:5},
- {t:"EVGN",n:"Evogene",sym:"EVGN",c:"🇮🇱/🇺🇸",b:2.3},{t:"TRMB",n:"Trimble",sym:"TRMB",c:"🇺🇸 Nasdaq",b:64}];
+ {t:"DE",n:"John Deere",he:"ג׳ון דיר",sym:"DE",c:"🇺🇸 NYSE",b:600},{t:"CTVA",n:"Corteva",he:"קורטבה",sym:"CTVA",c:"🇺🇸 NYSE",b:58},
+ {t:"NTR",n:"Nutrien",he:"נוטריאן",sym:"NTR",c:"🇨🇦 TSX",b:52},{t:"ADM",n:"Archer-Daniels",he:"ארצ׳ר דניאלס",sym:"ADM",c:"🇺🇸 NYSE",b:60},
+ {t:"BG",n:"Bunge",he:"בונגה",sym:"BG",c:"🇺🇸 NYSE",b:97},{t:"ICL",n:"ICL · כיל",he:"כיל (ICL)",sym:"ICL",c:"🇮🇱 NYSE",b:5,il:1},
+ {t:"EVGN",n:"Evogene",he:"אבוג׳ן",sym:"EVGN",c:"🇮🇱 Nasdaq",b:2.3,il:1},{t:"WILC",n:"Willi-Food",he:"וילי פוד",sym:"WILC",c:"🇮🇱 Nasdaq",b:15,il:1},
+ {t:"TRMB",n:"Trimble",he:"טרימבל",sym:"TRMB",c:"🇺🇸 Nasdaq",b:64}];
 const IDX=[
- ...COMM.map(x=>({n:x.n+' · '+x.src.replace(/^[^ ]+ /,''),sym:x.sym,b:x.b,src:x.src})),
- ...STOCKS.map(x=>({n:x.n,sym:x.sym,b:x.b,src:x.c}))];
+ ...COMM.map(x=>({n:x.n+' · '+x.e,sym:x.sym,b:x.b,src:x.src})),
+ ...STOCKS.map(x=>({n:x.he+' · '+x.n,sym:x.sym,b:x.b,src:x.c}))];
 function slideIdx(dir){document.getElementById('idx').scrollBy({left:dir*448,behavior:'smooth'});}
 let DATA={};
 let SEL={sym:'ZW=F',title:'חיטה · CBOT (ZW=F)',b:640};
@@ -141,15 +171,15 @@ function lineChart(svg,data,w,h){
 }
 function render(){
  document.getElementById('idx').innerHTML=IDX.map(x=>{const o=q(x.sym,x.b),p=pct(o),u=p>=0;return `<div class="icard" data-sym="${x.sym}" onclick="select('${x.sym}','${x.n} (${x.sym})',${x.b})"><div class="n">${x.n}</div><div class="v">${fmt(o.price)}</div><div class="c ${u?'up':'down'}">${u?'▲':'▼'} ${fmt(Math.abs(p))}%</div></div>`;}).join('');
- document.getElementById('commTable').innerHTML=COMM.map(x=>{const o=q(x.sym,x.b),p=pct(o),u=p>=0;return `<tr data-sym="${x.sym}" onclick="select('${x.sym}','${x.n} · ${x.src} (${x.sym})',${x.b})"><td>${x.n}</td><td>${x.src}</td><td class="num">${fmt(o.price)}</td><td class="num ${u?'up':'down'}">${u?'+':''}${fmt(p)}%</td><td>${spark(o.series)}</td></tr>`;}).join('');
- document.getElementById('stockTable').innerHTML=STOCKS.map(x=>{const o=q(x.sym,x.b),p=pct(o),u=p>=0;return `<tr data-sym="${x.sym}" onclick="select('${x.sym}','${x.n} (${x.sym}) · ${x.c}',${x.b})"><td class="tk">${x.t}</td><td>${x.n}</td><td>${x.c}</td><td class="num">${fmt(o.price)}</td><td class="num ${u?'up':'down'}">${u?'+':''}${fmt(p)}%</td></tr>`;}).join('');
+ document.getElementById('commTable').innerHTML=COMM.map(x=>{const o=q(x.sym,x.b),p=pct(o),u=p>=0;return `<tr data-sym="${x.sym}" onclick="select('${x.sym}','${x.n} / ${x.e} · ${x.src} (${x.sym})',${x.b})"><td><b>${x.n}</b> · <span style="color:#5c6f63">${x.e}</span></td><td>${x.src}</td><td class="num">$${fmt(o.price)}</td><td class="num ${u?'up':'down'}">${u?'+':''}${fmt(p)}%</td><td>${spark(o.series)}</td></tr>`;}).join('');
+ document.getElementById('stockTable').innerHTML=STOCKS.map(x=>{const o=q(x.sym,x.b),p=pct(o),u=p>=0;return `<tr data-sym="${x.sym}" class="${x.il?'ilrow':''}" onclick="select('${x.sym}','${x.he} / ${x.n} (${x.sym}) · ${x.c}',${x.b})"><td class="tk">${x.t}</td><td>${x.il?'🇮🇱 ':''}<b>${x.he}</b> · <span style="color:#5c6f63">${x.n}</span></td><td>${x.c}</td><td class="num">$${fmt(o.price)}</td><td class="num ${u?'up':'down'}">${u?'+':''}${fmt(p)}%</td></tr>`;}).join('');
  drawChart(); markSel();
 }
 function drawChart(){
  const o=q(SEL.sym,SEL.b),p=pct(o),u=p>=0;
  lineChart(document.getElementById('mainchart'),o.series,1000,260,26);
  document.getElementById('chTitle').textContent=SEL.title;
- document.getElementById('chSub').innerHTML=`חודש אחרון · מחיר סגירה יומי · <b class="mono">${fmt(o.price)}</b> <span class="mono ${u?'up':'down'}">${u?'▲':'▼'} ${fmt(Math.abs(p))}%</span>`;
+ document.getElementById('chSub').innerHTML=`חודש אחרון · מחיר סגירה יומי · <b class="mono">$${fmt(o.price)}</b> <span style="color:#5c6f63">USD</span> <span class="mono ${u?'up':'down'}">${u?'▲':'▼'} ${fmt(Math.abs(p))}%</span>`;
 }
 function markSel(){document.querySelectorAll('[data-sym]').forEach(el=>el.classList.toggle('sel',el.getAttribute('data-sym')===SEL.sym));}
 function select(sym,title,b){SEL={sym,title,b};drawChart();markSel();}

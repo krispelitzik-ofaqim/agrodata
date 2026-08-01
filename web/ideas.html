@@ -165,7 +165,7 @@ scoreChallenges();setInterval(scoreChallenges,300000);
 var CUR=-1;
 function pick(i){CUR=i;document.querySelectorAll('.ch').forEach(function(x,j){x.classList.toggle('on',j===i);});gen(CH[i].t+' — '+CH[i].d, CH[i].t);}
 function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});gen(q,q);}
-function isPremium(){try{return localStorage.getItem('agroPremium')==='1';}catch(e){return false;}}
+function isPremium(){return true;/* פתוח לכולם בינתיים — להחזיר נעילה: localStorage.getItem('agroPremium')==='1' */}
 function unlock(){try{localStorage.setItem('agroPremium','1');}catch(e){}location.reload();}
 function gate(){
  return '<div class="lock"><div class="lockic">🔒</div><div class="lockt">בנק הרעיונות פתוח למנויי <b>Professional</b> ומעלה</div>'

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroBank · הבנק של החקלאות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--gold-d:#a67d1e;--ink:#14261c;--mut:#67786e;--line:#e3ebe6;--bg2:#f5f9f6;--tint:#eef6f0;--red:#d1544a;--pos:#1c9e5a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:var(--gold)}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.top{background:linear-gradient(135deg,#0f3a26,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:40px 0;color:#fff;gap:14px;flex-wrap:wrap}
+.brand{font-family:'Space Grotesk';font-weight:700;font-size:52px;color:#fff;line-height:1;letter-spacing:-1px}.brand b{color:var(--gold)}
+.brand small{display:block;font-family:Heebo;font-weight:600;font-size:16px;color:#bcd8ca;letter-spacing:0;margin-top:8px}
+.navr{display:flex;align-items:center;gap:18px;font-size:14px}
+.navr a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600}
+.hello{color:#cfe6da;font-size:14px}
+.menu{background:#0f3a26;border-top:1px solid rgba(255,255,255,.1)}
+.menu .wrap{display:flex;gap:26px;padding:12px 22px;overflow-x:auto}
+.menu a{color:rgba(255,255,255,.82);text-decoration:none;font-weight:600;font-size:14.5px;white-space:nowrap;cursor:pointer;padding:4px 0;border-bottom:2px solid transparent}
+.menu a.on,.menu a:hover{color:#fff;border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin:22px 0}
+@media(max-width:880px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 26px rgba(20,38,28,.05)}
+.balance{background:linear-gradient(135deg,#124a30,#1c6b45);color:#fff;border-radius:20px;padding:26px 28px;position:relative;overflow:hidden}
+.balance::after{content:"🌿";position:absolute;left:-10px;bottom:-20px;font-size:120px;opacity:.08}
+.balance .lbl{font-size:14px;color:#bcd8ca}
+.balance .amt{font-family:Rubik;font-weight:800;font-size:44px;margin:4px 0 2px;letter-spacing:-1px}
+.balance .amt small{font-size:22px;opacity:.7}
+.balance .sub{font-size:13.5px;color:#a9ceba}
+.balance .accno{font-family:'Plex Mono';font-size:13px;color:#8fbfa4;margin-top:12px}
+.qa{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:22px}
+@media(max-width:700px){.qa{grid-template-columns:repeat(3,1fr)}}
+.qbtn{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px 8px;text-align:center;cursor:pointer;transition:.15s}
+.qbtn:hover{background:var(--tint);border-color:#bfe0cc;transform:translateY(-2px)}
+.qbtn .qi{font-size:24px}.qbtn div{font-size:12.5px;font-weight:700;color:var(--green-d);margin-top:6px}
+.side{display:flex;flex-direction:column;gap:16px}
+.mini{padding:18px 20px}
+.mini h4{font-size:14px;color:var(--mut);font-weight:700;margin-bottom:10px}
+.acct{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.acct:last-child{border:0}
+.acct .an{font-size:14px;color:var(--ink);font-weight:600}
+.acct .an span{display:block;font-size:11.5px;color:var(--mut);font-weight:400}
+.acct .av{font-family:Rubik;font-weight:800;font-size:15px}
+.sectt{font-family:Rubik;font-weight:800;font-size:21px;color:var(--green-d);margin:26px 0 14px;display:flex;align-items:center;gap:9px}
+.txwrap{padding:8px 4px}
+table{width:100%;border-collapse:collapse}
+.tx td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px}
+.tx tr:last-child td{border:0}
+.tx .ico{width:40px}.tx .ico span{display:inline-flex;width:36px;height:36px;border-radius:10px;align-items:center;justify-content:center;font-size:17px;background:var(--tint)}
+.tx .desc b{display:block;color:var(--ink)}.tx .desc small{color:var(--mut)}
+.tx .amt{text-align:left;font-family:Rubik;font-weight:800;white-space:nowrap}
+.tx .amt.neg{color:var(--red)}.tx .amt.pos{color:var(--pos)}
+.tx .bal{text-align:left;color:var(--mut);font-size:13px;font-family:'Plex Mono'}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:800px){.cols{grid-template-columns:1fr}}
+.ccard{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:16px;padding:20px;position:relative;min-height:150px}
+.ccard.gold{background:linear-gradient(135deg,#c79a2e,#a67d1e)}
+.ccard .ct{font-size:13px;opacity:.85}.ccard .cn{font-family:'Plex Mono';font-size:18px;letter-spacing:2px;margin:14px 0}
+.ccard .cf{display:flex;justify-content:space-between;font-size:12px;opacity:.9}
+.ccard .brandmark{position:absolute;top:18px;left:20px;font-family:'Space Grotesk';font-weight:700}
+.fin{padding:20px}
+.finrow{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.finrow:last-child{border:0}
+.finrow .fi b{color:var(--green-d);font-family:Rubik;font-size:15.5px}
+.finrow .fi p{color:var(--mut);font-size:13px;margin-top:2px}
+.finrow .fb{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border:0;border-radius:10px;padding:9px 18px;font-family:Rubik;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.bar{height:8px;background:#e9f1ec;border-radius:5px;overflow:hidden;margin:8px 0 4px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--lime))}
+.chartcard{padding:20px}
+.chartcard .bars{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:14px}
+.chartcard .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.chartcard .bcol i{width:60%;background:linear-gradient(180deg,#2e9e63,#1c6b45);border-radius:6px 6px 0 0}
+.chartcard .bcol span{font-size:11.5px;color:var(--mut)}
+.foot{background:#0f3a26;color:#a9c6b8;padding:24px 0;text-align:center;font-size:13.5px;margin-top:30px}
+.foot a{color:#8fe6ad;text-decoration:none}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green-d);color:#fff;padding:13px 24px;border-radius:12px;font-weight:700;font-size:14.5px;box-shadow:0 12px 30px rgba(0,0,0,.3);transition:.3s;z-index:100}
+.toast.on{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="demo">● דמו בלבד</div>
+<div class="top"><div class="wrap"><div class="nav">
+  <div style="display:flex;align-items:center;gap:16px">
+    <svg width="76" height="76" viewBox="0 0 100 100" fill="none" aria-label="AgroBank">
+      <circle cx="50" cy="50" r="46" fill="#0f3a26" stroke="#c79a2e" stroke-width="4"/>
+      <circle cx="50" cy="50" r="39" fill="none" stroke="#c79a2e" stroke-width="1.4" opacity="0.55"/>
+      <path d="M50 78 C50 66 50 56 50 40" stroke="#c79a2e" stroke-width="4.4" stroke-linecap="round"/>
+      <path d="M50 40 L44 47 M50 40 L56 47" stroke="#c79a2e" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M50 62 C40 63 32 57 30 47 C41 47 49 52 50 62 Z" fill="#2e9e63"/>
+      <path d="M50 54 C60 55 68 49 70 39 C59 39 51 44 50 54 Z" fill="#8fe6ad"/>
+      <path d="M31 72 C40 76 60 76 69 72" stroke="#c79a2e" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+      <circle cx="50" cy="34" r="2.4" fill="#8fe6ad"/>
+    </svg>
+    <div class="brand">Agro<b>Bank</b><small>בנק ההשקעות של האגרו-טק הישראלי 🌱</small></div>
+  </div>
+  <div class="navr">
+    <span class="hello">שלום, <b style="color:#fff">דנה כהן</b> 👋</span>
+    <a onclick="toast('הודעות — דמו')" style="cursor:pointer">🔔</a>
+    <a href="index.html">יציאה ←</a>
+  </div>
+</div></div>
+<div class="menu"><div class="wrap">
+  <a class="on">עמוד הבית</a><a onclick="toast('עו״ש — דמו')">עובר ושב</a><a onclick="toast('כרטיסים — דמו')">כרטיסי אשראי</a>
+  <a onclick="toast('חסכונות — דמו')">חסכונות ופיקדונות</a><a onclick="toast('הלוואות — דמו')">הלוואות ומימון</a>
+  <a onclick="toast('מסחר — דמו')">שוק ההון</a><a onclick="toast('אגרו — דמו')">מימון חקלאי 🌾</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="grid">
+    <div>
+      <div class="balance">
+        <div class="lbl">יתרה בעובר ושב</div>
+        <div class="amt">₪248,530<small>.55</small></div>
+        <div class="sub">מסגרת אשראי מאושרת: ₪50,000 · פנוי למשיכה: ₪298,530</div>
+        <div class="accno">חשבון 12-345-6789 · סניף אופקים 447</div>
+      </div>
+      <div class="card" style="margin-top:16px"><div class="qa">
+        <div class="qbtn" onclick="toast('העברה — דמו')"><div class="qi">💸</div><div>העברה</div></div>
+        <div class="qbtn" onclick="toast('תשלום — דמו')"><div class="qi">🧾</div><div>תשלום חשבון</div></div>
+        <div class="qbtn" onclick="toast('הפקדת שיק — דמו')"><div class="qi">📷</div><div>הפקדת שיק</div></div>
+        <div class="qbtn" onclick="toast('העברה לחו״ל — דמו')"><div class="qi">🌍</div><div>העברה לחו״ל</div></div>
+        <div class="qbtn" onclick="toast('בקשת אשראי — דמו')"><div class="qi">💰</div><div>בקשת אשראי</div></div>
+        <div class="qbtn" onclick="toast('מימון תשומות — דמו')"><div class="qi">🌱</div><div>מימון תשומות</div></div>
+      </div></div>
+    </div>
+    <div class="side">
+      <div class="card mini"><h4>החשבונות שלי</h4>
+        <div class="acct"><div class="an">עובר ושב <span>שקלי · 12-345-6789</span></div><div class="av" style="color:var(--pos)">₪248,530</div></div>
+        <div class="acct"><div class="an">חיסכון ״קציר״ <span>נזיל</span></div><div class="av">₪86,200</div></div>
+        <div class="acct"><div class="an">פיקדון עונתי <span>עד 12/2026 · 4.1%</span></div><div class="av">₪150,000</div></div>
+        <div class="acct"><div class="an">כרטיס אשראי <span>לחיוב ב-10/8</span></div><div class="av" style="color:var(--red)">−₪7,842</div></div>
+      </div>
+      <div class="card mini"><h4>שווי נקי משוער</h4>
+        <div style="font-family:Rubik;font-weight:800;font-size:30px;color:var(--green-d)">₪476,888</div>
+        <div class="bar"><i style="width:72%"></i></div>
+        <div style="font-size:12.5px;color:var(--mut)">72% מהיעד השנתי (₪660,000)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sectt">🧾 תנועות אחרונות</div>
+  <div class="card txwrap"><table class="tx"><tbody id="txbody"></tbody></table></div>
+
+  <div class="sectt">💳 כרטיסים</div>
+  <div class="cols">
+    <div class="ccard"><div class="brandmark">Agro<span style="color:var(--gold)">Bank</span></div><div class="ct">כרטיס עסקי · Visa</div><div class="cn">4726 •••• •••• 8102</div><div class="cf"><span>דנה כהן</span><span>12/28</span></div></div>
+    <div class="ccard gold"><div class="brandmark" style="color:#3a2c05">Agro<b>Bank</b></div><div class="ct" style="color:#3a2c05">כרטיס פרימיום · חקלאי</div><div class="cn" style="color:#3a2c05">5388 •••• •••• 2214</div><div class="cf" style="color:#3a2c05"><span>דנה כהן</span><span>09/27</span></div></div>
+  </div>
+
+  <div class="cols" style="margin-top:22px">
+    <div>
+      <div class="sectt">🌾 מימון חקלאי</div>
+      <div class="card fin">
+        <div class="finrow"><div class="fi"><b>מסגרת אשראי חקלאית</b><p>נוצל ₪120,000 מתוך ₪300,000</p><div class="bar" style="width:220px"><i style="width:40%"></i></div></div><button class="fb" onclick="toast('הגדלת מסגרת — דמו')">הגדלה</button></div>
+        <div class="finrow"><div class="fi"><b>הלוואת בלון עונתית</b><p>מימון תשומות לעונת האביב · 5.2%</p></div><button class="fb" onclick="toast('בקשה — דמו')">בקשה</button></div>
+        <div class="finrow"><div class="fi"><b>מימון ציוד ומיכון</b><p>עד ₪500,000 · פריסה ל-60 תשלומים</p></div><button class="fb" onclick="toast('בקשה — דמו')">בקשה</button></div>
+        <div class="finrow"><div class="fi"><b>ביטוח יבול</b><p>כיסוי נזקי מזג אוויר ומחלות</p></div><button class="fb" onclick="toast('הצעה — דמו')">הצעה</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="sectt">📊 הוצאות אחרונות</div>
+      <div class="card chartcard">
+        <div style="font-size:13.5px;color:var(--mut)">6 חודשים אחרונים (₪ אלפים)</div>
+        <div class="bars" id="chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Bank</b></span> · בנק ההשקעות של האגרו-טק הישראלי · דמו בלבד · חלק מזירת <a href="index.html">AgroData</a></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var TX=[
+ ["🌱","קניית זרעים · חקלאות מדבר","היום · 09:14",-3420,245110],
+ ["💧","רשות המים · חשבון השקיה","אתמול · 16:02",-1890,248530],
+ ["🚜","ליסינג טרקטור · תשלום חודשי","28/07 · 08:00",-2650,250420],
+ ["🍅","מכירת תוצרת · שוק סיטונאי","27/07 · 12:30",18240,253070],
+ ["💳","כרטיס אשראי · חיוב חודשי","25/07 · 00:00",-7842,234830],
+ ["⚡","חברת חשמל · חממות","24/07 · 10:11",-2130,242672],
+ ["🌾","מענק מו״פ · המדען הראשי","22/07 · 14:45",45000,244802],
+ ["👥","משכורות עובדים","20/07 · 09:00",-16400,199802]
+];
+function money(n){var s=(n<0?'−':'')+'₪'+Math.abs(n).toLocaleString();return s;}
+document.getElementById('txbody').innerHTML=TX.map(function(t){
+ var cls=t[3]<0?'neg':'pos';
+ return '<tr><td class="ico"><span>'+t[0]+'</span></td>'+
+  '<td class="desc"><b>'+t[1]+'</b><small>'+t[2]+'</small></td>'+
+  '<td class="amt '+cls+'">'+(t[3]>0?'+':'')+money(t[3])+'</td>'+
+  '<td class="bal">'+money(t[4])+'</td></tr>';
+}).join('');
+var EXP=[["פבר",28],["מרץ",34],["אפר",41],["מאי",37],["יונ",46],["יול",39]];
+var mx=Math.max.apply(null,EXP.map(function(e){return e[1];}));
+document.getElementById('chart').innerHTML=EXP.map(function(e){
+ return '<div class="bcol"><i style="height:'+(e[1]/mx*100)+'%"></i><span>'+e[0]+'</span></div>';
+}).join('');
+var _tt;
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(_tt);_tt=setTimeout(function(){t.classList.remove('on');},2200);}
+</script>
+</body></html>

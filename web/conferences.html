@@ -297,15 +297,16 @@ var VIDS=[
  ['World Agri-Tech Summit','🇬🇧 בריטניה','linear-gradient(135deg,#6a45c0,#3a2680)','2gWjXAKfPNM'],
  ['MJBizCon · קנביס','🇺🇸 ארה״ב','linear-gradient(135deg,#4f8f3a,#2f5a22)','Fc-z_NZP2M8'],
  ['אגרומשוב · Agromashov','🇮🇱 ישראל','linear-gradient(135deg,#1c6b45,#0f3a26)','Kv6huzbNwGk'],
- ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)','']
+ ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)','bGMGg60TTC0']
 ];
 document.getElementById('vidgrid').innerHTML=VIDS.map(function(v,i){
  return '<a class="vcard" style="--c:'+v[2].match(/#[0-9a-f]{6}/i)[0]+';background:'+v[2]+'" href="#" onclick="playVid('+i+');return false"><span class="play">▶</span><div class="vinfo"><div class="vn">'+v[0]+'</div><div class="vc">'+v[1]+'</div></div></a>';
 }).join('');
 function playVid(i){
  var v=VIDS[i];
- if(v[3]){document.getElementById('vframe').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v[3]+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';document.getElementById('vidmodal').classList.add('open');}
- else{window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(v[0]+' agritech expo'),'_blank');}
+ var id=v[3]||'';
+ document.getElementById('vframe').innerHTML=id?('<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'):('<div style="color:#fff;text-align:center;padding:40px">הסרטון יעלה בקרוב.</div>');
+ document.getElementById('vidmodal').classList.add('open');
 }
 function closeVidModal(){document.getElementById('vidmodal').classList.remove('open');document.getElementById('vframe').innerHTML='';}
 </script>

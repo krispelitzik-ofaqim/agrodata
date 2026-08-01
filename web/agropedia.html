@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroPedia · מילוני הידע החקלאי · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--teal-d:#186178;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f3f8fa;color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#124c60,#2b8fb0)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.live{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:6px 13px;font-size:13px;font-weight:700;color:#eaf7fb}
+.dot{width:9px;height:9px;border-radius:50%;background:#8fe6ad;box-shadow:0 0 0 0 rgba(143,230,173,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(143,230,173,.7)}70%{box-shadow:0 0 0 8px rgba(143,230,173,0)}100%{box-shadow:0 0 0 0 rgba(143,230,173,0)}}
+.hero{padding:40px 0 8px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--teal);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:48px;font-weight:800;margin:6px 0 8px;color:#123c4a}h1 b{color:var(--teal)}
+.sub{color:#5b7581;font-size:16px;max-width:700px;margin:0 auto}
+.dtabs{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:26px 0 20px}
+.dtab{background:#fff;border:1px solid #cfe0e8;border-radius:24px;padding:11px 20px;font-family:Rubik;font-weight:700;font-size:15px;color:#356170;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+.dtab:hover{border-color:#9cc3d2}
+.dtab.on{background:linear-gradient(135deg,#2b8fb0,#186178);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(43,143,176,.28)}
+.dtab .dcount{background:rgba(0,0,0,.12);border-radius:11px;padding:1px 8px;font-size:12px;font-weight:800}
+.dtab.on .dcount{background:rgba(255,255,255,.25)}
+.dpanel{background:#fff;border:1px solid #d6e4eb;border-radius:18px;padding:24px;box-shadow:0 14px 34px rgba(20,50,64,.08);margin-bottom:50px}
+.dtitle{font-family:Rubik;font-weight:800;font-size:24px;color:#124c60;margin-bottom:4px}
+.dtitle .dsub{font-size:14px;color:var(--mut);font-weight:400}
+.dsearch{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;margin:14px 0 10px;outline:0}
+.dsearch:focus{border-color:var(--teal)}
+.tools{display:flex;gap:9px;flex-wrap:wrap}
+.fbtn{background:#f2f7f9;border:1px solid var(--line);border-radius:22px;padding:8px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer}
+.fbtn.on{background:linear-gradient(135deg,#2b8fb0,#186178);color:#fff;border-color:transparent}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:var(--mut);font-weight:700;background:var(--bg2);position:sticky;top:0;z-index:1}
+tr:hover td{background:#f7fbfc}
+.srcs{display:flex;gap:5px;flex-wrap:wrap}
+.srcchip{text-decoration:none;background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:3px 7px;font-size:11.5px;font-weight:700;color:var(--teal);white-space:nowrap}
+.srcchip:hover{background:#e3f0f5;border-color:#9cc3d2}
+.srcblock{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.srch{font-family:Rubik;font-weight:800;font-size:17px;color:#124c60;margin-bottom:12px}
+.srch .srsub{font-family:Heebo;font-weight:400;font-size:13.5px;color:var(--mut)}
+.sbgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+@media(max-width:820px){.sbgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.sbgrid{grid-template-columns:1fr}}
+.sbank{display:flex;align-items:center;gap:11px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:12px 14px;text-decoration:none;color:inherit;transition:.15s}
+.sbank:hover{background:#eaf5f0;border-color:#bfe0cc;transform:translateY(-2px)}
+.sbank .sbi{font-size:22px;flex:0 0 auto}
+.sbank .sbt{flex:1;display:flex;flex-direction:column;line-height:1.35}
+.sbank .sbt b{font-family:Rubik;font-size:14.5px;color:var(--green-d)}
+.sbank .sbt span{font-size:12px;color:var(--mut)}
+.sbank .sba{color:var(--teal);font-weight:800}
+.load{text-align:center;color:var(--mut);padding:44px}
+.mapsec{background:#fff;border:1px solid #d6e4eb;border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(20,50,64,.08);margin-bottom:50px}
+.maphead{font-family:Rubik;font-weight:800;font-size:21px;color:#124c60;margin-bottom:12px}
+.mapsel{font-family:Heebo;font-weight:400;font-size:14px;color:var(--mut)}
+.mapsel b{color:var(--green-d)}
+.mapbtns{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.mbtn{background:#f2f7f9;border:1px solid var(--line);border-radius:22px;padding:9px 20px;font-family:Rubik;font-weight:700;font-size:14.5px;color:#356170;cursor:pointer}
+.mbtn.on{background:linear-gradient(135deg,#2b8fb0,#186178);color:#fff;border-color:transparent}
+.mapstage{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#dfe9ee}
+.mapstage svg{display:block;width:100%;height:auto}
+tr.drow{cursor:pointer}
+tr.drow.sel td{background:#fff7e6!important}
+.footbar{background:linear-gradient(135deg,#124c60,#2b8fb0)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <a class="back" href="agrolake.html">מספרים ← AgroLake</a>
+    <a class="back" href="index.html">→ חזרה לזירה</a>
+  </div>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROPEDIA · KNOWLEDGE DICTIONARIES</div>
+    <h1>מילוני <b>הידע החקלאי</b></h1>
+    <div class="sub">האנציקלופדיה של האגרו — זנים מן הצומח, דגנים, זרעים, חומרי בסיס ומזון מן החי. כל פריט עם שיטת גידול, אקלים, התמחות עולמית וקישורי אימות מ-FAO, ויקיפדיה ומשרד החקלאות.</div>
+  </div>
+  <div class="dtabs" id="dtabs"><span class="load">טוען לשוניות…</span></div>
+  <div class="dpanel" id="dpanel"><div class="load">📚 טוען מילונים…</div></div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · AgroPedia · <span class="mono">agricultural knowledge base</span></div></div></div>
+
+<script>
+var DICTS=null,DKEY=null,DFILT='all',DORDER=['crops','grains','seeds','spices','materials','animals'];
+var CATCOL={"שלחין":"#2b8fb0","שדה":"#c79a2e","שיח":"#1c6b45","שורש":"#8a5a2b","עץ":"#2e9e63","מים":"#2b6fb0","משטח":"#a6792e","בר":"#6b7a2b","אחר":"#5c6f63",
+ "דגן אמיתי":"#c79a2e","פסאודו-דגן":"#8a5a2b","קטנית-דגן":"#2e9e63",
+ "זרעי שמן":"#c79a2e","זרעי תבלין":"#b5482e","זרעי מאכל":"#2e9e63","זרעי מספוא":"#6b7a2b",
+ "קמח ועמילן":"#c79a2e","שמנים":"#b58a2e","סוכרים":"#b5482e","חלבונים":"#2b8fb0","סיבים":"#6b7a2b","ביו-אנרגיה":"#2e9e63","תוספים":"#8a5a2b",
+ "דבורים":"#c79a2e","עופות":"#b5482e","בקר":"#8a5a2b","צאן":"#a6792e","דגה":"#2b8fb0","חלב ומוצריו":"#2b6fb0",
+ "עשב תבלין":"#2e9e63","תבלין זרעים":"#c79a2e","תבלין שורש":"#8a5a2b","תבלין קליפה/פרי":"#b5482e","תבלין פרח":"#a6792e"};
+function catColor(v){return CATCOL[v]||"#5c6f63";}
+var SEEDBANKS=[
+ ["Genesys PGR","מאגר-על של מיליוני זני זרעים מבנקי גנים בעולם","https://www.genesys-pgr.org","🌍"],
+ ["Svalbard Global Seed Vault","הכספת העולמית לגיבוי זרעים · נורבגיה","https://www.seedvault.no","🧊"],
+ ["USDA GRIN","מאגר הגרמפלזם של משרד החקלאות האמריקאי","https://www.ars-grin.gov/npgs","🇺🇸"],
+ ["FAO WIEWS","המערכת העולמית למשאבים גנטיים צמחיים","https://www.fao.org/wiews","🌐"],
+ ["CGIAR Genebanks","בנקי הגנים של ICARDA · CIMMYT · IRRI","https://www.genebanks.org","🔬"],
+ ["מאגר צמחיית ישראל","צמח · מאגר המידע לצמחיית ישראל","https://www.plants.org.il","🇮🇱"],
+ ["Crop Trust","הארגון העולמי לשימור גיוון יבולים","https://www.croptrust.org","🌾"],
+ ["NordGen","בנק הגנים הנורדי · סקנדינביה","https://www.nordgen.org","🇸🇪"],
+ ["ECPGR","התוכנית האירופית למשאבים גנטיים צמחיים","https://www.ecpgr.cgiar.org","🇪🇺"],
+ ["Millennium Seed Bank (Kew)","בנק הזרעים של קיו · בריטניה","https://www.kew.org/science/collections-and-resources/collections/millennium-seed-bank","🏛️"],
+ ["World Vegetable Center","AVRDC · בנק זרעי הירקות העולמי · טייוואן","https://avrdc.org","🥬"],
+ ["Vavilov Institute (VIR)","המכון ההיסטורי לצמחייה · רוסיה","https://www.vir.nw.ru/en","🧬"],
+ ["IPK Gatersleben","בנק הגנים הגרמני · לייבניץ","https://www.ipk-gatersleben.de","🇩🇪"],
+ ["CIP Genebank","המרכז הבינלאומי לתפוח אדמה · פרו","https://cipotato.org","🥔"],
+ ["ICRISAT Genebank","גידולי אזורים צחיחים · הודו","https://www.icrisat.org","🌍"],
+ ["Native Seeds/SEARCH","שימור זני מורשת · דרום-מערב ארה״ב","https://www.nativeseeds.org","🌵"]
+];
+var ANIMALBANKS=[
+ ["FAO DAD-IS","מערכת המידע העולמית למשאבים גנטיים של בעלי חיים","https://www.fao.org/dad-is","🐄"],
+ ["ERFP","משאבים גנטיים לבעלי חיים באירופה","https://www.erfp.org","🇪🇺"]
+];
+var SRC={crops:SEEDBANKS,grains:SEEDBANKS,seeds:SEEDBANKS,animals:ANIMALBANKS};
+function srcBlock(key){
+ var list=SRC[key];if(!list)return '';
+ var head=key==='animals'?'🐄 בנקי גנים לבעלי חיים בעולם':'🌱 בנקי זרעים וגנים בעולם';
+ var items=list.map(function(s){
+  return '<a class="sbank" href="'+s[2]+'" target="_blank" rel="noopener"><span class="sbi">'+s[3]+'</span><span class="sbt"><b>'+s[0]+'</b><span>'+s[1]+'</span></span><span class="sba">↗</span></a>';
+ }).join('');
+ return '<div class="srcblock"><div class="srch">'+head+' <span class="srsub">· מקורות עולמיים להצלבה והעמקה</span></div><div class="sbgrid">'+items+'</div></div>';
+}
+function srcLinks(r){
+ var name=r.name||'',lat=r.latin||name;
+ var wiki='https://he.wikipedia.org/wiki/'+encodeURIComponent((r.wiki||name).replace(/ /g,'_'));
+ var fao='https://www.google.com/search?q=site:fao.org+'+encodeURIComponent(lat);
+ var wb='https://www.google.com/search?q=site:data.worldbank.org+'+encodeURIComponent(lat);
+ var moag='https://www.google.com/search?q=site:gov.il+'+encodeURIComponent('חקלאות '+name);
+ function a(u,t,tip){return '<a href="'+u+'" target="_blank" rel="noopener" title="'+tip+'" class="srcchip">'+t+'</a>';}
+ return '<div class="srcs" onclick="event.stopPropagation()">'+a(wiki,'📖','ויקיפדיה')+a(fao,'🌍 FAO','ארגון המזון והחקלאות העולמי')+a(wb,'🏦','נתוני בנק העולם')+a(moag,'🇮🇱','משרד החקלאות')+'</div>';
+}
+function loadDicts(){
+ fetch('data/dicts.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  DICTS=j;var keys=DORDER.filter(function(k){return j[k];});
+  document.getElementById('dtabs').innerHTML=keys.map(function(k,i){
+   var d=j[k];return '<button class="dtab'+(i===0?' on':'')+'" onclick="dtab(\''+k+'\',this)">'+d.icon+' '+d.title.replace('מילון ','')+' <span class="dcount">'+d.rows.length+'</span></button>';
+  }).join('');
+  if(keys.length){DKEY=keys[0];drawDict();}else{document.getElementById('dpanel').innerHTML='<div class="load">אין נתונים.</div>';}
+ }).catch(function(){document.getElementById('dpanel').innerHTML='<div class="load">📚 המילונים בהכנה — הנתונים נטענים בקרוב.</div>';});
+}
+function dtab(k,el){DKEY=k;DFILT='all';document.querySelectorAll('.dtab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');drawDict();}
+function drawDict(){
+ var d=DICTS[DKEY];
+ var types=[];d.rows.forEach(function(r){var v=r[d.filterKey];if(v&&types.indexOf(v)<0)types.push(v);});
+ var chips='<button class="fbtn on" onclick="dfilt(\'all\',this)">הכול</button>'+
+  types.map(function(t){return '<button class="fbtn" onclick="dfilt(\''+t+'\',this)">'+t+'</button>';}).join('');
+ document.getElementById('dpanel').innerHTML=
+  '<div class="dtitle">'+d.icon+' '+d.title+' <span class="dsub">· '+d.rows.length+' פריטים</span></div>'+
+  '<input id="dsearch" oninput="dbody()" placeholder="🔎 חיפוש…" class="dsearch">'+
+  '<div class="tools" style="margin:0 0 12px" id="dchips">'+chips+'</div>'+
+  '<div class="tblwrap" style="max-height:70vh"><table id="dtbl"></table></div>'+
+  srcBlock(DKEY);
+ dbody();
+}
+function dfilt(t,el){DFILT=t;document.querySelectorAll('#dchips .fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');dbody();}
+function dbody(){
+ var d=DICTS[DKEY],fk=d.filterKey;
+ var q=(document.getElementById('dsearch').value||'').trim();
+ var rows=d.rows.filter(function(r){
+  if(DFILT!=='all'&&r[fk]!==DFILT)return false;
+  if(!q)return true;
+  return d.cols.some(function(c){return (''+(r[c.key]||'')).indexOf(q)>=0;});
+ });
+ var head='<tr><th style="width:56px"></th>'+d.cols.map(function(c){return '<th>'+c.label+'</th>';}).join('')+'<th>מקורות לאימות</th></tr>';
+ var body=rows.map(function(r){
+  var cells=d.cols.map(function(c){
+   var v=r[c.key]||'';
+   if(c.chip){var col=catColor(v);return '<td><span style="background:'+col+'1a;color:'+col+';border-radius:11px;padding:3px 10px;font-size:12.5px;font-weight:700;white-space:nowrap">'+v+'</span></td>';}
+   if(c.bold)return '<td><b style="color:var(--green-d)">'+v+'</b></td>';
+   if(c.italic)return '<td style="font-style:italic;color:var(--mut);font-size:12.5px">'+v+'</td>';
+   if(c.mono)return '<td class="mono">'+v+'</td>';
+   return '<td>'+v+'</td>';
+  }).join('');
+  return '<tr><td><img src="img/'+DKEY+'/'+r.slug+'.jpg" alt="" loading="lazy" onerror="this.style.visibility=\'hidden\'" style="width:46px;height:46px;object-fit:cover;border-radius:9px;border:1px solid var(--line)"></td>'+cells+'<td>'+srcLinks(r)+'</td></tr>';
+ }).join('');
+ document.getElementById('dtbl').innerHTML=head+(body||'<tr><td colspan="'+(d.cols.length+2)+'" style="text-align:center;color:var(--mut);padding:24px">לא נמצאו פריטים</td></tr>');
+}
+/* ---- maps: where each item grows ---- */
+var SELECTED=null,SELDK=null,MV='world';
+// Hebrew country (normalized) -> [lat, lon, continent]
+var CLL={
+ "סין":[35,103,"as"],"הודו":[22,79,"as"],"רוסיה":[61,100,"as"],"ארהב":[39,-98,"na"],"ברזיל":[-10,-53,"sa"],
+ "מקסיקו":[23,-102,"na"],"טורקיה":[39,35,"as"],"ספרד":[40,-4,"eu"],"איטליה":[42,13,"eu"],"יוון":[39,22,"eu"],
+ "מצרים":[27,30,"af"],"סעודיה":[24,45,"as"],"איראן":[32,53,"as"],"קולומביה":[4,-73,"sa"],"פרו":[-10,-76,"sa"],
+ "אינדונזיה":[-2,118,"as"],"ניגריה":[10,8,"af"],"אתיופיה":[9,40,"af"],"אוקראינה":[49,32,"eu"],"ארגנטינה":[-34,-64,"sa"],
+ "קנדה":[56,-106,"na"],"אוסטרליה":[-25,133,"oc"],"ניוזילנד":[-41,174,"oc"],"גרמניה":[51,10,"eu"],"צרפת":[46,2,"eu"],
+ "פולין":[52,19,"eu"],"הולנד":[52,5,"eu"],"וייטנאם":[16,108,"as"],"קניה":[0,38,"af"],"גאנה":[8,-1,"af"],
+ "חוףהשנהב":[8,-5,"af"],"בוליביה":[-17,-64,"sa"],"אקוודור":[-1,-78,"sa"],"פיליפינים":[13,122,"as"],"תאילנד":[15,101,"as"],
+ "מיאנמר":[21,96,"as"],"סודן":[15,30,"af"],"מרוקו":[32,-6,"af"],"יפן":[36,138,"as"],"קוריאה":[37,127,"as"],
+ "ישראל":[31,35,"as"],"מלאווי":[-13,34,"af"],"טנזניה":[-6,35,"af"],"ניזר":[17,8,"af"],"מאלי":[17,-4,"af"],
+ "גינאה":[10,-11,"af"],"אריתריאה":[15,39,"af"],"מוזמביק":[-18,35,"af"],"קזחסטן":[48,67,"as"],"אוזבקיסטן":[41,64,"as"],
+ "דראפ":[-29,24,"af"],"דרוםאפריקה":[-29,24,"af"],"רומניה":[46,25,"eu"],"סרביה":[44,21,"eu"],"צילה":[-35,-71,"sa"],
+ "קוסטהריקה":[10,-84,"na"],"דומיניקנה":[19,-70,"na"],"גואטמלה":[15,-90,"na"],"פינלנד":[64,26,"eu"],"צכיה":[50,15,"eu"],
+ "סוריה":[35,38,"as"],"פקיסטן":[30,70,"as"],"בנגלדש":[24,90,"as"],"אוסטריה":[47,14,"eu"],"שוויץ":[47,8,"eu"],
+ "בלגיה":[51,4,"eu"],"פורטוגל":[39,-8,"eu"],"בריטניה":[54,-2,"eu"],"אנגליה":[54,-2,"eu"],"סנגל":[14,-14,"af"],
+ "אוגנדה":[1,32,"af"],"קמרון":[6,12,"af"],"ונצואלה":[7,-66,"sa"],"קובה":[22,-79,"na"],"מדגסקר":[-19,47,"af"]};
+var CONTBB={as:[205,28,128,76],eu:[166,16,62,44],af:[158,50,78,78],na:[8,15,124,72],sa:[95,74,54,76],oc:[286,96,74,46]};
+function norm(s){return (s||'').replace(/["'״׳\s]/g,'');}
+function producersOf(it){
+ var w=it&&(it.world||''),out=[];
+ if(!w)return out;
+ w.split('·').forEach(function(part){
+  var disp=part.trim(),k=norm(disp);
+  if(CLL[k])out.push({name:disp,lat:CLL[k][0],lon:CLL[k][1],cont:CLL[k][2]});
+ });
+ return out;
+}
+function selMap(slug,noScroll){
+ var it=(DICTS[DKEY].rows||[]).filter(function(r){return r.slug===slug;})[0];
+ if(!it)return;
+ SELECTED=it;SELDK=DKEY;
+ var prods=producersOf(it);
+ var ms=document.getElementById('mapsel');
+ if(ms)ms.innerHTML=prods.length?('— <b>'+it.name+'</b> · מוביל ב: '+prods.map(function(p){return p.name;}).join(' · ')):('— <b>'+it.name+'</b> · אין נתוני מדינות למיפוי');
+ dbody(); renderMap();
+ if(!noScroll)document.querySelector('.mapsec').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function autoSel(){
+ var rows=DICTS[DKEY].rows||[];
+ for(var i=0;i<rows.length;i++){if(producersOf(rows[i]).length){selMap(rows[i].slug,true);return;}}
+ if(rows.length)selMap(rows[0].slug,true);
+}
+function mapV(v,el){MV=v;document.querySelectorAll('.mbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');renderMap();}
+function renderMap(){
+ var stage=document.getElementById('mapstage');
+ if(MV==='israel'){stage.innerHTML=israelSVG();return;}
+ var prods=SELECTED?producersOf(SELECTED):[];
+ var vb=[0,0,360,180];
+ if(MV==='continent'&&prods.length){var c=prods[0].cont;if(CONTBB[c])vb=CONTBB[c].slice();}
+ var vbw=vb[2];
+ var dots=prods.map(function(p){
+  var cx=180+p.lon,cy=90-p.lat,r=vbw*0.014;
+  return '<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*2.4)+'" fill="#ffcf4d" opacity="0.3"><animate attributeName="r" values="'+(r*1.6)+';'+(r*3)+';'+(r*1.6)+'" dur="2s" repeatCount="indefinite"/></circle>'+
+   '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#f0a500" stroke="#fff" stroke-width="'+(r*0.32)+'"/>'+
+   '<text x="'+cx+'" y="'+(cy-r*1.9)+'" font-size="'+(vbw*0.026)+'" fill="#fff" stroke="#7a5a10" stroke-width="'+(vbw*0.004)+'" paint-order="stroke" text-anchor="middle" font-weight="800" style="font-family:Heebo">'+p.name+'</text>';
+ }).join('');
+ stage.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" viewBox="'+vb.join(' ')+'" preserveAspectRatio="xMidYMid meet" style="display:block">'+
+  '<image href="img/maps/world.jpg" xlink:href="img/maps/world.jpg" x="0" y="0" width="360" height="180" preserveAspectRatio="none"/>'+
+  '<rect x="0" y="0" width="360" height="180" fill="#0a2432" opacity="'+(prods.length?0.32:0)+'"/>'+dots+'</svg>';
+}
+var ISR_REG=[
+ ["גליל וגולן",50,20,["עץ","שיח","מים"]],
+ ["עמק יזרעאל",47,40,["עץ","שדה","שלחין","שורש","מים"]],
+ ["חוף ושרון",40,58,["עץ","שלחין"]],
+ ["מרכז ושפלה",45,74,["עץ","שלחין","שורש"]],
+ ["הרי יהודה",52,88,["שיח","עץ"]],
+ ["נגב מערבי",38,116,["שדה","משטח","שלחין","שורש"]],
+ ["באר שבע והנגב",44,140,["שדה","שורש","בר"]],
+ ["רמת נגב",41,158,["שלחין","משטח","בר"]],
+ ["הערבה",37,180,["שלחין","משטח","עץ"]]];
+function israelSVG(){
+ var t=SELECTED&&SELDK==='crops'?SELECTED.type:null;
+ var path='M50,6 L58,20 L55,40 L61,58 L57,74 L54,92 L48,112 L44,134 L41,154 L38,172 L34,193 L30,174 L34,150 L37,128 L40,104 L42,80 L44,58 L46,36 Z';
+ var pins=ISR_REG.map(function(r){
+  var on=!t||r[3].indexOf(t)>=0;
+  var col=on?'#1c6b45':'#c7d3cb',rr=on?3.1:2;
+  return '<circle cx="'+r[1]+'" cy="'+r[2]+'" r="'+rr+'" fill="'+col+'" stroke="#fff" stroke-width="0.7"/>'+
+   '<text x="'+(r[1]+5)+'" y="'+(r[2]+1.6)+'" font-size="5.2" fill="'+(on?'#134a30':'#9fb0a6')+'" font-weight="'+(on?'800':'500')+'" style="font-family:Heebo">'+r[0]+'</text>';
+ }).join('');
+ var cap=t?('אזורי גידול מתאימים לזן מסוג ״'+t+'״'):(SELECTED?SELECTED.name:'בחרו זן צומח כדי לראות אזורי גידול בישראל');
+ return '<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 130 205" preserveAspectRatio="xMidYMid meet" style="display:block;background:#eef5f0;max-height:70vh">'+
+  '<path d="'+path+'" fill="#dff0e6" stroke="#1c6b45" stroke-width="1.1"/>'+pins+
+  '<text x="66" y="12" font-size="5.6" fill="#5c6f63" style="font-family:Heebo">'+cap+'</text></svg>';
+}
+loadDicts();
+</script>
+</body></html>

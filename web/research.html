@@ -157,6 +157,17 @@ const R=[
  {n:"מו״פ אשכול — מערב הנגב",u:"https://www.eshkol.muni.il/",k:"rd",loc:"אשכול · מערב הנגב",
   d:"מו״פ אזורי לחקלאות מערב הנגב — ירקות, פרחים וגידולים בתנאי בשור.",t:["מערב הנגב","ירקות","פרחים"]},
 ];
+const INSTIMG={
+ "מכון ויצמן למדע":"img/inst/weizmann.jpg",
+ "הפקולטה לחקלאות, מזון וסביבה ע״ש רוברט ה. סמית":"img/inst/huji-agri.jpg",
+ "אוניברסיטת בן-גוריון — המכונים לחקר המדבר ומדעי הקיימות":"img/inst/bgu.jpg",
+ "מכון וולקני — מרכז מחקר חקלאי (ARO)":"img/inst/volcani.png",
+ "מיג״ל — מכון מחקר מדעי הגליל":"img/inst/migal.svg",
+ "מו״פ צפון — מיג״ל":"img/inst/migal.svg",
+ "הטכניון — הפקולטה להנדסה ביוטכנולוגיה ומזון":"img/inst/technion.svg",
+ "אוניברסיטת תל אביב — בית הספר למדעי הצמח והביטחון התזונתי":"img/inst/tau.jpg",
+ "אוניברסיטת חיפה — המכון לחקר הכנרת / מדעי הים":"img/inst/haifa.png"
+};
 let CUR='all';
 function domain(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');var n=h.endsWith('.il')?3:2;return p.slice(-n).join('.');}catch(e){return '';}}
 function initials(n){var m=n.replace(/[^A-Za-zא-ת ]/g,'').trim().split(/\s+/);return ((m[0]||'')[0]||'')+((m[1]||'')[0]||'');}
@@ -167,7 +178,7 @@ function render(f){
  document.getElementById('grid').innerHTML = rows.length? rows.map(r=>{
   const ty=TYPE[r.k];const dm=domain(r.u),ini=initials(r.n);
   return `<a class="rcard" href="${r.u}" target="_blank" rel="noopener">
-    <div class="rimg ${ty[0]}" data-url="${encodeURIComponent(r.u)}"><span class="rimgini">${ini}</span></div>
+    <div class="rimg ${ty[0]}" data-url="${encodeURIComponent(r.u)}" data-img="${INSTIMG[r.n]||''}"><span class="rimgini">${ini}</span></div>
     <div class="rtop"><span class="rtype ${ty[0]}">${ty[1]}</span><span class="rloc">${r.loc}</span></div>
     <div class="rnamerow"><span class="rlogo">${ini}${dm?`<img src="https://www.google.com/s2/favicons?domain=${dm}&sz=128" onerror="this.remove()" alt="">`:''}</span><div class="rname">${r.n}</div></div>
     <div class="rdesc">${r.d}</div>
@@ -181,8 +192,10 @@ var IMG={};
 function loadImages(){
  document.querySelectorAll('.rimg[data-url]').forEach(function(el){
   var u=decodeURIComponent(el.getAttribute('data-url'));
-  el.removeAttribute('data-url');
+  var local=el.getAttribute('data-img');
+  el.removeAttribute('data-url');el.removeAttribute('data-img');
   function apply(src){var im=new Image();im.onload=function(){el.style.backgroundImage='url("'+src+'")';el.classList.add('has');};im.src=src;}
+  if(local){apply(local);return;}
   if(IMG[u]){if(IMG[u]!=='none')apply(IMG[u]);return;}
   fetch('/api/ogimage?url='+encodeURIComponent(u)).then(function(r){return r.json();}).then(function(c){
    IMG[u]=c.image||'none';if(c.image)apply(c.image);

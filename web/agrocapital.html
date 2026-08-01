@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroCapital · גיוס הון · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#e0e9e3;--bg2:#f4f9f6;--tint:#eef6f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}.mono{font-family:'Plex Mono',monospace}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.top{background:linear-gradient(135deg,#0f3a26,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13.5px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:640px;margin:0 auto}
+.stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:26px 0 6px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 26px;text-align:center;box-shadow:0 8px 20px rgba(20,38,28,.05)}
+.stat b{display:block;font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d)}
+.stat span{font-size:13px;color:var(--mut)}
+.sectt{font-family:Rubik;font-weight:800;font-size:24px;color:var(--green-d);margin:30px 0 6px}
+.seccap{color:var(--mut);font-size:14.5px;margin-bottom:18px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.fbtn{background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer}
+.fbtn.on{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-color:transparent}
+.g1{display:grid;grid-template-columns:1fr;gap:22px;margin-bottom:22px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-bottom:22px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:22px}
+@media(max-width:900px){.g3{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.g2,.g3{grid-template-columns:1fr}}
+.deal{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 28px;box-shadow:0 12px 30px rgba(20,38,28,.06);transition:.15s}
+.deal.big{padding:36px 40px;background:linear-gradient(135deg,#fff,#f2f9f4);border-color:#cfe6d8}
+.deal.big .dname{font-size:30px}.deal.big .damt{font-size:56px}.deal.big .ddesc{font-size:17px;max-width:640px}
+.deal.big .logo{width:60px;height:60px;font-size:26px;border-radius:16px}
+.deal:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(20,38,28,.1)}
+.dhead{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.logo{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;color:#fff;flex:0 0 auto}
+.dname{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d)}
+.dsec{font-size:13.5px;color:var(--mut)}
+.round{display:inline-block;border-radius:14px;padding:5px 13px;font-size:13.5px;font-weight:800;margin-inline-start:auto}
+.damt{font-family:Rubik;font-weight:800;font-size:40px;color:var(--green-d);margin:8px 0 2px;letter-spacing:-1px}
+.ddesc{color:#51655a;font-size:15px;line-height:1.65;margin:10px 0 14px}
+.dmeta{display:flex;justify-content:space-between;font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:12px}
+.dmeta b{color:var(--ink)}
+.cta-band{text-align:center;background:linear-gradient(135deg,#eef7f1,#e6f3ea);border:1px solid #cfe6d8;border-radius:20px;padding:32px;margin:40px 0}
+.cta-band h3{font-family:Rubik;font-weight:800;font-size:24px;color:var(--green-d);margin-bottom:8px}
+.cta-band p{color:var(--mut);font-size:15px;max-width:600px;margin:0 auto 18px}
+.cta{display:inline-block;text-decoration:none;background:linear-gradient(135deg,#c79a2e,#a67d1e);color:#fff;border-radius:13px;padding:15px 40px;font-family:Rubik;font-weight:800;font-size:17px;box-shadow:0 12px 28px rgba(199,154,46,.3)}
+.foot{background:#0f3a26;color:#a9c6b8;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
+.foot a{color:#8fe6ad;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="demo">● דמו בלבד</div>
+<div class="top"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Capital</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROCAPITAL · FUNDING</div>
+    <h1>גיוס <b>הון</b></h1>
+    <div class="sub">חיבור בין יזמי אגרו-טק למשקיעים, קרנות ומענקים. הנה חלק מסבבי ההשקעה שנסגרו דרך הזירה.</div>
+    <div class="stats">
+      <div class="stat"><b>₪253M</b><span>סך גיוסים</span></div>
+      <div class="stat"><b>10</b><span>סבבים שנסגרו</span></div>
+      <div class="stat"><b>₪25M</b><span>סבב ממוצע</span></div>
+      <div class="stat"><b>34</b><span>משקיעים פעילים</span></div>
+    </div>
+  </div>
+
+  <div class="sectt">💼 השקעות שנסגרו</div>
+  <div class="seccap">סבבי גיוס לדוגמה (דמו) — סטארטאפים שגייסו הון בתחומי האגרו-טק.</div>
+  <div class="filters" id="filters"></div>
+  <div id="grid"></div>
+
+  <div class="cta-band">
+    <h3>💰 מחפשים הון לרעיון שלכם?</h3>
+    <p>הגישו הצעה לצוות ההשקעות של הזירה — נבחן, נחבר למשקיעים ונלווה מהסבב הראשון ועד הצמיחה.</p>
+    <a class="cta" href="invest-apply.html">להצעת השקעה →</a>
+  </div>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Capital</b></span> · גיוס הון · דמו בלבד · חלק מזירת <a href="index.html">AgroData</a></div>
+
+<script>
+var C=['#1c6b45','#2b8fb0','#c79a2e','#2e9e63','#8a5cc0','#c4562e','#1c8a8a','#a67d1e','#5c8a2b','#b5482e'];
+var ROUND={Seed:['#e7f9ee','#127a43'],'Series A':['#e3f0f7','#1c6b8a'],'Series B':['#f3ecfb','#7a4fb0'],'Pre-Seed':['#f0f7e9','#4c7a1c']};
+var DEALS=[
+ {n:"IrriSense",s:"השקיה חכמה מבוססת AI",r:"Seed",a:"₪12M",d:"Q1 2026",inv:"AgroBank Ventures",desc:"אלגוריתם שמייעל השקיה לפי חיישני קרקע ותחזית — 35% חיסכון מים."},
+ {n:"SkyAgro",s:"רחפני ריסוס וניטור",r:"Series A",a:"₪34M",d:"Q4 2025",inv:"Negev Growth Fund",desc:"רחפנים אוטונומיים לריסוס מדייק וזיהוי מוקדם של מחלות בשדה."},
+ {n:"BeeHive Data",s:"ניטור כוורות IoT",r:"Seed",a:"₪8M",d:"Q3 2025",inv:"Ofakim Angels",desc:"חיישנים שמנטרים בריאות כוורת ומגדילים תנובת דבש ב-30%."},
+ {n:"SoilX",s:"חיישני קרקע וקרקע חכמה",r:"Series A",a:"₪27M",d:"Q2 2025",inv:"TerraVentures",desc:"רשת חיישנים תת-קרקעית לניטור לחות, מליחות והזנה בזמן אמת."},
+ {n:"FreshChain",s:"שרשרת קור ולוגיסטיקה",r:"Series B",a:"₪60M",d:"Q1 2025",inv:"Global AgriFund",desc:"פלטפורמת שרשרת-קור חכמה שמאריכה חיי מדף ומצמצמת בזבוז מזון."},
+ {n:"AlgaeProtein",s:"פוד-טק · חלבון אצות",r:"Seed",a:"₪15M",d:"Q4 2024",inv:"BlueSea Capital",desc:"ייצור חלבון-על מספירולינה בפוטוביוריאקטורים עירוניים."},
+ {n:"CropVision AI",s:"ראייה ממוחשבת לגידולים",r:"Series A",a:"₪22M",d:"Q3 2024",inv:"Vision Partners",desc:"מודל AI שמזהה מחלות, מזיקים ומחסור תזונתי מתמונת שדה."},
+ {n:"VertiFarm",s:"חקלאות אנכית עירונית",r:"Seed",a:"₪18M",d:"Q2 2024",inv:"UrbanGreen Fund",desc:"חוות אנכיות מודולריות לגידול עלים טריים בלב הערים."},
+ {n:"SeedGen",s:"גנטיקה והשבחת זרעים",r:"Series B",a:"₪48M",d:"Q1 2024",inv:"BioSeed Capital",desc:"פלטפורמת השבחה מבוססת גנומיקה לזנים עמידי-חום ובצורת."},
+ {n:"AquaLoop",s:"אקוופוניקה מסחרית",r:"Pre-Seed",a:"₪9M",d:"Q4 2023",inv:"Arava R&D Angels",desc:"מערכת מחזור-סגור שמגדלת דגים וירקות יחד בחיסכון מים קיצוני."}
+];
+var CUR='all';
+function dealCard(d,big){
+ var col=C[DEALS.indexOf(d)%C.length],rc=ROUND[d.r]||['#eee','#555'];
+ return '<div class="deal'+(big?' big':'')+'"><div class="dhead">'+
+  '<div class="logo" style="background:'+col+'">'+d.n.charAt(0)+'</div>'+
+  '<div><div class="dname">'+d.n+'</div><div class="dsec">'+d.s+'</div></div>'+
+  '<span class="round" style="background:'+rc[0]+';color:'+rc[1]+'">'+d.r+'</span></div>'+
+  '<div class="damt">'+d.a+'</div>'+
+  '<div class="ddesc">'+d.desc+'</div>'+
+  '<div class="dmeta"><span>מוביל: <b>'+d.inv+'</b></span><span>'+d.d+'</span></div></div>';
+}
+function render(){
+ var rows=DEALS.filter(function(d){return CUR==='all'||d.r===CUR;});
+ var h='';
+ if(rows[0])h+='<div class="g1">'+dealCard(rows[0],true)+'</div>';
+ if(rows[1])h+='<div class="g2">'+rows.slice(1,3).map(function(d){return dealCard(d,false);}).join('')+'</div>';
+ if(rows[3])h+='<div class="g3">'+rows.slice(3).map(function(d){return dealCard(d,false);}).join('')+'</div>';
+ document.getElementById('grid').innerHTML=h||'<div style="text-align:center;color:var(--mut);padding:30px">אין עסקאות בקטגוריה זו.</div>';
+}
+var FS=[['all','הכל'],['Pre-Seed','Pre-Seed'],['Seed','Seed'],['Series A','Series A'],['Series B','Series B']];
+document.getElementById('filters').innerHTML=FS.map(function(f,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="filt(\''+f[0]+'\',this)">'+f[1]+'</button>';}).join('');
+function filt(c,el){CUR=c;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+render();
+</script>
+</body></html>

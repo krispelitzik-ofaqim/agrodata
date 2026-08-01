@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroLake · מאגר נתונים מרכזי · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.live{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(143,230,173,.5);border-radius:20px;padding:6px 13px;font-size:13px;font-weight:700;color:#d7f7e2}
+.dot{width:9px;height:9px;border-radius:50%;background:#3ee87e;box-shadow:0 0 0 0 rgba(62,232,126,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(62,232,126,.7)}70%{box-shadow:0 0 0 8px rgba(62,232,126,0)}100%{box-shadow:0 0 0 0 rgba(62,232,126,0)}}
+.hero{padding:38px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:680px;margin:0 auto}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:22px 0 6px}
+.fbtn{background:#fff;border:1px solid var(--line);border-radius:22px;padding:9px 18px;font-family:Heebo;font-weight:700;font-size:14px;color:var(--mut);cursor:pointer}
+.fbtn.on{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.rbtn{background:#fff;border:1px solid var(--line);border-radius:22px;padding:8px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer}
+.rbtn.on{background:linear-gradient(135deg,#2b8fb0,#186178);color:#fff;border-color:transparent}
+.dc-flag{position:absolute;bottom:14px;left:14px;font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 40px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.dcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 10px 26px rgba(20,38,28,.05);position:relative;transition:.16s;cursor:pointer;display:flex;flex-direction:column;gap:10px}
+.dcard.on:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(20,38,28,.12);border-color:#bfe0cc}
+.dcard.off{opacity:.62;cursor:default}
+.dc-ic{font-size:34px}
+.dc-badge{position:absolute;top:16px;left:16px;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:14px}
+.dc-badge.on{background:#e7f9ee;color:#127a43}
+.dc-badge.soon{background:#f0efe6;color:#9a8536}
+.dc-title{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d)}
+.dc-src{font-size:13px;color:var(--mut);font-family:'Plex Mono'}
+.dc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.dc-tag{background:var(--tint);color:var(--green-d);border-radius:12px;padding:3px 10px;font-size:12px;font-weight:600}
+.dc-open{margin-top:auto;color:var(--green);font-weight:800;font-size:14px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(15,30,22,.55);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:34px 16px}
+.modal.open{display:flex}
+.sheet{background:#fff;border-radius:20px;max-width:820px;width:100%;padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.sh-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px}
+.sh-title{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d)}
+.sh-note{font-size:13.5px;color:var(--mut);margin-top:2px}
+.sh-src{font-size:12.5px;color:var(--teal);font-family:'Plex Mono';margin-top:4px}
+.x{background:var(--bg2);border:1px solid var(--line);border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer;color:var(--mut);flex:0 0 auto}
+.chartbox{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px 10px 8px;margin:16px 0}
+.legend{display:flex;gap:16px;justify-content:center;font-size:13px;color:var(--mut);margin-bottom:6px}
+.legend b{color:var(--green-d)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.act{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 18px;font-family:Heebo;font-weight:700;font-size:14px;cursor:pointer;color:var(--green-d)}
+.act.p{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.aibox{background:linear-gradient(135deg,#fbfaf4,#f4f9f5);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:15px;line-height:1.7;color:var(--ink);display:none;margin-top:4px}
+.aibox.show{display:block}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:700;background:var(--bg2)}
+.tblwrap{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:6px}
+.load{text-align:center;color:var(--mut);padding:40px}
+/* dictionaries band — distinct blue-teal zone */
+.dictband{background:linear-gradient(180deg,#eef4f8,#e5eef3);border-top:1px solid #d3e1e9;margin-top:26px;padding:36px 0 54px}
+.dband-head{text-align:center;margin-bottom:20px}
+.dband-kick{font-family:'Plex Mono';font-size:13px;color:var(--teal);letter-spacing:.08em}
+.dband-head h2{font-family:Rubik;font-weight:800;font-size:32px;color:#124c60;margin:4px 0 4px}
+.dband-head p{color:#5b7581;font-size:15px;max-width:640px;margin:0 auto}
+.dtabs{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:18px 0 20px}
+.dtab{background:#fff;border:1px solid #cfe0e8;border-radius:24px;padding:10px 18px;font-family:Rubik;font-weight:700;font-size:14.5px;color:#356170;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+.dtab:hover{border-color:#9cc3d2}
+.dtab.on{background:linear-gradient(135deg,#2b8fb0,#186178);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(43,143,176,.28)}
+.dtab .dcount{background:rgba(0,0,0,.12);border-radius:11px;padding:1px 8px;font-size:12px;font-weight:800}
+.dtab.on .dcount{background:rgba(255,255,255,.25)}
+.dpanel{background:#fff;border:1px solid #d6e4eb;border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(20,50,64,.08)}
+.dtitle{font-family:Rubik;font-weight:800;font-size:22px;color:#124c60;margin-bottom:4px}
+.dtitle .dsub{font-size:14px;color:var(--mut);font-weight:400}
+.dsearch{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-family:Heebo;font-size:15px;margin:12px 0 10px;outline:0}
+.dsearch:focus{border-color:var(--teal)}
+.srcs{display:flex;gap:5px;flex-wrap:wrap}
+.srcchip{text-decoration:none;background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:3px 7px;font-size:11.5px;font-weight:700;color:var(--teal);white-space:nowrap}
+.srcchip:hover{background:#e3f0f5;border-color:#9cc3d2}
+.tradebar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:14px 0;font-size:14px;color:var(--mut)}
+.tradebar select{border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-family:Heebo;font-size:14px}
+.tfl{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 16px;font-family:Rubik;font-weight:700;font-size:14px;color:var(--green-d);cursor:pointer}
+.tfl.on{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.tbars{display:flex;flex-direction:column;gap:8px;margin:6px 0}
+.tbrow{display:flex;align-items:center;gap:12px}
+.tbrow .tbl-c{flex:0 0 140px;font-size:14px;color:var(--ink);text-align:start}
+.tbrow .tbtrack{flex:1;height:16px;background:#eef4f0;border-radius:8px;overflow:hidden}
+.tbrow .tbtrack i{display:block;height:100%;background:linear-gradient(90deg,#2e9e63,#1c6b45);border-radius:8px}
+.tbrow .tbv{flex:0 0 auto;font-family:'Plex Mono';font-size:12.5px;color:var(--green-d);min-width:96px;text-align:start}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:26px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span class="live"><span class="dot"></span>API חי</span>
+    <a class="back" href="index.html">→ חזרה לזירה</a>
+  </div>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROLAKE · DATA REPOSITORY</div>
+    <h1>מאגר הנתונים <b>המרכזי</b></h1>
+    <div class="sub">כל נתוני החקלאות של ישראל במקום אחד — אקלים, יבולים, קרקע, מים וסחר. נשאבים ממקורות פתוחים אמיתיים, עם גרף, טבלה, הורדה והסבר AI.</div>
+  </div>
+  <div class="tools" id="filters"></div>
+  <div class="tools" id="regfilters" style="margin-top:-6px"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="wrap" style="margin-bottom:44px">
+  <a href="agropedia.html" style="display:block;text-decoration:none;background:linear-gradient(135deg,#2b8fb0,#186178);border-radius:18px;padding:26px 28px;color:#fff;box-shadow:0 16px 38px rgba(24,97,120,.28)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div><div style="font-family:'Plex Mono';font-size:12.5px;color:#bfe9f5;letter-spacing:.06em">AGROPEDIA</div>
+      <div style="font-family:Rubik;font-weight:800;font-size:24px;margin:3px 0 2px">📚 מילוני הידע החקלאי</div>
+      <div style="font-size:14.5px;color:#dcf1f7">זנים מן הצומח · דגנים · זרעים · חומרי בסיס · מזון מן החי — עם קישורי אימות ל-FAO וויקיפדיה</div></div>
+      <div style="font-family:Rubik;font-weight:800;font-size:16px;white-space:nowrap">פתיחת האנציקלופדיה ←</div>
+    </div>
+  </a>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeDS()">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · AgroLake · <span class="mono">open agricultural data</span></div></div></div>
+
+<script>
+var DS=[
+ {id:'climate',ic:'🌡️',title:'אקלים וקרקע',src:'Open-Meteo · ERA5',cat:'env',reg:'il',tags:['מזג אוויר','קרקע','אופקים'],live:true},
+ {id:'yield',ic:'🌾',title:'יבול דגנים',src:'World Bank',cat:'crop',reg:'il',tags:['יבול','גד״ש'],live:true},
+ {id:'land',ic:'🗺️',title:'שטח חקלאי',src:'World Bank',cat:'crop',reg:'il',tags:['קרקע','שטחים'],live:true},
+ {id:'arable',ic:'🚜',title:'אדמה בת-עיבוד',src:'World Bank',cat:'crop',reg:'il',tags:['קרקע'],live:true},
+ {id:'water',ic:'💧',title:'צריכת מים לחקלאות',src:'World Bank',cat:'env',reg:'il',tags:['מים','השקיה'],live:true},
+ {id:'export',ic:'📦',title:'יצוא מזון',src:'World Bank',cat:'trade',reg:'il',tags:['סחר','יצוא'],live:true},
+ {id:'eu_cereal',ic:'🇪🇺',title:'ייצור דגנים · האיחוד האירופי',src:'Eurostat',cat:'crop',reg:'eu',tags:['דגנים','EU','ייצור'],live:true},
+ {id:'eu_area',ic:'🇪🇺',title:'שטח דגנים · האיחוד האירופי',src:'Eurostat',cat:'crop',reg:'eu',tags:['שטחים','EU'],live:true},
+ {id:'trade',ic:'🌐',title:'סחר עולמי במוצר',src:'UN Comtrade',cat:'trade',reg:'world',tags:['יבוא','יצוא','מדינות'],live:true,trade:true},
+ {id:'us_yield',ic:'🇺🇸',title:'יבול דגנים · ארה״ב',src:'World Bank',cat:'crop',reg:'na',tags:['יבול','ארה״ב'],live:true},
+ {id:'br_yield',ic:'🇧🇷',title:'יבול דגנים · ברזיל',src:'World Bank',cat:'crop',reg:'sa',tags:['יבול','ברזיל'],live:true},
+ {id:'ar_yield',ic:'🇦🇷',title:'יבול דגנים · ארגנטינה',src:'World Bank',cat:'crop',reg:'sa',tags:['יבול','ארגנטינה'],live:true},
+ {id:'br_land',ic:'🇧🇷',title:'שטח חקלאי · ברזיל',src:'World Bank',cat:'crop',reg:'sa',tags:['קרקע','ברזיל'],live:true},
+ {id:'cn_yield',ic:'🇨🇳',title:'יבול דגנים · סין',src:'World Bank',cat:'crop',reg:'as',tags:['יבול','סין'],live:true},
+ {id:'ru_yield',ic:'🇷🇺',title:'יבול דגנים · רוסיה',src:'World Bank',cat:'crop',reg:'as',tags:['יבול','רוסיה'],live:true},
+ {id:'cn_land',ic:'🇨🇳',title:'שטח חקלאי · סין',src:'World Bank',cat:'crop',reg:'as',tags:['קרקע','סין'],live:true},
+ {id:'prices',ic:'💰',title:'מחירי סחורות',src:'בקרוב',cat:'trade',reg:'world',tags:['שוק','מחירים'],live:false},
+ {id:'trade2',ic:'🚢',title:'יבוא/יצוא מפורט',src:'בקרוב',cat:'trade',reg:'il',tags:['סחר'],live:false},
+ {id:'sensors',ic:'📡',title:'חיישני שדה',src:'בקרוב',cat:'env',reg:'il',tags:['IoT','קרקע'],live:false}
+];
+var FCAT=[['all','הכול'],['env','אקלים ומים'],['crop','יבול וקרקע'],['trade','סחר ושוק']];
+var REGF=[['all','🌐 כל האזורים'],['il','🇮🇱 ישראל'],['eu','🇪🇺 אירופה'],['na','🇺🇸 צפון אמריקה'],['sa','🌎 דרום אמריקה'],['as','🌏 צפון אסיה'],['world','🌍 עולמי']];
+var REGFLAG={il:'🇮🇱',eu:'🇪🇺',world:'🌍',na:'🇺🇸',sa:'🌎',as:'🌏'},REGNAME={il:'ישראל',eu:'אירופה',world:'עולמי',na:'צפון אמריקה',sa:'דרום אמריקה',as:'צפון אסיה'};
+var CUR='all',CURREG='all';
+document.getElementById('filters').innerHTML=FCAT.map(function(f,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="filt(\''+f[0]+'\',this)">'+f[1]+'</button>';}).join('');
+document.getElementById('regfilters').innerHTML=REGF.map(function(f,i){return '<button class="rbtn '+(i===0?'on':'')+'" onclick="filtReg(\''+f[0]+'\',this)">'+f[1]+'</button>';}).join('');
+function filt(c,el){CUR=c;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+function filtReg(c,el){CURREG=c;document.querySelectorAll('.rbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+function render(){
+ var rows=DS.filter(function(d){return (CUR==='all'||d.cat===CUR)&&(CURREG==='all'||d.reg===CURREG);});
+ var g=document.getElementById('grid');
+ if(!rows.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:30px">אין מאגרים באזור/קטגוריה זו.</div>';return;}
+ g.innerHTML=rows.map(function(d){
+  var badge=d.live?'<span class="dc-badge on"><span class="dot"></span>LIVE</span>':'<span class="dc-badge soon">בקרוב</span>';
+  var flag='<span class="dc-flag" title="'+(REGNAME[d.reg]||'')+'">'+(REGFLAG[d.reg]||'🌐')+'</span>';
+  var tags=d.tags.map(function(t){return '<span class="dc-tag">'+t+'</span>';}).join('');
+  var open=d.live?'<div class="dc-open">פתיחת נתונים ←</div>':'<div class="dc-open" style="color:#9a8536">בהכנה</div>';
+  var click=d.live?('onclick="'+(d.trade?'openTrade()':'openDS(\''+d.id+'\')')+'"'):'';
+  return '<div class="dcard '+(d.live?'on':'off')+'" '+click+'>'+badge+flag+
+   '<div class="dc-ic">'+d.ic+'</div><div class="dc-title">'+d.title+'</div>'+
+   '<div class="dc-src">◦ '+d.src+'</div><div class="dc-tags">'+tags+'</div>'+open+'</div>';
+ }).join('');
+}
+render();
+
+var CURDATA=null;
+function openDS(id){
+ var d=DS.filter(function(x){return x.id===id;})[0];
+ var m=document.getElementById('modal'),s=document.getElementById('sheet');
+ m.classList.add('open');document.body.style.overflow='hidden';
+ s.innerHTML='<div class="load">📊 שואב נתונים חיים…</div>';
+ fetch('/api/lake?ds='+id+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok){s.innerHTML='<div class="load">שגיאת שאיבה ('+(j.err||'')+'). נסו שוב.</div>';return;}
+  CURDATA=j;drawSheet(j,d);
+ }).catch(function(){s.innerHTML='<div class="load">שגיאת חיבור לשרת.</div>';});
+}
+function closeDS(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+function drawSheet(j,d){
+ var s=document.getElementById('sheet');
+ var s0=j.series[0];
+ var leg=j.series.map(function(x){return '<span>● <b>'+x.name+'</b></span>';}).join('');
+ var html='<div class="sh-top"><div><div class="sh-title">'+d.ic+' '+j.title+'</div>'+
+  '<div class="sh-note">'+(j.note||'')+' · '+j.labels.length+' תקופות</div>'+
+  '<div class="sh-src">מקור: '+j.source+' ↗</div></div><button class="x" onclick="closeDS()">✕</button></div>'+
+  '<div class="chartbox"><div class="legend">'+leg+'</div>'+chartSVG(j.labels,s0)+'</div>'+
+  '<div class="actions"><button class="act p" onclick="explainDS()">🧠 הסבר AI על המגמה</button>'+
+  '<button class="act" onclick="downloadCSV()">⬇️ הורדת CSV</button>'+
+  '<a class="act" href="'+j.source_url+'" target="_blank" rel="noopener">מקור הנתונים ↗</a></div>'+
+  '<div class="aibox" id="aibox"></div>'+
+  '<div class="tblwrap"><table id="tbl"></table></div>';
+ s.innerHTML=html;
+ buildTable(j);
+}
+function chartSVG(labels,ser){
+ var data=ser.data,W=760,H=250,pl=44,pr=16,pt=16,pb=34;
+ var vals=data.filter(function(v){return v!==null;});
+ var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
+ if(mn===mx){mn=mn-1;mx=mx+1;}
+ var pad=(mx-mn)*0.12;mn-=pad;mx+=pad;
+ var n=data.length;
+ function X(i){return pl+(W-pl-pr)*(n<=1?0.5:i/(n-1));}
+ function Y(v){return pt+(H-pt-pb)*(1-(v-mn)/(mx-mn));}
+ var grid='',ticks=4;
+ for(var g=0;g<=ticks;g++){var vy=mn+(mx-mn)*g/ticks;var yy=Y(vy);grid+='<line x1="'+pl+'" y1="'+yy+'" x2="'+(W-pr)+'" y2="'+yy+'" stroke="#e2ecE6" stroke-width="1"/><text x="'+(pl-6)+'" y="'+(yy+4)+'" font-size="11" fill="#8a9a90" text-anchor="end">'+(Math.round(vy*10)/10)+'</text>';}
+ var pathD='',area='',dots='';
+ var first=true,lastX,lastY;
+ for(var i=0;i<n;i++){if(data[i]===null)continue;var x=X(i),y=Y(data[i]);if(first){pathD='M'+x+' '+y;area='M'+x+' '+(H-pb)+' L'+x+' '+y;first=false;}else{pathD+=' L'+x+' '+y;area+=' L'+x+' '+y;}lastX=x;lastY=y;dots+='<circle cx="'+x+'" cy="'+y+'" r="3" fill="#1c6b45"/>';}
+ area+=' L'+lastX+' '+(H-pb)+' Z';
+ var xl='';var step=Math.ceil(n/7);
+ for(var k=0;k<n;k+=step){xl+='<text x="'+X(k)+'" y="'+(H-10)+'" font-size="10.5" fill="#8a9a90" text-anchor="middle">'+labels[k]+'</text>';}
+ return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block">'+
+  grid+'<path d="'+area+'" fill="rgba(46,158,99,.13)"/><path d="'+pathD+'" fill="none" stroke="#1c6b45" stroke-width="2.4" stroke-linejoin="round"/>'+dots+xl+'</svg>';
+}
+function buildTable(j){
+ var head='<tr><th>תקופה</th>'+j.series.map(function(x){return '<th>'+x.name+'</th>';}).join('')+'</tr>';
+ var rows='';
+ for(var i=j.labels.length-1;i>=0;i--){
+  rows+='<tr><td>'+j.labels[i]+'</td>'+j.series.map(function(x){var v=x.data[i];return '<td>'+(v===null||v===undefined?'—':v.toLocaleString())+'</td>';}).join('')+'</tr>';
+ }
+ document.getElementById('tbl').innerHTML=head+rows;
+}
+function downloadCSV(){
+ var j=CURDATA;if(!j)return;
+ var head=['תקופה'].concat(j.series.map(function(x){return x.name;}));
+ var lines=[head.join(',')];
+ for(var i=0;i<j.labels.length;i++){var row=[j.labels[i]].concat(j.series.map(function(x){var v=x.data[i];return v===null||v===undefined?'':v;}));lines.push(row.join(','));}
+ var blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='agrolake-'+j.id+'.csv';a.click();
+}
+function explainDS(){
+ var j=CURDATA;if(!j)return;
+ var box=document.getElementById('aibox');box.classList.add('show');box.innerHTML='🧠 מנתח את הנתונים…';
+ var s0=j.series[0];var recent=[];
+ for(var i=Math.max(0,j.labels.length-8);i<j.labels.length;i++){recent.push(j.labels[i]+': '+s0.data[i]);}
+ var q='נתוני '+j.title+' ('+s0.name+'), מקור '+j.source+'. הערכים האחרונים — '+recent.join(', ')+
+  '. הסבר בעברית ב-3-4 משפטים: מה רואים במגמה, מדוע, ומה המשמעות המעשית לחקלאות ולאגרו-טק בישראל.';
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){
+  box.innerHTML=(d.answer||'לא התקבלה תשובה.').replace(/\n/g,'<br>');
+ }).catch(function(){box.innerHTML='שגיאה בחיבור למנוע ה-AI.';});
+}
+/* ---- world trade (UN Comtrade) ---- */
+var TCMD=[['1001','חיטה'],['1005','תירס'],['1006','אורז'],['0805','הדרים'],['0804','תמר · אבוקדו · מנגו'],['0702','עגבניות'],['0709','ירקות טריים'],['0806','ענבים'],['0808','תפוחים ואגסים'],['0901','קפה'],['1509','שמן זית'],['5201','כותנה גלמית'],['0603','פרחים קטופים'],['1701','סוכר']];
+var TCUR={cmd:'1001',flow:'X',period:'2023'};
+function openTrade(){
+ var m=document.getElementById('modal'),s=document.getElementById('sheet');
+ m.classList.add('open');document.body.style.overflow='hidden';
+ var opts=TCMD.map(function(c){return '<option value="'+c[0]+'">'+c[1]+'</option>';}).join('');
+ s.innerHTML='<div class="sh-top"><div><div class="sh-title">🌐 סחר עולמי במוצר</div>'+
+   '<div class="sh-note">UN Comtrade · יצוא/יבוא של ישראל לפי מדינת שותפה</div>'+
+   '<div class="sh-src">מקור: UN Comtrade ↗</div></div><button class="x" onclick="closeDS()">✕</button></div>'+
+  '<div class="tradebar">מוצר: <select id="tcmd">'+opts+'</select> '+
+    '<button class="tfl on" id="tflX" onclick="tflow(\'X\')">יצוא</button>'+
+    '<button class="tfl" id="tflM" onclick="tflow(\'M\')">יבוא</button> '+
+    'שנה: <select id="tper"><option>2023</option><option>2022</option><option>2021</option></select></div>'+
+  '<div id="tradestage"><div class="load">🌐 טוען…</div></div>';
+ document.getElementById('tcmd').onchange=function(){TCUR.cmd=this.value;loadTrade();};
+ document.getElementById('tper').onchange=function(){TCUR.period=this.value;loadTrade();};
+ loadTrade();
+}
+function tflow(f){TCUR.flow=f;document.getElementById('tflX').classList.toggle('on',f==='X');document.getElementById('tflM').classList.toggle('on',f==='M');loadTrade();}
+function loadTrade(){
+ var st=document.getElementById('tradestage');st.innerHTML='<div class="load">🌐 מושך נתוני סחר…</div>';
+ fetch('/api/trade?cmd='+TCUR.cmd+'&flow='+TCUR.flow+'&period='+TCUR.period+'&_='+Date.now(),{cache:'no-store'})
+  .then(function(r){return r.json();}).then(function(j){
+   if(!j.ok||!(j.labels||[]).length){st.innerHTML='<div class="load">אין נתונים למוצר/שנה זו (או הגבלת קצב Comtrade). נסו שוב או בחרו אחר.</div>';return;}
+   CURDATA=j;
+   st.innerHTML=tradeBars(j)+
+     '<div class="actions"><button class="act p" onclick="explainDS()">🧠 הסבר AI</button><button class="act" onclick="downloadCSV()">⬇️ הורדת CSV</button></div>'+
+     '<div class="aibox" id="aibox"></div>'+
+     '<div class="tblwrap"><table id="tbl"></table></div>';
+   buildTable(j);
+  }).catch(function(){st.innerHTML='<div class="load">שגיאת חיבור לשרת.</div>';});
+}
+function tradeBars(j){
+ var data=j.series[0].data,mx=Math.max.apply(null,data)||1;
+ return '<div class="tbars">'+j.labels.map(function(l,i){
+  var w=Math.round(data[i]/mx*100);
+  return '<div class="tbrow"><span class="tbl-c">'+l+'</span><div class="tbtrack"><i style="width:'+Math.max(2,w)+'%"></i></div><span class="tbv">$'+data[i].toLocaleString()+'</span></div>';
+ }).join('')+'</div>';
+}
+</script>
+</body></html>

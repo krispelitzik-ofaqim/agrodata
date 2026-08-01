@@ -1,0 +1,7354 @@
+{
+  "crops": {
+    "title": "מילון זנים מן הצומח",
+    "icon": "📖",
+    "filterKey": "type",
+    "cols": [
+      {
+        "key": "name",
+        "label": "שם",
+        "bold": true
+      },
+      {
+        "key": "latin",
+        "label": "שם מדעי",
+        "italic": true
+      },
+      {
+        "key": "type",
+        "label": "סוג",
+        "chip": true
+      },
+      {
+        "key": "method",
+        "label": "שיטת גידול"
+      },
+      {
+        "key": "temp",
+        "label": "טמפ׳ / אקלים",
+        "mono": true
+      },
+      {
+        "key": "world",
+        "label": "התמחות עולמית"
+      }
+    ],
+    "rows": [
+      {
+        "slug": "avocado",
+        "name": "אבוקדו",
+        "latin": "Persea americana",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "מקסיקו · קולומביה · פרו",
+        "wiki": "אבוקדו"
+      },
+      {
+        "slug": "watermelon",
+        "name": "אבטיח",
+        "latin": "Citrullus lanatus",
+        "type": "משטח",
+        "method": "שדה פתוח (זוחל)",
+        "temp": "22–30°C",
+        "world": "סין · טורקיה · הודו",
+        "wiki": "אבטיח"
+      },
+      {
+        "slug": "hazelnut",
+        "name": "אגוז לוז",
+        "latin": "Corylus avellana",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "טורקיה · איטליה · ארה״ב",
+        "wiki": "אגוז לוז"
+      },
+      {
+        "slug": "walnut",
+        "name": "אגוז מלך",
+        "latin": "Juglans regia",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–30°C",
+        "world": "סין · ארה״ב · איראן",
+        "wiki": "אגוז מלך"
+      },
+      {
+        "slug": "pear",
+        "name": "אגס",
+        "latin": "Pyrus communis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–24°C",
+        "world": "סין · ארה״ב · ארגנטינה",
+        "wiki": "אגס"
+      },
+      {
+        "slug": "blueberry",
+        "name": "אוכמנית",
+        "latin": "Vaccinium corymbosum",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "15–25°C",
+        "world": "ארה״ב · פרו · קנדה",
+        "wiki": "אוכמנית כחולה"
+      },
+      {
+        "slug": "rice",
+        "name": "אורז",
+        "latin": "Oryza sativa",
+        "type": "מים",
+        "method": "שדה מוצף",
+        "temp": "20–35°C",
+        "world": "סין · הודו · אינדונזיה",
+        "wiki": "אורז"
+      },
+      {
+        "slug": "amaranth",
+        "name": "אמרנת",
+        "latin": "Amaranthus caudatus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "סין · מקסיקו · פרו",
+        "wiki": "ירבוז"
+      },
+      {
+        "slug": "pineapple",
+        "name": "אננס",
+        "latin": "Ananas comosus",
+        "type": "אחר",
+        "method": "שדה",
+        "temp": "22–32°C",
+        "world": "קוסטה ריקה · פיליפינים · ברזיל",
+        "wiki": "אננס"
+      },
+      {
+        "slug": "alfalfa",
+        "name": "אספסת",
+        "latin": "Medicago sativa",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "15–28°C",
+        "world": "ארה״ב · ארגנטינה · אוסטרליה",
+        "wiki": "אספסת"
+      },
+      {
+        "slug": "asparagus",
+        "name": "אספרגוס",
+        "latin": "Asparagus officinalis",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "סין · פרו · מקסיקו",
+        "wiki": "אספרג רפואי"
+      },
+      {
+        "slug": "pea",
+        "name": "אפונה",
+        "latin": "Pisum sativum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "10–20°C",
+        "world": "קנדה · רוסיה · סין",
+        "wiki": "אפונה"
+      },
+      {
+        "slug": "persimmon",
+        "name": "אפרסמון",
+        "latin": "Diospyros kaki",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–30°C",
+        "world": "סין · קוריאה · יפן",
+        "wiki": "אפרסמון"
+      },
+      {
+        "slug": "peach",
+        "name": "אפרסק",
+        "latin": "Prunus persica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–27°C",
+        "world": "סין · ספרד · איטליה",
+        "wiki": "אפרסק"
+      },
+      {
+        "slug": "artichoke",
+        "name": "ארטישוק",
+        "latin": "Cynara cardunculus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "איטליה · מצרים · ספרד",
+        "wiki": "ארטישוק"
+      },
+      {
+        "slug": "jerusalemartichoke",
+        "name": "ארטישוק ירושלמי",
+        "latin": "Helianthus tuberosus",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "15–26°C",
+        "world": "צרפת · גרמניה · ארה״ב",
+        "wiki": "חמנית פקעתית"
+      },
+      {
+        "slug": "grapefruit",
+        "name": "אשכולית",
+        "latin": "Citrus paradisi",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "15–30°C",
+        "world": "סין · ארה״ב · מקסיקו",
+        "wiki": "אשכולית"
+      },
+      {
+        "slug": "peanut",
+        "name": "בוטנים",
+        "latin": "Arachis hypogaea",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "20–30°C",
+        "world": "סין · הודו · ניגריה",
+        "wiki": "בוטנים"
+      },
+      {
+        "slug": "basil",
+        "name": "בזיליקום",
+        "latin": "Ocimum basilicum",
+        "type": "שלחין",
+        "method": "חממה",
+        "temp": "20–30°C",
+        "world": "מצרים · הודו · ישראל",
+        "wiki": "בזיליקום"
+      },
+      {
+        "slug": "sweetpotato",
+        "name": "בטטה",
+        "latin": "Ipomoea batatas",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "20–30°C",
+        "world": "סין · מלאווי · טנזניה",
+        "wiki": "בטטה"
+      },
+      {
+        "slug": "okra",
+        "name": "במיה",
+        "latin": "Abelmoschus esculentus",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "22–35°C",
+        "world": "הודו · ניגריה · מאלי",
+        "wiki": "במיה"
+      },
+      {
+        "slug": "banana",
+        "name": "בננה",
+        "latin": "Musa",
+        "type": "אחר",
+        "method": "מטע (עשב ענק)",
+        "temp": "26–30°C",
+        "world": "הודו · סין · אינדונזיה",
+        "wiki": "בננה"
+      },
+      {
+        "slug": "onion",
+        "name": "בצל",
+        "latin": "Allium cepa",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "13–24°C",
+        "world": "הודו · סין · מצרים",
+        "wiki": "בצל"
+      },
+      {
+        "slug": "shallot",
+        "name": "בצלצל",
+        "latin": "Allium cepa var. aggregatum",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "13–24°C",
+        "world": "אינדונזיה · הודו · תאילנד",
+        "wiki": "בצלצל"
+      },
+      {
+        "slug": "broccoli",
+        "name": "ברוקולי",
+        "latin": "Brassica oleracea var. italica",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "15–20°C",
+        "world": "סין · הודו · ספרד",
+        "wiki": "ברוקולי"
+      },
+      {
+        "slug": "guava",
+        "name": "גויאבה",
+        "latin": "Psidium guajava",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "הודו · סין · תאילנד",
+        "wiki": "גויאבה"
+      },
+      {
+        "slug": "carrot",
+        "name": "גזר",
+        "latin": "Daucus carota",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "16–21°C",
+        "world": "סין · אוזבקיסטן · ארה״ב",
+        "wiki": "גזר"
+      },
+      {
+        "slug": "parsnip",
+        "name": "גזר לבן",
+        "latin": "Pastinaca sativa",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "8–18°C",
+        "world": "בריטניה · ארה״ב · צרפת",
+        "wiki": "גזר לבן"
+      },
+      {
+        "slug": "grape",
+        "name": "גפן / ענבים",
+        "latin": "Vitis vinifera",
+        "type": "שיח",
+        "method": "כרם",
+        "temp": "15–30°C",
+        "world": "סין · איטליה · ספרד",
+        "wiki": "גפן / ענבים"
+      },
+      {
+        "slug": "ginger",
+        "name": "ג׳ינג׳ר",
+        "latin": "Zingiber officinale",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "הודו · ניגריה · סין",
+        "wiki": "זנגביל רפואי"
+      },
+      {
+        "slug": "jackfruit",
+        "name": "ג׳קפרוט",
+        "latin": "Artocarpus heterophyllus",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "25–32°C",
+        "world": "הודו · בנגלדש · תאילנד",
+        "wiki": "ג׳קפרוט"
+      },
+      {
+        "slug": "cherry",
+        "name": "דובדבן",
+        "latin": "Prunus avium",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "טורקיה · ארה״ב · צ׳ילה",
+        "wiki": "דובדבן"
+      },
+      {
+        "slug": "millet",
+        "name": "דוחן",
+        "latin": "Panicum miliaceum",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "20–30°C",
+        "world": "הודו · ניז׳ר · סין",
+        "wiki": "דוחן"
+      },
+      {
+        "slug": "currant",
+        "name": "דומדמנית",
+        "latin": "Ribes rubrum",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "12–22°C",
+        "world": "רוסיה · פולין · גרמניה",
+        "wiki": "דומדמנית אדומה"
+      },
+      {
+        "slug": "pumpkin",
+        "name": "דלעת",
+        "latin": "Cucurbita moschata",
+        "type": "משטח",
+        "method": "שדה",
+        "temp": "20–30°C",
+        "world": "סין · הודו · אוקראינה",
+        "wiki": "דלעת"
+      },
+      {
+        "slug": "olive",
+        "name": "זית",
+        "latin": "Olea europaea",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–28°C",
+        "world": "ספרד · איטליה · יוון",
+        "wiki": "זית"
+      },
+      {
+        "slug": "quince",
+        "name": "חבוש",
+        "latin": "Cydonia oblonga",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "טורקיה · אוזבקיסטן · סין",
+        "wiki": "חבוש מצוי"
+      },
+      {
+        "slug": "chickpea",
+        "name": "חומוס",
+        "latin": "Cicer arietinum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "18–29°C",
+        "world": "הודו · טורקיה · אתיופיה",
+        "wiki": "חומוס"
+      },
+      {
+        "slug": "gooseberry",
+        "name": "חזרזר",
+        "latin": "Ribes uva-crispa",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "12–22°C",
+        "world": "גרמניה · רוסיה · פולין",
+        "wiki": "חזרזר תרבותי"
+      },
+      {
+        "slug": "horseradish",
+        "name": "חזרת",
+        "latin": "Armoracia rusticana",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–20°C",
+        "world": "הונגריה · ארה״ב · גרמניה",
+        "wiki": "חזרת"
+      },
+      {
+        "slug": "wheat",
+        "name": "חיטה",
+        "latin": "Triticum aestivum",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "סין · הודו · רוסיה",
+        "wiki": "חיטה"
+      },
+      {
+        "slug": "cranberry",
+        "name": "חמוצית",
+        "latin": "Vaccinium macrocarpon",
+        "type": "משטח",
+        "method": "בריכות הצפה",
+        "temp": "15–24°C",
+        "world": "ארה״ב · קנדה · צ׳ילה",
+        "wiki": "חמוצית"
+      },
+      {
+        "slug": "sunflower",
+        "name": "חמנית",
+        "latin": "Helianthus annuus",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "20–28°C",
+        "world": "אוקראינה · רוסיה · ארגנטינה",
+        "wiki": "חמנית"
+      },
+      {
+        "slug": "lettuce",
+        "name": "חסה",
+        "latin": "Lactuca sativa",
+        "type": "שלחין",
+        "method": "שדה / חממה",
+        "temp": "10–20°C",
+        "world": "סין · ארה״ב · הודו",
+        "wiki": "חסה"
+      },
+      {
+        "slug": "eggplant",
+        "name": "חציל",
+        "latin": "Solanum melongena",
+        "type": "שלחין",
+        "method": "חממה / שדה",
+        "temp": "22–30°C",
+        "world": "סין · הודו · מצרים",
+        "wiki": "חציל"
+      },
+      {
+        "slug": "pigeonpea",
+        "name": "טור",
+        "latin": "Cajanus cajan",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "20–30°C",
+        "world": "הודו · מיאנמר · מלאווי",
+        "wiki": "קיאנוס מצוי"
+      },
+      {
+        "slug": "teff",
+        "name": "טף",
+        "latin": "Eragrostis tef",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "18–27°C",
+        "world": "אתיופיה · אריתריאה · ארה״ב",
+        "wiki": "טף"
+      },
+      {
+        "slug": "yam",
+        "name": "יאם",
+        "latin": "Dioscorea alata",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "25–30°C",
+        "world": "ניגריה · גאנה · חוף השנהב",
+        "wiki": "דיוסקוריאה"
+      },
+      {
+        "slug": "spelt",
+        "name": "כוסמין",
+        "latin": "Triticum spelta",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "12–22°C",
+        "world": "גרמניה · אוסטריה · שווייץ",
+        "wiki": "כוסמין"
+      },
+      {
+        "slug": "buckwheat",
+        "name": "כוסמת",
+        "latin": "Fagopyrum esculentum",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "15–22°C",
+        "world": "רוסיה · סין · אוקראינה",
+        "wiki": "כוסמת מצויה"
+      },
+      {
+        "slug": "turmeric",
+        "name": "כורכום",
+        "latin": "Curcuma longa",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "הודו · בנגלדש · פקיסטן",
+        "wiki": "כורכום ארוך"
+      },
+      {
+        "slug": "cotton",
+        "name": "כותנה",
+        "latin": "Gossypium hirsutum",
+        "type": "שדה",
+        "method": "שדה שלחין",
+        "temp": "21–30°C",
+        "world": "הודו · סין · ארה״ב",
+        "wiki": "כותנה"
+      },
+      {
+        "slug": "cabbage",
+        "name": "כרוב",
+        "latin": "Brassica oleracea",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "15–20°C",
+        "world": "סין · הודו · רוסיה",
+        "wiki": "כרוב"
+      },
+      {
+        "slug": "brussels",
+        "name": "כרוב ניצנים",
+        "latin": "Brassica oleracea var. gemmifera",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–18°C",
+        "world": "מקסיקו · הולנד · בריטניה",
+        "wiki": "כרוב ניצנים"
+      },
+      {
+        "slug": "cauliflower",
+        "name": "כרובית",
+        "latin": "Brassica oleracea var. botrytis",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "15–20°C",
+        "world": "הודו · סין · ארה״ב",
+        "wiki": "כרובית"
+      },
+      {
+        "slug": "leek",
+        "name": "כרישה",
+        "latin": "Allium ampeloprasum",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "13–24°C",
+        "world": "אינדונזיה · טורקיה · צרפת",
+        "wiki": "כרשה"
+      },
+      {
+        "slug": "cowpea",
+        "name": "לוביה",
+        "latin": "Vigna unguiculata",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "25–32°C",
+        "world": "ניגריה · ניז׳ר · בורקינה פאסו",
+        "wiki": "לוביה חקלאית"
+      },
+      {
+        "slug": "lemon",
+        "name": "לימון",
+        "latin": "Citrus limon",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "15–30°C",
+        "world": "הודו · מקסיקו · סין",
+        "wiki": "לימון"
+      },
+      {
+        "slug": "lychee",
+        "name": "ליצ׳י",
+        "latin": "Litchi chinensis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "סין · הודו · וייטנאם",
+        "wiki": "ליצ׳י סיני"
+      },
+      {
+        "slug": "turnip",
+        "name": "לפת",
+        "latin": "Brassica rapa",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–18°C",
+        "world": "סין · ארה״ב · הודו",
+        "wiki": "לפת"
+      },
+      {
+        "slug": "melon",
+        "name": "מלון",
+        "latin": "Cucumis melo",
+        "type": "משטח",
+        "method": "שדה / חממה",
+        "temp": "18–28°C",
+        "world": "סין · טורקיה · הודו",
+        "wiki": "מלון"
+      },
+      {
+        "slug": "cucumber",
+        "name": "מלפפון",
+        "latin": "Cucumis sativus",
+        "type": "שלחין",
+        "method": "חממה / שדה",
+        "temp": "18–30°C",
+        "world": "סין · טורקיה · רוסיה",
+        "wiki": "מלפפון"
+      },
+      {
+        "slug": "mango",
+        "name": "מנגו",
+        "latin": "Mangifera indica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–30°C",
+        "world": "הודו · אינדונזיה · סין",
+        "wiki": "מנגו"
+      },
+      {
+        "slug": "chard",
+        "name": "מנגולד",
+        "latin": "Beta vulgaris subsp. vulgaris",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "סין · ארה״ב · הודו",
+        "wiki": "מנגולד"
+      },
+      {
+        "slug": "macadamia",
+        "name": "מקדמיה",
+        "latin": "Macadamia integrifolia",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "דרא״פ · אוסטרליה · קניה",
+        "wiki": "מקדמיה"
+      },
+      {
+        "slug": "mungbean",
+        "name": "מש",
+        "latin": "Vigna radiata",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "25–32°C",
+        "world": "הודו · מיאנמר · סין",
+        "wiki": "מש חקלאי"
+      },
+      {
+        "slug": "apricot",
+        "name": "משמש",
+        "latin": "Prunus armeniaca",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–30°C",
+        "world": "טורקיה · אוזבקיסטן · איראן",
+        "wiki": "משמש"
+      },
+      {
+        "slug": "mint",
+        "name": "נענע",
+        "latin": "Mentha spicata",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "15–25°C",
+        "world": "מרוקו · הודו · מצרים",
+        "wiki": "נענע"
+      },
+      {
+        "slug": "nectarine",
+        "name": "נקטרינה",
+        "latin": "Prunus persica var. nucipersica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–26°C",
+        "world": "סין · ספרד · איטליה",
+        "wiki": "נקטרינה"
+      },
+      {
+        "slug": "soybean",
+        "name": "סויה",
+        "latin": "Glycine max",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "20–30°C",
+        "world": "ברזיל · ארה״ב · ארגנטינה",
+        "wiki": "סויה"
+      },
+      {
+        "slug": "sorghum",
+        "name": "סורגום",
+        "latin": "Sorghum bicolor",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "25–32°C",
+        "world": "ארה״ב · ניגריה · אתיופיה",
+        "wiki": "סורגום"
+      },
+      {
+        "slug": "beet",
+        "name": "סלק",
+        "latin": "Beta vulgaris",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "15–20°C",
+        "world": "רוסיה · צרפת · ארה״ב",
+        "wiki": "סלק"
+      },
+      {
+        "slug": "celery",
+        "name": "סלרי",
+        "latin": "Apium graveolens",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "15–21°C",
+        "world": "סין · ארה״ב · הודו",
+        "wiki": "סלרי"
+      },
+      {
+        "slug": "spirulina",
+        "name": "ספירולינה",
+        "latin": "Arthrospira platensis",
+        "type": "מים",
+        "method": "בריכות / פוטוביוריאקטור",
+        "temp": "30–35°C",
+        "world": "סין · ארה״ב · הודו",
+        "wiki": "ספירולינה"
+      },
+      {
+        "slug": "tomato",
+        "name": "עגבנייה",
+        "latin": "Solanum lycopersicum",
+        "type": "שלחין",
+        "method": "חממה / שדה",
+        "temp": "21–27°C",
+        "world": "סין · הודו · טורקיה",
+        "wiki": "עגבנייה"
+      },
+      {
+        "slug": "lentil",
+        "name": "עדשים",
+        "latin": "Lens culinaris",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "18–30°C",
+        "world": "קנדה · הודו · אוסטרליה",
+        "wiki": "עדשים"
+      },
+      {
+        "slug": "chestnut",
+        "name": "ערמון",
+        "latin": "Castanea sativa",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "סין · ספרד · טורקיה",
+        "wiki": "ערמון"
+      },
+      {
+        "slug": "faba",
+        "name": "פול",
+        "latin": "Vicia faba",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "10–25°C",
+        "world": "סין · אתיופיה · אוסטרליה",
+        "wiki": "פול"
+      },
+      {
+        "slug": "raspberry",
+        "name": "פטל אדום",
+        "latin": "Rubus idaeus",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "15–24°C",
+        "world": "רוסיה · מקסיקו · סרביה",
+        "wiki": "פטל אדום"
+      },
+      {
+        "slug": "blackberry",
+        "name": "פטל שחור",
+        "latin": "Rubus fruticosus",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "15–25°C",
+        "world": "מקסיקו · ארה״ב · סרביה",
+        "wiki": "פטל שיסני"
+      },
+      {
+        "slug": "mushroom",
+        "name": "פטריית הכפתור",
+        "latin": "Agaricus bisporus",
+        "type": "אחר",
+        "method": "מבנה מבוקר",
+        "temp": "15–20°C",
+        "world": "סין · ארה״ב · הולנד",
+        "wiki": "פטריית הכפתור"
+      },
+      {
+        "slug": "dragonfruit",
+        "name": "פיטאיה",
+        "latin": "Hylocereus undatus",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "וייטנאם · סין · אינדונזיה",
+        "wiki": "פיטאיה"
+      },
+      {
+        "slug": "pistachio",
+        "name": "פיסטוק",
+        "latin": "Pistacia vera",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–35°C",
+        "world": "ארה״ב · איראן · טורקיה",
+        "wiki": "פיסטוק"
+      },
+      {
+        "slug": "pepper",
+        "name": "פלפל",
+        "latin": "Capsicum annuum",
+        "type": "שלחין",
+        "method": "חממה",
+        "temp": "20–30°C",
+        "world": "סין · מקסיקו · טורקיה",
+        "wiki": "פלפל"
+      },
+      {
+        "slug": "passionfruit",
+        "name": "פסיפלורה",
+        "latin": "Passiflora edulis",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "ברזיל · קולומביה · פרו",
+        "wiki": "שעונית נאכלת"
+      },
+      {
+        "slug": "papaya",
+        "name": "פפאיה",
+        "latin": "Carica papaya",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הודו · דומיניקנה · מקסיקו",
+        "wiki": "פפאיה"
+      },
+      {
+        "slug": "pecan",
+        "name": "פקאן",
+        "latin": "Carya illinoinensis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "ארה״ב · מקסיקו · דרא״פ",
+        "wiki": "פקאן"
+      },
+      {
+        "slug": "radish",
+        "name": "צנון",
+        "latin": "Raphanus sativus",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–18°C",
+        "world": "סין · הודו · דרום קוריאה",
+        "wiki": "צנון"
+      },
+      {
+        "slug": "kohlrabi",
+        "name": "קולורבי",
+        "latin": "Brassica oleracea var. gongylodes",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–20°C",
+        "world": "סין · הודו · גרמניה",
+        "wiki": "קולורבי"
+      },
+      {
+        "slug": "taro",
+        "name": "קולקס",
+        "latin": "Colocasia esculenta",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "25–30°C",
+        "world": "ניגריה · אתיופיה · סין",
+        "wiki": "קולוקסיה"
+      },
+      {
+        "slug": "coconut",
+        "name": "קוקוס",
+        "latin": "Cocos nucifera",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "27–32°C",
+        "world": "אינדונזיה · פיליפינים · הודו",
+        "wiki": "קוקוס"
+      },
+      {
+        "slug": "kiwi",
+        "name": "קיווי",
+        "latin": "Actinidia deliciosa",
+        "type": "שיח",
+        "method": "פרגולה",
+        "temp": "15–25°C",
+        "world": "סין · איטליה · ניו זילנד",
+        "wiki": "קיווי"
+      },
+      {
+        "slug": "kale",
+        "name": "קייל",
+        "latin": "Brassica oleracea var. sabellica",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–20°C",
+        "world": "ארה״ב · סין · גרמניה",
+        "wiki": "כרוב עלים"
+      },
+      {
+        "slug": "quinoa",
+        "name": "קינואה",
+        "latin": "Chenopodium quinoa",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "15–25°C",
+        "world": "פרו · בוליביה · אקוודור",
+        "wiki": "קינואה"
+      },
+      {
+        "slug": "zucchini",
+        "name": "קישוא",
+        "latin": "Cucurbita pepo",
+        "type": "שלחין",
+        "method": "שדה / חממה",
+        "temp": "18–27°C",
+        "world": "סין · הודו · מקסיקו",
+        "wiki": "קישוא"
+      },
+      {
+        "slug": "sugarcane",
+        "name": "קנה סוכר",
+        "latin": "Saccharum officinarum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "25–35°C",
+        "world": "ברזיל · הודו · סין",
+        "wiki": "קנה סוכר"
+      },
+      {
+        "slug": "cassava",
+        "name": "קסאווה",
+        "latin": "Manihot esculenta",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "25–32°C",
+        "world": "ניגריה · תאילנד · קונגו",
+        "wiki": "מניהוט מאכל"
+      },
+      {
+        "slug": "coffee",
+        "name": "קפה",
+        "latin": "Coffea arabica",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "18–24°C",
+        "world": "ברזיל · וייטנאם · קולומביה",
+        "wiki": "קפה"
+      },
+      {
+        "slug": "cocoa",
+        "name": "קקאו",
+        "latin": "Theobroma cacao",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "21–32°C",
+        "world": "חוף השנהב · גאנה · אינדונזיה",
+        "wiki": "קקאו"
+      },
+      {
+        "slug": "starfruit",
+        "name": "קרמבולה",
+        "latin": "Averrhoa carambola",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "טייוואן · מלזיה · הודו",
+        "wiki": "קרמבולה"
+      },
+      {
+        "slug": "cashew",
+        "name": "קשיו",
+        "latin": "Anacardium occidentale",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "25–35°C",
+        "world": "חוף השנהב · הודו · וייטנאם",
+        "wiki": "קשיו"
+      },
+      {
+        "slug": "arugula",
+        "name": "רוקט",
+        "latin": "Eruca vesicaria",
+        "type": "שלחין",
+        "method": "בית רשת",
+        "temp": "12–22°C",
+        "world": "איטליה · ארה״ב · מצרים",
+        "wiki": "בן חרדל מצוי"
+      },
+      {
+        "slug": "pomegranate",
+        "name": "רימון",
+        "latin": "Punica granatum",
+        "type": "שיח",
+        "method": "מטע / שיח",
+        "temp": "18–35°C",
+        "world": "הודו · איראן · סין",
+        "wiki": "רימון"
+      },
+      {
+        "slug": "garlic",
+        "name": "שום",
+        "latin": "Allium sativum",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "12–24°C",
+        "world": "סין · הודו · בנגלדש",
+        "wiki": "שום"
+      },
+      {
+        "slug": "fennel",
+        "name": "שומר",
+        "latin": "Foeniculum vulgare",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "הודו · מקסיקו · סין",
+        "wiki": "שומר פשוט"
+      },
+      {
+        "slug": "sesame",
+        "name": "שומשום",
+        "latin": "Sesamum indicum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "25–35°C",
+        "world": "סודן · מיאנמר · הודו",
+        "wiki": "שומשום"
+      },
+      {
+        "slug": "plum",
+        "name": "שזיף",
+        "latin": "Prunus domestica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "סין · רומניה · סרביה",
+        "wiki": "שזיף"
+      },
+      {
+        "slug": "oat",
+        "name": "שיבולת שועל",
+        "latin": "Avena sativa",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "15–22°C",
+        "world": "רוסיה · קנדה · פולין",
+        "wiki": "שיבולת שועל תרבותית"
+      },
+      {
+        "slug": "jujube",
+        "name": "שיזף סיני",
+        "latin": "Ziziphus jujuba",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–35°C",
+        "world": "סין · הודו · איראן",
+        "wiki": "שיזף החורש"
+      },
+      {
+        "slug": "rye",
+        "name": "שיפון",
+        "latin": "Secale cereale",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "10–20°C",
+        "world": "גרמניה · פולין · רוסיה",
+        "wiki": "שיפון"
+      },
+      {
+        "slug": "loquat",
+        "name": "שסק",
+        "latin": "Eriobotrya japonica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–30°C",
+        "world": "סין · ספרד · טורקיה",
+        "wiki": "שסק"
+      },
+      {
+        "slug": "kidneybean",
+        "name": "שעועית",
+        "latin": "Phaseolus vulgaris",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "18–27°C",
+        "world": "מיאנמר · הודו · ברזיל",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "adzuki",
+        "name": "שעועית אזוקי",
+        "latin": "Vigna angularis",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "סין · יפן · דרום קוריאה",
+        "wiki": "שעועית אזוקי"
+      },
+      {
+        "slug": "limabean",
+        "name": "שעועית לימה",
+        "latin": "Phaseolus lunatus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–28°C",
+        "world": "מדגסקר · מרוקו · פרו",
+        "wiki": "שעועית לימה"
+      },
+      {
+        "slug": "barley",
+        "name": "שעורה",
+        "latin": "Hordeum vulgare",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "12–25°C",
+        "world": "רוסיה · צרפת · גרמניה",
+        "wiki": "שעורה"
+      },
+      {
+        "slug": "almond",
+        "name": "שקד",
+        "latin": "Prunus dulcis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–30°C",
+        "world": "ארה״ב · ספרד · אוסטרליה",
+        "wiki": "שקד"
+      },
+      {
+        "slug": "fig",
+        "name": "תאנה",
+        "latin": "Ficus carica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–35°C",
+        "world": "טורקיה · מצרים · מרוקו",
+        "wiki": "תאנה"
+      },
+      {
+        "slug": "tea",
+        "name": "תה",
+        "latin": "Camellia sinensis",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "סין · הודו · קניה",
+        "wiki": "תה"
+      },
+      {
+        "slug": "lupin",
+        "name": "תורמוס",
+        "latin": "Lupinus albus",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "15–22°C",
+        "world": "אוסטרליה · פולין · רוסיה",
+        "wiki": "תורמוס"
+      },
+      {
+        "slug": "mulberry",
+        "name": "תות עץ",
+        "latin": "Morus alba",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "איראן · הודו · סין",
+        "wiki": "תות לבן"
+      },
+      {
+        "slug": "strawberry",
+        "name": "תות שדה",
+        "latin": "Fragaria × ananassa",
+        "type": "משטח",
+        "method": "מנהרה / משטח",
+        "temp": "15–26°C",
+        "world": "סין · ארה״ב · מקסיקו",
+        "wiki": "תות שדה"
+      },
+      {
+        "slug": "corn",
+        "name": "תירס",
+        "latin": "Zea mays",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "18–27°C",
+        "world": "ארה״ב · סין · ברזיל",
+        "wiki": "תירס"
+      },
+      {
+        "slug": "date",
+        "name": "תמר",
+        "latin": "Phoenix dactylifera",
+        "type": "עץ",
+        "method": "מטע מדברי",
+        "temp": "25–40°C",
+        "world": "מצרים · סעודיה · איראן",
+        "wiki": "תמר"
+      },
+      {
+        "slug": "tamarind",
+        "name": "תמר הינדי",
+        "latin": "Tamarindus indica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "25–35°C",
+        "world": "הודו · תאילנד · מקסיקו",
+        "wiki": "תמרהינדי"
+      },
+      {
+        "slug": "orange",
+        "name": "תפוז",
+        "latin": "Citrus × sinensis",
+        "type": "עץ",
+        "method": "מטע (פרדס)",
+        "temp": "15–30°C",
+        "world": "ברזיל · סין · הודו",
+        "wiki": "תפוז"
+      },
+      {
+        "slug": "apple",
+        "name": "תפוח",
+        "latin": "Malus domestica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–24°C",
+        "world": "סין · ארה״ב · טורקיה",
+        "wiki": "תפוח"
+      },
+      {
+        "slug": "potato",
+        "name": "תפוח אדמה",
+        "latin": "Solanum tuberosum",
+        "type": "שורש",
+        "method": "שדה",
+        "temp": "15–20°C",
+        "world": "סין · הודו · רוסיה",
+        "wiki": "תפוח אדמה"
+      },
+      {
+        "slug": "spinach",
+        "name": "תרד",
+        "latin": "Spinacia oleracea",
+        "type": "שלחין",
+        "method": "שדה",
+        "temp": "10–20°C",
+        "world": "סין · ארה״ב · טורקיה",
+        "wiki": "תרד"
+      },
+      {
+        "slug": "chili",
+        "name": "פלפל חריף",
+        "latin": "Capsicum frutescens",
+        "type": "שלחין",
+        "method": "חממה",
+        "temp": "20–30°C",
+        "world": "הודו · סין · אתיופיה",
+        "wiki": "פלפל חריף"
+      },
+      {
+        "slug": "purslane",
+        "name": "רגלה",
+        "latin": "Portulaca oleracea",
+        "type": "בר",
+        "method": "שדה פתוח",
+        "temp": "18–28°C",
+        "world": "סין · הודו · טורקיה",
+        "wiki": "רגלה"
+      },
+      {
+        "slug": "sage",
+        "name": "מרווה",
+        "latin": "Salvia officinalis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "אלבניה · טורקיה · ארה״ב",
+        "wiki": "מרווה רפואית"
+      },
+      {
+        "slug": "chicory",
+        "name": "עולש",
+        "latin": "Cichorium intybus",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "10–20°C",
+        "world": "בלגיה · צרפת · הולנד",
+        "wiki": "עולש תרבותי"
+      },
+      {
+        "slug": "endive",
+        "name": "אנדיב",
+        "latin": "Cichorium endivia",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–20°C",
+        "world": "צרפת · איטליה · ספרד",
+        "wiki": "עולש אנדיב"
+      },
+      {
+        "slug": "radicchio",
+        "name": "רדיקיו",
+        "latin": "Cichorium intybus var. foliosum",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–20°C",
+        "world": "איטליה · ארה״ב · גרמניה",
+        "wiki": "רדיקיו"
+      },
+      {
+        "slug": "bokchoy",
+        "name": "פאק צ׳וי",
+        "latin": "Brassica rapa subsp. chinensis",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–22°C",
+        "world": "סין · תאילנד · וייטנאם",
+        "wiki": "פאק צ׳וי"
+      },
+      {
+        "slug": "napacabbage",
+        "name": "כרוב סיני",
+        "latin": "Brassica rapa subsp. pekinensis",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "13–20°C",
+        "world": "סין · קוריאה · יפן",
+        "wiki": "כרוב סיני"
+      },
+      {
+        "slug": "nzspinach",
+        "name": "תרד ניו-זילנדי",
+        "latin": "Tetragonia tetragonioides",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "ניו זילנד · אוסטרליה · יפן",
+        "wiki": "Tetragonia tetragonioides"
+      },
+      {
+        "slug": "watercress",
+        "name": "גרגיר הנחלים",
+        "latin": "Nasturtium officinale",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "10–18°C",
+        "world": "סין · ארה״ב · גרמניה",
+        "wiki": "גרגר הנחלים"
+      },
+      {
+        "slug": "oregano",
+        "name": "אורגנו",
+        "latin": "Origanum vulgare",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "טורקיה · יוון · מקסיקו",
+        "wiki": "אורגנו"
+      },
+      {
+        "slug": "thyme",
+        "name": "קורנית",
+        "latin": "Thymus vulgaris",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "מרוקו · ספרד · צרפת",
+        "wiki": "קורנית מצויה"
+      },
+      {
+        "slug": "rosemary",
+        "name": "רוזמרין",
+        "latin": "Salvia rosmarinus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "מרוקו · ספרד · טוניסיה",
+        "wiki": "רוזמרין רפואי"
+      },
+      {
+        "slug": "tarragon",
+        "name": "טרגון",
+        "latin": "Artemisia dracunculus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "צרפת · הולנד · ארה״ב",
+        "wiki": "לענה טרגון"
+      },
+      {
+        "slug": "dill",
+        "name": "שמיר",
+        "latin": "Anethum graveolens",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "הודו · רוסיה · מצרים",
+        "wiki": "שבת ריחני"
+      },
+      {
+        "slug": "parsley",
+        "name": "פטרוזיליה",
+        "latin": "Petroselinum crispum",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–22°C",
+        "world": "איטליה · ארה״ב · מקסיקו",
+        "wiki": "פטרוזיליון גנני"
+      },
+      {
+        "slug": "cilantro",
+        "name": "כוסברה",
+        "latin": "Coriandrum sativum",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "הודו · מרוקו · מקסיקו",
+        "wiki": "כוסברה"
+      },
+      {
+        "slug": "lemonbalm",
+        "name": "מליסה",
+        "latin": "Melissa officinalis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "הונגריה · מצרים · איטליה",
+        "wiki": "מליסה רפואית"
+      },
+      {
+        "slug": "lavender",
+        "name": "לבנדר",
+        "latin": "Lavandula angustifolia",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "בולגריה · צרפת · ספרד",
+        "wiki": "אזוביון רפואי"
+      },
+      {
+        "slug": "zaatar",
+        "name": "זעתר",
+        "latin": "Origanum syriacum",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "18–30°C",
+        "world": "ישראל · לבנון · סוריה",
+        "wiki": "אזוב מצוי"
+      },
+      {
+        "slug": "cinnamon",
+        "name": "קינמון",
+        "latin": "Cinnamomum verum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "אינדונזיה · סין · וייטנאם",
+        "wiki": "קינמון"
+      },
+      {
+        "slug": "clove",
+        "name": "ציפורן",
+        "latin": "Syzygium aromaticum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "אינדונזיה · מדגסקר · טנזניה",
+        "wiki": "ציפורן (תבלין)"
+      },
+      {
+        "slug": "nutmeg",
+        "name": "אגוז מוסקט",
+        "latin": "Myristica fragrans",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "אינדונזיה · גואטמלה · הודו",
+        "wiki": "אגוז מוסקט"
+      },
+      {
+        "slug": "cardamom",
+        "name": "הל",
+        "latin": "Elettaria cardamomum",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "גואטמלה · הודו · אינדונזיה",
+        "wiki": "הל ריחני"
+      },
+      {
+        "slug": "galangal",
+        "name": "גלנגל",
+        "latin": "Alpinia galanga",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "תאילנד · אינדונזיה · סין",
+        "wiki": "גלנגל"
+      },
+      {
+        "slug": "vanilla",
+        "name": "וניל",
+        "latin": "Vanilla planifolia",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "21–30°C",
+        "world": "מדגסקר · אינדונזיה · מקסיקו",
+        "wiki": "וניל"
+      },
+      {
+        "slug": "saffron",
+        "name": "זעפרן",
+        "latin": "Crocus sativus",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "איראן · הודו · ספרד",
+        "wiki": "כרכום התרבות"
+      },
+      {
+        "slug": "fenugreek",
+        "name": "חילבה",
+        "latin": "Trigonella foenum-graecum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "15–25°C",
+        "world": "הודו · מרוקו · מצרים",
+        "wiki": "גרגרנית יוונית"
+      },
+      {
+        "slug": "clementine",
+        "name": "קלמנטינה",
+        "latin": "Citrus clementina",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "15–30°C",
+        "world": "ספרד · מרוקו · סין",
+        "wiki": "קלמנטינה"
+      },
+      {
+        "slug": "mandarin",
+        "name": "מנדרינה",
+        "latin": "Citrus reticulata",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "15–30°C",
+        "world": "סין · ספרד · טורקיה",
+        "wiki": "מנדרינה"
+      },
+      {
+        "slug": "lime",
+        "name": "ליים",
+        "latin": "Citrus aurantiifolia",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "20–32°C",
+        "world": "מקסיקו · הודו · ארגנטינה",
+        "wiki": "ליים"
+      },
+      {
+        "slug": "kumquat",
+        "name": "קומקוואט",
+        "latin": "Citrus japonica",
+        "type": "שיח",
+        "method": "פרדס",
+        "temp": "18–30°C",
+        "world": "סין · ישראל · יפן",
+        "wiki": "קומקואט"
+      },
+      {
+        "slug": "pomelo",
+        "name": "פומלה",
+        "latin": "Citrus maxima",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "22–32°C",
+        "world": "סין · תאילנד · וייטנאם",
+        "wiki": "פומלו"
+      },
+      {
+        "slug": "citron",
+        "name": "אתרוג",
+        "latin": "Citrus medica",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "18–30°C",
+        "world": "איטליה · ישראל · יוון",
+        "wiki": "אתרוג"
+      },
+      {
+        "slug": "bergamot",
+        "name": "ברגמוט",
+        "latin": "Citrus bergamia",
+        "type": "עץ",
+        "method": "פרדס",
+        "temp": "18–28°C",
+        "world": "איטליה · חוף השנהב · טורקיה",
+        "wiki": "ברגמוט"
+      },
+      {
+        "slug": "rambutan",
+        "name": "רמבוטן",
+        "latin": "Nephelium lappaceum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "תאילנד · אינדונזיה · מלזיה",
+        "wiki": "רמבוטן"
+      },
+      {
+        "slug": "longan",
+        "name": "לונגן",
+        "latin": "Dimocarpus longan",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "סין · תאילנד · וייטנאם",
+        "wiki": "לונגן"
+      },
+      {
+        "slug": "durian",
+        "name": "דוריאן",
+        "latin": "Durio zibethinus",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "תאילנד · מלזיה · אינדונזיה",
+        "wiki": "דוריאן"
+      },
+      {
+        "slug": "mangosteen",
+        "name": "מנגוסטין",
+        "latin": "Garcinia mangostana",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "25–32°C",
+        "world": "תאילנד · אינדונזיה · מלזיה",
+        "wiki": "מנגוסטן"
+      },
+      {
+        "slug": "cherimoya",
+        "name": "צ׳ירימויה",
+        "latin": "Annona cherimola",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "17–25°C",
+        "world": "ספרד · פרו · צ׳ילה",
+        "wiki": "צ׳רימויה"
+      },
+      {
+        "slug": "sugarapple",
+        "name": "אנונה קשקשית",
+        "latin": "Annona squamosa",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "הודו · בנגלדש · מצרים",
+        "wiki": "אנונה קשקשית"
+      },
+      {
+        "slug": "soursop",
+        "name": "אנונה דוקרנית",
+        "latin": "Annona muricata",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–30°C",
+        "world": "מקסיקו · ונצואלה · ברזיל",
+        "wiki": "אנונה דוקרנית"
+      },
+      {
+        "slug": "feijoa",
+        "name": "פייחוה",
+        "latin": "Acca sellowiana",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "קולומביה · ניו זילנד · אזרביג׳ן",
+        "wiki": "פייחואה"
+      },
+      {
+        "slug": "goji",
+        "name": "גוג׳י",
+        "latin": "Lycium barbarum",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "סין · מונגוליה · טיבט",
+        "wiki": "אטד"
+      },
+      {
+        "slug": "amla",
+        "name": "אמלה",
+        "latin": "Phyllanthus emblica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הודו · נפאל · תאילנד",
+        "wiki": "פילנתוס עינב"
+      },
+      {
+        "slug": "rose",
+        "name": "ורד",
+        "latin": "Rosa × damascena",
+        "type": "שיח",
+        "method": "חממה",
+        "temp": "15–25°C",
+        "world": "בולגריה · טורקיה · איראן",
+        "wiki": "ורד"
+      },
+      {
+        "slug": "brazilnut",
+        "name": "אגוז ברזיל",
+        "latin": "Bertholletia excelsa",
+        "type": "עץ",
+        "method": "יער מטופח",
+        "temp": "24–32°C",
+        "world": "בוליביה · ברזיל · פרו",
+        "wiki": "אגוז ברזיל"
+      },
+      {
+        "slug": "pinenut",
+        "name": "צנוברים",
+        "latin": "Pinus pinea",
+        "type": "עץ",
+        "method": "יער",
+        "temp": "15–25°C",
+        "world": "סין · קוריאה · איטליה",
+        "wiki": "אורן הצנובר"
+      },
+      {
+        "slug": "oilpalm",
+        "name": "דקל שמן",
+        "latin": "Elaeis guineensis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "25–33°C",
+        "world": "אינדונזיה · מלזיה · תאילנד",
+        "wiki": "דקל השמן"
+      },
+      {
+        "slug": "rubber",
+        "name": "עץ גומי",
+        "latin": "Hevea brasiliensis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "תאילנד · אינדונזיה · וייטנאם",
+        "wiki": "הבאה ברזילאית"
+      },
+      {
+        "slug": "tobacco",
+        "name": "טבק",
+        "latin": "Nicotiana tabacum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "20–30°C",
+        "world": "סין · הודו · ברזיל",
+        "wiki": "טבק"
+      },
+      {
+        "slug": "jute",
+        "name": "יוטה",
+        "latin": "Corchorus capsularis",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "24–32°C",
+        "world": "הודו · בנגלדש · אוזבקיסטן",
+        "wiki": "יוטה"
+      },
+      {
+        "slug": "flax",
+        "name": "פשתן",
+        "latin": "Linum usitatissimum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "15–22°C",
+        "world": "קזחסטן · קנדה · רוסיה",
+        "wiki": "פשתה"
+      },
+      {
+        "slug": "hemp",
+        "name": "קנבוס",
+        "latin": "Cannabis sativa",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "18–28°C",
+        "world": "סין · צרפת · קנדה",
+        "wiki": "קנבוס"
+      },
+      {
+        "slug": "indigo",
+        "name": "אינדיגו",
+        "latin": "Indigofera tinctoria",
+        "type": "שיח",
+        "method": "שדה",
+        "temp": "22–32°C",
+        "world": "הודו · אל סלוודור · וייטנאם",
+        "wiki": "בן-אסתר הצבעים"
+      },
+      {
+        "slug": "hops",
+        "name": "כשות",
+        "latin": "Humulus lupulus",
+        "type": "שיח",
+        "method": "פרגולה",
+        "temp": "15–25°C",
+        "world": "ארה״ב · גרמניה · צ׳כיה",
+        "wiki": "כשות מתפתל"
+      },
+      {
+        "slug": "arecanut",
+        "name": "אגוז ארקה",
+        "latin": "Areca catechu",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הודו · בנגלדש · מיאנמר",
+        "wiki": "ארקה בטל"
+      },
+      {
+        "slug": "jicama",
+        "name": "חיקמה",
+        "latin": "Pachyrhizus erosus",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "מקסיקו · סין · הודו",
+        "wiki": "פקירהיזוס"
+      },
+      {
+        "slug": "rutabaga",
+        "name": "לפת שוודית",
+        "latin": "Brassica napobrassica",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–18°C",
+        "world": "קנדה · ארה״ב · בריטניה",
+        "wiki": "לפת שוודית"
+      },
+      {
+        "slug": "maca",
+        "name": "מאקה",
+        "latin": "Lepidium meyenii",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "8–18°C",
+        "world": "פרו · בוליביה · ארה״ב",
+        "wiki": "מאקה"
+      },
+      {
+        "slug": "lotus",
+        "name": "לוטוס",
+        "latin": "Nelumbo nucifera",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "22–30°C",
+        "world": "סין · יפן · הודו",
+        "wiki": "לוטוס הודי"
+      },
+      {
+        "slug": "waterchestnut",
+        "name": "ערמון מים",
+        "latin": "Eleocharis dulcis",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "20–30°C",
+        "world": "סין · הודו · תאילנד",
+        "wiki": "Eleocharis dulcis"
+      },
+      {
+        "slug": "arrowroot",
+        "name": "ארוורוט",
+        "latin": "Maranta arundinacea",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "הודו · ברזיל · סנט וינסנט",
+        "wiki": "מרנתה קנית"
+      },
+      {
+        "slug": "clover",
+        "name": "תלתן",
+        "latin": "Trifolium pratense",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "12–24°C",
+        "world": "ארה״ב · קנדה · רוסיה",
+        "wiki": "תלתן הארגמן"
+      },
+      {
+        "slug": "vetch",
+        "name": "בקיה",
+        "latin": "Vicia sativa",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "10–22°C",
+        "world": "רוסיה · אתיופיה · סין",
+        "wiki": "בקיה תרבותית"
+      },
+      {
+        "slug": "guar",
+        "name": "גואר",
+        "latin": "Cyamopsis tetragonoloba",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "25–35°C",
+        "world": "הודו · פקיסטן · ארה״ב",
+        "wiki": "גואר"
+      },
+      {
+        "slug": "lablab",
+        "name": "לבלב",
+        "latin": "Lablab purpureus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "18–30°C",
+        "world": "הודו · קניה · אתיופיה",
+        "wiki": "לבלב מצרי"
+      },
+      {
+        "slug": "carob",
+        "name": "חרוב",
+        "latin": "Ceratonia siliqua",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "פורטוגל · איטליה · מרוקו",
+        "wiki": "חרוב מצוי"
+      },
+      {
+        "slug": "blackcurrant",
+        "name": "דומדמנית שחורה",
+        "latin": "Ribes nigrum",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "12–22°C",
+        "world": "רוסיה · פולין · אוקראינה",
+        "wiki": "דומדמנית שחורה"
+      },
+      {
+        "slug": "lingonberry",
+        "name": "לינגונברי",
+        "latin": "Vaccinium vitis-idaea",
+        "type": "שיח",
+        "method": "בית רשת",
+        "temp": "10–20°C",
+        "world": "שוודיה · רוסיה · קנדה",
+        "wiki": "אוכמנית אדומה"
+      },
+      {
+        "slug": "triticale",
+        "name": "טריטיקלה",
+        "latin": "× Triticosecale",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "12–22°C",
+        "world": "פולין · גרמניה · צרפת",
+        "wiki": "טריטיקלה"
+      },
+      {
+        "slug": "durumwheat",
+        "name": "חיטת דורום",
+        "latin": "Triticum durum",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "18–28°C",
+        "world": "קנדה · איטליה · טורקיה",
+        "wiki": "חיטת הדורום"
+      },
+      {
+        "slug": "fonio",
+        "name": "פוניו",
+        "latin": "Digitaria exilis",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "22–32°C",
+        "world": "גינאה · ניגריה · מאלי",
+        "wiki": "פוניו"
+      },
+      {
+        "slug": "chia",
+        "name": "צ׳יה",
+        "latin": "Salvia hispanica",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "18–28°C",
+        "world": "מקסיקו · בוליביה · ארגנטינה",
+        "wiki": "צ׳יה"
+      },
+      {
+        "slug": "wildrice",
+        "name": "אורז בר",
+        "latin": "Zizania aquatica",
+        "type": "מים",
+        "method": "שדה מוצף",
+        "temp": "18–28°C",
+        "world": "ארה״ב · קנדה · הונגריה",
+        "wiki": "אורז בר"
+      },
+      {
+        "slug": "chlorella",
+        "name": "כלורלה",
+        "latin": "Chlorella vulgaris",
+        "type": "מים",
+        "method": "פוטוביוריאקטור",
+        "temp": "25–30°C",
+        "world": "סין · יפן · טייוואן",
+        "wiki": "כלורלה"
+      },
+      {
+        "slug": "nori",
+        "name": "נורי",
+        "latin": "Pyropia yezoensis",
+        "type": "מים",
+        "method": "חבלים בים",
+        "temp": "10–20°C",
+        "world": "סין · יפן · קוריאה",
+        "wiki": "נורי"
+      },
+      {
+        "slug": "wakame",
+        "name": "וואקאמה",
+        "latin": "Undaria pinnatifida",
+        "type": "מים",
+        "method": "חבלים בים",
+        "temp": "10–18°C",
+        "world": "סין · קוריאה · יפן",
+        "wiki": "וואקאמה"
+      },
+      {
+        "slug": "kombu",
+        "name": "קומבו",
+        "latin": "Saccharina japonica",
+        "type": "מים",
+        "method": "חבלים בים",
+        "temp": "5–15°C",
+        "world": "סין · יפן · קוריאה",
+        "wiki": "קומבו"
+      },
+      {
+        "slug": "mallow",
+        "name": "חלמית",
+        "latin": "Malva sylvestris",
+        "type": "בר",
+        "method": "בר",
+        "temp": "12–25°C",
+        "world": "ישראל · מצרים · טורקיה",
+        "wiki": "חלמית גדולה"
+      },
+      {
+        "slug": "arum",
+        "name": "לוף",
+        "latin": "Arum palaestinum",
+        "type": "בר",
+        "method": "בר",
+        "temp": "12–25°C",
+        "world": "ישראל · ירדן · לבנון",
+        "wiki": "לוף ארץ-ישראלי"
+      },
+      {
+        "slug": "gundelia",
+        "name": "עכובית",
+        "latin": "Gundelia tournefortii",
+        "type": "בר",
+        "method": "בר",
+        "temp": "12–28°C",
+        "world": "ישראל · טורקיה · איראן",
+        "wiki": "עכובית הגלגל"
+      },
+      {
+        "slug": "micromeria",
+        "name": "זוטא",
+        "latin": "Micromeria fruticosa",
+        "type": "בר",
+        "method": "בר",
+        "temp": "15–28°C",
+        "world": "ישראל · לבנון · סוריה",
+        "wiki": "זוטה לבנה"
+      },
+      {
+        "slug": "truffle",
+        "name": "כמהין",
+        "latin": "Terfezia boudieri",
+        "type": "בר",
+        "method": "בר",
+        "temp": "15–25°C",
+        "world": "ישראל · מרוקו · תוניסיה",
+        "wiki": "כמהין"
+      },
+      {
+        "slug": "oystermushroom",
+        "name": "פטריית צדפה",
+        "latin": "Pleurotus ostreatus",
+        "type": "אחר",
+        "method": "מבנה מבוקר",
+        "temp": "15–22°C",
+        "world": "סין · הודו · איטליה",
+        "wiki": "פלאורוטוס"
+      },
+      {
+        "slug": "shiitake",
+        "name": "שיטאקה",
+        "latin": "Lentinula edodes",
+        "type": "אחר",
+        "method": "מבנה מבוקר",
+        "temp": "12–20°C",
+        "world": "סין · יפן · קוריאה",
+        "wiki": "שיטאקה"
+      },
+      {
+        "slug": "mustard",
+        "name": "חרדל",
+        "latin": "Brassica juncea",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "15–25°C",
+        "world": "נפאל · הודו · קנדה",
+        "wiki": "חרדל"
+      },
+      {
+        "slug": "kabocha",
+        "name": "דלעת ערמונים",
+        "latin": "Cucurbita maxima",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "18–27°C",
+        "world": "יפן · ניו זילנד · מקסיקו",
+        "wiki": "דלעת הענק"
+      },
+      {
+        "slug": "bottlegourd",
+        "name": "דלעת בקבוק",
+        "latin": "Lagenaria siceraria",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "הודו · סין · תאילנד",
+        "wiki": "קרואה מצויה"
+      },
+      {
+        "slug": "bittermelon",
+        "name": "מלון מר",
+        "latin": "Momordica charantia",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "24–30°C",
+        "world": "סין · הודו · פיליפינים",
+        "wiki": "מלון מר"
+      },
+      {
+        "slug": "celeriac",
+        "name": "כרפס פקעת",
+        "latin": "Apium graveolens var. rapaceum",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "15–21°C",
+        "world": "רוסיה · גרמניה · פולין",
+        "wiki": "כרפס ריחני"
+      },
+      {
+        "slug": "rapeseed",
+        "name": "לפתית",
+        "latin": "Brassica napus",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "12–22°C",
+        "world": "קנדה · הודו · סין",
+        "wiki": "לפתית"
+      },
+      {
+        "slug": "cardoon",
+        "name": "קרדה",
+        "latin": "Cynara cardunculus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–24°C",
+        "world": "איטליה · ספרד · צרפת",
+        "wiki": "קינרס החורש"
+      },
+      {
+        "slug": "rootparsley",
+        "name": "שורש פטרוזיליה",
+        "latin": "Petroselinum crispum var. tuberosum",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "12–20°C",
+        "world": "פולין · גרמניה · הולנד",
+        "wiki": "פטרוזיליון גנני"
+      },
+      {
+        "slug": "cress",
+        "name": "גרגיר הגינה",
+        "latin": "Lepidium sativum",
+        "type": "שלחין",
+        "method": "חממה",
+        "temp": "12–22°C",
+        "world": "הודו · אנגליה · ארה״ב",
+        "wiki": "שחליים תרבותיים"
+      },
+      {
+        "slug": "mizuna",
+        "name": "מיזונה",
+        "latin": "Brassica rapa var. nipposinica",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–22°C",
+        "world": "יפן · ארה״ב · אירופה",
+        "wiki": "מיזונה"
+      },
+      {
+        "slug": "gailan",
+        "name": "גאי-לאן",
+        "latin": "Brassica oleracea var. alboglabra",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "סין · תאילנד · וייטנאם",
+        "wiki": "Chinese broccoli"
+      },
+      {
+        "slug": "sorrel",
+        "name": "חומעה",
+        "latin": "Rumex acetosa",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–22°C",
+        "world": "צרפת · רוסיה · הולנד",
+        "wiki": "חומעה מצויה"
+      },
+      {
+        "slug": "malabarspinach",
+        "name": "תרד מלבר",
+        "latin": "Basella alba",
+        "type": "שלחין",
+        "method": "פרגולה",
+        "temp": "22–32°C",
+        "world": "הודו · סין · פיליפינים",
+        "wiki": "בסלה לבנה"
+      },
+      {
+        "slug": "moringa",
+        "name": "מורינגה",
+        "latin": "Moringa oleifera",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–35°C",
+        "world": "הודו · אתיופיה · סודן",
+        "wiki": "מורינגה מכונפת"
+      },
+      {
+        "slug": "molokhia",
+        "name": "מלוכיה",
+        "latin": "Corchorus olitorius",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "22–32°C",
+        "world": "מצרים · סודן · הודו",
+        "wiki": "מלוכיה יהודית"
+      },
+      {
+        "slug": "chayote",
+        "name": "צ׳איוטה",
+        "latin": "Sechium edule",
+        "type": "משטח",
+        "method": "פרגולה",
+        "temp": "18–28°C",
+        "world": "מקסיקו · קוסטה ריקה · ברזיל",
+        "wiki": "סכיון מאכל"
+      },
+      {
+        "slug": "luffa",
+        "name": "לופה",
+        "latin": "Luffa aegyptiaca",
+        "type": "משטח",
+        "method": "פרגולה",
+        "temp": "22–32°C",
+        "world": "סין · הודו · וייטנאם",
+        "wiki": "לופה"
+      },
+      {
+        "slug": "snakegourd",
+        "name": "מלפפון נחש",
+        "latin": "Trichosanthes cucumerina",
+        "type": "משטח",
+        "method": "פרגולה",
+        "temp": "24–32°C",
+        "world": "הודו · סין · מיאנמר",
+        "wiki": "טריכוסנתס"
+      },
+      {
+        "slug": "wingedbean",
+        "name": "שעועית מכונפת",
+        "latin": "Psophocarpus tetragonolobus",
+        "type": "שדה",
+        "method": "פרגולה",
+        "temp": "22–32°C",
+        "world": "פפואה גינאה · הודו · תאילנד",
+        "wiki": "שעועית מכונפת"
+      },
+      {
+        "slug": "wintermelon",
+        "name": "דלעת חורף סינית",
+        "latin": "Benincasa hispida",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "24–32°C",
+        "world": "סין · הודו · תאילנד",
+        "wiki": "בנינקסה"
+      },
+      {
+        "slug": "gac",
+        "name": "גאק",
+        "latin": "Momordica cochinchinensis",
+        "type": "משטח",
+        "method": "פרגולה",
+        "temp": "22–32°C",
+        "world": "וייטנאם · תאילנד · סין",
+        "wiki": "Momordica cochinchinensis"
+      },
+      {
+        "slug": "pawpaw",
+        "name": "פאפאו אמריקאי",
+        "latin": "Asimina triloba",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "ארה״ב · קנדה · איטליה",
+        "wiki": "אסימינה"
+      },
+      {
+        "slug": "medlar",
+        "name": "שסק אירופי",
+        "latin": "Mespilus germanica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "12–22°C",
+        "world": "טורקיה · איראן · אזרביג׳ן",
+        "wiki": "שסק אירופי"
+      },
+      {
+        "slug": "mulberryblack",
+        "name": "תות שחור",
+        "latin": "Morus nigra",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "איראן · טורקיה · אפגניסטן",
+        "wiki": "תות שחור"
+      },
+      {
+        "slug": "elderberry",
+        "name": "סמבוק",
+        "latin": "Sambucus nigra",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "12–24°C",
+        "world": "איטליה · אוסטריה · הונגריה",
+        "wiki": "סמבוק שחור"
+      },
+      {
+        "slug": "seabuckthorn",
+        "name": "אשחר-ים",
+        "latin": "Hippophae rhamnoides",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "10–25°C",
+        "world": "סין · רוסיה · מונגוליה",
+        "wiki": "Hippophae rhamnoides"
+      },
+      {
+        "slug": "tamarillo",
+        "name": "טמריו",
+        "latin": "Solanum betaceum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "קולומביה · ניו זילנד · אקוודור",
+        "wiki": "עגבניית עץ"
+      },
+      {
+        "slug": "physalis",
+        "name": "פיסאליס",
+        "latin": "Physalis peruviana",
+        "type": "שיח",
+        "method": "חממה",
+        "temp": "15–28°C",
+        "world": "קולומביה · דרא״פ · פרו",
+        "wiki": "פיסאליס מלופף"
+      },
+      {
+        "slug": "cloudberry",
+        "name": "פטל ענברי",
+        "latin": "Rubus chamaemorus",
+        "type": "שיח",
+        "method": "בר",
+        "temp": "8–18°C",
+        "world": "נורווגיה · פינלנד · רוסיה",
+        "wiki": "פטל ענברי"
+      },
+      {
+        "slug": "carissa",
+        "name": "קריסה",
+        "latin": "Carissa macrocarpa",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "דרא״פ · ישראל · ארה״ב",
+        "wiki": "קריסה גדולת-פרי"
+      },
+      {
+        "slug": "sapodilla",
+        "name": "ספודילה",
+        "latin": "Manilkara zapota",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "מקסיקו · הודו · גואטמלה",
+        "wiki": "ספודילה"
+      },
+      {
+        "slug": "mamey",
+        "name": "ממיסאפוטה",
+        "latin": "Pouteria sapota",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "מקסיקו · גואטמלה · הונדורס",
+        "wiki": "Pouteria sapota"
+      },
+      {
+        "slug": "breadfruit",
+        "name": "עץ הלחם",
+        "latin": "Artocarpus altilis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "אינדונזיה · פיליפינים · הודו",
+        "wiki": "עץ הלחם"
+      },
+      {
+        "slug": "plantain",
+        "name": "בננת בישול",
+        "latin": "Musa × paradisiaca",
+        "type": "אחר",
+        "method": "מטע (עשב ענק)",
+        "temp": "26–30°C",
+        "world": "אוגנדה · גאנה · קמרון",
+        "wiki": "בננת בישול"
+      },
+      {
+        "slug": "jobstears",
+        "name": "דמעות איוב",
+        "latin": "Coix lacryma-jobi",
+        "type": "שדה",
+        "method": "שדה",
+        "temp": "20–30°C",
+        "world": "סין · הודו · פיליפינים",
+        "wiki": "דמעות איוב"
+      },
+      {
+        "slug": "pearlmillet",
+        "name": "דוחן הפנינה",
+        "latin": "Pennisetum glaucum",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "25–32°C",
+        "world": "הודו · ניגריה · ניז׳ר",
+        "wiki": "דוחן הפנינה"
+      },
+      {
+        "slug": "fingermillet",
+        "name": "דוחן האצבע",
+        "latin": "Eleusine coracana",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "20–30°C",
+        "world": "הודו · אתיופיה · אוגנדה",
+        "wiki": "אלוסינה"
+      },
+      {
+        "slug": "emmer",
+        "name": "חיטת האמר",
+        "latin": "Triticum dicoccum",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "12–24°C",
+        "world": "איטליה · אתיופיה · טורקיה",
+        "wiki": "חיטת האמר"
+      },
+      {
+        "slug": "einkorn",
+        "name": "חיטה חד-גרגירית",
+        "latin": "Triticum monococcum",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "12–22°C",
+        "world": "טורקיה · גרמניה · איטליה",
+        "wiki": "חיטת חד-גרגיר"
+      },
+      {
+        "slug": "kamut",
+        "name": "קאמוט",
+        "latin": "Triticum turgidum subsp. turanicum",
+        "type": "שדה",
+        "method": "שדה בעל",
+        "temp": "15–25°C",
+        "world": "קנדה · ארה״ב · טורקיה",
+        "wiki": "קאמוט"
+      },
+      {
+        "slug": "oca",
+        "name": "אוקה",
+        "latin": "Oxalis tuberosa",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–20°C",
+        "world": "פרו · בוליביה · ניו זילנד",
+        "wiki": "חמציץ פקעתי"
+      },
+      {
+        "slug": "ulluco",
+        "name": "אולוקו",
+        "latin": "Ullucus tuberosus",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–18°C",
+        "world": "פרו · בוליביה · אקוודור",
+        "wiki": "אולוקו"
+      },
+      {
+        "slug": "arracacha",
+        "name": "אררקצ׳ה",
+        "latin": "Arracacia xanthorrhiza",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "15–22°C",
+        "world": "קולומביה · ברזיל · פרו",
+        "wiki": "אררקצ׳ה"
+      },
+      {
+        "slug": "tigernut",
+        "name": "אגוז אדמה",
+        "latin": "Cyperus esculentus",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "ניז׳ר · ספרד · גאנה",
+        "wiki": "גומא הפקעות"
+      },
+      {
+        "slug": "konjac",
+        "name": "קונג׳אק",
+        "latin": "Amorphophallus konjac",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "סין · יפן · מיאנמר",
+        "wiki": "אמורפופלוס קונג׳אק"
+      },
+      {
+        "slug": "wasabi",
+        "name": "וואסאבי",
+        "latin": "Eutrema japonicum",
+        "type": "מים",
+        "method": "זרימת מים הרים",
+        "temp": "8–18°C",
+        "world": "יפן · ניו זילנד · סין",
+        "wiki": "וסאבי"
+      },
+      {
+        "slug": "lemongrass",
+        "name": "למון גראס",
+        "latin": "Cymbopogon citratus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "הודו · תאילנד · גואטמלה",
+        "wiki": "לימונית ריחנית"
+      },
+      {
+        "slug": "stevia",
+        "name": "סטיביה",
+        "latin": "Stevia rebaudiana",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "18–28°C",
+        "world": "סין · פרגוואי · קניה",
+        "wiki": "סטיביה"
+      },
+      {
+        "slug": "curryleaf",
+        "name": "עלי קארי",
+        "latin": "Murraya koenigii",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הודו · סרי לנקה · נפאל",
+        "wiki": "מוראיה קונית"
+      },
+      {
+        "slug": "bayleaf",
+        "name": "עלה דפנה",
+        "latin": "Laurus nobilis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–28°C",
+        "world": "טורקיה · גאורגיה · אלבניה",
+        "wiki": "ער אציל"
+      },
+      {
+        "slug": "marjoram",
+        "name": "מיורן",
+        "latin": "Origanum majorana",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "מצרים · לוב · צרפת",
+        "wiki": "מיורן"
+      },
+      {
+        "slug": "chamomile",
+        "name": "קמומיל",
+        "latin": "Matricaria chamomilla",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "מצרים · הונגריה · ארגנטינה",
+        "wiki": "בבונג רפואי"
+      },
+      {
+        "slug": "calendula",
+        "name": "קלנדולה",
+        "latin": "Calendula officinalis",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "מצרים · פולין · אלבניה",
+        "wiki": "ציפורני חתול רפואיות"
+      },
+      {
+        "slug": "hibiscus",
+        "name": "היביסקוס",
+        "latin": "Hibiscus sabdariffa",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "22–32°C",
+        "world": "סודן · סין · תאילנד",
+        "wiki": "היביסקוס סבדריפה"
+      },
+      {
+        "slug": "valerianella",
+        "name": "ולריינית",
+        "latin": "Valerianella locusta",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "10–20°C",
+        "world": "צרפת · גרמניה · הולנד",
+        "wiki": "Valerianella locusta"
+      },
+      {
+        "slug": "tatsoi",
+        "name": "טאטסוי",
+        "latin": "Brassica rapa subsp. narinosa",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–22°C",
+        "world": "סין · יפן · קוריאה",
+        "wiki": "Tatsoi"
+      },
+      {
+        "slug": "witloof",
+        "name": "אנדיב בלגי",
+        "latin": "Cichorium intybus var. foliosum",
+        "type": "שלחין",
+        "method": "חממה",
+        "temp": "10–18°C",
+        "world": "בלגיה · צרפת · הולנד",
+        "wiki": "Witloof"
+      },
+      {
+        "slug": "frisee",
+        "name": "פריזיאה",
+        "latin": "Cichorium endivia var. crispum",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–22°C",
+        "world": "צרפת · איטליה · ארה\"ב",
+        "wiki": "Cichorium endivia"
+      },
+      {
+        "slug": "kangkong",
+        "name": "קנגקונג (בטטת מים)",
+        "latin": "Ipomoea aquatica",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "22–32°C",
+        "world": "סין · תאילנד · וייטנאם",
+        "wiki": "Ipomoea aquatica"
+      },
+      {
+        "slug": "habanero",
+        "name": "הבנרו",
+        "latin": "Capsicum chinense",
+        "type": "שלחין",
+        "method": "חממה",
+        "temp": "20–30°C",
+        "world": "מקסיקו · פרו · ארה\"ב",
+        "wiki": "Capsicum chinense"
+      },
+      {
+        "slug": "tindora",
+        "name": "טינדורה",
+        "latin": "Coccinia grandis",
+        "type": "שיח",
+        "method": "מנהרה",
+        "temp": "24–32°C",
+        "world": "הודו · תאילנד · אינדונזיה",
+        "wiki": "Coccinia grandis"
+      },
+      {
+        "slug": "boysenberry",
+        "name": "בויזנברי",
+        "latin": "Rubus ursinus × idaeus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "ניו זילנד · ארה\"ב · צ'ילה",
+        "wiki": "Boysenberry"
+      },
+      {
+        "slug": "loganberry",
+        "name": "לוגנברי",
+        "latin": "Rubus × loganobaccus",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "ארה\"ב · בריטניה · ניו זילנד",
+        "wiki": "Loganberry"
+      },
+      {
+        "slug": "redcurrant",
+        "name": "דומדמנית אדומה",
+        "latin": "Ribes rubrum",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "12–22°C",
+        "world": "פולין · רוסיה · גרמניה",
+        "wiki": "Ribes rubrum"
+      },
+      {
+        "slug": "salak",
+        "name": "סלאק",
+        "latin": "Salacca zalacca",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "אינדונזיה · תאילנד · מלזיה",
+        "wiki": "Salak"
+      },
+      {
+        "slug": "akebia",
+        "name": "אקביה",
+        "latin": "Akebia quinata",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "15–25°C",
+        "world": "יפן · סין · קוריאה",
+        "wiki": "Akebia"
+      },
+      {
+        "slug": "marula",
+        "name": "מרולה",
+        "latin": "Sclerocarya birrea",
+        "type": "עץ",
+        "method": "בר",
+        "temp": "20–32°C",
+        "world": "דרום אפריקה · נמיביה · בוצואנה",
+        "wiki": "Sclerocarya birrea"
+      },
+      {
+        "slug": "baobab",
+        "name": "באובב",
+        "latin": "Adansonia digitata",
+        "type": "עץ",
+        "method": "בר",
+        "temp": "20–35°C",
+        "world": "סנגל · מלאווי · קניה",
+        "wiki": "באובב"
+      },
+      {
+        "slug": "acai",
+        "name": "אסאי",
+        "latin": "Euterpe oleracea",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "ברזיל · קולומביה · אקוודור",
+        "wiki": "Euterpe oleracea"
+      },
+      {
+        "slug": "cupuacu",
+        "name": "קופואסו",
+        "latin": "Theobroma grandiflorum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "ברזיל · קולומביה · פרו",
+        "wiki": "Theobroma grandiflorum"
+      },
+      {
+        "slug": "camucamu",
+        "name": "קמו-קמו",
+        "latin": "Myrciaria dubia",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "פרו · ברזיל · קולומביה",
+        "wiki": "Myrciaria dubia"
+      },
+      {
+        "slug": "lucuma",
+        "name": "לוקומה",
+        "latin": "Pouteria lucuma",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "17–27°C",
+        "world": "פרו · צ'ילה · אקוודור",
+        "wiki": "Lúcuma"
+      },
+      {
+        "slug": "pepino",
+        "name": "פפינו",
+        "latin": "Solanum muricatum",
+        "type": "שיח",
+        "method": "חממה",
+        "temp": "15–25°C",
+        "world": "פרו · צ'ילה · ניו זילנד",
+        "wiki": "Solanum muricatum"
+      },
+      {
+        "slug": "naranjilla",
+        "name": "נאראנחיה (לולו)",
+        "latin": "Solanum quitoense",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "קולומביה · אקוודור · פרו",
+        "wiki": "Solanum quitoense"
+      },
+      {
+        "slug": "noni",
+        "name": "נוני",
+        "latin": "Morinda citrifolia",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הודו · פולינזיה · תאילנד",
+        "wiki": "Morinda citrifolia"
+      },
+      {
+        "slug": "bilimbi",
+        "name": "בילימבי",
+        "latin": "Averrhoa bilimbi",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "אינדונזיה · הפיליפינים · מלזיה",
+        "wiki": "Averrhoa bilimbi"
+      },
+      {
+        "slug": "champedak",
+        "name": "צ'מפדק",
+        "latin": "Artocarpus integer",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "24–32°C",
+        "world": "מלזיה · אינדונזיה · תאילנד",
+        "wiki": "Artocarpus integer"
+      },
+      {
+        "slug": "jabuticaba",
+        "name": "ז'בוטיקבה",
+        "latin": "Plinia cauliflora",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "ברזיל · ארגנטינה · פרגוואי",
+        "wiki": "Jabuticaba"
+      },
+      {
+        "slug": "atemoya",
+        "name": "אטמויה",
+        "latin": "Annona × atemoya",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "טייוואן · אוסטרליה · ישראל",
+        "wiki": "Atemoya"
+      },
+      {
+        "slug": "blacksapote",
+        "name": "ספוטה שחור",
+        "latin": "Diospyros nigra",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "מקסיקו · גואטמלה · הפיליפינים",
+        "wiki": "Diospyros nigra"
+      },
+      {
+        "slug": "santol",
+        "name": "סנטול",
+        "latin": "Sandoricum koetjape",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "תאילנד · הפיליפינים · מלזיה",
+        "wiki": "Sandoricum koetjape"
+      },
+      {
+        "slug": "langsat",
+        "name": "לנגסט",
+        "latin": "Lansium parasiticum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "תאילנד · מלזיה · אינדונזיה",
+        "wiki": "Lansium parasiticum"
+      },
+      {
+        "slug": "rollinia",
+        "name": "רוליניה",
+        "latin": "Rollinia deliciosa",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "ברזיל · פרו · קולומביה",
+        "wiki": "Rollinia"
+      },
+      {
+        "slug": "canistel",
+        "name": "קניסטל",
+        "latin": "Pouteria campechiana",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–30°C",
+        "world": "מקסיקו · ברזיל · וייטנאם",
+        "wiki": "Pouteria campechiana"
+      },
+      {
+        "slug": "abiu",
+        "name": "אביו",
+        "latin": "Pouteria caimito",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "ברזיל · פרו · קולומביה",
+        "wiki": "Pouteria caimito"
+      },
+      {
+        "slug": "waxapple",
+        "name": "תפוח שעווה",
+        "latin": "Syzygium samarangense",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "תאילנד · טייוואן · אינדונזיה",
+        "wiki": "Syzygium samarangense"
+      },
+      {
+        "slug": "jambul",
+        "name": "ג'מבול",
+        "latin": "Syzygium cumini",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הודו · פקיסטן · תאילנד",
+        "wiki": "Syzygium cumini"
+      },
+      {
+        "slug": "pitanga",
+        "name": "דובדבן סורינם",
+        "latin": "Eugenia uniflora",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "ברזיל · אורוגוואי · ארגנטינה",
+        "wiki": "Eugenia uniflora"
+      },
+      {
+        "slug": "ber",
+        "name": "שיזף הודי",
+        "latin": "Ziziphus mauritiana",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–32°C",
+        "world": "הודו · סין · פקיסטן",
+        "wiki": "Ziziphus mauritiana"
+      },
+      {
+        "slug": "yuzu",
+        "name": "יוזו",
+        "latin": "Citrus junos",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–28°C",
+        "world": "יפן · קוריאה · סין",
+        "wiki": "Yuzu"
+      },
+      {
+        "slug": "sudachi",
+        "name": "סודאצ'י",
+        "latin": "Citrus sudachi",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–28°C",
+        "world": "יפן · קוריאה · ארה\"ב",
+        "wiki": "Sudachi"
+      },
+      {
+        "slug": "kabosu",
+        "name": "קבוסו",
+        "latin": "Citrus sphaerocarpa",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–28°C",
+        "world": "יפן · קוריאה",
+        "wiki": "Kabosu"
+      },
+      {
+        "slug": "fingerlime",
+        "name": "ליים אצבע",
+        "latin": "Citrus australasica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "אוסטרליה · ארה\"ב · ספרד",
+        "wiki": "Citrus australasica"
+      },
+      {
+        "slug": "bloodorange",
+        "name": "תפוז דם",
+        "latin": "Citrus × sinensis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "איטליה · ספרד · ארה\"ב",
+        "wiki": "תפוז דם"
+      },
+      {
+        "slug": "tangelo",
+        "name": "טנג'לו",
+        "latin": "Citrus × tangelo",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "ארה\"ב · ג'מייקה · ישראל",
+        "wiki": "Tangelo"
+      },
+      {
+        "slug": "tangerine",
+        "name": "טנג'רין",
+        "latin": "Citrus tangerina",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "סין · ספרד · ברזיל",
+        "wiki": "Tangerine"
+      },
+      {
+        "slug": "ugli",
+        "name": "אוגלי",
+        "latin": "Citrus reticulata × paradisi",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "ג'מייקה · ארה\"ב",
+        "wiki": "Ugli"
+      },
+      {
+        "slug": "calamansi",
+        "name": "קלמנסי",
+        "latin": "Citrus × microcarpa",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–32°C",
+        "world": "הפיליפינים · מלזיה · אינדונזיה",
+        "wiki": "Calamansi"
+      },
+      {
+        "slug": "buddhahand",
+        "name": "יד בודהה",
+        "latin": "Citrus medica var. sarcodactylis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–30°C",
+        "world": "סין · יפן · ארה\"ב",
+        "wiki": "Buddha's hand"
+      },
+      {
+        "slug": "bael",
+        "name": "באל",
+        "latin": "Aegle marmelos",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "20–35°C",
+        "world": "הודו · תאילנד · בנגלדש",
+        "wiki": "Aegle marmelos"
+      },
+      {
+        "slug": "kolanut",
+        "name": "אגוז קולה",
+        "latin": "Cola nitida",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "ניגריה · חוף השנהב · גאנה",
+        "wiki": "Cola (genus)"
+      },
+      {
+        "slug": "ginkgo",
+        "name": "גינקו",
+        "latin": "Ginkgo biloba",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "10–25°C",
+        "world": "סין · קוריאה · יפן",
+        "wiki": "גינקו"
+      },
+      {
+        "slug": "pilinut",
+        "name": "אגוז פילי",
+        "latin": "Canarium ovatum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "הפיליפינים",
+        "wiki": "Canarium ovatum"
+      },
+      {
+        "slug": "atlanticpistachio",
+        "name": "בטנה אטלנטית",
+        "latin": "Pistacia atlantica",
+        "type": "עץ",
+        "method": "בר",
+        "temp": "15–30°C",
+        "world": "איראן · טורקיה · אפגניסטן",
+        "wiki": "בטנה אטלנטית"
+      },
+      {
+        "slug": "candlenut",
+        "name": "אגוז נר",
+        "latin": "Aleurites moluccanus",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "אינדונזיה · מלזיה · הפיליפינים",
+        "wiki": "Aleurites moluccanus"
+      },
+      {
+        "slug": "robusta",
+        "name": "קפה רובוסטה",
+        "latin": "Coffea canephora",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "וייטנאם · ברזיל · אינדונזיה",
+        "wiki": "Coffea canephora"
+      },
+      {
+        "slug": "kapok",
+        "name": "קפוק",
+        "latin": "Ceiba pentandra",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–32°C",
+        "world": "תאילנד · אינדונזיה · מלזיה",
+        "wiki": "קפוק"
+      },
+      {
+        "slug": "sisal",
+        "name": "סיסל",
+        "latin": "Agave sisalana",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "20–32°C",
+        "world": "ברזיל · טנזניה · קניה",
+        "wiki": "סיסל"
+      },
+      {
+        "slug": "ramie",
+        "name": "רמי",
+        "latin": "Boehmeria nivea",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "סין · ברזיל · הפיליפינים",
+        "wiki": "Ramie"
+      },
+      {
+        "slug": "kenaf",
+        "name": "קנאף",
+        "latin": "Hibiscus cannabinus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "הודו · סין · תאילנד",
+        "wiki": "Kenaf"
+      },
+      {
+        "slug": "betel",
+        "name": "בטל",
+        "latin": "Piper betle",
+        "type": "שיח",
+        "method": "מנהרה",
+        "temp": "22–30°C",
+        "world": "הודו · בנגלדש · תאילנד",
+        "wiki": "Piper betle"
+      },
+      {
+        "slug": "argan",
+        "name": "ארגן",
+        "latin": "Argania spinosa",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–32°C",
+        "world": "מרוקו",
+        "wiki": "ארגן קוצני"
+      },
+      {
+        "slug": "shea",
+        "name": "שיאה",
+        "latin": "Vitellaria paradoxa",
+        "type": "עץ",
+        "method": "בר",
+        "temp": "22–32°C",
+        "world": "ניגריה · מאלי · בורקינה פאסו",
+        "wiki": "Vitellaria"
+      },
+      {
+        "slug": "jojoba",
+        "name": "ג'וג'ובה",
+        "latin": "Simmondsia chinensis",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "20–35°C",
+        "world": "ארגנטינה · ישראל · ארה\"ב",
+        "wiki": "סימונדסיה סינית"
+      },
+      {
+        "slug": "neem",
+        "name": "נים",
+        "latin": "Azadirachta indica",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "22–35°C",
+        "world": "הודו · מיאנמר · נפאל",
+        "wiki": "Azadirachta indica"
+      },
+      {
+        "slug": "patchouli",
+        "name": "פצ'ולי",
+        "latin": "Pogostemon cablin",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "אינדונזיה · הודו · סין",
+        "wiki": "Pogostemon cablin"
+      },
+      {
+        "slug": "citronella",
+        "name": "ציטרונלה",
+        "latin": "Cymbopogon nardus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "סרי לנקה · אינדונזיה · הודו",
+        "wiki": "Cymbopogon nardus"
+      },
+      {
+        "slug": "verbena",
+        "name": "ורבנה",
+        "latin": "Verbena officinalis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "צרפת · מרוקו · ספרד",
+        "wiki": "ורבנה רפואית"
+      },
+      {
+        "slug": "eucalyptus",
+        "name": "אקליפטוס",
+        "latin": "Eucalyptus globulus",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "12–30°C",
+        "world": "אוסטרליה · פורטוגל · ברזיל",
+        "wiki": "אקליפטוס"
+      },
+      {
+        "slug": "annatto",
+        "name": "אנאטו",
+        "latin": "Bixa orellana",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "פרו · ברזיל · הודו",
+        "wiki": "Bixa orellana"
+      },
+      {
+        "slug": "savory",
+        "name": "סבוריה",
+        "latin": "Satureja hortensis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "ספרד · צרפת · טורקיה",
+        "wiki": "Satureja hortensis"
+      },
+      {
+        "slug": "lovage",
+        "name": "לובאג'",
+        "latin": "Levisticum officinale",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "גרמניה · פולין · הולנד",
+        "wiki": "Levisticum officinale"
+      },
+      {
+        "slug": "chervil",
+        "name": "צ'רוויל",
+        "latin": "Anthriscus cerefolium",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–22°C",
+        "world": "צרפת · הולנד · גרמניה",
+        "wiki": "Anthriscus cerefolium"
+      },
+      {
+        "slug": "borage",
+        "name": "בורג'",
+        "latin": "Borago officinalis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "בריטניה · גרמניה · ספרד",
+        "wiki": "Borago officinalis"
+      },
+      {
+        "slug": "hyssop",
+        "name": "איזוב",
+        "latin": "Hyssopus officinalis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "12–25°C",
+        "world": "צרפת · הונגריה · רוסיה",
+        "wiki": "Hyssopus officinalis"
+      },
+      {
+        "slug": "rue",
+        "name": "פיגם",
+        "latin": "Ruta graveolens",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "טורקיה · הודו · אתיופיה",
+        "wiki": "פיגם מצוי"
+      },
+      {
+        "slug": "angelica",
+        "name": "אנג'ליקה",
+        "latin": "Angelica archangelica",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "10–22°C",
+        "world": "פולין · גרמניה · צרפת",
+        "wiki": "Angelica archangelica"
+      },
+      {
+        "slug": "sumac",
+        "name": "אוג הבורסקאים",
+        "latin": "Rhus coriaria",
+        "type": "שיח",
+        "method": "בר",
+        "temp": "15–30°C",
+        "world": "טורקיה · איראן · סוריה",
+        "wiki": "אוג הבורסקאים"
+      },
+      {
+        "slug": "mastic",
+        "name": "מסטיק",
+        "latin": "Pistacia lentiscus",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "15–30°C",
+        "world": "יוון",
+        "wiki": "אלת המסטיק"
+      },
+      {
+        "slug": "asafoetida",
+        "name": "אספטידה",
+        "latin": "Ferula assa-foetida",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "איראן · אפגניסטן · הודו",
+        "wiki": "Asafoetida"
+      },
+      {
+        "slug": "ajwain",
+        "name": "אג'ואן",
+        "latin": "Trachyspermum ammi",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "הודו · איראן · פקיסטן",
+        "wiki": "Trachyspermum ammi"
+      },
+      {
+        "slug": "epazote",
+        "name": "אפזוטה",
+        "latin": "Dysphania ambrosioides",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "מקסיקו · גואטמלה",
+        "wiki": "Epazote"
+      },
+      {
+        "slug": "caraway",
+        "name": "קימל",
+        "latin": "Carum carvi",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "פינלנד · הולנד · מצרים",
+        "wiki": "קימל"
+      },
+      {
+        "slug": "cumin",
+        "name": "כמון",
+        "latin": "Cuminum cyminum",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "18–30°C",
+        "world": "הודו · סוריה · טורקיה",
+        "wiki": "כמון"
+      },
+      {
+        "slug": "anise",
+        "name": "אניס",
+        "latin": "Pimpinella anisum",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "טורקיה · ספרד · סוריה",
+        "wiki": "אניס"
+      },
+      {
+        "slug": "staranise",
+        "name": "אניס כוכבי",
+        "latin": "Illicium verum",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "סין · וייטנאם",
+        "wiki": "אניס כוכבי"
+      },
+      {
+        "slug": "nigella",
+        "name": "קצח",
+        "latin": "Nigella sativa",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "הודו · מצרים · טורקיה",
+        "wiki": "קצח זרעוני"
+      },
+      {
+        "slug": "ashwagandha",
+        "name": "אשווגנדה",
+        "latin": "Withania somnifera",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "18–30°C",
+        "world": "הודו · נפאל · סין",
+        "wiki": "Withania somnifera"
+      },
+      {
+        "slug": "ginseng",
+        "name": "ג'ינסנג",
+        "latin": "Panax ginseng",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "10–22°C",
+        "world": "קוריאה · סין · קנדה",
+        "wiki": "ג'ינסנג"
+      },
+      {
+        "slug": "peppermint",
+        "name": "נענע-פלפל",
+        "latin": "Mentha × piperita",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "מרוקו · ארה\"ב · הודו",
+        "wiki": "נענע חריפה"
+      },
+      {
+        "slug": "spearmint",
+        "name": "נענע ירוקה",
+        "latin": "Mentha spicata",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "הודו · ארה\"ב · סין",
+        "wiki": "נענע משובלת"
+      },
+      {
+        "slug": "mashua",
+        "name": "מאשואה",
+        "latin": "Tropaeolum tuberosum",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "8–18°C",
+        "world": "פרו · בוליביה · אקוודור",
+        "wiki": "Mashua"
+      },
+      {
+        "slug": "yacon",
+        "name": "יאקון",
+        "latin": "Smallanthus sonchifolius",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "15–25°C",
+        "world": "פרו · ברזיל · בוליביה",
+        "wiki": "Yacón"
+      },
+      {
+        "slug": "chineseyam",
+        "name": "יאם סיני",
+        "latin": "Dioscorea polystachya",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "סין · קוריאה · יפן",
+        "wiki": "Dioscorea polystachya"
+      },
+      {
+        "slug": "malanga",
+        "name": "מלנגה",
+        "latin": "Xanthosoma sagittifolium",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "ניגריה · גאנה · קמרון",
+        "wiki": "Xanthosoma"
+      },
+      {
+        "slug": "scorzonera",
+        "name": "סקורצונרה",
+        "latin": "Scorzonera hispanica",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "בלגיה · צרפת · הולנד",
+        "wiki": "סקורצונרה ספרדית"
+      },
+      {
+        "slug": "salsify",
+        "name": "זקן-התיש",
+        "latin": "Tragopogon porrifolius",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "צרפת · איטליה · גרמניה",
+        "wiki": "Salsify"
+      },
+      {
+        "slug": "burdock",
+        "name": "לפה גדולה",
+        "latin": "Arctium lappa",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "12–25°C",
+        "world": "יפן · טייוואן · קוריאה",
+        "wiki": "Arctium lappa"
+      },
+      {
+        "slug": "skirret",
+        "name": "סקירט",
+        "latin": "Sium sisarum",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "סין · יפן · אירופה",
+        "wiki": "Sium sisarum"
+      },
+      {
+        "slug": "crosne",
+        "name": "קרוסנה",
+        "latin": "Stachys affinis",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "12–24°C",
+        "world": "צרפת · יפן · סין",
+        "wiki": "Stachys affinis"
+      },
+      {
+        "slug": "zedoary",
+        "name": "זדוארי",
+        "latin": "Curcuma zedoaria",
+        "type": "שורש",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "הודו · אינדונזיה · תאילנד",
+        "wiki": "Curcuma zedoaria"
+      },
+      {
+        "slug": "fingerroot",
+        "name": "קרצ'אי",
+        "latin": "Boesenbergia rotunda",
+        "type": "שורש",
+        "method": "מנהרה",
+        "temp": "22–30°C",
+        "world": "תאילנד · אינדונזיה · סין",
+        "wiki": "Boesenbergia rotunda"
+      },
+      {
+        "slug": "yardlongbean",
+        "name": "לוביה ארוכה",
+        "latin": "Vigna unguiculata subsp. sesquipedalis",
+        "type": "שלחין",
+        "method": "מנהרה",
+        "temp": "20–32°C",
+        "world": "סין · תאילנד · הודו",
+        "wiki": "Yardlong bean"
+      },
+      {
+        "slug": "swordbean",
+        "name": "פול חרב",
+        "latin": "Canavalia gladiata",
+        "type": "שלחין",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "הודו · סין · יפן",
+        "wiki": "Canavalia gladiata"
+      },
+      {
+        "slug": "jackbean",
+        "name": "פול יק",
+        "latin": "Canavalia ensiformis",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "ברזיל · הודו · מקסיקו",
+        "wiki": "Canavalia ensiformis"
+      },
+      {
+        "slug": "teparybean",
+        "name": "פול טפרי",
+        "latin": "Phaseolus acutifolius",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–32°C",
+        "world": "מקסיקו · ארה\"ב",
+        "wiki": "Tepary bean"
+      },
+      {
+        "slug": "sainfoin",
+        "name": "אספרצת",
+        "latin": "Onobrychis viciifolia",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "8–22°C",
+        "world": "רוסיה · טורקיה · צרפת",
+        "wiki": "Onobrychis viciifolia"
+      },
+      {
+        "slug": "trefoil",
+        "name": "לוטוס מקורן",
+        "latin": "Lotus corniculatus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "8–24°C",
+        "world": "ארה\"ב · ניו זילנד · אירופה",
+        "wiki": "Lotus corniculatus"
+      },
+      {
+        "slug": "crownvetch",
+        "name": "כתרן משתרע",
+        "latin": "Securigera varia",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "8–24°C",
+        "world": "ארה\"ב · אירופה",
+        "wiki": "Securigera varia"
+      },
+      {
+        "slug": "serradella",
+        "name": "סרדלה",
+        "latin": "Ornithopus sativus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "10–22°C",
+        "world": "אוסטרליה · פורטוגל · ספרד",
+        "wiki": "Ornithopus sativus"
+      },
+      {
+        "slug": "hairyvetch",
+        "name": "בקיה שעירה",
+        "latin": "Vicia villosa",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "8–22°C",
+        "world": "ארה\"ב · רוסיה · סין",
+        "wiki": "Vicia villosa"
+      },
+      {
+        "slug": "velvetbean",
+        "name": "לבלב (מוקונה)",
+        "latin": "Mucuna pruriens",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "הודו · גאנה · ברזיל",
+        "wiki": "Mucuna pruriens"
+      },
+      {
+        "slug": "bambara",
+        "name": "בוטן במברה",
+        "latin": "Vigna subterranea",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–32°C",
+        "world": "ניגריה · גאנה · בורקינה פאסו",
+        "wiki": "Bambara groundnut"
+      },
+      {
+        "slug": "grasspea",
+        "name": "פול הדשא",
+        "latin": "Lathyrus sativus",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "12–28°C",
+        "world": "הודו · אתיופיה · בנגלדש",
+        "wiki": "Lathyrus sativus"
+      },
+      {
+        "slug": "dulse",
+        "name": "דולסה",
+        "latin": "Palmaria palmata",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "5–15°C",
+        "world": "אירלנד · קנדה · צרפת",
+        "wiki": "Palmaria palmata"
+      },
+      {
+        "slug": "sealettuce",
+        "name": "חסת ים",
+        "latin": "Ulva lactuca",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "12–24°C",
+        "world": "קוריאה · יפן · צ'ילה",
+        "wiki": "Ulva lactuca"
+      },
+      {
+        "slug": "dunaliella",
+        "name": "דונאליאלה",
+        "latin": "Dunaliella salina",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "20–35°C",
+        "world": "ישראל · אוסטרליה · סין",
+        "wiki": "Dunaliella salina"
+      },
+      {
+        "slug": "gracilaria",
+        "name": "גרצילריה",
+        "latin": "Gracilaria",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "18–28°C",
+        "world": "סין · צ'ילה · אינדונזיה",
+        "wiki": "Gracilaria"
+      },
+      {
+        "slug": "eucheuma",
+        "name": "אאוכאומה",
+        "latin": "Eucheuma",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "24–30°C",
+        "world": "אינדונזיה · הפיליפינים · טנזניה",
+        "wiki": "Eucheuma"
+      },
+      {
+        "slug": "hijiki",
+        "name": "היג'יקי",
+        "latin": "Sargassum fusiforme",
+        "type": "מים",
+        "method": "בריכות",
+        "temp": "12–22°C",
+        "world": "יפן · קוריאה · סין",
+        "wiki": "Hijiki"
+      },
+      {
+        "slug": "prosomillet",
+        "name": "דוחן מצוי",
+        "latin": "Panicum miliaceum",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "18–30°C",
+        "world": "סין · הודו · רוסיה",
+        "wiki": "Panicum miliaceum"
+      },
+      {
+        "slug": "foxtailmillet",
+        "name": "דוחן זנב-שועל",
+        "latin": "Setaria italica",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "סין · הודו",
+        "wiki": "Setaria italica"
+      },
+      {
+        "slug": "kodomillet",
+        "name": "דוחן קודו",
+        "latin": "Paspalum scrobiculatum",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–32°C",
+        "world": "הודו · נפאל",
+        "wiki": "Kodo millet"
+      },
+      {
+        "slug": "barnyardmillet",
+        "name": "דוחן חצר",
+        "latin": "Echinochloa esculenta",
+        "type": "שדה",
+        "method": "שדה פתוח",
+        "temp": "20–30°C",
+        "world": "הודו · יפן · קוריאה",
+        "wiki": "Echinochloa esculenta"
+      },
+      {
+        "slug": "seabeet",
+        "name": "סלק הים",
+        "latin": "Beta vulgaris subsp. maritima",
+        "type": "בר",
+        "method": "בר",
+        "temp": "12–25°C",
+        "world": "ספרד · איטליה · צרפת",
+        "wiki": "Beta vulgaris subsp. maritima"
+      },
+      {
+        "slug": "greeksage",
+        "name": "מרווה משולשת",
+        "latin": "Salvia fruticosa",
+        "type": "שיח",
+        "method": "בר",
+        "temp": "15–30°C",
+        "world": "יוון · ישראל · טורקיה",
+        "wiki": "מרווה משולשת"
+      },
+      {
+        "slug": "conehead",
+        "name": "קורנית מקורקפת",
+        "latin": "Thymbra capitata",
+        "type": "שיח",
+        "method": "בר",
+        "temp": "15–30°C",
+        "world": "יוון · ספרד · פורטוגל",
+        "wiki": "Thymbra capitata"
+      },
+      {
+        "slug": "enoki",
+        "name": "אנוקי",
+        "latin": "Flammulina velutipes",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "6–12°C",
+        "world": "סין · יפן · קוריאה",
+        "wiki": "Enokitake"
+      },
+      {
+        "slug": "maitake",
+        "name": "מאיטקה",
+        "latin": "Grifola frondosa",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "12–20°C",
+        "world": "יפן · סין · ארה\"ב",
+        "wiki": "Grifola frondosa"
+      },
+      {
+        "slug": "kingoyster",
+        "name": "פטריית צדפה מלכותית",
+        "latin": "Pleurotus eryngii",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "12–20°C",
+        "world": "סין · קוריאה · איטליה",
+        "wiki": "Pleurotus eryngii"
+      },
+      {
+        "slug": "porcini",
+        "name": "פורצ'יני",
+        "latin": "Boletus edulis",
+        "type": "אחר",
+        "method": "בר",
+        "temp": "10–20°C",
+        "world": "איטליה · צרפת · פולין",
+        "wiki": "Boletus edulis"
+      },
+      {
+        "slug": "reishi",
+        "name": "ריישי",
+        "latin": "Ganoderma lingzhi",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "20–30°C",
+        "world": "סין · קוריאה · יפן",
+        "wiki": "Ganoderma lingzhi"
+      },
+      {
+        "slug": "woodear",
+        "name": "אוזן היער",
+        "latin": "Auricularia auricula-judae",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "15–25°C",
+        "world": "סין · תאילנד · טייוואן",
+        "wiki": "Auricularia auricula-judae"
+      },
+      {
+        "slug": "shimeji",
+        "name": "שימג'י",
+        "latin": "Hypsizygus tessellatus",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "12–18°C",
+        "world": "יפן · סין · קוריאה",
+        "wiki": "Shimeji"
+      },
+      {
+        "slug": "lionsmane",
+        "name": "רעמת האריה",
+        "latin": "Hericium erinaceus",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "18–24°C",
+        "world": "סין · יפן · ארה\"ב",
+        "wiki": "Hericium erinaceus"
+      },
+      {
+        "slug": "champignon",
+        "name": "שמפיניון",
+        "latin": "Agaricus bisporus",
+        "type": "אחר",
+        "method": "חממה",
+        "temp": "14–20°C",
+        "world": "סין · ארה\"ב · הולנד",
+        "wiki": "שמפיניון תרבותי"
+      },
+      {
+        "slug": "carnation",
+        "name": "ציפורן",
+        "latin": "Dianthus caryophyllus",
+        "type": "משטח",
+        "method": "חממה",
+        "temp": "12–24°C",
+        "world": "קולומביה · אקוודור · קניה",
+        "wiki": "ציפורן הגינה"
+      },
+      {
+        "slug": "gerbera",
+        "name": "גרברה",
+        "latin": "Gerbera jamesonii",
+        "type": "משטח",
+        "method": "חממה",
+        "temp": "15–25°C",
+        "world": "הולנד · קולומביה · קניה",
+        "wiki": "גרברה"
+      },
+      {
+        "slug": "lisianthus",
+        "name": "ליזיאנטוס",
+        "latin": "Eustoma grandiflorum",
+        "type": "משטח",
+        "method": "חממה",
+        "temp": "15–26°C",
+        "world": "יפן · הולנד · ישראל",
+        "wiki": "Eustoma"
+      },
+      {
+        "slug": "limonium",
+        "name": "לימוניום",
+        "latin": "Limonium sinuatum",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "15–26°C",
+        "world": "ישראל · הולנד · ספרד",
+        "wiki": "עדעד מכונף"
+      },
+      {
+        "slug": "ruscus",
+        "name": "רוסקוס",
+        "latin": "Ruscus hypophyllum",
+        "type": "משטח",
+        "method": "מטע",
+        "temp": "12–26°C",
+        "world": "ישראל · איטליה · קוסטה ריקה",
+        "wiki": "עצבונית רחבת-עלים"
+      },
+      {
+        "slug": "chrysanthemum",
+        "name": "חרצית הגינה",
+        "latin": "Chrysanthemum morifolium",
+        "type": "משטח",
+        "method": "חממה",
+        "temp": "15–25°C",
+        "world": "הולנד · קולומביה · יפן",
+        "wiki": "חרצית הגינה"
+      },
+      {
+        "slug": "tulip",
+        "name": "צבעוני",
+        "latin": "Tulipa gesneriana",
+        "type": "משטח",
+        "method": "חממה",
+        "temp": "8–20°C",
+        "world": "הולנד",
+        "wiki": "צבעוני (צמח)"
+      },
+      {
+        "slug": "anemone",
+        "name": "כלנית",
+        "latin": "Anemone coronaria",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "10–22°C",
+        "world": "ישראל · הולנד · איטליה",
+        "wiki": "כלנית מצויה"
+      },
+      {
+        "slug": "ranunculus",
+        "name": "נורית",
+        "latin": "Ranunculus asiaticus",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "10–22°C",
+        "world": "ישראל · איטליה · הולנד",
+        "wiki": "נורית אסיה"
+      },
+      {
+        "slug": "gladiolus",
+        "name": "סייפן",
+        "latin": "Gladiolus",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "הולנד · ישראל · איטליה",
+        "wiki": "סייפן"
+      },
+      {
+        "slug": "waxflower",
+        "name": "שעוונית",
+        "latin": "Chamelaucium uncinatum",
+        "type": "משטח",
+        "method": "שדה פתוח",
+        "temp": "12–28°C",
+        "world": "אוסטרליה · ישראל · פרו",
+        "wiki": "Chamelaucium"
+      },
+      {
+        "slug": "rooibos",
+        "name": "רויבוס",
+        "latin": "Aspalathus linearis",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "דרום אפריקה",
+        "wiki": "Rooibos"
+      },
+      {
+        "slug": "honeybush",
+        "name": "הוניבוש",
+        "latin": "Cyclopia genistoides",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "15–28°C",
+        "world": "דרום אפריקה",
+        "wiki": "Cyclopia"
+      },
+      {
+        "slug": "yerbamate",
+        "name": "מטה",
+        "latin": "Ilex paraguariensis",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "18–28°C",
+        "world": "ברזיל · ארגנטינה · פרגוואי",
+        "wiki": "Ilex paraguariensis"
+      },
+      {
+        "slug": "guarana",
+        "name": "גוארנה",
+        "latin": "Paullinia cupana",
+        "type": "שיח",
+        "method": "מטע",
+        "temp": "22–30°C",
+        "world": "ברזיל · ונצואלה · קולומביה",
+        "wiki": "Paullinia cupana"
+      },
+      {
+        "slug": "sichuanpepper",
+        "name": "פלפל סצ'ואן",
+        "latin": "Zanthoxylum simulans",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "15–28°C",
+        "world": "סין · נפאל · הודו",
+        "wiki": "Zanthoxylum"
+      },
+      {
+        "slug": "longpepper",
+        "name": "פלפל ארוך",
+        "latin": "Piper longum",
+        "type": "שיח",
+        "method": "מנהרה",
+        "temp": "22–30°C",
+        "world": "הודו · אינדונזיה · נפאל",
+        "wiki": "Piper longum"
+      },
+      {
+        "slug": "grainsofparadise",
+        "name": "גרגרי גן עדן",
+        "latin": "Aframomum melegueta",
+        "type": "שיח",
+        "method": "שדה פתוח",
+        "temp": "22–30°C",
+        "world": "גאנה · ניגריה · חוף השנהב",
+        "wiki": "Aframomum melegueta"
+      },
+      {
+        "slug": "mahleb",
+        "name": "מהלב",
+        "latin": "Prunus mahaleb",
+        "type": "עץ",
+        "method": "מטע",
+        "temp": "12–28°C",
+        "world": "טורקיה · איראן · סוריה",
+        "wiki": "Prunus mahaleb"
+      }
+    ]
+  },
+  "grains": {
+    "title": "מילון דגנים",
+    "icon": "🌾",
+    "filterKey": "type",
+    "cols": [
+      {
+        "key": "name",
+        "label": "שם",
+        "bold": true
+      },
+      {
+        "key": "latin",
+        "label": "שם מדעי",
+        "italic": true
+      },
+      {
+        "key": "type",
+        "label": "סוג",
+        "chip": true
+      },
+      {
+        "key": "method",
+        "label": "שיטת גידול"
+      },
+      {
+        "key": "temp",
+        "label": "טמפ׳ / אקלים",
+        "mono": true
+      },
+      {
+        "key": "world",
+        "label": "התמחות עולמית"
+      }
+    ],
+    "rows": [
+      {
+        "slug": "wheat",
+        "name": "חיטה",
+        "latin": "Triticum aestivum",
+        "type": "דגן אמיתי",
+        "method": "קמח ולחם",
+        "temp": "ממוזג",
+        "world": "סין · הודו · רוסיה",
+        "wiki": "חיטה"
+      },
+      {
+        "slug": "barley",
+        "name": "שעורה",
+        "latin": "Hordeum vulgare",
+        "type": "דגן אמיתי",
+        "method": "בירה ומספוא",
+        "temp": "ממוזג",
+        "world": "רוסיה · צרפת · גרמניה",
+        "wiki": "שעורה"
+      },
+      {
+        "slug": "rye",
+        "name": "שיפון",
+        "latin": "Secale cereale",
+        "type": "דגן אמיתי",
+        "method": "לחם כהה",
+        "temp": "קר",
+        "world": "גרמניה · פולין · רוסיה",
+        "wiki": "שיפון"
+      },
+      {
+        "slug": "oat",
+        "name": "שיבולת שועל",
+        "latin": "Avena sativa",
+        "type": "דגן אמיתי",
+        "method": "דגני בוקר",
+        "temp": "ממוזג-קר",
+        "world": "רוסיה · קנדה · פולין",
+        "wiki": "שיבולת שועל"
+      },
+      {
+        "slug": "rice",
+        "name": "אורז",
+        "latin": "Oryza sativa",
+        "type": "דגן אמיתי",
+        "method": "מזון בסיס",
+        "temp": "טרופי-חם",
+        "world": "סין · הודו · אינדונזיה",
+        "wiki": "אורז"
+      },
+      {
+        "slug": "corn",
+        "name": "תירס",
+        "latin": "Zea mays",
+        "type": "דגן אמיתי",
+        "method": "מזון ומספוא",
+        "temp": "חם",
+        "world": "ארה״ב · סין · ברזיל",
+        "wiki": "תירס"
+      },
+      {
+        "slug": "sorghum",
+        "name": "סורגום",
+        "latin": "Sorghum bicolor",
+        "type": "דגן אמיתי",
+        "method": "מזון ומספוא",
+        "temp": "חם-צחיח",
+        "world": "ארה״ב · ניגריה · אתיופיה",
+        "wiki": "סורגום"
+      },
+      {
+        "slug": "millet",
+        "name": "דוחן",
+        "latin": "Panicum miliaceum",
+        "type": "דגן אמיתי",
+        "method": "דייסה ומספוא",
+        "temp": "חם-צחיח",
+        "world": "הודו · ניז׳ר · סין",
+        "wiki": "דוחן"
+      },
+      {
+        "slug": "fonio",
+        "name": "פוניו",
+        "latin": "Digitaria exilis",
+        "type": "דגן אמיתי",
+        "method": "דייסה",
+        "temp": "חם",
+        "world": "גינאה · ניגריה · מאלי",
+        "wiki": "פוניו"
+      },
+      {
+        "slug": "teff",
+        "name": "טף",
+        "latin": "Eragrostis tef",
+        "type": "דגן אמיתי",
+        "method": "אנג׳רה",
+        "temp": "ממוזג-רם",
+        "world": "אתיופיה · אריתריאה",
+        "wiki": "טף"
+      },
+      {
+        "slug": "spelt",
+        "name": "כוסמין",
+        "latin": "Triticum spelta",
+        "type": "דגן אמיתי",
+        "method": "קמח בריאות",
+        "temp": "ממוזג",
+        "world": "גרמניה · שווייץ · אוסטריה",
+        "wiki": "כוסמין"
+      },
+      {
+        "slug": "durum",
+        "name": "חיטת דורום",
+        "latin": "Triticum durum",
+        "type": "דגן אמיתי",
+        "method": "פסטה וסולת",
+        "temp": "ממוזג-חם",
+        "world": "קנדה · איטליה · טורקיה",
+        "wiki": "חיטת הדורום"
+      },
+      {
+        "slug": "triticale",
+        "name": "טריטיקלה",
+        "latin": "× Triticosecale",
+        "type": "דגן אמיתי",
+        "method": "מספוא",
+        "temp": "ממוזג",
+        "world": "פולין · גרמניה · צרפת",
+        "wiki": "טריטיקלה"
+      },
+      {
+        "slug": "wildrice",
+        "name": "אורז בר",
+        "latin": "Zizania aquatica",
+        "type": "דגן אמיתי",
+        "method": "מזון גורמה",
+        "temp": "ממוזג-לח",
+        "world": "ארה״ב · קנדה",
+        "wiki": "אורז בר"
+      },
+      {
+        "slug": "buckwheat",
+        "name": "כוסמת",
+        "latin": "Fagopyrum esculentum",
+        "type": "פסאודו-דגן",
+        "method": "קמח וגריסים",
+        "temp": "ממוזג-קר",
+        "world": "רוסיה · סין · אוקראינה",
+        "wiki": "כוסמת"
+      },
+      {
+        "slug": "quinoa",
+        "name": "קינואה",
+        "latin": "Chenopodium quinoa",
+        "type": "פסאודו-דגן",
+        "method": "דגן-על",
+        "temp": "רם-קריר",
+        "world": "פרו · בוליביה · אקוודור",
+        "wiki": "קינואה"
+      },
+      {
+        "slug": "amaranth",
+        "name": "אמרנט",
+        "latin": "Amaranthus caudatus",
+        "type": "פסאודו-דגן",
+        "method": "דגן וירק",
+        "temp": "חם",
+        "world": "הודו · מקסיקו · פרו",
+        "wiki": "ירבוז"
+      },
+      {
+        "slug": "chia",
+        "name": "צ׳יה",
+        "latin": "Salvia hispanica",
+        "type": "פסאודו-דגן",
+        "method": "זרעי-על",
+        "temp": "חם",
+        "world": "מקסיקו · בוליביה · ארגנטינה",
+        "wiki": "צ׳יה"
+      },
+      {
+        "slug": "chickpea",
+        "name": "חומוס",
+        "latin": "Cicer arietinum",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "הודו · טורקיה · אתיופיה",
+        "wiki": "חומוס (קטנית)"
+      },
+      {
+        "slug": "lentil",
+        "name": "עדשים",
+        "latin": "Lens culinaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג",
+        "world": "קנדה · הודו · אוסטרליה",
+        "wiki": "עדשה תרבותית"
+      },
+      {
+        "slug": "soybean",
+        "name": "סויה",
+        "latin": "Glycine max",
+        "type": "קטנית-דגן",
+        "method": "חלבון ושמן",
+        "temp": "ממוזג-חם",
+        "world": "ברזיל · ארה״ב · ארגנטינה",
+        "wiki": "פול הסויה"
+      },
+      {
+        "slug": "faba",
+        "name": "פול",
+        "latin": "Vicia faba",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג",
+        "world": "סין · אתיופיה",
+        "wiki": "פול הגינה"
+      },
+      {
+        "slug": "cowpea",
+        "name": "לוביה",
+        "latin": "Vigna unguiculata",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "חם",
+        "world": "ניגריה · ניז׳ר",
+        "wiki": "לוביה"
+      },
+      {
+        "slug": "mungbean",
+        "name": "מש",
+        "latin": "Vigna radiata",
+        "type": "קטנית-דגן",
+        "method": "נבטים וקטנית",
+        "temp": "חם",
+        "world": "הודו · מיאנמר · סין",
+        "wiki": "שעועית מאש"
+      },
+      {
+        "slug": "pea",
+        "name": "אפונה",
+        "latin": "Pisum sativum",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "קריר",
+        "world": "קנדה · רוסיה · סין",
+        "wiki": "אפונה"
+      },
+      {
+        "slug": "peanut",
+        "name": "בוטנים",
+        "latin": "Arachis hypogaea",
+        "type": "קטנית-דגן",
+        "method": "שמן וחטיף",
+        "temp": "חם",
+        "world": "סין · הודו · ניגריה",
+        "wiki": "בוטן"
+      },
+      {
+        "slug": "sesame",
+        "name": "שומשום",
+        "latin": "Sesamum indicum",
+        "type": "אחר",
+        "method": "זרע שמן דגני",
+        "temp": "חם",
+        "world": "סודן · מיאנמר · הודו",
+        "wiki": "שומשום"
+      },
+      {
+        "slug": "einkorn",
+        "name": "חיטת חד-גרגר",
+        "latin": "Triticum monococcum",
+        "type": "דגן אמיתי",
+        "method": "קמח קדום",
+        "temp": "ממוזג",
+        "world": "טורקיה · גרמניה · איטליה",
+        "wiki": "חיטת חד-גרגר"
+      },
+      {
+        "slug": "emmer",
+        "name": "חיטת אמר",
+        "latin": "Triticum dicoccon",
+        "type": "דגן אמיתי",
+        "method": "קמח וגריסים",
+        "temp": "ממוזג",
+        "world": "אתיופיה · הודו · איטליה",
+        "wiki": "Emmer"
+      },
+      {
+        "slug": "kamut",
+        "name": "חיטת חוראסאן (קאמוט)",
+        "latin": "Triticum turanicum",
+        "type": "דגן אמיתי",
+        "method": "קמח בריאות",
+        "temp": "ממוזג-חם",
+        "world": "קנדה · ארה״ב",
+        "wiki": "Khorasan wheat"
+      },
+      {
+        "slug": "jobstears",
+        "name": "דמעות איוב",
+        "latin": "Coix lacryma-jobi",
+        "type": "דגן אמיתי",
+        "method": "דייסה ומשקה",
+        "temp": "טרופי-חם",
+        "world": "סין · הודו · תאילנד",
+        "wiki": "Coix lacryma-jobi"
+      },
+      {
+        "slug": "fingermillet",
+        "name": "דוחן אצבע",
+        "latin": "Eleusine coracana",
+        "type": "דגן אמיתי",
+        "method": "דייסה ולחם",
+        "temp": "חם",
+        "world": "הודו · אתיופיה · אוגנדה",
+        "wiki": "Eleusine coracana"
+      },
+      {
+        "slug": "foxtailmillet",
+        "name": "דוחן זנב-שועל",
+        "latin": "Setaria italica",
+        "type": "דגן אמיתי",
+        "method": "דייסה ומספוא",
+        "temp": "חם-צחיח",
+        "world": "סין · הודו · ניגריה",
+        "wiki": "Setaria italica"
+      },
+      {
+        "slug": "pearlmillet",
+        "name": "דוחן הפנינה",
+        "latin": "Pennisetum glaucum",
+        "type": "דגן אמיתי",
+        "method": "קמח ולחם",
+        "temp": "חם-צחיח",
+        "world": "הודו · ניגריה · ניז׳ר",
+        "wiki": "Pennisetum glaucum"
+      },
+      {
+        "slug": "kodomillet",
+        "name": "דוחן קודו",
+        "latin": "Paspalum scrobiculatum",
+        "type": "דגן אמיתי",
+        "method": "דייסה",
+        "temp": "חם",
+        "world": "הודו · נפאל",
+        "wiki": "Paspalum scrobiculatum"
+      },
+      {
+        "slug": "barnyardmillet",
+        "name": "דוחן הגן",
+        "latin": "Echinochloa esculenta",
+        "type": "דגן אמיתי",
+        "method": "דייסה",
+        "temp": "ממוזג-חם",
+        "world": "הודו · יפן · סין",
+        "wiki": "Echinochloa esculenta"
+      },
+      {
+        "slug": "canarygrass",
+        "name": "זיף-נוצה קנרי",
+        "latin": "Phalaris canariensis",
+        "type": "דגן אמיתי",
+        "method": "מספוא וזרעי ציפורים",
+        "temp": "ממוזג",
+        "world": "קנדה · תאילנד · ארגנטינה",
+        "wiki": "Phalaris canariensis"
+      },
+      {
+        "slug": "blackrice",
+        "name": "אורז שחור",
+        "latin": "Oryza sativa",
+        "type": "דגן אמיתי",
+        "method": "מזון גורמה",
+        "temp": "טרופי-חם",
+        "world": "סין · הודו · אינדונזיה",
+        "wiki": "Black rice"
+      },
+      {
+        "slug": "redrice",
+        "name": "אורז אדום",
+        "latin": "Oryza sativa",
+        "type": "דגן אמיתי",
+        "method": "מזון בסיס",
+        "temp": "טרופי-חם",
+        "world": "בהוטן · הודו · תאילנד",
+        "wiki": "Red rice"
+      },
+      {
+        "slug": "sweetsorghum",
+        "name": "סורגום מתוק",
+        "latin": "Sorghum bicolor var. saccharatum",
+        "type": "דגן אמיתי",
+        "method": "סירופ ואתנול",
+        "temp": "חם",
+        "world": "ארה״ב · הודו · סין",
+        "wiki": "סורגום"
+      },
+      {
+        "slug": "durrasorghum",
+        "name": "דורה",
+        "latin": "Sorghum bicolor",
+        "type": "דגן אמיתי",
+        "method": "לחם ומספוא",
+        "temp": "חם-צחיח",
+        "world": "ניגריה · סודן · אתיופיה",
+        "wiki": "סורגום"
+      },
+      {
+        "slug": "adzuki",
+        "name": "שעועית אדזוקי",
+        "latin": "Vigna angularis",
+        "type": "קטנית-דגן",
+        "method": "ממתקים וקטנית",
+        "temp": "ממוזג",
+        "world": "סין · יפן · דרום קוריאה",
+        "wiki": "שעועית אזוקי"
+      },
+      {
+        "slug": "blackbean",
+        "name": "שעועית שחורה",
+        "latin": "Phaseolus vulgaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "ברזיל · מקסיקו · ארה״ב",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "kidneybean",
+        "name": "שעועית אדומה",
+        "latin": "Phaseolus vulgaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "הודו · מיאנמר · ברזיל",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "navybean",
+        "name": "שעועית נייבי",
+        "latin": "Phaseolus vulgaris",
+        "type": "קטנית-דגן",
+        "method": "שימורים ותבשיל",
+        "temp": "ממוזג",
+        "world": "ארה״ב · קנדה · אתיופיה",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "pintobean",
+        "name": "שעועית פינטו",
+        "latin": "Phaseolus vulgaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "ברזיל · ארה״ב · מקסיקו",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "limabean",
+        "name": "שעועית לימה",
+        "latin": "Phaseolus lunatus",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "חם",
+        "world": "מדגסקר · מיאנמר · פרו",
+        "wiki": "שעועית לימה"
+      },
+      {
+        "slug": "pigeonpea",
+        "name": "טור (עדשוני)",
+        "latin": "Cajanus cajan",
+        "type": "קטנית-דגן",
+        "method": "דאל ומספוא",
+        "temp": "חם",
+        "world": "הודו · מיאנמר · מלאווי",
+        "wiki": "קיאנוס מצוי"
+      },
+      {
+        "slug": "bambara",
+        "name": "אגוז במברה",
+        "latin": "Vigna subterranea",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "חם",
+        "world": "ניגריה · בורקינה פאסו · מאלי",
+        "wiki": "Vigna subterranea"
+      },
+      {
+        "slug": "lupin",
+        "name": "תורמוס",
+        "latin": "Lupinus albus",
+        "type": "קטנית-דגן",
+        "method": "חלבון ומספוא",
+        "temp": "ממוזג",
+        "world": "אוסטרליה · פולין · רוסיה",
+        "wiki": "תורמוס"
+      },
+      {
+        "slug": "grasspea",
+        "name": "פול הכרשינה",
+        "latin": "Lathyrus sativus",
+        "type": "קטנית-דגן",
+        "method": "קטנית ומספוא",
+        "temp": "חם-צחיח",
+        "world": "הודו · אתיופיה · בנגלדש",
+        "wiki": "Lathyrus sativus"
+      },
+      {
+        "slug": "guar",
+        "name": "גואר",
+        "latin": "Cyamopsis tetragonoloba",
+        "type": "קטנית-דגן",
+        "method": "מספוא וגומי גואר",
+        "temp": "חם-צחיח",
+        "world": "הודו · פקיסטן",
+        "wiki": "Cyamopsis tetragonoloba"
+      },
+      {
+        "slug": "hullessbarley",
+        "name": "שעורה עירומה",
+        "latin": "Hordeum vulgare var. nudum",
+        "type": "דגן אמיתי",
+        "method": "קמח ובריאות",
+        "temp": "ממוזג",
+        "world": "אתיופיה · נפאל · טיבט",
+        "wiki": "שעורה"
+      },
+      {
+        "slug": "hullessoat",
+        "name": "שיבולת-שועל עירומה",
+        "latin": "Avena nuda",
+        "type": "דגן אמיתי",
+        "method": "דגני בוקר",
+        "temp": "ממוזג-קר",
+        "world": "קנדה · סין · אוסטריה",
+        "wiki": "שיבולת שועל"
+      },
+      {
+        "slug": "prosomillet",
+        "name": "דוחן פרוסו",
+        "latin": "Panicum miliaceum",
+        "type": "דגן אמיתי",
+        "method": "דייסה",
+        "temp": "חם-צחיח",
+        "world": "סין · הודו · רוסיה",
+        "wiki": "דוחן"
+      },
+      {
+        "slug": "littlemillet",
+        "name": "דוחן קטן",
+        "latin": "Panicum sumatrense",
+        "type": "דגן אמיתי",
+        "method": "דייסה",
+        "temp": "חם",
+        "world": "הודו · נפאל · סרי לנקה",
+        "wiki": "Panicum sumatrense"
+      },
+      {
+        "slug": "blackfonio",
+        "name": "פוניו שחור",
+        "latin": "Digitaria iburua",
+        "type": "דגן אמיתי",
+        "method": "דייסה",
+        "temp": "חם",
+        "world": "ניגריה · בנין · טוגו",
+        "wiki": "Digitaria iburua"
+      },
+      {
+        "slug": "whiteteff",
+        "name": "טף לבן",
+        "latin": "Eragrostis tef",
+        "type": "דגן אמיתי",
+        "method": "אנג׳רה",
+        "temp": "ממוזג-רם",
+        "world": "אתיופיה · אריתריאה",
+        "wiki": "טף"
+      },
+      {
+        "slug": "redteff",
+        "name": "טף אדום",
+        "latin": "Eragrostis tef",
+        "type": "דגן אמיתי",
+        "method": "אנג׳רה",
+        "temp": "ממוזג-רם",
+        "world": "אתיופיה · אריתריאה",
+        "wiki": "טף"
+      },
+      {
+        "slug": "tartarybuckwheat",
+        "name": "כוסמת טטרית",
+        "latin": "Fagopyrum tataricum",
+        "type": "פסאודו-דגן",
+        "method": "קמח וגריסים",
+        "temp": "קר",
+        "world": "סין · הודו · נפאל",
+        "wiki": "Fagopyrum tataricum"
+      },
+      {
+        "slug": "kaniwa",
+        "name": "קניוואה",
+        "latin": "Chenopodium pallidicaule",
+        "type": "פסאודו-דגן",
+        "method": "דגן-על",
+        "temp": "רם-קריר",
+        "world": "בוליביה · פרו",
+        "wiki": "Chenopodium pallidicaule"
+      },
+      {
+        "slug": "redquinoa",
+        "name": "קינואה אדומה",
+        "latin": "Chenopodium quinoa",
+        "type": "פסאודו-דגן",
+        "method": "דגן-על",
+        "temp": "רם-קריר",
+        "world": "פרו · בוליביה · אקוודור",
+        "wiki": "קינואה"
+      },
+      {
+        "slug": "blackquinoa",
+        "name": "קינואה שחורה",
+        "latin": "Chenopodium quinoa",
+        "type": "פסאודו-דגן",
+        "method": "דגן-על",
+        "temp": "רם-קריר",
+        "world": "בוליביה · פרו",
+        "wiki": "קינואה"
+      },
+      {
+        "slug": "amaranthcruentus",
+        "name": "אמרנט מדמם",
+        "latin": "Amaranthus cruentus",
+        "type": "פסאודו-דגן",
+        "method": "דגן וירק",
+        "temp": "חם",
+        "world": "מקסיקו · הודו · פרו",
+        "wiki": "ירבוז"
+      },
+      {
+        "slug": "amaranthhypo",
+        "name": "אמרנט נשימתי",
+        "latin": "Amaranthus hypochondriacus",
+        "type": "פסאודו-דגן",
+        "method": "דגן",
+        "temp": "חם",
+        "world": "מקסיקו · הודו",
+        "wiki": "ירבוז"
+      },
+      {
+        "slug": "jasminerice",
+        "name": "אורז יסמין",
+        "latin": "Oryza sativa",
+        "type": "דגן אמיתי",
+        "method": "מזון בסיס",
+        "temp": "טרופי-חם",
+        "world": "תאילנד · קמבודיה · וייטנאם",
+        "wiki": "Jasmine rice"
+      },
+      {
+        "slug": "basmatirice",
+        "name": "אורז בסמטי",
+        "latin": "Oryza sativa",
+        "type": "דגן אמיתי",
+        "method": "מזון בסיס",
+        "temp": "טרופי-חם",
+        "world": "הודו · פקיסטן",
+        "wiki": "Basmati"
+      },
+      {
+        "slug": "africanrice",
+        "name": "אורז אפריקאי",
+        "latin": "Oryza glaberrima",
+        "type": "דגן אמיתי",
+        "method": "מזון בסיס",
+        "temp": "טרופי-חם",
+        "world": "מאלי · ניגריה · גינאה",
+        "wiki": "Oryza glaberrima"
+      },
+      {
+        "slug": "popcorn",
+        "name": "תירס פופ",
+        "latin": "Zea mays var. everta",
+        "type": "דגן אמיתי",
+        "method": "חטיף (פופקורן)",
+        "temp": "חם",
+        "world": "ארה״ב · ארגנטינה",
+        "wiki": "פופקורן"
+      },
+      {
+        "slug": "sweetcorn",
+        "name": "תירס מתוק",
+        "latin": "Zea mays var. saccharata",
+        "type": "דגן אמיתי",
+        "method": "ירק ומזון",
+        "temp": "חם",
+        "world": "ארה״ב · סין",
+        "wiki": "תירס מתוק"
+      },
+      {
+        "slug": "flintcorn",
+        "name": "תירס-קמח (פלינט)",
+        "latin": "Zea mays var. indurata",
+        "type": "דגן אמיתי",
+        "method": "קמח ומזון",
+        "temp": "חם",
+        "world": "מקסיקו · ארה״ב",
+        "wiki": "תירס"
+      },
+      {
+        "slug": "broomcorn",
+        "name": "סורגום מטאטא",
+        "latin": "Sorghum bicolor var. technicum",
+        "type": "דגן אמיתי",
+        "method": "מטאטאים וסיבים",
+        "temp": "חם",
+        "world": "מקסיקו · הונגריה · איטליה",
+        "wiki": "סורגום"
+      },
+      {
+        "slug": "greenpea",
+        "name": "אפונה ירוקה",
+        "latin": "Pisum sativum",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "קריר",
+        "world": "קנדה · רוסיה · סין",
+        "wiki": "אפונה"
+      },
+      {
+        "slug": "yellowpea",
+        "name": "אפונה צהובה",
+        "latin": "Pisum sativum",
+        "type": "קטנית-דגן",
+        "method": "דאל וחלבון",
+        "temp": "קריר",
+        "world": "קנדה · רוסיה",
+        "wiki": "אפונה"
+      },
+      {
+        "slug": "redlentil",
+        "name": "עדשה אדומה",
+        "latin": "Lens culinaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג",
+        "world": "קנדה · טורקיה · הודו",
+        "wiki": "עדשה תרבותית"
+      },
+      {
+        "slug": "greenlentil",
+        "name": "עדשה ירוקה",
+        "latin": "Lens culinaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג",
+        "world": "קנדה · הודו · צרפת",
+        "wiki": "עדשה תרבותית"
+      },
+      {
+        "slug": "belugalentil",
+        "name": "עדשה שחורה (בלוגה)",
+        "latin": "Lens culinaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג",
+        "world": "קנדה · ארה״ב",
+        "wiki": "עדשה תרבותית"
+      },
+      {
+        "slug": "desichickpea",
+        "name": "חומוס דסי",
+        "latin": "Cicer arietinum",
+        "type": "קטנית-דגן",
+        "method": "דאל וקמח",
+        "temp": "ממוזג-חם",
+        "world": "הודו · אתיופיה",
+        "wiki": "חומוס (קטנית)"
+      },
+      {
+        "slug": "kabulichickpea",
+        "name": "חומוס קבולי",
+        "latin": "Cicer arietinum",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "הודו · טורקיה · מקסיקו",
+        "wiki": "חומוס (קטנית)"
+      },
+      {
+        "slug": "whitebean",
+        "name": "שעועית לבנה",
+        "latin": "Phaseolus vulgaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "מיאנמר · ברזיל · הודו",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "cranberrybean",
+        "name": "שעועית מנומרת",
+        "latin": "Phaseolus vulgaris",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג-חם",
+        "world": "איטליה · ברזיל · ארה״ב",
+        "wiki": "שעועית רגילה"
+      },
+      {
+        "slug": "runnerbean",
+        "name": "שעועית רב-פרחית",
+        "latin": "Phaseolus coccineus",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "ממוזג",
+        "world": "בריטניה · מקסיקו",
+        "wiki": "Phaseolus coccineus"
+      },
+      {
+        "slug": "teparybean",
+        "name": "שעועית טפרי",
+        "latin": "Phaseolus acutifolius",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "חם-צחיח",
+        "world": "מקסיקו · ארה״ב",
+        "wiki": "Phaseolus acutifolius"
+      },
+      {
+        "slug": "yellowlupin",
+        "name": "תורמוס צהוב",
+        "latin": "Lupinus luteus",
+        "type": "קטנית-דגן",
+        "method": "חלבון ומספוא",
+        "temp": "ממוזג",
+        "world": "פולין · גרמניה · רוסיה",
+        "wiki": "תורמוס"
+      },
+      {
+        "slug": "bluelupin",
+        "name": "תורמוס כחול",
+        "latin": "Lupinus angustifolius",
+        "type": "קטנית-דגן",
+        "method": "חלבון ומספוא",
+        "temp": "ממוזג",
+        "world": "אוסטרליה · פולין",
+        "wiki": "תורמוס"
+      },
+      {
+        "slug": "vetch",
+        "name": "בקיה",
+        "latin": "Vicia sativa",
+        "type": "קטנית-דגן",
+        "method": "מספוא ודשא",
+        "temp": "ממוזג",
+        "world": "רוסיה · אתיופיה · סין",
+        "wiki": "בקיה תרבותית"
+      },
+      {
+        "slug": "lablab",
+        "name": "לבלב",
+        "latin": "Lablab purpureus",
+        "type": "קטנית-דגן",
+        "method": "קטנית ומספוא",
+        "temp": "חם",
+        "world": "הודו · קניה · אוסטרליה",
+        "wiki": "Lablab"
+      },
+      {
+        "slug": "mothbean",
+        "name": "שעועית עש",
+        "latin": "Vigna aconitifolia",
+        "type": "קטנית-דגן",
+        "method": "קטנית ומספוא",
+        "temp": "חם-צחיח",
+        "world": "הודו · פקיסטן",
+        "wiki": "Vigna aconitifolia"
+      },
+      {
+        "slug": "ricebean",
+        "name": "שעועית אורז",
+        "latin": "Vigna umbellata",
+        "type": "קטנית-דגן",
+        "method": "קטנית ומספוא",
+        "temp": "חם",
+        "world": "הודו · נפאל · סין",
+        "wiki": "Vigna umbellata"
+      },
+      {
+        "slug": "wingedbean",
+        "name": "שעועית מכונפת",
+        "latin": "Psophocarpus tetragonolobus",
+        "type": "קטנית-דגן",
+        "method": "קטנית מזון",
+        "temp": "טרופי",
+        "world": "פפואה גינאה · אינדונזיה · תאילנד",
+        "wiki": "Psophocarpus tetragonolobus"
+      },
+      {
+        "slug": "horsegram",
+        "name": "קולת (הורסגרם)",
+        "latin": "Macrotyloma uniflorum",
+        "type": "קטנית-דגן",
+        "method": "דאל ומספוא",
+        "temp": "חם",
+        "world": "הודו · אתיופיה · מלזיה",
+        "wiki": "Macrotyloma uniflorum"
+      },
+      {
+        "slug": "polishwheat",
+        "name": "חיטה פולנית",
+        "latin": "Triticum polonicum",
+        "type": "דגן אמיתי",
+        "method": "קמח",
+        "temp": "ממוזג",
+        "world": "אתיופיה · איטליה · ספרד",
+        "wiki": "Triticum polonicum"
+      },
+      {
+        "slug": "hardredwheat",
+        "name": "חיטה אדומה קשה",
+        "latin": "Triticum aestivum",
+        "type": "דגן אמיתי",
+        "method": "קמח לחם",
+        "temp": "ממוזג",
+        "world": "ארה״ב · קנדה · רוסיה",
+        "wiki": "חיטה"
+      },
+      {
+        "slug": "velvetbean",
+        "name": "שעועית קטיפה",
+        "latin": "Mucuna pruriens",
+        "type": "קטנית-דגן",
+        "method": "מספוא וכיסוי",
+        "temp": "חם",
+        "world": "ברזיל · הודו · ניגריה",
+        "wiki": "Mucuna pruriens"
+      }
+    ]
+  },
+  "seeds": {
+    "title": "מילון זרעים",
+    "icon": "🌱",
+    "filterKey": "type",
+    "cols": [
+      {
+        "key": "name",
+        "label": "שם",
+        "bold": true
+      },
+      {
+        "key": "latin",
+        "label": "שם מדעי",
+        "italic": true
+      },
+      {
+        "key": "type",
+        "label": "סוג",
+        "chip": true
+      },
+      {
+        "key": "method",
+        "label": "שיטת גידול"
+      },
+      {
+        "key": "temp",
+        "label": "טמפ׳ / אקלים",
+        "mono": true
+      },
+      {
+        "key": "world",
+        "label": "התמחות עולמית"
+      }
+    ],
+    "rows": [
+      {
+        "slug": "sunflowerseed",
+        "name": "זרעי חמנייה",
+        "latin": "Helianthus annuus",
+        "type": "זרעי שמן",
+        "method": "שמן וחטיף",
+        "temp": "ממוזג-חם",
+        "world": "אוקראינה · רוסיה · ארגנטינה",
+        "wiki": "חמנית מצויה"
+      },
+      {
+        "slug": "sesameseed",
+        "name": "שומשום",
+        "latin": "Sesamum indicum",
+        "type": "זרעי שמן",
+        "method": "טחינה ושמן",
+        "temp": "חם",
+        "world": "סודן · מיאנמר · הודו",
+        "wiki": "שומשום"
+      },
+      {
+        "slug": "flaxseed",
+        "name": "זרעי פשתן",
+        "latin": "Linum usitatissimum",
+        "type": "זרעי שמן",
+        "method": "שמן ובריאות",
+        "temp": "ממוזג",
+        "world": "קזחסטן · קנדה · רוסיה",
+        "wiki": "פשתה"
+      },
+      {
+        "slug": "canolaseed",
+        "name": "זרעי קנולה",
+        "latin": "Brassica napus",
+        "type": "זרעי שמן",
+        "method": "שמן מאכל",
+        "temp": "ממוזג",
+        "world": "קנדה · סין · הודו",
+        "wiki": "לפתית"
+      },
+      {
+        "slug": "poppyseed",
+        "name": "פרג",
+        "latin": "Papaver somniferum",
+        "type": "זרעי שמן",
+        "method": "מאפים ושמן",
+        "temp": "ממוזג",
+        "world": "צ׳כיה · טורקיה · ספרד",
+        "wiki": "פרג הישן"
+      },
+      {
+        "slug": "cottonseed",
+        "name": "זרעי כותנה",
+        "latin": "Gossypium hirsutum",
+        "type": "זרעי שמן",
+        "method": "שמן ומספוא",
+        "temp": "חם",
+        "world": "הודו · סין · ארה״ב",
+        "wiki": "כותנה"
+      },
+      {
+        "slug": "safflower",
+        "name": "חריע",
+        "latin": "Carthamus tinctorius",
+        "type": "זרעי שמן",
+        "method": "שמן וצבע",
+        "temp": "חם-צחיח",
+        "world": "קזחסטן · הודו · ארה״ב",
+        "wiki": "חריע הצבעים"
+      },
+      {
+        "slug": "castorbean",
+        "name": "קיקיון",
+        "latin": "Ricinus communis",
+        "type": "זרעי שמן",
+        "method": "שמן תעשייתי",
+        "temp": "חם",
+        "world": "הודו · מוזמביק · סין",
+        "wiki": "קיקיון מצוי"
+      },
+      {
+        "slug": "grapeseed",
+        "name": "זרעי ענבים",
+        "latin": "Vitis vinifera",
+        "type": "זרעי שמן",
+        "method": "שמן ותמצית",
+        "temp": "ממוזג",
+        "world": "איטליה · ספרד · צרפת",
+        "wiki": "גפן היין"
+      },
+      {
+        "slug": "pumpkinseed",
+        "name": "זרעי דלעת",
+        "latin": "Cucurbita pepo",
+        "type": "זרעי מאכל",
+        "method": "חטיף ושמן",
+        "temp": "חם",
+        "world": "סין · הודו · מקסיקו",
+        "wiki": "דלעת"
+      },
+      {
+        "slug": "chiaseed",
+        "name": "זרעי צ׳יה",
+        "latin": "Salvia hispanica",
+        "type": "זרעי מאכל",
+        "method": "סופר-פוד",
+        "temp": "חם",
+        "world": "מקסיקו · בוליביה",
+        "wiki": "צ׳יה"
+      },
+      {
+        "slug": "hempseed",
+        "name": "זרעי קנבוס",
+        "latin": "Cannabis sativa",
+        "type": "זרעי מאכל",
+        "method": "חלבון ושמן",
+        "temp": "ממוזג",
+        "world": "סין · צרפת · קנדה",
+        "wiki": "קנבוס"
+      },
+      {
+        "slug": "watermelonseed",
+        "name": "גרעיני אבטיח",
+        "latin": "Citrullus lanatus",
+        "type": "זרעי מאכל",
+        "method": "חטיף",
+        "temp": "חם",
+        "world": "סין · מצרים · סודן",
+        "wiki": "אבטיח"
+      },
+      {
+        "slug": "quinoaseed",
+        "name": "זרעי קינואה",
+        "latin": "Chenopodium quinoa",
+        "type": "זרעי מאכל",
+        "method": "דגן-על",
+        "temp": "רם-קריר",
+        "world": "פרו · בוליביה",
+        "wiki": "קינואה"
+      },
+      {
+        "slug": "mungseed",
+        "name": "זרעי מש",
+        "latin": "Vigna radiata",
+        "type": "זרעי מאכל",
+        "method": "נבטים",
+        "temp": "חם",
+        "world": "הודו · מיאנמר",
+        "wiki": "שעועית מאש"
+      },
+      {
+        "slug": "nigella",
+        "name": "קצח",
+        "latin": "Nigella sativa",
+        "type": "זרעי תבלין",
+        "method": "תבלין ורפואה",
+        "temp": "חם",
+        "world": "הודו · מצרים · טורקיה",
+        "wiki": "קצח זרוע"
+      },
+      {
+        "slug": "cumin",
+        "name": "כמון",
+        "latin": "Cuminum cyminum",
+        "type": "זרעי תבלין",
+        "method": "תבלין",
+        "temp": "חם-צחיח",
+        "world": "הודו · סוריה · טורקיה",
+        "wiki": "כמון"
+      },
+      {
+        "slug": "coriander",
+        "name": "כוסברה",
+        "latin": "Coriandrum sativum",
+        "type": "זרעי תבלין",
+        "method": "תבלין",
+        "temp": "ממוזג-חם",
+        "world": "הודו · רוסיה · מרוקו",
+        "wiki": "כוסברה"
+      },
+      {
+        "slug": "fennelseed",
+        "name": "זרעי שומר",
+        "latin": "Foeniculum vulgare",
+        "type": "זרעי תבלין",
+        "method": "תבלין ומשקה",
+        "temp": "ממוזג",
+        "world": "הודו · סין · מצרים",
+        "wiki": "שומר פשוט"
+      },
+      {
+        "slug": "aniseed",
+        "name": "אניס",
+        "latin": "Pimpinella anisum",
+        "type": "זרעי תבלין",
+        "method": "תבלין וליקר",
+        "temp": "ממוזג-חם",
+        "world": "טורקיה · ספרד · סוריה",
+        "wiki": "אניס"
+      },
+      {
+        "slug": "caraway",
+        "name": "קימל",
+        "latin": "Carum carvi",
+        "type": "זרעי תבלין",
+        "method": "תבלין ולחם",
+        "temp": "ממוזג",
+        "world": "פינלנד · מצרים",
+        "wiki": "קימל"
+      },
+      {
+        "slug": "fenugreek",
+        "name": "חילבה",
+        "latin": "Trigonella foenum-graecum",
+        "type": "זרעי תבלין",
+        "method": "תבלין ומספוא",
+        "temp": "חם",
+        "world": "הודו · טורקיה",
+        "wiki": "גרגרנית יוונית"
+      },
+      {
+        "slug": "mustardseed",
+        "name": "חרדל",
+        "latin": "Brassica juncea",
+        "type": "זרעי תבלין",
+        "method": "חרדל ותבלין",
+        "temp": "ממוזג",
+        "world": "נפאל · רוסיה · קנדה",
+        "wiki": "חרדל השדה"
+      },
+      {
+        "slug": "cardamom",
+        "name": "הל",
+        "latin": "Elettaria cardamomum",
+        "type": "זרעי תבלין",
+        "method": "תבלין יקר",
+        "temp": "טרופי",
+        "world": "גואטמלה · הודו",
+        "wiki": "הל ריחני"
+      },
+      {
+        "slug": "dillseed",
+        "name": "זרעי שבת",
+        "latin": "Anethum graveolens",
+        "type": "זרעי תבלין",
+        "method": "תבלין וכבישה",
+        "temp": "ממוזג",
+        "world": "הודו · פקיסטן",
+        "wiki": "שבת ריחני"
+      },
+      {
+        "slug": "alfalfaseed",
+        "name": "זרעי אספסת",
+        "latin": "Medicago sativa",
+        "type": "זרעי מספוא",
+        "method": "מספוא ונבטים",
+        "temp": "ממוזג",
+        "world": "ארה״ב · ארגנטינה",
+        "wiki": "אספסת תרבותית"
+      },
+      {
+        "slug": "clover",
+        "name": "זרעי תלתן",
+        "latin": "Trifolium pratense",
+        "type": "זרעי מספוא",
+        "method": "כיסוי ומספוא",
+        "temp": "ממוזג",
+        "world": "ארה״ב · קנדה",
+        "wiki": "תלתן"
+      },
+      {
+        "slug": "ryegrass",
+        "name": "זרעי בן-חיטה",
+        "latin": "Lolium perenne",
+        "type": "זרעי מספוא",
+        "method": "מרעה ודשא",
+        "temp": "ממוזג",
+        "world": "ניו זילנד · ארה״ב",
+        "wiki": "בן-חיטה"
+      },
+      {
+        "slug": "perillaseed",
+        "name": "זרעי פרילה",
+        "latin": "Perilla frutescens",
+        "type": "זרעי שמן",
+        "method": "שמן ותבלין",
+        "temp": "ממוזג",
+        "world": "דרום קוריאה · יפן · סין",
+        "wiki": "Perilla frutescens"
+      },
+      {
+        "slug": "camelinaseed",
+        "name": "זרעי קמלינה",
+        "latin": "Camelina sativa",
+        "type": "זרעי שמן",
+        "method": "שמן וביו-דלק",
+        "temp": "ממוזג",
+        "world": "קנדה · ארה״ב · אוקראינה",
+        "wiki": "Camelina sativa"
+      },
+      {
+        "slug": "nigerseed",
+        "name": "זרעי נוג׳ (רמטיל)",
+        "latin": "Guizotia abyssinica",
+        "type": "זרעי שמן",
+        "method": "שמן וזרעי ציפורים",
+        "temp": "חם",
+        "world": "אתיופיה · הודו · מיאנמר",
+        "wiki": "Guizotia abyssinica"
+      },
+      {
+        "slug": "rapeseed",
+        "name": "זרעי לפת",
+        "latin": "Brassica rapa",
+        "type": "זרעי שמן",
+        "method": "שמן ומספוא",
+        "temp": "ממוזג",
+        "world": "קנדה · סין · הודו",
+        "wiki": "לפת"
+      },
+      {
+        "slug": "borageseed",
+        "name": "זרעי עקצין",
+        "latin": "Borago officinalis",
+        "type": "זרעי שמן",
+        "method": "שמן GLA",
+        "temp": "ממוזג",
+        "world": "קנדה · בריטניה",
+        "wiki": "עקצין רפואי"
+      },
+      {
+        "slug": "moringaseed",
+        "name": "זרעי מורינגה",
+        "latin": "Moringa oleifera",
+        "type": "זרעי שמן",
+        "method": "שמן וטיהור מים",
+        "temp": "טרופי",
+        "world": "הודו · אתיופיה · פיליפינים",
+        "wiki": "מורינגה"
+      },
+      {
+        "slug": "sachainchi",
+        "name": "זרעי סצ׳ה אינצ׳י",
+        "latin": "Plukenetia volubilis",
+        "type": "זרעי שמן",
+        "method": "שמן אומגה-3",
+        "temp": "טרופי",
+        "world": "פרו · תאילנד",
+        "wiki": "Plukenetia volubilis"
+      },
+      {
+        "slug": "jojobaseed",
+        "name": "זרעי הוהובה",
+        "latin": "Simmondsia chinensis",
+        "type": "זרעי שמן",
+        "method": "שמן קוסמטי",
+        "temp": "חם-צחיח",
+        "world": "ארגנטינה · ישראל · ארה״ב",
+        "wiki": "הוהובה"
+      },
+      {
+        "slug": "pumpkinkernel",
+        "name": "גרעיני דלורית",
+        "latin": "Cucurbita moschata",
+        "type": "זרעי מאכל",
+        "method": "חטיף ושמן",
+        "temp": "חם",
+        "world": "סין · הודו · מקסיקו",
+        "wiki": "דלעת"
+      },
+      {
+        "slug": "cucumberseed",
+        "name": "זרעי מלפפון",
+        "latin": "Cucumis sativus",
+        "type": "זרעי מאכל",
+        "method": "שמן ומאכל",
+        "temp": "ממוזג-חם",
+        "world": "סין · הודו · טורקיה",
+        "wiki": "מלפפון"
+      },
+      {
+        "slug": "cantaloupeseed",
+        "name": "זרעי מלון",
+        "latin": "Cucumis melo",
+        "type": "זרעי מאכל",
+        "method": "חטיף ושמן",
+        "temp": "חם",
+        "world": "הודו · איראן · מצרים",
+        "wiki": "מלון"
+      },
+      {
+        "slug": "apricotkernel",
+        "name": "גלעיני משמש",
+        "latin": "Prunus armeniaca",
+        "type": "זרעי מאכל",
+        "method": "מרציפן ושמן",
+        "temp": "ממוזג",
+        "world": "טורקיה · אוזבקיסטן · איראן",
+        "wiki": "משמש"
+      },
+      {
+        "slug": "lotusseed",
+        "name": "זרעי לוטוס",
+        "latin": "Nelumbo nucifera",
+        "type": "זרעי מאכל",
+        "method": "מאכל וקינוח",
+        "temp": "טרופי",
+        "world": "סין · הודו · וייטנאם",
+        "wiki": "לוטוס הודי"
+      },
+      {
+        "slug": "jackfruitseed",
+        "name": "זרעי ג׳קפרוט",
+        "latin": "Artocarpus heterophyllus",
+        "type": "זרעי מאכל",
+        "method": "מבושל וקמח",
+        "temp": "טרופי",
+        "world": "הודו · בנגלדש · תאילנד",
+        "wiki": "ג׳קפרוט"
+      },
+      {
+        "slug": "amaranthseed",
+        "name": "זרעי אמרנט",
+        "latin": "Amaranthus caudatus",
+        "type": "זרעי מאכל",
+        "method": "דגן-על",
+        "temp": "חם",
+        "world": "הודו · מקסיקו · פרו",
+        "wiki": "ירבוז"
+      },
+      {
+        "slug": "basilseed",
+        "name": "זרעי בזיליקום (תוכמריא)",
+        "latin": "Ocimum basilicum",
+        "type": "זרעי מאכל",
+        "method": "משקה ומעבה",
+        "temp": "חם",
+        "world": "הודו · תאילנד · איראן",
+        "wiki": "בזיליקום"
+      },
+      {
+        "slug": "psyllium",
+        "name": "פסיליום (זרע לחך)",
+        "latin": "Plantago ovata",
+        "type": "זרעי מאכל",
+        "method": "סיבים תזונתיים",
+        "temp": "חם-צחיח",
+        "world": "הודו · פקיסטן",
+        "wiki": "Plantago ovata"
+      },
+      {
+        "slug": "milkthistleseed",
+        "name": "זרעי גדילן",
+        "latin": "Silybum marianum",
+        "type": "זרעי מאכל",
+        "method": "תוסף כבד",
+        "temp": "ממוזג-חם",
+        "world": "סין · ארגנטינה · הונגריה",
+        "wiki": "גדילן מצוי"
+      },
+      {
+        "slug": "radishseed",
+        "name": "זרעי צנון",
+        "latin": "Raphanus sativus",
+        "type": "זרעי מאכל",
+        "method": "נבטים ושמן",
+        "temp": "ממוזג",
+        "world": "סין · הודו · דרום קוריאה",
+        "wiki": "צנון"
+      },
+      {
+        "slug": "whitemustardseed",
+        "name": "זרעי חרדל לבן",
+        "latin": "Sinapis alba",
+        "type": "זרעי תבלין",
+        "method": "חרדל ותבלין",
+        "temp": "ממוזג",
+        "world": "קנדה · הונגריה · צ׳כיה",
+        "wiki": "חרדל לבן"
+      },
+      {
+        "slug": "blackmustardseed",
+        "name": "זרעי חרדל שחור",
+        "latin": "Brassica nigra",
+        "type": "זרעי תבלין",
+        "method": "חרדל חריף",
+        "temp": "ממוזג-חם",
+        "world": "אתיופיה · הודו · אירופה",
+        "wiki": "חרדל שחור"
+      },
+      {
+        "slug": "celeryseed",
+        "name": "זרעי סלרי",
+        "latin": "Apium graveolens",
+        "type": "זרעי תבלין",
+        "method": "תבלין ותערובות",
+        "temp": "ממוזג",
+        "world": "הודו · סין · צרפת",
+        "wiki": "סלרי"
+      },
+      {
+        "slug": "ajwainseed",
+        "name": "זרעי אג׳ואן",
+        "latin": "Trachyspermum ammi",
+        "type": "זרעי תבלין",
+        "method": "תבלין ורפואה",
+        "temp": "חם",
+        "world": "הודו · איראן · אפגניסטן",
+        "wiki": "Trachyspermum ammi"
+      },
+      {
+        "slug": "staraniseseed",
+        "name": "אניס כוכבי",
+        "latin": "Illicium verum",
+        "type": "זרעי תבלין",
+        "method": "תבלין וליקר",
+        "temp": "טרופי",
+        "world": "סין · וייטנאם",
+        "wiki": "אניס כוכבי"
+      },
+      {
+        "slug": "tamarindseed",
+        "name": "זרעי תמר הינדי",
+        "latin": "Tamarindus indica",
+        "type": "אחר",
+        "method": "גומי ומספוא",
+        "temp": "טרופי",
+        "world": "הודו · תאילנד · מקסיקו",
+        "wiki": "תמרהינדי"
+      },
+      {
+        "slug": "whitesesame",
+        "name": "שומשום לבן",
+        "latin": "Sesamum indicum",
+        "type": "זרעי שמן",
+        "method": "טחינה ושמן",
+        "temp": "חם",
+        "world": "סודן · הודו · מיאנמר",
+        "wiki": "שומשום"
+      },
+      {
+        "slug": "blacksesame",
+        "name": "שומשום שחור",
+        "latin": "Sesamum indicum",
+        "type": "זרעי שמן",
+        "method": "טחינה ותבלין",
+        "temp": "חם",
+        "world": "מיאנמר · הודו · סודן",
+        "wiki": "שומשום"
+      },
+      {
+        "slug": "brownflax",
+        "name": "פשתן חום",
+        "latin": "Linum usitatissimum",
+        "type": "זרעי שמן",
+        "method": "שמן ובריאות",
+        "temp": "ממוזג",
+        "world": "קנדה · רוסיה · קזחסטן",
+        "wiki": "פשתה"
+      },
+      {
+        "slug": "goldenflax",
+        "name": "פשתן זהוב",
+        "latin": "Linum usitatissimum",
+        "type": "זרעי שמן",
+        "method": "שמן ובריאות",
+        "temp": "ממוזג",
+        "world": "קנדה · קזחסטן · רוסיה",
+        "wiki": "פשתה"
+      },
+      {
+        "slug": "bluepoppy",
+        "name": "פרג כחול",
+        "latin": "Papaver somniferum",
+        "type": "זרעי שמן",
+        "method": "מאפים ושמן",
+        "temp": "ממוזג",
+        "world": "צ׳כיה · טורקיה · ספרד",
+        "wiki": "פרג הישן"
+      },
+      {
+        "slug": "whitepoppy",
+        "name": "פרג לבן",
+        "latin": "Papaver somniferum",
+        "type": "זרעי תבלין",
+        "method": "קארי ומאפים",
+        "temp": "ממוזג",
+        "world": "הודו · טורקיה",
+        "wiki": "פרג הישן"
+      },
+      {
+        "slug": "zucchiniseed",
+        "name": "זרעי קישוא",
+        "latin": "Cucurbita pepo",
+        "type": "זרעי מאכל",
+        "method": "חטיף ושמן",
+        "temp": "חם",
+        "world": "סין · הודו · מקסיקו",
+        "wiki": "קישוא"
+      },
+      {
+        "slug": "tigernut",
+        "name": "שקד-אדמה",
+        "latin": "Cyperus esculentus",
+        "type": "זרעי מאכל",
+        "method": "משקה אורצ׳טה",
+        "temp": "חם",
+        "world": "ספרד · ניז׳ר · גאנה",
+        "wiki": "Cyperus esculentus"
+      },
+      {
+        "slug": "whitechia",
+        "name": "צ׳יה לבנה",
+        "latin": "Salvia hispanica",
+        "type": "זרעי מאכל",
+        "method": "סופר-פוד",
+        "temp": "חם",
+        "world": "מקסיקו · פרגוואי · אוסטרליה",
+        "wiki": "צ׳יה"
+      },
+      {
+        "slug": "blackchia",
+        "name": "צ׳יה שחורה",
+        "latin": "Salvia hispanica",
+        "type": "זרעי מאכל",
+        "method": "סופר-פוד",
+        "temp": "חם",
+        "world": "מקסיקו · בוליביה · ארגנטינה",
+        "wiki": "צ׳יה"
+      },
+      {
+        "slug": "pomegranateseed",
+        "name": "זרעי רימון",
+        "latin": "Punica granatum",
+        "type": "זרעי מאכל",
+        "method": "שמן וחטיף",
+        "temp": "ממוזג-חם",
+        "world": "הודו · איראן · טורקיה",
+        "wiki": "רימון"
+      },
+      {
+        "slug": "blackcumin",
+        "name": "כמון שחור",
+        "latin": "Bunium persicum",
+        "type": "זרעי תבלין",
+        "method": "תבלין",
+        "temp": "חם",
+        "world": "איראן · הודו · אפגניסטן",
+        "wiki": "Bunium persicum"
+      },
+      {
+        "slug": "grainsofparadise",
+        "name": "גרגר-הפרדיס",
+        "latin": "Aframomum melegueta",
+        "type": "זרעי תבלין",
+        "method": "תבלין",
+        "temp": "טרופי",
+        "world": "גאנה · ניגריה · חוף השנהב",
+        "wiki": "Aframomum melegueta"
+      },
+      {
+        "slug": "brownmustardseed",
+        "name": "זרעי חרדל חום",
+        "latin": "Brassica juncea",
+        "type": "זרעי תבלין",
+        "method": "חרדל ושמן",
+        "temp": "ממוזג-חם",
+        "world": "נפאל · הודו · קנדה",
+        "wiki": "חרדל השדה"
+      },
+      {
+        "slug": "sainfoinseed",
+        "name": "זרעי אספרצת",
+        "latin": "Onobrychis viciifolia",
+        "type": "זרעי מספוא",
+        "method": "מספוא ודבורים",
+        "temp": "ממוזג",
+        "world": "רוסיה · קזחסטן · צרפת",
+        "wiki": "Onobrychis viciifolia"
+      },
+      {
+        "slug": "vetchseed",
+        "name": "זרעי בקיה",
+        "latin": "Vicia sativa",
+        "type": "זרעי מספוא",
+        "method": "מספוא ודשא",
+        "temp": "ממוזג",
+        "world": "רוסיה · אתיופיה · סין",
+        "wiki": "בקיה תרבותית"
+      },
+      {
+        "slug": "serradella",
+        "name": "זרעי סירדלה",
+        "latin": "Ornithopus sativus",
+        "type": "זרעי מספוא",
+        "method": "מספוא וכיסוי",
+        "temp": "ממוזג",
+        "world": "פורטוגל · אוסטרליה · ספרד",
+        "wiki": "Ornithopus sativus"
+      },
+      {
+        "slug": "argan",
+        "name": "זרעי ארגן",
+        "latin": "Argania spinosa",
+        "type": "זרעי שמן",
+        "method": "שמן ארגן",
+        "temp": "חם-צחיח",
+        "world": "מרוקו",
+        "wiki": "ארגן"
+      },
+      {
+        "slug": "crambeseed",
+        "name": "זרעי כרמבה",
+        "latin": "Crambe abyssinica",
+        "type": "זרעי שמן",
+        "method": "שמן תעשייתי",
+        "temp": "ממוזג",
+        "world": "ארה״ב · מקסיקו",
+        "wiki": "Crambe abyssinica"
+      },
+      {
+        "slug": "tungseed",
+        "name": "זרעי טונג",
+        "latin": "Vernicia fordii",
+        "type": "זרעי שמן",
+        "method": "שמן תעשייתי",
+        "temp": "ממוזג-חם",
+        "world": "סין · ארגנטינה · פרגוואי",
+        "wiki": "Vernicia fordii"
+      },
+      {
+        "slug": "mahuaseed",
+        "name": "זרעי מהואה",
+        "latin": "Madhuca longifolia",
+        "type": "זרעי שמן",
+        "method": "שמן וייצור",
+        "temp": "טרופי",
+        "world": "הודו",
+        "wiki": "Madhuca longifolia"
+      },
+      {
+        "slug": "kapokseed",
+        "name": "זרעי קפוק",
+        "latin": "Ceiba pentandra",
+        "type": "זרעי שמן",
+        "method": "שמן וסיבים",
+        "temp": "טרופי",
+        "world": "אינדונזיה · תאילנד",
+        "wiki": "Ceiba pentandra"
+      },
+      {
+        "slug": "lovageseed",
+        "name": "זרעי לובאג׳",
+        "latin": "Levisticum officinale",
+        "type": "זרעי תבלין",
+        "method": "תבלין",
+        "temp": "ממוזג",
+        "world": "הונגריה · גרמניה · הולנד",
+        "wiki": "Levisticum officinale"
+      },
+      {
+        "slug": "lettuceseed",
+        "name": "זרעי חסה",
+        "latin": "Lactuca sativa",
+        "type": "זרעי שמן",
+        "method": "שמן ותרבית",
+        "temp": "ממוזג",
+        "world": "מצרים · הודו · סין",
+        "wiki": "חסה"
+      },
+      {
+        "slug": "carrotseed",
+        "name": "זרעי גזר",
+        "latin": "Daucus carota",
+        "type": "זרעי תבלין",
+        "method": "שמן אתרי ותבלין",
+        "temp": "ממוזג",
+        "world": "הודו · צרפת · הולנד",
+        "wiki": "גזר"
+      },
+      {
+        "slug": "blacksunflower",
+        "name": "זרעי חמנייה שחורים",
+        "latin": "Helianthus annuus",
+        "type": "זרעי שמן",
+        "method": "שמן",
+        "temp": "ממוזג-חם",
+        "world": "אוקראינה · רוסיה · ארגנטינה",
+        "wiki": "חמנית מצויה"
+      },
+      {
+        "slug": "stripedsunflower",
+        "name": "זרעי חמנייה מפוספסים",
+        "latin": "Helianthus annuus",
+        "type": "זרעי מאכל",
+        "method": "חטיף",
+        "temp": "ממוזג-חם",
+        "world": "ארה״ב · סין · טורקיה",
+        "wiki": "חמנית מצויה"
+      },
+      {
+        "slug": "egusi",
+        "name": "זרעי אגוסי",
+        "latin": "Cucumeropsis mannii",
+        "type": "זרעי מאכל",
+        "method": "מרק ותבשיל",
+        "temp": "טרופי",
+        "world": "ניגריה · גאנה · קמרון",
+        "wiki": "Egusi"
+      },
+      {
+        "slug": "mahlab",
+        "name": "מהלב",
+        "latin": "Prunus mahaleb",
+        "type": "זרעי תבלין",
+        "method": "מאפים ותבלין",
+        "temp": "ממוזג",
+        "world": "סוריה · טורקיה · איראן",
+        "wiki": "Prunus mahaleb"
+      },
+      {
+        "slug": "parsleyseed",
+        "name": "זרעי פטרוזיליה",
+        "latin": "Petroselinum crispum",
+        "type": "זרעי תבלין",
+        "method": "תבלין וזריעה",
+        "temp": "ממוזג",
+        "world": "הודו · צרפת · ארה״ב",
+        "wiki": "פטרוזיליון גנני"
+      },
+      {
+        "slug": "soybeanoilseed",
+        "name": "זרעי סויה",
+        "latin": "Glycine max",
+        "type": "זרעי שמן",
+        "method": "שמן וחלבון",
+        "temp": "ממוזג-חם",
+        "world": "ברזיל · ארה״ב · ארגנטינה",
+        "wiki": "פול הסויה"
+      },
+      {
+        "slug": "groundnutseed",
+        "name": "זרעי בוטנים",
+        "latin": "Arachis hypogaea",
+        "type": "זרעי שמן",
+        "method": "שמן וחמאה",
+        "temp": "חם",
+        "world": "סין · הודו · ניגריה",
+        "wiki": "בוטן"
+      },
+      {
+        "slug": "lupinseed",
+        "name": "זרעי תורמוס",
+        "latin": "Lupinus albus",
+        "type": "זרעי מאכל",
+        "method": "חלבון וחטיף",
+        "temp": "ממוזג",
+        "world": "אוסטרליה · פולין · רוסיה",
+        "wiki": "תורמוס"
+      },
+      {
+        "slug": "buckwheatseed",
+        "name": "זרעי כוסמת",
+        "latin": "Fagopyrum esculentum",
+        "type": "זרעי מאכל",
+        "method": "קמח וגריסים",
+        "temp": "ממוזג-קר",
+        "world": "רוסיה · סין · אוקראינה",
+        "wiki": "כוסמת"
+      },
+      {
+        "slug": "sorghumseed",
+        "name": "זרעי סורגום",
+        "latin": "Sorghum bicolor",
+        "type": "זרעי מספוא",
+        "method": "מספוא ומזון",
+        "temp": "חם",
+        "world": "ארה״ב · ניגריה · הודו",
+        "wiki": "סורגום"
+      },
+      {
+        "slug": "milletbirdseed",
+        "name": "זרעי דוחן לציפורים",
+        "latin": "Panicum miliaceum",
+        "type": "זרעי מספוא",
+        "method": "מזון ציפורים",
+        "temp": "חם-צחיח",
+        "world": "הודו · סין · רוסיה",
+        "wiki": "דוחן"
+      },
+      {
+        "slug": "papayaseed",
+        "name": "זרעי פפאיה",
+        "latin": "Carica papaya",
+        "type": "זרעי תבלין",
+        "method": "תבלין דמוי-פלפל",
+        "temp": "טרופי",
+        "world": "הודו · מקסיקו · ברזיל",
+        "wiki": "פפאיה"
+      },
+      {
+        "slug": "mangoseed",
+        "name": "גלעין מנגו",
+        "latin": "Mangifera indica",
+        "type": "זרעי שמן",
+        "method": "חמאת מנגו",
+        "temp": "טרופי",
+        "world": "הודו · מקסיקו · תאילנד",
+        "wiki": "מנגו"
+      },
+      {
+        "slug": "avocadoseed",
+        "name": "גלעין אבוקדו",
+        "latin": "Persea americana",
+        "type": "אחר",
+        "method": "תמצית ותעשייה",
+        "temp": "טרופי",
+        "world": "מקסיקו · פרו · דומיניקנה",
+        "wiki": "אבוקדו"
+      },
+      {
+        "slug": "datepalmseed",
+        "name": "גלעיני תמר",
+        "latin": "Phoenix dactylifera",
+        "type": "אחר",
+        "method": "קפה תמרים ומספוא",
+        "temp": "חם-צחיח",
+        "world": "מצרים · סעודיה · איראן",
+        "wiki": "תמר"
+      },
+      {
+        "slug": "coffeeseed",
+        "name": "פולי קפה",
+        "latin": "Coffea arabica",
+        "type": "אחר",
+        "method": "משקה קפה",
+        "temp": "טרופי-רם",
+        "world": "ברזיל · וייטנאם · קולומביה",
+        "wiki": "קפה"
+      },
+      {
+        "slug": "cacaoseed",
+        "name": "פולי קקאו",
+        "latin": "Theobroma cacao",
+        "type": "אחר",
+        "method": "שוקולד",
+        "temp": "טרופי",
+        "world": "חוף השנהב · גאנה · אינדונזיה",
+        "wiki": "קקאו"
+      },
+      {
+        "slug": "nutmegseed",
+        "name": "אגוז מוסקט",
+        "latin": "Myristica fragrans",
+        "type": "זרעי תבלין",
+        "method": "תבלין",
+        "temp": "טרופי",
+        "world": "אינדונזיה · גואטמלה · הודו",
+        "wiki": "אגוז מוסקט"
+      },
+      {
+        "slug": "arecanut",
+        "name": "זרעי ארקה (בטל)",
+        "latin": "Areca catechu",
+        "type": "אחר",
+        "method": "לעיסה מסורתית",
+        "temp": "טרופי",
+        "world": "הודו · בנגלדש · מיאנמר",
+        "wiki": "Areca catechu"
+      },
+      {
+        "slug": "durianseed",
+        "name": "זרעי דוריאן",
+        "latin": "Durio zibethinus",
+        "type": "זרעי מאכל",
+        "method": "מבושל וחטיף",
+        "temp": "טרופי",
+        "world": "תאילנד · מלזיה · אינדונזיה",
+        "wiki": "דוריאן"
+      },
+      {
+        "slug": "breadfruitseed",
+        "name": "זרעי עץ-הלחם",
+        "latin": "Artocarpus altilis",
+        "type": "זרעי מאכל",
+        "method": "מבושל וקלוי",
+        "temp": "טרופי",
+        "world": "פיליפינים · אינדונזיה · הודו",
+        "wiki": "עץ הלחם"
+      },
+      {
+        "slug": "baobabseed",
+        "name": "זרעי באובב",
+        "latin": "Adansonia digitata",
+        "type": "זרעי שמן",
+        "method": "שמן ותוסף",
+        "temp": "חם-צחיח",
+        "world": "סנגל · מלאווי · זימבבואה",
+        "wiki": "באובב אצבעי"
+      },
+      {
+        "slug": "pilinut",
+        "name": "אגוז פילי",
+        "latin": "Canarium ovatum",
+        "type": "זרעי מאכל",
+        "method": "חטיף ושמן",
+        "temp": "טרופי",
+        "world": "פיליפינים",
+        "wiki": "Canarium ovatum"
+      },
+      {
+        "slug": "onionseed",
+        "name": "זרעי בצל",
+        "latin": "Allium cepa",
+        "type": "אחר",
+        "method": "זריעה וייצור",
+        "temp": "ממוזג",
+        "world": "הודו · ארה״ב · סין",
+        "wiki": "בצל"
+      },
+      {
+        "slug": "spinachseed",
+        "name": "זרעי תרד",
+        "latin": "Spinacia oleracea",
+        "type": "זרעי מאכל",
+        "method": "זריעה ונבטים",
+        "temp": "ממוזג",
+        "world": "סין · ארה״ב · טורקיה",
+        "wiki": "תרד"
+      }
+    ]
+  },
+  "spices": {
+    "title": "מילון תבלינים",
+    "icon": "🌶️",
+    "filterKey": "type",
+    "cols": [
+      {
+        "key": "name",
+        "label": "תבלין",
+        "bold": true
+      },
+      {
+        "key": "latin",
+        "label": "שם מדעי",
+        "italic": true
+      },
+      {
+        "key": "type",
+        "label": "קבוצה",
+        "chip": true
+      },
+      {
+        "key": "method",
+        "label": "חלק הצמח / שימוש"
+      },
+      {
+        "key": "temp",
+        "label": "אקלים גידול",
+        "mono": true
+      },
+      {
+        "key": "world",
+        "label": "מקורות עולמיים"
+      }
+    ],
+    "rows": [
+      {
+        "slug": "blackpepper",
+        "name": "פלפל שחור",
+        "latin": "Piper nigrum",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי מיובש",
+        "temp": "טרופי",
+        "world": "וייטנאם · הודו · אינדונזיה",
+        "wiki": "פלפל שחור"
+      },
+      {
+        "slug": "whitepepper",
+        "name": "פלפל לבן",
+        "latin": "Piper nigrum",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי בשל קלוף",
+        "temp": "טרופי",
+        "world": "וייטנאם · אינדונזיה · הודו",
+        "wiki": "פלפל שחור"
+      },
+      {
+        "slug": "pinkpepper",
+        "name": "פלפל ורוד",
+        "latin": "Schinus molle",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי מיובש",
+        "temp": "חם",
+        "world": "ברזיל · צרפת · מדגסקר",
+        "wiki": "פלפלון בכות"
+      },
+      {
+        "slug": "chili",
+        "name": "צ׳ילי / פלפלת",
+        "latin": "Capsicum frutescens",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי חריף מיובש",
+        "temp": "חם",
+        "world": "הודו · סין · תאילנד",
+        "wiki": "פלפל חריף"
+      },
+      {
+        "slug": "paprika",
+        "name": "פפריקה",
+        "latin": "Capsicum annuum",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי טחון",
+        "temp": "ממוזג-חם",
+        "world": "הונגריה · ספרד · פרו",
+        "wiki": "פפריקה"
+      },
+      {
+        "slug": "cumin",
+        "name": "כמון",
+        "latin": "Cuminum cyminum",
+        "type": "תבלין זרעים",
+        "method": "זרע מיובש",
+        "temp": "חם-צחיח",
+        "world": "הודו · סוריה · טורקיה",
+        "wiki": "כמון"
+      },
+      {
+        "slug": "coriander",
+        "name": "כוסברה (זרעים)",
+        "latin": "Coriandrum sativum",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "ממוזג-חם",
+        "world": "הודו · רוסיה · מרוקו",
+        "wiki": "כוסברה"
+      },
+      {
+        "slug": "turmeric",
+        "name": "כורכום",
+        "latin": "Curcuma longa",
+        "type": "תבלין שורש",
+        "method": "קנה-שורש",
+        "temp": "טרופי",
+        "world": "הודו · בנגלדש · פקיסטן",
+        "wiki": "כורכום ארוך"
+      },
+      {
+        "slug": "ginger",
+        "name": "ג׳ינג׳ר / זנגביל",
+        "latin": "Zingiber officinale",
+        "type": "תבלין שורש",
+        "method": "קנה-שורש",
+        "temp": "טרופי",
+        "world": "הודו · ניגריה · סין",
+        "wiki": "זנגביל רפואי"
+      },
+      {
+        "slug": "galangal",
+        "name": "גלנגל",
+        "latin": "Alpinia galanga",
+        "type": "תבלין שורש",
+        "method": "קנה-שורש",
+        "temp": "טרופי",
+        "world": "תאילנד · אינדונזיה · סין",
+        "wiki": "גלנגל"
+      },
+      {
+        "slug": "greencardamom",
+        "name": "הל ירוק",
+        "latin": "Elettaria cardamomum",
+        "type": "תבלין זרעים",
+        "method": "הלקט וזרעים",
+        "temp": "טרופי",
+        "world": "גואטמלה · הודו · אינדונזיה",
+        "wiki": "הל ריחני"
+      },
+      {
+        "slug": "blackcardamom",
+        "name": "הל שחור",
+        "latin": "Amomum subulatum",
+        "type": "תבלין זרעים",
+        "method": "הלקט מעושן",
+        "temp": "ממוזג-רם",
+        "world": "נפאל · הודו · בהוטן",
+        "wiki": "Amomum subulatum"
+      },
+      {
+        "slug": "cinnamon",
+        "name": "קינמון (ציילון)",
+        "latin": "Cinnamomum verum",
+        "type": "תבלין קליפה/פרי",
+        "method": "קליפת גזע",
+        "temp": "טרופי",
+        "world": "סרי לנקה · אינדונזיה · סין",
+        "wiki": "קינמון"
+      },
+      {
+        "slug": "cassia",
+        "name": "קסיה",
+        "latin": "Cinnamomum cassia",
+        "type": "תבלין קליפה/פרי",
+        "method": "קליפת גזע",
+        "temp": "טרופי",
+        "world": "סין · אינדונזיה · וייטנאם",
+        "wiki": "Cinnamomum cassia"
+      },
+      {
+        "slug": "clove",
+        "name": "ציפורן",
+        "latin": "Syzygium aromaticum",
+        "type": "תבלין פרח",
+        "method": "ניצן פרח מיובש",
+        "temp": "טרופי",
+        "world": "אינדונזיה · מדגסקר · טנזניה",
+        "wiki": "ציפורן (תבלין)"
+      },
+      {
+        "slug": "nutmeg",
+        "name": "אגוז מוסקט",
+        "latin": "Myristica fragrans",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "טרופי",
+        "world": "אינדונזיה · גואטמלה · הודו",
+        "wiki": "אגוז מוסקט"
+      },
+      {
+        "slug": "mace",
+        "name": "מוגט",
+        "latin": "Myristica fragrans",
+        "type": "תבלין קליפה/פרי",
+        "method": "עטיף הזרע (אריל)",
+        "temp": "טרופי",
+        "world": "אינדונזיה · גרנדה · הודו",
+        "wiki": "אגוז מוסקט"
+      },
+      {
+        "slug": "saffron",
+        "name": "זעפרן",
+        "latin": "Crocus sativus",
+        "type": "תבלין פרח",
+        "method": "צלקות הפרח",
+        "temp": "ממוזג",
+        "world": "איראן · הודו · ספרד",
+        "wiki": "כרכום התרבות"
+      },
+      {
+        "slug": "vanilla",
+        "name": "וניל",
+        "latin": "Vanilla planifolia",
+        "type": "תבלין קליפה/פרי",
+        "method": "תרמיל מותסס",
+        "temp": "טרופי",
+        "world": "מדגסקר · אינדונזיה · מקסיקו",
+        "wiki": "וניל"
+      },
+      {
+        "slug": "anise",
+        "name": "אניס",
+        "latin": "Pimpinella anisum",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "ממוזג-חם",
+        "world": "טורקיה · ספרד · סוריה",
+        "wiki": "אניס"
+      },
+      {
+        "slug": "staranise",
+        "name": "אניס כוכבי",
+        "latin": "Illicium verum",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי מיובש",
+        "temp": "טרופי",
+        "world": "סין · וייטנאם",
+        "wiki": "אניס כוכבי"
+      },
+      {
+        "slug": "fennel",
+        "name": "שומר",
+        "latin": "Foeniculum vulgare",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "ממוזג",
+        "world": "הודו · סין · מצרים",
+        "wiki": "שומר פשוט"
+      },
+      {
+        "slug": "dill",
+        "name": "שמיר",
+        "latin": "Anethum graveolens",
+        "type": "עשב תבלין",
+        "method": "עלים וזרעים",
+        "temp": "ממוזג",
+        "world": "הודו · רוסיה · מצרים",
+        "wiki": "שבת ריחני"
+      },
+      {
+        "slug": "caraway",
+        "name": "קימל",
+        "latin": "Carum carvi",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "ממוזג",
+        "world": "פינלנד · הולנד · מצרים",
+        "wiki": "קימל"
+      },
+      {
+        "slug": "fenugreek",
+        "name": "חילבה",
+        "latin": "Trigonella foenum-graecum",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "חם",
+        "world": "הודו · טורקיה · מצרים",
+        "wiki": "גרגרנית יוונית"
+      },
+      {
+        "slug": "nigella",
+        "name": "קצח",
+        "latin": "Nigella sativa",
+        "type": "תבלין זרעים",
+        "method": "זרע שחור",
+        "temp": "חם",
+        "world": "הודו · מצרים · טורקיה",
+        "wiki": "קצח זרוע"
+      },
+      {
+        "slug": "mustard",
+        "name": "חרדל",
+        "latin": "Brassica juncea",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "ממוזג",
+        "world": "נפאל · הודו · קנדה",
+        "wiki": "חרדל השדה"
+      },
+      {
+        "slug": "allspice",
+        "name": "פלפל אנגלי",
+        "latin": "Pimenta dioica",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי מיובש",
+        "temp": "טרופי",
+        "world": "ג׳מייקה · מקסיקו · הונדורס",
+        "wiki": "פלפל אנגלי"
+      },
+      {
+        "slug": "sumac",
+        "name": "סומאק",
+        "latin": "Rhus coriaria",
+        "type": "תבלין קליפה/פרי",
+        "method": "פרי טחון",
+        "temp": "ממוזג-חם",
+        "world": "טורקיה · איראן · סוריה",
+        "wiki": "אוג הבורסקאים"
+      },
+      {
+        "slug": "zaatar",
+        "name": "זעתר",
+        "latin": "Origanum syriacum",
+        "type": "עשב תבלין",
+        "method": "עלים מיובשים",
+        "temp": "חם",
+        "world": "ישראל · לבנון · סוריה",
+        "wiki": "אזוב מצוי"
+      },
+      {
+        "slug": "oregano",
+        "name": "אורגנו",
+        "latin": "Origanum vulgare",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "טורקיה · יוון · מקסיקו",
+        "wiki": "אורגנו"
+      },
+      {
+        "slug": "marjoram",
+        "name": "מיורן",
+        "latin": "Origanum majorana",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "מצרים · צרפת · גרמניה",
+        "wiki": "מיורן"
+      },
+      {
+        "slug": "thyme",
+        "name": "טימין / קורנית",
+        "latin": "Thymus vulgaris",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "מרוקו · ספרד · צרפת",
+        "wiki": "קורנית מצויה"
+      },
+      {
+        "slug": "rosemary",
+        "name": "רוזמרין",
+        "latin": "Salvia rosmarinus",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "מרוקו · ספרד · טוניסיה",
+        "wiki": "רוזמרין רפואי"
+      },
+      {
+        "slug": "sage",
+        "name": "מרווה",
+        "latin": "Salvia officinalis",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "אלבניה · טורקיה · ארה״ב",
+        "wiki": "מרווה רפואית"
+      },
+      {
+        "slug": "basil",
+        "name": "בזיליקום",
+        "latin": "Ocimum basilicum",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "חם",
+        "world": "מצרים · הודו · ישראל",
+        "wiki": "בזיליקום"
+      },
+      {
+        "slug": "mint",
+        "name": "נענע",
+        "latin": "Mentha spicata",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "מרוקו · הודו · מצרים",
+        "wiki": "נענע"
+      },
+      {
+        "slug": "tarragon",
+        "name": "טרגון",
+        "latin": "Artemisia dracunculus",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "ממוזג",
+        "world": "צרפת · הולנד · ארה״ב",
+        "wiki": "לענה טרגון"
+      },
+      {
+        "slug": "lemonverbena",
+        "name": "לואיזה",
+        "latin": "Aloysia citriodora",
+        "type": "עשב תבלין",
+        "method": "עלים",
+        "temp": "חם",
+        "world": "צ׳ילה · פרו · מרוקו",
+        "wiki": "לואיזה"
+      },
+      {
+        "slug": "bayleaf",
+        "name": "עלה דפנה",
+        "latin": "Laurus nobilis",
+        "type": "עשב תבלין",
+        "method": "עלים מיובשים",
+        "temp": "ממוזג",
+        "world": "טורקיה · אלבניה · יוון",
+        "wiki": "ער אציל"
+      },
+      {
+        "slug": "lemongrass",
+        "name": "למון-גראס",
+        "latin": "Cymbopogon citratus",
+        "type": "עשב תבלין",
+        "method": "גבעולים",
+        "temp": "טרופי",
+        "world": "הודו · תאילנד · גואטמלה",
+        "wiki": "למון גראס"
+      },
+      {
+        "slug": "wasabi",
+        "name": "ווסאבי",
+        "latin": "Eutrema japonicum",
+        "type": "תבלין שורש",
+        "method": "קנה-שורש",
+        "temp": "קריר-לח",
+        "world": "יפן",
+        "wiki": "וסאבי"
+      },
+      {
+        "slug": "horseradish",
+        "name": "חזרת",
+        "latin": "Armoracia rusticana",
+        "type": "תבלין שורש",
+        "method": "שורש",
+        "temp": "ממוזג",
+        "world": "הונגריה · גרמניה · ארה״ב",
+        "wiki": "חזרת"
+      },
+      {
+        "slug": "garlic",
+        "name": "שום",
+        "latin": "Allium sativum",
+        "type": "תבלין שורש",
+        "method": "ראש ושיני שום",
+        "temp": "ממוזג",
+        "world": "סין · הודו · בנגלדש",
+        "wiki": "שום"
+      },
+      {
+        "slug": "driedonion",
+        "name": "בצל מיובש",
+        "latin": "Allium cepa",
+        "type": "תבלין שורש",
+        "method": "בצל מיובש",
+        "temp": "ממוזג",
+        "world": "הודו · סין · מצרים",
+        "wiki": "בצל"
+      },
+      {
+        "slug": "sichuanpepper",
+        "name": "פלפל סצ׳ואן",
+        "latin": "Zanthoxylum bungeanum",
+        "type": "תבלין קליפה/פרי",
+        "method": "קליפת הפרי",
+        "temp": "ממוזג",
+        "world": "סין",
+        "wiki": "Zanthoxylum bungeanum"
+      },
+      {
+        "slug": "ajwain",
+        "name": "אג׳ואן",
+        "latin": "Trachyspermum ammi",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "חם",
+        "world": "הודו · איראן · אפגניסטן",
+        "wiki": "Trachyspermum ammi"
+      },
+      {
+        "slug": "asafoetida",
+        "name": "אספטידה",
+        "latin": "Ferula assa-foetida",
+        "type": "תבלין שורש",
+        "method": "שרף שורש",
+        "temp": "צחיח",
+        "world": "איראן · אפגניסטן · הודו",
+        "wiki": "Ferula assa-foetida"
+      },
+      {
+        "slug": "grainsofparadise",
+        "name": "גרגר הפרדיס",
+        "latin": "Aframomum melegueta",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "טרופי",
+        "world": "גאנה · ניגריה",
+        "wiki": "Aframomum melegueta"
+      },
+      {
+        "slug": "lavender",
+        "name": "לבנדר",
+        "latin": "Lavandula angustifolia",
+        "type": "תבלין פרח",
+        "method": "פרחים מיובשים",
+        "temp": "ממוזג",
+        "world": "בולגריה · צרפת · ספרד",
+        "wiki": "אזוביון רפואי"
+      },
+      {
+        "slug": "rose",
+        "name": "ורדים (מי ורדים)",
+        "latin": "Rosa × damascena",
+        "type": "תבלין פרח",
+        "method": "עלי כותרת",
+        "temp": "ממוזג",
+        "world": "איראן · בולגריה · טורקיה",
+        "wiki": "ורד"
+      },
+      {
+        "slug": "blackcumin",
+        "name": "כמון שחור (זירה שחורה)",
+        "latin": "Bunium persicum",
+        "type": "תבלין זרעים",
+        "method": "זרע יבש",
+        "temp": "ממוזג-רם",
+        "world": "איראן · הודו · אפגניסטן",
+        "wiki": "Bunium persicum"
+      },
+      {
+        "slug": "zedoary",
+        "name": "זנגביל לבן",
+        "latin": "Curcuma zedoaria",
+        "type": "תבלין שורש",
+        "method": "קנה-שורש",
+        "temp": "טרופי",
+        "world": "הודו · אינדונזיה · סין",
+        "wiki": "Curcuma zedoaria"
+      },
+      {
+        "slug": "mastic",
+        "name": "מסטיק",
+        "latin": "Pistacia lentiscus",
+        "type": "תבלין קליפה/פרי",
+        "method": "שרף עצי",
+        "temp": "ממוזג",
+        "world": "יוון · טורקיה",
+        "wiki": "אלה אמיתית"
+      },
+      {
+        "slug": "tamarind",
+        "name": "טמרינד",
+        "latin": "Tamarindus indica",
+        "type": "תבלין קליפה/פרי",
+        "method": "עיסת פרי",
+        "temp": "טרופי",
+        "world": "הודו · תאילנד · מקסיקו",
+        "wiki": "תמרהינדי"
+      }
+    ]
+  },
+  "materials": {
+    "title": "מילון חומרי בסיס מופקים",
+    "icon": "🧪",
+    "filterKey": "type",
+    "cols": [
+      {
+        "key": "name",
+        "label": "חומר",
+        "bold": true
+      },
+      {
+        "key": "source",
+        "label": "מקור"
+      },
+      {
+        "key": "type",
+        "label": "קטגוריה",
+        "chip": true
+      },
+      {
+        "key": "method",
+        "label": "תהליך הפקה"
+      },
+      {
+        "key": "world",
+        "label": "שימושים עיקריים"
+      }
+    ],
+    "rows": [
+      {
+        "slug": "flour",
+        "name": "קמח חיטה",
+        "source": "חיטה",
+        "type": "קמח ועמילן",
+        "method": "טחינה",
+        "world": "מאפייה ובישול",
+        "wiki": "קמח"
+      },
+      {
+        "slug": "bran",
+        "name": "סובין",
+        "source": "חיטה",
+        "type": "קמח ועמילן",
+        "method": "סינון קמח",
+        "world": "סיבים תזונתיים",
+        "wiki": "סובין"
+      },
+      {
+        "slug": "semolina",
+        "name": "סולת",
+        "source": "חיטת דורום",
+        "type": "קמח ועמילן",
+        "method": "גריסה גסה",
+        "world": "פסטה וקוסקוס",
+        "wiki": "סולת"
+      },
+      {
+        "slug": "cornstarch",
+        "name": "עמילן תירס",
+        "source": "תירס",
+        "type": "קמח ועמילן",
+        "method": "מיצוי רטוב",
+        "world": "מסמיך במזון",
+        "wiki": "עמילן"
+      },
+      {
+        "slug": "potatostarch",
+        "name": "עמילן תפוח-אדמה",
+        "source": "תפוח אדמה",
+        "type": "קמח ועמילן",
+        "method": "מיצוי",
+        "world": "מסמיך ונייר",
+        "wiki": "עמילן"
+      },
+      {
+        "slug": "gluten",
+        "name": "גלוטן",
+        "source": "חיטה",
+        "type": "חלבונים",
+        "method": "שטיפת עמילן",
+        "world": "סייטן ומאפים",
+        "wiki": "גלוטן"
+      },
+      {
+        "slug": "oliveoil",
+        "name": "שמן זית",
+        "source": "זיתים",
+        "type": "שמנים",
+        "method": "סחיטה קרה",
+        "world": "מזון וקוסמטיקה",
+        "wiki": "שמן זית"
+      },
+      {
+        "slug": "sunfloweroil",
+        "name": "שמן חמניות",
+        "source": "זרעי חמנייה",
+        "type": "שמנים",
+        "method": "סחיטה וזיקוק",
+        "world": "טיגון ובישול",
+        "wiki": "שמן חמניות"
+      },
+      {
+        "slug": "soybeanoil",
+        "name": "שמן סויה",
+        "source": "פולי סויה",
+        "type": "שמנים",
+        "method": "מיצוי ממס",
+        "world": "מזון ותעשייה",
+        "wiki": "שמן סויה"
+      },
+      {
+        "slug": "canolaoil",
+        "name": "שמן קנולה",
+        "source": "זרעי לפתית",
+        "type": "שמנים",
+        "method": "סחיטה",
+        "world": "בישול ובריאות",
+        "wiki": "שמן קנולה"
+      },
+      {
+        "slug": "palmoil",
+        "name": "שמן דקלים",
+        "source": "פרי הדקל",
+        "type": "שמנים",
+        "method": "מיצוי",
+        "world": "מזון ותמרוקים",
+        "wiki": "שמן דקלים"
+      },
+      {
+        "slug": "sesameoil",
+        "name": "שמן שומשום",
+        "source": "שומשום",
+        "type": "שמנים",
+        "method": "סחיטה",
+        "world": "בישול אסייתי",
+        "wiki": "שמן שומשום"
+      },
+      {
+        "slug": "sugar",
+        "name": "סוכר",
+        "source": "קנה / סלק סוכר",
+        "type": "סוכרים",
+        "method": "גיבוש וזיקוק",
+        "world": "המתקה",
+        "wiki": "סוכר"
+      },
+      {
+        "slug": "molasses",
+        "name": "מולסה",
+        "source": "קנה סוכר",
+        "type": "סוכרים",
+        "method": "תוצר לוואי",
+        "world": "מזון ומספוא",
+        "wiki": "מולסה"
+      },
+      {
+        "slug": "cornsyrup",
+        "name": "סירופ תירס",
+        "source": "תירס",
+        "type": "סוכרים",
+        "method": "הידרוליזה",
+        "world": "משקאות וממתקים",
+        "wiki": "סירופ תירס"
+      },
+      {
+        "slug": "soyprotein",
+        "name": "חלבון סויה",
+        "source": "פולי סויה",
+        "type": "חלבונים",
+        "method": "מיצוי וריכוז",
+        "world": "תחליפי בשר",
+        "wiki": "חלבון מבודד"
+      },
+      {
+        "slug": "lecithin",
+        "name": "לציטין",
+        "source": "סויה",
+        "type": "תוספים",
+        "method": "הפרדה משמן",
+        "world": "מתחלב במזון",
+        "wiki": "לציטין"
+      },
+      {
+        "slug": "pectin",
+        "name": "פקטין",
+        "source": "קליפות הדר / תפוח",
+        "type": "תוספים",
+        "method": "מיצוי",
+        "world": "ג׳לים וריבות",
+        "wiki": "פקטין"
+      },
+      {
+        "slug": "biodiesel",
+        "name": "ביו-דיזל",
+        "source": "שמנים צמחיים",
+        "type": "ביו-אנרגיה",
+        "method": "טרנס-אסטריפיקציה",
+        "world": "דלק מתחדש",
+        "wiki": "ביו-דיזל"
+      },
+      {
+        "slug": "ethanol",
+        "name": "ביו-אתנול",
+        "source": "תירס / קנה סוכר",
+        "type": "ביו-אנרגיה",
+        "method": "תסיסה",
+        "world": "דלק וכימיה",
+        "wiki": "אתנול"
+      },
+      {
+        "slug": "cellulose",
+        "name": "צלולוז",
+        "source": "עץ / כותנה",
+        "type": "סיבים",
+        "method": "עיסה",
+        "world": "נייר וטקסטיל",
+        "wiki": "תאית"
+      },
+      {
+        "slug": "cottonfiber",
+        "name": "סיבי כותנה",
+        "source": "כותנה",
+        "type": "סיבים",
+        "method": "מנפטה",
+        "world": "טקסטיל",
+        "wiki": "כותנה"
+      },
+      {
+        "slug": "flaxfiber",
+        "name": "סיבי פשתן",
+        "source": "פשתן",
+        "type": "סיבים",
+        "method": "השרייה וסריקה",
+        "world": "בד פשתן וחבלים",
+        "wiki": "פשתה"
+      },
+      {
+        "slug": "naturalrubber",
+        "name": "גומי טבעי",
+        "source": "עץ ההיאה",
+        "type": "סיבים",
+        "method": "הקזת לטקס",
+        "world": "צמיגים וגומי",
+        "wiki": "גומי טבעי"
+      },
+      {
+        "slug": "gumarabic",
+        "name": "גומי ערבי",
+        "source": "עץ השיטה",
+        "type": "תוספים",
+        "method": "הקזת שרף",
+        "world": "מייצב במזון",
+        "wiki": "גומי ערבי"
+      },
+      {
+        "slug": "caffeine",
+        "name": "קפאין",
+        "source": "קפה / תה",
+        "type": "תוספים",
+        "method": "מיצוי",
+        "world": "משקאות ותרופות",
+        "wiki": "קפאין"
+      },
+      {
+        "slug": "essentialoil",
+        "name": "שמן אתרי",
+        "source": "צמחי בושם",
+        "type": "תוספים",
+        "method": "זיקוק אדים",
+        "world": "בישום וטיפוח",
+        "wiki": "שמן אתרי"
+      },
+      {
+        "slug": "fishmeal",
+        "name": "קמח דגים",
+        "source": "דגה",
+        "type": "חלבונים",
+        "method": "ייבוש וטחינה",
+        "world": "מספוא ואקוותרבות",
+        "wiki": "קמח דגים"
+      },
+      {
+        "slug": "yeast",
+        "name": "שמרים",
+        "source": "מולסה",
+        "type": "תוספים",
+        "method": "גידול והחמצה",
+        "world": "אפייה ובירה",
+        "wiki": "שמרים"
+      },
+      {
+        "slug": "vinegar",
+        "name": "חומץ",
+        "source": "יין / תבואה",
+        "type": "תוספים",
+        "method": "החמצה",
+        "world": "מזון ושימור",
+        "wiki": "חומץ"
+      },
+      {
+        "slug": "casein",
+        "name": "קזאין",
+        "source": "חלב",
+        "type": "חלבונים",
+        "method": "שיקוע",
+        "world": "גבינות ותוספים",
+        "wiki": "קזאין"
+      },
+      {
+        "slug": "whey",
+        "name": "מי גבינה",
+        "source": "חלב",
+        "type": "חלבונים",
+        "method": "תוצר לוואי גבינה",
+        "world": "אבקות חלבון",
+        "wiki": "מי גבינה"
+      },
+      {
+        "slug": "milkpowder",
+        "name": "אבקת חלב",
+        "source": "חלב",
+        "type": "חלבונים",
+        "method": "ייבוש בהתזה",
+        "world": "מזון ותעשייה",
+        "wiki": "אבקת חלב"
+      },
+      {
+        "slug": "beeswax",
+        "name": "שעוות דבורים",
+        "source": "דבורים",
+        "type": "תוספים",
+        "method": "המסה וסינון",
+        "world": "קוסמטיקה ונרות",
+        "wiki": "שעווה"
+      },
+      {
+        "slug": "gelatin",
+        "name": "ג׳לטין",
+        "source": "עצמות / עורות",
+        "type": "חלבונים",
+        "method": "הידרוליזה",
+        "world": "קינוחים וקפסולות",
+        "wiki": "ג׳לטין"
+      },
+      {
+        "slug": "agar",
+        "name": "אגר-אגר",
+        "source": "אצות ים",
+        "type": "תוספים",
+        "method": "מיצוי",
+        "world": "ג׳לים וגידול",
+        "wiki": "אגר"
+      },
+      {
+        "slug": "glycerol",
+        "name": "גליצרול",
+        "source": "שמנים / שומנים",
+        "type": "תוספים",
+        "method": "סבון וטרנס-אסטר",
+        "world": "מזון וקוסמטיקה",
+        "wiki": "גליצרול"
+      }
+    ]
+  },
+  "animals": {
+    "title": "מילון מזון מן החי",
+    "icon": "🥚",
+    "filterKey": "type",
+    "cols": [
+      {
+        "key": "name",
+        "label": "מוצר",
+        "bold": true
+      },
+      {
+        "key": "source",
+        "label": "מקור"
+      },
+      {
+        "key": "type",
+        "label": "קטגוריה",
+        "chip": true
+      },
+      {
+        "key": "method",
+        "label": "שיטת הפקה"
+      },
+      {
+        "key": "world",
+        "label": "יצרניות מובילות"
+      }
+    ],
+    "rows": [
+      {
+        "slug": "honey",
+        "name": "דבש",
+        "source": "דבורת הדבש",
+        "type": "דבורים",
+        "method": "מכוורת / כוורות",
+        "world": "סין · טורקיה · איראן",
+        "wiki": "דבש"
+      },
+      {
+        "slug": "eggs",
+        "name": "ביצים",
+        "source": "תרנגולת",
+        "type": "עופות",
+        "method": "לולים / רעיית חופש",
+        "world": "סין · ארה״ב · הודו",
+        "wiki": "ביצים"
+      },
+      {
+        "slug": "milk",
+        "name": "חלב",
+        "source": "פרה",
+        "type": "חלב ומוצריו",
+        "method": "רפת חלב",
+        "world": "ארה״ב · הודו · ברזיל",
+        "wiki": "חלב"
+      },
+      {
+        "slug": "cheese",
+        "name": "גבינה",
+        "source": "חלב פרה / עז",
+        "type": "חלב ומוצריו",
+        "method": "מחלבה",
+        "world": "ארה״ב · גרמניה · צרפת",
+        "wiki": "גבינה"
+      },
+      {
+        "slug": "butter",
+        "name": "חמאה",
+        "source": "שמנת חלב",
+        "type": "חלב ומוצריו",
+        "method": "מחלבה",
+        "world": "הודו · ארה״ב · גרמניה",
+        "wiki": "חמאה"
+      },
+      {
+        "slug": "yogurt",
+        "name": "יוגורט",
+        "source": "חלב מותסס",
+        "type": "חלב ומוצריו",
+        "method": "מחלבה / החמצה",
+        "world": "ארה״ב · הודו · אירופה",
+        "wiki": "יוגורט"
+      },
+      {
+        "slug": "beef",
+        "name": "בשר בקר",
+        "source": "בקר",
+        "type": "בקר",
+        "method": "רפת בשר / מרעה",
+        "world": "ארה״ב · ברזיל · סין",
+        "wiki": "בשר בקר"
+      },
+      {
+        "slug": "chicken",
+        "name": "בשר עוף",
+        "source": "תרנגול פטם",
+        "type": "עופות",
+        "method": "לולי פיטום",
+        "world": "ארה״ב · ברזיל · סין",
+        "wiki": "בשר עוף"
+      },
+      {
+        "slug": "turkey",
+        "name": "בשר הודו",
+        "source": "תרנגול הודו",
+        "type": "עופות",
+        "method": "לולים",
+        "world": "ארה״ב · ברזיל · גרמניה",
+        "wiki": "בשר הודו"
+      },
+      {
+        "slug": "lamb",
+        "name": "בשר כבש",
+        "source": "כבש / טלה",
+        "type": "צאן",
+        "method": "מרעה / דיר",
+        "world": "סין · אוסטרליה · ניו זילנד",
+        "wiki": "בשר כבש"
+      },
+      {
+        "slug": "fish",
+        "name": "דגה",
+        "source": "דגי בריכות",
+        "type": "דגה",
+        "method": "בריכות / כלובי ים",
+        "world": "סין · הודו · אינדונזיה",
+        "wiki": "דגה"
+      }
+    ]
+  }
+}

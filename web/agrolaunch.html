@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroLaunch · גיוס תמורת מניות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#2b8fb0;--purple:#7a5cc0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#e0e9e3;--bg2:#f4f9f6;--tint:#eef6f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}.mono{font-family:'Plex Mono',monospace}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.top{background:linear-gradient(135deg,#3a2f6e,#5c4fa0)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13.5px;color:#b7a7f0;letter-spacing:.08em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--purple)}
+.sub{color:var(--mut);font-size:16px;max-width:660px;margin:0 auto}
+.badge{display:inline-block;background:#f3ecfb;color:#5c4fa0;border-radius:16px;padding:5px 14px;font-size:12.5px;font-weight:800;margin-top:12px}
+.g1{display:grid;grid-template-columns:1fr;gap:22px;margin:26px 0 22px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-bottom:40px}
+@media(max-width:640px){.g2{grid-template-columns:1fr}}
+.co{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 28px;box-shadow:0 12px 30px rgba(20,38,28,.06);cursor:pointer;transition:.15s}
+.co.big{padding:34px 40px;background:linear-gradient(135deg,#fff,#f5f2fc);border-color:#ddd2f0}
+.co.big .coname{font-size:28px}.co.big .corow{gap:30px}
+.co:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(20,38,28,.1)}
+.cohead{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.logo{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:19px;color:#fff;flex:0 0 auto}
+.coname{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d)}
+.cosec{font-size:13.5px;color:var(--mut)}
+.eqbadge{margin-inline-start:auto;background:#f3ecfb;color:#5c4fa0;border-radius:14px;padding:5px 13px;font-size:14px;font-weight:800}
+.corow{display:flex;align-items:center;gap:18px}
+.copie{flex:0 0 auto}
+.covals{flex:1;font-size:15px}
+.covals .v{display:flex;justify-content:space-between;padding:5px 0}
+.covals .v span{color:var(--mut)}
+.covals .v b{font-family:Rubik;color:var(--green-d);font-size:19px}
+.bar{height:7px;background:#eee6f7;border-radius:5px;overflow:hidden;margin:10px 0 5px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#7a5cc0,#5c4fa0)}
+.craised{font-size:12.5px;color:var(--mut)}
+.offer{background:#f3ecfb;color:#4c3f90;border:1px solid #e0d6f5;border-radius:11px;padding:9px 13px;font-size:14.5px;text-align:center;margin:12px 0 6px}
+.offer b{font-family:Rubik;font-weight:800;color:#5c4fa0}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(20,15,40,.6);display:none;align-items:flex-start;justify-content:center;z-index:70;overflow:auto;padding:30px 14px}
+.modal.open{display:flex}
+.sheet{background:#fff;border-radius:20px;max-width:820px;width:100%;padding:26px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.x{position:absolute;top:16px;left:16px;background:var(--bg2);border:1px solid var(--line);border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer}
+.mhead{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.mhead h2{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d)}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:16px}
+@media(max-width:680px){.mcols{grid-template-columns:1fr}}
+.captitle{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d);margin-bottom:10px}
+.legend{list-style:none;margin-top:10px}
+.legend li{display:flex;align-items:center;gap:9px;font-size:14px;padding:5px 0}
+.legend .dot{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+.legend .lp{margin-inline-start:auto;font-family:Rubik;font-weight:800;color:var(--green-d)}
+.kv{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv b{font-family:Rubik;color:var(--green-d)}
+.invbox{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+.invbox input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0}
+.invbox input:focus{border-color:var(--purple)}
+.calc{font-size:14px;color:var(--green-d);margin:12px 0;line-height:1.7;background:#f3ecfb;border-radius:10px;padding:12px 14px}
+.calc b{font-family:Rubik}
+.invbtn{width:100%;background:linear-gradient(135deg,#7a5cc0,#5c4fa0);color:#fff;border:0;border-radius:12px;padding:14px;font-family:Rubik;font-weight:800;font-size:16px;cursor:pointer}
+.imsg{text-align:center;font-size:14px;margin-top:10px;min-height:20px}
+.foot{background:#3a2f6e;color:#c9bfe8;padding:24px 0;text-align:center;font-size:13.5px;margin-top:14px}
+.foot a{color:#b7a7f0;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="demo">● דמו בלבד</div>
+<div class="top"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Launch</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROLAUNCH · EQUITY</div>
+    <h1>סטארטאפ <b>בהמראה</b></h1>
+    <div class="sub">גיוס תמורת מניות בלבד — לא תרומה ולא תמורה, אלא בעלות אמיתית בחברה. השקיעו, קבלו מניות, וראו את עוגת בעלי המניות מתעדכנת.</div>
+    <div class="badge">🥧 Equity Crowdfunding · אקוויטי</div>
+  </div>
+  <div id="grid"></div>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Launch</b></span> · גיוס תמורת מניות · דמו בלבד · חלק מזירת <a href="index.html">AgroData</a></div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()"><div class="sheet" id="sheet"></div></div>
+
+<script>
+var PAL={"מייסדים":"#1c6b45","משקיעים קודמים":"#2b8fb0","אופציות עובדים (ESOP)":"#c79a2e","הסבב הנוכחי":"#7a5cc0","משקיעים חדשים":"#7a5cc0"};
+var LOGOC=['#1c6b45','#2b8fb0','#7a5cc0','#2e9e63','#c4562e','#c79a2e'];
+var CO=[
+ {id:"greenrobotics",n:"GreenRobotics",s:"רובוטיקה חקלאית",val:40000000,round:6000000,raised:3900000,min:30000,
+  cap:[["מייסדים",62],["משקיעים קודמים",20],["אופציות עובדים (ESOP)",8],["הסבב הנוכחי",10]],
+  desc:"זרועות רובוטיות אוטונומיות לעשביה מכנית וקטיף — פותרות את מחסור העובדים בשדה."},
+ {id:"nanofert",n:"NanoFert",s:"דישון ננו-טכנולוגי",val:25000000,round:3000000,raised:1200000,min:30000,
+  cap:[["מייסדים",70],["משקיעים קודמים",12],["אופציות עובדים (ESOP)",6],["הסבב הנוכחי",12]],
+  desc:"דשן ננו שמשתחרר לפי הצורך של הצמח — פחות דשן, יותר יבול, פחות זיהום."},
+ {id:"aquasense",n:"AquaSense",s:"ניטור וניהול מים",val:60000000,round:15000000,raised:9800000,min:30000,
+  cap:[["מייסדים",55],["משקיעים קודמים",22],["אופציות עובדים (ESOP)",3],["הסבב הנוכחי",20]],
+  desc:"פלטפורמת ניטור מים חכמה למגדלים — איתור דליפות, איכות מים והשקיה מיטבית."},
+ {id:"bioshield",n:"BioShield",s:"הגנת צומח ביולוגית",val:32000000,round:5000000,raised:2600000,min:30000,
+  cap:[["מייסדים",64],["משקיעים קודמים",18],["אופציות עובדים (ESOP)",4],["הסבב הנוכחי",14]],
+  desc:"תכשירי הדברה ביולוגיים מבוססי מיקרואורגניזמים — חלופה ירוקה לכימיקלים."},
+ {id:"harvestbot",n:"HarvestBot",s:"רובוט קטיף לחממות",val:48000000,round:12000000,raised:8100000,min:30000,
+  cap:[["מייסדים",58],["משקיעים קודמים",20],["אופציות עובדים (ESOP)",4],["הסבב הנוכחי",18]],
+  desc:"רובוט קטיף בעל ראייה ממוחשבת לעגבניות ופלפלים — עובד 24/7 בעדינות."},
+ {id:"solargrow",n:"SolarGrow",s:"חממות סולאריות",val:22000000,round:4000000,raised:1500000,min:30000,
+  cap:[["מייסדים",68],["משקיעים קודמים",10],["אופציות עובדים (ESOP)",6],["הסבב הנוכחי",16]],
+  desc:"חממות שמייצרות את החשמל שלהן בפאנלים דו-פנים ומגדלות כל השנה."}
+];
+function money(n){return '₪'+n.toLocaleString();}
+function short(n){return n>=1e6?('₪'+(n/1e6).toFixed(n%1e6?1:0)+'M'):money(n);}
+function donut(cap,size){
+ var cum=0;
+ var circ=cap.map(function(seg){
+  var pct=seg[1],col=PAL[seg[0]]||'#999';
+  var c='<circle cx="21" cy="21" r="15.915" fill="none" stroke="'+col+'" stroke-width="8" stroke-dasharray="'+pct+' '+(100-pct)+'" stroke-dashoffset="'+(25-cum)+'"/>';
+  cum+=pct;return c;
+ }).join('');
+ return '<svg viewBox="0 0 42 42" width="'+size+'" height="'+size+'" style="transform:scaleX(-1)"><circle cx="21" cy="21" r="15.915" fill="none" stroke="#eef1ef" stroke-width="8"/>'+circ+'</svg>';
+}
+function coCard(c,i,big){
+ var pct=Math.min(100,Math.round(c.raised/c.round*100));
+ var eq=c.cap.filter(function(s){return s[0]==='הסבב הנוכחי';})[0][1];
+ return '<div class="co'+(big?' big':'')+'" onclick="openCo(\''+c.id+'\')"><div class="cohead">'+
+  '<div class="logo" style="background:'+LOGOC[i%LOGOC.length]+'">'+c.n.charAt(0)+'</div>'+
+  '<div><div class="coname">'+c.n+'</div><div class="cosec">'+c.s+'</div></div>'+
+  '<span class="eqbadge">'+eq+'% הון</span></div>'+
+  '<div class="corow"><div class="copie">'+donut(c.cap,big?140:112)+'</div>'+
+  '<div class="covals"><div class="v"><span>שווי חברה</span><b>'+short(c.val)+'</b></div>'+
+  '<div class="v"><span>גודל סבב</span><b>'+short(c.round)+'</b></div>'+
+  '<div class="v"><span>מינימום</span><b>'+money(c.min)+'</b></div></div></div>'+
+  '<div class="offer">🤝 מגייסת <b>'+short(c.round)+'</b> תמורת <b>'+eq+'%</b> ממניות החברה</div>'+
+  '<div class="bar"><i style="width:'+pct+'%"></i></div>'+
+  '<div class="craised">'+short(c.raised)+' גויסו · '+pct+'% מהסבב</div></div>';
+}
+function render(){
+ var h='';
+ if(CO[0])h+='<div class="g1">'+coCard(CO[0],0,true)+'</div>';
+ if(CO[1])h+='<div class="g2">'+CO.slice(1).map(function(c,i){return coCard(c,i+1,false);}).join('')+'</div>';
+ document.getElementById('grid').innerHTML=h;
+}
+render();
+var CUR=null;
+function openCo(id){
+ var c=CO.filter(function(x){return x.id===id;})[0];if(!c)return;CUR=c;
+ var m=document.getElementById('modal'),s=document.getElementById('sheet');
+ m.classList.add('open');document.body.style.overflow='hidden';
+ var pct=Math.min(100,Math.round(c.raised/c.round*100));
+ var legend=c.cap.map(function(seg){return '<li><span class="dot" style="background:'+(PAL[seg[0]]||'#999')+'"></span>'+seg[0]+'<span class="lp">'+seg[1]+'%</span></li>';}).join('');
+ s.innerHTML='<button class="x" onclick="closeM()">✕</button>'+
+  '<div class="mhead"><div class="logo" style="background:#5c4fa0;width:54px;height:54px;border-radius:14px;font-size:22px">'+c.n.charAt(0)+'</div>'+
+  '<div><h2>'+c.n+'</h2><div class="cosec">'+c.s+'</div></div></div>'+
+  '<p style="color:#41544a;font-size:15px;line-height:1.7;margin:8px 0 4px">'+c.desc+'</p>'+
+  '<div class="offer" style="font-size:16px;margin:12px 0 4px">🤝 <b>'+c.n+'</b> מגייסת <b>'+money(c.round)+'</b> תמורת <b>'+c.cap.filter(function(x){return x[0]==="הסבב הנוכחי";})[0][1]+'%</b> ממניות החברה</div>'+
+  '<div class="mcols"><div>'+
+    '<div class="captitle">🥧 עוגת בעלי המניות</div>'+
+    '<div style="text-align:center">'+donut(c.cap,190)+'</div>'+
+    '<ul class="legend">'+legend+'</ul></div>'+
+   '<div>'+
+    '<div class="captitle">💼 תנאי הסבב</div>'+
+    '<div class="kv"><span>שווי חברה (Pre-money)</span><b>'+money(c.val)+'</b></div>'+
+    '<div class="kv"><span>גודל הסבב</span><b>'+money(c.round)+'</b></div>'+
+    '<div class="kv"><span>הון מוצע בסבב</span><b>'+c.cap.filter(function(x){return x[0]==="הסבב הנוכחי";})[0][1]+'%</b></div>'+
+    '<div class="kv"><span>גויס עד כה</span><b>'+money(c.raised)+' ('+pct+'%)</b></div>'+
+    '<div class="kv"><span>השקעה מינימלית</span><b>'+money(c.min)+'</b></div>'+
+    '<div class="invbox"><div style="font-weight:800;color:var(--green-d);font-family:Rubik;margin-bottom:10px">📈 השקיעו וקבלו מניות</div>'+
+     '<input id="amt" type="number" placeholder="סכום השקעה ₪ (מ-'+money(c.min)+')" oninput="calc()">'+
+     '<div class="calc" id="calc">הזינו סכום כדי לחשב מניות ואחוזי בעלות.</div>'+
+     '<button class="invbtn" onclick="invest()">אישור השקעה תמורת מניות ←</button>'+
+     '<div class="imsg" id="imsg"></div></div>'+
+   '</div></div>';
+}
+function closeM(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+function calc(){
+ var c=CUR,a=+document.getElementById('amt').value||0,el=document.getElementById('calc');
+ if(a<=0){el.innerHTML='הזינו סכום כדי לחשב מניות ואחוזי בעלות.';return;}
+ var shares=Math.round(a/c.val*1000000);
+ var eq=(a/c.val*100);
+ el.innerHTML='עבור <b>'+money(a)+'</b> תקבלו כ-<b>'+shares.toLocaleString()+'</b> מניות ≈ <b>'+eq.toFixed(3)+'%</b> מהחברה (Post-money משוער).';
+}
+function invest(){
+ var c=CUR,a=+document.getElementById('amt').value||0,msg=document.getElementById('imsg');
+ if(a<c.min){msg.style.color='#c4562e';msg.textContent='המינימום להשקעה הוא '+money(c.min)+'.';return;}
+ c.raised=Math.min(c.round,c.raised+a);
+ msg.style.color='var(--green)';msg.textContent='ההשקעה נקלטה! קיבלתם מניות ב-'+c.n+' 🥧 (דמו)';
+ var pct=Math.min(100,Math.round(c.raised/c.round*100));
+ render();
+ setTimeout(function(){openCo(c.id);document.getElementById('imsg').style.color='var(--green)';document.getElementById('imsg').textContent='ההשקעה נקלטה! (דמו)';},50);
+}
+</script>
+</body></html>
