@@ -187,6 +187,11 @@ h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;displa
   </div>
 </div>
 
+<style>
+.ai p .ansh,.msg .ansh{display:inline-block;font-family:Rubik,Heebo,sans-serif;font-weight:800;color:#134a30;font-size:1.06em;margin:10px 0 3px;padding-bottom:2px;border-bottom:2px solid #cfe6d7}
+.ai p .ansli,.msg .ansli{color:#2e9e63;font-weight:800}
+hr.ansdiv{border:0;border-top:1px solid #dbe8df;margin:12px 0}
+</style>
 <script>
 var Q=new URLSearchParams(location.search).get('q');
 if(Q&&Q.trim()){document.getElementById('q').value=Q.trim();}
@@ -203,7 +208,21 @@ var ICO={
  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5 8.6 10.5"/></svg>',
  ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
 };
-function txtOf(id){return (document.getElementById(id).textContent||'').trim();}
+/* markdown → clean HTML (bold headings) + plain text for TTS/copy */
+function stripMd(t){return String(t||'').replace(/`/g,'').replace(/[*_#>]/g,'').replace(/[ \t]{2,}/g,' ').replace(/\n{3,}/g,'\n\n').trim();}
+function inl(s){return s.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/__(.+?)__/g,'<b>$1</b>').replace(/`([^`]+)`/g,'$1').replace(/\*/g,'');}
+function mdToHtml(t){
+ return esc(t).split('\n').map(function(ln){
+  if(/^\s*([-*_=])\1{2,}\s*$/.test(ln))return '<hr class="ansdiv">';
+  var h=ln.match(/^\s*#{1,4}\s+(.*)$/);
+  if(h)return '<b class="ansh">'+inl(h[1])+'</b>';
+  var b=ln.match(/^\s*[-*•]\s+(.*)$/);
+  if(b)return '<span class="ansli">•</span> '+inl(b[1]);
+  return inl(ln);
+ }).join('<br>');
+}
+function setAnswer(el,txt){el.innerHTML=mdToHtml(txt);el.dataset.plain=stripMd(txt);}
+function txtOf(id){var e=document.getElementById(id);return ((e.dataset&&e.dataset.plain)||e.textContent||'').trim();}
 function doCopy(id,btn){var t=txtOf(id);navigator.clipboard.writeText(t).then(function(){var h=btn.innerHTML;btn.innerHTML=ICO.ok;btn.classList.add('done');setTimeout(function(){btn.innerHTML=h;btn.classList.remove('done');},1200);});}
 function doPrint(id){var t=txtOf(id);var w=window.open('','_blank');w.document.write('<html dir="rtl"><head><meta charset="utf-8"><title>AgroData</title><style>body{font-family:Arial;font-size:16px;line-height:1.8;padding:40px;white-space:pre-wrap}h3{color:#134a30}</style></head><body><h3>תשובת AgroMind · AgroData</h3>'+t.replace(/</g,'&lt;')+'</body></html>');w.document.close();w.focus();setTimeout(function(){w.print();},300);}
 function doMail(id){var t=txtOf(id);location.href='mailto:?subject='+encodeURIComponent('תשובת AgroMind')+'&body='+encodeURIComponent(t);}
@@ -232,7 +251,7 @@ function ask(engine,ansEl,badgeEl,q,label){
  var a=document.getElementById(ansEl),b=document.getElementById(badgeEl);
  a.textContent='🔎 מנתח את השאלה מעל מאגר AgroData…';
  fetch('/api/ask?engine='+engine+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
-  var txt=j.answer||'—';a.textContent=txt;
+  var txt=j.answer||'—';setAnswer(a,txt);
   b.textContent='✦ תשובת AgroMind';
   var box=a.closest('.ai');if(box){box.dataset.len=txt.length;reorder();}
  }).catch(function(){a.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';});
@@ -240,7 +259,7 @@ function ask(engine,ansEl,badgeEl,q,label){
 function askSummary(q){
  var a=document.getElementById('sumAnswer');
  fetch('/api/ask?engine=claude&q='+encodeURIComponent('סכם בתמצית ב-2-3 משפטים קצרים וברורים, ללא כותרות וללא סימני עיצוב, את התשובה לשאלה: '+q)).then(function(r){return r.json();}).then(function(j){
-  a.textContent=j.answer||'—';
+  setAnswer(a,j.answer||'—');
  }).catch(function(){a.textContent='—';});
 }
 function askAI(q){
@@ -308,21 +327,24 @@ function speakText(t,btn){
  if(btn){btn.classList.add('on');btn.dataset.was='1';u.onend=function(){btn.classList.remove('on');btn.dataset.was='';};}
  speechSynthesis.speak(u);
 }
-function speak(id,btn){var t=(document.getElementById(id).textContent||'').trim();if(t)speakText(t,btn);}
+function speak(id,btn){var e=document.getElementById(id);var t=(((e.dataset&&e.dataset.plain)||e.textContent)||'').trim();if(t)speakText(t,btn);}
 if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=function(){};speechSynthesis.getVoices();}
 
 /* ===== chatbot ===== */
 function toggleChat(){var p=document.getElementById('cpanel'),b=document.getElementById('cbtn');var o=p.classList.toggle('open');b.style.display=o?'none':'flex';}
 function addMsg(cls,txt){
- var body=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+cls;d.textContent=txt;body.appendChild(d);
- if(cls==='b'){var s=document.createElement('button');s.className='spk';s.textContent='🔊';s.title='הקראה';s.onclick=function(){speakText(txt,s);};d.appendChild(document.createElement('br'));d.appendChild(s);}
- body.scrollTop=body.scrollHeight;return d;
+ var body=document.getElementById('cbody');var d=document.createElement('div');d.className='msg '+cls;
+ if(cls==='b'){
+  var c=document.createElement('span');c.innerHTML=mdToHtml(txt);d.appendChild(c);
+  var s=document.createElement('button');s.className='spk';s.textContent='🔊';s.title='הקראה';s.onclick=function(){speakText(stripMd(txt),s);};d.appendChild(document.createElement('br'));d.appendChild(s);
+ }else{d.textContent=txt;}
+ body.appendChild(d);body.scrollTop=body.scrollHeight;return d;
 }
 function chatSend(){
  var inp=document.getElementById('cin');var q=(inp.value||'').trim();if(!q)return;inp.value='';
  addMsg('u',q);var wait=addMsg('b','🔎 חושב…');
  fetch('/api/ask?engine=claude&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
-  wait.remove();var m=addMsg('b',j.answer||'—');speakText(j.answer||'',m.querySelector('.spk'));
+  wait.remove();var m=addMsg('b',j.answer||'—');speakText(stripMd(j.answer||''),m.querySelector('.spk'));
  }).catch(function(){wait.textContent='שגיאת חיבור לשרת.';});
 }
 </script>
