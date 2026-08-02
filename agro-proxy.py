@@ -468,6 +468,13 @@ WB = {  # World Bank indicators for Israel (ISR)
   "export": ("TX.VAL.FOOD.ZS.UN", "יצוא מזון",            "% מכלל היצוא", "TX.VAL.FOOD.ZS.UN"),
   "aqua":   ("ER.FSH.AQUA.MT",    "ייצור מדגה (חקלאות ימית)", "טון",     "ER.FSH.AQUA.MT"),
   "forest": ("AG.LND.FRST.ZS",    "שטח יער",               "% משטח הארץ", "AG.LND.FRST.ZS"),
+  # SDG · food security & sustainability (World Bank, ISR)
+  "foodprod":  ("AG.PRD.FOOD.XD",    "מדד ייצור מזון",        "אינדקס (2015=100)", "AG.PRD.FOOD.XD"),
+  "cropprod":  ("AG.PRD.CROP.XD",    "מדד ייצור צומח",        "אינדקס (2015=100)", "AG.PRD.CROP.XD"),
+  "lvskprod":  ("AG.PRD.LVSK.XD",    "מדד ייצור מהחי",        "אינדקס (2015=100)", "AG.PRD.LVSK.XD"),
+  "undernour": ("SN.ITK.DEFC.ZS",    "תת-תזונה באוכלוסייה",   "% מהאוכלוסייה",      "SN.ITK.DEFC.ZS"),
+  "foodinsec": ("SN.ITK.MSFI.ZS",    "חוסר-ביטחון תזונתי",    "% מהאוכלוסייה",      "SN.ITK.MSFI.ZS"),
+  "foodimp":   ("TM.VAL.FOOD.ZS.UN", "יבוא מזון",             "% מכלל היבוא",       "TM.VAL.FOOD.ZS.UN"),
 }
 # World Bank indicators for other markets (country-specific)
 WBC = {
