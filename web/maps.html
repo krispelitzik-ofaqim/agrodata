@@ -81,6 +81,7 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
           </defs>
           <g clip-path="url(#il)"><g id="cells"></g></g>
           <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="none" stroke="#134a30" stroke-width="1.6" stroke-linejoin="round"/>
+          <g id="setpins"></g>
           <g id="cities"></g>
         </svg>
       </div>
@@ -107,9 +108,90 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
   </div>
 </div>
 
+<style>
+.setbox{max-width:1100px;margin:0 auto 34px}
+.sech2{font-family:Rubik;font-weight:800;font-size:24px;color:var(--green-d);margin:8px 0 4px;display:flex;align-items:center;gap:9px}
+.setsub{color:var(--mut);font-size:14.5px;margin-bottom:14px}
+.setchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.schip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer}
+.schip.on{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+#setq{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:12px;background:#fff}
+.setwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.settbl{width:100%;border-collapse:collapse;font-size:14px}
+.settbl th,.settbl td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+.settbl th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
+.settbl .sn b{color:var(--green-d);font-family:Rubik}
+.stype{border-radius:11px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.stype.kib{background:#e7f2fb;color:#1c6b8a}.stype.mos{background:#eef6ea;color:#4c7a1c}
+.sfac{color:#a3611c;font-weight:600}
+</style>
+<div class="wrap"><div class="setbox">
+  <div class="sech2">🏘️ יישובים חקלאיים · מנוע חיפוש</div>
+  <div class="setsub">קיבוצים ומושבים לפי סוג, אזור, גידולים מובילים ומפעל/תעשייה. ידע אצור (שלד: רשימת ישובים למ״ס · data.gov.il), ניתן להרחבה.</div>
+  <div class="setchips" id="setchips"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+    <input id="setq" placeholder="🔎 חיפוש: שם יישוב, אזור, מועצה, גידול או מפעל…" oninput="setRender()" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-family:Heebo;font-size:15px;outline:0;background:#fff">
+    <button onclick="setExport()" style="background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap">⬇️ ייצוא CSV</button>
+  </div>
+  <div class="setwrap"><table class="settbl" id="settbl"><tbody><tr><td style="padding:22px;text-align:center;color:var(--mut)">טוען…</td></tr></tbody></table></div>
+</div></div>
+
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מפות ו-GIS · <span class="mono">Earth Engine ready</span></div></div></div>
 
 <script>
+var SETDB=[],STYPE='all',SETSHOWN=[];
+document.getElementById('setchips').innerHTML=[["all","הכול"],["קיבוץ","🔵 קיבוץ"],["מושב","🟢 מושב"],["details","⭐ עם פרטים"]].map(function(c,i){return '<button class="schip'+(i===0?' on':'')+'" onclick="setFilt(\''+c[0]+'\',this)">'+c[1]+'</button>';}).join('');
+function setFilt(t,el){STYPE=t;document.querySelectorAll('#setchips .schip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');setRender();}
+function setRender(){
+ var q=(document.getElementById('setq').value||'').trim();
+ var rows=SETDB.filter(function(s){
+  if(STYPE==='details'&&!(s.crops||s.factory))return false;
+  if((STYPE==='קיבוץ'||STYPE==='מושב')&&s.type!==STYPE)return false;
+  if(!q)return true;
+  return (s.name+' '+s.region+' '+s.council+' '+s.crops+' '+s.factory).indexOf(q)>=0;
+ });
+ SETSHOWN=rows;
+ var head='<tr><th>יישוב</th><th>סוג</th><th>נפה</th><th>מועצה אזורית</th><th>גידולים מובילים</th><th>מפעל / תעשייה</th></tr>';
+ var b=rows.slice(0,400).map(function(s){
+  var tc=s.type==='קיבוץ'?'kib':(s.type==='מושב'?'mos':'');
+  var tp=s.type?'<span class="stype '+tc+'">'+s.type+'</span>':'<span style="color:#bbb">—</span>';
+  return '<tr><td class="sn"><b>'+s.name+'</b></td><td>'+tp+'</td><td>'+(s.region||'')+'</td><td>'+(s.council||'')+'</td><td>'+(s.crops||'—')+'</td><td class="'+(s.factory?'sfac':'')+'">'+(s.factory||'—')+'</td></tr>';
+ }).join('');
+ var more=rows.length>400?'<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:10px;font-size:12px">מציג 400 מתוך '+rows.length+' · צמצמו בחיפוש או ייצאו CSV לכולם</td></tr>':'';
+ document.getElementById('settbl').innerHTML=head+(b||'<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:22px">לא נמצאו יישובים</td></tr>')+more;
+}
+function renderPins(){
+ var g=document.getElementById('setpins');if(!g)return;
+ var pins=SETDB.filter(function(s){return s.x&&s.y;});
+ g.innerHTML=pins.map(function(s){
+  var col=s.type==='קיבוץ'?'#1c6b8a':'#4c7a1c';
+  var tip=s.name+' · '+(s.type||'')+(s.crops?(' · '+s.crops):'')+(s.factory?(' · 🏭 '+s.factory):'');
+  return '<circle cx="'+s.x+'" cy="'+s.y+'" r="2.4" fill="'+col+'" stroke="#fff" stroke-width="0.7" style="cursor:pointer" onclick="pinClick(\''+s.name.replace(/'/g,"")+'\')"><title>'+tip+'</title></circle>';
+ }).join('');
+}
+function pinClick(name){var i=document.getElementById('setq');i.value=name;setRender();document.querySelector('.setbox').scrollIntoView({behavior:'smooth',block:'start'});}
+function setExport(){
+ var head=['יישוב','סוג','נפה','מועצה אזורית','גידולים מובילים','מפעל/תעשייה'];
+ var lines=[head.join(',')];
+ SETSHOWN.forEach(function(s){
+  var row=[s.name,s.type||'',s.region||'',s.council||'',s.crops||'',s.factory||''].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';});
+  lines.push(row.join(','));
+ });
+ var blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='agrodata-yishuvim.csv';a.click();
+}
+Promise.all([
+ fetch('data/settlements_full.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return {items:[]};}),
+ fetch('data/settlements.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return {items:[]};})
+]).then(function(res){
+ var full=res[0].items||[],cur=res[1].items||[];
+ var byName={};cur.forEach(function(c){byName[c.name]=c;});
+ SETDB=full.map(function(f){var c=byName[f.name];return {name:f.name,region:f.region,council:f.council,type:c?c.type:'',crops:c?c.crops:'',factory:c?c.factory:''};});
+ // add curated not present in the open backbone
+ cur.forEach(function(c){if(!full.some(function(f){return f.name===c.name;}))SETDB.push({name:c.name,region:c.region||'',council:'',type:c.type,crops:c.crops,factory:c.factory});});
+ SETDB.sort(function(a,b){return (b.crops?1:0)-(a.crops?1:0);});
+ setRender();renderPins();
+}).catch(function(){document.getElementById('settbl').innerHTML='<tr><td style="padding:22px;text-align:center;color:var(--mut)">מאגר היישובים בהכנה…</td></tr>';});
 const CITIES=[["חיפה",78,66],["תל אביב",69,120],["ירושלים",114,133],["באר שבע",97,206],["אילת",111,386]];
 const LAYERS={
  ndvi:{name:"ירק · NDVI",emoji:"🌿",title:"מדד צמחייה · NDVI",src:"Sentinel-2 · Landsat",res:"10–30 מ׳",freq:"5 ימים",seed:0.5,

@@ -807,6 +807,63 @@ def fetch_flora(q):
     except Exception as e:
         return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "items": []}
 
+# ---- Israeli Companies Registrar (data.gov.il, live) — agri-tech company lookup ----
+COMP_RID = "f004176c-b85f-4542-8901-7b3176f9a054"   # מאגר חברות · רשם החברות (728k)
+COMPCACHE = {}
+def fetch_companies(q, limit=30):
+    q = (q or "חקלאות").strip()
+    key = (q, limit)
+    now = time.time()
+    if key in COMPCACHE and now - COMPCACHE[key][0] < 900:
+        return COMPCACHE[key][1]
+    url = ("https://data.gov.il/api/3/action/datastore_search?resource_id=" + COMP_RID +
+           "&limit=" + str(limit) + "&q=" + urllib.parse.quote(q))
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=25))
+        res = d.get("result", {})
+        out = []
+        for c in res.get("records", []):
+            out.append({
+                "num": c.get("מספר חברה", ""), "name": c.get("שם חברה", ""),
+                "name_en": c.get("שם באנגלית", ""), "type": c.get("סוג תאגיד", ""),
+                "status": c.get("סטטוס חברה", ""), "purpose": (c.get("מטרת החברה") or "").strip(),
+                "founded": (c.get("תאריך התאגדות") or "")[:10],
+                "gov": c.get("חברה ממשלתית", ""),
+            })
+        result = {"ok": True, "total": res.get("total", len(out)), "items": out}
+        COMPCACHE[key] = (now, result)
+        return result
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "items": []}
+
+COMP_KEYWORDS = ["חקלאות", "אגרו", "השקיה", "זרעים", "חממות", "דשן", "מדגה", "פוד טק"]
+COMPSTATS = {}
+def _comp_count(q):
+    url = ("https://data.gov.il/api/3/action/datastore_search?resource_id=" + COMP_RID +
+           "&limit=0" + ("&q=" + urllib.parse.quote(q) if q else ""))
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+    return json.load(urllib.request.urlopen(req, timeout=20)).get("result", {}).get("total", 0)
+def fetch_company_stats():
+    now = time.time()
+    if "s" in COMPSTATS and now - COMPSTATS["s"][0] < 21600:   # 6h cache
+        return COMPSTATS["s"][1]
+    try:
+        stats = []
+        counts = {}
+        ths = []
+        def work(kw): counts[kw] = _comp_count(kw)
+        for kw in COMP_KEYWORDS + [""]:
+            t = threading.Thread(target=work, args=(kw,)); t.start(); ths.append(t)
+        for t in ths: t.join()
+        for kw in COMP_KEYWORDS:
+            stats.append({"term": kw, "count": counts.get(kw, 0)})
+        out = {"ok": True, "total": counts.get("", 0), "stats": stats}
+        COMPSTATS["s"] = (now, out)
+        return out
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "stats": []}
+
 def scan_sitemap():
     pages = []
     try:
@@ -943,6 +1000,23 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/flora"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_flora(qs.get("q", [""])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/company_stats"):
+            out = fetch_company_stats()
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/companies"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_companies(qs.get("q", ["חקלאות"])[0], min(50, int(qs.get("limit", ["30"])[0] or 30)))
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

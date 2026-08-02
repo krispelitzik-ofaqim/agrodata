@@ -110,6 +110,35 @@ tbody tr:hover{background:var(--bg2)}
     </tr></thead><tbody id="rows"></tbody></table>
   </div>
   <div class="note">הרשימה לצורכי הדגמה — נבנית ומתעדכנת. חסרה חברה? עדכנו אותנו דרך ״צור קשר״.</div>
+
+  <style>
+  @keyframes rgp{0%{box-shadow:0 0 0 0 rgba(62,232,126,.6)}70%{box-shadow:0 0 0 8px rgba(62,232,126,0)}100%{box-shadow:0 0 0 0 rgba(62,232,126,0)}}
+  .regbox{background:linear-gradient(135deg,#f0faf3,#eaf7ee);border:1.6px solid #bfe6cd;border-radius:16px;padding:22px;margin-top:26px}
+  .reghead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:4px}
+  .regdot{display:inline-flex;align-items:center;gap:7px;background:#127a43;color:#fff;border-radius:16px;padding:4px 13px;font-size:12.5px;font-weight:800}
+  .regdot i{width:9px;height:9px;border-radius:50%;background:#8dffb6;animation:rgp 1.6s infinite}
+  .regsub{color:#4c6957;font-size:14px;margin:2px 0 12px}
+  .regstats{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+  .rstat{background:#fff;border:1px solid #cfe6d8;border-radius:12px;padding:8px 13px;cursor:pointer;transition:.15s;text-align:center;min-width:78px}
+  .rstat:hover{background:#eaf7ee;border-color:#9cd0b0;transform:translateY(-2px)}
+  .rstat b{display:block;font-family:Rubik;font-weight:800;font-size:20px;color:#134a30}
+  .rstat span{font-size:12px;color:#5c6f63}
+  #regq{width:100%;border:1px solid #dbe8df;border-radius:11px;padding:12px 15px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:12px}
+  .rgwrap{overflow:auto;border:1px solid #dbe8df;border-radius:12px;max-height:520px;background:#fff}
+  .rgtbl{width:100%;border-collapse:collapse;font-size:13.5px}
+  .rgtbl th,.rgtbl td{padding:10px 12px;text-align:right;border-bottom:1px solid #eef4f0;vertical-align:top}
+  .rgtbl th{background:#f4f9f6;color:#5c6f63;font-weight:700;position:sticky;top:0}
+  .rgtbl .cn b{color:#134a30;font-family:Rubik}.rgtbl .cn i{display:block;color:#8a9a90;font-style:normal;font-size:11.5px}
+  .st{border-radius:9px;padding:2px 9px;font-size:11.5px;font-weight:700;white-space:nowrap}
+  .st.on{background:#e7f9ee;color:#127a43}.st.off{background:#f3eaea;color:#b5482e}
+  </style>
+  <div class="regbox">
+    <div class="reghead">🏛️ רשם החברות · חיפוש חברות אגרו-טק <span class="regdot"><i></i>API חי</span></div>
+    <div class="regsub"><b id="regtotal">728,751</b> חברות רשומות בסה״כ — חיפוש חי ברשם החברות (data.gov.il). המספרים למטה מתעדכנים אונליין מה-API.</div>
+    <div class="regstats" id="regstats"></div>
+    <input id="regq" placeholder="🔎 חיפוש שם / מטרה / תחום ברשם החברות…" onkeydown="if(event.key==='Enter')loadReg()">
+    <div class="rgwrap"><table class="rgtbl" id="regtbl"><tbody><tr><td style="padding:22px;text-align:center;color:#5c6f63">טוען…</td></tr></tbody></table></div>
+  </div>
 </div>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · חברות בישראל · <span class="mono">Israeli AgriTech</span></div></div></div>
@@ -220,5 +249,33 @@ const FB=[['all','הכול']].concat(Object.keys(CAT).map(k=>[k,CAT[k][1]]));
 document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[1]}</button>`).join('');
 document.getElementById('stTot').textContent=C.length;
 render('all');
+function loadReg(){
+ var q=(document.getElementById('regq').value||'').trim()||'אגרו';
+ var tb=document.querySelector('#regtbl tbody');
+ tb.innerHTML='<tr><td style="padding:22px;text-align:center;color:#5c6f63">🏛️ מושך מרשם החברות…</td></tr>';
+ fetch('/api/companies?limit=40&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok||!j.items.length){tb.innerHTML='<tr><td style="padding:22px;text-align:center;color:#5c6f63">לא נמצאו חברות למונח זה.</td></tr>';return;}
+  var head='<tr><th>חברה</th><th>מס׳ חברה</th><th>סטטוס</th><th>הוקמה</th><th>מטרת החברה</th></tr>';
+  var rows=j.items.map(function(c){
+   var on=(c.status||'').indexOf('פעיל')>=0;
+   return '<tr><td class="cn"><b>'+c.name+'</b>'+(c.name_en?'<i>'+c.name_en+'</i>':'')+'</td>'+
+    '<td class="mono">'+c.num+'</td>'+
+    '<td><span class="st '+(on?'on':'off')+'">'+(c.status||'')+'</span></td>'+
+    '<td>'+(c.founded||'')+'</td><td style="min-width:200px;white-space:normal">'+(c.purpose||'—')+'</td></tr>';
+  }).join('');
+  tb.innerHTML=head+rows+'<tr><td colspan="5" style="text-align:center;color:#8a9a90;padding:10px;font-size:12px">מציג '+j.items.length+' מתוך '+j.total.toLocaleString()+' תוצאות · מקור: רשם החברות · data.gov.il</td></tr>';
+ }).catch(function(){tb.innerHTML='<tr><td style="padding:22px;text-align:center;color:#c4562e">שגיאת חיבור לשרת.</td></tr>';});
+}
+function loadRegStats(){
+ fetch('/api/company_stats?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok)return;
+  var tot=document.getElementById('regtotal');if(tot&&j.total)tot.textContent=j.total.toLocaleString();
+  document.getElementById('regstats').innerHTML=j.stats.map(function(s){
+   return '<div class="rstat" onclick="document.getElementById(\'regq\').value=\''+s.term+'\';loadReg()"><b>'+s.count.toLocaleString()+'</b><span>'+s.term+'</span></div>';
+  }).join('');
+ }).catch(function(){});
+}
+loadRegStats();
+loadReg();
 </script>
 </body></html>
