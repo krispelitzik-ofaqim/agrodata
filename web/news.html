@@ -82,8 +82,8 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <h1>חדשות <b>ואקטואליה</b></h1>
     <div class="sub">אגרגטור החדשות החי של הזירה — כותרות אמיתיות ועדכניות בנושאי חקלאות ואגרו-טק מהעולם ומישראל, מתעדכן בזמן אמת.</div>
     <div class="regtoggle">
-      <button class="rbtn on" onclick="setRegion('world',this)">🌍 העולם</button>
-      <button class="rbtn" onclick="setRegion('il',this)">🇮🇱 ישראל</button>
+      <button class="rbtn on" onclick="setRegion('il',this)">🇮🇱 ישראל</button>
+      <button class="rbtn" onclick="setRegion('world',this)">🌍 העולם</button>
     </div>
   </div>
 
@@ -106,7 +106,7 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · חדשות ואקטואליה · <span class="mono">news aggregator</span></div></div></div>
 
 <script>
-var REGION='world', CURTOPIC=0, ITEMS=[];
+var REGION='il', CURTOPIC=0, ITEMS=[];
 var TOPICS={
  world:[['הכול','agritech OR agtech OR "agriculture technology" OR "food tech"'],['השקיה','precision agriculture irrigation technology'],['פוד-טק','food tech OR "alternative protein" OR "cultivated meat"'],['רובוטיקה','agriculture robotics automation'],['רחפנים','agriculture drones'],['חיישנים','precision agriculture sensors IoT'],['זרעים','crop genetics seed technology'],['השקעות','agrifood tech investment funding']],
  il:[['הכול','חקלאות OR אגרוטק'],['השקיה','חקלאות השקיה'],['פוד-טק','פודטק OR בשר מתורבת'],['רחפנים','חקלאות רחפנים'],['חיישנים','חקלאות מדייקת'],['ייצוא','יצוא חקלאות'],['השקעות','חקלאות השקעה']]
