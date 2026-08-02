@@ -106,6 +106,17 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
   <div class="sech">🗓️ ציר זמן — כרונולוגי</div>
   <div class="timeline" id="timeline"></div>
 
+  <div class="sech">💧 התפלת מים · תשתית המים של ישראל</div>
+  <div style="color:var(--mut);font-size:15px;margin:-6px 0 16px;max-width:820px">ישראל מובילה עולמית בהתפלת מי-ים ובמחזור קולחים לחקלאות — מה שמשחרר מים שפירים ומבטיח יציבות אספקה לחקלאות גם בשנות בצורת.</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px" id="deskpis">
+    <div style="background:linear-gradient(180deg,#eef7fb,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#2b8fb0">~585<span style="font-size:15px"> מ׳ מ״ק</span></div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">כושר התפלה שנתי</div></div>
+    <div style="background:linear-gradient(180deg,#eef7fb,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#2b8fb0">~80%</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">ממי השתייה העירוניים</div></div>
+    <div style="background:linear-gradient(180deg,#f1faf4,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#1c6b45">~90%</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">קולחים ממוחזרים לחקלאות · שיא עולמי</div></div>
+    <div style="background:linear-gradient(180deg,#fbf6e9,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#c79a2e">5+</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">מתקני התפלה גדולים לאורך החוף</div></div>
+  </div>
+  <div class="grid" id="desalgrid"></div>
+  <div class="note">🌱 <b>הקשר לחקלאות:</b> ההתפלה משחררת מים שפירים, והקולחים המטופלים משקים כ-50% מהחקלאות בישראל — המחזור הגבוה בעולם. חברת <b>IDE Technologies</b> הישראלית היא מהמובילות העולמיות בהתפלה. נתונים לאימות מול <b>רשות המים</b>.</div>
+
   <div class="sech">🔐 ממשל הנתונים של AgroData</div>
   <div class="gcards">
     <div class="gcard"><div class="ic">🔏</div><h3>פרטיות ובעלות</h3><p>הנתונים של המגדל שייכים לו. שקיפות מלאה על איסוף, שימוש והרשאות — לפי חוק הגנת הפרטיות.</p></div>
@@ -182,6 +193,23 @@ function render(){
 function filt(c,el){CUR=c;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
 document.getElementById('filters').innerHTML=CATS.map((c,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${c[0]}',this)">${c[1]}</button>`).join('');
 render();
+// ---- מתקני התפלה · ידע אצור (נתונים לאימות מול רשות המים) ----
+var WAU="https://www.gov.il/he/departments/water_authority";
+const DESAL=[
+ {n:"שורק ב׳",y:"2023",cap:"~200",op:"IDE Technologies",s:"מתקן ההתפלה הגדול בישראל — טכנולוגיית אוסמוזה הפוכה (SWRO) בקנה מידה עולמי, ליד פלמחים.",u:WAU},
+ {n:"שורק א׳",y:"2013",cap:"~150",op:"IDE Technologies",s:"בעת הקמתו — מתקן ההתפלה הגדול בעולם. חלוץ בהוזלת עלות המים המותפלים.",u:WAU},
+ {n:"חדרה",y:"2010",cap:"~127",op:"IDE Technologies",s:"מהמתקנים הגדולים בעולם בעת הקמתו — מספק מים לאזור המרכז והשרון.",u:WAU},
+ {n:"אשקלון",y:"2005",cap:"~120",op:"IDE · Veolia",s:"מתקן ההתפלה הגדול הראשון של ישראל — פרויקט הדגל שהחל את מהפכת ההתפלה.",u:WAU},
+ {n:"אשדוד",y:"2015",cap:"~100",op:"מקורות",s:"בבעלות חברת המים הלאומית מקורות — מחזק את חוסן אספקת המים באזור הדרום.",u:WAU},
+ {n:"פלמחים",y:"2007",cap:"~90",op:"Via Maris",s:"מתקן חוף פרטי המספק מים שפירים לרשת הארצית — הורחב לאורך השנים.",u:WAU}
+];
+document.getElementById('desalgrid').innerHTML=DESAL.map(function(d){return `<a class="dec" href="${d.u}" target="_blank" rel="noopener">
+   <div class="dtop"><span class="dnum">💧 ${d.n}</span><span class="ddate">${d.y}</span></div>
+   <div class="dtitle">קיבולת: ${d.cap} מיליון מ״ק/שנה</div>
+   <div class="ddesc">${d.s}</div>
+   <div class="dmin">🏭 ${d.op}</div>
+   <div class="dlink">רשות המים ↗</div>
+ </a>`;}).join('');
 function loadGov(){
  var q=(document.getElementById('govq').value||'').trim()||'חקלאות';
  var list=document.getElementById('govlist');
