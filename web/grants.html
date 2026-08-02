@@ -60,6 +60,15 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:6px 0 8px}h1 b{color:
   </div>
   <div class="grid" id="grid"></div>
   <div class="note">📋 מדריך מקורות המימון — לאימות מועדים וקולות קוראים באתרי הגופים. ניתן לחבר עדכון קולות קוראים חיים בהמשך.</div>
+
+  <h2 style="font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d);margin:44px 0 4px">🌱 רשות החדשנות · חממות ומסלולים</h2>
+  <div class="sub" style="margin:0 0 18px">חממות טכנולוגיות ומסלולי מימון של רשות החדשנות (לשעבר לשכת המדען הראשי) הרלוונטיים לאגרו-פוד-טק. ידע אצור — לאימות תנאים ומועדים באתרי הגופים.</div>
+
+  <h3 style="font-family:Rubik;font-weight:800;font-size:19px;color:var(--green-d);margin:8px 0 12px">חממות אגרי-פוד-טק</h3>
+  <div class="grid" id="incgrid"></div>
+
+  <h3 style="font-family:Rubik;font-weight:800;font-size:19px;color:var(--green-d);margin:30px 0 12px">מסלולי מימון · רשות החדשנות</h3>
+  <div class="grid" id="iagrid"></div>
 </div>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מענקי מחקר ומימון · <span class="mono">grants & funding</span></div></div></div>
@@ -97,6 +106,29 @@ function render(){
 }
 function filt(k,el){CUR=k;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
 document.getElementById('filters').innerHTML=CATS.map(function(c,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="filt(\''+c[0]+'\',this)">'+c[1]+'</button>';}).join('');
+
+// ---- רשות החדשנות: חממות ומסלולים (ידע אצור, מאומת) ----
+var INCUB=[
+ {n:'Fresh Start',u:'https://www.freshstart.co.il/',c:'#2e9e63',tag:'חממה',d:'חממת פוד-טק בקרית שמונה — שותפות תנובה, טמפו, OurCrowd ו-Finistere. ליווי סטארטאפים בשלב מוקדם.',m:['פוד-טק','קרית שמונה','שלב מוקדם']},
+ {n:'The Kitchen Hub',u:'https://www.thekitchenhub.com/',c:'#c4562e',tag:'חממה',d:'חממת הפוד-טק של קבוצת שטראוס באשדוד — מהוותיקות בעולם בתחום, השקעה וליווי טכנולוגי.',m:['פוד-טק','אשדוד','שטראוס']},
+ {n:'Trendlines Agrifood',u:'https://trendlines.com/',c:'#2b8fb0',tag:'חממה + קרן',d:'חממה וקרן השקעות במיסגב לתחומי אגרי-פוד ומד-טק — מהזרעה ועד גיוס והנפקה.',m:['אגרי-פוד','מיסגב','קרן']},
+ {n:'GrowingIL',u:'https://growingil.com/',c:'#6a45c0',tag:'קהילה',d:'קהילת האגרי-פוד-טק הישראלית — מיפוי מערכת החדשנות, אירועים וחיבור בין יזמים, תאגידים ומשקיעים.',m:['מערכת חדשנות','מיפוי']}
+];
+var IATRACK=[
+ {n:'מסלול חממות טכנולוגיות',u:'https://innovationisrael.org.il/',c:'#1c6b45',tag:'מסלול',d:'תמיכה בחברות בשלב מוקדם דרך חממה מפעילה — מימון של עד ~85% מהתקציב המאושר.',m:['שלב מוקדם','חממה מפעילה']},
+ {n:'תנופה (Tnufa)',u:'https://innovationisrael.org.il/',c:'#1c6b45',tag:'מענק',d:'מענק פרה-סיד ליזמים בתחילת הדרך — לבניית אב-טיפוס, הוכחת היתכנות והגנת קניין רוחני.',m:['פרה-סיד','אב-טיפוס']},
+ {n:'מסלול פיילוטים',u:'https://innovationisrael.org.il/',c:'#1c6b45',tag:'מסלול',d:'מימון הרצת טכנולוגיה בסביבה אמיתית — כולל שדות, חוות ומתקנים חקלאיים — להוכחה מסחרית.',m:['פיילוט','שדה/חווה']},
+ {n:'קרן המו״פ',u:'https://innovationisrael.org.il/',c:'#1c6b45',tag:'מסלול',d:'מימון תוכניות מו״פ לחברות טכנולוגיה בכל שלב — התמיכה המרכזית של רשות החדשנות.',m:['מו״פ','כל שלב']}
+];
+function cardHTML(g){var d=dom(g.u);
+ return '<a class="gcard" style="--c:'+g.c+'" href="'+g.u+'" target="_blank" rel="noopener">'
+  +'<div class="gtop"><span class="glogo">'+g.n[0]+(d?'<img src="https://www.google.com/s2/favicons?domain='+d+'&sz=128" onerror="this.remove()">':'')+'</span><span class="gtag">'+g.tag+'</span></div>'
+  +'<div class="gn">'+g.n+'</div><div class="gd">'+g.d+'</div>'
+  +'<div class="gmeta">'+g.m.map(function(x){return '<span class="gm">'+x+'</span>';}).join('')+'</div>'
+  +'<div class="glink">לפרטים ↗</div></a>';
+}
+document.getElementById('incgrid').innerHTML=INCUB.map(cardHTML).join('');
+document.getElementById('iagrid').innerHTML=IATRACK.map(cardHTML).join('');
 render();
 </script>
 </body></html>
