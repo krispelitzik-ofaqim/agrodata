@@ -148,7 +148,7 @@ h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;displa
       <span class="gicon"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.09a6.6 6.6 0 0 1 0-4.18V7.07H2.18a11 11 0 0 0 0 9.86l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg></span>
       <span class="gtx">תוצאות מהאינטרנט</span>
     </div>
-    <div class="gresults"><div class="gcse-searchresults-only" data-queryParameterName="q" data-gname="agweb"></div></div>
+    <div class="gresults"><div id="gcseDiv"></div><div id="gcseFallback" style="display:none;padding:10px 2px"><a id="gLink2" href="#" target="_blank" rel="noopener" style="color:#2b8fb0;font-weight:700">פתח את התוצאות בגוגל ↗</a></div></div>
   </div>
 
   <!-- DATA -->
@@ -160,15 +160,15 @@ h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;displa
   </div>
 
   <!-- RESEARCH -->
-  <h3 class="sec">מחקרים מקושרים <span class="tag">מחקר ואקדמיה</span></h3>
-  <a class="ritem" href="#"><div class="ricon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/></svg></div><div><h4>אופטימיזציה של משטר השקיה בעגבניות בתנאי מליחות בערבה</h4><div class="sub">אוניברסיטת בן-גוריון · 2024 · ד״ר נ. לוי</div></div><span class="kind">דוקטורט</span></a>
-  <a class="ritem" href="#"><div class="ricon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/></svg></div><div><h4>השפעת פרטיגציה על יבול ואיכות פרי בעגבניות מדבר</h4><div class="sub">מכון וולקני · 2023 · תזה (מוסמך)</div></div><span class="kind">תזה</span></a>
-  <a class="ritem" href="#"><div class="ricon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div><div><h4>ניטור לחות קרקע מבוסס חיישנים לחיסכון במים בחקלאות מדבר</h4><div class="sub">Agricultural Water Management · 2024 · מאמר</div></div><span class="kind">מאמר</span></a>
+  <div id="resSec" style="display:none">
+    <h3 class="sec">מחקרים מקושרים <span class="tag">מחקר ואקדמיה · OpenAlex</span></h3>
+    <div id="resList"></div>
+  </div>
 
   <!-- RELATED -->
-  <h3 class="sec">חיפושים קשורים</h3>
-  <div class="chips">
-    <span class="chip">מליחות מים בערבה</span><span class="chip">פרטיגציה בעגבניות</span><span class="chip">ניטור לחות קרקע</span><span class="chip">יבול עגבניות מדבר</span><span class="chip">חסכון במים בחקלאות</span>
+  <div id="relSec" style="display:none">
+    <h3 class="sec">חיפושים קשורים</h3>
+    <div class="chips" id="relChips"></div>
   </div>
 </div>
 
@@ -249,6 +249,55 @@ function askAI(q){
  ask('gemini','geminiAnswer','geminiBadge',q,'Gemini');
 }
 if(Q&&Q.trim()){askAI(Q.trim());}
+
+/* ===== dynamic sections (research / related / google) ===== */
+function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+var RESICO='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4L2 9l10 5 10-5-10-5z"/><path d="M6 11v5c0 1.2 2.7 2.5 6 2.5s6-1.3 6-2.5v-5"/></svg>';
+function renderResearch(items){
+ var it=(items||[]).slice(0,6);if(!it.length)return;
+ document.getElementById('resList').innerHTML=it.map(function(p){
+  var sub=[p.inst,p.year].filter(Boolean).join(' · ');
+  return '<a class="ritem" href="'+(p.url||'#')+'" target="_blank" rel="noopener"><div class="ricon">'+RESICO+'</div><div><h4>'+esc(p.title)+'</h4><div class="sub">'+esc(sub)+(p.authors?' · '+esc(p.authors):'')+'</div></div><span class="kind">'+esc(p.type||'מאמר')+'</span></a>';
+ }).join('');
+ document.getElementById('resSec').style.display='';
+}
+function fetchResearch(term){
+ fetch('/api/research?q='+encodeURIComponent(term)).then(function(r){return r.json();}).then(function(j){renderResearch(j.items);}).catch(function(){});
+}
+function loadResearch(q){
+ if(/[֐-׿]/.test(q)){ // Hebrew → translate to English keywords for OpenAlex
+  fetch('/api/ask?engine=gemini&q='+encodeURIComponent('Translate this agriculture topic to 2-4 English keywords only, no punctuation, no explanation: "'+q+'"')).then(function(r){return r.json();}).then(function(j){
+   var t=(j.demo?'':(j.answer||'')).split('\n')[0].replace(/["'.:]/g,'').trim();
+   fetchResearch(t||q);
+  }).catch(function(){fetchResearch(q);});
+ } else fetchResearch(q);
+}
+function loadRelated(q){
+ fetch('/api/ask?engine=gemini&q='+encodeURIComponent('החזר בדיוק 6 חיפושים קשורים קצרים (2-4 מילים כל אחד) לשאילתה: "'+q+'". רק רשימה מופרדת בפסיקים — בלי מספור, בלי הסבר, בלי מרכאות.')).then(function(r){return r.json();}).then(function(j){
+  if(j.demo)return;
+  var arr=(j.answer||'').replace(/\n/g,',').split(/[,،]/).map(function(s){return s.replace(/^[\d\.\-–•\s"']+/,'').replace(/["']+$/,'').trim();}).filter(function(s){return s&&s.length>=3&&s.length<40;}).slice(0,6);
+  if(!arr.length)return;
+  document.getElementById('relChips').innerHTML=arr.map(function(s){return '<span class="chip" style="cursor:pointer" onclick="location.href=\'search-results.html?q=\'+encodeURIComponent('+JSON.stringify(s)+')">'+esc(s)+'</span>';}).join('');
+  document.getElementById('relSec').style.display='';
+ }).catch(function(){});
+}
+if(Q&&Q.trim()){loadResearch(Q.trim());loadRelated(Q.trim());}
+
+/* Google Programmable Search — explicit render with the query */
+(function(){
+ var q=(Q||'').trim();
+ var fb=document.getElementById('gcseFallback'),fl=document.getElementById('gLink2');
+ if(fl)fl.href='https://www.google.com/search?q='+encodeURIComponent(q);
+ window.__gcse={parsetags:'explicit',callback:function(){
+  try{
+   google.search.cse.element.render({div:'gcseDiv',tag:'searchresults-only',gname:'agweb'});
+   var el=google.search.cse.element.getElement('agweb');
+   if(el&&q)el.execute(q);
+  }catch(e){if(fb)fb.style.display='block';}
+ }};
+ // safety fallback if widget never renders
+ setTimeout(function(){var d=document.getElementById('gcseDiv');if(fb&&d&&!d.querySelector('.gsc-results,.gsc-webResult,iframe'))fb.style.display='block';},4500);
+})();
 
 /* ===== read-aloud (TTS) ===== */
 function heVoice(){var vs=speechSynthesis.getVoices();return vs.find(function(v){return v.lang&&v.lang.indexOf('he')===0;})||null;}

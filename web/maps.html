@@ -320,7 +320,7 @@ Promise.all([
 ]).then(function(res){
  var full=res[0].items||[],cur=res[1].items||[];
  var byName={};cur.forEach(function(c){byName[c.name]=c;});
- SETDB=full.map(function(f){var c=byName[f.name];return {name:f.name,region:c&&c.region?c.region:f.region,council:f.council,type:(c&&c.type)?c.type:(f.type||''),crops:c?c.crops:'',factory:c?c.factory:'',lat:f.lat,lon:f.lon};});
+ SETDB=full.map(function(f){var c=byName[f.name];return {name:f.name,region:c&&c.region?c.region:f.region,council:f.council,type:(c&&c.type)?c.type:(f.type||''),crops:(c&&c.crops)?c.crops:(f.crops||''),factory:(c&&c.factory)?c.factory:(f.factory||''),lat:f.lat,lon:f.lon};});
  // add curated not present in the open backbone
  cur.forEach(function(c){if(!full.some(function(f){return f.name===c.name;}))SETDB.push({name:c.name,region:c.region||'',council:'',type:c.type,crops:c.crops,factory:c.factory,lat:c.lat,lon:c.lon});});
  SETDB.sort(function(a,b){return (b.crops?1:0)-(a.crops?1:0);});
