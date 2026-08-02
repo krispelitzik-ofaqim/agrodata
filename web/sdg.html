@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לוח SDG · ביטחון תזונתי וקיימות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--ink:#14261c;--mut:#5c6f63;--line:#e2ebe5;--bg2:#f4f9f5;--tint:#eaf4ee;
+--sdg2:#DDA63A;--sdg6:#26BDE2;--sdg12:#BF8B2E;--sdg13:#3F7E44;--sdg15:#56C02B}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6faf7;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:30px 0 10px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:820px}
+.live{display:inline-flex;align-items:center;gap:8px;font-family:'Plex Mono';font-size:12.5px;color:var(--mut);margin-top:10px}
+.dot{width:9px;height:9px;border-radius:50%;background:#1f9d57;animation:pulse 1.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}
+.sect{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin:30px 0 14px}
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;box-shadow:0 8px 20px rgba(20,38,28,.05);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;right:0;left:0;height:4px;background:var(--c,#2e9e63)}
+.kpi .kl{font-size:12.5px;color:var(--mut);font-weight:600;line-height:1.3;min-height:32px}
+.kpi .kv{font-family:Rubik;font-weight:800;font-size:30px;color:var(--green-d);margin-top:6px;line-height:1}
+.kpi .ku{font-size:12px;color:var(--mut);margin-top:3px}
+.kpi .ky{font-family:'Plex Mono';font-size:11px;color:#9bb0a3;margin-top:6px}
+.kpi .spark{margin-top:8px}
+/* goal cards */
+.goals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1000px){.goals{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.goals{grid-template-columns:1fr}}
+.goal{border-radius:18px;padding:20px;color:#fff;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;box-shadow:0 12px 28px rgba(20,38,28,.12)}
+.goal .num{font-family:Rubik;font-weight:900;font-size:15px;background:rgba(255,255,255,.22);border-radius:8px;padding:3px 9px;align-self:flex-start;letter-spacing:.03em}
+.goal h3{font-family:Rubik;font-weight:800;font-size:19px;margin:12px 0 4px}
+.goal .gd{font-size:13px;opacity:.92;line-height:1.5;flex:1}
+.goal .gbig{font-family:Rubik;font-weight:900;font-size:34px;margin-top:8px;line-height:1}
+.goal .gsm{font-size:12px;opacity:.9}
+/* charts */
+.charts{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+@media(max-width:900px){.charts{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 20px rgba(20,38,28,.05)}
+.card h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin-bottom:2px}
+.card .cs{font-size:13px;color:var(--mut);margin-bottom:12px}
+.leg{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:13px;font-weight:600}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+.leg i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:16px;padding:18px 20px;margin:30px 0 40px;font-size:13.5px;line-height:1.6}
+.note b{color:#8fe6ad}.note a{color:#8fe6ad}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:24px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.8)}
+.loading{color:var(--mut);font-size:14px;padding:8px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="agrolake.html">→ למאגר הנתונים</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">SDG DASHBOARD · יעדי הפיתוח בר-קיימא</div>
+    <h1>לוח <b>SDG</b> · ביטחון תזונתי וקיימות</h1>
+    <div class="sub">תרומת החקלאות והאגרו-טק הישראלי ליעדי הפיתוח בר-קיימא של האו״ם — מדדים חיים מ-World Bank, ממופים ליעדים 2, 6, 12 ו-15.</div>
+    <div class="live"><span class="dot"></span> <span id="upd">נתונים חיים · World Bank Open Data</span></div>
+  </div>
+
+  <div class="sect">מדדי מפתח · ישראל</div>
+  <div class="kpis" id="kpis"><div class="loading">טוען מדדים חיים…</div></div>
+
+  <div class="sect">יעדי SDG רלוונטיים</div>
+  <div class="goals" id="goals"></div>
+
+  <div class="sect">מגמות לאורך זמן</div>
+  <div class="charts">
+    <div class="card">
+      <h3>מדדי ייצור חקלאי · ישראל</h3>
+      <div class="cs">אינדקס (2015=100) · מזון, צומח ומהחי · SDG 2</div>
+      <svg id="cprod" viewBox="0 0 720 300" style="width:100%;height:auto"></svg>
+      <div class="leg" id="cprodleg"></div>
+    </div>
+    <div class="card">
+      <h3>ביטחון תזונתי · מגמה</h3>
+      <div class="cs">חוסר-ביטחון תזונתי מתון/חמור · % מהאוכלוסייה</div>
+      <svg id="cfs" viewBox="0 0 480 300" style="width:100%;height:auto"></svg>
+    </div>
+  </div>
+
+  <div class="note">🎯 <b>איך לקרוא:</b> המדדים מבטאים את תרומת החקלאות הישראלית ליעדי הפיתוח בר-קיימא (SDG). ייצור מזון גבוה ותת-תזונה נמוכה = ביטחון תזונתי חזק (SDG 2). מקור: <b>World Bank Open Data</b> · נתונים פתוחים, ללא מפתח. חלק ממאגר הנתונים המרכזי של הזירה.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · לוח SDG · <span class="mono">World Bank · SDG indicators</span></div></div></div>
+
+<script>
+function api(ds){return fetch('/api/lake?ds='+ds).then(function(r){return r.json();}).catch(function(){return null;});}
+function ser(d){return (d&&d.series&&d.series[0]&&d.series[0].data)||[];}
+function labs(d){return (d&&d.labels)||[];}
+function lastV(d){var s=ser(d);return s.length?s[s.length-1]:null;}
+function lastY(d){var l=labs(d);return l.length?l[l.length-1]:'';}
+function fmt(v){return v==null?'—':(Math.round(v*10)/10).toLocaleString('he-IL');}
+function spark(data,col){
+ if(!data||data.length<2)return '';
+ var w=120,h=30,mn=Math.min.apply(null,data),mx=Math.max.apply(null,data),r=(mx-mn)||1;
+ var pts=data.slice(-14).map(function(v,i,a){return [i/(a.length-1)*w,h-((v-mn)/r)*(h-4)-2];});
+ var p=pts.map(function(pt,i){return (i?'L':'M')+pt[0].toFixed(1)+','+pt[1].toFixed(1);}).join(' ');
+ return '<svg class="spark" width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'"><path d="'+p+'" fill="none" stroke="'+col+'" stroke-width="2"/></svg>';
+}
+var KPI=[
+ {ds:'foodprod',l:'מדד ייצור מזון',u:'אינדקס (2015=100)',c:'#DDA63A'},
+ {ds:'undernour',l:'תת-תזונה באוכלוסייה',u:'% מהאוכלוסייה',c:'#DDA63A'},
+ {ds:'foodinsec',l:'חוסר-ביטחון תזונתי',u:'% מהאוכלוסייה',c:'#BF8B2E'},
+ {ds:'foodimp',l:'יבוא מזון',u:'% מכלל היבוא',c:'#BF8B2E'},
+ {ds:'water',l:'צריכת מים לחקלאות',u:'% מכלל המים',c:'#26BDE2'},
+ {ds:'forest',l:'שטח יער',u:'% משטח הארץ',c:'#56C02B'}
+];
+Promise.all(KPI.map(function(k){return api(k.ds);})).then(function(res){
+ document.getElementById('kpis').innerHTML=KPI.map(function(k,i){var d=res[i];
+  return '<div class="kpi" style="--c:'+k.c+'"><div class="kl">'+k.l+'</div>'
+   +'<div class="kv">'+fmt(lastV(d))+'</div><div class="ku">'+k.u+'</div>'
+   +spark(ser(d),k.c)
+   +'<div class="ky">'+lastY(d)+'</div></div>';
+ }).join('');
+ var d=new Date(),p=function(n){return String(n).padStart(2,'0');};
+ document.getElementById('upd').textContent='עודכן '+p(d.getHours())+':'+p(d.getMinutes())+' · World Bank Open Data';
+});
+
+// SDG goal cards
+Promise.all([api('foodprod'),api('undernour'),api('water'),api('foodimp'),api('forest')]).then(function(r){
+ var GOALS=[
+  {n:'SDG 2',c:'#DDA63A',t:'ביטחון תזונתי',d:'ייצור מזון בר-קיימא וחיסול הרעב — הלב של החקלאות.',big:fmt(lastV(r[0])),sm:'מדד ייצור מזון (2015=100)'},
+  {n:'SDG 6',c:'#26BDE2',t:'מים נקיים ויעילות',d:'ניהול מים בר-קיימא — החוזק הישראלי בהשקיה ומחזור.',big:fmt(lastV(r[2]))+'%',sm:'מהמים לחקלאות'},
+  {n:'SDG 12',c:'#BF8B2E',t:'צריכה אחראית',d:'עצמאות תזונתית והפחתת תלות ביבוא מזון.',big:fmt(lastV(r[3]))+'%',sm:'יבוא מזון מכלל היבוא'},
+  {n:'SDG 15',c:'#56C02B',t:'חיים ביבשה',d:'שמירת קרקע, ייעור ומגוון ביולוגי לחקלאות בת-קיימא.',big:fmt(lastV(r[4]))+'%',sm:'שטח יער מהארץ'}
+ ];
+ document.getElementById('goals').innerHTML=GOALS.map(function(g){
+  return '<div class="goal" style="background:linear-gradient(150deg,'+g.c+','+g.c+'cc)"><span class="num">'+g.n+'</span>'
+   +'<h3>'+g.t+'</h3><div class="gd">'+g.d+'</div>'
+   +'<div class="gbig">'+g.big+'</div><div class="gsm">'+g.sm+'</div></div>';
+ }).join('');
+});
+
+// line chart: production indices
+function lineChart(svgId,legId,seriesList,w,h){
+ var svg=document.getElementById(svgId);if(!svg)return;
+ var pad=34,all=[];seriesList.forEach(function(s){all=all.concat(s.data.filter(function(v){return v!=null;}));});
+ if(!all.length){svg.innerHTML='<text x="'+(w/2)+'" y="'+(h/2)+'" text-anchor="middle" fill="#9bb0a3" font-family="Heebo">אין נתונים</text>';return;}
+ var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),r=(mx-mn)||1;var n=Math.max.apply(null,seriesList.map(function(s){return s.data.length;}));
+ var g='';for(var i=0;i<=4;i++){var y=pad+i*(h-2*pad)/4;g+='<line x1="'+pad+'" y1="'+y+'" x2="'+(w-pad)+'" y2="'+y+'" stroke="#eef4ef"/>';g+='<text x="'+(w-pad+4)+'" y="'+(y+4)+'" font-size="11" fill="#9bb0a3" font-family="Plex Mono">'+Math.round(mx-(mx-mn)*i/4)+'</text>';}
+ seriesList.forEach(function(s){
+  var pts=s.data.map(function(v,i){var x=pad+(n>1?i/(n-1):0)*(w-2*pad);var y=v==null?null:h-pad-((v-mn)/r)*(h-2*pad);return [x,y];}).filter(function(p){return p[1]!=null;});
+  var path=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' ');
+  g+='<path d="'+path+'" fill="none" stroke="'+s.c+'" stroke-width="3" stroke-linejoin="round"/>';
+  pts.forEach(function(p){g+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.4" fill="#fff" stroke="'+s.c+'" stroke-width="2"/>';});
+ });
+ // x labels (first/mid/last)
+ svg.innerHTML=g;
+ if(legId)document.getElementById(legId).innerHTML=seriesList.map(function(s){return '<span><i style="background:'+s.c+'"></i>'+s.name+'</span>';}).join('');
+}
+Promise.all([api('foodprod'),api('cropprod'),api('lvskprod')]).then(function(r){
+ lineChart('cprod','cprodleg',[
+  {name:'ייצור מזון',c:'#DDA63A',data:ser(r[0])},
+  {name:'ייצור צומח',c:'#56C02B',data:ser(r[1])},
+  {name:'ייצור מהחי',c:'#26BDE2',data:ser(r[2])}
+ ],720,300);
+});
+Promise.all([api('foodinsec')]).then(function(r){
+ lineChart('cfs',null,[{name:'חוסר-ביטחון תזונתי',c:'#BF8B2E',data:ser(r[0])}],480,300);
+});
+</script>
+</body></html>
