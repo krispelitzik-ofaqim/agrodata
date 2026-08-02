@@ -78,6 +78,10 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .lbtn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25)}
 .footbar{background:linear-gradient(135deg,#0a1a11,#134a30);margin-top:36px}
 .foot{padding:24px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.6)}
+.ispk{margin-inline-start:8px;border:0;background:#eaf4ee;color:#1c6b45;border-radius:8px;padding:3px 9px;font-size:14px;cursor:pointer;vertical-align:middle;transition:.15s}
+.ispk:hover{background:#d7ecdf}
+.ispk.on{background:var(--green,#1c6b45);color:#fff;animation:ispkpulse 1s infinite}
+@keyframes ispkpulse{50%{opacity:.55}}
 </style>
 </head>
 <body>
@@ -172,6 +176,19 @@ function gate(){
   +'<div class="lockp">קבלו רעיונות סטארטאפ בלתי-מוגבלים, שנשאבים מכל נתוני הזירה — בעיה → פתרון → שוק יעד.</div>'
   +'<div class="lockb"><a class="lbtn" href="pricing.html">🚀 שדרגו למנוי →</a><button class="lbtn ghost" onclick="unlock()">יש לי מנוי · כניסה</button></div></div>';
 }
+function idSpeak(btn){
+ var t=(btn.getAttribute('data-say')||'').replace(/&quot;/g,'"');
+ if(!('speechSynthesis' in window)||!t)return;
+ var wasOn=btn.classList.contains('on');
+ if(speechSynthesis.speaking)speechSynthesis.cancel();
+ document.querySelectorAll('.ispk.on').forEach(function(b){b.classList.remove('on');});
+ if(wasOn)return;
+ var u=new SpeechSynthesisUtterance(t);u.lang='he-IL';
+ var vs=speechSynthesis.getVoices(),v=vs.find(function(x){return x.lang&&x.lang.indexOf('he')===0;});if(v)u.voice=v;
+ btn.classList.add('on');u.onend=function(){btn.classList.remove('on');};
+ speechSynthesis.speak(u);
+}
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){};}
 function gen(problem,label){
  document.getElementById('bankSel').textContent='אתגר: '+label;
  var box=document.getElementById('ideas');
@@ -187,7 +204,8 @@ function gen(problem,label){
    var parts=l.split('|').map(function(p){return p.replace(/^\[|\]$/g,'').trim();});
    var name=parts[0]||'רעיון';
    var body=parts.slice(1).map(function(p){var kv=p.split(':');return kv.length>1?'<div class="row"><b>'+kv[0].trim()+':</b> '+kv.slice(1).join(':').trim()+'</div>':'<div class="row">'+p+'</div>';}).join('');
-   return '<div class="idea"><div class="it">💡 '+name+'</div>'+body
+   var say=parts.join('. ').replace(/"/g,'&quot;');
+   return '<div class="idea"><div class="it">💡 '+name+'<button class="ispk" data-say="'+say+'" onclick="idSpeak(this)" title="הקראה">🔊</button></div>'+body
     +'<div class="nsteps"><span class="nslbl">הצעדים הבאים:</span>'
     +'<a href="grants.html">💰 מענק</a><a href="scholarships.html">🎓 צוות</a><a href="ofakim.html">🚀 האצה</a><a href="analytics.html">📊 שוק</a></div>'
     +'</div>';
