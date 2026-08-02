@@ -81,6 +81,12 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
   <div class="lfilters" id="rfilters"></div>
   <div class="grid" id="grid"></div>
   <div class="note">🔌 רשימה מבוססת מקורות ציבוריים, להדגמה ועדכון. ניתן לחבר ל-<b>רשות החדשנות</b> ולמאגר החממות הרשמי לנתונים חיים.</div>
+
+  <div class="sech">💰 מסלולי מימון · רשות החדשנות</div>
+  <div class="gov" id="tracks"></div>
+
+  <div class="sech">🌾 מו״פים אזוריים לחקלאות</div>
+  <div class="gov" id="regrnd"></div>
 </div>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · המדען הראשי וחממות · <span class="mono">innovation</span></div></div></div>
@@ -104,7 +110,23 @@ const LABS=[
  {n:"NGT3 VC",u:"https://www.ngt3.co.il/",loc:"נצרת",k:["deep","ביו-טק"],p:"רשות החדשנות",d:"חממה טכנולוגית בגליל — ביו-קונברג׳נס וטכנולוגיות עמוקות.",bk:"b-deep",bl:"ביו-טק"},
  {n:"GrowingIL",u:"https://www.growingil.com/",loc:"ארצי",k:["agri","קהילה"],p:"אקוסיסטם אגריפוד",d:"פלטפורמת קהילה ומיזמים לחיבור האקוסיסטם החקלאי-מזוני בישראל.",bk:"b-agri",bl:"אגרי-פוד"}
 ];
-document.getElementById('gov').innerHTML=GOV.map(g=>`<a class="gcard" href="${g.u}" target="_blank" rel="noopener">${logoHTML(g.u,g.n)}<div><div class="cn">${g.n}</div><div class="cd" style="margin:6px 0 8px">${g.d}</div><div class="link">לאתר הרשמי ↗</div></div></a>`).join('');
+function govCards(id,arr,link){document.getElementById(id).innerHTML=arr.map(g=>`<a class="gcard" href="${g.u}" target="_blank" rel="noopener">${logoHTML(g.u,g.n)}<div><div class="cn">${g.n}</div><div class="cd" style="margin:6px 0 8px">${g.d}</div><div class="link">${link} ↗</div></div></a>`).join('');}
+govCards('gov',GOV,'לאתר הרשמי');
+const TRACKS=[
+ {n:"מסלול חממות טכנולוגיות",u:"https://innovationisrael.org.il/",d:"תמיכה בחברות בשלב מוקדם דרך חממה מפעילה — מימון של עד ~85% מהתקציב המאושר."},
+ {n:"תנופה (Tnufa)",u:"https://innovationisrael.org.il/",d:"מענק פרה-סיד ליזמים בתחילת הדרך — אב-טיפוס, הוכחת היתכנות והגנת קניין רוחני."},
+ {n:"מסלול פיילוטים",u:"https://innovationisrael.org.il/",d:"מימון הרצת טכנולוגיה בסביבה אמיתית — כולל שדות, חוות ומתקנים חקלאיים — להוכחה מסחרית."},
+ {n:"קרן המו״פ",u:"https://innovationisrael.org.il/",d:"מימון תוכניות מו״פ לחברות טכנולוגיה בכל שלב — התמיכה המרכזית של רשות החדשנות."},
+ {n:"מגנ״ט (MAGNET)",u:"https://innovationisrael.org.il/",d:"מימון קונסורציומים של חברות תעשייה ומוסדות אקדמיה לפיתוח טכנולוגיות גנריות פורצות-דרך."}
+];
+const REGRND=[
+ {n:"מו״פ ערבה",u:"https://www.arava.co.il/",d:"מחקר חקלאי מדברי בערבה — פלפל, ירקות יצוא, תמרים והשקיה במים מליחים בתנאי קיצון."},
+ {n:"מרכז מו״פ רמת נגב",u:"https://www.gov.il/he/departments/units/moag_chief_scientist",d:"מחקר לנגב — גידולים במים מליחים, חקלאות מדבר, אקוופוניקה ואנרגיה מתחדשת."},
+ {n:"מו״פ צפון (מיג״ל)",u:"https://www.migal.org.il/",d:"מחקר יישומי לגליל ולעמקים — גד״ש, מטעים, רפת, מזון ומים דרך מכון המחקר הגליל."},
+ {n:"מו״פ בקעת הירדן",u:"https://www.gov.il/he/departments/units/moag_chief_scientist",d:"מחקר לתנאי הבקעה החמה — תמרים, ענבי מאכל, ירקות ופתרונות לעקת חום ומליחות."}
+];
+govCards('tracks',TRACKS,'לפרטים');
+govCards('regrnd',REGRND,'לאתר');
 const REG={"Fresh Start":"צפון","The Kitchen Hub":"מרכז","Trendlines Agrifood":"צפון","Millennium Food-Tech":"מרכז","Arava Innovation":"ערבה","Capital Nature":"מרכז","Incubit (אלביט)":"מרכז","NGT3 VC":"צפון","GrowingIL":"מרכז"};
 LABS.forEach(function(l){l.r=REG[l.n]||"מרכז";});
 let curT='הכל',curR='הכל',curQ='';
