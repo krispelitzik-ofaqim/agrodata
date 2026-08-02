@@ -466,6 +466,8 @@ WB = {  # World Bank indicators for Israel (ISR)
   "arable": ("AG.LND.ARBL.HA",   "אדמה בת-עיבוד",         "הקטר",        "AG.LND.ARBL.HA"),
   "water":  ("ER.H2O.FWAG.ZS",   "צריכת מים לחקלאות",     "% מכלל המים", "ER.H2O.FWAG.ZS"),
   "export": ("TX.VAL.FOOD.ZS.UN", "יצוא מזון",            "% מכלל היצוא", "TX.VAL.FOOD.ZS.UN"),
+  "aqua":   ("ER.FSH.AQUA.MT",    "ייצור מדגה (חקלאות ימית)", "טון",     "ER.FSH.AQUA.MT"),
+  "forest": ("AG.LND.FRST.ZS",    "שטח יער",               "% משטח הארץ", "AG.LND.FRST.ZS"),
 }
 # World Bank indicators for other markets (country-specific)
 WBC = {
@@ -512,6 +514,8 @@ EU = {
                 "ייצור דגנים · האיחוד האירופי", "אלף טון"),
   "eu_area":   ("apro_cpsh1", {"crops": "C0000", "strucpro": "AR_THS_HA", "geo": "EU27_2020"},
                 "שטח דגנים · האיחוד האירופי", "אלף הקטר"),
+  "eu_organic": ("sdg_02_40", {"geo": "EU27_2020"},
+                "חקלאות אורגנית · האיחוד האירופי", "% מהשטח החקלאי"),
 }
 def fetch_eurostat(code, params):
     url = ("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/" + code +
@@ -708,6 +712,101 @@ def compute_agroindex():
             "sectors": sectors, "top": top,
             "note": "מחושב חי מנתוני הזירה — AgroCapital + AgroInvest"}
 
+# ---- data.gov.il datastore: Ministry of Agriculture pesticide registry (live rows) ----
+PEST_RID = "cffe0c50-6856-4187-9315-51bc113cb718"   # מאגר חומרי הדברה · משרד החקלאות
+PESTCACHE = {}
+def fetch_pesticides(q, limit=25):
+    q = (q or "").strip()
+    key = (q, limit)
+    now = time.time()
+    if key in PESTCACHE and now - PESTCACHE[key][0] < 900:
+        return PESTCACHE[key][1]
+    url = ("https://data.gov.il/api/3/action/datastore_search?resource_id=" + PEST_RID +
+           "&limit=" + str(limit) + ("&q=" + urllib.parse.quote(q) if q else ""))
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=25))
+        res = d.get("result", {})
+        out = []
+        for r in res.get("records", []):
+            out.append({
+                "name": r.get("שם תכשיר", ""), "name_en": r.get("שם תכשיר אנגלי", ""),
+                "active": r.get("חומר פעיל", ""), "type": r.get("סוג פעילות", ""),
+                "crop": r.get("גידול", ""), "pest": r.get("נגע", ""),
+                "tox": r.get("רעילות", ""), "holder": r.get("בעל רשיון", ""),
+                "dose": r.get("מינון ליישום", ""), "label": r.get("תווית", ""),
+            })
+        result = {"ok": True, "total": res.get("total", len(out)), "items": out}
+        PESTCACHE[key] = (now, result)
+        return result
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "items": []}
+
+# ---- Medical cannabis registries (data.gov.il, live rows) ----
+CANN = {
+  "holders":    ("c05fc5e0-c292-4633-8b06-e4f8b635d2a0",
+                 ["company_name", "type_description", "type", "notes"],
+                 ["חברה / בעל רישיון", "סוג פעילות", "קטגוריה", "הערות"], "בעלי רישיון עיסוק בקנביס"),
+  "pharmacies": ("f635f611-5b6d-4b21-9cd3-ce7b14da6c11",
+                 ["pharmacy_name", "pharmacy_city", "pharmacy_street", "pharmacy_delivery"],
+                 ["בית מרקחת", "עיר", "כתובת", "משלוח"], "בתי מרקחת מורשים לקנביס"),
+  "doctors":    ("37f14c29-47af-4b6c-b38e-e08a15e15b5b",
+                 ["dr_name", "specialty", "institution", "city"],
+                 ["רופא/ה", "התמחות", "מוסד", "עיר"], "רופאים מוסמכים לרישיון קנביס"),
+}
+CANNCACHE = {}
+def fetch_cannabis(ds, q, limit=40):
+    if ds not in CANN:
+        ds = "holders"
+    rid, fields, labels, title = CANN[ds]
+    key = (ds, q, limit)
+    now = time.time()
+    if key in CANNCACHE and now - CANNCACHE[key][0] < 900:
+        return CANNCACHE[key][1]
+    url = ("https://data.gov.il/api/3/action/datastore_search?resource_id=" + rid +
+           "&limit=" + str(limit) + ("&q=" + urllib.parse.quote(q) if q else ""))
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=25))
+        res = d.get("result", {})
+        rows = [[str(r.get(f, "") or "") for f in fields] for r in res.get("records", [])]
+        out = {"ok": True, "title": title, "cols": labels, "total": res.get("total", len(rows)), "rows": rows}
+        CANNCACHE[key] = (now, out)
+        return out
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "rows": []}
+
+# ---- AgroFlora: live plant identifier via iNaturalist (open, no key) ----
+FLORACACHE = {}
+def fetch_flora(q):
+    q = (q or "").strip()
+    if not q:
+        return {"ok": True, "items": []}
+    now = time.time()
+    if q in FLORACACHE and now - FLORACACHE[q][0] < 900:
+        return FLORACACHE[q][1]
+    url = ("https://api.inaturalist.org/v1/taxa?iconic_taxa=Plantae&per_page=24&locale=he&q=" +
+           urllib.parse.quote(q))
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0 (krispelitzik@gmail.com)"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+        out = []
+        for t in d.get("results", []):
+            dp = t.get("default_photo") or {}
+            out.append({
+                "id": t.get("id"), "sci": t.get("name", ""),
+                "he": t.get("preferred_common_name", ""),
+                "rank": t.get("rank", ""), "obs": t.get("observations_count", 0),
+                "photo": dp.get("medium_url") or dp.get("square_url") or "",
+                "wiki": t.get("wikipedia_url") or "",
+                "inat": "https://www.inaturalist.org/taxa/" + str(t.get("id", "")),
+            })
+        result = {"ok": True, "count": d.get("total_results", len(out)), "items": out}
+        FLORACACHE[q] = (now, result)
+        return result
+    except Exception as e:
+        return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "items": []}
+
 def scan_sitemap():
     pages = []
     try:
@@ -825,6 +924,34 @@ class H(http.server.SimpleHTTPRequestHandler):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_trade(qs.get("cmd", ["1001"])[0], qs.get("flow", ["X"])[0],
                               qs.get("reporter", ["376"])[0], qs.get("period", ["2023"])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/cannabis"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_cannabis(qs.get("ds", ["holders"])[0], qs.get("q", [""])[0],
+                                 min(60, int(qs.get("limit", ["40"])[0] or 40)))
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/flora"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_flora(qs.get("q", [""])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/pesticides"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_pesticides(qs.get("q", [""])[0], min(50, int(qs.get("limit", ["25"])[0] or 25)))
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

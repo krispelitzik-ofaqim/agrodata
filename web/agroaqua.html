@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroAqua · חקלאות ימית ובריכות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--blue:#1c6f9e;--blue-d:#124a6b;--teal:#1f8f8f;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe6ee;--bg2:#f2f8fb;--tint:#e8f3f8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f3f9fb;color:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#7fc7e8}.mono{font-family:'Plex Mono',monospace}
+.top{background:linear-gradient(135deg,#124a6b,#1c6f9e)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--blue);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#123a52}h1 b{color:var(--blue)}
+.sub{color:var(--mut);font-size:16px;max-width:660px;margin:0 auto}
+.tabs{display:flex;gap:10px;justify-content:center;margin:26px 0 18px;flex-wrap:wrap}
+.tab{background:#fff;border:1px solid #cfe2ec;border-radius:24px;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#2a5f7a;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tab.on{background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(28,111,158,.28)}
+.tab .cnt{background:rgba(0,0,0,.12);border-radius:11px;padding:1px 8px;font-size:12px;font-weight:800}
+.tab.on .cnt{background:rgba(255,255,255,.25)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(18,74,107,.07);margin-bottom:40px}
+.ptitle{font-family:Rubik;font-weight:800;font-size:22px;color:#123a52;margin-bottom:10px}
+.search{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px}
+.search:focus{border-color:var(--blue)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-family:Heebo;font-weight:700;font-size:13px;color:var(--mut);cursor:pointer}
+.chip.on{background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;border-color:transparent}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
+tr:hover td{background:#fafdff}
+.ic{font-size:22px}
+.cat{border-radius:12px;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.nm b{color:#123a52;font-family:Rubik}
+.cogrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:760px){.cogrid{grid-template-columns:1fr}}
+.co{border:1px solid var(--line);border-radius:15px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+.co .cl{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;flex:0 0 auto}
+.co h3{font-family:Rubik;font-weight:800;font-size:18px;color:#123a52;margin-bottom:2px}
+.co .tag{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:6px}
+.co p{color:#4a5c58;font-size:13.5px;line-height:1.6}
+.co a{color:var(--blue);font-weight:700;text-decoration:none;font-size:13px}
+.foot{background:#123a52;color:#a9cfe0;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
+.foot a{color:#7fc7e8;text-decoration:none}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="demo">● דמו · ידע</div>
+<div class="top"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Aqua</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROAQUA · AQUACULTURE</div>
+    <h1>חקלאות <b>ימית ובריכות</b></h1>
+    <div class="sub">מדגה, כלובי ים, מערכות מים מחזוריות (RAS) ואקוופוניקה — הענף שגדל הכי מהר בעולם המזון. ישראל מובילה בטכנולוגיית RAS וגידול במים מליחים.</div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Aqua</b></span> · חקלאות ימית ובריכות · דמו · חלק מזירת <a href="index.html">AgroData</a></div>
+
+<script>
+var CATCOL={"מים מתוקים":"#2b8fb0","מים מליחים":"#1f8f8f","ים":"#124a6b","מים מלוחים":"#c79a2e",
+ "אקסטנסיבי":"#5c8a2b","אינטנסיבי":"#b5482e","מחזורי (RAS)":"#1c6f9e","משולב":"#7a5cc0","אצות":"#2e9e63"};
+function cc(v){return CATCOL[v]||"#5c6f63";}
+var SPEC=[
+ ["🐟","אמנון (טילפיה)","Oreochromis niloticus","מים מתוקים","בריכות / RAS","בשר לבן","ישראל · עולמי"],
+ ["🐟","קרפיון","Cyprinus carpio","מים מתוקים","בריכות עפר","בשר · חג","ישראל · אסיה"],
+ ["🐟","בורי (מולית)","Mugil cephalus","מים מליחים","בריכות","בשר · בוטרגה","ים תיכון"],
+ ["🐟","שפמנון (קטפיש)","Clarias gariepinus","מים מתוקים","אינטנסיבי","בשר","אפריקה · ישראל"],
+ ["🐟","פורל (טרוטה)","Oncorhynchus mykiss","מים מתוקים","מדגה זורם","בשר","גליל · דן"],
+ ["🐠","דניס","Sparus aurata","ים","כלובי ים / RAS","בשר","ים תיכון"],
+ ["🐠","לברק","Dicentrarchus labrax","ים","כלובי ים","בשר","ים תיכון"],
+ ["🐟","סלמון","Salmo salar","ים","כלובי ים","בשר","נורבגיה · צ׳ילה"],
+ ["🐟","טונה (פיטום)","Thunnus thynnus","ים","כלובים","בשר · סושי","ים תיכון · יפן"],
+ ["🐟","חדקן (סטרג׳ן)","Acipenser","מים מתוקים","RAS","קוויאר","קיבוץ דן"],
+ ["🦐","שרימפס רגל-לבנה","Penaeus vannamei","מים מליחים","ביופלוק / בריכות","בשר","עולמי"],
+ ["🦐","שרימפס ענק מים-מתוקים","Macrobrachium rosenbergii","מים מתוקים","בריכות","בשר","אסיה"],
+ ["🦞","לובסטר מים-מתוקים (רדקלו)","Cherax quadricarinatus","מים מתוקים","בריכות / RAS","מעדן","אוסטרליה · ישראל"],
+ ["🦪","צדפות מאכל (מולים)","Mytilus","ים","חבלים / רפסודות","בשר","ים תיכון"],
+ ["🦪","אויסטר","Crassostrea gigas","ים","משטחים","מעדן","צרפת · עולמי"],
+ ["🐌","אבלון (חלזון ים)","Haliotis","ים","RAS","מעדן","אילת"],
+ ["🟢","ספירולינה","Arthrospira platensis","מים מלוחים","בריכות / פוטוביוריאקטור","תוסף חלבון","עולמי"],
+ ["🟩","כלורלה","Chlorella vulgaris","מים מתוקים","פוטוביוריאקטור","תוסף","עולמי"],
+ ["🌿","אצת נורי","Porphyra","ים","חבלים","מזון (סושי)","יפן · קוריאה"],
+ ["🥬","אולבה (חסת ים)","Ulva","ים","מיכלים / RAS","מזון · תוסף","ישראל"],
+ ["🟠","דונליאלה","Dunaliella salina","מים מלוחים","בריכות","בטא-קרוטן","ים המלח · אילת"],
+ ["🌿","אצות אדומות (גרצילריה)","Gracilaria","ים","בריכות","אגר · מזון","אסיה"]
+];
+var METH=[
+ ["🏞️","בריכות עפר","אקסטנסיבי","מים מתוקים","גידול חוץ בעלות נמוכה, צפיפות נמוכה — שיטת הקיבוצים הקלאסית."],
+ ["⚡","מדגה אינטנסיבי","אינטנסיבי","מים מתוקים","צפיפות גבוהה עם אוורור והזנה — תפוקה גבוהה לשטח."],
+ ["🌊","כלובי ים (Cages)","אינטנסיבי","ים","גידול בכלובים בים פתוח — דניס, לברק, סלמון."],
+ ["♻️","RAS · מערכת מים מחזורית","מחזורי (RAS)","מים מתוקים","מים ממוחזרים בסינון ביולוגי — חיסכון 90%+ מים, בקרה מלאה, כל מקום. ישראל מובילה."],
+ ["🌱","אקוופוניקה","משולב","מים מתוקים","דגים + צמחים במחזור סגור — פסולת הדגים מזינה את הצמחים."],
+ ["🦠","ביופלוק","מחזורי (RAS)","מים מליחים","חיידקים ממחזרים פסולת לחלבון מזין — נפוץ בשרימפס."],
+ ["🔗","IMTA · רב-טרופי משולב","משולב","ים","דגים + אצות + צדפות יחד — האצות והצדפות מנקות את המים."],
+ ["🧪","פוטוביוריאקטור","אצות","מים מלוחים","מערכת סגורה ומבוקרת לגידול אצות מיקרוסקופיות."],
+ ["🏜️","בריכות מים מליחים / גיאותרמי","אקסטנסיבי","מים מליחים","ניצול מים מליחים ומי גיאותרמיה בנגב ובערבה לגידול דגים ואצות."]
+];
+var CO=[
+ ["AquaMaof","טכנולוגיית RAS","מהמובילות בעולם למערכות מים מחזוריות (RAS) — הקמת חוות דגים יבשתיות בכל מקום, כולל סלמון.","https://www.aquamaof.com"],
+ ["BioFishency","טיפול מים","פתרונות טיפול וסינון מים חסכוני לחקלאות ימית ו-RAS.","https://www.biofishency.com"],
+ ["ViAqua Therapeutics","בריאות דגים","הגנה מפני מחלות דגים באמצעות טכנולוגיית RNA במזון — צמצום תמותה.","https://www.viaqua-t.com"],
+ ["AquiNovo","תזונת דגים","תוספי מזון להאצת גדילה ושיפור יחס המרה — פחות מזון לק״ג דג.","https://www.aquinovo.com"],
+ ["Seakura","גידול אצות","גידול אצות ים אורגניות במים בטכנולוגיה ישראלית — מזון-על.","https://www.seakura.net"],
+ ["GreenOnyx / Wanna Greens","ווטר-לנטיל","גידול צמח מים ״מנקאי״ ירוק-על בסביבה מבוקרת.","https://www.greenonyx.bio"]
+];
+var DICTS={
+ spec:{title:"מיני דגה וחקלאות ימית",icon:"🐟",cols:["","מין","שם מדעי","סוג מים","מערכת גידול","מוצר","אזור"],fk:3,rows:SPEC},
+ meth:{title:"שיטות גידול",icon:"♻️",cols:["","שיטה","עצימות","סוג מים","תיאור"],fk:2,rows:METH},
+ co:{title:"חברות ישראליות",icon:"🏢",companies:true,cnt:CO.length}
+};
+var DK='spec',DFILT='all';
+document.getElementById('tabs').innerHTML=Object.keys(DICTS).map(function(k,i){var d=DICTS[k];return '<button class="tab'+(i===0?' on':'')+'" onclick="tab(\''+k+'\',this)">'+d.icon+' '+d.title+' <span class="cnt">'+(d.companies?d.cnt:d.rows.length)+'</span></button>';}).join('');
+function tab(k,el){DK=k;DFILT='all';document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');draw();}
+function draw(){
+ var d=DICTS[DK];
+ if(d.companies){drawCo();return;}
+ var types=[];d.rows.forEach(function(r){if(types.indexOf(r[d.fk])<0)types.push(r[d.fk]);});
+ var chips='<button class="chip on" onclick="cfilt(\'all\',this)">הכול</button>'+types.map(function(t){return '<button class="chip" onclick="cfilt(\''+t+'\',this)">'+t+'</button>';}).join('');
+ document.getElementById('panel').innerHTML='<div class="ptitle">'+d.icon+' '+d.title+' <span style="font-size:14px;color:var(--mut);font-weight:400">· '+d.rows.length+' פריטים</span></div>'+
+  '<input class="search" id="search" oninput="body()" placeholder="🔎 חיפוש מין, שיטה או אזור…">'+
+  '<div class="chips" id="chips">'+chips+'</div><div class="tblwrap"><table id="tbl"></table></div>';
+ body();
+}
+function cfilt(t,el){DFILT=t;document.querySelectorAll('#chips .chip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');body();}
+function body(){
+ var d=DICTS[DK],q=(document.getElementById('search').value||'').trim();
+ var rows=d.rows.filter(function(r){if(DFILT!=='all'&&r[d.fk]!==DFILT)return false;if(!q)return true;return r.join(' ').indexOf(q)>=0;});
+ var head='<tr>'+d.cols.map(function(c,i){return '<th'+(i===0?' style="width:44px"':'')+'>'+c+'</th>';}).join('')+'</tr>';
+ var b=rows.map(function(r){return '<tr><td class="ic">'+r[0]+'</td>'+r.slice(1).map(function(v,i){
+  if(i+1===d.fk){var col=cc(v);return '<td><span class="cat" style="background:'+col+'1a;color:'+col+'">'+v+'</span></td>';}
+  if(i===0)return '<td class="nm"><b>'+v+'</b></td>';
+  if(d.cols[i+1]==='שם מדעי')return '<td style="font-style:italic;color:var(--mut);font-size:12.5px">'+v+'</td>';
+  if(d.cols[i+1]==='תיאור')return '<td style="min-width:260px;white-space:normal">'+v+'</td>';
+  return '<td>'+v+'</td>';
+ }).join('')+'</tr>';}).join('');
+ document.getElementById('tbl').innerHTML=head+(b||'<tr><td colspan="7" style="text-align:center;color:var(--mut);padding:24px">לא נמצאו פריטים</td></tr>');
+}
+function drawCo(){
+ document.getElementById('panel').innerHTML='<div class="ptitle">🏢 חברות חקלאות ימית ישראליות</div><div class="cogrid">'+
+  CO.map(function(c){return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+'</h3><div class="tag">'+c[1]+'</div><p>'+c[2]+'</p><a href="'+c[3]+'" target="_blank" rel="noopener">אתר החברה ↗</a></div></div>';}).join('')+'</div>';
+}
+draw();
+</script>
+</body></html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroFlora · מזהה צמחים וליקוט בר · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#2e7d46;--green-d:#14401f;--lime:#4caf50;--olive:#6b8e23;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dde8dc;--bg2:#f4f9f2;--tint:#eaf5e8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f5faf2;color:var(--ink)}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#a7e39a}.mono{font-family:'Plex Mono',monospace}
+.top{background:linear-gradient(135deg,#14401f,#2e7d46)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--olive);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#173e20}h1 b{color:var(--green)}
+.sub{color:var(--mut);font-size:16px;max-width:680px;margin:0 auto}
+.tabs{display:flex;gap:10px;justify-content:center;margin:26px 0 18px;flex-wrap:wrap}
+.tab{background:#fff;border:1px solid #cfe2c9;border-radius:24px;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#3a6b3f;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tab.on{background:linear-gradient(135deg,#2e7d46,#14401f);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(46,125,70,.28)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(20,64,31,.07);margin-bottom:20px}
+.search{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-family:Heebo;font-size:16px;outline:0;margin-bottom:8px}
+.search:focus{border-color:var(--green)}
+.hint{font-size:13px;color:var(--mut);margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+.pc{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#fff;transition:.15s}
+.pc:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,64,31,.12)}
+.pc .img{height:150px;background:#e8f0e5 center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-size:34px;color:#9bbf94}
+.pc .b{padding:13px 15px}
+.pc h3{font-family:Rubik;font-weight:800;font-size:16.5px;color:#173e20}
+.pc .sci{font-style:italic;color:var(--mut);font-size:12.5px;margin-top:2px}
+.pc .meta{font-size:11.5px;color:#9aa;margin-top:6px}
+.pc .lnk{display:flex;gap:8px;margin-top:9px}
+.pc .lnk a{font-size:12px;font-weight:700;text-decoration:none;color:var(--green);background:var(--tint);border-radius:9px;padding:3px 9px}
+.load{text-align:center;color:var(--mut);padding:40px}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
+tr:hover td{background:#fafdf8}
+.pl b{color:#173e20;font-family:Rubik}.pl i{color:var(--mut);font-style:italic;font-size:12px;display:block}
+.warn{color:#b5482e;font-weight:600}
+.safebox{background:#fff7ed;border:1px solid #f0d9b8;border-radius:12px;padding:13px 16px;font-size:13.5px;color:#8a5a1e;margin-bottom:14px}
+.foot{background:#14401f;color:#a9d0a2;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
+.foot a{color:#a7e39a;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Flora</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROFLORA · IDENTIFY & FORAGE</div>
+    <h1>מזהה צמחים <b>וליקוט בר</b></h1>
+    <div class="sub">מגדיר צמחי ישראל חי — חפשו שם (עברית/מדעי) וקבלו תמונה, זיהוי ומקורות. ומדריך ליקוט בר: מה אוכלים, מתי ואיך. מבוסס מקורות פתוחים (iNaturalist · ויקיפדיה) וידע אצור.</div>
+  </div>
+  <div class="tabs" id="tabs">
+    <button class="tab on" onclick="tab('id',this)">🔍 מזהה צמחים</button>
+    <button class="tab" onclick="tab('trees',this)">🌳 מזהה עצים</button>
+    <button class="tab" onclick="tab('forage',this)">🧺 ליקוט בר</button>
+  </div>
+  <div class="panel" id="panel"></div>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Flora</b></span> · מזהה צמחים וליקוט · חלק מזירת <a href="index.html">AgroData</a> · נתונים: iNaturalist (CC)</div>
+
+<script>
+var DK='id';
+function tab(k,el){DK=k;document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');draw();}
+function draw(){DK==='id'?drawId():(DK==='trees'?drawTrees():drawForage());}
+var TREEDB=null,TCAT='all';
+var TCOL={"פרי":"#2e9e63","נוי":"#7a5cc0","חורש":"#8a5a2b"};
+function drawTrees(){
+ document.getElementById('panel').innerHTML=
+  '<input class="search" id="tq" placeholder="🔎 חיפוש עץ: אלון · זית · דקל · Ficus…" oninput="treeFilter()">'+
+  '<div class="chips" id="tchips" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"></div>'+
+  '<div class="hint" id="treecount">🌳 טוען מאגר עצים…</div>'+
+  '<div class="grid" id="tgrid"></div>';
+ var chips=[["all","הכול"],["פרי","🍎 פרי / מטע"],["נוי","🌸 נוי / עירוני"],["חורש","🌲 חורש / בר"]];
+ document.getElementById('tchips').innerHTML=chips.map(function(c,i){return '<button class="tab'+(i===0?' on':'')+'" style="padding:8px 16px;font-size:13.5px" onclick="tcat(\''+c[0]+'\',this)">'+c[1]+'</button>';}).join('');
+ if(TREEDB)renderTrees();
+ else fetch('data/trees_db.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){TREEDB=j;renderTrees();}).catch(function(){document.getElementById('tgrid').innerHTML='<div class="load" style="grid-column:1/-1">מאגר העצים בהכנה…</div>';});
+}
+function tcat(c,el){TCAT=c;document.querySelectorAll('#tchips .tab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');renderTrees();}
+function treeFilter(){renderTrees();}
+function renderTrees(){
+ if(!TREEDB)return;
+ var q=(document.getElementById('tq').value||'').trim().toLowerCase();
+ var rows=TREEDB.items.filter(function(p){return (TCAT==='all'||p.cat===TCAT)&&(!q||(p.he+' '+p.sci).toLowerCase().indexOf(q)>=0);});
+ document.getElementById('treecount').innerHTML='מאגר עצי ישראל — <b>'+TREEDB.count+'</b> עצים · מציג '+rows.length+' · פרי / נוי / חורש';
+ var g=document.getElementById('tgrid');
+ g.innerHTML=rows.length?rows.map(function(p){
+  var img=p.photo?('style="background-image:url(\''+p.photo+'\')"'):'';
+  var col=TCOL[p.cat]||'#5c6f63';
+  var inat=p.id?'https://www.inaturalist.org/taxa/'+p.id:'#';
+  var links='<a href="'+inat+'" target="_blank" rel="noopener">iNaturalist ↗</a>'+(p.wiki?'<a href="'+p.wiki+'" target="_blank" rel="noopener">ויקיפדיה ↗</a>':'');
+  return '<div class="pc"><div class="img" '+img+'>'+(p.photo?'':'🌳')+'</div><div class="b"><h3>'+(p.he||p.sci)+'</h3><div class="sci">'+p.sci+'</div><div class="meta"><span style="background:'+col+'1a;color:'+col+';border-radius:9px;padding:1px 8px;font-weight:700">'+p.cat+'</span> · '+(p.obs||0).toLocaleString()+' תצפיות</div><div class="lnk">'+links+'</div></div></div>';
+ }).join(''):'<div class="load" style="grid-column:1/-1">לא נמצא.</div>';
+}
+var FLORADB=null;
+function drawId(){
+ document.getElementById('panel').innerHTML=
+  '<input class="search" id="q" placeholder="🔎 חיפוש במאגר: חלמית · זעתר · Salvia · חרצית…" oninput="floraFilter()">'+
+  '<div class="hint" id="floracount">🌿 טוען מאגר צמחי ישראל…</div>'+
+  '<div class="grid" id="grid"></div>';
+ if(FLORADB){renderFlora(FLORADB.items);setCount(FLORADB.items.length);}
+ else fetch('data/flora_db.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){FLORADB=j;renderFlora(j.items);setCount(j.items.length);}).catch(function(){document.getElementById('grid').innerHTML='<div class="load" style="grid-column:1/-1">שגיאה בטעינת המאגר.</div>';});
+}
+function setCount(n){var el=document.getElementById('floracount');if(el)el.innerHTML='מאגר צמחי ישראל — <b>'+(FLORADB?FLORADB.count:n)+'</b> מינים · מציג '+n+' · חיפוש מיידי בעברית או בשם מדעי';}
+function floraFilter(){
+ if(!FLORADB)return;
+ var q=(document.getElementById('q').value||'').trim().toLowerCase();
+ var rows=q?FLORADB.items.filter(function(p){return (p.he+' '+p.sci).toLowerCase().indexOf(q)>=0;}):FLORADB.items;
+ renderFlora(rows.slice(0,120));setCount(Math.min(rows.length,120));
+}
+function renderFlora(items){
+ var g=document.getElementById('grid');
+ if(!items.length){g.innerHTML='<div class="load" style="grid-column:1/-1">לא נמצא במאגר. נסו שם אחר.</div>';return;}
+ g.innerHTML=items.map(function(p){
+  var img=p.photo?('style="background-image:url(\''+p.photo+'\')"'):'';
+  var inat=p.id?'https://www.inaturalist.org/taxa/'+p.id:'#';
+  var links='<a href="'+inat+'" target="_blank" rel="noopener">iNaturalist ↗</a>'+(p.wiki?'<a href="'+p.wiki+'" target="_blank" rel="noopener">ויקיפדיה ↗</a>':'');
+  return '<div class="pc"><div class="img" '+img+'>'+(p.photo?'':'🌱')+'</div><div class="b"><h3>'+(p.he||p.sci)+'</h3><div class="sci">'+p.sci+'</div><div class="meta">'+(p.obs||0).toLocaleString()+' תצפיות בישראל</div><div class="lnk">'+links+'</div></div></div>';
+ }).join('');
+}
+function drawForage(){
+ document.getElementById('panel').innerHTML='<div class="load">🧺 טוען מאגר ליקוט…</div>';
+ fetch('data/flora.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var rows=j.items.map(function(p){
+   return '<tr><td class="pl"><b>'+p.name+'</b><i>'+p.sci+'</i></td><td>'+p.part+'</td><td>'+p.season+'</td><td>'+p.prep+'</td><td class="'+(p.caution?'warn':'')+'">'+(p.caution||'—')+'</td><td>'+p.habitat+'</td></tr>';
+  }).join('');
+  document.getElementById('panel').innerHTML=
+   '<div class="safebox">⚠️ <b>בטיחות ליקוט:</b> ודאו זיהוי ודאי לפני אכילה, הימנעו מצמחים מוגנים ומשמורות טבע, ואל תלקטו ליד כבישים/ריסוס. חלק מהצמחים דורשים הכנה נכונה.</div>'+
+   '<div class="tblwrap"><table><tr><th>צמח</th><th>חלק נאכל</th><th>עונה</th><th>אופן הכנה</th><th>אזהרה</th><th>בית גידול</th></tr>'+rows+'</table></div>'+
+   '<div class="hint" style="margin-top:10px">'+(j.note||'')+'</div>';
+ }).catch(function(){document.getElementById('panel').innerHTML='<div class="load">שגיאה בטעינת המאגר.</div>';});
+}
+draw();
+</script>
+</body></html>

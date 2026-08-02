@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroPharm · חקלאות ותרופות · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#1f8f8f;--teal-d:#136b6b;--purple:#7a5cc0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe9e6;--bg2:#f2f9f8;--tint:#e8f5f3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f4faf9;color:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#7fe3d6}.mono{font-family:'Plex Mono',monospace}
+.top{background:linear-gradient(135deg,#136b6b,#1f8f8f)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{text-align:center;padding:40px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--teal);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#124a4a}h1 b{color:var(--teal)}
+.sub{color:var(--mut);font-size:16px;max-width:660px;margin:0 auto}
+.tabs{display:flex;gap:10px;justify-content:center;margin:26px 0 18px;flex-wrap:wrap}
+.tab{background:#fff;border:1px solid #cfe6e2;border-radius:24px;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#2a6b6b;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tab.on{background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(31,143,143,.28)}
+.tab .cnt{background:rgba(0,0,0,.12);border-radius:11px;padding:1px 8px;font-size:12px;font-weight:800}
+.tab.on .cnt{background:rgba(255,255,255,.25)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(19,107,107,.07);margin-bottom:20px}
+.ptitle{font-family:Rubik;font-weight:800;font-size:22px;color:#124a4a;margin-bottom:10px}
+.search{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px}
+.search:focus{border-color:var(--teal)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-family:Heebo;font-weight:700;font-size:13px;color:var(--mut);cursor:pointer}
+.chip.on{background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;border-color:transparent}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
+tr:hover td{background:#fbfdfd}
+.ic{font-size:22px}
+.cat{border-radius:12px;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.nm b{color:#124a4a;font-family:Rubik}
+.cogrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:760px){.cogrid{grid-template-columns:1fr}}
+.co{border:1px solid var(--line);border-radius:15px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+.co .cl{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;flex:0 0 auto}
+.co h3{font-family:Rubik;font-weight:800;font-size:18px;color:#124a4a;margin-bottom:2px}
+.co .tag{font-size:12px;color:var(--teal);font-weight:700;margin-bottom:6px}
+.co p{color:#4a5c58;font-size:13.5px;line-height:1.6}
+.co a{color:var(--teal);font-weight:700;text-decoration:none;font-size:13px}
+.livecta{display:block;text-decoration:none;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:14px;padding:18px 22px;margin:0 0 40px;box-shadow:0 12px 28px rgba(20,60,45,.2)}
+.foot{background:#0f3a3a;color:#a9d6d0;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
+.foot a{color:#7fe3d6;text-decoration:none}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px}
+</style>
+</head>
+<body>
+<div class="demo">● דמו · ידע</div>
+<div class="top"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Pharm</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROPHARM · AGRICULTURE → HEALTH</div>
+    <h1>חקלאות <b>ותרופות</b></h1>
+    <div class="sub">מהשדה למדף התרופות — צמחי מרפא ותוספי מזון, סופר-פוד, קנביס רפואי, ומולקולר-פארמינג (ייצור תרופות בצמחים). הענף שבו האגרו פוגש את הביו-פארמה.</div>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="panel" id="panel"></div>
+
+  <a class="livecta" href="agromarket.html">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <div><div style="font-family:'Plex Mono';font-size:12px;color:#8fe6ad">LIVE · משרד הבריאות</div>
+      <div style="font-family:Rubik;font-weight:800;font-size:19px">🌿 קנביס רפואי — נתוני רישוי חיים</div>
+      <div style="font-size:13.5px;color:#cfe6da">חברות מגדלות, בתי מרקחת ורופאים מוסמכים — חי מ-data.gov.il (ב-AgroMarket)</div></div>
+      <div style="font-family:Rubik;font-weight:800">פתיחה ←</div>
+    </div>
+  </a>
+</div>
+
+<div class="foot">Ofakim <span class="wm">Agro<b>Pharm</b></span> · חקלאות ותרופות · דמו · חלק מזירת <a href="index.html">AgroData</a></div>
+
+<script>
+var CATCOL={"תבלין-רפואי":"#c79a2e","אדפטוגן":"#7a5cc0","סופר-פוד":"#2e9e63","אצה":"#1f8f8f","שורש":"#8a5a2b","פרי-על":"#c4562e","עלים ותה":"#5c8a2b","זרע/שמן":"#b58a2e","פרח":"#b5482e",
+ "מולקולר-פארמינג":"#1f8f8f","קנביס-פארמה":"#5c8a2b","אגרו-ביוטק":"#7a5cc0","צמחי מרפא":"#2e9e63",
+ "שומנים":"#c79a2e","חלבון":"#1f8f8f","ויטמין":"#c4562e","מינרל":"#7a5cc0","פרוביוטיקה":"#2e9e63","סיבים":"#5c8a2b","נוגד חמצון":"#b5482e","ממריץ/הורמון":"#8a5a2b"};
+function cc(v){return CATCOL[v]||"#5c6f63";}
+var HERB=[
+ ["🟡","כורכום","Curcuma longa","תבלין-רפואי","כורכומין","אנטי-דלקתי ונוגד חמצון","אבקה / כמוסות"],
+ ["🟤","אשווגנדה","Withania somnifera","אדפטוגן","ויתנולידים","הפחתת מתח ואיזון הורמונלי","תמצית / אבקה"],
+ ["🫚","ג׳ינג׳ר","Zingiber officinale","שורש","ג׳ינג׳רול","עיכול, בחילה ואנטי-דלקתי","טרי / אבקה"],
+ ["🟢","ספירולינה","Arthrospira platensis","אצה","פיקוציאנין + חלבון","חלבון-על ונוגד חמצון","אבקה / טבליות"],
+ ["🟩","כלורלה","Chlorella vulgaris","אצה","כלורופיל","ניקוי רעלים ומינרלים","אבקה"],
+ ["🌿","מורינגה","Moringa oleifera","סופר-פוד","קוורצטין + ויטמינים","עלי-על עשירים בתזונה","אבקה"],
+ ["🪴","אלוורה","Aloe vera","סופר-פוד","פוליסכרידים","עור, עיכול וריפוי","ג׳ל"],
+ ["🥕","ג׳ינסנג","Panax ginseng","שורש","גינסנוסידים","אנרגיה ואדפטוגן","תמצית"],
+ ["🔴","גוג׳י ברי","Lycium barbarum","פרי-על","נוגדי חמצון","סופר-פוד לחיסון","מיובש"],
+ ["🟣","אסאי","Euterpe oleracea","פרי-על","אנתוציאנינים","נוגד חמצון חזק","אבקה קפואה"],
+ ["🟠","מאקה","Lepidium meyenii","שורש","מאקאמידים","אנרגיה ואיזון הורמונלי","אבקה"],
+ ["🍵","תה ירוק","Camellia sinensis","עלים ותה","EGCG / קטכינים","נוגד חמצון ומטבוליזם","עלים / תמצית"],
+ ["🌱","קנביס · CBD","Cannabis sativa","פרח","קנבינואידים (CBD/THC)","כאב, שינה ורפואי","שמן / תפרחת"],
+ ["⚫","זרעי צ׳יה","Salvia hispanica","זרע/שמן","אומגה-3 + סיבים","סופר-פוד ובריאות לב","זרעים"],
+ ["🟫","זרעי פשתן","Linum usitatissimum","זרע/שמן","ליגננים + אומגה-3","הורמונלי ולב","שמן / זרעים"],
+ ["🔴","רימון","Punica granatum","פרי-על","פוניקלגין","בריאות לב וכלי דם","מיץ / תמצית"],
+ ["🧄","שום","Allium sativum","תבלין-רפואי","אליצין","חיסון ולחץ דם","טרי / כמוסות"],
+ ["🍫","קקאו","Theobroma cacao","פרי-על","פלבנולים","מצב רוח ובריאות לב","אבקה"],
+ ["🌼","אכינצאה","Echinacea purpurea","צמחי מרפא","אלקאמידים","חיזוק מערכת החיסון","תמצית"],
+ ["🌳","ג׳ינקו","Ginkgo biloba","צמחי מרפא","פלבונואידים","זרימת דם וזיכרון","תמצית"],
+ ["🌿","גוטו קולה","Centella asiatica","צמחי מרפא","טריטרפנים","עור, ריפוי וקוגניציה","תמצית"],
+ ["🫘","חילבה","Trigonella foenum-graecum","זרע/שמן","סאפונינים","איזון סוכר והנקה","זרעים / אבקה"],
+ ["🌿","סרפד","Urtica dioica","צמחי מרפא","מינרלים","אנטי-דלקתי וסינון","עלים / תמצית"],
+ ["🌾","שיבולת שועל β-גלוקן","Avena sativa","סופר-פוד","בטא-גלוקן","הורדת כולסטרול","סובין / שיבולת"]
+];
+var CO=[
+ ["Protalix BioTherapeutics","מולקולר-פארמינג","ProCellEx — ייצור חלבונים תרופתיים בתאי צמח (גזר). התרופה Elelyso למחלת גושה מאושרת FDA — דגל עולמי לייצור תרופות בצמחים.","https://www.protalix.com","PLX"],
+ ["Evogene (Lavie Bio / Canonic)","אגרו-ביוטק","פלטפורמת גנומיקה חישובית לגילוי מולקולות — Lavie Bio לתוספי ביו, ו-Canonic לזני קנביס רפואי מותאמים.","https://www.evogene.com","EVGN"],
+ ["PoLoPo","מולקולר-פארמינג","ייצור חלבונים (כמו אובלבומין/ביו-פארמה) בתוך פקעות תפוח אדמה — מולקולר-פארמינג מדרגי.","https://www.polopo.bio"],
+ ["Panaxia","קנביס-פארמה","פיתוח וייצור תכשירי קנביס רפואי בסטנדרט פרמצבטי (GMP) — משחות, טבליות ותמציות.","https://www.panaxia.co.il"],
+ ["BOL Pharma","קנביס-פארמה","מהחברות הגדולות בישראל לגידול, מו״פ וייצור מוצרי קנביס רפואי ומחקר קליני.","https://www.bol-pharma.com"],
+ ["Cannabotech","צמחי מרפא + קנביס","שילוב פטריות מרפא, צמחי מרפא וקנביס למוצרי בריאות מבוססי מדע.","https://cannabotech.com"],
+ ["BetterSeeds","אגרו-ביוטק","עריכת גנום (CRISPR) לגידולים — כולל שיפור תכונות בצמחי תעשייה ומרפא.","https://www.better-seeds.com"],
+ ["Vetka / ביו-סטימולנטים","אגרו-ביוטק","הפקת תרכובות פעילות מצמחים ואצות לתעשיית התוספים והקוסמטיקה.","https://www.evogene.com"]
+];
+var SUPP=[
+ ["🐟","אומגה-3","פשתן · צ׳יה · אצות · דגים","שומנים","בריאות לב, מוח ועיניים","כמוסות / שמן"],
+ ["💪","חלבון אפונה","אפונה","חלבון","בניית שריר · טבעוני","אבקה"],
+ ["🌾","חלבון אורז","אורז","חלבון","חלבון צמחי היפואלרגני","אבקה"],
+ ["🫘","חלבון סויה","פולי סויה","חלבון","חלבון מלא","אבקה"],
+ ["🍊","ויטמין C","הדרים · אצרולה","ויטמין","חיזוק חיסון ונוגד חמצון","טבליות"],
+ ["🥕","בטא-קרוטן (ויטמין A)","גזר · דונליאלה","נוגד חמצון","עור וראייה","כמוסות"],
+ ["🌱","ויטמין E","נבט חיטה · שמנים","נוגד חמצון","הגנה על תאים ועור","כמוסות"],
+ ["🥬","ויטמין K","עלים ירוקים","ויטמין","קרישת דם ובריאות עצם","טבליות"],
+ ["🍃","חומצה פולית (B9)","עלים · קטניות","ויטמין","הריון וחלוקת תאים","טבליות"],
+ ["🩸","ברזל","קטניות · עלים","מינרל","מניעת אנמיה","טבליות"],
+ ["🥜","מגנזיום","אגוזים · דגנים","מינרל","שרירים, עצבים ושינה","אבקה"],
+ ["🌰","אבץ","זרעים · דגנים","מינרל","חיסון וריפוי","טבליות"],
+ ["🫘","סידן","שומשום · עלים","מינרל","עצמות ושיניים","טבליות"],
+ ["🦠","פרוביוטיקה","מזון מותסס","פרוביוטיקה","בריאות המעי והחיסון","כמוסות"],
+ ["🌾","סיבים תזונתיים","סובין · פסיליום","סיבים","עיכול, שובע וסוכר","אבקה"],
+ ["🐟","קולגן ימי","עור ועצמות דגים","חלבון","עור, מפרקים וגידים","אבקה"],
+ ["🟢","ספירולינה","אצה כחולה-ירוקה","סופר-פוד","חלבון ונוגד חמצון","אבקה / טבליות"],
+ ["🟩","כלורלה","אצה ירוקה","סופר-פוד","ניקוי רעלים ומינרלים","טבליות"],
+ ["👁️","לוטאין","ציפורני חתול · תירס","נוגד חמצון","בריאות העיניים","כמוסות"],
+ ["🍇","רזברטרול","ענבים · יין אדום","נוגד חמצון","לב והאטת הזדקנות","כמוסות"],
+ ["🧅","קוורצטין","בצל · תפוח","נוגד חמצון","אלרגיה ודלקת","כמוסות"],
+ ["🟡","כורכומין","כורכום","נוגד חמצון","אנטי-דלקתי","כמוסות"],
+ ["☕","קפאין","קפה · תה","ממריץ/הורמון","אנרגיה וריכוז","טבליות"],
+ ["🍒","מלטונין","דובדבן · סינתטי","ממריץ/הורמון","ויסות שינה","טבליות"],
+ ["💊","BCAA · חומצות אמינו","תסיסה","חלבון","שיקום שריר","אבקה"],
+ ["⚡","קריאטין","תסיסה","חלבון","כוח וביצועים","אבקה"]
+];
+var DICTS={
+ herb:{title:"צמחי מרפא",icon:"🌿",cols:["","צמח / מקור","שם מדעי","קטגוריה","חומר פעיל","תועלת","צורה"],fk:3,rows:HERB},
+ supp:{title:"תוספי מזון",icon:"💊",cols:["","תוסף","מקור חקלאי","סוג","תועלת","צורה"],fk:3,rows:SUPP},
+ mol:{title:"מולקולר-פארמינג וחברות",icon:"🧬",companies:true,cnt:CO.length}
+};
+var DK='herb',DFILT='all';
+document.getElementById('tabs').innerHTML=Object.keys(DICTS).map(function(k,i){var d=DICTS[k];return '<button class="tab'+(i===0?' on':'')+'" onclick="tab(\''+k+'\',this)">'+d.icon+' '+d.title+' <span class="cnt">'+(d.companies?d.cnt:d.rows.length)+'</span></button>';}).join('');
+function tab(k,el){DK=k;DFILT='all';document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');draw();}
+function draw(){
+ var d=DICTS[DK];
+ if(d.companies){drawCo();return;}
+ var types=[];d.rows.forEach(function(r){if(types.indexOf(r[d.fk])<0)types.push(r[d.fk]);});
+ var chips='<button class="chip on" onclick="cfilt(\'all\',this)">הכול</button>'+types.map(function(t){return '<button class="chip" onclick="cfilt(\''+t+'\',this)">'+t+'</button>';}).join('');
+ document.getElementById('panel').innerHTML='<div class="ptitle">'+d.icon+' '+d.title+' <span style="font-size:14px;color:var(--mut);font-weight:400">· '+d.rows.length+' פריטים</span></div>'+
+  '<input class="search" id="search" oninput="body()" placeholder="🔎 חיפוש צמח, חומר פעיל או תועלת…">'+
+  '<div class="chips" id="chips">'+chips+'</div><div class="tblwrap"><table id="tbl"></table></div>'+(DK==='supp'?suppCoBlock():'');
+ body();
+}
+function cfilt(t,el){DFILT=t;document.querySelectorAll('#chips .chip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');body();}
+function body(){
+ var d=DICTS[DK],q=(document.getElementById('search').value||'').trim();
+ var rows=d.rows.filter(function(r){if(DFILT!=='all'&&r[d.fk]!==DFILT)return false;if(!q)return true;return r.join(' ').indexOf(q)>=0;});
+ var head='<tr>'+d.cols.map(function(c,i){return '<th'+(i===0?' style="width:44px"':'')+'>'+c+'</th>';}).join('')+'</tr>';
+ var b=rows.map(function(r){return '<tr><td class="ic">'+r[0]+'</td>'+r.slice(1).map(function(v,i){
+  if(i+1===d.fk){var col=cc(v);return '<td><span class="cat" style="background:'+col+'1a;color:'+col+'">'+v+'</span></td>';}
+  if(i===0)return '<td class="nm"><b>'+v+'</b></td>';
+  if(i===1)return '<td style="font-style:italic;color:var(--mut);font-size:12.5px">'+v+'</td>';
+  return '<td>'+v+'</td>';
+ }).join('')+'</tr>';}).join('');
+ document.getElementById('tbl').innerHTML=head+(b||'<tr><td colspan="7" style="text-align:center;color:var(--mut);padding:24px">לא נמצאו פריטים</td></tr>');
+}
+var SUPPCO=[
+ ["Lycored","ליקופן, לוטאין וקרוטנואידים מעגבניות — מגדל העמק (ישראל)","https://www.lycored.com"],
+ ["Algatech","אסטקסנטין ופוקוקסנטין מאצות — קיבוץ קטורה (ישראל)","https://www.algatech.com"],
+ ["Altman Health","ייצור, ייבוא ושיווק תוספי תזונה — יבואנית Solgar בישראל","https://www.altman.co.il"],
+ ["SupHerb","תוספי תזונה, ויטמינים וצמחי מרפא (ישראל)","https://www.supherb.co.il"],
+ ["Frutarom / IFF","תמציות, ויטמינים וחומרי גלם לתוספים (מקור ישראלי)","https://www.iff.com"],
+ ["NextFerm","חלבון ונוגדי חמצון מתסיסת שמרים (ישראל)","https://www.nextferm.com"]
+];
+function suppCoBlock(){
+ return '<div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)"><div style="font-family:Rubik;font-weight:800;font-size:17px;color:#124a4a;margin-bottom:12px">🏭 חברות תוספי מזון · ייצור וייבוא <span style="font-family:Heebo;font-weight:400;font-size:13px;color:var(--mut)">· יצרניות ויבואניות מובילות</span></div><div class="cogrid">'+
+  SUPPCO.map(function(c){return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+'</h3><p>'+c[1]+'</p><a href="'+c[2]+'" target="_blank" rel="noopener">אתר החברה ↗</a></div></div>';}).join('')+'</div></div>';
+}
+function drawCo(){
+ document.getElementById('panel').innerHTML='<div class="ptitle">🧬 מולקולר-פארמינג וחברות אגרו-פארמה</div><div class="cogrid">'+
+  CO.map(function(c){var col=cc(c[1]);var stock=c[4]?' · <a href="agro-stock.html" style="color:#1c9e5a">📈 מניה חיה '+c[4]+' ↗</a>':'';return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+(c[4]?' <span style="font-size:11px;background:#e7f9ee;color:#127a43;border-radius:10px;padding:1px 8px;font-weight:800">בורסה</span>':'')+'</h3><div class="tag" style="color:'+col+'">'+c[1]+'</div><p>'+c[2]+'</p><a href="'+c[3]+'" target="_blank" rel="noopener">אתר החברה ↗</a>'+stock+'</div></div>';}).join('')+'</div>';
+}
+draw();
+</script>
+</body></html>

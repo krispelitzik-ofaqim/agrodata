@@ -57,6 +57,8 @@ tr:hover td{background:#fdfbf7}
 .sup .supt b{font-family:Rubik;font-size:14.5px;color:#7a4e12}
 .sup .supt span{font-size:12px;color:var(--mut)}
 .sup .supa{color:var(--amber);font-weight:800}
+.pdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3ee87e;margin:0 6px -1px;box-shadow:0 0 0 0 rgba(62,232,126,.6);animation:pd 1.6s infinite}
+@keyframes pd{0%{box-shadow:0 0 0 0 rgba(62,232,126,.6)}70%{box-shadow:0 0 0 7px rgba(62,232,126,0)}100%{box-shadow:0 0 0 0 rgba(62,232,126,0)}}
 </style>
 </head>
 <body>
@@ -82,6 +84,8 @@ tr:hover td{background:#fdfbf7}
 var CATCOL={
  "חנקני":"#2b8fb0","זרחני":"#a3611c","אשלגני":"#c77d2e","מאקרו מורכב":"#1c6b45","משולב":"#2e9e63",
  "אורגני":"#5c8a2b","מיקרו-אלמנטים":"#7a5cc0","משני":"#b5482e","שחרור-מבוקר":"#8a5a2b","ביולוגי":"#2b9e8f",
+ "נוזלי":"#2b8fb0","ביו-סטימולנט":"#2b9e8f",
+ "אויב טבעי":"#2e9e63","מיקרוביאלי":"#7a5cc0","בוטני":"#5c8a2b","פרומון/מלכודת":"#c79a2e","ביו-קוטל":"#b5482e",
  "מיכון כבד":"#5a3a0e","עיבוד קרקע":"#a3611c","זריעה ושתילה":"#2e9e63","ריסוס והדברה":"#b5482e","השקיה":"#2b8fb0",
  "קטיף ואיסוף":"#c79a2e","חישה ובקרה":"#7a5cc0","רחפנים ורובוטיקה":"#2b9e8f","אחסון וטיפול":"#5c6f63"};
 function cc(v){return CATCOL[v]||"#5c6f63";}
@@ -98,6 +102,14 @@ var SUPPLIERS={
   ["🚁","DJI Agriculture","רחפני ריסוס וזריעה","https://ag.dji.com"],
   ["🤖","Lely","רובוטי חליבה ורפת","https://www.lely.com"]
  ],
+ bio:[
+  ["🐞","BioBee","אויבים טבעיים והדברה ביולוגית — ישראל (קיבוץ שדה אליהו)","https://www.biobee.com"],
+  ["🐞","Koppert","פתרונות ביולוגיים והאבקה — עולמי","https://www.koppert.com"],
+  ["🐞","Biobest","אויבים טבעיים ובומבוסים","https://www.biobestgroup.com"],
+  ["🍄","Andermatt","ביו-פרוטקשן ומיקרוביאלים","https://www.andermatt.com"],
+  ["🧫","Certis Biologicals","ביו-קוטלים ומיקרוביאלים","https://www.certisbio.com"],
+  ["🌿","Rimi Chemicals / STK","ביו-חקלאות ותכשירים טבעיים","https://www.stk-ah.com"]
+ ],
  fert:[
   ["🧪","Yara","דשנים והזנת צומח עולמית","https://www.yara.com"],
   ["🧪","ICL Group","אשלג, זרחן ודשנים — ישראל","https://www.icl-group.com"],
@@ -109,7 +121,7 @@ var SUPPLIERS={
 };
 function supBlock(key){
  var list=SUPPLIERS[key];if(!list)return '';
- var head=key==='fert'?'🏭 יצרני דשנים מובילים':'🏭 יצרני ציוד מובילים';
+ var head=key==='fert'?'🏭 יצרני דשנים מובילים':(key==='bio'?'🐞 חברות הדברה ביולוגית':'🏭 יצרני ציוד מובילים');
  return '<div class="supblock"><div class="suph">'+head+' <span class="supsub">· קטלוגים ומפרטים באתרי היצרנים</span></div><div class="supgrid">'+
   list.map(function(s){return '<a class="sup" href="'+s[3]+'" target="_blank" rel="noopener"><span class="supi">'+s[0]+'</span><span class="supt"><b>'+s[1]+'</b><span>'+s[2]+'</span></span><span class="supa">↗</span></a>';}).join('')+'</div></div>';
 }
@@ -139,7 +151,49 @@ var FERT=[
  ["🟡","גופרית (Sulfur)","משני","S","הורדת pH והזנה","פיזור / הצנעה"],
  ["⚫","סידן חנקתי","משני","15.5-0-0 +Ca","מניעת ריקבון פסגת הפרי","הדשיה"],
  ["⏳","אוריאה מצופה (שחרור מבוקר)","שחרור-מבוקר","44-0-0","שחרור חנקן הדרגתי","פיזור"],
- ["⏳","דשן מצופה פולימר (CRF)","שחרור-מבוקר","משתנה","הזנה ממושכת לעונה","הצנעה / מצע"]
+ ["⏳","דשן מצופה פולימר (CRF)","שחרור-מבוקר","משתנה","הזנה ממושכת לעונה","הצנעה / מצע"],
+ ["💠","MKP · אשלגן מונופוספט","משולב","0-52-34","זרחן+אשלגן בשלב פריחה","הדשיה"],
+ ["💧","UAN · תמיסת חנקן","נוזלי","32-0-0","חנקן נוזלי להזרקה","הדשיה"],
+ ["💧","דשן NPK נוזלי","נוזלי","7-3-7","הזנה שוטפת בטפטוף","הדשיה"],
+ ["🟢","סידן-בור נוזלי","משני","Ca+B","חנטה ומניעת סדקים","ריסוס עלוותי"],
+ ["🌀","תערובת מיקרו (Micro-mix)","מיקרו-אלמנטים","Fe·Zn·Mn·B·Cu·Mo","תיקון מחסורים מרובים","ריסוס / הדשיה"],
+ ["🔵","נחושת כלאט (Cu)","מיקרו-אלמנטים","Cu","מחסור נחושת ומחלות","ריסוס עלוותי"],
+ ["⚗️","מוליבדן (Mo)","מיקרו-אלמנטים","Mo","קיבוע חנקן בקטניות","ריסוס"],
+ ["🪨","סיליקון (Si)","משני","Si","חוזק דופן ועמידות","ריסוס / הדשיה"],
+ ["🧬","חומצות אמינו (ביו-סטימולנט)","ביו-סטימולנט","חנקן אורגני","התאוששות ממתח","ריסוס / הדשיה"],
+ ["🍄","מיקוריזה","ביולוגי","פטריות שורש","הגדלת קליטת מים והזנה","טיפול שורש / מצע"],
+ ["🦠","אזוטובקטר (מקבע חנקן)","ביולוגי","חיידקים","קיבוע חנקן חופשי","טיפול קרקע / זרע"],
+ ["🌊","תמצית אצות (ביו)","ביו-סטימולנט","ציטוקינינים","עידוד צימוח ושורש","ריסוס / הדשיה"],
+ ["🦇","גואנו (עטלפים/עופות)","אורגני","N-P גבוה","דשן אורגני מרוכז","הצנעה"],
+ ["🔥","אפר עץ","אורגני","אשלגן+סידן","אשלגן אורגני והעלאת pH","פיזור"]
+];
+var BIO=[
+ ["🕷️","Phytoseiulus persimilis","אויב טבעי","אקרית אדומה","אקרית טורפת מתמחה","שקיקים / בקבוק"],
+ ["🕷️","Amblyseius swirskii","אויב טבעי","טריפס · כנימת עש","אקרית טורפת רב-תכליתית","שקיקים"],
+ ["🐞","Orius laevigatus","אויב טבעי","טריפס","פשפש טורף","בקבוק"],
+ ["🐝","Encarsia formosa","אויב טבעי","כנימת עש (טבק)","צרעה טפילית","כרטיסיות"],
+ ["🐝","Aphidius colemani","אויב טבעי","כנימות עלה","צרעה טפילית","בקבוק / מומיות"],
+ ["🐞","Nesidiocoris tenuis","אויב טבעי","עש הטבק · כנימת עש","פשפש טורף","בקבוק"],
+ ["🐞","Cryptolaemus montrouzieri","אויב טבעי","כנימות קמחיות","חיפושית טורפת","בקבוק"],
+ ["🌿","Chrysoperla (זהבית)","אויב טבעי","כנימות עלה","זחל טורף רעב","כרטיסיות / רימות"],
+ ["🪰","Diglyphus isaea","אויב טבעי","זבובי מנהרות","צרעה טפילית","בקבוק"],
+ ["🐛","נמטודות מועילות (Steinernema)","אויב טבעי","זחלי קרקע · חדקוניות","נמטודה טורפת","אבקה מסיסה"],
+ ["🦠","Bacillus thuringiensis (Bt)","מיקרוביאלי","זחלי עשים","רעלן חלבוני סלקטיבי","אבקה / תרסיס"],
+ ["🍄","Beauveria bassiana","מיקרוביאלי","טריפס · כנימות · חיפושיות","פטרייה מדביקה","אבקה רטיבה"],
+ ["🍄","Metarhizium anisopliae","מיקרוביאלי","חדקוניות · טריפס","פטרייה אנטומופתוגנית","אבקה"],
+ ["🍄","Trichoderma","מיקרוביאלי","מחלות קרקע (פוזריום/פיתיום)","פטרייה אנטגוניסטית","אבקה / מצע"],
+ ["🦠","Bacillus subtilis","מיקרוביאלי","מחלות עלווה ובוטריטיס","חיידק מגן","תרסיס"],
+ ["🧫","Spinosad","ביו-קוטל","טריפס · עשים · זבובים","תוצר תסיסה חיידקית","תרסיס"],
+ ["🦠","NPV (נגיף גרעיני)","מיקרוביאלי","זחלי עש ספציפיים","נגיף מדביק סלקטיבי","תרסיס"],
+ ["🍄","Paecilomyces lilacinus","מיקרוביאלי","נמטודות עפצים","פטרייה טורפת ביצים","אבקה"],
+ ["🌿","שמן NEEM (אזדירכטין)","בוטני","מזיקים רכים · טריפס","מרתיע ומווסת גדילה","תרסיס"],
+ ["🌼","פירתרום טבעי","בוטני","מזיקים מעופפים","רעל עצבי טבעי מהיר","תרסיס"],
+ ["🛢️","שמן מינרלי / קיץ","בוטני","כנימות · ביצים · אקריות","חניקה פיזית","תרסיס"],
+ ["🧼","סבון אשלגני","בוטני","כנימות רכות · אקריות","חניקה ופירוק שעווה","תרסיס"],
+ ["💜","פרומון בלבול (Mating disruption)","פרומון/מלכודת","עשים (עש התפוח וכו׳)","שיבוש הזדווגות","מפזרים"],
+ ["🪤","מלכודת פרומון","פרומון/מלכודת","ניטור עשים וחיפושיות","משיכה ולכידה","מלכודת + פתיון"],
+ ["🟨","מלכודת צבע דביקה","פרומון/מלכודת","טריפס · כנימת עש · זבובים","משיכה ויזואלית","צהוב / כחול"],
+ ["🐦","ציפורים ותיבות קינון (בקרה)","אויב טבעי","מכרסמים · חרקים","טורפים טבעיים בשטח","תיבות / מוטות תצפית"]
 ];
 var EQUIP=[
  ["🚜","טרקטור","מיכון כבד","כוח משיכה והפעלת מכשירים","מנוע דיזל / חשמלי"],
@@ -197,13 +251,18 @@ var EQUIP=[
 ];
 var DICTS={
  fert:{title:"מילון דשנים והזנת הצומח",icon:"🧪",cols:["","דשן","סוג","הרכב N-P-K","שימוש","אופן יישום"],fk:2,rows:FERT},
+ pest:{title:"הגנת הצומח · תכשירי הדברה",icon:"🛡️",live:true,cnt:"חי"},
+ bio:{title:"הדברה ביולוגית",icon:"🐞",cols:["","שם","סוג","מזיק יעד","אופן פעולה","צורה"],fk:2,rows:BIO},
+ cannabis:{title:"קנביס רפואי · רישיונות",icon:"🌿",live:true,cannabis:true,cnt:"חי"},
  equip:{title:"מילון ציוד ומיכון חקלאי",icon:"🚜",cols:["","ציוד","קטגוריה","שימוש","הערה"],fk:2,rows:EQUIP}
 };
 var DK='fert',DFILT='all';
-document.getElementById('tabs').innerHTML=Object.keys(DICTS).map(function(k,i){var d=DICTS[k];return '<button class="tab'+(i===0?' on':'')+'" onclick="tab(\''+k+'\',this)">'+d.icon+' '+d.title.replace('מילון ','')+' <span class="cnt">'+d.rows.length+'</span></button>';}).join('');
+document.getElementById('tabs').innerHTML=Object.keys(DICTS).map(function(k,i){var d=DICTS[k];return '<button class="tab'+(i===0?' on':'')+'" onclick="tab(\''+k+'\',this)">'+d.icon+' '+d.title.replace('מילון ','')+' <span class="cnt">'+(d.live?d.cnt:d.rows.length)+'</span></button>';}).join('');
 function tab(k,el){DK=k;DFILT='all';document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});el.classList.add('on');draw();}
 function draw(){
  var d=DICTS[DK];
+ if(d.cannabis){drawCann(d);return;}
+ if(d.live){drawPest(d);return;}
  var types=[];d.rows.forEach(function(r){if(types.indexOf(r[d.fk])<0)types.push(r[d.fk]);});
  var chips='<button class="chip on" onclick="cfilt(\'all\',this)">הכול</button>'+types.map(function(t){return '<button class="chip" onclick="cfilt(\''+t+'\',this)">'+t+'</button>';}).join('');
  document.getElementById('panel').innerHTML=
@@ -232,6 +291,55 @@ function body(){
   }).join('')+'</tr>';
  }).join('');
  document.getElementById('tbl').innerHTML=head+(b||'<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:24px">לא נמצאו פריטים</td></tr>');
+}
+function drawPest(d){
+ document.getElementById('panel').innerHTML=
+  '<div class="ptitle">'+d.icon+' '+d.title+' <span class="psub" style="display:inline">· חי ממשרד החקלאות · 49,539 רשומות <span class="pdot"></span>API חי</span></div>'+
+  '<input class="search" id="pestq" placeholder="🔎 חיפוש: גידול (עגבנייה), מזיק/נגע (כנימה), חומר פעיל או שם תכשיר…" onkeydown="if(event.key===\'Enter\')loadPest()">'+
+  '<div class="tblwrap" style="max-height:560px"><table id="pesttbl"><tbody><tr><td style="padding:24px;text-align:center;color:var(--mut)">מושך נתונים ממשרד החקלאות…</td></tr></tbody></table></div>'+
+  '<div style="font-size:12.5px;color:var(--mut);margin-top:8px">מקור: משרד החקלאות וביטחון המזון · <a href="https://data.gov.il" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700">data.gov.il ↗</a></div>';
+ loadPest();
+}
+function loadPest(){
+ var q=(document.getElementById('pestq').value||'').trim();
+ var tb=document.querySelector('#pesttbl tbody');
+ tb.innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--mut)">🛡️ מושך תכשירים…</td></tr>';
+ fetch('/api/pesticides?limit=40&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok||!j.items.length){tb.innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--mut)">לא נמצאו תכשירים למונח זה.</td></tr>';return;}
+  var head='<tr><th>תכשיר</th><th>חומר פעיל</th><th>סוג</th><th>גידול</th><th>נגע / מזיק</th><th>רעילות</th><th>בעל רישיון</th><th>תווית</th></tr>';
+  var rows=j.items.map(function(p){
+   return '<tr><td><b style="color:#5a3a0e;font-family:Rubik">'+(p.name||'')+'</b>'+(p.name_en?'<div style="color:#9aa;font-size:11px">'+p.name_en+'</div>':'')+'</td>'+
+    '<td>'+(p.active||'')+'</td><td>'+(p.type||'')+'</td><td>'+(p.crop||'')+'</td><td>'+(p.pest||'')+'</td>'+
+    '<td style="color:#b5482e;font-size:12px">'+(p.tox||'')+'</td><td>'+(p.holder||'')+'</td>'+
+    '<td>'+(p.label?'<a href="'+p.label+'" target="_blank" rel="noopener" style="color:#2b8fb0;font-weight:700;text-decoration:none">תווית ↗</a>':'—')+'</td></tr>';
+  }).join('');
+  tb.innerHTML=head+rows+'<tr><td colspan="8" style="text-align:center;color:#9aa;padding:10px;font-size:12px">מציג '+j.items.length+' מתוך '+j.total.toLocaleString()+' רשומות במאגר</td></tr>';
+ }).catch(function(){tb.innerHTML='<tr><td style="padding:24px;text-align:center;color:#c4562e">שגיאת חיבור לשרת.</td></tr>';});
+}
+var CANNDS='holders';
+function drawCann(d){
+ document.getElementById('panel').innerHTML=
+  '<div class="ptitle">'+d.icon+' '+d.title+' <span class="psub" style="display:inline">· חי ממשרד הבריאות (יק״ר) <span class="pdot"></span>API חי</span></div>'+
+  '<div class="chips" style="margin-bottom:10px">'+
+   '<button class="chip on" onclick="cannTab(\'holders\',this)">🏭 חברות ובעלי רישיון</button>'+
+   '<button class="chip" onclick="cannTab(\'pharmacies\',this)">💊 בתי מרקחת</button>'+
+   '<button class="chip" onclick="cannTab(\'doctors\',this)">👨‍⚕️ רופאים מוסמכים</button></div>'+
+  '<input class="search" id="cannq" placeholder="🔎 חיפוש: שם, עיר, סוג פעילות…" onkeydown="if(event.key===\'Enter\')loadCann()">'+
+  '<div class="tblwrap" style="max-height:540px"><table id="canntbl"><tbody><tr><td style="padding:24px;text-align:center;color:var(--mut)">מושך…</td></tr></tbody></table></div>'+
+  '<div style="font-size:12.5px;color:var(--mut);margin-top:8px">מקור: היחידה לקנביס רפואי (יק״ר) · <a href="https://data.gov.il" target="_blank" rel="noopener" style="color:var(--amber);font-weight:700">data.gov.il ↗</a></div>';
+ CANNDS='holders';loadCann();
+}
+function cannTab(ds,el){CANNDS=ds;document.querySelectorAll('#panel .chips .chip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');loadCann();}
+function loadCann(){
+ var q=(document.getElementById('cannq').value||'').trim();
+ var tb=document.querySelector('#canntbl tbody');
+ tb.innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--mut)">🌿 מושך רישיונות…</td></tr>';
+ fetch('/api/cannabis?ds='+CANNDS+'&limit=50&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok||!j.rows.length){tb.innerHTML='<tr><td style="padding:24px;text-align:center;color:var(--mut)">לא נמצאו רשומות.</td></tr>';return;}
+  var head='<tr>'+j.cols.map(function(c){return '<th>'+c+'</th>';}).join('')+'</tr>';
+  var rows=j.rows.map(function(r){return '<tr>'+r.map(function(v,i){return i===0?'<td><b style="color:#5a3a0e;font-family:Rubik">'+v+'</b></td>':'<td>'+v+'</td>';}).join('')+'</tr>';}).join('');
+  tb.innerHTML=head+rows+'<tr><td colspan="'+j.cols.length+'" style="text-align:center;color:#9aa;padding:10px;font-size:12px">מציג '+j.rows.length+' מתוך '+j.total.toLocaleString()+' רשומות</td></tr>';
+ }).catch(function(){tb.innerHTML='<tr><td style="padding:24px;text-align:center;color:#c4562e">שגיאת חיבור.</td></tr>';});
 }
 draw();
 </script>
