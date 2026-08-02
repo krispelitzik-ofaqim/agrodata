@@ -175,6 +175,7 @@ function gate(){
 function gen(problem,label){
  document.getElementById('bankSel').textContent='אתגר: '+label;
  var box=document.getElementById('ideas');
+ (document.getElementById('bankSel').closest('section,.card,.bank')||box).scrollIntoView({behavior:'smooth',block:'center'});
  if(!isPremium()){box.innerHTML=gate();return;}
  box.innerHTML='<div class="thinking"><span>המוח חושב ומייצר רעיונות</span><span class="dots"><i></i><i></i><i></i></span></div>';
  var prompt='אתה מנוע החדשנות של AgroMind. בהתבסס על האתגר הבא באגרו-טק, הצע בדיוק 4 רעיונות לסטארטאפים חדשים. לכל רעיון תן שורה בפורמט המדויק הזה (בעברית):\n[שם הרעיון] | הבעיה: ... | הפתרון: ... | שוק יעד: ...\nרעיון אחד בכל שורה, ללא מספור, ללא טקסט נוסף. האתגר: '+problem;
