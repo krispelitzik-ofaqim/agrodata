@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>מפות ו-GIS · AgroData</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 @font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
@@ -33,8 +35,21 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .maptop .live{display:inline-flex;align-items:center;gap:8px;font-family:'Plex Mono';font-size:14px;color:var(--mut)}
 .maptop .dot{width:10px;height:10px;border-radius:50%;background:#1f9d57;animation:pulse 1.6s infinite}
 @keyframes pulse{70%{box-shadow:0 0 0 8px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}
-.mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;justify-content:center}
+#lmap,#lmap2{height:74vh;min-height:560px;border-radius:14px;border:1px solid var(--line);z-index:0}
+.leaflet-popup-content{margin:12px 14px;font-family:Heebo}
+.maplegend{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.dotm{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);display:inline-block}
+.mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;justify-content:center;position:relative}
 .mapbox svg{width:auto;height:780px;max-width:100%}
+.mappop{position:absolute;z-index:6;background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:0 14px 34px rgba(20,38,28,.2);padding:13px 15px 14px;width:238px;font-size:13.5px;display:none}
+.mappop .pt{font-family:Rubik;font-weight:800;color:var(--green-d);font-size:17px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.mappop .px{cursor:pointer;color:var(--mut);font-size:20px;line-height:.9;border:0;background:0;padding:0}
+.mappop .pty{display:inline-block;margin-top:6px;border-radius:11px;padding:2px 10px;font-size:11.5px;font-weight:700}
+.mappop .pty.kib{background:#e7f2fb;color:#1c6b8a}.mappop .pty.mos{background:#eef6ea;color:#4c7a1c}
+.mappop .prow{margin-top:9px;color:var(--ink);line-height:1.5}
+.mappop .prow .lk{color:var(--mut);font-weight:700;font-size:12px}
+.mappop .pfac{color:#a3611c;font-weight:600}
+.mappop .pmore{margin-top:11px;font-size:12.5px;color:var(--teal);font-weight:800;cursor:pointer;display:inline-block}
 .legend{margin-top:16px}
 .legbar{height:16px;border-radius:8px;border:1px solid var(--line)}
 .leglabels{display:flex;justify-content:space-between;font-size:14px;color:var(--mut);margin-top:6px;font-weight:600}
@@ -65,47 +80,26 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
 
 <div class="wrap">
   <div class="hero">
-    <div class="kick">MAPS & GIS · שכבות לוויין</div>
-    <h1>מפות <b>ו-GIS</b></h1>
-    <div class="sub">שכבות גאו-מרחביות לחקלאות — ירק, גשמים, חום ויבולים, על גבי מפת ישראל. מוכן לחיבור ל-Google Earth Engine.</div>
+    <div class="kick">MAPS & GIS · מפת היישובים החקלאיים</div>
+    <h1>מפת <b>החקלאות</b></h1>
+    <div class="sub">מפת ישראל אינטראקטיבית של היישובים החקלאיים — קיבוצים ומושבים, גידולים מובילים ותעשייה. לחצו על נעץ לפרטים.</div>
   </div>
-
-  <div class="layers" id="layers"></div>
 
   <div class="panel mapwrap">
-      <div class="maptop"><h2 id="mapTitle">—</h2><span class="live"><span class="dot"></span> <span id="mapUpd">מעודכן</span></span></div>
-      <div class="mapbox">
-        <svg viewBox="0 0 200 400">
-          <defs>
-            <clipPath id="il"><path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z"/></clipPath>
-          </defs>
-          <g clip-path="url(#il)"><g id="cells"></g></g>
-          <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="none" stroke="#134a30" stroke-width="1.6" stroke-linejoin="round"/>
-          <g id="setpins"></g>
-          <g id="cities"></g>
-        </svg>
+      <div class="maptop gtog" onclick="toggleAgro()" style="cursor:pointer">
+        <h2><span id="agroArrow" style="display:inline-block;transition:.2s;color:var(--lime)">▾</span> 🗺️ מפת היישובים החקלאיים</h2>
+        <span class="live"><span class="dot"></span> <span id="pinCount">—</span> יישובים</span>
       </div>
-      <div class="legend" id="legend"></div>
-    </div>
-
-  <div class="inforow">
-    <div class="panel info">
-      <h3 id="iName">—</h3>
-      <div class="desc" id="iDesc">—</div>
-    </div>
-    <div class="panel">
-      <div class="meta">
-        <div class="mcard"><div class="k">מקור נתונים</div><div class="v" id="iSrc">—</div></div>
-        <div class="mcard"><div class="k">רזולוציה</div><div class="v" id="iRes">—</div></div>
-        <div class="mcard"><div class="k">כיסוי</div><div class="v">ישראל · גלובלי</div></div>
-        <div class="mcard"><div class="k">תדירות עדכון</div><div class="v" id="iFreq">—</div></div>
+      <div id="agroBody" style="margin-top:14px">
+        <div id="lmap"></div>
+        <div class="maplegend">
+          <span class="catitem"><span class="dotm" style="background:#1c6b8a"></span>קיבוץ (<b id="cKib">0</b>)</span>
+          <span class="catitem"><span class="dotm" style="background:#4c7a1c"></span>מושב (<b id="cMos">0</b>)</span>
+          <span class="catitem"><span class="dotm" style="background:#2e9e63"></span>יישוב כפרי (<b id="cOth">0</b>)</span>
+          <span style="color:var(--mut);font-size:13.5px;font-weight:600">· לחצו על נעץ לפרטים · גללו לזום</span>
+        </div>
       </div>
     </div>
-    <div class="note">
-      <div class="t">🛰️ מוכן לחיבור חי</div>
-      <div class="s">התצוגה הנוכחית להדגמה. חיבור אמיתי דרך <b>Google Earth Engine</b> (או Copernicus/Sentinel Hub) יזרים את השכבות בזמן אמת לפי קואורדינטות ותאריך.</div>
-    </div>
-  </div>
 </div>
 
 <style>
@@ -115,6 +109,14 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .setchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .schip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer}
 .schip.on{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.setalpha{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.aleph{min-width:38px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 6px;font-family:Rubik;font-weight:800;font-size:16px;color:var(--green-d);cursor:pointer;transition:.12s;position:relative}
+.aleph:hover{background:var(--tint)}
+.aleph.on{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.aleph.empty{opacity:.32;pointer-events:none}
+.aleph .ac{display:block;font-family:Heebo;font-weight:700;font-size:10px;color:var(--mut);margin-top:1px}
+.aleph.on .ac{color:rgba(255,255,255,.75)}
+.aleph.all{min-width:auto;padding:8px 14px;font-size:13.5px;font-family:Heebo}
 #setq{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:12px;background:#fff}
 .setwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
 .settbl{width:100%;border-collapse:collapse;font-size:14px}
@@ -129,6 +131,7 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
   <div class="sech2">🏘️ יישובים חקלאיים · מנוע חיפוש</div>
   <div class="setsub">קיבוצים ומושבים לפי סוג, אזור, גידולים מובילים ומפעל/תעשייה. ידע אצור (שלד: רשימת ישובים למ״ס · data.gov.il), ניתן להרחבה.</div>
   <div class="setchips" id="setchips"></div>
+  <div class="setalpha" id="setalpha"></div>
   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
     <input id="setq" placeholder="🔎 חיפוש: שם יישוב, אזור, מועצה, גידול או מפעל…" oninput="setRender()" style="flex:1;min-width:220px;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-family:Heebo;font-size:15px;outline:0;background:#fff">
     <button onclick="setExport()" style="background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap">⬇️ ייצוא CSV</button>
@@ -136,22 +139,80 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
   <div class="setwrap"><table class="settbl" id="settbl"><tbody><tr><td style="padding:22px;text-align:center;color:var(--mut)">טוען…</td></tr></tbody></table></div>
 </div></div>
 
-<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מפות ו-GIS · <span class="mono">Earth Engine ready</span></div></div></div>
+<div class="wrap">
+  <div class="panel mapwrap">
+      <div class="maptop gtog" onclick="toggleGis()" style="cursor:pointer">
+        <h2><span id="gisArrow" style="display:inline-block;transition:.2s;color:var(--lime)">▸</span> 🛰️ שכבות לוויין · GIS</h2>
+        <span class="live"><span class="dot"></span> NASA GIBS · לחצו לפתיחה</span>
+      </div>
+      <div id="gisBody" style="display:none;margin-top:14px">
+        <div class="layers" id="gislayers"></div>
+        <div id="lmap2"></div>
+        <div class="maplegend">
+          <span id="gisNote" style="color:var(--green-d);font-weight:700;font-size:13.5px">בחרו שכבה — ירק, חום או גשם — על גבי מפת ישראל אמיתית.</span>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="wrap">
+  <div class="setbox" style="margin-bottom:40px">
+    <div class="sech2">📚 מקורות נתונים</div>
+    <div class="setsub">כל הנתונים במפות ובמנוע החיפוש נשענים על מקורות פתוחים ורשמיים — ללא מפתחות סגורים:</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+      <div class="mcard"><div class="k">רשימת היישובים</div><div class="v" style="font-size:14px">הלשכה המרכזית לסטטיסטיקה (למ״ס)</div><a href="https://data.gov.il/dataset/citiesandsettelments" target="_blank" style="font-size:12px;color:var(--teal)">data.gov.il ↗</a></div>
+      <div class="mcard"><div class="k">קואורדינטות</div><div class="v" style="font-size:14px">GeoNames</div><a href="https://www.geonames.org" target="_blank" style="font-size:12px;color:var(--teal)">geonames.org ↗</a></div>
+      <div class="mcard"><div class="k">סיווג קיבוץ / מושב</div><div class="v" style="font-size:14px">ויקיפדיה העברית</div><a href="https://he.wikipedia.org" target="_blank" style="font-size:12px;color:var(--teal)">he.wikipedia.org ↗</a></div>
+      <div class="mcard"><div class="k">מפעלים ותעשייה</div><div class="v" style="font-size:14px">איגוד התעשייה הקיבוצית</div><a href="https://kia.co.il/factories/" target="_blank" style="font-size:12px;color:var(--teal)">kia.co.il ↗</a></div>
+      <div class="mcard"><div class="k">שכבות לוויין (GIS)</div><div class="v" style="font-size:14px">NASA GIBS · EOSDIS</div><a href="https://worldview.earthdata.nasa.gov" target="_blank" style="font-size:12px;color:var(--teal)">earthdata.nasa.gov ↗</a></div>
+      <div class="mcard"><div class="k">מפת בסיס</div><div class="v" style="font-size:14px">OpenStreetMap</div><a href="https://www.openstreetmap.org/copyright" target="_blank" style="font-size:12px;color:var(--teal)">openstreetmap.org ↗</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מפות ו-GIS · <span class="mono">Open data · NASA GIBS · OpenStreetMap</span></div></div></div>
 
 <script>
 var SETDB=[],STYPE='all',SETSHOWN=[];
 document.getElementById('setchips').innerHTML=[["all","הכול"],["קיבוץ","🔵 קיבוץ"],["מושב","🟢 מושב"],["details","⭐ עם פרטים"]].map(function(c,i){return '<button class="schip'+(i===0?' on':'')+'" onclick="setFilt(\''+c[0]+'\',this)">'+c[1]+'</button>';}).join('');
 function setFilt(t,el){STYPE=t;document.querySelectorAll('#setchips .schip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');setRender();}
+var STLETTER='',ALEF='אבגדהוזחטיכלמנסעפצקרשת'.split('');
+function firstLetter(name){
+ var s=(name||'').replace(/[^֐-׿]/g,'');if(!s)return '';var ch=s.charAt(0);
+ var fin={'ך':'כ','ם':'מ','ן':'נ','ף':'פ','ץ':'צ'};return fin[ch]||ch;
+}
+function buildAlpha(){
+ var cnt={};SETDB.forEach(function(s){var l=firstLetter(s.name);if(l)cnt[l]=(cnt[l]||0)+1;});
+ var html='<button class="aleph all'+(STLETTER==='*'?' on':'')+'" onclick="setLetter(\'*\')">📋 הכול</button>';
+ html+=ALEF.map(function(l){
+  var c=cnt[l]||0;
+  return '<button class="aleph'+(c?'':' empty')+(STLETTER===l?' on':'')+'" onclick="setLetter(\''+l+'\')">'+l+'<span class="ac">'+(c||'')+'</span></button>';
+ }).join('');
+ document.getElementById('setalpha').innerHTML=html;
+}
+function setLetter(l){STLETTER=(STLETTER===l?'':l);buildAlpha();setRender();document.querySelector('.setwrap').scrollIntoView({behavior:'smooth',block:'nearest'});}
+var SORTKEY='name',SORTDIR=1;
+var SCOLS=[['name','יישוב'],['type','סוג'],['region','נפה'],['council','מועצה אזורית'],['crops','גידולים מובילים'],['factory','מפעל / שדה']];
+function stSort(k){if(SORTKEY===k){SORTDIR=-SORTDIR;}else{SORTKEY=k;SORTDIR=1;}setRender();}
 function setRender(){
  var q=(document.getElementById('setq').value||'').trim();
  var rows=SETDB.filter(function(s){
   if(STYPE==='details'&&!(s.crops||s.factory))return false;
   if((STYPE==='קיבוץ'||STYPE==='מושב')&&s.type!==STYPE)return false;
+  if(STLETTER&&STLETTER!=='*'&&firstLetter(s.name)!==STLETTER)return false;
   if(!q)return true;
   return (s.name+' '+s.region+' '+s.council+' '+s.crops+' '+s.factory).indexOf(q)>=0;
  });
+ rows.sort(function(a,b){var x=(a[SORTKEY]||''),y=(b[SORTKEY]||'');
+  if(!x&&y)return 1;if(x&&!y)return -1;
+  return x.localeCompare(y,'he')*SORTDIR;});
  SETSHOWN=rows;
- var head='<tr><th>יישוב</th><th>סוג</th><th>נפה</th><th>מועצה אזורית</th><th>גידולים מובילים</th><th>מפעל / תעשייה</th></tr>';
+ var head='<tr>'+SCOLS.map(function(c){var ar=SORTKEY===c[0]?(SORTDIR>0?' ▲':' ▼'):'';return '<th style="cursor:pointer;user-select:none;white-space:nowrap" onclick="stSort(\''+c[0]+'\')">'+c[1]+'<span style="color:var(--lime)">'+ar+'</span></th>';}).join('')+'</tr>';
+ // no letter, no search, no specific type → prompt to pick a letter
+ if(!STLETTER&&!q&&STYPE==='all'){
+  document.getElementById('settbl').innerHTML=head+'<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:30px 20px;font-size:15px">בחרו אות מהאינדקס למעלה — או חפשו — כדי להציג יישובים<br><span style="font-size:13px">('+SETDB.length+' יישובים במאגר)</span></td></tr>';
+  return;
+ }
  var b=rows.slice(0,400).map(function(s){
   var tc=s.type==='קיבוץ'?'kib':(s.type==='מושב'?'mos':'');
   var tp=s.type?'<span class="stype '+tc+'">'+s.type+'</span>':'<span style="color:#bbb">—</span>';
@@ -160,16 +221,89 @@ function setRender(){
  var more=rows.length>400?'<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:10px;font-size:12px">מציג 400 מתוך '+rows.length+' · צמצמו בחיפוש או ייצאו CSV לכולם</td></tr>':'';
  document.getElementById('settbl').innerHTML=head+(b||'<tr><td colspan="6" style="text-align:center;color:var(--mut);padding:22px">לא נמצאו יישובים</td></tr>')+more;
 }
-function renderPins(){
- var g=document.getElementById('setpins');if(!g)return;
- var pins=SETDB.filter(function(s){return s.x&&s.y;});
- g.innerHTML=pins.map(function(s){
-  var col=s.type==='קיבוץ'?'#1c6b8a':'#4c7a1c';
-  var tip=s.name+' · '+(s.type||'')+(s.crops?(' · '+s.crops):'')+(s.factory?(' · 🏭 '+s.factory):'');
-  return '<circle cx="'+s.x+'" cy="'+s.y+'" r="2.4" fill="'+col+'" stroke="#fff" stroke-width="0.7" style="cursor:pointer" onclick="pinClick(\''+s.name.replace(/'/g,"")+'\')"><title>'+tip+'</title></circle>';
- }).join('');
+// ---- real map (Leaflet + OpenStreetMap + live NASA GIBS layers, no API key) ----
+var LMAP=null,MLAYER=null,GISLAYER=null,GISCUR='';
+function gisDate(){var d=new Date(Date.now()-3*86400000),p=function(n){return String(n).padStart(2,'0');};return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+var GIS={
+ sat :{name:'לוויין',emoji:'🛰️',layer:'MODIS_Terra_CorrectedReflectance_TrueColor',mx:'GoogleMapsCompatible_Level9',ext:'jpg',maxN:9,op:1,
+       note:'תצלום לוויין אמיתי (MODIS Terra) — עדכני ליום.'},
+ veg :{name:'צמחייה',emoji:'🌿',layer:'MODIS_Terra_CorrectedReflectance_Bands721',mx:'GoogleMapsCompatible_Level9',ext:'jpg',maxN:9,op:.9,
+       note:'שילוב-שווא 7-2-1 — צמחייה בריאה בגווני ירוק בהיר, קרקע חשופה בכתום.'},
+ heat:{name:'חום',emoji:'🌡️',layer:'MODIS_Terra_Land_Surface_Temp_Day',mx:'GoogleMapsCompatible_Level7',ext:'png',maxN:7,op:.72,
+       note:'טמפרטורת פני הקרקע ביום (MODIS LST) — אדום=חם, כחול=קריר.'},
+ rain:{name:'גשם',emoji:'🌧️',layer:'IMERG_Precipitation_Rate',mx:'GoogleMapsCompatible_Level6',ext:'png',maxN:6,op:.75,
+       note:'עוצמת משקעים (GPM IMERG) — כחול=גשם, ריק=יובש.'}
+};
+var GMAP=null;
+function initMap(){
+ if(LMAP)return;
+ LMAP=L.map('lmap',{scrollWheelZoom:true,zoomControl:true}).setView([31.4,34.9],7.5);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(LMAP);
+ MLAYER=L.layerGroup().addTo(LMAP);
+ setTimeout(function(){LMAP.invalidateSize();},250);
 }
-function pinClick(name){var i=document.getElementById('setq');i.value=name;setRender();document.querySelector('.setbox').scrollIntoView({behavior:'smooth',block:'start'});}
+function toggleAgro(){
+ var body=document.getElementById('agroBody'),ar=document.getElementById('agroArrow');
+ var open=body.style.display==='none';
+ body.style.display=open?'block':'none';
+ ar.textContent=open?'▾':'▸';
+ if(open){setTimeout(function(){if(LMAP)LMAP.invalidateSize();},150);}
+}
+function toggleGis(){
+ var body=document.getElementById('gisBody'),ar=document.getElementById('gisArrow');
+ var open=body.style.display==='none';
+ body.style.display=open?'block':'none';
+ ar.textContent=open?'▾':'▸';
+ if(open){initGisMap();setTimeout(function(){if(GMAP)GMAP.invalidateSize();},150);}
+}
+function initGisMap(){
+ if(GMAP)return;
+ GMAP=L.map('lmap2',{scrollWheelZoom:true,zoomControl:true}).setView([31.4,34.9],7.5);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,opacity:.65,attribution:'© OpenStreetMap'}).addTo(GMAP);
+ buildGisButtons();
+}
+function buildGisButtons(){
+ var el=document.getElementById('gislayers');if(!el)return;
+ el.innerHTML='<button class="lbtn on" data-g="" onclick="setGis(\'\')">🗺️ מפת בסיס</button>'+
+  Object.keys(GIS).map(function(k){return '<button class="lbtn" data-g="'+k+'" onclick="setGis(\''+k+'\')">'+GIS[k].emoji+' '+GIS[k].name+'</button>';}).join('');
+}
+function setGis(k){
+ if(GISLAYER){GMAP.removeLayer(GISLAYER);GISLAYER=null;}
+ GISCUR=(GISCUR===k?'':k);
+ if(GISCUR&&GIS[GISCUR]){
+  var g=GIS[GISCUR];
+  GISLAYER=L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+g.layer+'/default/'+gisDate()+'/'+g.mx+'/{z}/{y}/{x}.'+g.ext,
+   {maxNativeZoom:g.maxN,maxZoom:14,opacity:g.op,bounds:[[29.3,34.1],[33.4,35.95]],attribution:'NASA GIBS · '+gisDate()});
+  GISLAYER.addTo(GMAP);
+ }
+ document.querySelectorAll('#gislayers .lbtn').forEach(function(b){b.classList.toggle('on',b.dataset.g===GISCUR);});
+ var nn=document.getElementById('gisNote');if(nn)nn.textContent=GISCUR?GIS[GISCUR].note:'בחרו שכבה — ירק, חום או גשם — על גבי מפת ישראל אמיתית.';
+}
+function pinColor(s){return s.type==='קיבוץ'?'#1c6b8a':(s.type==='מושב'?'#4c7a1c':'#2e9e63');}
+function renderMarkers(){
+ if(!MLAYER)return;MLAYER.clearLayers();var n=0,ck=0,cm=0,co=0;
+ SETDB.forEach(function(s){
+  if(s.lat==null||s.lon==null)return;n++;
+  if(s.type==='קיבוץ')ck++;else if(s.type==='מושב')cm++;else co++;
+  var det=s.crops||s.factory;
+  var m=L.circleMarker([s.lat,s.lon],{radius:det?7:5,color:'#fff',weight:det?2:1.2,fillColor:pinColor(s),fillOpacity:det?1:.82});
+  var html='<div dir="rtl" style="font-family:Heebo;min-width:180px">'
+   +'<div style="font-family:Rubik;font-weight:800;color:#134a30;font-size:17px">'+s.name+'</div>'
+   +'<div style="margin-top:3px;color:#5c6f63;font-weight:700;font-size:12.5px">'+(s.type||'יישוב כפרי')+((s.council||s.region)?' · '+(s.council||s.region):'')+'</div>'
+   +(s.crops?'<div style="margin-top:8px;font-size:13.5px"><b>גידולים:</b> '+s.crops+'</div>':'')
+   +(s.factory?'<div style="margin-top:5px;font-size:13.5px;color:#a3611c"><b>🏭 '+s.factory+'</b></div>':'')
+   +'<a href="#" onclick="pinTable(\''+s.name.replace(/'/g,"")+'\');return false;" style="display:inline-block;margin-top:9px;color:#2b8fb0;font-weight:800;font-size:12.5px;text-decoration:none">הצג בטבלה למטה ↓</a>'
+   +'</div>';
+  m.bindPopup(html);
+  MLAYER.addLayer(m);
+ });
+ var el=document.getElementById('pinCount');if(el)el.textContent=n;
+ var g;
+ if(g=document.getElementById('cKib'))g.textContent=ck;
+ if(g=document.getElementById('cMos'))g.textContent=cm;
+ if(g=document.getElementById('cOth'))g.textContent=co;
+}
+function pinTable(name){var i=document.getElementById('setq');i.value=name;setRender();document.querySelector('.setbox').scrollIntoView({behavior:'smooth',block:'start'});}
 function setExport(){
  var head=['יישוב','סוג','נפה','מועצה אזורית','גידולים מובילים','מפעל/תעשייה'];
  var lines=[head.join(',')];
@@ -181,67 +315,17 @@ function setExport(){
  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='agrodata-yishuvim.csv';a.click();
 }
 Promise.all([
- fetch('data/settlements_full.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return {items:[]};}),
+ fetch('data/settlements_geo.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return {items:[]};}),
  fetch('data/settlements.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return {items:[]};})
 ]).then(function(res){
  var full=res[0].items||[],cur=res[1].items||[];
  var byName={};cur.forEach(function(c){byName[c.name]=c;});
- SETDB=full.map(function(f){var c=byName[f.name];return {name:f.name,region:f.region,council:f.council,type:c?c.type:'',crops:c?c.crops:'',factory:c?c.factory:''};});
+ SETDB=full.map(function(f){var c=byName[f.name];return {name:f.name,region:c&&c.region?c.region:f.region,council:f.council,type:(c&&c.type)?c.type:(f.type||''),crops:c?c.crops:'',factory:c?c.factory:'',lat:f.lat,lon:f.lon};});
  // add curated not present in the open backbone
- cur.forEach(function(c){if(!full.some(function(f){return f.name===c.name;}))SETDB.push({name:c.name,region:c.region||'',council:'',type:c.type,crops:c.crops,factory:c.factory});});
+ cur.forEach(function(c){if(!full.some(function(f){return f.name===c.name;}))SETDB.push({name:c.name,region:c.region||'',council:'',type:c.type,crops:c.crops,factory:c.factory,lat:c.lat,lon:c.lon});});
  SETDB.sort(function(a,b){return (b.crops?1:0)-(a.crops?1:0);});
- setRender();renderPins();
+ buildAlpha();setRender();renderMarkers();
 }).catch(function(){document.getElementById('settbl').innerHTML='<tr><td style="padding:22px;text-align:center;color:var(--mut)">מאגר היישובים בהכנה…</td></tr>';});
-const CITIES=[["חיפה",78,66],["תל אביב",69,120],["ירושלים",114,133],["באר שבע",97,206],["אילת",111,386]];
-const LAYERS={
- ndvi:{name:"ירק · NDVI",emoji:"🌿",title:"מדד צמחייה · NDVI",src:"Sentinel-2 · Landsat",res:"10–30 מ׳",freq:"5 ימים",seed:0.5,
-   desc:"מדד הצמחייה (NDVI) מודד את בריאות ועוצמת הכיסוי הצמחי — ערכים גבוהים = צמחייה בריאה וצפופה.",
-   legend:["קרקע חשופה","צמחייה דלילה","צמחייה בריאה"],colors:["#8a5a2b","#c9a13b","#e3d24a","#8fce6a","#2e9e63","#0d5a2e"]},
- rain:{name:"גשמים",emoji:"🌧️",title:"משקעים · גשם",src:"CHIRPS · GPM",res:"5 ק״מ",freq:"יומי",seed:2.1,
-   desc:"מפת משקעים מצטברים — הצפון והרי הגליל מקבלים משקעים רבים יותר, הנגב והערבה יובשניים.",
-   legend:["יובש","גשם בינוני","גשם רב"],colors:["#f4fbff","#cdeaf7","#7cc4e8","#3a95c9","#1c6b9e","#0d3a6b"]},
- heat:{name:"חום",emoji:"🌡️",title:"טמפ׳ פני קרקע (LST)",src:"MODIS LST · SMAP",res:"1 ק״מ",freq:"יומי",seed:4.0,
-   desc:"טמפרטורת פני הקרקע ולחות — הנגב והערבה חמים משמעותית. חיוני לתזמון השקיה והתראות עקת חום.",
-   legend:["קריר","ממוזג","חם מאוד"],colors:["#2b6cb0","#5aa9d6","#a9d4a0","#f2e04a","#eaa63a","#c4302e"]},
- crop:{name:"יבולים",emoji:"🌾",title:"כיסוי קרקע · יבולים",src:"Dynamic World · ESA WorldCover",res:"10 מ׳",freq:"עונתי",seed:1.2,cat:true,
-   desc:"סיווג כיסוי הקרקע לסוגי גידול ושימושי קרקע — גד״ש, מטעים, ירקות, מרעה, שטח בנוי ומים.",
-   cats:[["גד״ש","#e0c34a"],["מטעים","#3f8f3a"],["ירקות","#7ec46a"],["מרעה","#c2cf94"],["בנוי","#b59a90"],["מים","#4f9fd6"]]}
-};
-function hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
-function lerp(stops,t){t=Math.max(0,Math.min(1,t));var n=stops.length-1,f=t*n,i=Math.floor(f),fr=f-i;if(i>=n)return stops[n];var a=hx(stops[i]),b=hx(stops[i+1]);return 'rgb('+Math.round(a[0]+(b[0]-a[0])*fr)+','+Math.round(a[1]+(b[1]-a[1])*fr)+','+Math.round(a[2]+(b[2]-a[2])*fr)+')';}
-function base(x,y,s){var nx=(x-52)/104,ny=(y-6)/388;var a=Math.sin(nx*6.2+s)+Math.cos(ny*5.1-s*1.3)+Math.sin((nx*3+ny*4)*2+s*2);return (a+3)/6;}
-function cellVal(k,x,y){var ny=(y-6)/388;var b=base(x,y,LAYERS[k].seed);if(k==='rain')b=b*0.5+(1-ny)*0.5;else if(k==='heat')b=b*0.5+ny*0.5;else if(k==='ndvi')b=b*0.68+(1-ny)*0.32;return Math.max(0,Math.min(1,b));}
-let CUR='ndvi';
-function draw(k){
- CUR=k;const L=LAYERS[k];let c='';
- for(let y=6;y<393;y+=11){for(let x=52;x<157;x+=6.6){
-   const v=cellVal(k,x+3,y+5);let f;
-   if(L.cat){f=L.cats[Math.min(L.cats.length-1,Math.floor(v*L.cats.length))][1];}
-   else f=lerp(L.colors,v);
-   c+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="7.2" height="11.6" fill="'+f+'"/>';
- }}
- document.getElementById('cells').innerHTML=c;
- // title / info
- document.getElementById('mapTitle').textContent=L.emoji+' '+L.title;
- document.getElementById('iName').textContent=L.title;
- document.getElementById('iDesc').textContent=L.desc;
- document.getElementById('iSrc').textContent=L.src;
- document.getElementById('iRes').textContent=L.res;
- document.getElementById('iFreq').textContent=L.freq;
- // legend
- let lg;
- if(L.cat){lg='<div class="cats">'+L.cats.map(c=>'<span class="catitem"><span class="sw" style="background:'+c[1]+'"></span>'+c[0]+'</span>').join('')+'</div>';}
- else{lg='<div class="legbar" style="background:linear-gradient(90deg,'+L.colors.join(',')+')"></div><div class="leglabels"><span>'+L.legend[0]+'</span><span>'+L.legend[1]+'</span><span>'+L.legend[2]+'</span></div>';}
- document.getElementById('legend').innerHTML=lg;
- // buttons
- document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
-}
-// build buttons
-document.getElementById('layers').innerHTML=Object.keys(LAYERS).map(k=>'<button class="lbtn" data-k="'+k+'" onclick="draw(\''+k+'\')">'+LAYERS[k].emoji+' '+LAYERS[k].name+'</button>').join('');
-// cities
-document.getElementById('cities').innerHTML=CITIES.map(c=>'<circle class="cdot" cx="'+c[1]+'" cy="'+c[2]+'" r="2.1"/><text class="clbl" x="'+(c[1]-3.5)+'" y="'+(c[2]+0.5)+'" text-anchor="end">'+c[0]+'</text>').join('');
-// update time
-(function(){var d=new Date(),p=n=>String(n).padStart(2,'0');document.getElementById('mapUpd').textContent='מעודכן '+p(d.getHours())+':'+p(d.getMinutes());})();
-draw('ndvi');
+initMap();
 </script>
 </body></html>

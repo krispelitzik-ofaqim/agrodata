@@ -122,6 +122,7 @@ tr:last-child td{border-bottom:0}
       <a onclick="go(this,'finance')"><span class="i">💹</span><span class="lbl">זירה פיננסית</span></a>
       <a onclick="go(this,'maps')"><span class="i">🗺️</span><span class="lbl">מפות ו-GIS</span></a>
       <a onclick="go(this,'analytics')"><span class="i">📈</span><span class="lbl">אנליטיקה</span></a>
+      <a onclick="go(this,'services')"><span class="i">🔑</span><span class="lbl">שירותים ומפתחות</span></a>
       <a onclick="go(this,'settings')"><span class="i">⚙️</span><span class="lbl">הגדרות</span></a>
     </nav>
     <div class="sfoot">v0.2 · מחובר · <span id="ct"></span></div>
@@ -235,6 +236,73 @@ tr:last-child td{border-bottom:0}
       <div class="row eq">
         <div class="card"><h3>עמודים מובילים</h3><div class="sm">לפי צפיות</div><div class="bars" id="pagesB"></div></div>
         <div class="card"><h3>מקורות תנועה</h3><div class="sm">מאיפה מגיעים</div><div class="donut-wrap"><div class="donut" id="srcDonut"></div><div class="dlegend" id="srcLegend"></div></div></div>
+      </div>
+    </section>
+
+    <!-- SERVICES & KEYS -->
+    <section class="screen" id="s-services">
+      <style>
+        .svtbl td,.svtbl th{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+        .svtbl th{background:var(--bg2);color:var(--mut);font-weight:700}
+        .svtbl .nm{font-weight:800;color:var(--green-d)}
+        .pill{display:inline-block;border-radius:20px;padding:3px 11px;font-size:12px;font-weight:800;white-space:nowrap}
+        .p-ok{background:#e5f4ea;color:#1c6b45}.p-pay{background:#fbecd6;color:#a3611c}.p-key{background:#fde8e8;color:#c0392b}.p-off{background:#eceff0;color:#6b7a72}.p-free{background:#e7f2fb;color:#1c6b8a}
+        .svnote{font-size:12.5px;color:var(--mut)}
+      </style>
+      <div class="kpis k4">
+        <div class="kpi"><div class="v">3</div><div class="l">💳 שירותים בתשלום</div></div>
+        <div class="kpi"><div class="v">2</div><div class="l">🔑 דורשים מפתח</div></div>
+        <div class="kpi"><div class="v">15</div><div class="l">🆓 מקורות חינמיים</div></div>
+        <div class="kpi"><div class="v">✅</div><div class="l">סטטוס כללי · פעיל</div></div>
+      </div>
+
+      <div class="card">
+        <h3>🏗️ תשתית ופלטפורמה</h3>
+        <div class="sm" style="margin-bottom:12px">אחסון, קוד ודומיין — הבסיס שעליו האתר רץ</div>
+        <table class="svtbl"><thead><tr><th>שירות</th><th>תפקיד</th><th>עלות</th><th>מפתח / הגדרה</th><th>סטטוס</th></tr></thead><tbody>
+          <tr><td class="nm">GitHub</td><td>מאגר הקוד (ריפו פומבי <span class="svnote">krispelitzik-ofaqim/agrodata</span>)</td><td><span class="pill p-free">חינמי</span></td><td>חשבון GitHub</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">Railway</td><td>אחסון האתר (פרודקשן)</td><td><span class="pill p-pay">לפי שימוש</span></td><td>חשבון Railway · פרויקט AgroData</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">Render</td><td>אחסון חלופי</td><td><span class="svnote">—</span></td><td>—</td><td><span class="pill p-off">לא בשימוש · עברנו ל-Railway</span></td></tr>
+          <tr><td class="nm">דומיין · agrodata.co.il</td><td>כתובת האתר</td><td><span class="pill p-pay">תשלום שנתי</span></td><td>LiveDNS / רשם הדומיין</td><td><span class="pill p-ok">פעיל</span></td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>🤖 מנועי AI · AgroMind</h3>
+        <div class="sm" style="margin-bottom:12px">סיכומי AI חכמים בחיפוש — דורשים מפתח בתשלום. מוגדרים כמשתני-סביבה ב-Railway (לא בקוד).</div>
+        <table class="svtbl"><thead><tr><th>שירות</th><th>תפקיד</th><th>עלות</th><th>מפתח / הגדרה</th><th>סטטוס</th></tr></thead><tbody>
+          <tr><td class="nm">Google Gemini</td><td>סיכומי AI בחיפוש</td><td><span class="pill p-pay">לפי שימוש</span></td><td><span class="svnote">GEMINI_API_KEY</span></td><td><span class="pill p-key">דורש מפתח</span></td></tr>
+          <tr><td class="nm">Anthropic Claude</td><td>סיכומי AI (חלופה)</td><td><span class="pill p-pay">לפי שימוש</span></td><td><span class="svnote">ANTHROPIC_API_KEY</span></td><td><span class="pill p-key">דורש מפתח</span></td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>🆓 מקורות נתונים חינמיים · ללא מפתח</h3>
+        <div class="sm" style="margin-bottom:12px">כל אלה פתוחים, חינמיים ולא דורשים מפתח או תשלום</div>
+        <table class="svtbl"><thead><tr><th>מקור</th><th>שימוש באתר</th><th>סטטוס</th></tr></thead><tbody>
+          <tr><td class="nm">data.gov.il · למ״ס</td><td>יישובים, חברות (רשם), חומרי הדברה, קנביס רפואי</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">World Bank</td><td>נתוני חקלאות רב-מדינתיים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">Eurostat</td><td>נתוני אירופה · חקלאות אורגנית</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">UN Comtrade</td><td>סחר חקלאי עולמי</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">Open-Meteo</td><td>מזג אוויר ואקלים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">OpenAlex</td><td>מחקר אקדמי · מאמרים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">CrossRef</td><td>מטא-דאטה של מחקרים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">iNaturalist</td><td>זיהוי צמחים ועצים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">Yahoo Finance</td><td>מדדי מניות אגרו-טק חיים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">Google News (RSS)</td><td>מבזקי חדשות</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">NASA GIBS · EOSDIS</td><td>שכבות לוויין במפות (ירק/חום/גשם)</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">GeoNames</td><td>קואורדינטות יישובים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">OpenStreetMap</td><td>מפת בסיס</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">איגוד התעשייה הקיבוצית</td><td>מפעלים ותעשייה של קיבוצים</td><td><span class="pill p-ok">פעיל</span></td></tr>
+          <tr><td class="nm">ויקיפדיה העברית</td><td>סיווג קיבוץ/מושב</td><td><span class="pill p-ok">פעיל</span></td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>🔍 נבחן ולא בשימוש</h3>
+        <table class="svtbl"><thead><tr><th>שירות</th><th>נשקל עבור</th><th>החלטה</th></tr></thead><tbody>
+          <tr><td class="nm">Google Maps API</td><td>מפה חכמה של יישובים</td><td><span class="pill p-off">לא בשימוש · Leaflet חינמי במקום</span></td></tr>
+        </tbody></table>
       </div>
     </section>
 
