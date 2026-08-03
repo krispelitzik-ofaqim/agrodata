@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אופקים · זירת האגרו-טק · אינטרו</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--lime:#8fe6ad;--green:#2e9e63;--green-d:#134a30;--gold:#e8c56a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Heebo,Arial,sans-serif;background:#050c08;color:#eaf4ee;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#frame{position:relative;width:1000px;height:1000px;flex:0 0 auto;overflow:hidden;border-radius:14px;background:radial-gradient(120% 120% at 50% 40%,#123521 0%,#0c1c13 55%,#060f0a 100%);box-shadow:0 30px 90px rgba(0,0,0,.6)}
+#stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .8s ease;pointer-events:none}
+.scene.on{opacity:1}
+/* subtle starfield */
+.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(143,230,173,.5);animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.7;transform:scale(1.2)}}
+
+/* ---- BRAIN ---- */
+.brainWrap{perspective:1400px}
+#brainRot{transform-style:preserve-3d;transition:transform 3.4s cubic-bezier(.5,0,.2,1)}
+#stage.spin #brainRot{transform:rotateY(360deg)}
+#stage.mini .brainScene{transform:scale(.42) translateY(-30vh);transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
+.brainScene{transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
+svg.brain{width:560px;height:auto;filter:drop-shadow(0 0 26px rgba(143,230,173,.35))}
+.brain .outline{fill:none;stroke:var(--lime);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.brain .gyrus{fill:none;stroke:var(--green);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.9;stroke-dasharray:1;stroke-dashoffset:1}
+.brain .fissure{fill:none;stroke:var(--lime);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+#stage.draw .brain .outline{animation:draw 2.2s ease forwards}
+#stage.draw .brain .fissure{animation:draw 1.6s ease .8s forwards}
+#stage.draw .brain .gyrus{animation:draw 1.3s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+#stage.glow svg.brain{filter:drop-shadow(0 0 46px rgba(143,230,173,.75))}
+.brainCore{fill:rgba(143,230,173,0);transition:fill 1.2s ease}
+#stage.glow .brainCore{fill:rgba(143,230,173,.10)}
+
+/* ---- CHIPS ---- */
+.chipsScene{align-items:center}
+.chipGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:13px 14px;width:900px}
+.chip{background:rgba(255,255,255,.05);border:1px solid rgba(143,230,173,.35);border-radius:12px;padding:10px 8px;text-align:center;opacity:0;transform:translateY(18px) scale(.85);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+#stage.chips .chip{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+.chip .en{font-family:'Space Grotesk';font-weight:700;font-size:15px;color:#fff;line-height:1.1;direction:ltr}
+.chip .en b{color:var(--lime)}
+.chip .he{font-size:11px;color:rgba(234,244,238,.7);margin-top:2px}
+.chipTitle{position:absolute;top:7%;width:100%;text-align:center;font-family:Rubik;font-weight:800;font-size:32px;color:#fff;opacity:0}
+#stage.chips .chipTitle{animation:fadeUp .8s ease .2s forwards}
+.chipTitle b{color:var(--lime)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---- TITLE ---- */
+.titleScene{flex-direction:column;gap:14px;text-align:center}
+.brandLine{font-family:'Space Grotesk';font-weight:700;font-size:96px;color:#fff;letter-spacing:-.01em;opacity:0}
+.brandLine b{color:var(--lime)}
+#stage.title .brandLine{animation:zoomIn 1s cubic-bezier(.2,.8,.3,1) forwards}
+.subLine{font-family:Rubik;font-weight:800;font-size:42px;color:var(--gold);opacity:0}
+#stage.title .subLine{animation:fadeUp 1s ease .5s forwards}
+.subEn{font-family:'Space Grotesk';font-weight:600;font-size:19px;color:rgba(234,244,238,.55);letter-spacing:.24em;text-transform:uppercase;opacity:0;direction:ltr}
+#stage.title .subEn{animation:fadeUp 1s ease .9s forwards}
+@keyframes zoomIn{from{opacity:0;transform:scale(1.4);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+
+/* ---- STATS ---- */
+.statsScene{flex-direction:column;gap:26px}
+.statsHead{font-family:Rubik;font-weight:800;font-size:34px;color:#fff;text-align:center;opacity:0}
+#stage.stats .statsHead{animation:fadeUp .7s ease forwards}
+.statsHead b{color:var(--lime)}
+.statGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;width:920px}
+.stat{background:rgba(46,158,99,.1);border:1px solid rgba(143,230,173,.3);border-radius:18px;padding:26px 12px;text-align:center;opacity:0;transform:translateY(20px)}
+#stage.stats .stat{animation:fadeUp .7s ease forwards}
+.stat .v{font-family:Rubik;font-weight:900;font-size:40px;color:var(--lime);line-height:1}
+.stat .l{font-size:14px;color:rgba(234,244,238,.75);margin-top:10px}
+
+/* ---- MAP ---- */
+.mapScene svg{width:640px;height:auto}
+.mapHead{position:absolute;top:8%;width:100%;text-align:center;font-family:Rubik;font-weight:800;font-size:32px;color:#fff;opacity:0}
+#stage.map .mapHead{animation:fadeUp .8s ease forwards}
+.mapHead b{color:var(--lime)}
+.mnode{opacity:0}
+#stage.map .mnode{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) forwards}
+.mconn{stroke:rgba(143,230,173,.4);stroke-width:1.4;opacity:0}
+#stage.map .mconn{animation:fadeIn .6s ease forwards}
+@keyframes fadeIn{to{opacity:1}}
+
+/* ---- OUTRO ---- */
+.outroScene{flex-direction:column;gap:16px;text-align:center}
+.outroScene .lg{font-family:'Space Grotesk';font-weight:700;font-size:86px;color:#fff}
+.outroScene .lg b{color:var(--lime)}
+.outroScene .tag{font-family:Rubik;font-weight:700;color:var(--gold);font-size:28px}
+.outroScene .url{font-family:'Plex Mono';color:rgba(234,244,238,.6);font-size:18px;margin-top:10px;direction:ltr}
+
+/* controls */
+.ctrls{position:absolute;bottom:20px;left:0;width:100%;display:flex;justify-content:center;gap:12px;z-index:20}
+.ctrls button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#eaf4ee;font-family:Rubik;font-weight:800;font-size:15px;border-radius:999px;padding:11px 24px;cursor:pointer;transition:.15s;backdrop-filter:blur(6px)}
+.ctrls button:hover{background:rgba(255,255,255,.16)}
+.progress{position:absolute;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--green),var(--lime));width:0;z-index:20;transition:width .3s linear}
+.skiplink{position:absolute;top:16px;left:18px;z-index:20;color:rgba(234,244,238,.5);text-decoration:none;font-size:14px;font-family:'Plex Mono'}
+</style>
+</head>
+<body>
+<div id="frame">
+<div class="progress" id="prog"></div>
+<a class="skiplink" href="index.html">← לאתר</a>
+
+<div id="stage">
+  <!-- BRAIN -->
+  <div class="scene brainScene on"><div class="brainWrap"><div id="brainRot">
+    <svg class="brain" id="brainSvg" viewBox="0 0 480 400" aria-hidden="true"></svg>
+  </div></div></div>
+
+  <!-- CHIPS -->
+  <div class="scene chipsScene">
+    <div class="chipTitle">28 מנועים · <b>זירה אחת</b></div>
+    <div class="chipGrid" id="chipGrid"></div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="scene titleScene">
+    <div class="brandLine">Agro<b>Data</b></div>
+    <div class="subLine">אופקים — זירת האגרו-טק של ישראל</div>
+    <div class="subEn">Ofakim · Israel's Agri-Tech Arena</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="scene statsScene">
+    <div class="statsHead">הזירה <b>במספרים</b></div>
+    <div class="statGrid" id="statGrid"></div>
+  </div>
+
+  <!-- MIND MAP -->
+  <div class="scene mapScene">
+    <div class="mapHead">מפת <b>החשיבה</b> · המוח של הזירה</div>
+    <svg id="mapSvg" viewBox="0 0 600 600" aria-hidden="true"></svg>
+  </div>
+
+  <!-- OUTRO -->
+  <div class="scene outroScene">
+    <div class="lg">Agro<b>Data</b> Center</div>
+    <div class="tag">זירת האגרו-טק של ישראל</div>
+    <div class="url">www.agrodata.co.il</div>
+  </div>
+</div>
+
+<div class="ctrls">
+  <button onclick="play()">▶ הפעל שוב</button>
+  <button onclick="location.href='index.html'">דלג לאתר ←</button>
+</div>
+</div><!-- /frame -->
+
+<script>
+/* scale the 1000×1000 frame to fit the viewport */
+function fitFrame(){var f=document.getElementById('frame');var s=Math.min(window.innerWidth/1000,window.innerHeight/1000);f.style.transform='scale('+s+')';}
+window.addEventListener('resize',fitFrame);fitFrame();
+/* ---------- BRAIN (outline + gyri that draw in) ---------- */
+var OUTLINE="M240,58 C312,50 366,84 384,140 C398,182 392,224 362,258 C348,296 300,320 240,322 C180,320 132,296 118,258 C88,224 82,182 96,140 C114,84 168,50 240,58 Z";
+function wave(y,amp,per,ph,x0,x1){var d='M'+x0+','+y.toFixed(1);for(var x=x0+8;x<=x1;x+=8){var yy=y+amp*Math.sin((x/per)+ph);d+=' L'+x+','+yy.toFixed(1);}return d;}
+(function brain(){
+ var g='<defs><clipPath id="bclip"><path d="'+OUTLINE+'"/></clipPath></defs>';
+ g+='<path class="brainCore" d="'+OUTLINE+'"/>';
+ // gyri (folds) clipped to brain
+ var lines='';var i=0;
+ for(var y=92;y<=300;y+=15){ var amp=7+(i%3)*2, per=34+(i%4)*6, ph=(i*1.1);
+   lines+='<path class="gyrus" pathLength="1" d="'+wave(y,amp,per,ph,110,372)+'" style="animation-delay:'+(0.5+i*0.11).toFixed(2)+'s"/>'; i++; }
+ g+='<g clip-path="url(#bclip)">'+lines+'</g>';
+ g+='<path class="outline" pathLength="1" d="'+OUTLINE+'"/>';
+ g+='<path class="fissure" pathLength="1" d="M240,60 C252,150 230,250 240,320"/>';
+ document.getElementById('brainSvg').innerHTML=g;
+})();
+
+/* ---------- CHIPS (28 engines, he+en) ---------- */
+var ENG=[['Lake','מאגר'],['Labs','מדען ראשי'],['Library','כתבי עת'],['Gov','מדיניות'],['RnD','מו״פים'],['Scholar','אקדמיה'],['Innovate','חדשנות'],['Map','מפות'],['Expo','כנסים'],['Trade','סחר'],['Pulse','חדשות'],['Mind','AI'],['Directory','חברות'],['Impact','SDG'],['Scout','סטארטאפים'],['Apps','אפליקציות'],['Eco','סביבה'],['Patents','פטנטים'],['Books','ספרים'],['Hub','אקסלרטור'],['Pedia','מילון'],['Flora','צמחים'],['Market','תשומות'],['Pharm','תרופות'],['Aqua','ימית'],['Grow','מבוקרת'],['Academy','חינוך'],['Sense','חיישנים']];
+document.getElementById('chipGrid').innerHTML=ENG.map(function(e,i){
+ return '<div class="chip" style="animation-delay:'+(i*0.13).toFixed(2)+'s"><div class="en">Agro<b>'+e[0]+'</b></div><div class="he">'+e[1]+'</div></div>';
+}).join('');
+
+/* ---------- STATS ---------- */
+var STATS=[['מנועים בזירה',28,''],['מקורות חיים',20,''],['ספרים במאגר',300000,'+'],['יישובים חקלאיים',873,''],['חברות ברשם',728000,'+']];
+document.getElementById('statGrid').innerHTML=STATS.map(function(s,i){
+ return '<div class="stat" style="animation-delay:'+(i*0.14).toFixed(2)+'s"><div class="v" data-t="'+s[1]+'" data-s="'+s[2]+'">0</div><div class="l">'+s[0]+'</div></div>';
+}).join('');
+function countUp(){document.querySelectorAll('.statGrid .v').forEach(function(el){
+ var t=+el.getAttribute('data-t'),suf=el.getAttribute('data-s')||'',st=null;
+ function step(ts){if(!st)st=ts;var p=Math.min((ts-st)/1400,1);var e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e).toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}
+ requestAnimationFrame(step);});}
+
+/* ---------- MIND MAP (radial burst) ---------- */
+(function map(){
+ var cx=300,cy=300,g='';var petals=6,per=5;var conns='',nodes='';
+ for(var b=0;b<petals;b++){var a=(b/petals)*Math.PI*2-Math.PI/2;var bx=cx+150*Math.cos(a),by=cy+150*Math.sin(a);
+  conns+='<line class="mconn" x1="'+cx+'" y1="'+cy+'" x2="'+bx.toFixed(0)+'" y2="'+by.toFixed(0)+'" style="animation-delay:'+(b*0.12).toFixed(2)+'s"/>';
+  nodes+='<circle class="mnode" cx="'+bx.toFixed(0)+'" cy="'+by.toFixed(0)+'" r="16" fill="#2e9e63" style="animation-delay:'+(0.3+b*0.12).toFixed(2)+'s"/>';
+  for(var k=0;k<per;k++){var a2=a+(k-(per-1)/2)*0.34;var lx=bx+95*Math.cos(a2),ly=by+95*Math.sin(a2);
+   conns+='<line class="mconn" x1="'+bx.toFixed(0)+'" y1="'+by.toFixed(0)+'" x2="'+lx.toFixed(0)+'" y2="'+ly.toFixed(0)+'" style="animation-delay:'+(0.5+b*0.12+k*0.05).toFixed(2)+'s"/>';
+   nodes+='<circle class="mnode" cx="'+lx.toFixed(0)+'" cy="'+ly.toFixed(0)+'" r="7" fill="#8fe6ad" style="animation-delay:'+(0.7+b*0.12+k*0.05).toFixed(2)+'s"/>';}}
+ g=conns+nodes+'<circle class="mnode" cx="'+cx+'" cy="'+cy+'" r="46" fill="#134a30" stroke="#8fe6ad" stroke-width="3" style="animation-delay:0s"/><text x="'+cx+'" y="'+(cy+6)+'" text-anchor="middle" fill="#8fe6ad" font-family="Space Grotesk" font-weight="700" font-size="20">Agro</text>';
+ document.getElementById('mapSvg').innerHTML=g;
+})();
+
+/* ---------- TIMELINE ---------- */
+var S=document.getElementById('stage'),PROG=document.getElementById('prog');
+var TOTAL=58000, timers=[];
+function at(ms,fn){timers.push(setTimeout(fn,ms));}
+function scene(name){['brainScene','chipsScene','titleScene','statsScene','mapScene','outroScene'].forEach(function(c){var el=document.querySelector('.'+c);if(el)el.classList.toggle('on',c===name);});}
+function play(){
+ timers.forEach(clearTimeout);timers=[];
+ S.className='';void S.offsetWidth;
+ document.querySelector('.brainScene').classList.add('on');
+ // scene 1: draw brain
+ at(60,function(){S.classList.add('draw');});
+ at(4200,function(){S.classList.add('glow');});
+ // spin
+ at(4600,function(){S.classList.add('spin');});
+ // scene 2: chips fill (brain stays, dim behind)
+ at(8600,function(){S.classList.remove('spin');scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
+ // scene 3: title
+ at(22000,function(){S.classList.remove('chips');scene('titleScene');S.classList.add('title');});
+ // scene 4: stats
+ at(30000,function(){S.classList.remove('title');scene('statsScene');S.classList.add('stats');countUp();});
+ // scene 5: mind map
+ at(41000,function(){S.classList.remove('stats');scene('mapScene');S.classList.add('map');});
+ // scene 6: outro
+ at(51000,function(){S.classList.remove('map');scene('outroScene');});
+ // progress bar
+ var t0=Date.now();var iv=setInterval(function(){var p=Math.min((Date.now()-t0)/TOTAL,1);PROG.style.width=(p*100)+'%';if(p>=1)clearInterval(iv);},120);
+ timers.push({});
+}
+window.addEventListener('load',function(){setTimeout(play,300);});
+</script>
+</body>
+</html>
