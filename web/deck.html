@@ -278,8 +278,10 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     <button onclick="go(cur-1)" title="הקודם">‹</button>
     <button id="pp" onclick="toggle()" title="נגן/עצור">⏸</button>
     <button onclick="go(cur+1)" title="הבא">›</button>
+    <button id="mbtn" onclick="music()" title="מוזיקה">🔊</button>
     <div class="dots" id="dots"></div>
   </div>
+  <audio id="bgm" loop preload="auto" src="assets/audio/deck.mp3"></audio>
 </div></div>
 
 <script>
@@ -402,6 +404,14 @@ function schedule(){
 function toggle(){playing=!playing;document.getElementById('pp').textContent=playing?'⏸':'▶';if(playing)schedule();else{clearTimeout(timer);clearInterval(progTimer);}}
 document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(cur+1);if(e.key==='ArrowRight'||e.key==='ArrowDown')go(cur-1);if(e.key===' '){e.preventDefault();toggle();}});
 window.addEventListener('resize',function(){[].forEach.call(document.querySelectorAll('iframe[data-src]'),function(f){if(f.src)sizeFrame(f);});});
+/* background music (drop file at assets/audio/deck.mp3) */
+var bgm=document.getElementById('bgm'),musicOn=true;bgm.volume=0.5;
+function tryPlay(){if(musicOn)bgm.play().catch(function(){});}
+function music(){musicOn=!musicOn;document.getElementById('mbtn').textContent=musicOn?'🔊':'🔇';if(musicOn)bgm.play().catch(function(){});else bgm.pause();}
+document.addEventListener('pointerdown',tryPlay,{once:true});
+document.addEventListener('keydown',tryPlay,{once:true});
+tryPlay();
+
 /* start */
 slides[0].classList.add('on');dots[0].classList.add('on');activate(0);schedule();
 </script>
