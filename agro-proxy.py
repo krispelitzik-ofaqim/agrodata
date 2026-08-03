@@ -882,7 +882,7 @@ def fetch_books(q, num=30):
     if key in BOOKS_CACHE and now - BOOKS_CACHE[key][0] < 3600:
         return BOOKS_CACHE[key][1]
     url = ("https://openlibrary.org/search.json?q=" + urllib.parse.quote(q) +
-           "&limit=" + str(num) + "&fields=title,author_name,first_publish_year,cover_i,ia,key,edition_count")
+           "&limit=" + str(num) + "&fields=title,author_name,first_publish_year,cover_i,ia,key,edition_count,first_sentence,subject")
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
         d = json.load(urllib.request.urlopen(req, timeout=20))
@@ -899,6 +899,8 @@ def fetch_books(q, num=30):
             "editions": b.get("edition_count") or 0,
             "cover": ("https://covers.openlibrary.org/b/id/" + str(cover) + "-M.jpg") if cover else "",
             "scanned": bool(ia),
+            "desc": ((b.get("first_sentence") or [""])[0] or "")[:200],
+            "subjects": [s for s in (b.get("subject") or [])[:3] if s],
             "read": ("https://archive.org/details/" + ia[0]) if ia else ("https://openlibrary.org" + (b.get("key") or "")),
         })
     out = {"ok": True, "total": d.get("numFound", len(items)), "items": items}
