@@ -876,8 +876,10 @@ def fetch_appstore(term, country="us", limit=40):
     return out
 
 BOOKS_CACHE = {}
-def fetch_books(q, num=30):
+def fetch_books(q, num=30, lang=""):
     q = (q or "agriculture").strip()
+    if lang in ("heb", "eng"):
+        q = q + " language:" + lang
     key = (q, num); now = time.time()
     if key in BOOKS_CACHE and now - BOOKS_CACHE[key][0] < 3600:
         return BOOKS_CACHE[key][1]
@@ -1179,7 +1181,7 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/books"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
-            out = fetch_books(qs.get("q", ["agriculture"])[0], min(48, int(qs.get("num", ["30"])[0] or 30)))
+            out = fetch_books(qs.get("q", ["agriculture"])[0], min(48, int(qs.get("num", ["30"])[0] or 30)), qs.get("lang", [""])[0])
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

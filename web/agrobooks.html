@@ -50,6 +50,7 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .bsub{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
 .bsub span{font-size:10.5px;color:var(--green-d);background:var(--tint);border-radius:6px;padding:1px 7px}
 #scanToggle.on{background:var(--green);color:#fff;border-color:var(--green)}
+.chip.lang.on{background:var(--green);color:#fff;border-color:var(--green)}
 .byr{font-family:'Plex Mono';font-size:12px;color:var(--teal);font-weight:700}
 .blink{font-family:'Plex Mono';font-size:12px;color:var(--lime);font-weight:700;margin-top:6px}
 .note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:16px;padding:18px 20px;margin-bottom:40px;font-size:14px;line-height:1.6}
@@ -72,7 +73,14 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <div class="sub">חיפוש חי בספרי חקלאות מכל העולם (Open Library) — כולל ספרים <b>סרוקים עם OCR</b> לקריאה מלאה חינם (Internet Archive). אנציקלופדיה חיה של הידע החקלאי.</div>
     <div class="searchbar"><span>🔎</span><input id="q" placeholder="נושא/כותרת (אנגלית מומלצת): irrigation, agronomy, soil science…" onkeydown="if(event.key==='Enter')search()" value="agriculture"><button class="go" onclick="search()">חיפוש</button></div>
     <div class="chips" id="chips"></div>
-    <div style="margin:8px 0 0"><button class="chip" id="scanToggle" onclick="toggleScan()" style="font-weight:800">📖 רק ספרים לקריאה (סרוקים)</button></div>
+    <div style="margin:8px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center">
+      <button class="chip" id="scanToggle" onclick="toggleScan()" style="font-weight:800">📖 רק ספרים לקריאה (סרוקים)</button>
+      <span style="color:#9bb0a3">|</span>
+      <span style="color:#9bb0a3;font-weight:700">שפה:</span>
+      <button class="chip lang on" data-lang="" onclick="setLang('')">הכול</button>
+      <button class="chip lang" data-lang="heb" onclick="setLang('heb')">🇮🇱 עברית</button>
+      <button class="chip lang" data-lang="eng" onclick="setLang('eng')">🇬🇧 אנגלית</button>
+    </div>
     <div class="bstats" id="bstats"></div>
   </div>
   <div class="grid" id="grid"></div>
@@ -86,8 +94,9 @@ var CHIPS=['agriculture','irrigation','agronomy','soil science','plant breeding'
 document.getElementById('chips').innerHTML=CHIPS.map(function(c){return '<span class="chip" onclick="setQ(\''+c+'\')">'+c+'</span>';}).join('');
 function setQ(c){document.getElementById('q').value=c;search();}
 function esc(s){return String(s||'').replace(/[&<>"]/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x];});}
-var LAST=[],LASTTOTAL=0,ONLYSCAN=false;
+var LAST=[],LASTTOTAL=0,ONLYSCAN=false,LANG='';
 function toggleScan(){ONLYSCAN=!ONLYSCAN;document.getElementById('scanToggle').classList.toggle('on',ONLYSCAN);renderBooks();}
+function setLang(l){LANG=l;var bs=document.querySelectorAll('.lang');for(var i=0;i<bs.length;i++)bs[i].classList.toggle('on',bs[i].getAttribute('data-lang')===l);search();}
 function renderBooks(){
  var items=LAST.filter(function(b){return b.cover;});if(ONLYSCAN)items=items.filter(function(b){return b.scanned;});
  var scanned=LAST.filter(function(b){return b.scanned;}).length,covers=LAST.filter(function(b){return b.cover;}).length;
@@ -125,7 +134,7 @@ function search(){
  var q=(document.getElementById('q').value||'').trim();if(!q)return;
  document.getElementById('bstats').innerHTML='';
  document.getElementById('grid').innerHTML='<div class="load">📚 מחפש ספרים ל-"'+esc(q)+'"…</div>';
- fetch('/api/books?num=36&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+ fetch('/api/books?num=36&lang='+LANG+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
   LAST=(j&&j.items)||[];LASTTOTAL=(j&&j.total)||LAST.length;
   if(!LAST.length){document.getElementById('grid').innerHTML='<div class="load">לא נמצאו ספרים — נסו מונח אחר.</div>';return;}
   renderBooks();
