@@ -371,6 +371,74 @@ def ask_gemini(q):
             msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
         return {"answer": msg, "demo": True, "err": code}
 
+def ask_gemini_media(q, media):
+    """מולטימודאל — Gemini רואה תמונות/איורים/תרשימים/וידאו. q הוא ההנחיה המלאה (בלי עטיפת מערכת)."""
+    if not GEMINI_KEY:
+        return {"answer": "מנוע ה-AI אינו מחובר.", "demo": True}
+    parts = [{"text": q}]
+    for m in (media or [])[:6]:
+        data = m.get("data", "")
+        if not data:
+            continue
+        parts.append({"inline_data": {"mime_type": m.get("mime", "image/png"), "data": data}})
+    url = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + GEMINI_KEY
+    body = json.dumps({"contents": [{"parts": parts}],
+                       "generationConfig": {"temperature": 0.4, "maxOutputTokens": 1024, "thinkingConfig": {"thinkingBudget": 0}}}).encode("utf-8")
+    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+    try:
+        d = json.load(urllib.request.urlopen(req, timeout=120))
+        txt = d["candidates"][0]["content"]["parts"][0]["text"]
+        return {"answer": txt.strip(), "demo": False}
+    except Exception as e:
+        return {"answer": "שגיאה בניתוח המדיה.", "demo": True, "err": getattr(e, "code", None)}
+
+def extract_spreadsheet(b64, mime="", name=""):
+    """מחלץ טקסט מקובץ CSV או XLSX (ספריות סטנדרט בלבד)."""
+    import io, zipfile
+    import xml.etree.ElementTree as ET
+    try:
+        raw = base64.b64decode(b64)
+    except Exception:
+        return ""
+    lname = (name or "").lower()
+    if lname.endswith(".csv") or (mime and "csv" in mime):
+        try:
+            return raw.decode("utf-8", "ignore")[:6000]
+        except Exception:
+            return raw.decode("latin-1", "ignore")[:6000]
+    try:
+        z = zipfile.ZipFile(io.BytesIO(raw))
+        ns = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+        shared = []
+        if "xl/sharedStrings.xml" in z.namelist():
+            r = ET.fromstring(z.read("xl/sharedStrings.xml"))
+            for si in r.findall(ns + "si"):
+                shared.append("".join(t.text or "" for t in si.iter(ns + "t")))
+        out = []
+        sheets = sorted(n for n in z.namelist() if n.startswith("xl/worksheets/sheet") and n.endswith(".xml"))
+        for sh in sheets[:3]:
+            r = ET.fromstring(z.read(sh))
+            for row in r.iter(ns + "row"):
+                cells = []
+                for c in row.findall(ns + "c"):
+                    t = c.get("t"); v = c.find(ns + "v"); val = ""
+                    if v is not None and v.text is not None:
+                        if t == "s":
+                            try: val = shared[int(v.text)]
+                            except Exception: val = v.text
+                        else:
+                            val = v.text
+                    else:
+                        istag = c.find(ns + "is")
+                        if istag is not None:
+                            val = "".join(tt.text or "" for tt in istag.iter(ns + "t"))
+                    cells.append(val or "")
+                if any(cells):
+                    out.append("\t".join(cells))
+        return "\n".join(out)[:6000]
+    except Exception:
+        return ""
+
 NEWSCACHE = {}
 def fetch_news(q, region):
     q = (q or 'agritech OR agtech OR "agriculture technology" OR "food tech"').strip()
@@ -1320,6 +1388,40 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/api/ask"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            q = (data.get("q") or "").strip(); eng = data.get("engine", "gemini"); media = data.get("media") or []
+            if not q:
+                out = {"answer": "נא להזין שאלה.", "demo": True}
+            elif media:
+                out = ask_gemini_media(q, media)      # מולטימודאל תמיד דרך Gemini
+            elif eng == "claude":
+                out = ask_claude(q)
+            else:
+                out = ask_gemini(q)
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/xlsx"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            text = extract_spreadsheet(data.get("data", ""), data.get("mime", ""), data.get("name", ""))
+            body = json.dumps({"ok": bool(text), "text": text}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/apply"):
             try:
                 n = int(self.headers.get("Content-Length", 0))

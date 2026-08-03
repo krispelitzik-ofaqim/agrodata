@@ -10,7 +10,7 @@
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
 :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:linear-gradient(180deg,#eef7f1,#fff 220px);color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .wrap{max-width:920px;margin:0 auto;padding:0 22px}
 .topbar{background:linear-gradient(135deg,#0c1c13,#134a30)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
@@ -29,14 +29,29 @@ h1{font-family:Rubik;font-size:38px;font-weight:800;margin:6px 0;color:var(--gre
 .step.on .n{background:var(--green);color:#fff}
 .step.done .n{background:var(--lime);color:#fff}
 /* card */
-.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 26px 20px;box-shadow:0 12px 34px rgba(20,60,40,.06);margin:14px 0 40px}
+.card{background:#fff;border:1px solid #eceff0;border-radius:20px;padding:26px 26px 20px;box-shadow:0 10px 30px rgba(20,40,30,.05);margin:14px 0 40px}
 .rhead{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:4px}
 .rsub{color:var(--mut);font-size:14px;margin-bottom:18px}
 .q{margin-bottom:16px}
 .q label{display:block;font-family:Rubik;font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:7px}
 .q .why{font-weight:500;color:var(--teal);font-size:13px}
-.q textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font-family:Heebo;font-size:15px;resize:vertical;min-height:64px;background:var(--bg2)}
-.q textarea:focus{outline:none;border-color:var(--green);background:#fff}
+.q textarea{width:100%;border:1.5px solid #e6eae8;border-radius:12px;padding:11px 13px;font-family:Heebo;font-size:15px;resize:vertical;min-height:64px;background:#fff}
+.q textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(46,158,99,.1)}
+/* attachments */
+.attach{border:1.5px dashed #d8e5dd;border-radius:14px;padding:15px 16px;margin:4px 0 20px;background:#fcfefd}
+.attach .ah{font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--green-d);margin-bottom:2px}
+.attach .asub{font-size:12.5px;color:var(--mut);margin-bottom:11px}
+.attbtns{display:flex;gap:8px;flex-wrap:wrap}
+.attbtn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #e0e8e3;border-radius:10px;padding:9px 14px;font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--green-d);cursor:pointer;transition:.14s}
+.attbtn:hover{border-color:var(--green);background:var(--tint)}
+.attlist{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.attitem{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e9edeb;border-radius:10px;padding:8px 12px;font-size:13.5px}
+.attitem .ai{font-size:18px;flex:0 0 auto}
+.attitem img.th{width:34px;height:34px;object-fit:cover;border-radius:6px;flex:0 0 auto}
+.attitem .an{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.attitem .ast{font-size:11.5px;font-family:'Plex Mono';flex:0 0 auto}
+.attitem .ast.ok{color:var(--green)}.attitem .ast.wait{color:var(--gold)}.attitem .ast.err{color:#c4562e}
+.attitem .ax{cursor:pointer;color:#c4562e;font-weight:900;border:0;background:none;font-size:16px;flex:0 0 auto}
 .row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:8px}
 .btn{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;padding:13px 30px;font-family:Rubik;font-weight:800;font-size:16px;cursor:pointer;transition:.15s}
 .btn:hover{filter:brightness(1.08)}
@@ -102,6 +117,9 @@ var Q1=[
  ['מהו הפתרון/המוצר, ומה חדשני בו?',''],
  ['מיהו הלקוח המשלם? (מגדלים, חברות, יצואנים, מפעלים…)',''],
  ['מהו מודל ההכנסה? (מנוי, מכירה, עמלה, רישוי…)',''],
+ ['איזה מתקן/שטח נדרש לפעילות?','מעבדה · חממה · קיוב/מכולה · האנגר · שטח גידול · משרד — וכמה מ״ר'],
+ ['עלויות מתקן ותפעול חודשיות משוערות','שכירות למ״ר · ארנונה · דמי ניהול · חשמל · מים'],
+ ['כוח אדם ושכר','כמה עובדים · אילו תפקידים · עלות שכר חודשית משוערת'],
  ['מי המתחרים ומהו הבידול שלכם?',''],
  ['באיזה שלב אתם? (רעיון · אב-טיפוס · פיילוט · מכירות ראשונות)',''],
  ['מי בצוות ומה הניסיון הרלוונטי?',''],
@@ -111,9 +129,64 @@ var Q1=[
 var answers=[]; // {q,a}
 var round=1;
 
+/* ===== ATTACHMENTS ===== */
+var ATTACH=[], _aid=0;
+var LIMIT={img:8,sheet:4,video:20}; // MB
+function pick(kind){document.getElementById(kind==='img'?'fImg':kind==='video'?'fVideo':'fSheet').click();}
+function addLoc(){
+ var go=function(v){if(!v)return;ATTACH.push({id:++_aid,kind:'loc',name:v,text:'מיקום: '+v,status:'ok'});renderAtt();};
+ if(navigator.geolocation){
+  var t=setTimeout(function(){manualLoc(go);},4000);
+  navigator.geolocation.getCurrentPosition(function(p){clearTimeout(t);go(p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5)+' (מיקום נוכחי)');},
+   function(){clearTimeout(t);manualLoc(go);},{timeout:4000});
+ } else manualLoc(go);
+}
+function manualLoc(go){var v=prompt('הזינו מיקום — עיר, אזור או קואורדינטות:');if(v)go(v.trim());}
+function fileB64(f){return new Promise(function(res){var r=new FileReader();r.onload=function(){res(String(r.result).split(',')[1]||'');};r.readAsDataURL(f);});}
+function onFile(input,kind){
+ var f=input.files&&input.files[0];input.value='';if(!f)return;
+ if(f.size>LIMIT[kind]*1048576){alert('הקובץ גדול מדי (עד '+LIMIT[kind]+'MB).');return;}
+ var it={id:++_aid,kind:kind,name:f.name,mime:f.type||'',status:'wait'};
+ ATTACH.push(it);renderAtt();updateBtn();
+ fileB64(f).then(function(b64){
+  it.data=b64;
+  if(kind==='sheet'){
+   fetch('/api/xlsx',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data:b64,mime:it.mime,name:it.name})})
+    .then(function(r){return r.json();}).then(function(j){it.text=(j&&j.text)||'';it.status=it.text?'ok':'err';renderAtt();updateBtn();})
+    .catch(function(){it.status='err';renderAtt();updateBtn();});
+  } else {
+   if(kind==='img')it.thumb='data:'+it.mime+';base64,'+b64;
+   var q=(kind==='video'?'תאר בקצרה בעברית מה מוצג בסרטון הזה':'תאר בקצרה בעברית מה מוצג בתמונה/איור/תרשים הזה')
+    +', עם דגש על פרטים רלוונטיים לתוכנית עסקית (מוצר, שדה, טכנולוגיה, נתונים, תהליך). עד 3 משפטים.';
+   fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({engine:'gemini',q:q,media:[{mime:it.mime,data:b64}]})})
+    .then(function(r){return r.json();}).then(function(j){it.desc=(j&&!j.demo&&j.answer)||'';it.status=it.desc?'ok':'err';renderAtt();updateBtn();})
+    .catch(function(){it.status='err';renderAtt();updateBtn();});
+  }
+ });
+}
+function removeAtt(id){ATTACH=ATTACH.filter(function(a){return a.id!==id;});renderAtt();updateBtn();}
+function renderAtt(){
+ var el=document.getElementById('attlist');if(!el)return;
+ var ic={loc:'📍',img:'🖼️',sheet:'📊',video:'🎥'};
+ el.innerHTML=ATTACH.map(function(a){
+  var thumb=a.thumb?'<img class="th" src="'+a.thumb+'">':'<span class="ai">'+ic[a.kind]+'</span>';
+  var st=a.status==='wait'?'<span class="ast wait">מנתח…</span>':a.status==='err'?'<span class="ast err">שגיאה</span>':'<span class="ast ok">✓ מוכן</span>';
+  return '<div class="attitem">'+thumb+'<span class="an">'+esc(a.name)+'</span>'+st+'<button class="ax" onclick="removeAtt('+a.id+')" title="הסר">×</button></div>';
+ }).join('');
+}
+function updateBtn(){var b=document.getElementById('r1btn');if(!b)return;var waiting=ATTACH.some(function(a){return a.status==='wait';});b.disabled=waiting;b.textContent=waiting?'מנתח צירופים…':'בנה שאלות חכמות ←';}
+function attachBlock(){
+ var ok=ATTACH.filter(function(a){return a.status==='ok';});if(!ok.length)return '';
+ return '\n\n== חומרים שצורפו על-ידי היזם ==\n'+ok.map(function(a){
+  if(a.kind==='loc')return '• '+a.text;
+  if(a.kind==='sheet')return '• טבלה מצורפת ('+a.name+'):\n'+(a.text||'').slice(0,1500);
+  return '• '+(a.kind==='video'?'סרטון':'תמונה/תרשים')+' ('+a.name+') — תיאור: '+(a.desc||'');
+ }).join('\n');
+}
+
 function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
 function ask(prompt){return fetch('/api/ask?engine='+ENGINE+'&q='+encodeURIComponent(prompt)).then(function(r){return r.json();});}
-function qaText(){return answers.map(function(x,i){return (i+1)+'. '+x.q+'\nתשובה: '+(x.a||'(לא נענה)');}).join('\n');}
+function qaText(){return answers.map(function(x,i){return (i+1)+'. '+x.q+'\nתשובה: '+(x.a||'(לא נענה)');}).join('\n')+attachBlock();}
 
 function renderSteps(){
  var labels=['שאלון','סבב שיפור','חידוד אחרון','התוכנית'];
@@ -137,9 +210,23 @@ function renderRound1(){
  var qs=Q1.map(function(q,i){
   return '<div class="q"><label>'+(i+1)+'. '+esc(q[0])+'</label><textarea id="a'+i+'" placeholder="'+esc(q[1])+'"></textarea></div>';
  }).join('');
+ var attach=
+  '<div class="attach"><div class="ah">📎 צירופים (רשות)</div>'
+  +'<div class="asub">הוסיפו חומרים שיעשירו את התוכנית — ה-AI ינתח אותם: מיקום, תמונה/איור/תרשים, טבלת אקסל או סרטון.</div>'
+  +'<div class="attbtns">'
+  +'<button class="attbtn" onclick="addLoc()">📍 מיקום</button>'
+  +'<button class="attbtn" onclick="pick(\'img\')">🖼️ תמונה/איור/תרשים</button>'
+  +'<button class="attbtn" onclick="pick(\'sheet\')">📊 אקסל / CSV</button>'
+  +'<button class="attbtn" onclick="pick(\'video\')">🎥 וידאו</button>'
+  +'</div><div class="attlist" id="attlist"></div></div>';
  document.getElementById('card').innerHTML=
   '<div class="rhead">סבב 1 · השאלון הבסיסי</div><div class="rsub">ענו כמיטב יכולתכם — אין תשובות נכונות. ככל שתפרטו, התוכנית תהיה מדויקת יותר.</div>'
-  +qs+'<div class="row ctrlrow">'+engBar()+'<button class="btn" onclick="submitRound1()">בנה שאלות חכמות ←</button></div>';
+  +qs+attach+'<div class="row ctrlrow">'+engBar()+'<button class="btn" id="r1btn" onclick="submitRound1()">בנה שאלות חכמות ←</button></div>'
+  +'<input type="file" id="fImg" accept="image/*" hidden><input type="file" id="fVideo" accept="video/*" hidden><input type="file" id="fSheet" accept=".csv,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden>';
+ document.getElementById('fImg').onchange=function(){onFile(this,'img');};
+ document.getElementById('fVideo').onchange=function(){onFile(this,'video');};
+ document.getElementById('fSheet').onchange=function(){onFile(this,'sheet');};
+ renderAtt();
  renderSteps();window.scrollTo(0,0);
 }
 function submitRound1(){
@@ -189,7 +276,7 @@ function buildPlan(){
  +'\n\nהחזר JSON תקין בלבד (בלי טקסט מסביב ובלי סימוני קוד) במבנה המדויק:\n'
  +'{"title":"","tagline":"","summary":"","sections":[{"h":"","body":""}],"swot":{"s":[],"w":[],"o":[],"t":[]},"financials":[{"item":"","y1":"","y2":"","y3":""}],"milestones":[""],"ask":""}\n'
  +'הסעיפים ב-sections חייבים לכלול: הבעיה, הפתרון, השוק וההזדמנות, מודל עסקי, אסטרטגיית go-to-market, תחרות ובידול, הצוות, ניהול סיכונים, שימוש בכספים. '
- +'financials — הערכת הכנסות/עלויות ל-3 שנים (y1,y2,y3) בשקלים או במונחים איכותיים. השתמש בעברית מקצועית ותמציתית.';
+ +'financials — פרק לשורות מפורטות ל-3 שנים (y1,y2,y3) בשקלים: הכנסות, וכן עלויות — שכירות/מ״ר, ארנונה, דמי ניהול, חשמל, מים, שכר עובדים, ובסוף שורת רווח/הפסד תפעולי. השתמש בעברית מקצועית ותמציתית.';
  ask(p).then(function(j){
   if(j.demo){demoNote();return;}
   var plan=parsePlan(j.answer||'');
