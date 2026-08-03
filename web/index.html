@@ -115,9 +115,10 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .lecarrow:hover{background:#2b8fb0;color:#fff;border-color:#2b8fb0}
 .lecarrow.r{right:-8px}.lecarrow.l{left:-8px}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;text-align:right}
-.cards.eng{grid-template-columns:repeat(4,1fr);gap:18px}
-@media(max-width:1200px){.cards.eng{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){.cards.eng{grid-template-columns:1fr}}
+.cards.eng{grid-template-columns:repeat(5,1fr);gap:14px}
+.cards.team{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1200px){.cards.eng{grid-template-columns:repeat(3,1fr)}.cards.team{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.cards.eng{grid-template-columns:repeat(2,1fr)}.cards.team{grid-template-columns:1fr}}
 @media(max-width:900px){.cards{grid-template-columns:1fr}.h1big{font-size:55px}}
 .card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:24px;transition:.15s;position:relative}
 .apilive{position:absolute;top:14px;inset-inline-start:14px;display:inline-flex;align-items:center;gap:6px;font-family:'Plex Mono';font-size:11px;font-weight:700;color:#16a34a}
@@ -398,7 +399,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 <div class="wrap"><div class="sec">
   <div class="kicker">The Team</div>
   <div class="lead">צוות המומחים</div>
-  <div class="cards" style="text-align:center">
+  <div class="cards team" style="text-align:center">
     <div class="card tcard"><div class="av" data-i="flask"></div><div class="tinfo"><h3>מנהל/ת מדעי/ת ראשי/ת</h3><p>הובלת החזון המדעי, אמינות הנתונים והמתודולוגיה.</p></div></div>
     <div class="card tcard"><div class="av" data-i="database"></div><div class="tinfo"><h3>ראש/ת דאטה והנדסה</h3><p>ארכיטקטורת המאגר, קליטה, אבטחה ותשתית.</p></div></div>
     <div class="card tcard"><div class="av" data-i="leaf"></div><div class="tinfo"><h3>אגרונום/ית ראשי/ת</h3><p>הצומת בין המדע לשדה — צרכי המגדלים.</p></div></div>
