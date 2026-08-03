@@ -51,12 +51,12 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .chip .en b{color:var(--lime)}
 .chip .he{font-size:clamp(9px,.85vw,11px);color:rgba(234,244,238,.65);margin-top:2px}
 /* slide 4 grown: chips fill the whole slide, title fades away */
-.slide.grown{padding:3% 3.5%}
+.slide.grown{padding:0}
 .slide.grown .kick,.slide.grown h2{opacity:0!important;transform:scale(.92)!important;height:0;margin:0;overflow:hidden;transition:.6s;pointer-events:none}
-.slide.grown .chips{width:98%;height:88%;margin-top:0;grid-template-rows:repeat(4,1fr);gap:14px;transition:width .7s ease,height .7s ease,gap .7s ease}
-.slide.grown .chip{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px;transition:.7s}
-.slide.grown .chip .en{font-size:clamp(18px,2.6vw,38px)}
-.slide.grown .chip .he{font-size:clamp(11px,1.3vw,18px);margin-top:5px}
+.slide.grown .chips{width:90%;height:84%;margin-top:0;grid-template-rows:repeat(4,1fr);gap:12px;transition:width .7s ease,height .7s ease,gap .7s ease}
+.slide.grown .chip{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px;overflow:hidden;transition:.7s}
+.slide.grown .chip .en{font-size:clamp(14px,2vw,30px);word-break:break-word;line-height:1.05}
+.slide.grown .chip .he{font-size:clamp(10px,1.15vw,16px);margin-top:5px}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;width:min(92%,1000px);margin-top:26px}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
@@ -80,6 +80,9 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .fcard .ft{font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:19px;margin-top:8px}
 .fcard .ft b{color:var(--lime)}
 .fcard .fd{color:rgba(234,244,238,.65);font-size:13px;margin-top:5px;line-height:1.5}
+.peoplepic{width:min(72%,760px);aspect-ratio:16/6;border-radius:16px;overflow:hidden;margin-top:16px;border:1px solid rgba(143,230,173,.3);box-shadow:0 20px 50px rgba(0,0,0,.45);opacity:0}
+.slide.on .peoplepic{animation:up .9s ease .2s both}
+.peoplepic img{width:100%;height:100%;object-fit:cover;display:block}
 /* milestones */
 .miles{display:flex;flex-direction:column;gap:16px;width:min(88%,880px);margin-top:26px}
 .mrow{display:flex;align-items:center;gap:20px;background:rgba(46,158,99,.11);border:1px solid rgba(143,230,173,.32);border-radius:18px;padding:22px 28px;opacity:0;transform:translateX(24px)}
@@ -106,6 +109,15 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .src{background:rgba(255,255,255,.06);border:1px solid rgba(143,230,173,.3);border-radius:999px;padding:10px 18px;font-family:'Plex Mono';font-size:clamp(11px,1.3vw,15px);color:var(--ink);opacity:0}
 .slide.on .src{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) both}
 .src b{color:var(--lime)}
+/* full-screen live screenshot (iframe) + banner caption */
+.slide.fulliframe{padding:0}
+.bgframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:0;background:#0b1c12;pointer-events:none}
+.fbanner{position:absolute;top:0;left:0;right:0;z-index:2;padding:26px 6% 40px;background:linear-gradient(180deg,rgba(6,15,10,.94),rgba(6,15,10,.6) 62%,transparent);text-align:center;opacity:0}
+.slide.on .fbanner{animation:up .8s ease both}
+.fbanner .bsub{color:rgba(234,244,238,.8);font-size:clamp(13px,1.6vw,20px);margin-top:8px;max-width:70ch;margin-inline:auto;line-height:1.5}
+/* youtube cover (fills the whole slide, cropped) */
+.ytwrap{position:absolute;inset:0;overflow:hidden;z-index:0}
+.ytframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;height:100vh;min-width:100%;min-height:56.25vw;border:0}
 /* ofakim full-screen video */
 .slide.fullmedia{padding:0}
 .bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
@@ -162,18 +174,16 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     <div class="chips" id="chips"></div>
   </section>
 
-  <!-- 5 · MIND MAP (live, real, with topics) -->
-  <section class="slide" data-t="14000">
-    <div class="kick">The Blueprint</div>
-    <h2>מפת <b>החשיבה</b> · המוח החי של הזירה</h2>
-    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="sitemap-brain.html" data-scroll="620" title="Mind Map"></iframe></div></div>
+  <!-- 5 · MIND MAP (live, full-screen) -->
+  <section class="slide fulliframe" data-t="14000">
+    <iframe class="bgframe" data-src="sitemap-brain.html" data-scroll="620" title="Mind Map"></iframe>
+    <div class="fbanner"><div class="kick">The Blueprint</div><h2>מפת <b>החשיבה</b> · המוח החי של הזירה</h2></div>
   </section>
 
-  <!-- 7 · LIVE MAP -->
-  <section class="slide" data-t="13000">
-    <div class="kick">AgroMap · GIS</div>
-    <h2>873 יישובים <b>על המפה</b></h2>
-    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="maps.html" title="AgroMap"></iframe></div></div>
+  <!-- LIVE MAP · full-screen -->
+  <section class="slide fulliframe" data-t="13000">
+    <iframe class="bgframe" data-src="maps.html" title="AgroMap"></iframe>
+    <div class="fbanner"><div class="kick">AgroMap · GIS</div><h2>873 יישובים <b>על המפה</b></h2></div>
   </section>
 
   <!-- 8 · KNOWLEDGE -->
@@ -216,18 +226,17 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     <div class="wall g4" data-wall></div>
   </section>
 
-  <!-- 9 · INNOVATION -->
-  <section class="slide" data-t="12000">
-    <div class="kick">Innovation Engine</div>
-    <h2>מרעיון <b>למוצר</b></h2>
-    <div class="sub">אתגרים חיים מהשטח → בנק רעיונות לסטארטאפים. חיפוש אחד, חמש עדשות ניתוח: רעיונות · פערים · מי עושה · מגמות · מימון.</div>
-    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="ideas.html" title="AgroInnovate"></iframe></div></div>
+  <!-- INNOVATION · full-screen -->
+  <section class="slide fulliframe" data-t="12000">
+    <iframe class="bgframe" data-src="ideas.html" title="AgroInnovate"></iframe>
+    <div class="fbanner"><div class="kick">Innovation Engine</div><h2>מרעיון <b>למוצר</b></h2><div class="bsub">אתגרים חיים מהשטח → בנק רעיונות לסטארטאפים. חמש עדשות: רעיונות · פערים · מי עושה · מגמות · מימון.</div></div>
   </section>
 
   <!-- FINANCIAL -->
   <section class="slide" data-t="11000">
     <div class="kick">Financial Arena</div>
     <h2>הון · מסחר · <b>צמיחה</b></h2>
+    <div class="peoplepic"><img src="assets/finance/people.jpg" alt="" onerror="this.closest('.peoplepic').style.display='none'"></div>
     <div class="cardrow">
       <div class="fcard" style="animation-delay:.1s"><div class="fi">🏦</div><div class="ft">Agro<b>Bank</b></div><div class="fd">מימון למגדלים ולסטארטאפים</div></div>
       <div class="fcard" style="animation-delay:.25s"><div class="fi">📈</div><div class="ft">Agro<b>Stock</b></div><div class="fd">סחורות ומדדים בזמן אמת</div></div>
@@ -235,15 +244,11 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     </div>
   </section>
 
-  <!-- OFAKIM · full-screen video 10s -->
-  <section class="slide fullmedia" data-t="10000" style="background:linear-gradient(135deg,#1c6b45,#0b1c12)">
-    <video class="bgvid" muted loop playsinline preload="auto" data-src="assets/ofakim/ofakim.mp4"></video>
+  <!-- OFAKIM · full-screen YouTube video -->
+  <section class="slide fulliframe" data-t="18000" style="background:#000">
+    <div class="ytwrap"><iframe class="ytframe" data-src="https://www.youtube.com/embed/m06pYkUvvGQ?autoplay=1&mute=1&controls=0&playsinline=1&loop=1&playlist=m06pYkUvvGQ&modestbranding=1&rel=0&start=0" title="Ofakim" allow="autoplay; encrypted-media"></iframe></div>
     <div class="fmscrim"></div>
-    <div class="fmoverlay">
-      <div class="kick">Ofakim · From The Negev</div>
-      <h2>מהנגב <b>לעולם</b></h2>
-      <div class="sub">אופקים — בירת האגרו-טק החדשה.</div>
-    </div>
+    <div class="fbanner"><div class="kick">Ofakim · From The Negev</div><h2>מהנגב <b>לעולם</b></h2></div>
   </section>
 
   <!-- 13 · MILESTONES -->
@@ -365,7 +370,9 @@ function activate(i){
  clearTimeout(growTimer);
  if(s.getAttribute('data-chips'))growTimer=setTimeout(function(){s.classList.add('grown');},3400);
  var f=s.querySelector('iframe[data-src]');
- if(f&&!f.src){var y=+f.getAttribute('data-scroll')||0;f.onload=function(){sizeFrame(f);if(y){try{f.contentWindow.scrollTo(0,y);}catch(e){}}};f.src=f.getAttribute('data-src');sizeFrame(f);}
+ if(f&&!f.src){var y=+f.getAttribute('data-scroll')||0,scaled=!(f.classList.contains('bgframe')||f.classList.contains('ytframe'));
+  f.onload=function(){if(scaled)sizeFrame(f);if(y){try{f.contentWindow.scrollTo(0,y);}catch(e){}}};
+  if(scaled)sizeFrame(f);f.src=f.getAttribute('data-src');}
  var v=s.querySelector('.bgvid[data-src]');
  if(v){if(!v.src)v.src=v.getAttribute('data-src');try{v.currentTime=0;v.play();}catch(e){}}
 }
