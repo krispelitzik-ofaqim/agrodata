@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מו״פים · מרכזי מו״פ אזוריים · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1300px;margin:0 auto;padding:0 40px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:30px 0 8px;text-align:center;background:radial-gradient(760px 320px at 50% -14%,var(--tint),transparent)}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:46px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:820px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 8px}
+@media(max-width:700px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.kpi .v{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d)}
+.kpi .l{font-size:13px;color:var(--mut);font-weight:600;margin-top:3px}
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 6px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer;transition:.12s}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}.fbtn:hover:not(.on){background:var(--tint)}
+.jsearchbar{display:flex;align-items:center;gap:10px;max-width:600px;margin:12px auto 4px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;background:transparent}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:26px 0 34px}
+@media(max-width:980px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+.rd{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:5px solid var(--gold)}
+.rd:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,38,28,.1);border-color:#e6d5a3}
+.rd .rtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.rd .rloc{font-family:'Plex Mono';font-size:12.5px;color:var(--mut)}
+.rd .rnum{width:40px;height:40px;border-radius:11px;background:var(--tint);display:grid;place-items:center;font-size:22px}
+.rd h3{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin-bottom:6px}
+.rd .rd_d{font-size:14.5px;color:var(--mut);line-height:1.55;flex:1;margin-bottom:12px}
+.rd .rtags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.rd .rtag{font-size:12.5px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:999px;padding:3px 10px}
+.rd .rlink{font-family:'Plex Mono';font-size:13px;color:var(--lime);font-weight:700}
+.note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:16px;padding:18px 20px;margin-bottom:38px;font-size:14px;line-height:1.6}
+.note b{color:#8fe6ad}.note a{color:#8fe6ad}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">R&D CENTERS · מו״פים אזוריים</div>
+    <h1>מו״פים · <b>מרכזי מו״פ אזוריים</b></h1>
+    <div class="sub">רשת מרכזי המחקר והפיתוח החקלאי היישומי של ישראל — פרוסים לפי אזורי אקלים, חוקרים בשדה ומתאימים טכנולוגיה לתנאי כל אזור. בתמיכת המדען הראשי במשרד החקלאות.</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v">מדבר → צפון</div><div class="l">כיסוי כל אזורי האקלים</div></div>
+    <div class="kpi"><div class="v">יישומי</div><div class="l">מחקר בשדה, לא במעבדה</div></div>
+    <div class="kpi"><div class="v">המדען הראשי</div><div class="l">מימון משרד החקלאות</div></div>
+    <div class="kpi"><div class="v" id="cnt">—</div><div class="l">מרכזי מו״פ במאגר</div></div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="jsearchbar"><span>🔎</span><input id="q" placeholder="חיפוש: אזור, גידול או נושא מחקר…" oninput="render()"></div>
+  <div class="grid" id="grid"></div>
+
+  <div class="note">🌾 <b>למה אזורי?</b> לכל אזור בישראל אקלים, קרקע ומים משלו — מדבר הערבה, מליחות רמת הנגב, קור הגולן. המו״פים האזוריים מפתחים זנים ושיטות המותאמים בדיוק לתנאים המקומיים, ומעבירים את הידע ישירות למגדלים. מקורות לאימות: <b>המדען הראשי · משרד החקלאות</b> ואתרי המו״פים.</div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מו״פים אזוריים · <span class="mono">regional R&D</span></div></div></div>
+
+<script>
+var MOAG="https://www.gov.il/he/departments/units/moag_chief_scientist";
+var RD=[
+ {n:"מו״פ ערבה תיכונה וצפונית",em:"🌵",reg:"דרום",loc:"ערבה",u:"https://www.arava.co.il/",
+  d:"מחקר חקלאי מדברי — פלפל וירקות יצוא, תמרים, ומשק מים מליחים בתנאי חום קיצוני.",t:["חקלאות מדבר","פלפל","מים מליחים"]},
+ {n:"מו״פ ערבה דרומית · יוטבתה",em:"🏜️",reg:"דרום",loc:"ערבה דרומית",u:MOAG,
+  d:"פיתוח לחקלאות בקצה המדברי — גידולים עמידי חום ומליחות, ואנרגיה סולארית.",t:["מדבר קיצוני","עמידות חום"]},
+ {n:"מו״פ רמת נגב",em:"🌡️",reg:"דרום",loc:"רמת נגב",u:"https://www.rngr.co.il/",
+  d:"מחקר במים מליחים, גד״ש מדברי, אקוופוניקה, אצות ואנרגיה מתחדשת בנגב.",t:["מים מליחים","נגב","אקוופוניקה"]},
+ {n:"מו״פ דרום · גילת",em:"🌾",reg:"דרום",loc:"צפון הנגב",u:"https://www.mopdarom.org.il/",
+  d:"מחקר יישומי לצפון הנגב — גד״ש, מטעים, ירקות ומים בתנאי מדבר למחצה.",t:["צפון הנגב","גד״ש","מטעים"]},
+ {n:"מו״פ אשכול · מערב הנגב",em:"🥔",reg:"דרום",loc:"מערב הנגב",u:MOAG,
+  d:"מו״פ אזורי לחבל הבשור — תפו״א, גזר, בטטה, ירקות ופרחים לייצוא.",t:["מערב הנגב","ירקות","פרחים"]},
+ {n:"מו״פ בקעת הירדן",em:"🌴",reg:"מרכז",loc:"בקעת הירדן",u:MOAG,
+  d:"מחקר לתנאי הבקעה החמה — תמרים, ענבי מאכל, ירקות ופתרונות לעקת חום ומליחות.",t:["בקעת הירדן","תמרים","ענבים"]},
+ {n:"מו״פ צפון · מיג״ל",em:"🍎",reg:"צפון",loc:"גליל",u:"https://www.migal.org.il/",
+  d:"פיתוח יישומי לחקלאי הגליל והעמקים — מטעים, גד״ש, רפת, מים וביוטכנולוגיה.",t:["גליל","מטעים","רפת"]},
+ {n:"מו״פ מעלה הגליל וגולן",em:"🏔️",reg:"צפון",loc:"גליל עליון · גולן",u:MOAG,
+  d:"מחקר לאזורי ההר הקרים — כרמים, מטעים נשירים, מרעה ובקר לחלב ולבשר.",t:["גולן","כרמים","מרעה"]}
+];
+var CUR='all';
+var FB=[['all','הכול'],['צפון','🟢 צפון'],['מרכז','🟡 מרכז'],['דרום','🟠 דרום']];
+document.getElementById('filters').innerHTML=FB.map(function(f,i){return '<button class="fbtn'+(i===0?' on':'')+'" onclick="filt(\''+f[0]+'\',this)">'+f[1]+'</button>';}).join('');
+function filt(f,el){CUR=f;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+function render(){
+ var q=(document.getElementById('q').value||'').trim();
+ var rows=RD.filter(function(r){return (CUR==='all'||r.reg===CUR)&&(!q||(r.n+' '+r.d+' '+r.loc+' '+r.t.join(' ')).indexOf(q)>=0);});
+ document.getElementById('cnt').textContent=RD.length;
+ document.getElementById('grid').innerHTML=rows.length?rows.map(function(r){
+  return '<a class="rd" href="'+r.u+'" target="_blank" rel="noopener">'
+   +'<div class="rtop"><span class="rnum">'+r.em+'</span><span class="rloc">📍 '+r.loc+'</span></div>'
+   +'<h3>'+r.n+'</h3><div class="rd_d">'+r.d+'</div>'
+   +'<div class="rtags">'+r.t.map(function(x){return '<span class="rtag">'+x+'</span>';}).join('')+'</div>'
+   +'<div class="rlink">לאתר המו״פ ↗</div></a>';
+ }).join(''):'<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:40px">לא נמצאו תוצאות</div>';
+}
+render();
+</script>
+</body></html>
