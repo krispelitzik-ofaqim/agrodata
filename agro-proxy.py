@@ -875,6 +875,36 @@ def fetch_appstore(term, country="us", limit=40):
     APPSTORE_CACHE[key] = (now, out)
     return out
 
+BOOKS_CACHE = {}
+def fetch_books(q, num=30):
+    q = (q or "agriculture").strip()
+    key = (q, num); now = time.time()
+    if key in BOOKS_CACHE and now - BOOKS_CACHE[key][0] < 3600:
+        return BOOKS_CACHE[key][1]
+    url = ("https://openlibrary.org/search.json?q=" + urllib.parse.quote(q) +
+           "&limit=" + str(num) + "&fields=title,author_name,first_publish_year,cover_i,ia,key,edition_count")
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+    except Exception as e:
+        return {"ok": False, "items": [], "err": str(e)[:60]}
+    items = []
+    for b in d.get("docs", []):
+        ia = b.get("ia") or []
+        cover = b.get("cover_i")
+        items.append({
+            "title": b.get("title", ""),
+            "author": (b.get("author_name") or [""])[0],
+            "year": b.get("first_publish_year") or "",
+            "editions": b.get("edition_count") or 0,
+            "cover": ("https://covers.openlibrary.org/b/id/" + str(cover) + "-M.jpg") if cover else "",
+            "scanned": bool(ia),
+            "read": ("https://archive.org/details/" + ia[0]) if ia else ("https://openlibrary.org" + (b.get("key") or "")),
+        })
+    out = {"ok": True, "total": d.get("numFound", len(items)), "items": items}
+    BOOKS_CACHE[key] = (now, out)
+    return out
+
 PAT_CACHE = {}
 def fetch_patents(q, num=30):
     q = (q or "agriculture").strip()
@@ -1139,6 +1169,15 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/appstore"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_appstore(qs.get("q", ["agriculture"])[0], qs.get("country", ["us"])[0], min(60, int(qs.get("limit", ["40"])[0] or 40)))
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/books"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_books(qs.get("q", ["agriculture"])[0], min(48, int(qs.get("num", ["30"])[0] or 30)))
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
