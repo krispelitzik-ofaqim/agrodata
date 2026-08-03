@@ -186,9 +186,11 @@ function scoreChallenges(){
 scoreChallenges();setInterval(scoreChallenges,300000);
 // generate ideas via AgroMind (Claude)
 var CUR=-1,CURQ='',CURTITLE='',CURKW='',CUREN='',ITAB='ideas';
-var ITABS=[['ideas','💡 רעיונות'],['gap','🎯 מפת פערים'],['who','🏢 מי כבר עושה'],['trends','📈 מגמות ומחקר']];
-function buildTabs(){document.getElementById('itabs').innerHTML=ITABS.map(function(t){return '<button class="itab'+(t[0]===ITAB?' on':'')+'" onclick="itab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');}
+var ITABS=[['ideas','💡 רעיונות','#8fe6ad'],['gap','🎯 מפת פערים','#f0c14b'],['who','🏢 מי כבר עושה','#5ab0d0'],['trends','📈 מגמות ומחקר','#b39ae0']];
+function tabCol(k){var t=ITABS.find(function(x){return x[0]===k;});return t?t[2]:'#8fe6ad';}
+function buildTabs(){document.getElementById('itabs').innerHTML=ITABS.map(function(t){var on=t[0]===ITAB;return '<button class="itab'+(on?' on':'')+'" style="'+(on?'background:'+t[2]+';color:#0d1f16;border-color:transparent':'color:'+t[2])+'" onclick="itab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');}
 buildTabs();
+var _b=document.querySelector('.bank');if(_b){_b.style.borderTop='4px solid '+tabCol(ITAB);}
 function heKw(a){for(var i=0;i<a.length;i++){if(/[֐-׿]/.test(a[i]))return a[i];}return a[0]||'';}
 function enKw(a){for(var i=0;i<a.length;i++){if(/[A-Za-z]/.test(a[i]))return a[i];}return a[0]||'';}
 function pick(i){
@@ -203,6 +205,8 @@ function pick(i){
 function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});CUR=-1;CURQ=q;CURTITLE=q;CURKW=q;CUREN=q;drawTab();}
 function itab(k){ITAB=k;buildTabs();drawTab();}
 function drawTab(){
+ var col=tabCol(ITAB),bank=document.querySelector('.bank');
+ if(bank){bank.style.borderTop='4px solid '+col;bank.style.boxShadow='0 24px 50px -20px '+col;}
  document.getElementById('bankSel').textContent='אתגר: '+CURTITLE;
  (document.querySelector('.bank')||document.getElementById('ideas')).scrollIntoView({behavior:'smooth',block:'nearest'});
  if(!CURQ){document.getElementById('ideas').innerHTML='<div class="bankempty">בחרו אתגר או כתבו בעיה.</div>';return;}
