@@ -61,8 +61,8 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .idea .row b{color:#8fe6ad}
 .nsteps{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}
 .nslbl{font-family:'Plex Mono';font-size:12px;color:rgba(234,244,238,.6)}
-.nsteps a{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#eaf4ee;text-decoration:none;font-family:Rubik;font-weight:700;font-size:13px;border-radius:9px;padding:6px 12px;transition:.12s}
-.nsteps a:hover{background:#8fe6ad;color:#134a30}
+.nsteps a{background:transparent;border:0;color:#cfe9d8;text-decoration:none;font-family:Rubik;font-weight:700;font-size:13px;border-radius:10px;padding:6px 10px;transition:.14s;display:inline-flex;align-items:center;gap:5px}
+.nsteps a:hover{background:rgba(143,230,173,.16);color:#8fe6ad;transform:translateY(-1px)}
 .bankempty{color:rgba(234,244,238,.6);text-align:center;padding:26px;font-size:15px}
 .thinking{display:flex;align-items:center;justify-content:center;gap:12px;color:#8fe6ad;padding:26px;font-size:16px}
 .dots i{display:inline-block;width:8px;height:8px;margin:0 2px;border-radius:50%;background:#8fe6ad;animation:think 1s infinite}
@@ -80,8 +80,8 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .lbtn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25)}
 .footbar{background:linear-gradient(135deg,#0a1a11,#134a30);margin-top:36px}
 .foot{padding:16px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.6)}
-.ispk{margin-inline-start:8px;border:0;background:#eaf4ee;color:#1c6b45;border-radius:8px;padding:3px 9px;font-size:14px;cursor:pointer;vertical-align:middle;transition:.15s}
-.ispk:hover{background:#d7ecdf}
+.ispk{margin-inline-start:8px;border:0;background:transparent;color:#8fe6ad;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;vertical-align:middle;transition:.15s;opacity:.75}
+.ispk:hover{background:rgba(143,230,173,.18);opacity:1}
 .ispk.on{background:var(--green,#1c6b45);color:#fff;animation:ispkpulse 1s infinite}
 @keyframes ispkpulse{50%{opacity:.55}}
 .itabs{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 16px}
@@ -189,7 +189,15 @@ function buildTabs(){document.getElementById('itabs').innerHTML=ITABS.map(functi
 buildTabs();
 function heKw(a){for(var i=0;i<a.length;i++){if(/[֐-׿]/.test(a[i]))return a[i];}return a[0]||'';}
 function enKw(a){for(var i=0;i<a.length;i++){if(/[A-Za-z]/.test(a[i]))return a[i];}return a[0]||'';}
-function pick(i){CUR=i;document.querySelectorAll('.ch').forEach(function(x,j){x.classList.toggle('on',j===i);});var c=CH[i];CURQ=c.t+' — '+c.d;CURTITLE=c.t;CURKW=heKw(c.kw||[c.t]);CUREN=enKw(c.kw||[c.t]);drawTab();}
+function pick(i){
+ if(CUR===i){ // toggle off
+  CUR=-1;CURQ='';document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});
+  document.getElementById('bankSel').textContent='בחרו אתגר למעלה, או כתבו בעיה משלכם ↓';
+  document.getElementById('ideas').innerHTML='<div class="bankempty">עדיין לא נוצרו רעיונות — בחרו אתגר או כתבו בעיה.</div>';return;
+ }
+ CUR=i;document.querySelectorAll('.ch').forEach(function(x,j){x.classList.toggle('on',j===i);});
+ var c=CH[i];CURQ=c.t+' — '+c.d;CURTITLE=c.t;CURKW=heKw(c.kw||[c.t]);CUREN=enKw(c.kw||[c.t]);drawTab();
+}
 function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});CUR=-1;CURQ=q;CURTITLE=q;CURKW=q;CUREN=q;drawTab();}
 function itab(k){ITAB=k;buildTabs();drawTab();}
 function drawTab(){
