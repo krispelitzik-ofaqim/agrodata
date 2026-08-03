@@ -205,10 +205,10 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     </div>
   </section>
 
-  <!-- BOOKS & JOURNALS wall -->
-  <section class="slide" data-t="11000" data-gal="books" data-q="agriculture">
-    <div class="kick">Living Library</div>
-    <h2>ספרים <b>וכתבי עת</b></h2>
+  <!-- BOOKS & JOURNALS wall (Hebrew) -->
+  <section class="slide" data-t="11000" data-gal="books" data-q="חקלאות" data-lang="heb">
+    <div class="kick">Living Library · עברית</div>
+    <h2>ספרים <b>וכתבי עת</b> בעברית</h2>
     <div class="wall g8" data-wall></div>
   </section>
 
@@ -229,7 +229,6 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
   <!-- INNOVATION · full-screen -->
   <section class="slide fulliframe" data-t="12000">
     <iframe class="bgframe" data-src="ideas.html" title="AgroInnovate"></iframe>
-    <div class="fbanner"><div class="kick">Innovation Engine</div><h2>מרעיון <b>למוצר</b></h2><div class="bsub">אתגרים חיים מהשטח → בנק רעיונות לסטארטאפים. חמש עדשות: רעיונות · פערים · מי עושה · מגמות · מימון.</div></div>
   </section>
 
   <!-- FINANCIAL -->
@@ -349,7 +348,8 @@ function loadGallery(s){
   var E=[['💧','השקיה מדויקת'],['🚜','מיכון חקלאי'],['🌡️','חיישני שדה'],['🏭','חממות טכנולוגיות'],['🛰️','חישה מרחוק'],['🧪','דישון והזנה'],['🌱','חקלאות אנכית'],['🐝','האבקה']];
   wall.innerHTML=E.map(function(e,i){return '<div class="gitem eq" style="animation-delay:'+(i*0.08).toFixed(2)+'s"><div class="eqi">'+e[0]+'</div><div class="wcap">'+e[1]+'</div></div>';}).join('');return;
  }
- var url=type==='flora'?('/api/flora?q='+encodeURIComponent(q)):('/api/books?num=24&q='+encodeURIComponent(q));
+ var lang=s.getAttribute('data-lang')||'';
+ var url=type==='flora'?('/api/flora?q='+encodeURIComponent(q)):('/api/books?num=24&lang='+lang+'&q='+encodeURIComponent(q));
  fetch(url).then(function(r){return r.json();}).then(function(j){
   var items=(j&&j.items)||[],n=type==='flora'?12:16;
   items=items.filter(function(x){return type==='flora'?x.photo:x.cover;}).slice(0,n);
