@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroPlan · בונה התוכנית העסקית · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:linear-gradient(180deg,#eef7f1,#fff 220px);color:var(--ink)}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px}
+.topbar{background:linear-gradient(135deg,#0c1c13,#134a30)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav a{color:#fff;text-decoration:none}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.back{color:rgba(255,255,255,.8);font-size:14px;font-weight:600}
+.hero{text-align:center;padding:34px 0 10px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--lime);letter-spacing:.1em;text-transform:uppercase}
+h1{font-family:Rubik;font-size:38px;font-weight:800;margin:6px 0;color:var(--green-d)}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:620px;margin:0 auto;line-height:1.6}
+/* steps */
+.steps{display:flex;justify-content:center;gap:8px;margin:22px 0 8px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;font-family:Rubik;font-weight:800;font-size:13.5px;color:var(--mut);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px}
+.step .n{width:22px;height:22px;border-radius:50%;background:var(--tint);color:var(--green-d);display:grid;place-items:center;font-size:12px}
+.step.on{border-color:var(--green);color:var(--green-d);box-shadow:0 4px 14px rgba(28,107,69,.14)}
+.step.on .n{background:var(--green);color:#fff}
+.step.done .n{background:var(--lime);color:#fff}
+/* card */
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 26px 20px;box-shadow:0 12px 34px rgba(20,60,40,.06);margin:14px 0 40px}
+.rhead{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:4px}
+.rsub{color:var(--mut);font-size:14px;margin-bottom:18px}
+.q{margin-bottom:16px}
+.q label{display:block;font-family:Rubik;font-weight:700;font-size:15.5px;color:var(--ink);margin-bottom:7px}
+.q .why{font-weight:500;color:var(--teal);font-size:13px}
+.q textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font-family:Heebo;font-size:15px;resize:vertical;min-height:64px;background:var(--bg2)}
+.q textarea:focus{outline:none;border-color:var(--green);background:#fff}
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:8px}
+.btn{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;padding:13px 30px;font-family:Rubik;font-weight:800;font-size:16px;cursor:pointer;transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.5;cursor:default}
+.btn.ghost{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
+.engsel{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:7px}
+.engsel select{border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-family:Heebo;font-size:13px;background:#fff}
+.load{text-align:center;padding:40px 10px;color:var(--green-d)}
+.spin{width:38px;height:38px;border:4px solid var(--tint);border-top-color:var(--green);border-radius:50%;margin:0 auto 14px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.note{background:#fff8e6;border:1px solid #f0d98a;color:#7a5b12;border-radius:12px;padding:12px 15px;font-size:13.5px;margin-bottom:16px}
+/* PLAN output */
+.plan h2{font-family:Rubik;font-weight:900;font-size:30px;color:var(--green-d);text-align:center}
+.plan .tag{text-align:center;color:var(--gold);font-family:Rubik;font-weight:700;font-size:17px;margin:4px 0 18px}
+.plan .exec{background:var(--tint);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:15.5px;line-height:1.7;margin-bottom:20px}
+.sec{margin-bottom:16px;border-top:1px solid var(--line);padding-top:14px}
+.sec h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin-bottom:6px}
+.sec p{font-size:14.5px;line-height:1.7;color:#2c3a31;white-space:pre-wrap}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+@media(max-width:620px){.swot{grid-template-columns:1fr}}
+.sw{border-radius:12px;padding:13px 15px}
+.sw h4{font-family:Rubik;font-weight:800;font-size:14px;margin-bottom:6px}
+.sw ul{margin:0;padding-inline-start:18px}.sw li{font-size:13.5px;line-height:1.6;margin-bottom:3px}
+.sw.s{background:#eafaf0;border:1px solid #bfe8cd}.sw.s h4{color:#1c6b45}
+.sw.w{background:#fdeeea;border:1px solid #f4c9ba}.sw.w h4{color:#b3502e}
+.sw.o{background:#e9f4fb;border:1px solid #bcdcf0}.sw.o h4{color:#256a94}
+.sw.t{background:#f6f0fb;border:1px solid #dcc9f0}.sw.t h4{color:#6a45c0}
+table.fin{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px}
+table.fin th,table.fin td{border:1px solid var(--line);padding:8px 10px;text-align:right}
+table.fin th{background:var(--tint);font-family:Rubik;font-weight:800;color:var(--green-d)}
+.mile{display:flex;gap:10px;align-items:flex-start;margin-bottom:7px;font-size:14.5px}
+.mile .d{width:9px;height:9px;border-radius:50%;background:var(--lime);margin-top:6px;flex:0 0 auto}
+.ask{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;border-radius:14px;padding:16px 18px;font-size:15.5px;line-height:1.7;margin-top:16px}
+.ask b{color:#8fe6ad}
+.foot{padding:16px 0 40px;text-align:center;color:var(--mut);font-size:13px}
+@media print{.topbar,.steps,.ctrlrow,.foot,.back{display:none!important}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html"><span class="wm" style="font-size:22px">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROPLAN · בונה התוכנית העסקית</div>
+    <h1>מרעיון ל<b>תוכנית עסקית</b></h1>
+    <div class="sub">ענו על שאלון קצר, ה-AI ישאל שני סבבי שאלות לחידוד ושיפור — ובסוף תקבלו תוכנית עסקית מלאה ומקצועית לאגרו-טק, מוכנה למשקיעים.</div>
+  </div>
+
+  <div class="steps" id="steps"></div>
+  <div class="card" id="card"></div>
+</div>
+
+<div class="foot">🤖 מונע ע״י AI (Gemini · Claude) · <span class="wm" style="color:var(--green-d)">Agro<b style="color:var(--lime)">Data</b></span> Center</div>
+
+<script>
+var ENGINE='gemini';
+var Q1=[
+ ['שם היוזמה/החברה — ובמשפט אחד, מה אתם עושים?','לדוגמה: "GreenSense — חיישני קרקע חכמים להשקיה מדויקת"'],
+ ['איזו בעיה חקלאית/אגרו-טק אתם פותרים, ולמי היא כואבת?',''],
+ ['מהו הפתרון/המוצר, ומה חדשני בו?',''],
+ ['מיהו הלקוח המשלם? (מגדלים, חברות, יצואנים, מפעלים…)',''],
+ ['מהו מודל ההכנסה? (מנוי, מכירה, עמלה, רישוי…)',''],
+ ['מי המתחרים ומהו הבידול שלכם?',''],
+ ['באיזה שלב אתם? (רעיון · אב-טיפוס · פיילוט · מכירות ראשונות)',''],
+ ['מי בצוות ומה הניסיון הרלוונטי?',''],
+ ['כמה מימון דרוש, ולמה הוא ישמש?',''],
+ ['מהם היעדים המרכזיים ל-12 החודשים הקרובים?','']
+];
+var answers=[]; // {q,a}
+var round=1;
+
+function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
+function ask(prompt){return fetch('/api/ask?engine='+ENGINE+'&q='+encodeURIComponent(prompt)).then(function(r){return r.json();});}
+function qaText(){return answers.map(function(x,i){return (i+1)+'. '+x.q+'\nתשובה: '+(x.a||'(לא נענה)');}).join('\n');}
+
+function renderSteps(){
+ var labels=['שאלון','סבב שיפור','חידוד אחרון','התוכנית'];
+ document.getElementById('steps').innerHTML=labels.map(function(l,i){
+  var st=i+1, cls=st<curStep()?'done':(st===curStep()?'on':'');
+  return '<div class="step '+cls+'"><span class="n">'+(st<curStep()?'✓':st)+'</span>'+l+'</div>';
+ }).join('');
+}
+function curStep(){ if(PLAN)return 4; return round; }
+var PLAN=null;
+
+function engBar(){
+ return '<div class="engsel">מנוע AI: <select onchange="ENGINE=this.value">'
+  +'<option value="gemini"'+(ENGINE==='gemini'?' selected':'')+'>Gemini</option>'
+  +'<option value="claude"'+(ENGINE==='claude'?' selected':'')+'>Claude</option></select></div>';
+}
+
+/* ---- ROUND 1 (fixed) ---- */
+function renderRound1(){
+ PLAN=null;round=1;answers=[];
+ var qs=Q1.map(function(q,i){
+  return '<div class="q"><label>'+(i+1)+'. '+esc(q[0])+'</label><textarea id="a'+i+'" placeholder="'+esc(q[1])+'"></textarea></div>';
+ }).join('');
+ document.getElementById('card').innerHTML=
+  '<div class="rhead">סבב 1 · השאלון הבסיסי</div><div class="rsub">ענו כמיטב יכולתכם — אין תשובות נכונות. ככל שתפרטו, התוכנית תהיה מדויקת יותר.</div>'
+  +qs+'<div class="row ctrlrow">'+engBar()+'<button class="btn" onclick="submitRound1()">בנה שאלות חכמות ←</button></div>';
+ renderSteps();window.scrollTo(0,0);
+}
+function submitRound1(){
+ answers=Q1.map(function(q,i){return {q:q[0],a:(document.getElementById('a'+i).value||'').trim()};});
+ if(answers.filter(function(x){return x.a;}).length<3){alert('מלאו לפחות 3 שאלות כדי להמשיך.');return;}
+ loading('מנתח את התשובות ומכין שאלות המשך…');
+ var p='אתה יועץ בכיר לבניית תוכניות עסקיות באגרו-טק ופוד-טק. להלן שאלון ותשובות של יזם:\n'+qaText()
+  +'\n\nשאל בדיוק 5 שאלות המשך ממוקדות, חדות ומקצועיות שיחשפו פערים ויחזקו את התוכנית (שוק, יחידת כלכלה, בידול, סיכונים, ביצוע). '
+  +'החזר אך ורק רשימה ממוספרת 1 עד 5 — שאלה אחת בכל שורה, בעברית, בלי מבוא ובלי טקסט נוסף.';
+ ask(p).then(function(j){handleQuestions(j,2);}).catch(fail);
+}
+
+/* ---- ROUND 2 / 3 (AI questions) ---- */
+function handleQuestions(j,nextRound){
+ if(j.demo){demoNote();return;}
+ var qs=parseQ(j.answer||'');
+ if(!qs.length){fail();return;}
+ renderRoundQ(nextRound,qs);
+}
+function parseQ(t){var out=[];(t||'').split('\n').forEach(function(l){var m=l.match(/^\s*\d+[\.\)]\s*(.+)$/);if(m)out.push(m[1].replace(/["*]/g,'').trim());});return out;}
+function renderRoundQ(r,qs){
+ round=r;
+ var head=r===2?'סבב 2 · שיפור וחיזוק':'סבב 3 · חידוד אחרון';
+ var sub=r===2?'ה-AI זיהה נקודות לחיזוק. ענו כדי לשפר את התוכנית.':'שאלות חדות אחרונות לפני בניית התוכנית המלאה.';
+ window._pendQ=qs;
+ var body=qs.map(function(q,i){return '<div class="q"><label>'+(i+1)+'. '+esc(q)+'</label><textarea id="a'+i+'"></textarea></div>';}).join('');
+ var nextLabel=r<3?'המשך לסבב הבא ←':'בנה את התוכנית העסקית ←';
+ var nextFn=r<3?'submitRoundQ('+(r+1)+')':'submitRoundQ(0)';
+ document.getElementById('card').innerHTML='<div class="rhead">'+head+'</div><div class="rsub">'+sub+'</div>'+body
+  +'<div class="row ctrlrow">'+engBar()+'<button class="btn" onclick="'+nextFn+'">'+nextLabel+'</button></div>';
+ renderSteps();window.scrollTo(0,0);
+}
+function submitRoundQ(nextRound){
+ window._pendQ.forEach(function(q,i){answers.push({q:q,a:(document.getElementById('a'+i).value||'').trim()});});
+ if(nextRound===0){buildPlan();return;}
+ loading('מעבד ומכין שאלות חדות יותר…');
+ var p='אתה יועץ אסטרטגי לאגרו-טק. להלן שאלון מלא ותשובות:\n'+qaText()
+  +'\n\nזהו סבב 3 — שאל בדיוק 5 שאלות חדות על הנחות היסוד, יחידת הכלכלה (unit economics), טרקשן, מדדי הצלחה וסיכונים קריטיים. '
+  +'החזר אך ורק רשימה ממוספרת 1 עד 5, שאלה בכל שורה, בעברית, בלי טקסט נוסף.';
+ ask(p).then(function(j){handleQuestions(j,3);}).catch(fail);
+}
+
+/* ---- FINAL PLAN ---- */
+function buildPlan(){
+ loading('בונה את התוכנית העסקית המלאה… זה עשוי לקחת מספר שניות.');
+ var p='אתה יועץ אסטרטגי בכיר. בנה תוכנית עסקית מלאה, מקצועית ומשכנעת בעברית, על סמך כל השאלות והתשובות של היזם:\n'+qaText()
+ +'\n\nהחזר JSON תקין בלבד (בלי טקסט מסביב ובלי סימוני קוד) במבנה המדויק:\n'
+ +'{"title":"","tagline":"","summary":"","sections":[{"h":"","body":""}],"swot":{"s":[],"w":[],"o":[],"t":[]},"financials":[{"item":"","y1":"","y2":"","y3":""}],"milestones":[""],"ask":""}\n'
+ +'הסעיפים ב-sections חייבים לכלול: הבעיה, הפתרון, השוק וההזדמנות, מודל עסקי, אסטרטגיית go-to-market, תחרות ובידול, הצוות, ניהול סיכונים, שימוש בכספים. '
+ +'financials — הערכת הכנסות/עלויות ל-3 שנים (y1,y2,y3) בשקלים או במונחים איכותיים. השתמש בעברית מקצועית ותמציתית.';
+ ask(p).then(function(j){
+  if(j.demo){demoNote();return;}
+  var plan=parsePlan(j.answer||'');
+  if(plan)renderPlan(plan); else renderRaw(j.answer||'');
+ }).catch(fail);
+}
+function parsePlan(t){
+ t=t.replace(/```json/gi,'').replace(/```/g,'').trim();
+ var a=t.indexOf('{'),b=t.lastIndexOf('}');
+ if(a<0||b<0)return null;
+ try{return JSON.parse(t.slice(a,b+1));}catch(e){return null;}
+}
+function renderPlan(p){
+ PLAN=p;
+ var h='<div class="plan"><h2>'+esc(p.title||'התוכנית העסקית')+'</h2>';
+ if(p.tagline)h+='<div class="tag">'+esc(p.tagline)+'</div>';
+ if(p.summary)h+='<div class="exec"><b>תקציר מנהלים:</b> '+esc(p.summary)+'</div>';
+ (p.sections||[]).forEach(function(s){h+='<div class="sec"><h3>'+esc(s.h)+'</h3><p>'+esc(s.body)+'</p></div>';});
+ var sw=p.swot||{};
+ if((sw.s||sw.w||sw.o||sw.t)){
+  h+='<div class="sec"><h3>ניתוח SWOT</h3><div class="swot">'
+   +swBox('s','חוזקות',sw.s)+swBox('w','חולשות',sw.w)+swBox('o','הזדמנויות',sw.o)+swBox('t','איומים',sw.t)+'</div></div>';
+ }
+ if((p.financials||[]).length){
+  h+='<div class="sec"><h3>תחזית פיננסית (3 שנים)</h3><table class="fin"><tr><th>סעיף</th><th>שנה 1</th><th>שנה 2</th><th>שנה 3</th></tr>'
+   +p.financials.map(function(f){return '<tr><td>'+esc(f.item)+'</td><td>'+esc(f.y1)+'</td><td>'+esc(f.y2)+'</td><td>'+esc(f.y3)+'</td></tr>';}).join('')+'</table></div>';
+ }
+ if((p.milestones||[]).length){
+  h+='<div class="sec"><h3>אבני דרך</h3>'+p.milestones.map(function(m){return '<div class="mile"><span class="d"></span>'+esc(m)+'</div>';}).join('')+'</div>';
+ }
+ if(p.ask)h+='<div class="ask"><b>בקשת המימון:</b> '+esc(p.ask)+'</div>';
+ h+='</div><div class="row ctrlrow" style="margin-top:22px"><button class="btn ghost" onclick="renderRound1()">התחל מחדש</button><button class="btn" onclick="window.print()">🖨️ הדפסה / PDF</button></div>';
+ document.getElementById('card').innerHTML=h;
+ renderSteps();window.scrollTo(0,0);
+}
+function swBox(c,t,arr){arr=arr||[];return '<div class="sw '+c+'"><h4>'+t+'</h4><ul>'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';}
+function renderRaw(t){
+ PLAN={};
+ document.getElementById('card').innerHTML='<div class="rhead">התוכנית העסקית</div><div class="sec"><p>'+esc(t)+'</p></div>'
+  +'<div class="row ctrlrow" style="margin-top:18px"><button class="btn ghost" onclick="renderRound1()">התחל מחדש</button><button class="btn" onclick="window.print()">🖨️ הדפסה / PDF</button></div>';
+ renderSteps();
+}
+
+/* ---- helpers ---- */
+function loading(msg){document.getElementById('card').innerHTML='<div class="load"><div class="spin"></div>'+esc(msg)+'</div>';}
+function fail(){document.getElementById('card').innerHTML='<div class="note">אירעה שגיאה בחיבור ל-AI. נסו שוב.</div><div class="row"><button class="btn" onclick="renderRound1()">חזרה לשאלון</button></div>';}
+function demoNote(){document.getElementById('card').innerHTML='<div class="note">מנוע ה-AI אינו זמין בסביבה זו. באתר החי (agrodata.co.il) הכלי פעיל.</div><div class="row"><button class="btn" onclick="renderRound1()">חזרה לשאלון</button></div>';}
+
+renderRound1();
+</script>
+</body>
+</html>
