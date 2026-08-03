@@ -45,6 +45,7 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .bmeta{padding:12px 13px;display:flex;flex-direction:column;flex:1}
 .bt{font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--green-d);line-height:1.3;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ba{font-size:12.5px;color:var(--mut);margin-bottom:4px}
+.bhe{font-size:12.5px;color:#1c6b45;font-weight:700;line-height:1.35;margin-bottom:5px}
 .bd{font-size:12px;color:#6b7a72;line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;flex:1}
 .bsub{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
 .bsub span{font-size:10.5px;color:var(--green-d);background:var(--tint);border-radius:6px;padding:1px 7px}
@@ -96,17 +97,29 @@ function renderBooks(){
  +'<div class="bstat"><div class="v">'+scanned+' 📖</div><div class="l">סרוקים לקריאה (OCR)</div></div>'
  +'<div class="bstat"><div class="v">'+covers+'</div><div class="l">עם כריכה</div></div>';
  if(!items.length){document.getElementById('grid').innerHTML='<div class="load">אין ספרים סרוקים בתוצאות אלה — כבו את המסנן או נסו מונח אחר.</div>';return;}
- document.getElementById('grid').innerHTML=items.map(function(b){
+ document.getElementById('grid').innerHTML=items.map(function(b,i){
   var cov=b.cover?'<img src="'+b.cover+'" loading="lazy" alt="" onerror="this.parentNode.innerHTML=\'<div class=&quot;ph&quot;>'+esc((b.title||'').slice(0,40)).replace(/'/g,'')+'</div>\'">':'<div class="ph">'+esc((b.title||'').slice(0,40))+'</div>';
   var subs=(b.subjects&&b.subjects.length)?'<div class="bsub">'+b.subjects.map(function(s){return '<span>'+esc(s)+'</span>';}).join('')+'</div>':'';
   return '<a class="book" href="'+b.read+'" target="_blank" rel="noopener">'
    +'<div class="cover">'+(b.scanned?'<span class="ocr">📖 סרוק</span>':'')+cov+'</div>'
    +'<div class="bmeta"><div class="bt">'+esc(b.title)+'</div>'
+   +'<div class="bhe" id="bhe'+i+'">'+(HECACHE[b.title]?'🇮🇱 '+esc(HECACHE[b.title]):'')+'</div>'
    +'<div class="ba">'+(b.author?esc(b.author):'—')+' · '+(b.year||'—')+'</div>'
    +(b.desc?'<div class="bd">'+esc(b.desc)+'</div>':'<div class="bd" style="color:#9bb0a3;font-style:italic">אין תקציר — ראו בדף הספר</div>')
    +subs
    +'<div class="blink">'+(b.scanned?'קריאה מלאה (OCR) ↗':'לפרטים ותקציר ↗')+'</div></div></a>';
  }).join('');
+ heTranslate(items);
+}
+var HECACHE={};
+function heTranslate(items){
+ var need=items.map(function(b,i){return {i:i,t:b.title};}).filter(function(x){return !HECACHE[x.t];});
+ if(!need.length)return;
+ var list=need.map(function(x,n){return (n+1)+'. '+x.t;}).join('\n');
+ fetch('/api/ask?engine=gemini&q='+encodeURIComponent('לכל כותרת ספר תן תמצית/תרגום קצר בעברית (עד 8 מילים) שמסביר על מה הספר. החזר בדיוק בפורמט "מספר. עברית" — שורה לכל כותרת, בלי טקסט נוסף. כותרות:\n'+list)).then(function(r){return r.json();}).then(function(j){
+  if(j.demo)return;
+  (j.answer||'').split('\n').forEach(function(l){var m=l.match(/^\s*(\d+)[\.\)]\s*(.+)$/);if(!m)return;var idx=parseInt(m[1])-1;if(idx<0||idx>=need.length)return;var he=m[2].replace(/["*]/g,'').trim();HECACHE[need[idx].t]=he;var el=document.getElementById('bhe'+need[idx].i);if(el)el.textContent='🇮🇱 '+he;});
+ }).catch(function(){});
 }
 function search(){
  var q=(document.getElementById('q').value||'').trim();if(!q)return;
