@@ -82,6 +82,20 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .ispk:hover{background:#d7ecdf}
 .ispk.on{background:var(--green,#1c6b45);color:#fff;animation:ispkpulse 1s infinite}
 @keyframes ispkpulse{50%{opacity:.55}}
+.itabs{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 16px}
+.itab{display:inline-flex;align-items:center;gap:6px;font-family:Rubik;font-weight:800;font-size:14px;color:#eaf4ee;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:9px 15px;cursor:pointer;transition:.14s}
+.itab:hover{background:rgba(255,255,255,.14)}
+.itab.on{background:#8fe6ad;color:#0f3a26;border-color:transparent}
+.gapcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:22px;grid-column:1/-1}
+.gapgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0}
+@media(max-width:640px){.gapgrid{grid-template-columns:1fr}}
+.gapkpi{background:rgba(0,0,0,.18);border-radius:14px;padding:16px;text-align:center}
+.gapkpi .v{font-family:Rubik;font-weight:900;font-size:30px;color:#8fe6ad}
+.gapkpi .l{font-size:13px;color:rgba(234,244,238,.75);margin-top:4px}
+.gapverdict{border-radius:12px;padding:14px 16px;font-family:Rubik;font-weight:800;font-size:17px;text-align:center}
+.rowitm{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:13px 15px;margin-bottom:9px;text-decoration:none;color:#eaf4ee;grid-column:1/-1}
+.rowitm:hover{background:rgba(255,255,255,.11)}
+.rowitm b{color:#8fe6ad}.rowitm .mt{font-size:12.5px;color:rgba(234,244,238,.6);margin-top:3px}
 </style>
 </head>
 <body>
@@ -106,6 +120,7 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
   <div class="h2sub">רעיונות סטארטאפ שנוצרו ע״י AgroMind — בעיה → פתרון → שוק יעד.</div>
   <div class="bank">
     <div class="bankhead"><h3>🧠 המוח האנליטי</h3><span class="sel" id="bankSel">בחרו אתגר למעלה, או כתבו בעיה משלכם ↓</span></div>
+    <div class="itabs" id="itabs"></div>
     <div class="ideas" id="ideas"><div class="bankempty">עדיין לא נוצרו רעיונות — בחרו אתגר או כתבו בעיה.</div></div>
     <div class="custom"><input id="cq" placeholder="כתבו בעיה/אתגר משלכם… (למשל: מחסור במים בעונת הקיץ)" onkeydown="if(event.key==='Enter')genCustom()"><button onclick="genCustom()">💡 ייצר רעיונות</button></div>
   </div>
@@ -166,9 +181,22 @@ function scoreChallenges(){
 }
 scoreChallenges();setInterval(scoreChallenges,300000);
 // generate ideas via AgroMind (Claude)
-var CUR=-1;
-function pick(i){CUR=i;document.querySelectorAll('.ch').forEach(function(x,j){x.classList.toggle('on',j===i);});gen(CH[i].t+' — '+CH[i].d, CH[i].t);}
-function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});gen(q,q);}
+var CUR=-1,CURQ='',CURTITLE='',CURKW='',CUREN='',ITAB='ideas';
+var ITABS=[['ideas','💡 רעיונות'],['gap','🎯 מפת פערים'],['who','🏢 מי כבר עושה'],['trends','📈 מגמות ומחקר']];
+function buildTabs(){document.getElementById('itabs').innerHTML=ITABS.map(function(t){return '<button class="itab'+(t[0]===ITAB?' on':'')+'" onclick="itab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');}
+buildTabs();
+function heKw(a){for(var i=0;i<a.length;i++){if(/[֐-׿]/.test(a[i]))return a[i];}return a[0]||'';}
+function enKw(a){for(var i=0;i<a.length;i++){if(/[A-Za-z]/.test(a[i]))return a[i];}return a[0]||'';}
+function pick(i){CUR=i;document.querySelectorAll('.ch').forEach(function(x,j){x.classList.toggle('on',j===i);});var c=CH[i];CURQ=c.t+' — '+c.d;CURTITLE=c.t;CURKW=heKw(c.kw||[c.t]);CUREN=enKw(c.kw||[c.t]);drawTab();}
+function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});CUR=-1;CURQ=q;CURTITLE=q;CURKW=q;CUREN=q;drawTab();}
+function itab(k){ITAB=k;buildTabs();drawTab();}
+function drawTab(){
+ document.getElementById('bankSel').textContent='אתגר: '+CURTITLE;
+ (document.querySelector('.bank')||document.getElementById('ideas')).scrollIntoView({behavior:'smooth',block:'nearest'});
+ if(!CURQ){document.getElementById('ideas').innerHTML='<div class="bankempty">בחרו אתגר או כתבו בעיה.</div>';return;}
+ if(ITAB==='ideas')renderIdeas();else if(ITAB==='gap')renderGap();else if(ITAB==='who')renderWho();else renderTrends();
+}
+function thinking(msg){document.getElementById('ideas').innerHTML='<div class="thinking"><span>'+msg+'</span><span class="dots"><i></i><i></i><i></i></span></div>';}
 function isPremium(){return true;/* פתוח לכולם בינתיים — להחזיר נעילה: localStorage.getItem('agroPremium')==='1' */}
 function unlock(){try{localStorage.setItem('agroPremium','1');}catch(e){}location.reload();}
 function gate(){
@@ -189,13 +217,11 @@ function idSpeak(btn){
  speechSynthesis.speak(u);
 }
 if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){};}
-function gen(problem,label){
- document.getElementById('bankSel').textContent='אתגר: '+label;
+function renderIdeas(){
  var box=document.getElementById('ideas');
- (document.getElementById('bankSel').closest('section,.card,.bank')||box).scrollIntoView({behavior:'smooth',block:'center'});
  if(!isPremium()){box.innerHTML=gate();return;}
- box.innerHTML='<div class="thinking"><span>המוח חושב ומייצר רעיונות</span><span class="dots"><i></i><i></i><i></i></span></div>';
- var prompt='אתה מנוע החדשנות של AgroMind. בהתבסס על האתגר הבא באגרו-טק, הצע בדיוק 4 רעיונות לסטארטאפים חדשים. לכל רעיון תן שורה בפורמט המדויק הזה (בעברית):\n[שם הרעיון] | הבעיה: ... | הפתרון: ... | שוק יעד: ...\nרעיון אחד בכל שורה, ללא מספור, ללא טקסט נוסף. האתגר: '+problem;
+ thinking('המוח חושב ומייצר רעיונות');
+ var prompt='אתה מנוע החדשנות של AgroMind. בהתבסס על האתגר הבא באגרו-טק, הצע בדיוק 4 רעיונות לסטארטאפים חדשים. לכל רעיון תן שורה בפורמט המדויק הזה (בעברית):\n[שם הרעיון] | הבעיה: ... | הפתרון: ... | שוק יעד: ...\nרעיון אחד בכל שורה, ללא מספור, ללא טקסט נוסף. האתגר: '+CURQ;
  fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){
   var txt=j.answer||'';
   var lines=txt.split('\n').filter(function(l){return l.indexOf('|')>0;});
@@ -210,7 +236,50 @@ function gen(problem,label){
     +'<a href="grants.html">💰 מענק</a><a href="scholarships.html">🎓 צוות</a><a href="ofakim.html">🚀 האצה</a><a href="analytics.html">📊 שוק</a></div>'
     +'</div>';
   }).join('');
- }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.</div>';});
+ }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת — האם ה-AI מחובר?</div>';});
+}
+function renderGap(){
+ var box=document.getElementById('ideas');thinking('סורק את השוק — כמה חברות, כמה אזכורים…');
+ Promise.all([
+  fetch('/api/companies?limit=1&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).catch(function(){return{};}),
+  fetch('/api/news?region=il&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).catch(function(){return{items:[]};})
+ ]).then(function(res){
+  var comp=(res[0]&&res[0].total)||0, ment=((res[1]&&res[1].items)||[]).length;
+  var gap,vcol;
+  if(ment>=4&&comp<50){gap='פער גדול · הזדמנות 🚀';vcol='#8fe6ad,#134a30';}
+  else if(comp<250){gap='שוק מתפתח · מקום לצמיחה';vcol='#c79a2e,#8a6a16';}
+  else{gap='שוק צפוף · תחרות גבוהה';vcol='#c4562e,#7a2a15';}
+  box.innerHTML='<div class="gapcard"><div style="font-family:Rubik;font-weight:800;font-size:20px;color:#fff">🎯 מפת פערים · '+CURTITLE+'</div>'
+   +'<div class="gapgrid"><div class="gapkpi"><div class="v">'+comp.toLocaleString()+'</div><div class="l">🏢 חברות ישראליות בתחום</div></div>'
+   +'<div class="gapkpi"><div class="v">'+ment+'</div><div class="l">🔥 אזכורים אחרונים בחדשות</div></div>'
+   +'<div class="gapkpi"><div class="v">'+(ment>=4?'גבוהה':'בינונית')+'</div><div class="l">📊 דחיפות הבעיה</div></div></div>'
+   +'<div class="gapverdict" style="background:linear-gradient(135deg,'+vcol+')">'+gap+'</div>'
+   +'<div style="font-size:12.5px;color:rgba(234,244,238,.6);margin-top:12px">חברות מרשם החברות (data.gov.il) · אזכורים מחדשות חיות · לפי המונח "'+CURKW+'"</div></div>';
+ });
+}
+function renderWho(){
+ var box=document.getElementById('ideas');thinking('מחפש חברות וסטארטאפים בתחום…');
+ fetch('/api/companies?limit=20&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).then(function(j){
+  var items=(j&&j.items)||[];
+  if(!items.length){box.innerHTML='<div class="bankempty">לא נמצאו חברות למונח "'+CURKW+'".</div>';return;}
+  box.innerHTML='<div style="grid-column:1/-1;color:#eaf4ee;font-family:Rubik;font-weight:800;margin-bottom:8px">🏢 '+((j.total||items.length).toLocaleString())+' חברות בתחום · מציג '+items.length+'</div>'+items.map(function(c){
+   return '<div class="rowitm"><b>'+c.name+'</b> <span class="mt">מס׳ '+c.num+' · '+(c.status||'')+(c.founded?' · הוקמה '+c.founded:'')+'</span>'+(c.purpose?'<div class="mt">'+c.purpose+'</div>':'')+'</div>';
+  }).join('');
+ }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת.</div>';});
+}
+function renderTrends(){
+ var box=document.getElementById('ideas');thinking('אוסף מגמות מהחדשות והמחקר…');
+ Promise.all([
+  fetch('/api/news?region=il&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).catch(function(){return{items:[]};}),
+  fetch('/api/research?q='+encodeURIComponent(CUREN)).then(function(r){return r.json();}).catch(function(){return{items:[]};})
+ ]).then(function(res){
+  var news=((res[0]&&res[0].items)||[]).slice(0,6), papers=((res[1]&&res[1].items)||[]).slice(0,6);
+  var h='<div style="grid-column:1/-1"><div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:2px 0 8px">📰 חדשות אחרונות</div>';
+  h+= news.length? news.map(function(a){return '<a class="rowitm" href="'+(a.link||a.url||'#')+'" target="_blank" rel="noopener"><b>'+a.title+'</b><span class="mt">'+(a.source||'')+'</span></a>';}).join('') : '<div class="bankempty">אין חדשות למונח זה.</div>';
+  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🔬 מחקרים אקדמיים (OpenAlex)</div>';
+  h+= papers.length? papers.map(function(p){return '<a class="rowitm" href="'+(p.url||'#')+'" target="_blank" rel="noopener"><b>'+p.title+'</b><span class="mt">'+[p.inst,p.year].filter(Boolean).join(' · ')+'</span></a>';}).join('') : '<div class="bankempty">אין מחקרים למונח זה.</div>';
+  h+='</div>';box.innerHTML=h;
+ });
 }
 </script>
 </body></html>
