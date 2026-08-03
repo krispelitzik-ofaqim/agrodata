@@ -393,14 +393,13 @@ function renderFinance(){
   ];
   var routes=[['מענקים','grants.html'],['גיוס הון (אקוויטי)','agrolaunch.html'],['גיוס המונים','agroinvest.html'],['עסקאות ומשקיעים','agrocapital.html']];
   var stage=comp<80?'תחום צעיר — מתאים למענקי פרה-סיד וחממות 🌱':'תחום מבוסס — מתאים לגיוס הון ומשקיעים אסטרטגיים 📈';
+  function cubes(arr){return '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:6px">'+arr.map(function(g){return '<a href="'+g[2]+'" style="display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 13px;text-decoration:none;color:#eaf4ee"><b style="display:block;font-family:Rubik;font-size:14px;color:#8fe6ad;margin-bottom:3px">'+g[0]+'</b><span style="font-size:11.5px;color:rgba(234,244,238,.6);line-height:1.4">'+g[1]+'</span></a>';}).join('')+'</div>';}
   var h='<div style="grid-column:1/-1">';
   h+='<div class="gapcard" style="border-color:#3ec9a0"><div style="font-family:Rubik;font-weight:800;font-size:19px;color:#fff">💰 מסלול מימון · '+CURTITLE+'</div>'
     +'<div style="font-size:13.5px;color:rgba(234,244,238,.75);margin-top:6px">'+stage+' · <b style="color:#8fe6ad">'+comp.toLocaleString()+'</b> חברות כבר בתחום</div></div>';
-  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🏛️ מענקים ומסלולי מימון</div>';
-  h+=grants.map(function(g){return '<a class="rowitm" href="'+g[2]+'"><b>'+g[0]+'</b><span class="mt">'+g[1]+'</span></a>';}).join('');
-  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🧪 חממות ומשקיעים</div>';
-  h+=inv.map(function(g){return '<a class="rowitm" href="'+g[2]+'"><b>'+g[0]+'</b><span class="mt">'+g[1]+'</span></a>';}).join('');
-  h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">'+routes.map(function(r){return '<a href="'+r[1]+'" style="background:rgba(62,201,160,.16);color:#8fe6ad;text-decoration:none;font-family:Rubik;font-weight:800;font-size:13.5px;border-radius:10px;padding:9px 14px">'+r[0]+' ↗</a>';}).join('')+'</div>';
+  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🏛️ מענקים ומסלולי מימון</div>'+cubes(grants);
+  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:14px 0 8px">🧪 חממות ומשקיעים</div>'+cubes(inv);
+  h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">'+routes.map(function(r){return '<a href="'+r[1]+'" style="background:rgba(62,201,160,.16);color:#8fe6ad;text-decoration:none;font-family:Rubik;font-weight:800;font-size:13.5px;border-radius:10px;padding:9px 14px">'+r[0]+' ↗</a>';}).join('')+'</div>';
   h+='</div>';box.innerHTML=h;
  });
 }
