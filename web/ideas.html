@@ -84,6 +84,12 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .foot{padding:16px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.6)}
 .ispk{margin-inline-start:8px;border:0;background:transparent;color:#8fe6ad;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;vertical-align:middle;transition:.15s;opacity:.75}
 .ispk:hover{background:rgba(143,230,173,.18);opacity:1}
+@keyframes dropIn{0%{opacity:0;transform:translateY(-26px) scale(.95)}60%{transform:translateY(4px) scale(1.01)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.selch{display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.22);border:1.5px solid var(--sc);border-radius:16px;padding:14px 16px;margin:2px 0 16px;animation:dropIn .45s cubic-bezier(.2,.8,.3,1);box-shadow:0 10px 30px -12px var(--sc)}
+.selch .scviz{width:88px;flex:0 0 auto}
+.selch h4{font-family:Rubik;font-weight:800;font-size:18px;color:#fff}
+.selch p{font-size:13px;color:rgba(234,244,238,.7);margin-top:2px;line-height:1.45}
+.selch .scbadge{margin-inline-start:auto;background:var(--sc);color:#0d1f16;font-family:Rubik;font-weight:800;font-size:12px;border-radius:9px;padding:5px 11px;white-space:nowrap}
 .ispk.on{background:var(--green,#1c6b45);color:#fff;animation:ispkpulse 1s infinite}
 @keyframes ispkpulse{50%{opacity:.55}}
 .itabs{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 16px}
@@ -124,6 +130,7 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
   <div class="h2sub">רעיונות סטארטאפ שנוצרו ע״י AgroMind — בעיה → פתרון → שוק יעד.</div>
   <div class="bank">
     <div class="bankhead"><h3>🧠 המוח האנליטי</h3><span class="sel" id="bankSel">בחרו אתגר למעלה, או כתבו בעיה משלכם ↓</span></div>
+    <div id="selChallenge"></div>
     <div class="itabs" id="itabs"></div>
     <div class="ideas" id="ideas"><div class="bankempty">עדיין לא נוצרו רעיונות — בחרו אתגר או כתבו בעיה.</div></div>
     <div class="custom"><input id="cq" placeholder="כתבו בעיה/אתגר משלכם… (למשל: מחסור במים בעונת הקיץ)" onkeydown="if(event.key==='Enter')genCustom()"><button onclick="genCustom()">💡 ייצר רעיונות</button></div>
@@ -193,16 +200,21 @@ buildTabs();
 var _b=document.querySelector('.bank');if(_b){_b.style.borderTop='4px solid '+tabCol(ITAB);}
 function heKw(a){for(var i=0;i<a.length;i++){if(/[֐-׿]/.test(a[i]))return a[i];}return a[0]||'';}
 function enKw(a){for(var i=0;i<a.length;i++){if(/[A-Za-z]/.test(a[i]))return a[i];}return a[0]||'';}
+function showSelCard(html){var el=document.getElementById('selChallenge');el.innerHTML='';if(html){void el.offsetWidth;el.innerHTML=html;}}
 function pick(i){
  if(CUR===i){ // toggle off
-  CUR=-1;CURQ='';document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});
+  CUR=-1;CURQ='';document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});showSelCard('');
   document.getElementById('bankSel').textContent='בחרו אתגר למעלה, או כתבו בעיה משלכם ↓';
   document.getElementById('ideas').innerHTML='<div class="bankempty">עדיין לא נוצרו רעיונות — בחרו אתגר או כתבו בעיה.</div>';return;
  }
  CUR=i;document.querySelectorAll('.ch').forEach(function(x,j){x.classList.toggle('on',j===i);});
- var c=CH[i];CURQ=c.t+' — '+c.d;CURTITLE=c.t;CURKW=heKw(c.kw||[c.t]);CUREN=enKw(c.kw||[c.t]);drawTab();
+ var c=CH[i];CURQ=c.t+' — '+c.d;CURTITLE=c.t;CURKW=heKw(c.kw||[c.t]);CUREN=enKw(c.kw||[c.t]);
+ showSelCard('<div class="selch" style="--sc:'+c.c+'"><div class="scviz">'+viz(c.k,c.c)+'</div><div><h4>'+c.t+'</h4><p>'+c.d+'</p></div><span class="scbadge">🎯 אתגר נבחר</span></div>');
+ drawTab();
 }
-function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});CUR=-1;CURQ=q;CURTITLE=q;CURKW=q;CUREN=q;drawTab();}
+function genCustom(){var q=(document.getElementById('cq').value||'').trim();if(!q)return;document.querySelectorAll('.ch').forEach(function(x){x.classList.remove('on');});CUR=-1;CURQ=q;CURTITLE=q;CURKW=q;CUREN=q;
+ showSelCard('<div class="selch" style="--sc:#8fe6ad"><div style="font-size:34px;flex:0 0 auto">💡</div><div><h4>'+q+'</h4><p>בעיה מותאמת אישית — המוח מנתח אותה בכל הכרטיסיות.</p></div><span class="scbadge">אתגר משלך</span></div>');
+ drawTab();}
 function itab(k){ITAB=k;buildTabs();drawTab();}
 function drawTab(){
  var col=tabCol(ITAB),bank=document.querySelector('.bank');
