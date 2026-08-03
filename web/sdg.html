@@ -74,6 +74,7 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <h1>לוח <b>SDG</b> · ביטחון תזונתי וקיימות</h1>
     <div class="sub">תרומת החקלאות והאגרו-טק הישראלי ליעדי הפיתוח בר-קיימא של האו״ם — מדדים חיים מ-World Bank, ממופים ליעדים 2, 6, 12 ו-15.</div>
     <div class="live"><span class="dot"></span> <span id="upd">נתונים חיים · World Bank Open Data</span></div>
+    <button onclick="openVenn()" style="margin-top:14px;background:linear-gradient(135deg,#3F7E44,#56C02B);color:#fff;border:0;border-radius:14px;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 10px 26px rgba(63,126,68,.28)">📊 כמה מ-17 היעדים נוגעים לחקלאות? · פתח סיכום ←</button>
   </div>
 
   <div class="sect">מדדי מפתח · ישראל</div>
@@ -177,5 +178,47 @@ Promise.all([api('foodprod'),api('cropprod'),api('lvskprod')]).then(function(r){
 Promise.all([api('foodinsec')]).then(function(r){
  lineChart('cfs',null,[{name:'חוסר-ביטחון תזונתי',c:'#BF8B2E',data:ser(r[0])}],480,300);
 });
+function openVenn(){document.getElementById('vennModal').style.display='flex';}
+function closeVenn(){document.getElementById('vennModal').style.display='none';}
 </script>
+
+<div id="vennModal" onclick="if(event.target===this)closeVenn()" style="display:none;position:fixed;inset:0;background:rgba(10,26,17,.62);z-index:80;align-items:center;justify-content:center;padding:20px">
+ <div style="background:#fff;border-radius:20px;max-width:720px;width:100%;max-height:92vh;overflow:auto;padding:26px;box-shadow:0 30px 70px rgba(0,0,0,.35)">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+   <h2 style="font-family:Rubik;font-weight:800;font-size:24px;color:#134a30">🎯 חקלאות בלב יעדי ה-SDG</h2>
+   <button onclick="closeVenn()" style="border:0;background:#eef4f0;color:#5c6f63;font-size:22px;line-height:1;border-radius:10px;width:36px;height:36px;cursor:pointer">×</button>
+  </div>
+  <p style="color:#14261c;font-size:15px;line-height:1.7;margin:8px 0 4px">מבין <b>17 יעדי הפיתוח בר-קיימא</b> של האו״ם, לפי ה-FAO כ-<b>12</b> קשורים ישירות למערכת המזון והחקלאות. ארבעה צירים מרכזיים — <b>חקלאות, מזון, אנרגיה ואקלים</b> — נפגשים ומזינים זה את זה, והחקלאות יושבת בדיוק בנקודת החיבור.</p>
+
+  <svg viewBox="0 0 460 430" style="width:100%;height:auto;max-width:520px;display:block;margin:6px auto">
+   <g style="mix-blend-mode:multiply">
+    <circle cx="230" cy="150" r="120" fill="#56C02B" fill-opacity=".26"/>
+    <circle cx="305" cy="235" r="120" fill="#DDA63A" fill-opacity=".26"/>
+    <circle cx="155" cy="235" r="120" fill="#26BDE2" fill-opacity=".26"/>
+    <circle cx="230" cy="320" r="120" fill="#FD9D24" fill-opacity=".26"/>
+   </g>
+   <g font-family="Rubik" font-weight="800" font-size="16" fill="#134a30" text-anchor="middle">
+    <text x="230" y="34">🌾 חקלאות</text><text x="420" y="238">🍎 מזון</text>
+    <text x="40" y="238">🌡️ אקלים</text><text x="230" y="424">⚡ אנרגיה</text>
+   </g>
+   <g font-family="Rubik" font-weight="900" font-size="13" fill="#fff" text-anchor="middle">
+    <circle cx="230" cy="235" r="15" fill="#DDA63A"/><text x="230" y="240">2</text>
+    <circle cx="278" cy="180" r="14" fill="#56C02B"/><text x="278" y="185">12</text>
+    <circle cx="248" cy="120" r="14" fill="#56C02B"/><text x="248" y="125">15</text>
+    <circle cx="188" cy="180" r="14" fill="#26BDE2"/><text x="188" y="185">6</text>
+    <circle cx="150" cy="230" r="14" fill="#26BDE2"/><text x="150" y="235">13</text>
+    <circle cx="330" cy="235" r="14" fill="#DDA63A"/><text x="330" y="240">3</text>
+    <circle cx="278" cy="290" r="14" fill="#FD9D24"/><text x="278" y="295">9</text>
+    <circle cx="230" cy="330" r="14" fill="#FD9D24"/><text x="230" y="335">7</text>
+    <circle cx="188" cy="290" r="14" fill="#FD9D24"/><text x="188" y="295">14</text>
+   </g>
+  </svg>
+
+  <div style="background:#f4f9f5;border:1px solid #dbe8df;border-radius:12px;padding:16px;font-size:14px;line-height:1.7;color:#14261c">
+   <b style="color:#134a30">היעדים הקשורים לחקלאות ומזון:</b><br>
+   <b>2</b> חיסול הרעב · <b>3</b> בריאות ותזונה · <b>6</b> מים נקיים · <b>7</b> אנרגיה מתחדשת · <b>9</b> תעשייה וחדשנות · <b>12</b> צריכה וייצור אחראיים · <b>13</b> פעולת אקלים · <b>14</b> חיים במים · <b>15</b> חיים ביבשה · <b>1</b> מיגור עוני · <b>8</b> עבודה וצמיחה כלכלית (כפרית).
+   <div style="margin-top:10px;color:#5c6f63;font-size:13px">מקור: FAO — "Food and Agriculture: Key to Achieving the 2030 Agenda".</div>
+  </div>
+ </div>
+</div>
 </body></html>
