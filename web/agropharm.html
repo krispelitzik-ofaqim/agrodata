@@ -85,7 +85,8 @@ tr:hover td{background:#fbfdfd}
 <script>
 var CATCOL={"תבלין-רפואי":"#c79a2e","אדפטוגן":"#7a5cc0","סופר-פוד":"#2e9e63","אצה":"#1f8f8f","שורש":"#8a5a2b","פרי-על":"#c4562e","עלים ותה":"#5c8a2b","זרע/שמן":"#b58a2e","פרח":"#b5482e",
  "מולקולר-פארמינג":"#1f8f8f","קנביס-פארמה":"#5c8a2b","אגרו-ביוטק":"#7a5cc0","צמחי מרפא":"#2e9e63",
- "שומנים":"#c79a2e","חלבון":"#1f8f8f","ויטמין":"#c4562e","מינרל":"#7a5cc0","פרוביוטיקה":"#2e9e63","סיבים":"#5c8a2b","נוגד חמצון":"#b5482e","ממריץ/הורמון":"#8a5a2b"};
+ "שומנים":"#c79a2e","חלבון":"#1f8f8f","ויטמין":"#c4562e","מינרל":"#7a5cc0","פרוביוטיקה":"#2e9e63","סיבים":"#5c8a2b","נוגד חמצון":"#b5482e","ממריץ/הורמון":"#8a5a2b",
+ "שמן":"#b58a2e","פרח":"#b5482e","פרי":"#c4562e","דגן":"#c79a2e","עלים":"#5c8a2b","צמח מרפא":"#2e9e63"};
 function cc(v){return CATCOL[v]||"#5c6f63";}
 var HERB=[
  ["🟡","כורכום","Curcuma longa","תבלין-רפואי","כורכומין","אנטי-דלקתי ונוגד חמצון","אבקה / כמוסות"],
@@ -151,9 +152,34 @@ var SUPP=[
  ["💊","BCAA · חומצות אמינו","תסיסה","חלבון","שיקום שריר","אבקה"],
  ["⚡","קריאטין","תסיסה","חלבון","כוח וביצועים","אבקה"]
 ];
+var COSM=[
+ ["🌰","יוז׳בה","Simmondsia chinensis","שמן","אסטרים דמויי-שעווה","לחות והזנה לעור ולשיער — גידול ישראלי (ערבה/נגב)","שמן"],
+ ["🧂","מינרלים · ים המלח","Dead Sea","מינרל","מגנזיום, אשלגן, ברום","מינרליזציה, קילוף ולחות לעור","מלח / בוץ"],
+ ["🟢","אצות","Microalgae","אצה","אסטקסנטין / פוקוקסנטין","אנטי-אייג׳ינג ונוגד חמצון — קיבוץ קטורה","תמצית"],
+ ["🍅","עגבנייה","Solanum lycopersicum","פרי","ליקופן","הגנה מחמצון ומ-UV, זוהר עור — מגדל העמק","תמצית"],
+ ["🌼","נרקיס","Narcissus","פרח","IBR-Dormin (תמצית בצל)","האטת הזדקנות תאי עור — פיתוח ישראלי","תמצית"],
+ ["🫒","זית","Olea europaea","שמן","סקוואלן ופוליפנולים","לחות ונוגד חמצון","שמן"],
+ ["🥑","אבוקדו","Persea americana","שמן","ויטמין E","הזנה עמוקה לעור יבש","שמן"],
+ ["🌵","ארגן","Argania spinosa","שמן","טוקופרולים","הזנה לשיער ולעור","שמן"],
+ ["🌹","ורד","Rosa damascena","פרח","שמן ורדים / מי ורדים","טונינג, ארומה והרגעה","מים / שמן אתרי"],
+ ["💜","לבנדר","Lavandula","פרח","לינלול","הרגעה ואנטיספטי","שמן אתרי"],
+ ["🌼","קלנדולה","Calendula officinalis","פרח","פלבנואידים","ריפוי והרגעת עור","תמצית / שמן"],
+ ["🪴","אלוורה","Aloe vera","צמח מרפא","פוליסכרידים","הרגעה, לחות וריפוי עור","ג׳ל"],
+ ["🌾","שיבולת שועל","Avena sativa","דגן","בטא-גלוקן","הרגעה וחיזוק חסם העור","קולואיד / אבקה"],
+ ["🍵","תה ירוק","Camellia sinensis","עלים","פוליפנולים (EGCG)","נוגד חמצון והגנה מזיהום","תמצית"]
+];
+var COSMCO=[
+ ["Ahava","קוסמטיקה מבוססת מינרלים וצמחי ים המלח — מותג הדגל הישראלי","https://www.ahava.com"],
+ ["Algatech","אסטקסנטין ופוקוקסנטין מאצות לאנטי-אייג׳ינג — קיבוץ קטורה","https://www.algatech.com"],
+ ["IBR Ltd","רכיבים פעילים מצמחים (נרקיס, יוז׳בה) לקוסמצבטיקה — יבנה","https://www.ibr-ltd.com"],
+ ["TAGRA Biotechnologies","מיקרו-אנקפסולציה של רכיבים פעילים לתעשיית הקוסמטיקה","https://www.tagra.com"],
+ ["Lycored","ליקופן וקרוטנואידים מעגבניות — הגנה ובריאות העור","https://www.lycored.com"],
+ ["Jojoba Israel","מיצוי שמן יוז׳בה טהור לקוסמטיקה — קיבוץ הצרים","https://www.jojobaisrael.com"]
+];
 var DICTS={
  herb:{title:"צמחי מרפא",icon:"🌿",cols:["","צמח / מקור","שם מדעי","קטגוריה","חומר פעיל","תועלת","צורה"],fk:3,rows:HERB},
  supp:{title:"תוספי מזון",icon:"💊",cols:["","תוסף","מקור חקלאי","סוג","תועלת","צורה"],fk:3,rows:SUPP},
+ cosm:{title:"אגרו-קוסמטיקה",icon:"💄",cols:["","צמח / מקור","שם מדעי","קטגוריה","רכיב פעיל","תועלת קוסמטית","צורה"],fk:3,rows:COSM},
  mol:{title:"מולקולר-פארמינג וחברות",icon:"🧬",companies:true,cnt:CO.length}
 };
 var DK='herb',DFILT='all';
@@ -166,7 +192,7 @@ function draw(){
  var chips='<button class="chip on" onclick="cfilt(\'all\',this)">הכול</button>'+types.map(function(t){return '<button class="chip" onclick="cfilt(\''+t+'\',this)">'+t+'</button>';}).join('');
  document.getElementById('panel').innerHTML='<div class="ptitle">'+d.icon+' '+d.title+' <span style="font-size:14px;color:var(--mut);font-weight:400">· '+d.rows.length+' פריטים</span></div>'+
   '<input class="search" id="search" oninput="body()" placeholder="🔎 חיפוש צמח, חומר פעיל או תועלת…">'+
-  '<div class="chips" id="chips">'+chips+'</div><div class="tblwrap"><table id="tbl"></table></div>'+(DK==='supp'?suppCoBlock():'');
+  '<div class="chips" id="chips">'+chips+'</div><div class="tblwrap"><table id="tbl"></table></div>'+(DK==='supp'?suppCoBlock():DK==='cosm'?cosmCoBlock():'');
  body();
 }
 function cfilt(t,el){DFILT=t;document.querySelectorAll('#chips .chip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');body();}
@@ -193,6 +219,10 @@ var SUPPCO=[
 function suppCoBlock(){
  return '<div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)"><div style="font-family:Rubik;font-weight:800;font-size:17px;color:#124a4a;margin-bottom:12px">🏭 חברות תוספי מזון · ייצור וייבוא <span style="font-family:Heebo;font-weight:400;font-size:13px;color:var(--mut)">· יצרניות ויבואניות מובילות</span></div><div class="cogrid">'+
   SUPPCO.map(function(c){return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+'</h3><p>'+c[1]+'</p><a href="'+c[2]+'" target="_blank" rel="noopener">אתר החברה ↗</a></div></div>';}).join('')+'</div></div>';
+}
+function cosmCoBlock(){
+ return '<div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)"><div style="font-family:Rubik;font-weight:800;font-size:17px;color:#124a4a;margin-bottom:12px">🏭 חברות אגרו-קוסמטיקה ישראליות <span style="font-family:Heebo;font-weight:400;font-size:13px;color:var(--mut)">· רכיבים פעילים מהצומח לתעשיית היופי</span></div><div class="cogrid">'+
+  COSMCO.map(function(c){return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+'</h3><p>'+c[1]+'</p><a href="'+c[2]+'" target="_blank" rel="noopener">אתר החברה ↗</a></div></div>';}).join('')+'</div></div>';
 }
 function drawCo(){
  document.getElementById('panel').innerHTML='<div class="ptitle">🧬 מולקולר-פארמינג וחברות אגרו-פארמה</div><div class="cogrid">'+
