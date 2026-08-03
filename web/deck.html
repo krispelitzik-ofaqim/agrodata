@@ -137,6 +137,30 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .prog{position:absolute;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--green),var(--lime));z-index:30;transition:width .25s linear}
 .snum{position:absolute;top:14px;right:18px;font-family:'Plex Mono';font-size:13px;color:rgba(234,244,238,.5);z-index:30;direction:ltr}
 .skip{position:absolute;top:14px;left:18px;color:rgba(234,244,238,.5);text-decoration:none;font-family:'Plex Mono';font-size:13px;z-index:30}
+/* ===== MOBILE (portrait) — fills the phone screen, content reflows ===== */
+@media (orientation:portrait){
+ #deck{max-width:none;max-height:none;border-radius:0}
+ .slide{padding:10% 6%}
+ h1{font-size:clamp(40px,13vw,88px)}
+ h2{font-size:clamp(26px,7vw,52px)}
+ .lead{font-size:clamp(18px,5vw,34px)}
+ .sub,.fbanner .bsub{font-size:clamp(14px,3.6vw,20px)}
+ .chips{grid-template-columns:repeat(4,1fr);width:96%}
+ .chip .en{font-size:clamp(12px,3.4vw,18px)}
+ .chip .he{font-size:clamp(9px,2.4vw,12px)}
+ .slide.grown .chips{grid-template-columns:repeat(4,1fr);grid-template-rows:none;height:auto;width:95%;gap:9px}
+ .slide.grown .chip .en{font-size:clamp(13px,4.2vw,22px)}
+ .cardrow{gap:10px}
+ .fcard{width:min(46%,260px)}
+ .wall.g8{grid-template-columns:repeat(4,1fr)}
+ .wall.g6,.wall.g4{grid-template-columns:repeat(3,1fr)}
+ .stats,.statGrid{grid-template-columns:repeat(2,1fr)}
+ .miles{width:96%}
+ .peoplepic{width:94%;aspect-ratio:16/9}
+ .fbanner{padding:20px 5% 34px}
+ .ctrls{bottom:10px;gap:9px}
+ .ctrls button{width:38px;height:38px;font-size:14px}
+}
 </style>
 </head>
 <body>
