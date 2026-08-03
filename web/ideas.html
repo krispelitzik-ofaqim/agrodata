@@ -197,7 +197,7 @@ function scoreChallenges(){
 scoreChallenges();setInterval(scoreChallenges,300000);
 // generate ideas via AgroMind (Claude)
 var CUR=-1,CURQ='',CURTITLE='',CURKW='',CUREN='',ITAB='ideas';
-var ITABS=[['ideas','💡 רעיונות','#8fe6ad'],['gap','🎯 מפת פערים','#f0c14b'],['who','🏢 מי כבר עושה','#5ab0d0'],['trends','📈 מגמות ומחקר','#b39ae0']];
+var ITABS=[['ideas','💡 רעיונות','#8fe6ad'],['gap','🎯 מפת פערים','#f0c14b'],['who','🏢 מי כבר עושה','#5ab0d0'],['trends','📈 מגמות ומחקר','#b39ae0'],['finance','💰 מימון','#3ec9a0']];
 function tabCol(k){var t=ITABS.find(function(x){return x[0]===k;});return t?t[2]:'#8fe6ad';}
 function buildTabs(){document.getElementById('itabs').innerHTML=ITABS.map(function(t){var on=t[0]===ITAB;return '<button class="itab'+(on?' on':'')+'" style="'+(on?'background:'+t[2]+';color:#0d1f16;border-color:transparent':'color:'+t[2])+'" onclick="itab(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');}
 buildTabs();
@@ -226,7 +226,7 @@ function drawTab(){
  document.getElementById('bankSel').textContent='אתגר: '+CURTITLE;
  (document.querySelector('.bank')||document.getElementById('ideas')).scrollIntoView({behavior:'smooth',block:'nearest'});
  if(!CURQ){document.getElementById('ideas').innerHTML='<div class="bankempty">בחרו אתגר או כתבו בעיה.</div>';return;}
- if(ITAB==='ideas')renderIdeas();else if(ITAB==='gap')renderGap();else if(ITAB==='who')renderWho();else renderTrends();
+ if(ITAB==='ideas')renderIdeas();else if(ITAB==='gap')renderGap();else if(ITAB==='who')renderWho();else if(ITAB==='trends')renderTrends();else renderFinance();
 }
 function thinking(msg){document.getElementById('ideas').innerHTML='<div class="thinking"><span>'+msg+'</span><span class="dots"><i></i><i></i><i></i></span></div>';}
 function isPremium(){return true;/* פתוח לכולם בינתיים — להחזיר נעילה: localStorage.getItem('agroPremium')==='1' */}
@@ -304,6 +304,36 @@ function renderWho(){
    return '<div class="rowitm"><b>'+c.name+'</b> <span class="mt">מס׳ '+c.num+' · '+(c.status||'')+(c.founded?' · הוקמה '+c.founded:'')+'</span>'+(c.purpose?'<div class="mt">'+c.purpose+'</div>':'')+'</div>';
   }).join('');
  }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת.</div>';});
+}
+function renderFinance(){
+ var box=document.getElementById('ideas');thinking('בונה מסלול מימון לרעיון…');
+ fetch('/api/companies?limit=1&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).catch(function(){return{};}).then(function(j){
+  var comp=(j&&j.total)||0;
+  var grants=[
+   ['רשות החדשנות · תנופה','מענק פרה-סיד ליזמים בתחילת הדרך','grants.html'],
+   ['רשות החדשנות · מסלול חממות','מימון עד ~85% מהתקציב דרך חממה מפעילה','labs.html'],
+   ['קרן המו״פ · רשות החדשנות','מימון תוכנית מו״פ בכל שלב','grants.html'],
+   ['Horizon Europe · EIT Food','קונסורציומים ומענקי פוד-טק אירופיים','grants.html'],
+   ['קרן BARD','מו״פ חקלאי דו-לאומי ארה״ב–ישראל','grants.html']
+  ];
+  var inv=[
+   ['Fresh Start','חממת פוד-טק · קרית שמונה','labs.html'],
+   ['Trendlines Agrifood','חממה וקרן השקעות · מסגב','labs.html'],
+   ['The Kitchen Hub','חממת שטראוס · אשדוד','labs.html'],
+   ['GrowingIL','קהילת אגריפוד ומשקיעים','labs.html']
+  ];
+  var routes=[['מענקים','grants.html'],['גיוס הון (אקוויטי)','agrolaunch.html'],['גיוס המונים','agroinvest.html'],['עסקאות ומשקיעים','agrocapital.html']];
+  var stage=comp<80?'תחום צעיר — מתאים למענקי פרה-סיד וחממות 🌱':'תחום מבוסס — מתאים לגיוס הון ומשקיעים אסטרטגיים 📈';
+  var h='<div style="grid-column:1/-1">';
+  h+='<div class="gapcard" style="border-color:#3ec9a0"><div style="font-family:Rubik;font-weight:800;font-size:19px;color:#fff">💰 מסלול מימון · '+CURTITLE+'</div>'
+    +'<div style="font-size:13.5px;color:rgba(234,244,238,.75);margin-top:6px">'+stage+' · <b style="color:#8fe6ad">'+comp.toLocaleString()+'</b> חברות כבר בתחום</div></div>';
+  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🏛️ מענקים ומסלולי מימון</div>';
+  h+=grants.map(function(g){return '<a class="rowitm" href="'+g[2]+'"><b>'+g[0]+'</b><span class="mt">'+g[1]+'</span></a>';}).join('');
+  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🧪 חממות ומשקיעים</div>';
+  h+=inv.map(function(g){return '<a class="rowitm" href="'+g[2]+'"><b>'+g[0]+'</b><span class="mt">'+g[1]+'</span></a>';}).join('');
+  h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">'+routes.map(function(r){return '<a href="'+r[1]+'" style="background:rgba(62,201,160,.16);color:#8fe6ad;text-decoration:none;font-family:Rubik;font-weight:800;font-size:13.5px;border-radius:10px;padding:9px 14px">'+r[0]+' ↗</a>';}).join('')+'</div>';
+  h+='</div>';box.innerHTML=h;
+ });
 }
 function renderTrends(){
  var box=document.getElementById('ideas');thinking('אוסף מגמות מהחדשות והמחקר…');
