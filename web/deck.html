@@ -50,6 +50,13 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .chip .en{font-family:'Space Grotesk';font-weight:700;font-size:clamp(11px,1.15vw,15px);color:#fff;direction:ltr;line-height:1.05}
 .chip .en b{color:var(--lime)}
 .chip .he{font-size:clamp(9px,.85vw,11px);color:rgba(234,244,238,.65);margin-top:2px}
+/* slide 4 grown: chips fill the whole slide, title fades away */
+.slide.grown{padding:3% 3.5%}
+.slide.grown .kick,.slide.grown h2{opacity:0!important;transform:scale(.92)!important;height:0;margin:0;overflow:hidden;transition:.6s;pointer-events:none}
+.slide.grown .chips{width:98%;height:88%;margin-top:0;grid-template-rows:repeat(4,1fr);gap:14px;transition:width .7s ease,height .7s ease,gap .7s ease}
+.slide.grown .chip{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px;transition:.7s}
+.slide.grown .chip .en{font-size:clamp(18px,2.6vw,38px)}
+.slide.grown .chip .he{font-size:clamp(11px,1.3vw,18px);margin-top:5px}
 /* stats */
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;width:min(92%,1000px);margin-top:26px}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
@@ -74,23 +81,36 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .fcard .ft b{color:var(--lime)}
 .fcard .fd{color:rgba(234,244,238,.65);font-size:13px;margin-top:5px;line-height:1.5}
 /* milestones */
-.miles{display:flex;flex-direction:column;gap:11px;width:min(82%,760px);margin-top:22px}
-.mrow{display:flex;align-items:center;gap:14px;background:rgba(46,158,99,.09);border:1px solid rgba(143,230,173,.28);border-radius:13px;padding:13px 18px;opacity:0;transform:translateX(24px)}
+.miles{display:flex;flex-direction:column;gap:16px;width:min(88%,880px);margin-top:26px}
+.mrow{display:flex;align-items:center;gap:20px;background:rgba(46,158,99,.11);border:1px solid rgba(143,230,173,.32);border-radius:18px;padding:22px 28px;opacity:0;transform:translateX(24px)}
 .slide.on .mrow{animation:inR .6s cubic-bezier(.2,.8,.3,1) both}
 @keyframes inR{to{opacity:1;transform:none}}
-.mrow .ck{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#2e9e63,#134a30);color:#fff;display:grid;place-items:center;font-weight:900;flex:0 0 auto}
-.mrow .mt{font-family:Rubik;font-weight:700;font-size:clamp(14px,1.6vw,19px);color:#fff;text-align:right}
+.mrow .ck{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#2e9e63,#134a30);color:#fff;display:grid;place-items:center;font-weight:900;font-size:clamp(16px,2vw,22px);flex:0 0 auto}
+.mrow .mt{font-family:Rubik;font-weight:700;font-size:clamp(17px,2.2vw,28px);color:#fff;text-align:right}
+/* live image walls (books / plants / equipment) with captions */
+.wall{display:grid;gap:12px;width:min(92%,1040px);margin-top:22px}
+.wall.g8{grid-template-columns:repeat(8,1fr)}
+.wall.g6{grid-template-columns:repeat(6,1fr)}
+.wall.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:700px){.wall.g8{grid-template-columns:repeat(4,1fr)}.wall.g6,.wall.g4{grid-template-columns:repeat(3,1fr)}}
+.gitem{position:relative;border-radius:9px;overflow:hidden;opacity:0;background:rgba(255,255,255,.05);border:1px solid rgba(143,230,173,.22);box-shadow:0 8px 22px rgba(0,0,0,.45)}
+.slide.on .gitem{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) both,floaty 7s ease-in-out infinite}
+.gitem img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:3/4}
+.wall.g6 .gitem img,.wall.g4 .gitem img{aspect-ratio:1/1}
+.wcap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(6,15,10,.92),rgba(6,15,10,.1));color:#eaf4ee;font-size:clamp(9px,1vw,13px);padding:16px 6px 6px;text-align:center;font-weight:700;line-height:1.2}
+.gitem.eq{aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(46,158,99,.12)}
+.gitem.eq .eqi{font-size:clamp(30px,4.5vw,54px)}
+.gitem.eq .wcap{position:static;background:none;padding:0;font-size:clamp(11px,1.3vw,16px)}
 /* source chips */
 .srcs{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;width:min(90%,900px);margin-top:24px}
 .src{background:rgba(255,255,255,.06);border:1px solid rgba(143,230,173,.3);border-radius:999px;padding:10px 18px;font-family:'Plex Mono';font-size:clamp(11px,1.3vw,15px);color:var(--ink);opacity:0}
 .slide.on .src{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) both}
 .src b{color:var(--lime)}
-/* ofakim media */
-.media{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:22px;width:min(90%,940px)}
-.mtile{flex:1 1 260px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid rgba(143,230,173,.3);opacity:0;background:linear-gradient(135deg,#1c6b45,#134a30);display:flex;align-items:center;justify-content:center;position:relative}
-.slide.on .mtile{animation:up .9s ease both,floaty 7s ease-in-out infinite}
-.mtile img,.mtile video{width:100%;height:100%;object-fit:cover}
-.mtile .ph{color:rgba(255,255,255,.6);font-family:Rubik;font-weight:700;font-size:15px;text-align:center;padding:10px}
+/* ofakim full-screen video */
+.slide.fullmedia{padding:0}
+.bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.fmscrim{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(6,15,10,.9),rgba(6,15,10,.1) 45%,rgba(6,15,10,.45))}
+.fmoverlay{position:absolute;left:0;right:0;bottom:9%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 6%}
 /* floating background shapes per slide */
 .orbs .orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5;animation:floaty 8s ease-in-out infinite}
 /* controls */
@@ -142,26 +162,18 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     <div class="chips" id="chips"></div>
   </section>
 
-  <!-- 5 · STATS -->
-  <section class="slide" data-t="12000" data-stats="1">
-    <div class="kick">By The Numbers</div>
-    <h2>הזירה <b>במספרים</b></h2>
-    <div class="stats" id="stats"></div>
-  </section>
-
-  <!-- 6 · MIND MAP -->
-  <section class="slide" data-t="13000" data-map="1">
+  <!-- 5 · MIND MAP (live, real, with topics) -->
+  <section class="slide" data-t="14000">
     <div class="kick">The Blueprint</div>
-    <canvas class="eng" id="mapCv" width="560" height="560"></canvas>
-    <h2 style="margin-top:4px">מפת <b>החשיבה</b></h2>
-    <div class="sub">המוח החי של הזירה — נושם, מתעדכן, מתרחב.</div>
+    <h2>מפת <b>החשיבה</b> · המוח החי של הזירה</h2>
+    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="sitemap-brain.html" title="Mind Map"></iframe></div></div>
   </section>
 
   <!-- 7 · LIVE MAP -->
   <section class="slide" data-t="13000">
     <div class="kick">AgroMap · GIS</div>
     <h2>873 יישובים <b>על המפה</b></h2>
-    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="agromap.html" title="AgroMap"></iframe></div></div>
+    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="maps.html" title="AgroMap"></iframe></div></div>
   </section>
 
   <!-- 8 · KNOWLEDGE -->
@@ -169,27 +181,50 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     <div class="kick">Knowledge Engines</div>
     <h2>כל <b>הידע</b> החקלאי</h2>
     <div class="cardrow">
-      <div class="fcard" style="animation-delay:.1s"><div class="fi">📚</div><div class="ft">Agro<b>Books</b></div><div class="fd">300K+ ספרים · כולל עברית</div></div>
-      <div class="fcard" style="animation-delay:.25s"><div class="fi">🔬</div><div class="ft">Agro<b>Patents</b></div><div class="fd">חיפוש פטנטים גלובלי חי</div></div>
-      <div class="fcard" style="animation-delay:.4s"><div class="fi">🎓</div><div class="ft">Agro<b>Scholar</b></div><div class="fd">אקדמיה ומחקר · IL + עולם</div></div>
+      <div class="fcard" style="animation-delay:.05s"><div class="fi">📚</div><div class="ft">Agro<b>Books</b></div><div class="fd">300K+ ספרים · כולל עברית</div></div>
+      <div class="fcard" style="animation-delay:.15s"><div class="fi">🔬</div><div class="ft">Agro<b>Patents</b></div><div class="fd">פטנטים גלובלי · חי</div></div>
+      <div class="fcard" style="animation-delay:.25s"><div class="fi">🎓</div><div class="ft">Agro<b>Scholar</b></div><div class="fd">אקדמיה · IL + עולם</div></div>
+      <div class="fcard" style="animation-delay:.35s"><div class="fi">📄</div><div class="ft">Agro<b>Library</b></div><div class="fd">כתבי עת · Crossref</div></div>
+      <div class="fcard" style="animation-delay:.45s"><div class="fi">📖</div><div class="ft">Agro<b>Pedia</b></div><div class="fd">מילון האגרו · FAO</div></div>
+      <div class="fcard" style="animation-delay:.55s"><div class="fi">🌿</div><div class="ft">Agro<b>Flora</b></div><div class="fd">מזהה צמחים · iNaturalist</div></div>
     </div>
+    <div class="stats" style="grid-template-columns:repeat(3,1fr);width:min(72%,720px);margin-top:20px">
+      <div class="stat" style="animation-delay:.6s"><div class="v">300K+</div><div class="l">📚 ספרים</div></div>
+      <div class="stat" style="animation-delay:.72s"><div class="v">מיליוני</div><div class="l">📄 מאמרים</div></div>
+      <div class="stat" style="animation-delay:.84s"><div class="v">גלובלי</div><div class="l">🔬 פטנטים</div></div>
+    </div>
+  </section>
+
+  <!-- BOOKS & JOURNALS wall -->
+  <section class="slide" data-t="11000" data-gal="books" data-q="agriculture">
+    <div class="kick">Living Library</div>
+    <h2>ספרים <b>וכתבי עת</b></h2>
+    <div class="wall g8" data-wall></div>
+  </section>
+
+  <!-- PLANTS & TREES identifier wall -->
+  <section class="slide" data-t="11000" data-gal="flora" data-q="tree">
+    <div class="kick">Flora · iNaturalist</div>
+    <h2>מגדיר <b>צמחים ועצים</b></h2>
+    <div class="wall g6" data-wall></div>
+  </section>
+
+  <!-- EQUIPMENT & TECH -->
+  <section class="slide" data-t="11000" data-gal="equip">
+    <div class="kick">Equipment & Tech</div>
+    <h2>ציוד <b>וטכנולוגיה</b></h2>
+    <div class="wall g4" data-wall></div>
   </section>
 
   <!-- 9 · INNOVATION -->
   <section class="slide" data-t="12000">
     <div class="kick">Innovation Engine</div>
     <h2>מרעיון <b>למוצר</b></h2>
+    <div class="sub">אתגרים חיים מהשטח → בנק רעיונות לסטארטאפים. חיפוש אחד, חמש עדשות ניתוח: רעיונות · פערים · מי עושה · מגמות · מימון.</div>
     <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="ideas.html" title="AgroInnovate"></iframe></div></div>
   </section>
 
-  <!-- 10 · AGROPLAN -->
-  <section class="slide" data-t="12000">
-    <div class="kick">AI Business Plan</div>
-    <h2>תוכנית עסקית <b>ב-AI</b></h2>
-    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="agroplan.html" title="AgroPlan"></iframe></div></div>
-  </section>
-
-  <!-- 11 · FINANCIAL -->
+  <!-- FINANCIAL -->
   <section class="slide" data-t="11000">
     <div class="kick">Financial Arena</div>
     <h2>הון · מסחר · <b>צמיחה</b></h2>
@@ -200,12 +235,15 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
     </div>
   </section>
 
-  <!-- 12 · OFAKIM -->
-  <section class="slide" data-t="14000">
-    <div class="kick">Ofakim · From The Negev</div>
-    <h2>מהנגב <b>לעולם</b></h2>
-    <div class="sub">אופקים — בירת האגרו-טק החדשה. מרכז חדשנות, חוות ניסויים וקהילת מגדלים.</div>
-    <div class="media" id="ofmedia"></div>
+  <!-- OFAKIM · full-screen video 10s -->
+  <section class="slide fullmedia" data-t="10000" style="background:linear-gradient(135deg,#1c6b45,#0b1c12)">
+    <video class="bgvid" muted loop playsinline preload="auto" data-src="assets/ofakim/ofakim.mp4"></video>
+    <div class="fmscrim"></div>
+    <div class="fmoverlay">
+      <div class="kick">Ofakim · From The Negev</div>
+      <h2>מהנגב <b>לעולם</b></h2>
+      <div class="sub">אופקים — בירת האגרו-טק החדשה.</div>
+    </div>
   </section>
 
   <!-- 13 · MILESTONES -->
@@ -251,21 +289,10 @@ var dots=[].slice.call(document.querySelectorAll('.dot'));
 /* ---- content builders ---- */
 var ENG=[['Lake','מאגר'],['Labs','מדען'],['Library','כתבי עת'],['Gov','מדיניות'],['RnD','מו״פים'],['Scholar','אקדמיה'],['Innovate','חדשנות'],['Map','מפות'],['Expo','כנסים'],['Trade','סחר'],['Pulse','חדשות'],['Mind','AI'],['Directory','חברות'],['Impact','SDG'],['Scout','סטארטאפים'],['Apps','אפליקציות'],['Eco','סביבה'],['Patents','פטנטים'],['Books','ספרים'],['Hub','אקסלרטור'],['Pedia','מילון'],['Flora','צמחים'],['Market','תשומות'],['Pharm','תרופות'],['Aqua','ימית'],['Grow','מבוקרת'],['Academy','חינוך'],['Sense','חיישנים']];
 document.getElementById('chips').innerHTML=ENG.map(function(e,i){return '<div class="chip" style="animation-delay:'+(i*0.09).toFixed(2)+'s"><div class="en">Agro<b>'+e[0]+'</b></div><div class="he">'+e[1]+'</div></div>';}).join('');
-var STATS=[['מנועים',28,''],['מקורות חיים',20,''],['ספרים',300000,'+'],['יישובים',873,''],['חברות',728000,'+']];
-document.getElementById('stats').innerHTML=STATS.map(function(s,i){return '<div class="stat" style="animation-delay:'+(i*0.12).toFixed(2)+'s"><div class="v" data-t="'+s[1]+'" data-s="'+s[2]+'">0</div><div class="l">'+s[0]+'</div></div>';}).join('');
-var MILE=[['28','מנועים חיים — כל הזירה באוויר'],['✓','האתר עלה לאוויר · agrodata.co.il'],['20+','מקורות נתונים חיים — ללא עלות'],['AI','2 מנועי בינה · Gemini + Claude'],['🧠','מפת חשיבה + תוכנית עסקית ב-AI']];
+var MILE=[['28','מנועים חיים — כל הזירה באוויר'],['✓','האתר עלה לאוויר · agrodata.co.il'],['20+','מקורות נתונים חיים — ללא עלות'],['🤖','בינה מלאכותית מובנית בכל הזירה'],['🧠','מפת חשיבה חיה של הזירה']];
 document.getElementById('miles').innerHTML=MILE.map(function(m,i){return '<div class="mrow" style="animation-delay:'+(0.15+i*0.22).toFixed(2)+'s"><span class="ck">'+m[0]+'</span><span class="mt">'+m[1]+'</span></div>';}).join('');
-var SRC=['World Bank','data.gov.il','Google Patents','Open Library','iNaturalist','Crossref','OpenAlex','Google News','NASA GIBS','GeoNames'];
+var SRC=['World Bank','data.gov.il','Google Patents','Open Library','Internet Archive','Google Books','iNaturalist','Crossref','OpenAlex','Google News','NASA GIBS','GeoNames','Eurostat','UN Comtrade','App Store','Google Play','Yahoo Finance','ויקיפדיה','Open-Meteo','Gemini','Claude'];
 document.getElementById('srcs').innerHTML=SRC.map(function(s,i){return '<span class="src" style="animation-delay:'+(i*0.08).toFixed(2)+'s"><b>›</b> '+s+'</span>';}).join('');
-/* ofakim media — drop files in assets/ofakim/ (ofakim1.jpg, ofakim2.jpg, ofakim.mp4). graceful placeholder if missing */
-var OF=[['img','assets/ofakim/ofakim1.jpg','אופקים · העיר'],['video','assets/ofakim/ofakim.mp4','מרכז החדשנות'],['img','assets/ofakim/ofakim2.jpg','חוות ניסויים']];
-document.getElementById('ofmedia').innerHTML=OF.map(function(o,i){
- var inner=o[0]==='video'
-  ? '<video src="'+o[1]+'" muted autoplay loop playsinline onerror="this.parentNode.innerHTML=\'<div class=&quot;ph&quot;>'+o[2]+'</div>\'"></video>'
-  : '<img src="'+o[1]+'" alt="" onerror="this.parentNode.innerHTML=\'<div class=&quot;ph&quot;>'+o[2]+'</div>\'">';
- return '<div class="mtile" style="animation-delay:'+(i*0.18).toFixed(2)+'s">'+inner+'</div>';
-}).join('');
-
 /* ---- floating particles ---- */
 (function(){var c=document.getElementById('pcv'),x=c.getContext('2d'),W,H,ps=[];
  function size(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
@@ -309,18 +336,43 @@ function initMap(){
 function countUp(){[].forEach.call(document.querySelectorAll('#stats .v'),function(el){var t=+el.getAttribute('data-t'),suf=el.getAttribute('data-s')||'',st=null;function step(ts){if(!st)st=ts;var p=Math.min((ts-st)/1500,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e).toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
 
 /* ---- slide engine ---- */
+function esc(s){return String(s||'').replace(/[&<>"]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[x];});}
+function loadGallery(s){
+ if(s._gl)return;s._gl=true;
+ var type=s.getAttribute('data-gal'),q=s.getAttribute('data-q')||'',wall=s.querySelector('[data-wall]');if(!wall)return;
+ if(type==='equip'){
+  var E=[['💧','השקיה מדויקת'],['🚜','מיכון חקלאי'],['🌡️','חיישני שדה'],['🏭','חממות טכנולוגיות'],['🛰️','חישה מרחוק'],['🧪','דישון והזנה'],['🌱','חקלאות אנכית'],['🐝','האבקה']];
+  wall.innerHTML=E.map(function(e,i){return '<div class="gitem eq" style="animation-delay:'+(i*0.08).toFixed(2)+'s"><div class="eqi">'+e[0]+'</div><div class="wcap">'+e[1]+'</div></div>';}).join('');return;
+ }
+ var url=type==='flora'?('/api/flora?q='+encodeURIComponent(q)):('/api/books?num=24&q='+encodeURIComponent(q));
+ fetch(url).then(function(r){return r.json();}).then(function(j){
+  var items=(j&&j.items)||[],n=type==='flora'?12:16;
+  items=items.filter(function(x){return type==='flora'?x.photo:x.cover;}).slice(0,n);
+  if(!items.length){s._gl=false;return;}
+  wall.innerHTML=items.map(function(x,i){
+   var img=type==='flora'?x.photo:x.cover,cap=type==='flora'?(x.he||x.sci):(x.title||'');
+   return '<div class="gitem" style="animation-delay:'+(i*0.06).toFixed(2)+'s"><img src="'+img+'" loading="lazy" alt=""><div class="wcap">'+esc(cap)+'</div></div>';
+  }).join('');
+ }).catch(function(){s._gl=false;});
+}
+var growTimer=null;
 function activate(i){
  var s=slides[i];
  if(s.getAttribute('data-brain')){initBrain();brainStart=Date.now();}
  if(s.getAttribute('data-map'))initMap();
  if(s.getAttribute('data-stats'))setTimeout(countUp,300);
+ if(s.getAttribute('data-gal'))loadGallery(s);
+ clearTimeout(growTimer);
+ if(s.getAttribute('data-chips'))growTimer=setTimeout(function(){s.classList.add('grown');},3400);
  var f=s.querySelector('iframe[data-src]');
  if(f&&!f.src){f.src=f.getAttribute('data-src');sizeFrame(f);}
+ var v=s.querySelector('.bgvid[data-src]');
+ if(v){if(!v.src)v.src=v.getAttribute('data-src');try{v.currentTime=0;v.play();}catch(e){}}
 }
 function sizeFrame(f){var vp=f.parentNode,w=1400;f.style.width=w+'px';f.style.height=Math.round(w*(vp.offsetHeight/vp.offsetWidth))+'px';f.style.transform='scale('+(vp.offsetWidth/w)+')';}
 function go(i){
  if(i<0)i=slides.length-1;if(i>=slides.length)i=0;
- slides[cur].classList.remove('on');dots[cur].classList.remove('on');
+ slides[cur].classList.remove('on','grown');dots[cur].classList.remove('on');clearTimeout(growTimer);
  cur=i;slides[cur].classList.add('on');dots[cur].classList.add('on');
  SNUM.textContent=('0'+(cur+1)).slice(-2)+' / '+slides.length;
  activate(cur);schedule();
