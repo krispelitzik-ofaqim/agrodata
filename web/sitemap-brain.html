@@ -107,6 +107,18 @@ svg.brain{width:100%;min-width:900px;height:auto;display:block}
 .sblk .ik{font-size:12.5px;color:rgba(234,244,238,.7)}
 .sblk .iv{font-family:Rubik;font-weight:800;font-size:18px;color:#8fe6ad;white-space:nowrap}
 .sblk .iv.lv::after{content:"● LIVE";font-family:'Plex Mono';font-size:8.5px;color:#4ade80;vertical-align:super;margin-inline-start:4px;font-weight:700}
+.sumtblwrap{overflow-x:auto;border-radius:14px;border:1px solid rgba(255,255,255,.1)}
+.sumtbl{width:100%;border-collapse:collapse;font-size:14px;min-width:640px}
+.sumtbl th{background:rgba(255,255,255,.06);color:rgba(234,244,238,.75);font-family:Rubik;font-weight:800;font-size:12.5px;text-align:right;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.12);white-space:nowrap}
+.sumtbl td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+.sumtbl tr:last-child td{border-bottom:0}
+.sumtbl td.bn{font-family:'Space Grotesk',Rubik;font-weight:800;font-size:15px;color:#fff;border-inline-start:3px solid var(--lime);white-space:nowrap}
+.sumtbl td.bn b{color:var(--lime)}
+.sumtbl td.bd{color:rgba(234,244,238,.62);font-size:13px;line-height:1.5;max-width:280px}
+.sumtbl td.ik{color:rgba(234,244,238,.8);font-size:13px;white-space:nowrap}
+.sumtbl td.iv{font-family:Rubik;font-weight:800;font-size:16px;color:#8fe6ad;white-space:nowrap}
+.sumtbl td.iv.lv::after{content:"● LIVE";font-family:'Plex Mono';font-size:8.5px;color:#4ade80;vertical-align:super;margin-inline-start:5px;font-weight:700}
+.sumtbl tbody tr:hover td{background:rgba(255,255,255,.03)}
 @media print{
  body{background:#fff!important;color:#14261c!important}
  .topbar,.footbar,.livebar2,.exportbar,.back{display:none!important}
@@ -383,11 +395,16 @@ function fmt(n){return (n||0).toLocaleString('en-US');}
 function openSummary(){
  var sec=SUMMARY.length, blocks=0, lives=0;
  var html=SUMMARY.map(function(s){
-  return '<div class="sumsec"><h3><span class="dot" style="background:'+s.c+'"></span>'+s.t+' · '+s.blocks.length+' בלוקים</h3><div class="sumgrid">'+
-   s.blocks.map(function(b){blocks++;
-    var imp=b.imp.map(function(x){if(x.id)lives++;return '<div class="improw"><span class="ik">'+x.k+'</span><span class="iv'+(x.id?' lv" id="sum_'+x.id:'')+'">'+x.v+'</span></div>';}).join('');
-    return '<div class="sblk"><div class="bt">'+b.n+'</div><div class="bin">'+b.in+'</div><div class="imp">'+imp+'</div></div>';
-   }).join('')+'</div></div>';
+  var rows=s.blocks.map(function(b){blocks++;
+    return b.imp.map(function(x,j){
+     if(x.id)lives++;
+     var live=x.id?'<span style="color:#4ade80;font-family:Rubik;font-weight:800">● חי</span>':'<span style="color:rgba(234,244,238,.35)">יייצוגי</span>';
+     var first=j===0?'<td class="bn" rowspan="'+b.imp.length+'">'+b.n+'</td><td class="bd" rowspan="'+b.imp.length+'">'+b.in+'</td>':'';
+     return '<tr>'+first+'<td class="ik">'+x.k+'</td><td class="iv'+(x.id?' lv" id="sum_'+x.id:'')+'">'+x.v+'</td><td>'+live+'</td></tr>';
+    }).join('');
+   }).join('');
+  return '<div class="sumsec"><h3><span class="dot" style="background:'+s.c+'"></span>'+s.t+' · '+s.blocks.length+' בלוקים</h3>'+
+   '<div class="sumtblwrap"><table class="sumtbl"><thead><tr><th>בלוק</th><th>מה יש בבלוק</th><th>מדד (אימפקט)</th><th>ערך</th><th>חי</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
  }).join('');
  document.getElementById('sumBody').innerHTML=html;
  document.getElementById('sumTot').innerHTML=
