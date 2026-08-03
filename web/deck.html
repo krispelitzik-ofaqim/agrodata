@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroData · מצגת קולנועית</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--lime:#8fe6ad;--green:#2e9e63;--green-d:#134a30;--gold:#e8c56a;--ink:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Heebo,Arial,sans-serif;background:#050c08;color:var(--ink);overflow:hidden}
+#stageWrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{position:relative;width:100vw;height:100vh;max-width:calc(100vh*1.6);max-height:calc(100vw/1.6);overflow:hidden;background:radial-gradient(130% 130% at 50% 30%,#123f27,#0b1c12 60%,#060f0a);box-shadow:0 0 120px rgba(0,0,0,.7)}
+#pcv{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6% 7%;opacity:0;transform:scale(1.04);transition:opacity .9s ease,transform .9s ease;pointer-events:none}
+.slide.on{opacity:1;transform:none;pointer-events:auto}
+.kick{font-family:'Plex Mono';letter-spacing:.28em;text-transform:uppercase;color:var(--lime);font-size:clamp(11px,1.3vw,16px);opacity:0}
+.slide.on .kick{animation:up .8s ease .1s both}
+h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(38px,7vw,104px);color:#fff;line-height:1.02;letter-spacing:-.02em;opacity:0}
+h1 b{color:var(--lime)}
+.slide.on h1{animation:zoom 1s cubic-bezier(.2,.8,.3,1) .15s both}
+h2{font-family:Rubik;font-weight:900;font-size:clamp(26px,4.6vw,62px);color:#fff;line-height:1.1;opacity:0}
+h2 b{color:var(--lime)}
+.slide.on h2{animation:up .9s ease .2s both}
+.lead{font-family:Rubik;font-weight:700;color:var(--gold);font-size:clamp(18px,2.8vw,38px);margin-top:12px;opacity:0}
+.slide.on .lead{animation:up .9s ease .4s both}
+.sub{color:rgba(234,244,238,.7);font-size:clamp(14px,1.7vw,22px);max-width:60ch;margin-top:14px;line-height:1.6;opacity:0}
+.slide.on .sub{animation:up .9s ease .55s both}
+.enline{font-family:'Space Grotesk';font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:rgba(234,244,238,.45);font-size:clamp(11px,1.4vw,18px);direction:ltr;margin-top:10px;opacity:0}
+.slide.on .enline{animation:up .9s ease .7s both}
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes zoom{from{opacity:0;transform:scale(1.3);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(2deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* logo hexagon */
+.hexwrap{margin-bottom:22px;opacity:0}
+.slide.on .hexwrap{animation:zoom 1s ease both}
+.hexwrap svg{width:clamp(70px,9vw,120px);height:auto;animation:floaty 5s ease-in-out infinite}
+/* canvases */
+canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
+/* chips */
+.chips{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;width:min(88%,980px);margin-top:22px}
+@media(max-width:700px){.chips{grid-template-columns:repeat(4,1fr)}}
+.chip{background:rgba(255,255,255,.05);border:1px solid rgba(143,230,173,.32);border-radius:11px;padding:9px 6px;opacity:0;transform:translateY(16px) scale(.85)}
+.slide.on .chip{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes pop{to{opacity:1;transform:none}}
+.chip .en{font-family:'Space Grotesk';font-weight:700;font-size:clamp(11px,1.15vw,15px);color:#fff;direction:ltr;line-height:1.05}
+.chip .en b{color:var(--lime)}
+.chip .he{font-size:clamp(9px,.85vw,11px);color:rgba(234,244,238,.65);margin-top:2px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;width:min(92%,1000px);margin-top:26px}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:rgba(46,158,99,.1);border:1px solid rgba(143,230,173,.3);border-radius:16px;padding:22px 10px;opacity:0}
+.slide.on .stat{animation:up .7s ease both}
+.stat .v{font-family:Rubik;font-weight:900;font-size:clamp(24px,3.4vw,46px);color:var(--lime);line-height:1}
+.stat .l{font-size:clamp(11px,1.2vw,15px);color:rgba(234,244,238,.75);margin-top:8px}
+/* live device (iframe screenshot) */
+.device{position:relative;width:min(78%,900px);aspect-ratio:16/10;border-radius:16px;overflow:hidden;border:1px solid rgba(143,230,173,.35);box-shadow:0 30px 80px rgba(0,0,0,.55);margin-top:22px;opacity:0;background:#0b1c12}
+.slide.on .device{animation:up 1s ease .25s both}
+.device.tilt{transform:perspective(1400px) rotateY(-9deg) rotateX(4deg)}
+.device .bar{height:26px;background:#0c1c13;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.device .bar i{width:9px;height:9px;border-radius:50%;background:#2e5a41;display:inline-block}
+.device .vp{position:absolute;inset:26px 0 0 0;overflow:hidden}
+.device iframe{border:0;background:#fff;transform-origin:top right}
+/* floating cards */
+.cardrow{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.fcard{width:min(30%,230px);background:rgba(255,255,255,.05);border:1px solid rgba(143,230,173,.3);border-radius:16px;padding:20px 16px;opacity:0}
+.slide.on .fcard{animation:up .8s ease both,floaty 6s ease-in-out infinite}
+.fcard .fi{font-size:34px}
+.fcard .ft{font-family:'Space Grotesk';font-weight:700;color:#fff;font-size:19px;margin-top:8px}
+.fcard .ft b{color:var(--lime)}
+.fcard .fd{color:rgba(234,244,238,.65);font-size:13px;margin-top:5px;line-height:1.5}
+/* milestones */
+.miles{display:flex;flex-direction:column;gap:11px;width:min(82%,760px);margin-top:22px}
+.mrow{display:flex;align-items:center;gap:14px;background:rgba(46,158,99,.09);border:1px solid rgba(143,230,173,.28);border-radius:13px;padding:13px 18px;opacity:0;transform:translateX(24px)}
+.slide.on .mrow{animation:inR .6s cubic-bezier(.2,.8,.3,1) both}
+@keyframes inR{to{opacity:1;transform:none}}
+.mrow .ck{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#2e9e63,#134a30);color:#fff;display:grid;place-items:center;font-weight:900;flex:0 0 auto}
+.mrow .mt{font-family:Rubik;font-weight:700;font-size:clamp(14px,1.6vw,19px);color:#fff;text-align:right}
+/* source chips */
+.srcs{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;width:min(90%,900px);margin-top:24px}
+.src{background:rgba(255,255,255,.06);border:1px solid rgba(143,230,173,.3);border-radius:999px;padding:10px 18px;font-family:'Plex Mono';font-size:clamp(11px,1.3vw,15px);color:var(--ink);opacity:0}
+.slide.on .src{animation:pop .5s cubic-bezier(.2,.9,.3,1.3) both}
+.src b{color:var(--lime)}
+/* ofakim media */
+.media{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:22px;width:min(90%,940px)}
+.mtile{flex:1 1 260px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;border:1px solid rgba(143,230,173,.3);opacity:0;background:linear-gradient(135deg,#1c6b45,#134a30);display:flex;align-items:center;justify-content:center;position:relative}
+.slide.on .mtile{animation:up .9s ease both,floaty 7s ease-in-out infinite}
+.mtile img,.mtile video{width:100%;height:100%;object-fit:cover}
+.mtile .ph{color:rgba(255,255,255,.6);font-family:Rubik;font-weight:700;font-size:15px;text-align:center;padding:10px}
+/* floating background shapes per slide */
+.orbs .orb{position:absolute;border-radius:50%;filter:blur(2px);opacity:.5;animation:floaty 8s ease-in-out infinite}
+/* controls */
+.ctrls{position:absolute;bottom:16px;left:0;width:100%;display:flex;align-items:center;justify-content:center;gap:14px;z-index:30}
+.ctrls button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#eaf4ee;font-family:Rubik;font-weight:800;font-size:15px;border-radius:999px;width:44px;height:44px;cursor:pointer;transition:.14s}
+.ctrls button:hover{background:rgba(255,255,255,.18)}
+.dots{display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s}
+.dot.on{background:var(--lime);width:22px;border-radius:5px}
+.prog{position:absolute;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--green),var(--lime));z-index:30;transition:width .25s linear}
+.snum{position:absolute;top:14px;right:18px;font-family:'Plex Mono';font-size:13px;color:rgba(234,244,238,.5);z-index:30}
+.skip{position:absolute;top:14px;left:18px;color:rgba(234,244,238,.5);text-decoration:none;font-family:'Plex Mono';font-size:13px;z-index:30}
+</style>
+</head>
+<body>
+<div id="stageWrap"><div id="deck">
+  <canvas id="pcv"></canvas>
+  <div class="prog" id="prog"></div>
+  <div class="snum" id="snum">01 / 15</div>
+  <a class="skip" href="index.html">← לאתר</a>
+
+  <!-- 1 · TITLE -->
+  <section class="slide" data-t="8000">
+    <div class="hexwrap"><svg viewBox="0 0 120 120"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7f0c1"/><stop offset="1" stop-color="#3aa873"/></linearGradient></defs><path d="M60,10 L104,35 L104,85 L60,110 L16,85 L16,35 Z" fill="url(#lg)"/><path d="M60,92 L60,54" stroke="#0d3a26" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M60,64 C45,64 40,53 40,42 C54,42 60,51 60,64 Z" fill="#0d3a26"/><path d="M60,58 C75,58 80,47 80,36 C66,36 60,45 60,58 Z" fill="#134a30"/></svg></div>
+    <h1>Agro<b>Data</b></h1>
+    <div class="lead">אופקים — זירת האגרו-טק של ישראל</div>
+    <div class="enline">Ofakim · Israel's Agri-Tech Arena</div>
+  </section>
+
+  <!-- 2 · PROBLEM -->
+  <section class="slide" data-t="11000">
+    <div class="kick">The Challenge</div>
+    <h2>המזון של <b>המחר</b><br>נבנה היום</h2>
+    <div class="sub">אקלים משתנה, מים מוגבלים, וביקוש גדל — החקלאות חייבת חדשנות. אבל הידע, הדאטה והחדשנות מפוזרים בעשרות מקומות.</div>
+  </section>
+
+  <!-- 3 · BRAIN -->
+  <section class="slide" data-t="14000" data-brain="1">
+    <div class="kick">One Brain</div>
+    <canvas class="eng" id="brainCv" width="560" height="560"></canvas>
+    <h2 style="margin-top:6px">מוח אחד לכל <b>האגרו-טק</b></h2>
+    <div class="sub">כל הנתונים, המחקר והחדשנות — מחוברים במערכת אחת חכמה.</div>
+  </section>
+
+  <!-- 4 · ENGINES -->
+  <section class="slide" data-t="13000" data-chips="1">
+    <div class="kick">The Engines</div>
+    <h2>28 מנועים · <b>זירה אחת</b></h2>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <!-- 5 · STATS -->
+  <section class="slide" data-t="12000" data-stats="1">
+    <div class="kick">By The Numbers</div>
+    <h2>הזירה <b>במספרים</b></h2>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <!-- 6 · MIND MAP -->
+  <section class="slide" data-t="13000" data-map="1">
+    <div class="kick">The Blueprint</div>
+    <canvas class="eng" id="mapCv" width="560" height="560"></canvas>
+    <h2 style="margin-top:4px">מפת <b>החשיבה</b></h2>
+    <div class="sub">המוח החי של הזירה — נושם, מתעדכן, מתרחב.</div>
+  </section>
+
+  <!-- 7 · LIVE MAP -->
+  <section class="slide" data-t="13000">
+    <div class="kick">AgroMap · GIS</div>
+    <h2>873 יישובים <b>על המפה</b></h2>
+    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="agromap.html" title="AgroMap"></iframe></div></div>
+  </section>
+
+  <!-- 8 · KNOWLEDGE -->
+  <section class="slide" data-t="12000">
+    <div class="kick">Knowledge Engines</div>
+    <h2>כל <b>הידע</b> החקלאי</h2>
+    <div class="cardrow">
+      <div class="fcard" style="animation-delay:.1s"><div class="fi">📚</div><div class="ft">Agro<b>Books</b></div><div class="fd">300K+ ספרים · כולל עברית</div></div>
+      <div class="fcard" style="animation-delay:.25s"><div class="fi">🔬</div><div class="ft">Agro<b>Patents</b></div><div class="fd">חיפוש פטנטים גלובלי חי</div></div>
+      <div class="fcard" style="animation-delay:.4s"><div class="fi">🎓</div><div class="ft">Agro<b>Scholar</b></div><div class="fd">אקדמיה ומחקר · IL + עולם</div></div>
+    </div>
+  </section>
+
+  <!-- 9 · INNOVATION -->
+  <section class="slide" data-t="12000">
+    <div class="kick">Innovation Engine</div>
+    <h2>מרעיון <b>למוצר</b></h2>
+    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="ideas.html" title="AgroInnovate"></iframe></div></div>
+  </section>
+
+  <!-- 10 · AGROPLAN -->
+  <section class="slide" data-t="12000">
+    <div class="kick">AI Business Plan</div>
+    <h2>תוכנית עסקית <b>ב-AI</b></h2>
+    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="agroplan.html" title="AgroPlan"></iframe></div></div>
+  </section>
+
+  <!-- 11 · FINANCIAL -->
+  <section class="slide" data-t="11000">
+    <div class="kick">Financial Arena</div>
+    <h2>הון · מסחר · <b>צמיחה</b></h2>
+    <div class="cardrow">
+      <div class="fcard" style="animation-delay:.1s"><div class="fi">🏦</div><div class="ft">Agro<b>Bank</b></div><div class="fd">מימון למגדלים ולסטארטאפים</div></div>
+      <div class="fcard" style="animation-delay:.25s"><div class="fi">📈</div><div class="ft">Agro<b>Stock</b></div><div class="fd">סחורות ומדדים בזמן אמת</div></div>
+      <div class="fcard" style="animation-delay:.4s"><div class="fi">💰</div><div class="ft">Agro<b>Capital</b></div><div class="fd">משקיעים, קרנות ומענקים</div></div>
+    </div>
+  </section>
+
+  <!-- 12 · OFAKIM -->
+  <section class="slide" data-t="14000">
+    <div class="kick">Ofakim · From The Negev</div>
+    <h2>מהנגב <b>לעולם</b></h2>
+    <div class="sub">אופקים — בירת האגרו-טק החדשה. מרכז חדשנות, חוות ניסויים וקהילת מגדלים.</div>
+    <div class="media" id="ofmedia"></div>
+  </section>
+
+  <!-- 13 · MILESTONES -->
+  <section class="slide" data-t="12000">
+    <div class="kick">Where We Are</div>
+    <h2>לאן <b>הגענו</b></h2>
+    <div class="miles" id="miles"></div>
+  </section>
+
+  <!-- 14 · LIVE DATA -->
+  <section class="slide" data-t="11000">
+    <div class="kick">Live · No Keys</div>
+    <h2>נתונים <b>חיים</b> ממקורות פתוחים</h2>
+    <div class="srcs" id="srcs"></div>
+  </section>
+
+  <!-- 15 · CLOSING -->
+  <section class="slide" data-t="11000">
+    <div class="hexwrap"><svg viewBox="0 0 120 120"><path d="M60,10 L104,35 L104,85 L60,110 L16,85 L16,35 Z" fill="url(#lg)"/><path d="M60,92 L60,54" stroke="#0d3a26" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M60,64 C45,64 40,53 40,42 C54,42 60,51 60,64 Z" fill="#0d3a26"/><path d="M60,58 C75,58 80,47 80,36 C66,36 60,45 60,58 Z" fill="#134a30"/></svg></div>
+    <h1>Agro<b>Data</b></h1>
+    <div class="lead">בואו נבנה יחד את עתיד המזון</div>
+    <div class="enline">www.agrodata.co.il</div>
+  </section>
+
+  <div class="ctrls">
+    <button onclick="go(cur-1)" title="הקודם">‹</button>
+    <button id="pp" onclick="toggle()" title="נגן/עצור">⏸</button>
+    <button onclick="go(cur+1)" title="הבא">›</button>
+    <div class="dots" id="dots"></div>
+  </div>
+</div></div>
+
+<script>
+var slides=[].slice.call(document.querySelectorAll('.slide'));
+var TIMES=slides.map(function(s){return +s.getAttribute('data-t')||12000;});
+var cur=0,playing=true,timer=null,progTimer=null,started=0;
+var PROG=document.getElementById('prog'),SNUM=document.getElementById('snum');
+
+/* dots */
+document.getElementById('dots').innerHTML=slides.map(function(s,i){return '<span class="dot" onclick="go('+i+')"></span>';}).join('');
+var dots=[].slice.call(document.querySelectorAll('.dot'));
+
+/* ---- content builders ---- */
+var ENG=[['Lake','מאגר'],['Labs','מדען'],['Library','כתבי עת'],['Gov','מדיניות'],['RnD','מו״פים'],['Scholar','אקדמיה'],['Innovate','חדשנות'],['Map','מפות'],['Expo','כנסים'],['Trade','סחר'],['Pulse','חדשות'],['Mind','AI'],['Directory','חברות'],['Impact','SDG'],['Scout','סטארטאפים'],['Apps','אפליקציות'],['Eco','סביבה'],['Patents','פטנטים'],['Books','ספרים'],['Hub','אקסלרטור'],['Pedia','מילון'],['Flora','צמחים'],['Market','תשומות'],['Pharm','תרופות'],['Aqua','ימית'],['Grow','מבוקרת'],['Academy','חינוך'],['Sense','חיישנים']];
+document.getElementById('chips').innerHTML=ENG.map(function(e,i){return '<div class="chip" style="animation-delay:'+(i*0.09).toFixed(2)+'s"><div class="en">Agro<b>'+e[0]+'</b></div><div class="he">'+e[1]+'</div></div>';}).join('');
+var STATS=[['מנועים',28,''],['מקורות חיים',20,''],['ספרים',300000,'+'],['יישובים',873,''],['חברות',728000,'+']];
+document.getElementById('stats').innerHTML=STATS.map(function(s,i){return '<div class="stat" style="animation-delay:'+(i*0.12).toFixed(2)+'s"><div class="v" data-t="'+s[1]+'" data-s="'+s[2]+'">0</div><div class="l">'+s[0]+'</div></div>';}).join('');
+var MILE=[['28','מנועים חיים — כל הזירה באוויר'],['✓','האתר עלה לאוויר · agrodata.co.il'],['20+','מקורות נתונים חיים — ללא עלות'],['AI','2 מנועי בינה · Gemini + Claude'],['🧠','מפת חשיבה + תוכנית עסקית ב-AI']];
+document.getElementById('miles').innerHTML=MILE.map(function(m,i){return '<div class="mrow" style="animation-delay:'+(0.15+i*0.22).toFixed(2)+'s"><span class="ck">'+m[0]+'</span><span class="mt">'+m[1]+'</span></div>';}).join('');
+var SRC=['World Bank','data.gov.il','Google Patents','Open Library','iNaturalist','Crossref','OpenAlex','Google News','NASA GIBS','GeoNames'];
+document.getElementById('srcs').innerHTML=SRC.map(function(s,i){return '<span class="src" style="animation-delay:'+(i*0.08).toFixed(2)+'s"><b>›</b> '+s+'</span>';}).join('');
+/* ofakim media — drop files in assets/ofakim/ (ofakim1.jpg, ofakim2.jpg, ofakim.mp4). graceful placeholder if missing */
+var OF=[['img','assets/ofakim/ofakim1.jpg','אופקים · העיר'],['video','assets/ofakim/ofakim.mp4','מרכז החדשנות'],['img','assets/ofakim/ofakim2.jpg','חוות ניסויים']];
+document.getElementById('ofmedia').innerHTML=OF.map(function(o,i){
+ var inner=o[0]==='video'
+  ? '<video src="'+o[1]+'" muted autoplay loop playsinline onerror="this.parentNode.innerHTML=\'<div class=&quot;ph&quot;>'+o[2]+'</div>\'"></video>'
+  : '<img src="'+o[1]+'" alt="" onerror="this.parentNode.innerHTML=\'<div class=&quot;ph&quot;>'+o[2]+'</div>\'">';
+ return '<div class="mtile" style="animation-delay:'+(i*0.18).toFixed(2)+'s">'+inner+'</div>';
+}).join('');
+
+/* ---- floating particles ---- */
+(function(){var c=document.getElementById('pcv'),x=c.getContext('2d'),W,H,ps=[];
+ function size(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+ window.addEventListener('resize',size);size();
+ for(var i=0;i<46;i++)ps.push({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.4,vy:.15+Math.random()*.45,vx:(Math.random()-.5)*.25,a:.2+Math.random()*.5});
+ (function loop(){x.clearRect(0,0,W,H);for(var i=0;i<ps.length;i++){var p=ps[i];p.y-=p.vy;p.x+=p.vx;if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}x.beginPath();x.arc(p.x,p.y,p.r,0,6.2832);x.fillStyle='rgba(143,230,173,'+p.a+')';x.fill();}requestAnimationFrame(loop);})();
+})();
+
+/* ---- 3D brain (compact point-cloud) ---- */
+var brainReady=false,brainStart=0;
+function initBrain(){
+ if(brainReady)return;brainReady=true;
+ var cv=document.getElementById('brainCv'),ctx=cv.getContext('2d'),VB=560,R=185,FOC=520,Cx=280,Cy=280,P=[];
+ function hemi(side,N){for(var i=0;i<N;i++){var t=(i+.5)/N,y=1-2*t,r=Math.sqrt(Math.max(0,1-y*y)),phi=i*2.399963;var ux=Math.cos(phi)*r,uz=Math.sin(phi)*r;var fold=1+.07*Math.sin(y*11+side)+.055*Math.cos(phi*4);var X=ux*.42*fold,Y=y*.62*fold,Z=uz*.82*fold;var inner=(side>0)?(X<0):(X>0);if(inner)X*=.34;X+=side*.3;P.push([X*R,Y*R,Z*R]);}}
+ hemi(1,320);hemi(-1,320);
+ for(var i=0;i<70;i++){var t=(i+.5)/70,y=1-2*t,r=Math.sqrt(Math.max(0,1-y*y)),phi=i*2.399963;P.push([Math.cos(phi)*r*.3*R,(y*.2-.44)*R,(Math.sin(phi)*r*.3-.34)*R]);}
+ P.sort(function(a,b){return a[1]-b[1];});
+ var ang=0;
+ (function frame(){requestAnimationFrame(frame);ctx.clearRect(0,0,VB,VB);ang+=.006;var tilt=.34+.09*Math.sin(ang*.6);
+  var rev=brainStart?Math.min((Date.now()-brainStart)/3800,1):0,e=1-Math.pow(1-rev,3),shown=Math.floor(e*P.length);
+  for(var i=0;i<shown;i++){var p=P[i],cy=Math.cos(ang),sy=Math.sin(ang),X=p[0]*cy-p[2]*sy,Z=p[0]*sy+p[2]*cy,cx=Math.cos(tilt),sx=Math.sin(tilt),Y=p[1]*cx-Z*sx,Z2=p[1]*sx+Z*cx;var sc=FOC/(FOC+Z2),sx2=Cx+X*sc,sy2=Cy-Y*sc,depth=(Z2+R)/(2*R);ctx.fillStyle='rgba('+Math.round(90+60*depth)+','+Math.round(150+90*depth)+','+Math.round(120+70*depth)+','+(.35+.6*depth).toFixed(2)+')';ctx.beginPath();ctx.arc(sx2,sy2,Math.max(.6,(.7+1.5*depth)*sc),0,6.2832);ctx.fill();}
+ })();
+}
+/* ---- radial mind map (breathing) ---- */
+var mapReady=false;
+function initMap(){
+ if(mapReady)return;mapReady=true;
+ var cv=document.getElementById('mapCv'),ctx=cv.getContext('2d'),VB=560,Cx=280,Cy=280,t0=null;
+ var nodes=[];for(var b=0;b<6;b++){var a=(b/6)*6.2832-1.5708;var bx=140*Math.cos(a),by=140*Math.sin(a);nodes.push({x:bx,y:by,r:14,p:null});for(var k=0;k<5;k++){var a2=a+(k-2)*.34;nodes.push({x:bx+88*Math.cos(a2),y:by+88*Math.sin(a2),r:6,p:{x:bx,y:by}});}}
+ (function frame(ts){requestAnimationFrame(frame);if(!t0)t0=ts;var tt=(ts-t0)/1000;ctx.clearRect(0,0,VB,VB);
+  var bs=1+.03*Math.sin(tt*1.1),rot=.04*Math.sin(tt*.7);ctx.save();ctx.translate(Cx,Cy);ctx.scale(bs,1/bs*bs);ctx.rotate(rot);
+  ctx.strokeStyle='rgba(143,230,173,.4)';ctx.lineWidth=1.3;
+  nodes.forEach(function(n){var px=n.p?n.p.x:0,py=n.p?n.p.y:0;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(n.x,n.y);ctx.stroke();});
+  nodes.forEach(function(n){ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,6.2832);ctx.fillStyle=n.r>10?'#2e9e63':'#8fe6ad';ctx.fill();});
+  ctx.beginPath();ctx.arc(0,0,42,0,6.2832);ctx.fillStyle='#134a30';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#8fe6ad';ctx.stroke();
+  ctx.fillStyle='#8fe6ad';ctx.font='700 18px "Space Grotesk"';ctx.textAlign='center';ctx.fillText('Agro',0,6);
+  ctx.restore();
+ })();
+}
+/* ---- stats count-up ---- */
+function countUp(){[].forEach.call(document.querySelectorAll('#stats .v'),function(el){var t=+el.getAttribute('data-t'),suf=el.getAttribute('data-s')||'',st=null;function step(ts){if(!st)st=ts;var p=Math.min((ts-st)/1500,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e).toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);});}
+
+/* ---- slide engine ---- */
+function activate(i){
+ var s=slides[i];
+ if(s.getAttribute('data-brain')){initBrain();brainStart=Date.now();}
+ if(s.getAttribute('data-map'))initMap();
+ if(s.getAttribute('data-stats'))setTimeout(countUp,300);
+ var f=s.querySelector('iframe[data-src]');
+ if(f&&!f.src){f.src=f.getAttribute('data-src');sizeFrame(f);}
+}
+function sizeFrame(f){var vp=f.parentNode,w=1400;f.style.width=w+'px';f.style.height=Math.round(w*(vp.offsetHeight/vp.offsetWidth))+'px';f.style.transform='scale('+(vp.offsetWidth/w)+')';}
+function go(i){
+ if(i<0)i=slides.length-1;if(i>=slides.length)i=0;
+ slides[cur].classList.remove('on');dots[cur].classList.remove('on');
+ cur=i;slides[cur].classList.add('on');dots[cur].classList.add('on');
+ SNUM.textContent=('0'+(cur+1)).slice(-2)+' / '+slides.length;
+ activate(cur);schedule();
+}
+function schedule(){
+ clearTimeout(timer);clearInterval(progTimer);
+ if(!playing)return;
+ started=Date.now();var dur=TIMES[cur];
+ PROG.style.width='0%';
+ progTimer=setInterval(function(){var p=Math.min((Date.now()-started)/dur,1);PROG.style.width=(p*100)+'%';},80);
+ timer=setTimeout(function(){go(cur+1);},dur);
+}
+function toggle(){playing=!playing;document.getElementById('pp').textContent=playing?'⏸':'▶';if(playing)schedule();else{clearTimeout(timer);clearInterval(progTimer);}}
+document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(cur+1);if(e.key==='ArrowRight'||e.key==='ArrowDown')go(cur-1);if(e.key===' '){e.preventDefault();toggle();}});
+window.addEventListener('resize',function(){[].forEach.call(document.querySelectorAll('iframe[data-src]'),function(f){if(f.src)sizeFrame(f);});});
+/* start */
+slides[0].classList.add('on');dots[0].classList.add('on');activate(0);schedule();
+</script>
+</body>
+</html>
