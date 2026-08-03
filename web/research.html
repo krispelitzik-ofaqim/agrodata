@@ -95,19 +95,19 @@ h1{font-family:Rubik;font-size:62px;font-weight:800;margin:4px 0 8px}h1 b{color:
   <div class="hero">
     <div class="kick">RESEARCH & ACADEMIA</div>
     <h1>מחקר <b>ואקדמיה</b></h1>
-    <div class="sub">מוסדות המחקר והפקולטות המובילים באגרו-טק, מדעי הצמח והקיימות בישראל.</div>
+    <div class="sub">מוסדות המחקר, הפקולטות ומכוני האקדמיה המובילים באגרו-טק, מדעי הצמח והקיימות — בישראל ובעולם.</div>
     <div class="filters" id="filters"></div>
     <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש: מוסד, תחום מחקר, עיר…" oninput="render(CUR)"></div>
   </div>
 
   <div class="mappanel">
-    <h2 class="mh">🗺️ מפת המו״פים והמוסדות בישראל</h2>
+    <h2 class="mh">🗺️ מפת מוסדות המחקר בישראל</h2>
     <div class="mapbox"><svg viewBox="0 0 200 400">
       <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="#dce9e0" stroke="#134a30" stroke-width="1.4" stroke-linejoin="round"/>
       <g font-family="Rubik" font-size="7" font-weight="700" fill="#5c6f63"><text x="70" y="64" text-anchor="middle">חיפה</text><text x="60" y="120" text-anchor="middle">ת״א</text><text x="90" y="212" text-anchor="middle">ב״ש</text></g>
       <g id="rpins"></g>
     </svg></div>
-    <div class="mleg">🟢 אקדמיה · 🔵 מכוני מחקר · 🟡 מו״פ אזורי — לחצו על נקודה לאתר המוסד</div>
+    <div class="mleg">🟢 אקדמיה · 🔵 מכוני מחקר — לחצו על נקודה לאתר המוסד (מוסדות העולם ברשימה למטה)</div>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -128,34 +128,40 @@ h1{font-family:Rubik;font-size:62px;font-weight:800;margin:4px 0 8px}h1 b{color:
 <script>
 const TYPE={uni:['t-uni','אקדמיה'],inst:['t-inst','מכון מחקר'],rd:['t-rd','מו״פ אזורי']};
 const R=[
- {n:"מכון ויצמן למדע",u:"https://www.weizmann.ac.il/",k:"inst",loc:"רחובות",
+ {n:"מכון ויצמן למדע",u:"https://www.weizmann.ac.il/",k:"inst",reg:"il",loc:"רחובות",
   d:"מחקר בסיסי מוביל בביולוגיה של הצמח, גנטיקה, פוטוסינתזה ומדעי הסביבה.",t:["ביולוגיה של הצמח","גנטיקה","סביבה"]},
- {n:"הפקולטה לחקלאות, מזון וסביבה ע״ש רוברט ה. סמית",u:"https://agri.huji.ac.il/",k:"uni",loc:"רחובות · האונ׳ העברית",
+ {n:"הפקולטה לחקלאות, מזון וסביבה ע״ש רוברט ה. סמית",u:"https://agri.huji.ac.il/",k:"uni",reg:"il",loc:"רחובות · האונ׳ העברית",
   d:"הפקולטה המובילה בישראל לחקלאות — אגרונומיה, מדעי הצמח והחי, מזון וכלכלה חקלאית.",t:["אגרונומיה","מדעי המזון","כלכלה חקלאית"]},
- {n:"אוניברסיטת בן-גוריון — המכונים לחקר המדבר ומדעי הקיימות",u:"https://in.bgu.ac.il/bidr/",k:"uni",loc:"שדה בוקר · הנגב",
+ {n:"אוניברסיטת בן-גוריון — המכונים לחקר המדבר ומדעי הקיימות",u:"https://in.bgu.ac.il/bidr/",k:"uni",reg:"il",loc:"שדה בוקר · הנגב",
   d:"חקר חקלאות מדבר, מים, אנרגיה מתחדשת וקיימות בסביבה צחיחה במכוני בלאושטיין.",t:["חקלאות מדבר","קיימות","מים"]},
- {n:"מכון וולקני — מרכז מחקר חקלאי (ARO)",u:"https://www.agri.gov.il/",k:"inst",loc:"ראשון לציון",
+ {n:"מכון וולקני — מרכז מחקר חקלאי (ARO)",u:"https://www.agri.gov.il/",k:"inst",reg:"il",loc:"ראשון לציון",
   d:"זרוע המחקר של משרד החקלאות — גידולי שדה, הגנת הצומח, מיכון ומדעי בעלי חיים.",t:["גידולי שדה","הגנת הצומח","מיכון"]},
- {n:"מיג״ל — מכון מחקר מדעי הגליל",u:"https://www.migal.org.il/",k:"inst",loc:"קריית שמונה",
+ {n:"מיג״ל — מכון מחקר מדעי הגליל",u:"https://www.migal.org.il/",k:"inst",reg:"il",loc:"קריית שמונה",
   d:"מחקר יישומי בביוטכנולוגיה חקלאית, מדעי הצמח, מים וסביבה בצפון.",t:["ביוטכנולוגיה","מים","צמח"]},
- {n:"הטכניון — הפקולטה להנדסה ביוטכנולוגיה ומזון",u:"https://biotech.technion.ac.il/",k:"uni",loc:"חיפה",
+ {n:"הטכניון — הפקולטה להנדסה ביוטכנולוגיה ומזון",u:"https://biotech.technion.ac.il/",k:"uni",reg:"il",loc:"חיפה",
   d:"הנדסת מזון, ביוטכנולוגיה וטכנולוגיות ייצור מזון מתקדמות.",t:["הנדסת מזון","ביוטכנולוגיה"]},
- {n:"אוניברסיטת תל אביב — בית הספר למדעי הצמח והביטחון התזונתי",u:"https://en-lifesci.tau.ac.il/",k:"uni",loc:"תל אביב",
+ {n:"אוניברסיטת תל אביב — בית הספר למדעי הצמח והביטחון התזונתי",u:"https://en-lifesci.tau.ac.il/",k:"uni",reg:"il",loc:"תל אביב",
   d:"מחקר במדעי הצמח, גנומיקה, מולקולרית וביטחון תזונתי.",t:["מדעי הצמח","גנומיקה"]},
- {n:"מו״פ ערבה תיכונה וצפונית",u:"https://www.arava.co.il/",k:"rd",loc:"ערבה",
-  d:"מו״פ יישומי לחקלאות מדברית — גידולים בתנאי מליחות, חום ומים מליחים.",t:["חקלאות מדבר","מליחות"]},
- {n:"מו״פ רמת נגב",u:"https://www.rngr.co.il/",k:"rd",loc:"רמת נגב",
-  d:"מחקר חקלאי יישומי במים מליחים, גד״ש מדברי וחקלאות בת-קיימא.",t:["מים מליחים","נגב"]},
- {n:"מו״פ צפון — מיג״ל",u:"https://www.migal.org.il/",k:"rd",loc:"גליל",
-  d:"פיתוח יישומי לחקלאי הצפון — מטעים, גד״ש, בעלי חיים ומים.",t:["מטעים","גליל"]},
- {n:"מכון ערבה ללימודי סביבה",u:"https://arava.org/",k:"inst",loc:"קטורה · ערבה",
+ {n:"מכון ערבה ללימודי סביבה",u:"https://arava.org/",k:"inst",reg:"il",loc:"קטורה · ערבה",
   d:"מחקר וחינוך בקיימות, אנרגיה מתחדשת ומים חוצי-גבולות.",t:["קיימות","אנרגיה","מים"]},
- {n:"אוניברסיטת חיפה — המכון לחקר הכנרת / מדעי הים",u:"https://www.haifa.ac.il/",k:"uni",loc:"חיפה",
+ {n:"אוניברסיטת חיפה — המכון לחקר הכנרת / מדעי הים",u:"https://www.haifa.ac.il/",k:"uni",reg:"il",loc:"חיפה",
   d:"מחקר במדעי הים, אקולוגיה של מים וחקלאות ימית.",t:["מדעי הים","אקולוגיה"]},
- {n:"מו״פ גילת — צפון הנגב",u:"https://www.mopdarom.org.il/",k:"rd",loc:"גילת · צפון הנגב",
-  d:"מחקר חקלאי יישומי לצפון הנגב — גד״ש, מטעים, ירקות ומים בתנאי מדבר.",t:["צפון הנגב","גד״ש","מטעים"]},
- {n:"מו״פ אשכול — מערב הנגב",u:"https://www.eshkol.muni.il/",k:"rd",loc:"אשכול · מערב הנגב",
-  d:"מו״פ אזורי לחקלאות מערב הנגב — ירקות, פרחים וגידולים בתנאי בשור.",t:["מערב הנגב","ירקות","פרחים"]},
+ {n:"Wageningen University & Research",u:"https://www.wur.nl/en.htm",k:"uni",reg:"world",loc:"הולנד 🇳🇱",
+  d:"האוניברסיטה המדורגת #1 בעולם לחקלאות ומדעי הסביבה — מעצמת המחקר החקלאי הגלובלית.",t:["חקלאות","מזון","קיימות"]},
+ {n:"UC Davis",u:"https://www.ucdavis.edu/",k:"uni",reg:"world",loc:"קליפורניה · ארה״ב 🇺🇸",
+  d:"מהמובילות בעולם בחקלאות, גפן ויין, מדעי הצמח וביו-חקלאות.",t:["חקלאות","גפן ויין","מדעי הצמח"]},
+ {n:"INRAE",u:"https://www.inrae.fr/en",k:"inst",reg:"world",loc:"צרפת 🇫🇷",
+  d:"מכון המחקר הלאומי הגדול באירופה לחקלאות, מזון וסביבה.",t:["חקלאות","מזון","סביבה"]},
+ {n:"Cornell CALS",u:"https://cals.cornell.edu/",k:"uni",reg:"world",loc:"ניו יורק · ארה״ב 🇺🇸",
+  d:"הפקולטה לחקלאות ומדעי החיים של קורנל — צמח, קרקע ומערכות מזון.",t:["מדעי הצמח","מערכות מזון"]},
+ {n:"Rothamsted Research",u:"https://www.rothamsted.ac.uk/",k:"inst",reg:"world",loc:"בריטניה 🇬🇧",
+  d:"מכון המחקר החקלאי הוותיק בעולם (1843) — יבול, קרקע והגנת הצומח.",t:["יבול","קרקע"]},
+ {n:"Agroscope",u:"https://www.agroscope.admin.ch/",k:"inst",reg:"world",loc:"שווייץ 🇨🇭",
+  d:"מרכז המחקר החקלאי הלאומי של שווייץ — מזון, חלב וקיימות.",t:["מזון","חלב","קיימות"]},
+ {n:"USDA — ARS",u:"https://www.ars.usda.gov/",k:"inst",reg:"world",loc:"ארה״ב 🇺🇸",
+  d:"זרוע המחקר של משרד החקלאות האמריקאי — המחקר החקלאי הממשלתי הגדול בעולם.",t:["חקלאות","מחקר ממשלתי"]},
+ {n:"CGIAR",u:"https://www.cgiar.org/",k:"inst",reg:"world",loc:"רשת גלובלית 🌍",
+  d:"קונסורציום מחקר בין-לאומי לביטחון תזונתי — כולל מכון האורז (IRRI) ומכוני גידולים.",t:["ביטחון תזונתי","גידולים"]}
 ];
 const INSTIMG={
  "מכון ויצמן למדע":"img/inst/weizmann.jpg",
@@ -174,7 +180,7 @@ function initials(n){var m=n.replace(/[^A-Za-zא-ת ]/g,'').trim().split(/\s+/);
 function render(f){
  CUR=f;
  const q=(document.getElementById('jsearch').value||'').trim().toLowerCase();
- const rows=R.filter(r=>(f==='all'||r.k===f) && (!q || (r.n+' '+r.d+' '+r.loc+' '+r.t.join(' ')).toLowerCase().includes(q)));
+ const rows=R.filter(r=>(f==='all'||r.k===f||r.reg===f) && (!q || (r.n+' '+r.d+' '+r.loc+' '+r.t.join(' ')).toLowerCase().includes(q)));
  document.getElementById('grid').innerHTML = rows.length? rows.map(r=>{
   const ty=TYPE[r.k];const dm=domain(r.u),ini=initials(r.n);
   return `<a class="rcard" href="${r.u}" target="_blank" rel="noopener">
@@ -203,12 +209,13 @@ function loadImages(){
  });
 }
 function filt(f,el){document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render(f);}
-const FB=[['all','הכול'],['uni','אקדמיה'],['inst','מכוני מחקר'],['rd','מו״פ אזורי']];
+const FB=[['all','הכול'],['il','🇮🇱 ישראל'],['world','🌍 עולם'],['uni','אקדמיה'],['inst','מכוני מחקר']];
 document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[1]}</button>`).join('');
-const POS=[[76,134],[70,138],[100,214],[68,128],[92,44],[82,66],[64,120],[112,288],[98,204],[88,50],[110,322],[100,58],[93,196],[84,206]];
-R.forEach(function(r,i){r.xy=POS[i]||[85,120];});
+const POS=[[76,134],[70,138],[100,214],[68,128],[92,44],[82,66],[64,120],[110,322],[84,64]];
+var ILR=R.filter(function(r){return r.reg==='il';});
+ILR.forEach(function(r,i){r.xy=POS[i]||[85,120];});
 const TCOL={uni:'#1c6b45',inst:'#2b8fb0',rd:'#c79a2e'};
-document.getElementById('rpins').innerHTML=R.map(function(r){return '<a class="pin" href="'+r.u+'" target="_blank" rel="noopener"><circle cx="'+r.xy[0]+'" cy="'+r.xy[1]+'" r="4.5" fill="'+TCOL[r.k]+'" stroke="#fff" stroke-width="1.3"/><title>'+r.n+' · '+r.loc+'</title></a>';}).join('');
+document.getElementById('rpins').innerHTML=ILR.map(function(r){return '<a class="pin" href="'+r.u+'" target="_blank" rel="noopener"><circle cx="'+r.xy[0]+'" cy="'+r.xy[1]+'" r="4.5" fill="'+TCOL[r.k]+'" stroke="#fff" stroke-width="1.3"/><title>'+r.n+' · '+r.loc+'</title></a>';}).join('');
 render('all');
 
 // live academic research feed (OpenAlex)
