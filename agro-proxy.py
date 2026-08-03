@@ -875,6 +875,38 @@ def fetch_appstore(term, country="us", limit=40):
     APPSTORE_CACHE[key] = (now, out)
     return out
 
+PAT_CACHE = {}
+def fetch_patents(q, num=30):
+    q = (q or "agriculture").strip()
+    key = (q, num); now = time.time()
+    if key in PAT_CACHE and now - PAT_CACHE[key][0] < 3600:
+        return PAT_CACHE[key][1]
+    inner = "q=" + q + "&type=PATENT&num=" + str(num)
+    url = "https://patents.google.com/xhr/query?url=" + urllib.parse.quote(inner) + "&exp="
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+    except Exception as e:
+        return {"ok": False, "items": [], "err": str(e)[:60]}
+    def strip(s): return re.sub(r"<[^>]+>", "", s or "").strip()
+    cl = d.get("results", {}).get("cluster", [])
+    res = cl[0].get("result", []) if cl else []
+    items = []
+    for r in res:
+        p = r.get("patent", {})
+        pn = p.get("publication_number", "")
+        items.append({
+            "num": pn, "title": strip(p.get("title", "")),
+            "assignee": strip(p.get("assignee", "")), "inventor": strip(p.get("inventor", "")),
+            "date": p.get("priority_date", "") or p.get("publication_date", "") or p.get("grant_date", ""),
+            "country": pn[:2] if pn else "",
+            "abstract": strip(p.get("snippet", ""))[:240],
+            "url": ("https://patents.google.com/patent/" + pn) if pn else "https://patents.google.com/",
+        })
+    out = {"ok": True, "total": d.get("results", {}).get("total_num_results", len(items)), "items": items}
+    PAT_CACHE[key] = (now, out)
+    return out
+
 GPLAY_CACHE = {}
 def _gplay_app(aid):
     u = "https://play.google.com/store/apps/details?id=" + aid + "&hl=en&gl=us"
@@ -1107,6 +1139,15 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/appstore"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_appstore(qs.get("q", ["agriculture"])[0], qs.get("country", ["us"])[0], min(60, int(qs.get("limit", ["40"])[0] or 40)))
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/patents"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_patents(qs.get("q", ["agriculture"])[0], min(50, int(qs.get("num", ["30"])[0] or 30)))
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
