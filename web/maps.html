@@ -95,6 +95,7 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
         <div class="maplegend">
           <span class="catitem"><span class="dotm" style="background:#1c6b8a"></span>קיבוץ (<b id="cKib">0</b>)</span>
           <span class="catitem"><span class="dotm" style="background:#4c7a1c"></span>מושב (<b id="cMos">0</b>)</span>
+          <span class="catitem"><span class="dotm" style="background:#6a45c0"></span>כפר נוער (<b id="cYou">0</b>)</span>
           <span class="catitem"><span class="dotm" style="background:#2e9e63"></span>יישוב כפרי (<b id="cOth">0</b>)</span>
           <span style="color:var(--mut);font-size:13.5px;font-weight:600">· לחצו על נעץ לפרטים · גללו לזום</span>
         </div>
@@ -124,7 +125,7 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .settbl th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
 .settbl .sn b{color:var(--green-d);font-family:Rubik}
 .stype{border-radius:11px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
-.stype.kib{background:#e7f2fb;color:#1c6b8a}.stype.mos{background:#eef6ea;color:#4c7a1c}
+.stype.kib{background:#e7f2fb;color:#1c6b8a}.stype.mos{background:#eef6ea;color:#4c7a1c}.stype.you{background:#efeafb;color:#6a45c0}
 .sfac{color:#a3611c;font-weight:600}
 </style>
 <div class="wrap"><div class="setbox">
@@ -214,7 +215,7 @@ function setRender(){
   return;
  }
  var b=rows.slice(0,400).map(function(s){
-  var tc=s.type==='קיבוץ'?'kib':(s.type==='מושב'?'mos':'');
+  var tc=s.type==='קיבוץ'?'kib':(s.type==='מושב'?'mos':(s.type==='כפר נוער'?'you':''));
   var tp=s.type?'<span class="stype '+tc+'">'+s.type+'</span>':'<span style="color:#bbb">—</span>';
   return '<tr><td class="sn"><b>'+s.name+'</b></td><td>'+tp+'</td><td>'+(s.region||'')+'</td><td>'+(s.council||'')+'</td><td>'+(s.crops||'—')+'</td><td class="'+(s.factory?'sfac':'')+'">'+(s.factory||'—')+'</td></tr>';
  }).join('');
@@ -279,12 +280,12 @@ function setGis(k){
  document.querySelectorAll('#gislayers .lbtn').forEach(function(b){b.classList.toggle('on',b.dataset.g===GISCUR);});
  var nn=document.getElementById('gisNote');if(nn)nn.textContent=GISCUR?GIS[GISCUR].note:'בחרו שכבה — ירק, חום או גשם — על גבי מפת ישראל אמיתית.';
 }
-function pinColor(s){return s.type==='קיבוץ'?'#1c6b8a':(s.type==='מושב'?'#4c7a1c':'#2e9e63');}
+function pinColor(s){return s.type==='קיבוץ'?'#1c6b8a':(s.type==='מושב'?'#4c7a1c':(s.type==='כפר נוער'?'#6a45c0':'#2e9e63'));}
 function renderMarkers(){
- if(!MLAYER)return;MLAYER.clearLayers();var n=0,ck=0,cm=0,co=0;
+ if(!MLAYER)return;MLAYER.clearLayers();var n=0,ck=0,cm=0,co=0,cy=0;
  SETDB.forEach(function(s){
   if(s.lat==null||s.lon==null)return;n++;
-  if(s.type==='קיבוץ')ck++;else if(s.type==='מושב')cm++;else co++;
+  if(s.type==='קיבוץ')ck++;else if(s.type==='מושב')cm++;else if(s.type==='כפר נוער')cy++;else co++;
   var det=s.crops||s.factory;
   var m=L.circleMarker([s.lat,s.lon],{radius:det?7:5,color:'#fff',weight:det?2:1.2,fillColor:pinColor(s),fillOpacity:det?1:.82});
   var html='<div dir="rtl" style="font-family:Heebo;min-width:180px">'
@@ -301,6 +302,7 @@ function renderMarkers(){
  var g;
  if(g=document.getElementById('cKib'))g.textContent=ck;
  if(g=document.getElementById('cMos'))g.textContent=cm;
+ if(g=document.getElementById('cYou'))g.textContent=cy;
  if(g=document.getElementById('cOth'))g.textContent=co;
 }
 function pinTable(name){var i=document.getElementById('setq');i.value=name;setRender();document.querySelector('.setbox').scrollIntoView({behavior:'smooth',block:'start'});}
