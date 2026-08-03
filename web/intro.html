@@ -73,6 +73,19 @@ canvas.brain3d{width:620px;height:620px;filter:drop-shadow(0 0 22px rgba(143,230
 .stat .v{font-family:Rubik;font-weight:900;font-size:40px;color:var(--lime);line-height:1}
 .stat .l{font-size:14px;color:rgba(234,244,238,.75);margin-top:10px}
 
+/* ---- MILESTONES ---- */
+.mileScene{flex-direction:column;gap:20px}
+.mileHead{font-family:Rubik;font-weight:800;font-size:38px;color:#fff;text-align:center;opacity:0}
+#stage.mile .mileHead{animation:fadeUp .7s ease forwards}
+.mileHead b{color:var(--lime)}
+.mileList{display:flex;flex-direction:column;gap:12px;width:780px}
+.mile{display:flex;align-items:center;gap:16px;background:rgba(46,158,99,.09);border:1px solid rgba(143,230,173,.3);border-radius:15px;padding:15px 20px;opacity:0;transform:translateX(24px)}
+#stage.mile .mile{animation:fadeInR .6s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes fadeInR{to{opacity:1;transform:none}}
+.mile .ck{width:32px;height:32px;flex:0 0 auto;border-radius:50%;background:linear-gradient(135deg,#2e9e63,#134a30);color:#fff;display:grid;place-items:center;font-weight:900;font-size:17px}
+.mile .mt{font-family:Rubik;font-weight:700;font-size:20px;color:#fff}
+.mile .mt b{color:var(--lime)}
+
 /* ---- MAP ---- */
 .mapScene svg{width:640px;height:auto;transform-origin:center;animation:amoeba 6s ease-in-out infinite}
 /* breathing like a living cell / amoeba */
@@ -136,6 +149,12 @@ canvas.brain3d{width:620px;height:620px;filter:drop-shadow(0 0 22px rgba(143,230
   <div class="scene statsScene">
     <div class="statsHead">הזירה <b>במספרים</b></div>
     <div class="statGrid" id="statGrid"></div>
+  </div>
+
+  <!-- MILESTONES · לאן הגענו -->
+  <div class="scene mileScene">
+    <div class="mileHead">לאן <b>הגענו</b></div>
+    <div class="mileList" id="mileList"></div>
   </div>
 
   <!-- MIND MAP -->
@@ -242,6 +261,19 @@ function countUp(){document.querySelectorAll('.statGrid .v').forEach(function(el
  function step(ts){if(!st)st=ts;var p=Math.min((ts-st)/1400,1);var e=1-Math.pow(1-p,3);el.textContent=Math.round(t*e).toLocaleString('en-US')+suf;if(p<1)requestAnimationFrame(step);}
  requestAnimationFrame(step);});}
 
+/* ---------- MILESTONES ---------- */
+var MILE=[
+ ['28','מנועים חיים — כל הזירה באוויר'],
+ ['✓','האתר עלה לאוויר · agrodata.co.il'],
+ ['20+','מקורות נתונים חיים — ללא עלות מפתחות'],
+ ['AI','2 מנועי בינה מלאכותית · Gemini + Claude'],
+ ['🔎','ספרים · פטנטים · חברות — חיפוש חי'],
+ ['🧠','מפת חשיבה + דף מסכם למשקיעים']
+];
+document.getElementById('mileList').innerHTML=MILE.map(function(m,i){
+ return '<div class="mile" style="animation-delay:'+(0.2+i*0.28).toFixed(2)+'s"><span class="ck">'+m[0]+'</span><span class="mt">'+m[1]+'</span></div>';
+}).join('');
+
 /* ---------- MIND MAP (radial burst) ---------- */
 (function map(){
  var cx=300,cy=300,g='';var petals=6,per=5;var conns='',nodes='';
@@ -257,9 +289,9 @@ function countUp(){document.querySelectorAll('.statGrid .v').forEach(function(el
 
 /* ---------- TIMELINE ---------- */
 var S=document.getElementById('stage'),PROG=document.getElementById('prog');
-var TOTAL=61000, timers=[];
+var TOTAL=71000, timers=[];
 function at(ms,fn){timers.push(setTimeout(fn,ms));}
-function scene(name){['openScene','brainScene','chipsScene','titleScene','statsScene','mapScene','outroScene'].forEach(function(c){var el=document.querySelector('.'+c);if(el)el.classList.toggle('on',c===name);});}
+function scene(name){['openScene','brainScene','chipsScene','titleScene','statsScene','mileScene','mapScene','outroScene'].forEach(function(c){var el=document.querySelector('.'+c);if(el)el.classList.toggle('on',c===name);});}
 function play(){
  timers.forEach(clearTimeout);timers=[];
  S.className='';void S.offsetWidth;
@@ -274,10 +306,12 @@ function play(){
  at(24800,function(){S.classList.remove('chips');scene('titleScene');S.classList.add('title');});
  // scene 4: stats
  at(32800,function(){S.classList.remove('title');scene('statsScene');S.classList.add('stats');countUp();});
- // scene 5: mind map (breathing)
- at(43800,function(){S.classList.remove('stats');scene('mapScene');S.classList.add('map');});
- // scene 6: outro
- at(53800,function(){S.classList.remove('map');scene('outroScene');});
+ // scene 5: milestones — לאן הגענו
+ at(43800,function(){S.classList.remove('stats');scene('mileScene');S.classList.add('mile');});
+ // scene 6: mind map (breathing)
+ at(53800,function(){S.classList.remove('mile');scene('mapScene');S.classList.add('map');});
+ // scene 7: outro
+ at(63800,function(){S.classList.remove('map');scene('outroScene');});
  // progress bar
  var t0=Date.now();var iv=setInterval(function(){var p=Math.min((Date.now()-t0)/TOTAL,1);PROG.style.width=(p*100)+'%';if(p>=1)clearInterval(iv);},120);
  timers.push({});
