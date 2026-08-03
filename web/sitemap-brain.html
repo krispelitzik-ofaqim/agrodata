@@ -237,7 +237,7 @@ var DEF=[
    {label:'AgroLabs · מדען ראשי',file:'labs.html'},{label:'AgroRnD · מו״פים',file:'research.html'}]},
  {key:'fin',c:'#c79a2e',t:'זירה פיננסית',nodes:[
    {label:'אגרו בנק'},{label:'אגרו אינווסט'},{label:'אגרו סטוק',file:'agro-stock.html'},
-   {label:'אגרו ונצ׳ר'},{label:'אגרו לאנץ׳'},{label:'אגרו קפיטל'}]},
+   {label:'אגרו ונצ׳ר'},{label:'אגרו לאנץ׳'},{label:'אגרו קפיטל'},{label:'AgroPlan · תוכנית עסקית',file:'agroplan.html'}]},
  {key:'ofa',c:'#6a45c0',t:'אופקים · AgroCity',nodes:[
    {label:'חזון'},{label:'אקוסיסטם'},{label:'מהנגב לעולם'},{label:'מרכז החדשנות העירוני'},{label:'אגרו קמפוס',file:'research.html'},
    {label:'חוות ניסויים'},{label:'אגרו-סייט'},{label:'אזור תעשייה'},{label:'בי״ס רגבים'},{label:'בי״ס תיכון'},{label:'אופקים',file:'ofakim.html'}]},
@@ -251,7 +251,7 @@ var DEF=[
    {label:'לוח ניהול',file:'admin.html'},{label:'כניסת מנהלים'},{label:'משתמשים וסיסמאות'},{label:'מסלולי מנוי',file:'pricing.html'},
    {label:'אנליטיקה'},{label:'מפת חשיבה',file:'sitemap-brain.html'},{label:'מי אנחנו',file:'about.html'},{label:'צור קשר',file:'contact.html'}]}
 ];
-var KW={research:'res',journals:'res',labs:'res','agro-stock':'fin',grants:'fin',scholarships:'fin',ofakim:'ofa',community:'com',conferences:'com',gov:'com',trade:'com',ideas:'eng',analytics:'eng',scout:'eng',
+var KW={research:'res',journals:'res',labs:'res','agro-stock':'fin',grants:'fin',scholarships:'fin',agroplan:'fin',ofakim:'ofa',community:'com',conferences:'com',gov:'com',trade:'com',ideas:'eng',analytics:'eng',scout:'eng',
  admin:'adm',pricing:'adm',brand:'adm',about:'adm',contact:'adm',privacy:'adm',terms:'adm',companies:'eng',agromap:'eng',maps:'eng',news:'eng',network:'eng',brain:'eng',index:'eng','search-results':'eng',logo:'eng','diagram-flow':'eng'};
 function branchIdxFor(file){var b=file.replace('.html','');for(var kw in KW){if(b.indexOf(kw)>=0){for(var i=0;i<DEF.length;i++)if(DEF[i].key===KW[kw])return i;}}return DEF.length-1;}
 function short(s){s=s.replace(/·.*$/,'').trim();return s.length>22?s.slice(0,21)+'…':s;}
@@ -267,7 +267,7 @@ function loadMap(manual){
   var pages=data.pages||[], apis=data.apis||[];
   // 1) every curated cube (even empty) always appears
   var covered={};
-  var LIVE={'AgroMind · AI':1,'AgroInnovate · רעיונות':1,'AgroPulse · חדשות':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1};
+  var LIVE={'AgroMind · AI':1,'AgroInnovate · רעיונות':1,'AgroPulse · חדשות':1,'AgroDirectory · חברות':1,'AgroScholar · אקדמיה':1,'AgroLibrary · כתבי עת':1,'AgroRnD · מו״פים':1,'אגרו סטוק':1,'זירת שיח':1,'מפת חשיבה':1,'AgroPlan · תוכנית עסקית':1};
   BRANCHES.forEach(function(b,i){ b.n=DEF[i].nodes.map(function(nd){ if(nd.file)covered[nd.file]=1; return {label:short(nd.label),file:nd.file||'',live:LIVE[nd.label]?1:0}; }); });
   // 2) merge any NEW scanned page not already covered (auto-discovery)
   pages.forEach(function(p){ if(p.file==='sitemap-brain.html'||covered[p.file])return; BRANCHES[branchIdxFor(p.file)].n.push({label:short(p.title||p.file),file:p.file}); });
@@ -397,7 +397,8 @@ var SUMMARY=[
    {n:'Agro<b>Stock</b>',in:'מסחר בסחורות חקלאיות ומדדי שוק בזמן אמת.',imp:[{k:'שערים חיים',v:'חי',live:1},{k:'סחורות',v:'15'}]},
    {n:'Agro<b>Index</b>',in:'ברומטר האקוסיסטם — גיוסים, עסקאות ואקזיטים.',imp:[{k:'מדד חי',v:'חי',live:1},{k:'מדדים',v:'4'}]},
    {n:'Agro<b>Capital</b>',in:'חיבור למשקיעים, קרנות ומענקים.',imp:[{k:'סבבי השקעה',v:'—'}]},
-   {n:'Agro<b>Grants</b>',in:'מפת מקורות המימון למחקר וחדשנות.',imp:[{k:'מקורות מימון',v:'ממשלתי · אירופי · פרטי'}]}]},
+   {n:'Agro<b>Grants</b>',in:'מפת מקורות המימון למחקר וחדשנות.',imp:[{k:'מקורות מימון',v:'ממשלתי · אירופי · פרטי'}]},
+   {n:'Agro<b>Plan</b> · תוכנית עסקית',in:'בונה תוכנית עסקית ב-AI — שאלון + 2 סבבי חידוד → תוכנית מלאה.',imp:[{k:'סבבי AI',v:'3',live:1},{k:'פלט',v:'תוכנית + SWOT + פיננסים'}]}]},
  {t:'קהילה ותוכן',c:'#c4562e',blocks:[
    {n:'זירת שיח · קהילה',in:'פורום חי — שיחות, שאלות ותמונות בין המגדלים.',imp:[{k:'מחוברים כעת',v:'חי',live:1}]},
    {n:'הבלוג',in:'תוכן מקורי, טורים וסקירות מהזירה.',imp:[{k:'פוסטים',v:'—'}]}]},
