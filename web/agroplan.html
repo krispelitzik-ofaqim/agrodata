@@ -37,6 +37,12 @@ h1{font-family:Rubik;font-size:38px;font-weight:800;margin:6px 0;color:var(--gre
 .q .why{font-weight:500;color:var(--teal);font-size:13px}
 .q textarea{width:100%;border:1.5px solid #e6eae8;border-radius:12px;padding:11px 13px;font-family:Heebo;font-size:15px;resize:vertical;min-height:64px;background:#fff}
 .q textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(46,158,99,.1)}
+.opts{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.opt{background:#fff;border:1.5px solid #e0e8e3;border-radius:999px;padding:7px 15px;font-size:13.5px;font-family:Rubik;font-weight:600;color:var(--green-d);cursor:pointer;transition:.13s;user-select:none}
+.opt:hover{border-color:var(--green)}
+.opt.on{background:var(--green);border-color:var(--green);color:#fff}
+.locbtn{margin-top:8px;background:#fff;border:1.5px solid #e0e8e3;border-radius:10px;padding:8px 14px;font-family:Rubik;font-weight:700;font-size:13px;color:var(--green-d);cursor:pointer}
+.locbtn:hover{border-color:var(--green);background:var(--tint)}
 /* attachments */
 .attach{border:1.5px dashed #d8e5dd;border-radius:14px;padding:15px 16px;margin:4px 0 20px;background:#fcfefd}
 .attach .ah{font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--green-d);margin-bottom:2px}
@@ -120,21 +126,22 @@ var ENGINE='gemini';
 var SEEDTOPIC='';try{SEEDTOPIC=(new URLSearchParams(location.search).get('topic')||'').trim();}catch(e){}
 function resetTopic(){SEEDTOPIC='';try{history.replaceState(null,'',location.pathname);}catch(e){}renderRound1();}
 var Q1=[
- ['שם היוזמה/החברה — ובמשפט אחד, מה אתם עושים?','לדוגמה: "GreenSense — חיישני קרקע חכמים להשקיה מדויקת"'],
- ['איזו בעיה חקלאית/אגרו-טק אתם פותרים, ולמי היא כואבת?',''],
- ['מהו הפתרון/המוצר, ומה חדשני בו?',''],
- ['מיהו הלקוח המשלם? (מגדלים, חברות, יצואנים, מפעלים…)',''],
- ['מהו מודל ההכנסה? (מנוי, מכירה, עמלה, רישוי…)',''],
- ['איזה מתקן/שטח נדרש לפעילות?','מעבדה · חממה · קיוב/מכולה · האנגר · שטח גידול · משרד — וכמה מ״ר'],
- ['עלויות מתקן ותפעול חודשיות משוערות','שכירות למ״ר · ארנונה · דמי ניהול · חשמל · מים'],
- ['כוח אדם ושכר','כמה עובדים · אילו תפקידים · עלות שכר חודשית משוערת'],
- ['הכנסות צפויות ואומדן','מקורות: מכירות · מנויים · שירותים · רישוי · מענקים — וסכום חודשי/שנתי משוער'],
- ['מי המתחרים ומהו הבידול שלכם?',''],
- ['באיזה שלב אתם? (רעיון · אב-טיפוס · פיילוט · מכירות ראשונות)',''],
- ['מי בצוות ומה הניסיון הרלוונטי?',''],
- ['כמה מימון דרוש, ולמה הוא ישמש?',''],
- ['מקורות המימון/ההון','הון עצמי · מענקים · מלגות · תרומות · משקיעים — ואיזה סכום מכל מקור'],
- ['מהם היעדים המרכזיים ל-12 החודשים הקרובים?','']
+ {q:'שם היוזמה/החברה — ובמשפט אחד, מה אתם עושים?',ph:'לדוגמה: "GreenSense — חיישני קרקע חכמים להשקיה מדויקת"'},
+ {q:'איזו בעיה חקלאית/אגרו-טק אתם פותרים, ולמי היא כואבת?',ph:''},
+ {q:'מהו הפתרון/המוצר, ומה חדשני בו?',ph:''},
+ {q:'מיהו הלקוח המשלם?',opts:['מגדלים','חברות אגרו-טק','יצואנים','מפעלים','ממשלה/רשויות','צרכנים','אחר'],multi:1,ph:'פירוט / "אחר"…'},
+ {q:'מהו מודל ההכנסה?',opts:['מנוי','מכירה','עמלה','רישוי','פרסום','אחר'],multi:1,ph:'פירוט / "אחר"…'},
+ {q:'איזה מתקן/שטח נדרש לפעילות?',opts:['מעבדה','חממה','קיוב/מכולה','האנגר','שטח גידול','משרד','אחר'],multi:1,ph:'כמה מ״ר / "אחר"…'},
+ {q:'מיקום העסק העתידי',ph:'עיר / אזור / כתובת — כדי שנציע בהמשך שירותים ונכסים קרובים',loc:1},
+ {q:'עלויות מתקן ותפעול חודשיות משוערות',ph:'שכירות למ״ר · ארנונה · דמי ניהול · חשמל · מים'},
+ {q:'כוח אדם ושכר',ph:'כמה עובדים · אילו תפקידים · עלות שכר חודשית משוערת'},
+ {q:'מקורות הכנסה צפויים ואומדן',opts:['מכירות','מנויים','שירותים','רישוי','מענקים','אחר'],multi:1,ph:'סכום חודשי/שנתי משוער / "אחר"…'},
+ {q:'מי המתחרים ומהו הבידול שלכם?',ph:''},
+ {q:'באיזה שלב אתם?',opts:['רעיון','אב-טיפוס','פיילוט','מכירות ראשונות'],multi:0,ph:'פירוט…'},
+ {q:'מי בצוות ומה הניסיון הרלוונטי?',ph:''},
+ {q:'כמה מימון דרוש, ולמה הוא ישמש?',ph:''},
+ {q:'מקורות המימון/ההון',opts:['הון עצמי','מענק','מלגה','תרומה','משקיעים','אחר'],multi:1,ph:'איזה סכום מכל מקור / "אחר"…'},
+ {q:'מהם היעדים המרכזיים ל-12 החודשים הקרובים?',ph:''}
 ];
 var answers=[]; // {q,a}
 var round=1;
@@ -194,6 +201,10 @@ function attachBlock(){
  }).join('\n');
 }
 
+function toggleOpt(el,multi){if(!multi){[].forEach.call(el.parentNode.querySelectorAll('.opt'),function(x){if(x!==el)x.classList.remove('on');});}el.classList.toggle('on');}
+function fillLoc(i){var ta=document.getElementById('a'+i);
+ if(navigator.geolocation){navigator.geolocation.getCurrentPosition(function(p){ta.value=p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5);},function(){var v=prompt('הזינו מיקום:');if(v)ta.value=v;},{timeout:5000});}
+ else{var v=prompt('הזינו מיקום:');if(v)ta.value=v;}}
 function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
 function ask(prompt){return fetch('/api/ask?engine='+ENGINE+'&q='+encodeURIComponent(prompt)).then(function(r){return r.json();});}
 function qaText(){var t=SEEDTOPIC?'נושא הליבה (נבחר במנוע החדשנות): '+SEEDTOPIC+'\n\n':'';return t+answers.map(function(x,i){return (i+1)+'. '+x.q+'\nתשובה: '+(x.a||'(לא נענה)');}).join('\n')+attachBlock();}
@@ -218,7 +229,9 @@ function engBar(){
 function renderRound1(){
  PLAN=null;round=1;answers=[];
  var qs=Q1.map(function(q,i){
-  return '<div class="q"><label>'+(i+1)+'. '+esc(q[0])+'</label><textarea id="a'+i+'" placeholder="'+esc(q[1])+'"></textarea></div>';
+  var chips=q.opts?'<div class="opts" data-qi="'+i+'">'+q.opts.map(function(o){return '<span class="opt" onclick="toggleOpt(this,'+(q.multi?1:0)+')">'+esc(o)+'</span>';}).join('')+'</div>':'';
+  var locbtn=q.loc?'<button type="button" class="locbtn" onclick="fillLoc('+i+')">📍 השתמש במיקומי</button>':'';
+  return '<div class="q"><label>'+(i+1)+'. '+esc(q.q)+'</label>'+chips+'<textarea id="a'+i+'" placeholder="'+esc(q.ph||'')+'"></textarea>'+locbtn+'</div>';
  }).join('');
  var attach=
   '<div class="attach"><div class="ah">📎 צירופים (רשות)</div>'
@@ -241,7 +254,12 @@ function renderRound1(){
  renderSteps();window.scrollTo(0,0);
 }
 function submitRound1(){
- answers=Q1.map(function(q,i){return {q:q[0],a:(document.getElementById('a'+i).value||'').trim()};});
+ answers=Q1.map(function(q,i){
+  var sel=[].map.call(document.querySelectorAll('.opts[data-qi="'+i+'"] .opt.on'),function(x){return x.textContent;});
+  var txt=(document.getElementById('a'+i).value||'').trim();
+  var a=(sel.join(', ')+((sel.length&&txt)?' — ':'')+txt).trim();
+  return {q:q.q,a:a};
+ });
  if(answers.filter(function(x){return x.a;}).length<3){alert('מלאו לפחות 3 שאלות כדי להמשיך.');return;}
  loading('מנתח את התשובות ומכין שאלות המשך…');
  var p='אתה יועץ בכיר לבניית תוכניות עסקיות באגרו-טק ופוד-טק. להלן שאלון ותשובות של יזם:\n'+qaText()
