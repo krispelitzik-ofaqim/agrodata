@@ -876,8 +876,51 @@ def fetch_appstore(term, country="us", limit=40):
     return out
 
 BOOKS_CACHE = {}
+GBOOKS_KEY = os.environ.get("GOOGLE_BOOKS_API_KEY", "")
+def fetch_gbooks(q, num=30, lang="heb"):
+    q = (q or "agriculture").strip()
+    ck = ("gb", q, num, lang); now = time.time()
+    if ck in BOOKS_CACHE and now - BOOKS_CACHE[ck][0] < 3600:
+        return BOOKS_CACHE[ck][1]
+    url = ("https://www.googleapis.com/books/v1/volumes?q=" + urllib.parse.quote(q) +
+           "&langRestrict=" + lang + "&maxResults=" + str(min(40, num)) +
+           "&orderBy=relevance&country=IL&key=" + GBOOKS_KEY)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+    except Exception as e:
+        return {"ok": False, "items": [], "err": str(e)[:80]}
+    items = []
+    for it in d.get("items", []):
+        v = it.get("volumeInfo", {}) or {}
+        a = it.get("accessInfo", {}) or {}
+        img = (v.get("imageLinks") or {})
+        cover = img.get("thumbnail") or img.get("smallThumbnail") or ""
+        if cover.startswith("http://"):
+            cover = "https://" + cover[7:]
+        readable = a.get("viewability") in ("ALL_PAGES",) or (a.get("pdf", {}) or {}).get("isAvailable") or (a.get("epub", {}) or {}).get("isAvailable")
+        items.append({
+            "title": v.get("title", ""),
+            "author": (v.get("authors") or [""])[0],
+            "year": (v.get("publishedDate") or "")[:4],
+            "editions": 0,
+            "cover": cover,
+            "scanned": bool(readable),
+            "desc": (v.get("description") or (it.get("searchInfo", {}) or {}).get("textSnippet") or "")[:220],
+            "subjects": [s for s in (v.get("categories") or [])[:3] if s],
+            "read": a.get("webReaderLink") or v.get("infoLink") or v.get("previewLink") or "",
+        })
+    out = {"ok": True, "total": d.get("totalItems", len(items)), "items": items, "src": "gbooks"}
+    BOOKS_CACHE[ck] = (now, out)
+    return out
+
 def fetch_books(q, num=30, lang=""):
     q = (q or "agriculture").strip()
+    # עברית: Google Books נותן כיסוי עשיר בהרבה (אם יש מפתח)
+    if lang == "heb" and GBOOKS_KEY:
+        g = fetch_gbooks(q, num, "heb")
+        if g.get("ok") and g.get("items"):
+            return g
     if lang in ("heb", "eng"):
         q = q + " language:" + lang
     key = (q, num); now = time.time()

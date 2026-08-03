@@ -118,7 +118,7 @@ function renderBooks(){
    +subs
    +'<div class="blink">'+(b.scanned?'קריאה מלאה (OCR) ↗':'לפרטים ותקציר ↗')+'</div></div></a>';
  }).join('');
- heTranslate(items);
+ if(LANG!=='heb')heTranslate(items);
 }
 var HECACHE={};
 function heTranslate(items){
