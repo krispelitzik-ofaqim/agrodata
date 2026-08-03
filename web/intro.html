@@ -210,7 +210,7 @@ for(var i=0;i<P.length;i++){var best=[-1,-1],bd=[1e9,1e9];
  for(var j=0;j<P.length;j++){if(j===i)continue;var dx=P[i][0]-P[j][0],dy=P[i][1]-P[j][1],dz=P[i][2]-P[j][2],d=dx*dx+dy*dy+dz*dz;
   if(d<bd[0]){bd[1]=bd[0];best[1]=best[0];bd[0]=d;best[0]=j;}else if(d<bd[1]){bd[1]=d;best[1]=j;}}
  if(best[0]>i)EDGES.push([i,best[0]]);if(best[1]>i)EDGES.push([i,best[1]]);}
-var brainStart=0, BUILD=4500;
+var brainStart=0, BUILD=2600;
 function rotP(p,ay,ax){
  var cy=Math.cos(ay),sy=Math.sin(ay),x=p[0]*cy-p[2]*sy,z=p[0]*sy+p[2]*cy;
  var cx=Math.cos(ax),sx=Math.sin(ax),y=p[1]*cx-z*sx,z2=p[1]*sx+z*cx;
@@ -282,7 +282,7 @@ document.getElementById('mileList').innerHTML=MILE.map(function(m,i){
 
 /* ---------- TIMELINE ---------- */
 var S=document.getElementById('stage'),PROG=document.getElementById('prog');
-var TOTAL=64000, timers=[];
+var TOTAL=55000, timers=[];
 function at(ms,fn){timers.push(setTimeout(fn,ms));}
 function scene(name){['brainScene','chipsScene','titleScene','statsScene','mileScene','mapScene','outroScene'].forEach(function(c){var el=document.querySelector('.'+c);if(el)el.classList.toggle('on',c===name);});}
 function play(){
@@ -290,19 +290,19 @@ function play(){
  S.className='';void S.offsetWidth;
  // scene 0: opening BRAND title — AgroData · אופקים — זירת האגרו-טק של ישראל
  scene('titleScene');S.classList.add('title');
- // scene 1: 3D brain builds in volume, then keeps rotating
- at(3600,function(){S.classList.remove('title');scene('brainScene');brainStart=Date.now();});
- at(7400,function(){S.classList.add('glow');});
+ // scene 1: 3D brain — head-start the build so it appears already partly-formed (no empty green)
+ at(3000,function(){S.classList.remove('title');scene('brainScene');brainStart=Date.now()-1500;});
+ at(5200,function(){S.classList.add('glow');});
  // scene 2: chips fill (brain lifts up & keeps rotating behind)
- at(12200,function(){scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
+ at(9500,function(){scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
  // scene 3: stats
- at(25600,function(){S.classList.remove('chips');scene('statsScene');S.classList.add('stats');countUp();});
+ at(19000,function(){S.classList.remove('chips');scene('statsScene');S.classList.add('stats');countUp();});
  // scene 4: milestones — לאן הגענו
- at(36600,function(){S.classList.remove('stats');scene('mileScene');S.classList.add('mile');});
+ at(28500,function(){S.classList.remove('stats');scene('mileScene');S.classList.add('mile');});
  // scene 5: mind map (breathing)
- at(46600,function(){S.classList.remove('mile');scene('mapScene');S.classList.add('map');});
+ at(38000,function(){S.classList.remove('mile');scene('mapScene');S.classList.add('map');});
  // scene 6: outro
- at(56600,function(){S.classList.remove('map');scene('outroScene');});
+ at(47000,function(){S.classList.remove('map');scene('outroScene');});
  // progress bar
  var t0=Date.now();var iv=setInterval(function(){var p=Math.min((Date.now()-t0)/TOTAL,1);PROG.style.width=(p*100)+'%';if(p>=1)clearInterval(iv);},120);
  timers.push({});
