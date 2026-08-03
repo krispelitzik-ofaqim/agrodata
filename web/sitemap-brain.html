@@ -22,7 +22,10 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#fff}
 .sub{color:rgba(234,244,238,.6);font-size:16px;max-width:640px;margin:0 auto}
 .panel{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:16px;margin:26px 0}
 .mapbox{width:100%;overflow-x:auto}
-svg.brain{width:100%;min-width:900px;height:auto;display:block}
+svg.brain{width:100%;min-width:900px;height:auto;display:block;transform-origin:center;animation:brainBreathe 7s ease-in-out infinite}
+/* נשימה — כמו תא חי / אמבה */
+@keyframes brainBreathe{0%,100%{transform:scale(1,1) rotate(0deg)}28%{transform:scale(1.022,.99) rotate(.5deg)}55%{transform:scale(.99,1.02) rotate(-.5deg)}80%{transform:scale(1.012,.996) rotate(.25deg)}}
+.brain.live{animation-duration:3.6s}
 .legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:14px 0 4px}
 .lg{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(234,244,238,.8)}
 .lg .sw{width:12px;height:12px;border-radius:4px}
