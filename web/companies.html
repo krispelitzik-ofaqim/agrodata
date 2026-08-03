@@ -103,7 +103,8 @@ tbody tr:hover{background:var(--bg2)}
     <div class="filters" id="filters"></div>
   </div>
 
-  <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש חברה: שם, תחום, טכנולוגיה…" oninput="render(CUR)"></div>
+  <div class="jsearchbar"><span>🔎</span><input id="jsearch" placeholder="חיפוש חברה: שם, תחום, טכנולוגיה… (מחפש גם ב-48 המובילות וגם בכל הרשם)" oninput="onSearch()"></div>
+  <div style="font-size:13.5px;color:var(--mut);margin:-4px 0 6px">🔗 חיפוש אחד — למעלה <b>החברות המובילות האצורות</b>, ולמטה <b>אותו חיפוש חי</b> בכל 728K החברות ברשם.</div>
   <div class="twrap">
     <table><thead><tr>
       <th>חברה</th><th>תחום</th><th>הוקמה</th><th>תגיות</th>
@@ -249,6 +250,14 @@ const FB=[['all','הכול']].concat(Object.keys(CAT).map(k=>[k,CAT[k][1]]));
 document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[1]}</button>`).join('');
 document.getElementById('stTot').textContent=C.length;
 render('all');
+var regTimer=null;
+function onSearch(){
+ render(CUR);
+ var q=(document.getElementById('jsearch').value||'').trim();
+ document.getElementById('regq').value=q;
+ clearTimeout(regTimer);
+ if(q.length>=2){regTimer=setTimeout(loadReg,450);}
+}
 function loadReg(){
  var q=(document.getElementById('regq').value||'').trim()||'אגרו';
  var tb=document.querySelector('#regtbl tbody');
