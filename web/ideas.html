@@ -36,7 +36,9 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 @media(max-width:560px){.chgrid{grid-template-columns:1fr}}
 .ch{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px;cursor:pointer;transition:.16s;position:relative;overflow:hidden}
 .ch:hover{transform:translateY(-4px);border-color:var(--cc);box-shadow:0 20px 40px rgba(0,0,0,.35)}
-.ch.on{border-color:var(--cc);background:rgba(255,255,255,.07)}
+.ch.on{border-color:var(--cc);border-width:2px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05));box-shadow:0 0 0 2px var(--cc),0 16px 36px rgba(0,0,0,.4);transform:translateY(-3px)}
+.ch.on::after{content:'✓ נבחר';position:absolute;top:12px;inset-inline-start:12px;background:var(--cc);color:#0d1f16;font-family:Rubik;font-weight:800;font-size:12px;border-radius:8px;padding:3px 9px;z-index:2}
+.ch.on .go{display:none}
 .ch .viz{height:64px;margin-bottom:10px}
 .ch h3{font-family:Rubik;font-weight:800;font-size:19px;color:#fff}
 .ch p{font-size:13.5px;color:rgba(234,244,238,.62);line-height:1.5;margin:6px 0 12px}
