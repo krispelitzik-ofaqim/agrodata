@@ -121,7 +121,7 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
 .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:.2s}
 .dot.on{background:var(--lime);width:22px;border-radius:5px}
 .prog{position:absolute;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--green),var(--lime));z-index:30;transition:width .25s linear}
-.snum{position:absolute;top:14px;right:18px;font-family:'Plex Mono';font-size:13px;color:rgba(234,244,238,.5);z-index:30}
+.snum{position:absolute;top:14px;right:18px;font-family:'Plex Mono';font-size:13px;color:rgba(234,244,238,.5);z-index:30;direction:ltr}
 .skip{position:absolute;top:14px;left:18px;color:rgba(234,244,238,.5);text-decoration:none;font-family:'Plex Mono';font-size:13px;z-index:30}
 </style>
 </head>
@@ -166,7 +166,7 @@ canvas.eng{width:min(52vh,520px);height:min(52vh,520px)}
   <section class="slide" data-t="14000">
     <div class="kick">The Blueprint</div>
     <h2>מפת <b>החשיבה</b> · המוח החי של הזירה</h2>
-    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="sitemap-brain.html" title="Mind Map"></iframe></div></div>
+    <div class="device tilt"><div class="bar"><i></i><i></i><i></i></div><div class="vp"><iframe data-src="sitemap-brain.html" data-scroll="620" title="Mind Map"></iframe></div></div>
   </section>
 
   <!-- 7 · LIVE MAP -->
@@ -365,7 +365,7 @@ function activate(i){
  clearTimeout(growTimer);
  if(s.getAttribute('data-chips'))growTimer=setTimeout(function(){s.classList.add('grown');},3400);
  var f=s.querySelector('iframe[data-src]');
- if(f&&!f.src){f.src=f.getAttribute('data-src');sizeFrame(f);}
+ if(f&&!f.src){var y=+f.getAttribute('data-scroll')||0;f.onload=function(){sizeFrame(f);if(y){try{f.contentWindow.scrollTo(0,y);}catch(e){}}};f.src=f.getAttribute('data-src');sizeFrame(f);}
  var v=s.querySelector('.bgvid[data-src]');
  if(v){if(!v.src)v.src=v.getAttribute('data-src');try{v.currentTime=0;v.play();}catch(e){}}
 }
