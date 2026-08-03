@@ -296,13 +296,15 @@ function renderGap(){
  });
 }
 function renderWho(){
- var box=document.getElementById('ideas');thinking('מחפש חברות וסטארטאפים בתחום…');
- fetch('/api/companies?limit=20&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).then(function(j){
-  var items=(j&&j.items)||[];
+ var box=document.getElementById('ideas');thinking('מסכם מי פועל בתחום…');
+ fetch('/api/companies?limit=8&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).then(function(j){
+  var items=(j&&j.items)||[],tot=(j&&j.total)||items.length;
   if(!items.length){box.innerHTML='<div class="bankempty">לא נמצאו חברות למונח "'+CURKW+'".</div>';return;}
-  box.innerHTML='<div style="grid-column:1/-1;color:#eaf4ee;font-family:Rubik;font-weight:800;margin-bottom:8px">🏢 '+((j.total||items.length).toLocaleString())+' חברות בתחום · מציג '+items.length+'</div>'+items.map(function(c){
-   return '<div class="rowitm"><b>'+c.name+'</b> <span class="mt">מס׳ '+c.num+' · '+(c.status||'')+(c.founded?' · הוקמה '+c.founded:'')+'</span>'+(c.purpose?'<div class="mt">'+c.purpose+'</div>':'')+'</div>';
-  }).join('');
+  var names=items.slice(0,6).map(function(c){return c.name;});
+  box.innerHTML='<div class="gapcard" style="border-color:#5ab0d0"><div style="font-family:Rubik;font-weight:800;font-size:19px;color:#fff">🏢 מי כבר עושה · '+CURTITLE+'</div>'
+   +'<div style="font-size:14.5px;color:rgba(234,244,238,.82);margin:8px 0 12px">בתחום פועלות כ-<b style="color:#5ab0d0">'+tot.toLocaleString()+'</b> חברות ישראליות רשומות. בין הבולטות:</div>'
+   +'<div style="display:flex;flex-wrap:wrap;gap:8px">'+names.map(function(n){return '<span style="background:rgba(90,176,208,.16);color:#bfe4f2;border-radius:10px;padding:6px 12px;font-size:13.5px;font-weight:700">'+n+'</span>';}).join('')+'</div>'
+   +'<div style="margin-top:14px"><a href="companies.html" style="color:#5ab0d0;font-weight:800;text-decoration:none">לרשימה המלאה ולחיפוש ברשם ←</a></div></div>';
  }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת.</div>';});
 }
 function renderFinance(){
@@ -336,17 +338,20 @@ function renderFinance(){
  });
 }
 function renderTrends(){
- var box=document.getElementById('ideas');thinking('אוסף מגמות מהחדשות והמחקר…');
+ var box=document.getElementById('ideas');thinking('מתמצת מגמות מהחדשות והמחקר…');
  Promise.all([
   fetch('/api/news?region=il&q='+encodeURIComponent(CURKW)).then(function(r){return r.json();}).catch(function(){return{items:[]};}),
   fetch('/api/research?q='+encodeURIComponent(CUREN)).then(function(r){return r.json();}).catch(function(){return{items:[]};})
  ]).then(function(res){
-  var news=((res[0]&&res[0].items)||[]).slice(0,6), papers=((res[1]&&res[1].items)||[]).slice(0,6);
-  var h='<div style="grid-column:1/-1"><div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:2px 0 8px">📰 חדשות אחרונות</div>';
-  h+= news.length? news.map(function(a){return '<a class="rowitm" href="'+(a.link||a.url||'#')+'" target="_blank" rel="noopener"><b>'+a.title+'</b><span class="mt">'+(a.source||'')+'</span></a>';}).join('') : '<div class="bankempty">אין חדשות למונח זה.</div>';
-  h+='<div style="color:#8fe6ad;font-family:Rubik;font-weight:800;margin:16px 0 8px">🔬 מחקרים אקדמיים (OpenAlex)</div>';
-  h+= papers.length? papers.map(function(p){return '<a class="rowitm" href="'+(p.url||'#')+'" target="_blank" rel="noopener"><b>'+p.title+'</b><span class="mt">'+[p.inst,p.year].filter(Boolean).join(' · ')+'</span></a>';}).join('') : '<div class="bankempty">אין מחקרים למונח זה.</div>';
-  h+='</div>';box.innerHTML=h;
+  var news=((res[0]&&res[0].items)||[]).slice(0,8), papers=((res[1]&&res[1].items)||[]).slice(0,8);
+  var titles=news.map(function(a){return a.title;}).concat(papers.map(function(p){return p.title;})).filter(Boolean).slice(0,14).join(' | ');
+  if(!titles){box.innerHTML='<div class="bankempty">אין מספיק מקורות לתמצית עבור "'+CURTITLE+'".</div>';return;}
+  fetch('/api/ask?engine=gemini&q='+encodeURIComponent('סכם תמציתית בעברית את המגמות הבולטות בנושא "'+CURTITLE+'" לפי הכותרות הבאות. 2-3 משפטי פתיחה ואז 3 נקודות תבליט קצרות. בלי כותרות מודגשות ובלי סימני עיצוב. כותרות: '+titles)).then(function(r){return r.json();}).then(function(j){
+   var s=(j.demo?'':(j.answer||'')).replace(/[*#`>]/g,'').trim();
+   box.innerHTML='<div class="gapcard" style="border-color:#b39ae0"><div style="font-family:Rubik;font-weight:800;font-size:19px;color:#fff">📈 תמצית מגמות · '+CURTITLE+'</div>'
+    +'<div style="font-size:14.5px;color:rgba(234,244,238,.9);line-height:1.75;margin-top:10px;white-space:pre-wrap">'+(s||'—')+'</div>'
+    +'<div style="margin-top:12px;font-size:12.5px;color:rgba(234,244,238,.55)">מתומצת מ-'+news.length+' כותרות חדשות + '+papers.length+' מחקרים · המונח "'+CURKW+'"</div></div>';
+  }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור ל-AI.</div>';});
  });
 }
 </script>
