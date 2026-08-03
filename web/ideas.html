@@ -61,8 +61,10 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .idea .row b{color:#8fe6ad}
 .nsteps{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}
 .nslbl{font-family:'Plex Mono';font-size:12px;color:rgba(234,244,238,.6)}
-.nsteps a{background:transparent;border:0;color:#cfe9d8;text-decoration:none;font-family:Rubik;font-weight:700;font-size:13px;border-radius:10px;padding:6px 10px;transition:.14s;display:inline-flex;align-items:center;gap:5px}
-.nsteps a:hover{background:rgba(143,230,173,.16);color:#8fe6ad;transform:translateY(-1px)}
+.nsteps a{background:rgba(255,255,255,.05);border:0;color:#cfe9d8;text-decoration:none;font-family:Rubik;font-weight:700;font-size:16px;border-radius:10px;padding:6px 9px;transition:.16s;display:inline-flex;align-items:center;line-height:1}
+.nsteps a:hover{background:rgba(143,230,173,.18);color:#8fe6ad;transform:translateY(-1px)}
+.nsteps a .lbl{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-size:13px;transition:.2s ease;display:inline-block}
+.nsteps a:hover .lbl{max-width:100px;opacity:1;margin-inline-start:6px}
 .bankempty{color:rgba(234,244,238,.6);text-align:center;padding:26px;font-size:15px}
 .thinking{display:flex;align-items:center;justify-content:center;gap:12px;color:#8fe6ad;padding:26px;font-size:16px}
 .dots i{display:inline-block;width:8px;height:8px;margin:0 2px;border-radius:50%;background:#8fe6ad;animation:think 1s infinite}
@@ -243,7 +245,7 @@ function renderIdeas(){
    var say=parts.join('. ').replace(/"/g,'&quot;');
    return '<div class="idea"><div class="it">💡 '+name+'<button class="ispk" data-say="'+say+'" onclick="idSpeak(this)" title="הקראה">🔊</button></div>'+body
     +'<div class="nsteps"><span class="nslbl">הצעדים הבאים:</span>'
-    +'<a href="grants.html">💰 מענק</a><a href="scholarships.html">🎓 צוות</a><a href="ofakim.html">🚀 האצה</a><a href="analytics.html">📊 שוק</a></div>'
+    +'<a href="grants.html" title="מענק">💰<span class="lbl">מענק</span></a><a href="scholarships.html" title="צוות">🎓<span class="lbl">צוות</span></a><a href="ofakim.html" title="האצה">🚀<span class="lbl">האצה</span></a><a href="analytics.html" title="שוק">📊<span class="lbl">שוק</span></a></div>'
     +'</div>';
   }).join('');
  }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת — האם ה-AI מחובר?</div>';});
