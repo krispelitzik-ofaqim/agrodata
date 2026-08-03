@@ -20,23 +20,11 @@ body{font-family:Heebo,Arial,sans-serif;background:#050c08;color:#eaf4ee;overflo
 .spark{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(143,230,173,.5);animation:tw 3s ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.7;transform:scale(1.2)}}
 
-/* ---- BRAIN ---- */
-.brainWrap{perspective:1400px}
-#brainRot{transform-style:preserve-3d;transition:transform 3.4s cubic-bezier(.5,0,.2,1)}
-#stage.spin #brainRot{transform:rotateY(360deg)}
-#stage.mini .brainScene{transform:scale(.42) translateY(-30vh);transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
+/* ---- 3D BRAIN (canvas point-cloud) ---- */
+#stage.mini .brainScene{transform:scale(.44) translateY(-300px);transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
 .brainScene{transition:transform 1.4s cubic-bezier(.5,0,.2,1)}
-svg.brain{width:560px;height:auto;filter:drop-shadow(0 0 26px rgba(143,230,173,.35))}
-.brain .outline{fill:none;stroke:var(--lime);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
-.brain .gyrus{fill:none;stroke:var(--green);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.9;stroke-dasharray:1;stroke-dashoffset:1}
-.brain .fissure{fill:none;stroke:var(--lime);stroke-width:2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
-#stage.draw .brain .outline{animation:draw 2.2s ease forwards}
-#stage.draw .brain .fissure{animation:draw 1.6s ease .8s forwards}
-#stage.draw .brain .gyrus{animation:draw 1.3s ease forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-#stage.glow svg.brain{filter:drop-shadow(0 0 46px rgba(143,230,173,.75))}
-.brainCore{fill:rgba(143,230,173,0);transition:fill 1.2s ease}
-#stage.glow .brainCore{fill:rgba(143,230,173,.10)}
+canvas.brain3d{width:620px;height:620px;filter:drop-shadow(0 0 22px rgba(143,230,173,.28));transition:filter 1.2s ease}
+#stage.glow canvas.brain3d{filter:drop-shadow(0 0 44px rgba(143,230,173,.6))}
 
 /* ---- CHIPS ---- */
 .chipsScene{align-items:center}
@@ -106,10 +94,10 @@ svg.brain{width:560px;height:auto;filter:drop-shadow(0 0 26px rgba(143,230,173,.
 <a class="skiplink" href="index.html">← לאתר</a>
 
 <div id="stage">
-  <!-- BRAIN -->
-  <div class="scene brainScene on"><div class="brainWrap"><div id="brainRot">
-    <svg class="brain" id="brainSvg" viewBox="0 0 480 400" aria-hidden="true"></svg>
-  </div></div></div>
+  <!-- 3D BRAIN -->
+  <div class="scene brainScene on">
+    <canvas class="brain3d" id="brainCanvas" width="620" height="620" aria-hidden="true"></canvas>
+  </div>
 
   <!-- CHIPS -->
   <div class="scene chipsScene">
@@ -154,21 +142,69 @@ svg.brain{width:560px;height:auto;filter:drop-shadow(0 0 26px rgba(143,230,173,.
 /* scale the 1000×1000 frame to fit the viewport */
 function fitFrame(){var f=document.getElementById('frame');var s=Math.min(window.innerWidth/1000,window.innerHeight/1000);f.style.transform='scale('+s+')';}
 window.addEventListener('resize',fitFrame);fitFrame();
-/* ---------- BRAIN (outline + gyri that draw in) ---------- */
-var OUTLINE="M240,58 C312,50 366,84 384,140 C398,182 392,224 362,258 C348,296 300,320 240,322 C180,320 132,296 118,258 C88,224 82,182 96,140 C114,84 168,50 240,58 Z";
-function wave(y,amp,per,ph,x0,x1){var d='M'+x0+','+y.toFixed(1);for(var x=x0+8;x<=x1;x+=8){var yy=y+amp*Math.sin((x/per)+ph);d+=' L'+x+','+yy.toFixed(1);}return d;}
-(function brain(){
- var g='<defs><clipPath id="bclip"><path d="'+OUTLINE+'"/></clipPath></defs>';
- g+='<path class="brainCore" d="'+OUTLINE+'"/>';
- // gyri (folds) clipped to brain
- var lines='';var i=0;
- for(var y=92;y<=300;y+=15){ var amp=7+(i%3)*2, per=34+(i%4)*6, ph=(i*1.1);
-   lines+='<path class="gyrus" pathLength="1" d="'+wave(y,amp,per,ph,110,372)+'" style="animation-delay:'+(0.5+i*0.11).toFixed(2)+'s"/>'; i++; }
- g+='<g clip-path="url(#bclip)">'+lines+'</g>';
- g+='<path class="outline" pathLength="1" d="'+OUTLINE+'"/>';
- g+='<path class="fissure" pathLength="1" d="M240,60 C252,150 230,250 240,320"/>';
- document.getElementById('brainSvg').innerHTML=g;
-})();
+/* ---------- 3D BRAIN — volumetric point-cloud built along width·height·depth ---------- */
+var cv=document.getElementById('brainCanvas'),ctx=cv.getContext('2d');
+var DPR=Math.min(window.devicePixelRatio||1,2),VB=620;
+cv.width=VB*DPR;cv.height=VB*DPR;ctx.scale(DPR,DPR);
+var Cx=VB/2,Cy=VB/2,R=205,FOC=560;
+/* build a brain: two folded hemispheres + cerebellum, as 3D points */
+var P=[];
+function hemisphere(side,N){
+ for(var i=0;i<N;i++){
+  var t=(i+0.5)/N, y=1-2*t, r=Math.sqrt(Math.max(0,1-y*y)), phi=i*2.399963229;
+  var ux=Math.cos(phi)*r, uz=Math.sin(phi)*r, uy=y;
+  // gyri folds — wrinkle the radius
+  var fold=1+0.055*Math.sin(uy*9+side)+0.045*Math.cos(phi*3)+0.03*Math.sin(uz*7);
+  // ellipsoid radii: lateral(x) · vertical(y) · length front-back(z)
+  var X=ux*0.42*fold, Y=uy*0.62*fold, Z=uz*0.82*fold;
+  // flatten medial (inner) side so the two halves meet
+  var inner=(side>0)?(X<0):(X>0); if(inner) X*=0.34;
+  X+=side*0.30;                 // separate hemispheres
+  Y-=0.04;                      // sit slightly high (room for cerebellum)
+  P.push([X*R,Y*R,Z*R]);
+ }
+}
+hemisphere(1,330);hemisphere(-1,330);
+// cerebellum (small dense blob, lower-back)
+for(var i=0;i<90;i++){var t=(i+0.5)/90,y=1-2*t,r=Math.sqrt(Math.max(0,1-y*y)),phi=i*2.399963229;
+ P.push([Math.cos(phi)*r*0.30*R, (y*0.20-0.44)*R, (Math.sin(phi)*r*0.30-0.34)*R]);}
+// brain stem
+for(var i=0;i<26;i++){P.push([(Math.random()-.5)*10, (-0.5-i*0.012)*R, (-0.30+ (Math.random()-.5)*0.04)*R]);}
+// sort bottom->top so it "grows" upward when revealed
+P.sort(function(a,b){return a[1]-b[1];});
+// precompute a couple of near-neighbour edges for a neural mesh
+var EDGES=[];
+for(var i=0;i<P.length;i++){var best=[-1,-1],bd=[1e9,1e9];
+ for(var j=0;j<P.length;j++){if(j===i)continue;var dx=P[i][0]-P[j][0],dy=P[i][1]-P[j][1],dz=P[i][2]-P[j][2],d=dx*dx+dy*dy+dz*dz;
+  if(d<bd[0]){bd[1]=bd[0];best[1]=best[0];bd[0]=d;best[0]=j;}else if(d<bd[1]){bd[1]=d;best[1]=j;}}
+ if(best[0]>i)EDGES.push([i,best[0]]);if(best[1]>i)EDGES.push([i,best[1]]);}
+var brainStart=0, BUILD=4500;
+function rotP(p,ay,ax){
+ var cy=Math.cos(ay),sy=Math.sin(ay),x=p[0]*cy-p[2]*sy,z=p[0]*sy+p[2]*cy;
+ var cx=Math.cos(ax),sx=Math.sin(ax),y=p[1]*cx-z*sx,z2=p[1]*sx+z*cx;
+ return [x,y,z2];
+}
+var angY=0;
+function brainFrame(){
+ requestAnimationFrame(brainFrame);
+ ctx.clearRect(0,0,VB,VB);
+ angY+=0.006; var tilt=0.34+0.09*Math.sin(angY*0.6);
+ var now=Date.now(),rev=brainStart?Math.min((now-brainStart)/BUILD,1):0;
+ var e=1-Math.pow(1-rev,3), shown=Math.floor(e*P.length);
+ var pr=new Array(P.length);
+ for(var i=0;i<shown;i++){var q=rotP(P[i],angY,tilt),sc=FOC/(FOC+q[2]);pr[i]={x:Cx+q[0]*sc,y:Cy-q[1]*sc,z:q[2],s:sc};}
+ // edges
+ ctx.lineWidth=0.7;
+ for(var k=0;k<EDGES.length;k++){var a=pr[EDGES[k][0]],b=pr[EDGES[k][1]];if(!a||!b)continue;
+  var al=0.10+0.10*((a.z+R)/(2*R));ctx.strokeStyle='rgba(120,220,160,'+al.toFixed(3)+')';
+  ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+ // points (far first)
+ for(var i=0;i<shown;i++){var p=pr[i];if(!p)continue;var depth=(p.z+R)/(2*R);
+  var rad=(0.9+1.9*depth)*p.s, g=Math.round(150+90*depth), b2=Math.round(120+70*depth);
+  ctx.fillStyle='rgba('+Math.round(90+60*depth)+','+g+','+b2+','+(0.35+0.6*depth).toFixed(2)+')';
+  ctx.beginPath();ctx.arc(p.x,p.y,Math.max(0.6,rad),0,6.2832);ctx.fill();}
+}
+requestAnimationFrame(brainFrame);
 
 /* ---------- CHIPS (28 engines, he+en) ---------- */
 var ENG=[['Lake','מאגר'],['Labs','מדען ראשי'],['Library','כתבי עת'],['Gov','מדיניות'],['RnD','מו״פים'],['Scholar','אקדמיה'],['Innovate','חדשנות'],['Map','מפות'],['Expo','כנסים'],['Trade','סחר'],['Pulse','חדשות'],['Mind','AI'],['Directory','חברות'],['Impact','SDG'],['Scout','סטארטאפים'],['Apps','אפליקציות'],['Eco','סביבה'],['Patents','פטנטים'],['Books','ספרים'],['Hub','אקסלרטור'],['Pedia','מילון'],['Flora','צמחים'],['Market','תשומות'],['Pharm','תרופות'],['Aqua','ימית'],['Grow','מבוקרת'],['Academy','חינוך'],['Sense','חיישנים']];
@@ -208,13 +244,11 @@ function play(){
  timers.forEach(clearTimeout);timers=[];
  S.className='';void S.offsetWidth;
  document.querySelector('.brainScene').classList.add('on');
- // scene 1: draw brain
- at(60,function(){S.classList.add('draw');});
- at(4200,function(){S.classList.add('glow');});
- // spin
- at(4600,function(){S.classList.add('spin');});
- // scene 2: chips fill (brain stays, dim behind)
- at(8600,function(){S.classList.remove('spin');scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
+ // scene 1: 3D brain builds in volume, then keeps rotating
+ brainStart=Date.now();
+ at(3800,function(){S.classList.add('glow');});
+ // scene 2: chips fill (brain keeps rotating behind)
+ at(8600,function(){scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
  // scene 3: title
  at(22000,function(){S.classList.remove('chips');scene('titleScene');S.classList.add('title');});
  // scene 4: stats
