@@ -261,6 +261,7 @@ function play(){
  var t0=Date.now();var iv=setInterval(function(){var p=Math.min((Date.now()-t0)/TOTAL,1);PROG.style.width=(p*100)+'%';if(p>=1)clearInterval(iv);},120);
  timers.push({});
 }
+try{localStorage.setItem('ad_intro','1');}catch(e){}
 window.addEventListener('load',function(){setTimeout(play,300);});
 </script>
 </body>

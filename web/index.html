@@ -2,6 +2,17 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* אינטרו: נפתח רק בכניסה הראשונה, ורק עד תאריך הסיום. לביטול — שנה INTRO_UNTIL לתאריך עבר. */
+(function(){try{
+ var INTRO_UNTIL='2026-12-31';               /* ← ערוך: עד מתי להציג את האינטרו */
+ var now=new Date(), end=new Date(INTRO_UNTIL+'T23:59:59');
+ if(now<=end && !localStorage.getItem('ad_intro')){
+   localStorage.setItem('ad_intro','1');
+   location.replace('intro.html');
+ }
+}catch(e){}})();
+</script>
 <meta property="fb:app_id" content="1365641238994519">
 <title>AgroData — מנוע החיפוש והמחקר לחקלאות</title>
 <style>
