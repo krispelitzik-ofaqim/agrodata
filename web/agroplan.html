@@ -97,6 +97,17 @@ table.fin th{background:var(--tint);font-family:Rubik;font-weight:800;color:var(
 .mile .d{width:9px;height:9px;border-radius:50%;background:var(--lime);margin-top:6px;flex:0 0 auto}
 .ask{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;border-radius:14px;padding:16px 18px;font-size:15.5px;line-height:1.7;margin-top:16px}
 .ask b{color:#8fe6ad}
+.stageb{margin-top:24px;border-top:2px dashed var(--line);padding-top:18px}
+.stageb .sbh{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d)}
+.stageb .sbsub{color:var(--mut);font-size:13.5px;margin:3px 0 12px}
+.sbbtns{display:flex;gap:10px;flex-wrap:wrap}
+.abtn{background:#fff!important;color:var(--green-d)!important;border:1.5px solid var(--green)!important;padding:11px 18px!important;font-size:14.5px!important}
+.abtn:hover{background:var(--tint)!important}
+.mdbody h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin:16px 0 6px;border-top:1px solid var(--line);padding-top:12px}
+.mdbody h4{font-family:Rubik;font-weight:700;font-size:15px;color:var(--ink);margin:12px 0 4px}
+.mdbody p{font-size:14.5px;line-height:1.7;color:#2c3a31;margin-bottom:6px}
+.mdbody ul{margin:2px 18px 10px;padding:0}
+.mdbody li{font-size:14.5px;line-height:1.65;margin-bottom:4px}
 .foot{padding:16px 0 40px;text-align:center;color:var(--mut);font-size:13px}
 @media print{.topbar,.steps,.ctrlrow,.foot,.back{display:none!important}.card{box-shadow:none;border:0}}
 </style>
@@ -337,11 +348,51 @@ function renderPlan(p){
   h+='<div class="sec"><h3>אבני דרך</h3>'+p.milestones.map(function(m){return '<div class="mile"><span class="d"></span>'+esc(m)+'</div>';}).join('')+'</div>';
  }
  if(p.ask)h+='<div class="ask"><b>בקשת המימון:</b> '+esc(p.ask)+'</div>';
+ h+='<div class="stageb"><div class="sbh">שלב ב׳ · ניתוחים מתקדמים</div><div class="sbsub">מייצרים ניתוח נוסף מהנתונים שכבר נאספו — בבחירה.</div><div class="sbbtns">'
+  +'<button class="btn abtn" onclick="runAnalysis(\'feas\')">📈 כדאיות כלכלית</button>'
+  +'<button class="btn abtn" onclick="runAnalysis(\'mvp\')">🚀 הגדרת MVP</button>'
+  +'<button class="btn abtn" onclick="runAnalysis(\'market\')">🔍 סקר שוק</button>'
+  +'</div></div>';
  h+='</div><div class="row ctrlrow" style="margin-top:22px"><button class="btn ghost" onclick="renderRound1()">התחל מחדש</button><button class="btn" onclick="window.print()">🖨️ הדפסה / PDF</button></div>';
  document.getElementById('card').innerHTML=h;
  renderSteps();window.scrollTo(0,0);
 }
 function swBox(c,t,arr){arr=arr||[];return '<div class="sw '+c+'"><h4>'+t+'</h4><ul>'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';}
+
+/* ===== STAGE B · ANALYSES ===== */
+var ANALYSES={
+ feas:{t:'ניתוח כדאיות כלכלית',ic:'📈',p:'בצע ניתוח כדאיות כלכלית מקצועי ומפורט בעברית על סמך הנתונים:\n<QA>\nכלול: הנחות יסוד, הכנסות מול עלויות, נקודת איזון (break-even), החזר השקעה (ROI) וזמן החזר (payback), יחידת כלכלה (unit economics), תרחישים (אופטימי · בסיסי · פסימי), ומסקנה ברורה — האם ההשקעה כדאית ובאילו תנאים.'},
+ mvp:{t:'הגדרת MVP',ic:'🚀',p:'הגדר MVP (מוצר מינימלי בר-קיימא) בעברית על סמך הנתונים:\n<QA>\nכלול: מטרת ה-MVP, הפיצ׳רים המרכזיים בלבד, מה לא נכלל בשלב זה, שלבי פיתוח ולו״ז, עלות מוערכת, ומדדי הצלחה לבדיקת ההשערות.'},
+ market:{t:'סקר שוק',ic:'🔍',p:'בצע סקר שוק מקצועי בעברית על סמך הנתונים:\n<QA>\nכלול: גודל שוק TAM/SAM/SOM, פילוח לקוחות, מתחרים עיקריים ובידול, מגמות בענף, בנצ׳מרק תמחור, וכן סיכונים והזדמנויות.'}
+};
+function runAnalysis(type){
+ var a=ANALYSES[type];if(!a)return;
+ loading('מכין '+a.t+'… ');
+ var p=a.p.replace('<QA>',qaText())+'\n\nעצב את התשובה עם כותרות שמתחילות ב-"## " ותבליטים שמתחילים ב-"- ", בעברית מקצועית ותמציתית.';
+ ask(p).then(function(j){
+  if(j.demo){demoNote();return;}
+  renderAnalysis(a,j.answer||'');
+ }).catch(fail);
+}
+function renderAnalysis(a,text){
+ var h='<div class="plan"><h2>'+a.ic+' '+esc(a.t)+'</h2><div class="mdbody">'+mdRender(text)+'</div></div>'
+  +'<div class="row ctrlrow" style="margin-top:20px"><button class="btn ghost" onclick="renderPlan(PLAN)">← חזרה לתוכנית</button><button class="btn" onclick="window.print()">🖨️ הדפסה / PDF</button></div>';
+ document.getElementById('card').innerHTML=h;window.scrollTo(0,0);
+}
+function mdRender(t){
+ var lines=String(t||'').replace(/\r/g,'').split('\n'),out=[],inUl=false;
+ function closeUl(){if(inUl){out.push('</ul>');inUl=false;}}
+ lines.forEach(function(l){
+  l=l.trim();
+  if(!l){closeUl();return;}
+  l=esc(l).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  if(/^###\s+/.test(l)){closeUl();out.push('<h4>'+l.replace(/^###\s+/,'')+'</h4>');}
+  else if(/^##\s+/.test(l)){closeUl();out.push('<h3>'+l.replace(/^##\s+/,'')+'</h3>');}
+  else if(/^[-•*]\s+/.test(l)){if(!inUl){out.push('<ul>');inUl=true;}out.push('<li>'+l.replace(/^[-•*]\s+/,'')+'</li>');}
+  else{closeUl();out.push('<p>'+l+'</p>');}
+ });
+ closeUl();return out.join('');
+}
 function renderRaw(t){
  PLAN={};
  document.getElementById('card').innerHTML='<div class="rhead">התוכנית העסקית</div><div class="sec"><p>'+esc(t)+'</p></div>'
