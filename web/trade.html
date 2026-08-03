@@ -142,6 +142,10 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <div class="wlists"><div><h4>יצואניות מובילות</h4><div id="wexList"></div></div><div><h4>יבואניות מובילות</h4><div id="wimList"></div></div></div>
   </div>
 
+  <h2 class="teamsh">🌐 שווקי הסחר החקלאי בעולם</h2>
+  <div class="sm" style="margin:-8px 0 16px">זירות המסחר, המכירות הפומביות ובורסות הסחורות הגדולות בעולם — מה נסחר בכל אחת, והקשר הישראלי.</div>
+  <div id="mktgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:34px"></div>
+
   <h2 class="teamsh">💬 פנייה לצוותי הסחר</h2>
   <div class="tgrid">
     <div class="tcard"><div class="ic">📤</div><h3>צוות יצוא</h3><p>ליווי יצואנים חדשים, אישורים ושווקי יעד בחו״ל.</p><button class="tbtn2" onclick="pick('צוות יצוא')">פנייה →</button></div>
@@ -232,5 +236,25 @@ document.getElementById('commsel').innerHTML=Object.keys(COMMOD).map((k,i)=>`<bu
 wmap('wheat');
 function pick(team){var s=document.getElementById('q4');for(var i=0;i<s.options.length;i++){if(s.options[i].value===team)s.selectedIndex=i;}document.getElementById('inq').scrollIntoView({behavior:'smooth',block:'center'});document.getElementById('q1').focus();}
 function sendInq(){var n=document.getElementById('q1').value.trim(),e=document.getElementById('q2').value.trim();if(!n||!e){alert('נא למלא שם ואימייל');return;}document.getElementById('qok').style.display='block';['q1','q2','q3','q5'].forEach(function(id){document.getElementById(id).value='';});}
+// ---- שווקי סחר חקלאי בעולם ----
+var MARKETS=[
+ {em:"🌷",n:"Royal FloraHolland",loc:"אלסמיר · הולנד",t:"מכירת הפרחים וצמחי הנוי הגדולה בעולם — מכירה פומבית יומית.",il:"ישראל מייצאת פרחים, ענפי קישוט וצמחי נוי דרך המכירה.",u:"https://www.royalfloraholland.com"},
+ {em:"🥦",n:"Rungis International",loc:"פריז · צרפת",t:"שוק המזון הטרי הגדול בעולם — פירות, ירקות, בשר ודגים.",il:"יעד מרכזי לתמרים, פלפל ואבוקדו ישראליים.",u:"https://www.rungisinternational.com"},
+ {em:"🍊",n:"Mercamadrid",loc:"מדריד · ספרד",t:"מרכז ההפצה הגדול באירופה לפירות, ירקות ודגים.",il:"שער הכניסה לתוצרת ישראלית לשוק הספרדי והדרום-אירופי.",u:"https://www.mercamadrid.es"},
+ {em:"🐟",n:"Toyosu Market",loc:"טוקיו · יפן",t:"שוק הדגים והפירות-ים הגדול בעולם (יורש צוקיג׳י).",il:"מדד עולמי למחירי דגה — רלוונטי ליצוא מדגה.",u:"https://www.toyosu-market.or.jp"},
+ {em:"📈",n:"CME Group · CBOT",loc:"שיקגו · ארה״ב",t:"בורסת החוזים העתידיים לתירס, סויה וחיטה — קובעת מחירי דגנים עולמיים.",il:"מדד ייחוס למחירי גד״ש ומספוא ביבוא לישראל.",u:"https://www.cmegroup.com"},
+ {em:"☕",n:"ICE Futures",loc:"ניו יורק · לונדון",t:"בורסת הסחורות הרכות — קפה, סוכר, כותנה וקקאו.",il:"מדד למחירי חומרי גלם חקלאיים בייבוא.",u:"https://www.ice.com"},
+ {em:"🌾",n:"Euronext · MATIF",loc:"פריז · צרפת",t:"בורסת החוזים לחיטה ותירס האירופית — הבנצ׳מרק של אירופה.",il:"רלוונטי לתמחור יבוא דגנים מאירופה והים השחור.",u:"https://www.euronext.com"},
+ {em:"🥬",n:"New Covent Garden",loc:"לונדון · בריטניה",t:"שוק הסיטונאות הגדול בבריטניה לפירות, ירקות ופרחים.",il:"נקודת כניסה לתוצרת טרייה ופרחים ישראליים לבריטניה.",u:"https://www.newcoventgarden.com"}
+];
+document.getElementById('mktgrid').innerHTML=MARKETS.map(function(m){
+ return '<a href="'+m.u+'" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line,#dbe8df);border-radius:16px;padding:18px;text-decoration:none;color:inherit;box-shadow:0 8px 20px rgba(20,38,28,.05);transition:.14s" onmouseover="this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.transform=\'\'">'+
+  '<div style="font-size:28px">'+m.em+'</div>'+
+  '<div style="font-family:Rubik;font-weight:800;font-size:18px;color:#134a30">'+m.n+'</div>'+
+  '<div style="font-family:\'Plex Mono\',monospace;font-size:12.5px;color:#5c6f63">📍 '+m.loc+'</div>'+
+  '<div style="font-size:14px;color:#14261c;line-height:1.5;margin-top:2px">'+m.t+'</div>'+
+  '<div style="font-size:13px;color:#134a30;background:#eaf4ee;border:1px solid #cfe6d8;border-radius:10px;padding:7px 10px;margin-top:6px">🇮🇱 '+m.il+'</div>'+
+  '<div style="font-family:Rubik;font-weight:800;font-size:13px;color:#2e9e63;margin-top:4px">לאתר השוק ↗</div></a>';
+}).join('');
 </script>
 </body></html>
