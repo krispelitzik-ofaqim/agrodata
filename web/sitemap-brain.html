@@ -75,6 +75,38 @@ svg.brain{width:100%;min-width:900px;height:auto;display:block}
 .brain.live .core{animation:corepulse 1.9s ease-in-out infinite}
 @keyframes corepulse{0%,100%{stroke-width:3.5;filter:drop-shadow(0 0 4px rgba(143,230,173,.4))}50%{stroke-width:7;filter:drop-shadow(0 0 24px rgba(143,230,173,.95))}}
 .expbtn.liveon{background:linear-gradient(135deg,#c4562e,#8a3a1c)!important;border-color:transparent!important}
+/* summary overlay */
+.sumbtn{background:linear-gradient(135deg,#c79a2e,#a87d1c);color:#fff;border:0;border-radius:11px;padding:10px 20px;font-family:Rubik;font-weight:800;font-size:14px;cursor:pointer}
+.sumbtn:hover{filter:brightness(1.08)}
+.sumov{position:fixed;inset:0;background:rgba(8,20,14,.72);backdrop-filter:blur(4px);z-index:200;display:none;overflow-y:auto;padding:32px 16px}
+.sumov.open{display:block}
+.sumpanel{max-width:1180px;margin:0 auto;background:#0f2419;border:1px solid rgba(255,255,255,.12);border-radius:24px;box-shadow:0 40px 90px rgba(0,0,0,.5);overflow:hidden}
+.sumhead{background:linear-gradient(135deg,#134a30,#0c1c13);padding:26px 30px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:2}
+.sumhead h2{font-family:Rubik;font-size:27px;font-weight:800;color:#fff}.sumhead h2 b{color:var(--lime)}
+.sumhead p{color:rgba(234,244,238,.6);font-size:14px;margin-top:4px}
+.sumx{background:rgba(255,255,255,.1);border:0;color:#fff;width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer;flex:0 0 auto}
+.sumx:hover{background:rgba(255,255,255,.2)}
+.sumtot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:22px 30px;border-bottom:1px solid rgba(255,255,255,.08)}
+@media(max-width:700px){.sumtot{grid-template-columns:1fr 1fr}}
+.sumtot .t{background:rgba(46,158,99,.12);border:1px solid rgba(46,158,99,.3);border-radius:14px;padding:14px;text-align:center}
+.sumtot .t .v{font-family:Rubik;font-weight:800;font-size:26px;color:#8fe6ad}
+.sumtot .t .l{font-size:12.5px;color:rgba(234,244,238,.7);margin-top:2px}
+.sumsec{padding:22px 30px}
+.sumsec h3{font-family:Rubik;font-size:19px;font-weight:800;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sumsec h3 .dot{width:13px;height:13px;border-radius:4px}
+.sumgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.sumgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.sumgrid{grid-template-columns:1fr}}
+.sblk{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px 17px}
+.sblk .bt{font-family:'Space Grotesk',Rubik;font-weight:800;font-size:16.5px;color:#fff;margin-bottom:3px}
+.sblk .bt b{color:var(--lime)}
+.sblk .bin{font-size:13px;color:rgba(234,244,238,.62);line-height:1.5;margin-bottom:11px;min-height:38px}
+.sblk .imp{display:flex;flex-direction:column;gap:7px}
+.sblk .improw{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:1px dashed rgba(255,255,255,.1);padding-top:7px}
+.sblk .improw:first-child{border-top:0;padding-top:0}
+.sblk .ik{font-size:12.5px;color:rgba(234,244,238,.7)}
+.sblk .iv{font-family:Rubik;font-weight:800;font-size:18px;color:#8fe6ad;white-space:nowrap}
+.sblk .iv.lv::after{content:"● LIVE";font-family:'Plex Mono';font-size:8.5px;color:#4ade80;vertical-align:super;margin-inline-start:4px;font-weight:700}
 @media print{
  body{background:#fff!important;color:#14261c!important}
  .topbar,.footbar,.livebar2,.exportbar,.back{display:none!important}
@@ -102,6 +134,22 @@ svg.brain{width:100%;min-width:900px;height:auto;display:block}
     <span class="livebadge"><span class="ldot"></span> חי · מתעדכן כל 5 דקות</span>
     <span class="upd">מעודכן ל־ <b id="lastUpd">—</b></span>
     <button class="refbtn" onclick="loadMap(true)">🔄 רענון ידני</button>
+    <button class="sumbtn" onclick="openSummary()">📊 דף מסכם · כל הבלוקים</button>
+  </div>
+
+  <!-- SUMMARY OVERLAY -->
+  <div class="sumov" id="sumov" onclick="if(event.target===this)closeSummary()">
+    <div class="sumpanel">
+      <div class="sumhead">
+        <div>
+          <h2>דף מסכם · <b>כל הבלוקים בזירה</b></h2>
+          <p>מבט-על על כל מנוע: מה יש בו וכמה השפעה (אימפקט). מספרים מסומנים ● LIVE נמשכים בזמן אמת.</p>
+        </div>
+        <button class="sumx" onclick="closeSummary()">×</button>
+      </div>
+      <div class="sumtot" id="sumTot"></div>
+      <div id="sumBody"></div>
+    </div>
   </div>
 
   <!-- RADIAL BRAIN MAP -->
@@ -295,5 +343,66 @@ svg+='<circle class="core" cx="'+CX+'" cy="'+CY+'" r="95" fill="#134a30" stroke=
 document.getElementById('brain').innerHTML=svg;
 document.getElementById('legend').innerHTML=BRANCHES.map(function(b){return '<span class="lg"><span class="sw" style="background:'+b.c+'"></span>'+b.t+'</span>';}).join('');
 }
+
+/* ===== SUMMARY PAGE — כל הבלוקים + אימפקט ===== */
+/* imp: {k:כותרת-משנה, v:ערך, id:מזהה-חי} · ערכים עם id נמשכים חי, השאר יייצוגי (ניתן לעריכה) */
+var SUMMARY=[
+ {t:'מנועי הזירה',c:'#2e9e63',blocks:[
+   {n:'Agro<b>Lake</b> · מאגר',in:'מאגר נתוני החקלאות המרכזי של ישראל.',imp:[{k:'מקורות נתונים',v:'40+'},{k:'רשומות',v:'12,000+'}]},
+   {n:'Agro<b>Mind</b> · AI',in:'קופיילוט שמבין את כל הזירה ועונה על שאלות אגרונומיות.',imp:[{k:'מנועי AI',v:'2'},{k:'Gemini + Claude',v:'חי'}]},
+   {n:'Agro<b>Books</b> · ספרים',in:'אנציקלופדיה חיה של הידע החקלאי — כולל ספרים סרוקים לקריאה.',imp:[{k:'ספרים במאגר',v:'…',id:'books'},{k:'ספרי חקלאות בעברית',v:'300+'}]},
+   {n:'Agro<b>Patents</b> · פטנטים',in:'חיפוש פטנטים גלובלי — המנוע החדשני ביותר.',imp:[{k:'פטנטים',v:'…',id:'patents'},{k:'מדינות',v:'100+'}]},
+   {n:'Agro<b>Apps</b> · אפליקציות',in:'מאגר אפליקציות ואתרים — App Store ו-Google Play חי.',imp:[{k:'חנויות חיות',v:'2'},{k:'מובחרות',v:'45'}]},
+   {n:'Agro<b>Directory</b> · חברות',in:'מדריך חברות האגרו-טק — נבחרות + רשם החברות החי.',imp:[{k:'חברות ברשם',v:'728,000+'},{k:'נבחרות',v:'48'}]},
+   {n:'Agro<b>Map</b> · מפות',in:'מפת היישובים החקלאיים בישראל עם סיווג וגידולים.',imp:[{k:'יישובים',v:'873'},{k:'שכבות מידע',v:'6'}]},
+   {n:'Agro<b>Innovate</b> · רעיונות',in:'פלטפורמת חדשנות — חיפוש אחד, חמש עדשות ניתוח.',imp:[{k:'אתגרים',v:'18'},{k:'עדשות ניתוח',v:'5'}]},
+   {n:'Agro<b>Pulse</b> · חדשות',in:'חדשות אגרו-טק בזמן אמת, עברית ואנגלית.',imp:[{k:'מקור',v:'Google News'},{k:'שפות',v:'2'}]},
+   {n:'Agro<b>Scout</b> · סטארטאפים',in:'מפת הסטארטאפים באגרו-טק ופוד-טק.',imp:[{k:'סטארטאפים',v:'120+'}]}]},
+ {t:'מחקר וידע',c:'#2b8fb0',blocks:[
+   {n:'Agro<b>Scholar</b> · אקדמיה',in:'מוסדות אקדמיים בישראל ובעולם על מפה חיה.',imp:[{k:'מוסדות',v:'17'},{k:'מפה',v:'IL + עולם'}]},
+   {n:'Agro<b>Library</b> · כתבי עת',in:'מאגר כתבי עת מדעיים דרך Crossref.',imp:[{k:'מקור',v:'Crossref'},{k:'מאמרים',v:'מיליונים'}]},
+   {n:'Agro<b>Labs</b> · מדען ראשי',in:'מחקר, קרנות ומענקים לחדשנות.',imp:[{k:'תוכניות מחקר',v:'30+'}]},
+   {n:'Agro<b>RnD</b> · מו״פים',in:'מרכזי מחקר ופיתוח אזוריים ברחבי הארץ.',imp:[{k:'מרכזי מו״פ',v:'8'}]}]},
+ {t:'זירה פיננסית',c:'#c79a2e',blocks:[
+   {n:'Agro<b>Bank</b>',in:'בנקאות, אשראי ומימון מותאמים למגדלים.',imp:[{k:'מסלולי מימון',v:'6'}]},
+   {n:'Agro<b>Invest</b>',in:'פלטפורמת גיוס המונים לחקלאות.',imp:[{k:'קמפיינים',v:'—'}]},
+   {n:'Agro<b>Stock</b>',in:'מסחר בסחורות חקלאיות ומדדי שוק בזמן אמת.',imp:[{k:'סחורות',v:'15'}]},
+   {n:'Agro<b>Index</b>',in:'ברומטר האקוסיסטם — גיוסים, עסקאות ואקזיטים.',imp:[{k:'מדדים',v:'4'}]},
+   {n:'Agro<b>Capital</b>',in:'חיבור למשקיעים, קרנות ומענקים.',imp:[{k:'סבבי השקעה',v:'—'}]},
+   {n:'Agro<b>Grants</b>',in:'מפת מקורות המימון למחקר וחדשנות.',imp:[{k:'מקורות מימון',v:'ממשלתי · אירופי · פרטי'}]}]},
+ {t:'קהילה ותוכן',c:'#c4562e',blocks:[
+   {n:'Agro<b>Expo</b> · כנסים',in:'לוח כנסים ותערוכות אגרו-טק בעולם.',imp:[{k:'אירועים',v:'—'}]},
+   {n:'Agro<b>Trade</b> · סחר',in:'סחר בינלאומי ושווקי סחורות עולמיים על מפה.',imp:[{k:'סחורות',v:'15'},{k:'שווקים',v:'עולמי'}]},
+   {n:'Agro<b>Gov</b> · מדיניות',in:'רגולציה, מדיניות והתפלת מים.',imp:[{k:'מתקני התפלה',v:'6'}]},
+   {n:'זירת שיח · קהילה',in:'פורום חי — שיחות, שאלות ותמונות.',imp:[{k:'מחוברים כעת',v:'חי'}]}]},
+ {t:'צוות המומחים',c:'#158a94',blocks:[
+   {n:'מועצת הלקטורים',in:'ביקורת עמיתים מדעית-אגרונומית לכל תוכן.',imp:[{k:'מומחים',v:'6'}]},
+   {n:'משרדי פטנטים',in:'ליווי רישום פטנטים והגנת קניין רוחני.',imp:[{k:'שירותים',v:'IP + פטנטים'}]}]}
+];
+function fmt(n){return (n||0).toLocaleString('en-US');}
+function openSummary(){
+ var sec=SUMMARY.length, blocks=0, lives=0;
+ var html=SUMMARY.map(function(s){
+  return '<div class="sumsec"><h3><span class="dot" style="background:'+s.c+'"></span>'+s.t+' · '+s.blocks.length+' בלוקים</h3><div class="sumgrid">'+
+   s.blocks.map(function(b){blocks++;
+    var imp=b.imp.map(function(x){if(x.id)lives++;return '<div class="improw"><span class="ik">'+x.k+'</span><span class="iv'+(x.id?' lv" id="sum_'+x.id:'')+'">'+x.v+'</span></div>';}).join('');
+    return '<div class="sblk"><div class="bt">'+b.n+'</div><div class="bin">'+b.in+'</div><div class="imp">'+imp+'</div></div>';
+   }).join('')+'</div></div>';
+ }).join('');
+ document.getElementById('sumBody').innerHTML=html;
+ document.getElementById('sumTot').innerHTML=
+   '<div class="t"><div class="v">'+blocks+'</div><div class="l">בלוקים בזירה</div></div>'
+  +'<div class="t"><div class="v">'+sec+'</div><div class="l">קטגוריות</div></div>'
+  +'<div class="t"><div class="v" id="sumTotBooks">…</div><div class="l">📚 ספרים במאגר</div></div>'
+  +'<div class="t"><div class="v" id="sumTotPat">…</div><div class="l">🔬 פטנטים</div></div>';
+ document.getElementById('sumov').classList.add('open');
+ document.body.style.overflow='hidden';
+ // LIVE counts
+ fetch('/api/books?q=agriculture&num=1').then(function(r){return r.json();}).then(function(j){var v=fmt(j.total);setTxt('sum_books',v);setTxt('sumTotBooks',v);}).catch(function(){});
+ fetch('/api/patents?q=agriculture&num=1').then(function(r){return r.json();}).then(function(j){var v=fmt(j.total);setTxt('sum_patents',v);setTxt('sumTotPat',v);}).catch(function(){});
+}
+function setTxt(id,v){var el=document.getElementById(id);if(el)el.textContent=v;}
+function closeSummary(){document.getElementById('sumov').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSummary();});
 </script>
 </body></html>
