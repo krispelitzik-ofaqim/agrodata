@@ -120,13 +120,6 @@ canvas.brain3d{width:620px;height:620px;filter:drop-shadow(0 0 22px rgba(143,230
 <a class="skiplink" href="index.html">← לאתר</a>
 
 <div id="stage">
-  <!-- OPENING TITLE -->
-  <div class="scene openScene on">
-    <div class="openBrand">אופקים</div>
-    <div class="openSub">בירת האגרו-טק של ישראל</div>
-    <div class="openEn">Ofakim · Israel's Agri-Tech Capital</div>
-  </div>
-
   <!-- 3D BRAIN -->
   <div class="scene brainScene">
     <canvas class="brain3d" id="brainCanvas" width="620" height="620" aria-hidden="true"></canvas>
@@ -289,29 +282,27 @@ document.getElementById('mileList').innerHTML=MILE.map(function(m,i){
 
 /* ---------- TIMELINE ---------- */
 var S=document.getElementById('stage'),PROG=document.getElementById('prog');
-var TOTAL=71000, timers=[];
+var TOTAL=64000, timers=[];
 function at(ms,fn){timers.push(setTimeout(fn,ms));}
-function scene(name){['openScene','brainScene','chipsScene','titleScene','statsScene','mileScene','mapScene','outroScene'].forEach(function(c){var el=document.querySelector('.'+c);if(el)el.classList.toggle('on',c===name);});}
+function scene(name){['brainScene','chipsScene','titleScene','statsScene','mileScene','mapScene','outroScene'].forEach(function(c){var el=document.querySelector('.'+c);if(el)el.classList.toggle('on',c===name);});}
 function play(){
  timers.forEach(clearTimeout);timers=[];
  S.className='';void S.offsetWidth;
- // scene 0: opening title — "אופקים · בירת האגרו-טק של ישראל"
- scene('openScene');S.classList.add('opening');
+ // scene 0: opening BRAND title — AgroData · אופקים — זירת האגרו-טק של ישראל
+ scene('titleScene');S.classList.add('title');
  // scene 1: 3D brain builds in volume, then keeps rotating
- at(2800,function(){S.classList.remove('opening');scene('brainScene');brainStart=Date.now();});
- at(6600,function(){S.classList.add('glow');});
+ at(3600,function(){S.classList.remove('title');scene('brainScene');brainStart=Date.now();});
+ at(7400,function(){S.classList.add('glow');});
  // scene 2: chips fill (brain lifts up & keeps rotating behind)
- at(11400,function(){scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
- // scene 3: brand
- at(24800,function(){S.classList.remove('chips');scene('titleScene');S.classList.add('title');});
- // scene 4: stats
- at(32800,function(){S.classList.remove('title');scene('statsScene');S.classList.add('stats');countUp();});
- // scene 5: milestones — לאן הגענו
- at(43800,function(){S.classList.remove('stats');scene('mileScene');S.classList.add('mile');});
- // scene 6: mind map (breathing)
- at(53800,function(){S.classList.remove('mile');scene('mapScene');S.classList.add('map');});
- // scene 7: outro
- at(63800,function(){S.classList.remove('map');scene('outroScene');});
+ at(12200,function(){scene('chipsScene');document.querySelector('.brainScene').classList.add('on');S.classList.add('chips');});
+ // scene 3: stats
+ at(25600,function(){S.classList.remove('chips');scene('statsScene');S.classList.add('stats');countUp();});
+ // scene 4: milestones — לאן הגענו
+ at(36600,function(){S.classList.remove('stats');scene('mileScene');S.classList.add('mile');});
+ // scene 5: mind map (breathing)
+ at(46600,function(){S.classList.remove('mile');scene('mapScene');S.classList.add('map');});
+ // scene 6: outro
+ at(56600,function(){S.classList.remove('map');scene('outroScene');});
  // progress bar
  var t0=Date.now();var iv=setInterval(function(){var p=Math.min((Date.now()-t0)/TOTAL,1);PROG.style.width=(p*100)+'%';if(p>=1)clearInterval(iv);},120);
  timers.push({});
