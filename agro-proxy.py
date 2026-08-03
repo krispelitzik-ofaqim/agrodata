@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """AgroData local server + live-quote proxy (Yahoo Finance v8). Serves web/ and /api/quote."""
-import http.server, socketserver, json, urllib.request, urllib.parse, time, threading, os, re, base64, datetime
+import http.server, socketserver, json, urllib.request, urllib.parse, time, threading, os, re, base64, datetime, concurrent.futures
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WEB  = os.path.join(HERE, "web")
@@ -844,6 +844,80 @@ def fetch_companies(q, limit=30):
     except Exception as e:
         return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__), "items": []}
 
+APPSTORE_CACHE = {}
+def fetch_appstore(term, country="us", limit=40):
+    term = (term or "agriculture").strip()
+    key = (term, country, limit)
+    now = time.time()
+    if key in APPSTORE_CACHE and now - APPSTORE_CACHE[key][0] < 3600:
+        return APPSTORE_CACHE[key][1]
+    url = ("https://itunes.apple.com/search?term=" + urllib.parse.quote(term) +
+           "&entity=software&limit=" + str(limit) + "&country=" + country)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
+        d = json.load(urllib.request.urlopen(req, timeout=20))
+    except Exception as e:
+        return {"ok": False, "items": [], "err": str(e)[:60]}
+    items = []
+    for a in d.get("results", []):
+        items.append({
+            "name": a.get("trackName"),
+            "dev": a.get("artistName"),
+            "rating": round(a.get("averageUserRating") or 0, 2),
+            "reviews": a.get("userRatingCount") or 0,
+            "genre": a.get("primaryGenreName"),
+            "icon": a.get("artworkUrl100") or a.get("artworkUrl60"),
+            "url": a.get("trackViewUrl"),
+            "desc": (a.get("description") or "").replace("\n", " ")[:220],
+            "price": a.get("formattedPrice") or "חינם",
+        })
+    out = {"ok": True, "count": d.get("resultCount", len(items)), "items": items}
+    APPSTORE_CACHE[key] = (now, out)
+    return out
+
+GPLAY_CACHE = {}
+def _gplay_app(aid):
+    u = "https://play.google.com/store/apps/details?id=" + aid + "&hl=en&gl=us"
+    try:
+        d = urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=15).read().decode("utf-8", "ignore")
+    except Exception:
+        return None
+    t = re.search(r'<meta property="og:title" content="([^"]+)"', d)
+    img = re.search(r'<meta property="og:image" content="([^"]+)"', d)
+    desc = re.search(r'<meta property="og:description" content="([^"]+)"', d)
+    star = re.search(r'"ratingValue":"?([0-9.]+)', d) or re.search(r'([0-9]\.[0-9])\s*star', d)
+    revs = re.search(r'"ratingCount":"?([0-9]+)', d)
+    name = ((t.group(1) if t else "") or "").replace(" - Apps on Google Play", "").strip()
+    if not name:
+        return None
+    return {"name": name, "rating": round(float(star.group(1)), 2) if star else 0,
+            "reviews": int(revs.group(1)) if revs else 0,
+            "icon": img.group(1) if img else "", "desc": (desc.group(1) if desc else "").replace("\n", " ")[:200],
+            "url": u.split("&hl=")[0], "dev": ""}
+def fetch_googleplay(term, limit=15):
+    term = (term or "agriculture").strip(); key = (term, limit); now = time.time()
+    if key in GPLAY_CACHE and now - GPLAY_CACHE[key][0] < 3600:
+        return GPLAY_CACHE[key][1]
+    try:
+        s = urllib.request.urlopen(urllib.request.Request(
+            "https://play.google.com/store/search?q=" + urllib.parse.quote(term) + "&c=apps&hl=en&gl=us",
+            headers={"User-Agent": "Mozilla/5.0"}), timeout=20).read().decode("utf-8", "ignore")
+    except Exception as e:
+        return {"ok": False, "items": [], "err": str(e)[:60]}
+    ids = []
+    for m in re.findall(r'/store/apps/details\?id=([a-zA-Z0-9._]+)', s):
+        if m not in ids:
+            ids.append(m)
+    ids = ids[:limit]
+    items = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+        for r in ex.map(_gplay_app, ids):
+            if r:
+                items.append(r)
+    out = {"ok": True, "count": len(items), "items": items}
+    GPLAY_CACHE[key] = (now, out)
+    return out
+
 COMP_KEYWORDS = ["חקלאות", "אגרו", "השקיה", "זרעים", "חממות", "דשן", "מדגה", "פוד טק"]
 COMPSTATS = {}
 def _comp_count(q):
@@ -1024,6 +1098,24 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/companies"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_companies(qs.get("q", ["חקלאות"])[0], min(50, int(qs.get("limit", ["30"])[0] or 30)))
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/appstore"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_appstore(qs.get("q", ["agriculture"])[0], qs.get("country", ["us"])[0], min(60, int(qs.get("limit", ["40"])[0] or 40)))
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/googleplay"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_googleplay(qs.get("q", ["agriculture"])[0], min(24, int(qs.get("limit", ["15"])[0] or 15)))
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
