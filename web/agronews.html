@@ -141,13 +141,17 @@ a{color:inherit}
 .mrow .mp{font-family:Rubik;font-weight:800;font-size:15px;color:var(--ink);margin-inline-start:auto;margin-inline-end:12px}
 .mrow .mc{font-family:'Plex Mono';font-size:12.5px;font-weight:700}
 .mrow .mc.up{color:#1c8a4a}.mrow .mc.dn{color:#c4562e}
-/* ofakim image cards */
-.ofcard{background:#fff;box-shadow:0 3px 10px rgba(20,50,35,.05);overflow:hidden;border-top:3px solid var(--green)}
-.ofcard .im{aspect-ratio:16/9;position:relative;overflow:hidden;background:var(--tint);display:grid;place-items:center;font-size:38px}
-.ofcard .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ofcard .b{padding:12px 14px}
-.ofcard .b h3{font-family:Rubik;font-weight:800;font-size:16px;color:var(--green-d)}
-.ofcard .b p{font-size:13px;color:var(--mut);margin-top:4px;line-height:1.5}
+/* ofakim — one dark-green negative block with image/video tiles */
+.ofpanel{background:linear-gradient(135deg,#0f3a26,#134a30);padding:24px;margin:22px 0;box-shadow:0 8px 26px rgba(20,50,35,.18)}
+.ofpanel .oftitle{font-family:Rubik;font-weight:900;font-size:22px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.ofpanel .oftitle b{color:var(--lime)}
+.ofgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:760px){.ofgrid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.ofgrid{grid-template-columns:1fr}}
+.oftile{position:relative;aspect-ratio:4/3;overflow:hidden;background:#0b2a1b}
+.oftile img,.oftile iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.oftile .em{position:absolute;inset:0;display:grid;place-items:center;font-size:40px;opacity:.5}
+.oftile .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,20,12,.92),rgba(6,20,12,.12) 55%,transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.oftile .ov h3{font-family:Rubik;font-weight:800;font-size:16px;color:#fff}
+.oftile .ov p{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:3px;line-height:1.4}
 /* video */
 .vid{aspect-ratio:16/9;background:#000;margin-bottom:6px;overflow:hidden}
 .vid iframe{width:100%;height:100%;border:0;display:block}
@@ -193,10 +197,9 @@ a{color:inherit}
       <div class="two" id="more"></div>
       <div class="secbar gold">📈 שוק הסחורות · חי</div>
       <div class="commod" id="commodHome"><div class="load">…</div></div>
-      <div class="secbar">🌱 אופקים · בירת האגרו-טק</div>
-      <div class="grid3" id="ofcubesHome"></div>
       <div class="secbar teal">🎬 וידאו</div>
       <div class="vid"><iframe id="vid" src="" title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+      <div class="ofpanel"><div class="oftitle">🌱 אופקים · <b>בירת האגרו-טק</b></div><div class="ofgrid" id="ofcubesHome"></div></div>
       <div class="secbar gold">🏛️ תערוכות וכנסים</div>
       <div class="two" id="expo"></div>
       <div class="secbar teal">🪴 חקלאות ביתית</div>
@@ -215,7 +218,7 @@ a{color:inherit}
     </div>
   </div></div>
   <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
-  <!-- OFAKIM --><div class="panel" id="p_ofakim"><div class="sec"><div class="secbar" id="ofah">🌱 אופקים · בירת האגרו-טק</div><div class="vid"><iframe id="ofvid" src="" title="Ofakim" allow="autoplay; encrypted-media" allowfullscreen></iframe></div><div class="secbar">🏙️ מרכיבי הזירה באופקים</div><div class="grid3" id="ofcubes"></div><div class="secbar">📰 חדשות מאופקים</div><div class="two" id="ofakimlist"><div class="load">…</div></div></div></div>
+  <!-- OFAKIM --><div class="panel" id="p_ofakim"><div class="sec"><div class="secbar" id="ofah">🌱 אופקים · בירת האגרו-טק</div><div class="vid"><iframe id="ofvid" src="" title="Ofakim" allow="autoplay; encrypted-media" allowfullscreen></iframe></div><div class="ofpanel"><div class="oftitle">🏙️ מרכיבי הזירה באופקים</div><div class="ofgrid" id="ofcubes"></div></div><div class="secbar">📰 חדשות מאופקים</div><div class="two" id="ofakimlist"><div class="load">…</div></div></div></div>
   <!-- ALBUM --><div class="panel" id="p_album"><div class="sec"><div class="secbar teal" id="albh">📸 אלבום הקהילה</div><div id="album" class="load">…</div></div></div>
   <!-- GROUPS --><div class="panel" id="p_groups"><div class="sec"><div class="secbar" id="grh">👥 קבוצות עניין</div><div class="grid3" id="groups"></div></div></div>
   <!-- HOME AG --><div class="panel" id="p_home"><div class="sec"><div class="secbar" id="hah">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html" id="habtn">כניסה · 9 שיטות לגידול בבית ↗</a></div></div>
@@ -270,7 +273,7 @@ function selectCom(id,sym){var el=document.getElementById(id),map=el._q,q=map&&m
  [].forEach.call(document.querySelectorAll('#'+id+'l .mrow'),function(r){r.classList.toggle('on',r.getAttribute('data-s')===sym);});}
 var OF_he=[['🎯','חזון','מהנגב לעולם — בירת האגרו-טק של ישראל'],['🏙️','מרכז החדשנות','חממה, האצה ומפגש לחברות ומגדלים'],['🌾','חוות ניסויים','שדות מו״פ לגידולים וטכנולוגיות'],['🏭','אזור תעשייה אגרו','ייצור, לוגיסטיקה ועיבוד תוצרת'],['🎓','אגרו-קמפוס','הכשרה, אקדמיה ודור העתיד'],['🌱','אגרו-סייט','חיישנים ומזג אוויר חקלאי חי'],['🏫','בי״ס רגבים','חינוך חקלאי מגיל צעיר'],['🤝','קהילת המגדלים','שיתוף ידע, אירועים ופיילוטים']];
 var OF_en=[['🎯','Vision','From the Negev to the world'],['🏙️','Innovation Center','incubator & meeting hub'],['🌾','Experiment Farms','R&D fields for crops & tech'],['🏭','Agri Industrial Zone','production & processing'],['🎓','Agro-Campus','training & academia'],['🌱','Agro-Site','live field sensors & weather'],['🏫','Regavim School','agri education from a young age'],['🤝','Growers Community','knowledge, events & pilots']];
-function renderOfCubes(id,limit){var el=document.getElementById(id);if(!el)return;var O=LANG==='he'?OF_he:OF_en;if(limit)O=O.slice(0,limit);el.innerHTML=O.map(function(o,i){return '<div class="ofcard"><div class="im">'+(PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="">':o[0])+'</div><div class="b"><h3>'+o[0]+' '+esc(o[1])+'</h3><p>'+esc(o[2])+'</p></div></div>';}).join('');}
+function renderOfCubes(id,limit){var el=document.getElementById(id);if(!el)return;var O=LANG==='he'?OF_he:OF_en;if(limit)O=O.slice(0,limit);el.innerHTML=O.map(function(o,i){return '<div class="oftile">'+(PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="">':'<div class="em">'+o[0]+'</div>')+'<div class="ov"><h3>'+o[0]+' '+esc(o[1])+'</h3><p>'+esc(o[2])+'</p></div></div>';}).join('');}
 function loadTopic(panel,q){var S=STR[LANG],el=document.getElementById(panel+'list');el.innerHTML='<div class="load">…</div>';
  fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
   if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
