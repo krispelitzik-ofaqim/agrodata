@@ -63,7 +63,7 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <h1>בנק <b>האפליקציות</b></h1>
     <div class="sub">מפת האפליקציות והפלטפורמות של עולם האגרו-טק — מזיהוי מחלות ועד רובוטיקה. מה כבר קיים, מי בונה, ואיפה ישראל מובילה. כלי לחדשנות, למיפוי השוק ולזיהוי פערים.</div>
     <div class="stats">
-      <div class="stat"><b id="stTot">0</b><span>אפליקציות</span></div>
+      <div class="stat"><b id="stTot">0</b><span id="stTotL">אפליקציות</span></div>
       <div class="stat"><b id="stIl">0</b><span>🇮🇱 ישראליות</span></div>
       <div class="stat"><b id="stCat">8</b><span>קטגוריות</span></div>
     </div>
@@ -161,7 +161,7 @@ function render(){
 function buildFilters(){var C=cats();var FB=[['all','הכול']].concat(Object.keys(C).map(function(k){return [k,C[k][0]];}));
  document.getElementById('filters').innerHTML=FB.map(function(f,i){return '<button class="fbtn'+(i===0?' on':'')+'" onclick="filt(\''+f[0]+'\',this)">'+f[1]+'</button>';}).join('');}
 function filt(k,el){CUR=k;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
-function stats(){document.getElementById('stTot').textContent=ds().length;document.getElementById('stIl').textContent=ds().filter(function(a){return a.il;}).length;document.getElementById('stCat').textContent=Object.keys(cats()).length;}
+function stats(){document.getElementById('stTot').textContent=ds().length;document.getElementById('stIl').textContent=ds().filter(function(a){return a.il;}).length;document.getElementById('stCat').textContent=Object.keys(cats()).length;document.getElementById('stTotL').textContent=(MODE==='web'?'אתרים':'אפליקציות');}
 var LIVE=false,liveTimer=null;
 function onSearch(){if(LIVE){clearTimeout(liveTimer);liveTimer=setTimeout(loadStore,500);}else render();}
 function setMode(m){MODE=m;CUR='all';LIVE=(m==='ios'||m==='android');
