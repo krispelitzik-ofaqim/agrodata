@@ -179,6 +179,8 @@ function loadStore(){
  document.getElementById('analysis').innerHTML='';
  fetch(ep+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
   var items=(j&&j.items)||[];
+  document.getElementById('stTot').textContent=items.length;document.getElementById('stTotL').textContent='אפליקציות';
+  document.getElementById('stIl').textContent='—';document.getElementById('stCat').textContent='—';
   if(!items.length){document.getElementById('grid').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--mut);padding:40px">לא נמצאו אפליקציות למונח זה.</div>';return;}
   // analysis
   var rated=items.filter(function(a){return a.rating>0;});
