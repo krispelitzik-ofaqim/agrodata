@@ -201,24 +201,29 @@ a{color:inherit}
 .oftile .ov h3{font-family:Rubik;font-weight:800;font-size:16px;color:#fff}
 .oftile .ov p{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:3px;line-height:1.4}
 /* AgroMashov ad banners */
-.admash{display:block;position:relative;height:200px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 14px rgba(20,50,35,.12)}
-.admashv{display:block;position:relative;height:500px;overflow:hidden;margin-top:auto;margin-bottom:0;box-shadow:0 4px 14px rgba(20,50,35,.12)}
-.admash img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;animation:kenburns 20s ease-in-out infinite alternate}
-.admashv img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;animation:kenburnsV 24s ease-in-out infinite alternate}
-@keyframes kenburns{from{transform:scale(1.03) translate(2%,0)}to{transform:scale(1.16) translate(-3%,-4%)}}
-@keyframes kenburnsV{from{transform:scale(1.04) translate(0,2%)}to{transform:scale(1.18) translate(-2%,-6%)}}
-.admash:hover img,.admashv:hover img{animation-play-state:paused}
+.admash{display:block;position:relative;height:200px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 14px rgba(20,50,35,.12);background:radial-gradient(120% 130% at 50% 130%,#1c6b45 0%,#134a30 55%,#0b2c1c 100%)}
+.admashv{display:block;position:relative;height:500px;overflow:hidden;margin-top:auto;margin-bottom:0;box-shadow:0 4px 14px rgba(20,50,35,.12);background:radial-gradient(120% 120% at 50% 130%,#1c6b45 0%,#134a30 55%,#0b2c1c 100%)}
+.adcarpet{position:absolute;inset:0;overflow:hidden;perspective:300px;pointer-events:none}
+.adcarpet .rug{position:absolute;left:-45%;right:-45%;top:-8%;bottom:-55%;transform-origin:center bottom;transform:rotateX(60deg);display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:6px 24px;font-family:Rubik;font-weight:900;font-size:26px;line-height:1;color:rgba(143,230,173,.5);animation:rugmove 16s linear infinite}
+.admashv .adcarpet .rug{font-size:30px;transform:rotateX(62deg)}
+@keyframes rugmove{from{transform:rotateX(60deg) translateY(0)}to{transform:rotateX(60deg) translateY(-72px)}}
+.adcarpet::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,transparent 0,rgba(15,58,38,.15) 42%,#0f3a26 90%)}
+.admash:hover .rug,.admashv:hover .rug{animation-play-state:paused}
 .adtag{position:absolute;top:8px;inset-inline-start:8px;background:rgba(6,20,12,.72);color:#fff;font-family:'Plex Mono';font-size:10px;padding:3px 8px;border-radius:4px;z-index:2}
 .adshine{position:absolute;top:0;bottom:0;width:60%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-18deg);animation:adshine 6s ease-in-out infinite;pointer-events:none;z-index:1}
 @keyframes adshine{0%,60%{left:-70%}80%,100%{left:130%}}
 .admtxt{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 30px;text-align:start;background:linear-gradient(90deg,rgba(6,20,12,.72),rgba(6,20,12,.15) 55%,transparent)}
-.admash .admtxt{flex-direction:row;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(90deg,rgba(6,20,12,.82),rgba(6,20,12,.4) 55%,rgba(6,20,12,.62))}
+.admash .admtxt{flex-direction:row;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(90deg,rgba(6,20,12,.55),rgba(6,20,12,.1) 60%,transparent)}
 .admash .adleft{display:flex;flex-direction:column;align-items:flex-start}
 .admash .adcta{margin-top:0}
-.admtxt.v{padding:30px 24px;justify-content:center;gap:2px;background:linear-gradient(165deg,rgba(6,20,12,.68),rgba(9,28,17,.9))}
-.admtxt b{font-family:Rubik;font-weight:900;font-size:34px;color:#fff;line-height:1.05;text-shadow:0 2px 10px rgba(0,0,0,.55);animation:admin 7s ease-in-out infinite}
+.admtxt.v{padding:30px 24px;justify-content:center;gap:2px;background:linear-gradient(165deg,rgba(6,20,12,.28),rgba(9,28,17,.5))}
+.admtxt b{font-family:Rubik;font-weight:900;font-size:30px;color:#fff;line-height:1.05;text-shadow:0 2px 10px rgba(0,0,0,.6);animation:admin 7s ease-in-out infinite}
 .admtxt.v b{font-size:30px}
-.admtxt span{font-family:Rubik;font-weight:800;font-size:16.5px;color:#8fe6ad;margin-top:8px;text-shadow:0 2px 8px rgba(0,0,0,.5);animation:admin 7s ease-in-out .25s infinite both}
+.admtxt span{font-family:Rubik;font-weight:800;font-size:16.5px;color:#8fe6ad;margin-top:8px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.admtxt .adofa{font-family:Rubik;font-weight:900;color:#fff;line-height:1.12;margin-top:10px;text-shadow:0 3px 14px rgba(0,0,0,.65);font-size:21px;animation:ofain 6.5s ease-in-out infinite}
+.admtxt.v .adofa{font-size:27px;margin-top:12px}
+.admtxt .adofa b{color:var(--gold)}
+@keyframes ofain{0%{opacity:0;transform:translateY(34px) scale(.86)}15%,76%{opacity:1;transform:none}93%,100%{opacity:0;transform:scale(1.05)}}
 @keyframes admin{0%{opacity:0;transform:translateX(45px)}12%,80%{opacity:1;transform:none}95%,100%{opacity:0;transform:translateX(-25px)}}
 .admtxt .addate{align-self:flex-start;background:var(--gold);color:#3a2c06;font-family:Rubik;font-weight:900;font-size:14px;padding:3px 11px;border-radius:5px;margin-top:8px;text-shadow:none}
 .admtxt .adcta{align-self:flex-start;background:#fff;color:var(--green-d);font-family:Rubik;font-weight:800;font-size:13.5px;padding:7px 15px;border-radius:6px;margin-top:11px;text-shadow:none;box-shadow:0 3px 10px rgba(0,0,0,.25)}
@@ -264,7 +269,7 @@ a{color:inherit}
     <div class="colmain">
       <div id="lead"></div>
       <div class="blocks" id="blocks"></div>
-      <a class="admash" href="https://www.agromashovgroup.com/" target="_blank" rel="noopener"><img src="assets/ads/agromashov.jpg" alt="AgroMashov"><div class="adshine"></div><div class="admtxt"><div class="adleft"><b>תערוכת אגרו-משוב</b><span class="addate">📅 30/11 – 01/12</span><span>אופקים · בירת האגרו-טק</span></div><span class="adcta">פרטים והרשמה כאן ↗</span></div><span class="adtag">פרסומת</span></a>
+      <a class="admash" href="https://www.agromashovgroup.com/" target="_blank" rel="noopener"><div class="adcarpet"><div class="rug">תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · </div></div><div class="adshine"></div><div class="admtxt"><div class="adleft"><b>תערוכת אגרו-משוב</b><span class="addate">📅 30/11 – 01/12</span><span class="adofa">אופקים · <b>בירת האגרו-טק</b> של ישראל</span></div><span class="adcta">פרטים והרשמה כאן ↗</span></div><span class="adtag">פרסומת</span></a>
       <div class="secbar">📰 עוד בחדשות</div>
       <div class="two" id="more"></div>
       <div class="secbar gold">📈 שוק הסחורות · חי</div>
@@ -299,7 +304,7 @@ a{color:inherit}
         </div></a>
       </div>
       <div class="box"><h4 id="eduh">🎓 לומדים היום את מקצועות העתיד</h4><div class="edusub" id="edusub">אגרו-טק וחקלאות מדייקת · תארים ולימודים</div><div id="edulist"></div></div>
-      <a class="admashv" href="https://www.agromashovgroup.com/" target="_blank" rel="noopener"><img src="assets/ads/agromashov.jpg" alt="AgroMashov"><div class="adshine"></div><div class="admtxt v"><b>תערוכת<br>אגרו-משוב</b><span class="addate">📅 30/11 – 01/12</span><span>אופקים · בירת האגרו-טק</span><span class="adcta">פרטים והרשמה כאן ↗</span></div><span class="adtag">פרסומת</span></a>
+      <a class="admashv" href="https://www.agromashovgroup.com/" target="_blank" rel="noopener"><div class="adcarpet"><div class="rug">תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · </div></div><div class="adshine"></div><div class="admtxt v"><b>תערוכת<br>אגרו-משוב</b><span class="addate">📅 30/11 – 01/12</span><span class="adofa">אופקים ·<br><b>בירת האגרו-טק</b><br>של ישראל</span><span class="adcta">פרטים והרשמה כאן ↗</span></div><span class="adtag">פרסומת</span></a>
     </div>
   </div></div>
   <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
