@@ -161,10 +161,6 @@ a{color:inherit}
       <div class="vid"><iframe id="vid" src="" title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
       <div class="secbar gold">🏛️ תערוכות וכנסים</div>
       <div class="two" id="expo"></div>
-      <div class="secbar">🔬 פטנטים חדשים · חי</div>
-      <div class="two" id="patents"><div class="load">…</div></div>
-      <div class="secbar gold">📚 ספרים חדשים · חי</div>
-      <div class="two" id="books"><div class="load">…</div></div>
       <div class="secbar gold">✍️ דעות וטורים</div>
       <div class="op3" id="opinion"></div>
       <div class="secbar teal">📸 מהשטח · גלריה</div>
@@ -196,12 +192,12 @@ function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'
 var LANG='he';
 var STR={
  he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות והאגרו-טק של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',
-  cats:[['news','📰 ראשי'],['finance','💰 פיננסים'],['ofakim','🌱 אופקים ואגרו-טק'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],qfin:'אגרו-טק השקעות OR גיוס OR מימון חקלאות OR בורסה',qofa:'אופקים OR "אגרו טק" OR חדשנות חקלאית',
+  cats:[['news','📰 ראשי'],['finance','💰 פיננסים'],['ofakim','🌱 אופקים ואגרו-טק'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],qfin:'אגרו-טק השקעות OR גיוס OR מימון חקלאות OR בורסה',qofa:'אופקים אגרו-טק OR אופקים חקלאות OR אופקים חדשנות OR "מרכז חדשנות אופקים"',
   mr:'🔥 הנקראות ביותר',hg:'🪴 חקלאות ביתית',hgb:'9 שיטות לגידול בבית ↗',alb:'📸 אלבום הקהילה',gr:'👥 קבוצות עניין',ha:'🪴 חקלאות ביתית',hab:'כניסה · 9 שיטות ↗',
   bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'אופקים · מזג אוויר חקלאי',foot:'פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים',
   more:'📰 עוד בחדשות',op:'✍️ דעות וטורים',glr:'📸 מהשטח · גלריה'},
  en:{dir:'ltr',lang:'en',tag:"Israel's Agri-Tech News Portal",brk:'BREAKING',pw:'Powered by <b>AgroData</b> ↗',region:'world',live:'live',
-  cats:[['news','📰 Main'],['finance','💰 Finance'],['ofakim','🌱 Ofakim & Agri-Tech'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],qfin:'agrifood investment OR funding OR IPO agriculture',qofa:'Ofakim agritech OR agri innovation Israel',
+  cats:[['news','📰 Main'],['finance','💰 Finance'],['ofakim','🌱 Ofakim & Agri-Tech'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],qfin:'agrifood investment OR funding OR IPO agriculture',qofa:'Ofakim agritech OR Ofakim agriculture OR Negev agri innovation',
   mr:'🔥 Most Read',hg:'🪴 Home Farming',hgb:'9 ways to grow at home ↗',alb:'📸 Community Album',gr:'👥 Interest Groups',ha:'🪴 Home Farming',hab:'Enter · 9 ways ↗',
   bh:'🧠 The Smart Arena',bs:'28 engines · data, research, innovation',oh:'🌱 Agri-Tech Capital',os:'From the Negev to the world',wl:'Ofakim · Farm Weather',foot:"Israel's Agri-Tech News Portal · Powered by AgroData · Ofakim",
   more:'📰 More News',op:'✍️ Opinion & Columns',glr:'📸 From The Field · Gallery'}
@@ -249,22 +245,12 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();
  }).catch(function(){loadNews();});
- setVideo();renderExpo();loadPatents();loadBooks();loadWeather();
+ setVideo();renderExpo();loadWeather();
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
 var EXPO_he=[['🌱','Agritech Israel','תל אביב · תערוכת האגרו-טק המובילה'],['🍎','Fresh AgroMashov','תל אביב · פירות, ירקות ופרחים'],['🚜','EIMA International','בולוניה · מיכון חקלאי'],['📦','Fruit Logistica','ברלין · שרשרת התוצרת הטרייה']];
 var EXPO_en=[['🌱','Agritech Israel','Tel Aviv · leading agri-tech expo'],['🍎','Fresh AgroMashov','Tel Aviv · fruit, veg & flowers'],['🚜','EIMA International','Bologna · agri machinery'],['📦','Fruit Logistica','Berlin · fresh produce chain']];
 function renderExpo(){var E=LANG==='he'?EXPO_he:EXPO_en;document.getElementById('expo').innerHTML=E.map(function(e){return '<div class="ncard"><div class="th thumb">'+e[0]+'</div><div class="in"><div class="t">'+esc(e[1])+'</div><div class="src">'+esc(e[2])+'</div></div></div>';}).join('');}
-function loadPatents(){fetch('/api/patents?num=6&q=agriculture').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).slice(0,6);
-  if(!it.length){document.getElementById('patents').innerHTML='<div class="load">—</div>';return;}
-  document.getElementById('patents').innerHTML=it.map(function(p){return '<a class="ncard" href="'+(p.url||'#')+'" target="_blank" rel="noopener"><div class="th thumb">🔬</div><div class="in"><div class="t">'+esc((p.title||'').slice(0,72))+'</div><div class="src">'+esc(p.assignee||p.num||'')+'</div></div></a>';}).join('');
- }).catch(function(){document.getElementById('patents').innerHTML='<div class="load">—</div>';});}
-function loadBooks(){var q=LANG==='he'?'חקלאות':'agriculture',lg=LANG==='he'?'heb':'';
- fetch('/api/books?num=6&lang='+lg+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.cover;}).slice(0,6);
-  if(!it.length)it=(j.items||[]).slice(0,6);
-  if(!it.length){document.getElementById('books').innerHTML='<div class="load">—</div>';return;}
-  document.getElementById('books').innerHTML=it.map(function(b){return '<a class="ncard" href="'+(b.read||'#')+'" target="_blank" rel="noopener"><div class="th thumb">'+(b.cover?'<img src="'+b.cover+'" loading="lazy" alt="">':'📚')+'</div><div class="in"><div class="t">'+esc((b.title||'').slice(0,60))+'</div><div class="src">'+esc(b.author||b.year||'')+'</div></div></a>';}).join('');
- }).catch(function(){document.getElementById('books').innerHTML='<div class="load">—</div>';});}
 var ALBUM=false;
 function loadAlbum(){if(ALBUM)return;ALBUM=true;
  fetch('/api/flora?q=herb').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
@@ -272,7 +258,7 @@ function loadAlbum(){if(ALBUM)return;ALBUM=true;
   document.getElementById('album').innerHTML='<div class="album">'+it.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
  }).catch(function(){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;});
 }
-function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();loadBooks();}
+function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();}
 document.getElementById('date').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 applyStr();boot();
 </script>
