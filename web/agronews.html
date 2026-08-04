@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>agroNews · פורטל החקלאות של ישראל</title>
+<title>agroNews · פורטל החקלאות והאגרו-טק של ישראל</title>
 <style>
 @font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
@@ -21,7 +21,7 @@ a{color:inherit}
 .mast{background:#fff;border-bottom:3px solid var(--green)}
 .masthead{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 0}
 .brand{text-align:center}
-.logo{font-family:'Space Grotesk';font-weight:700;font-size:clamp(38px,6vw,58px);color:var(--green-d);letter-spacing:-.01em;line-height:1}.logo b{color:var(--lime)}.logo .d{color:var(--gold)}
+.logo{direction:ltr;font-family:'Space Grotesk';font-weight:700;font-size:clamp(38px,6vw,58px);color:var(--green-d);letter-spacing:-.01em;line-height:1}.logo b{color:var(--lime)}.logo .d{color:var(--gold)}
 .tagline{display:block;font-family:Rubik;font-weight:700;color:var(--mut);font-size:15px;margin-top:5px}
 .mright{display:flex;align-items:center;gap:12px}
 .date{font-family:'Plex Mono';font-size:12.5px;color:var(--mut)}
@@ -49,7 +49,8 @@ a{color:inherit}
 /* lead */
 .lead{display:grid;grid-template-columns:1.15fr 1fr;background:#fff;border-radius:14px;overflow:hidden;text-decoration:none;margin-bottom:16px;box-shadow:0 6px 18px rgba(20,50,35,.07)}
 @media(max-width:620px){.lead{grid-template-columns:1fr}}
-.thumb{position:relative;min-height:230px;display:grid;place-items:center;font-size:72px;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:rgba(255,255,255,.9)}
+.thumb{position:relative;display:grid;place-items:center;font-size:40px;overflow:hidden;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:rgba(255,255,255,.9)}
+.lead .thumb{min-height:230px;max-height:360px;font-size:72px}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .lead .in{padding:18px 20px;display:flex;flex-direction:column;justify-content:center}
 .badge{align-self:flex-start;background:var(--gold);color:#3a2c06;font-family:Rubik;font-weight:900;font-size:12px;padding:4px 10px;border-radius:5px}
@@ -134,7 +135,7 @@ a{color:inherit}
 </head>
 <body>
 <div class="mast"><div class="wrap"><div class="masthead">
-  <div class="brand"><span class="logo">agro<b>News</b><span class="d">.</span></span> <span class="tagline" id="tagline">פורטל החקלאות של ישראל</span></div>
+  <div class="brand"><span class="logo">agro<b>News</b><span class="d">.</span></span> <span class="tagline" id="tagline">פורטל החקלאות והאגרו-טק של ישראל</span></div>
   <div class="mright">
     <span class="date" id="date"></span>
     <div class="langtog"><button id="lg_he" class="on" onclick="setLang('he')">עב</button><button id="lg_en" onclick="setLang('en')">EN</button></div>
@@ -178,7 +179,7 @@ a{color:inherit}
   <!-- HOME AG --><div class="panel" id="p_home"><div class="sec"><div class="secbar" id="hah">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html" id="habtn">כניסה · 9 שיטות לגידול בבית ↗</a></div></div>
 </div>
 
-<div class="foot"><span class="wm">agro<b>News</b></span> · <span id="footline">פורטל החקלאות של ישראל · מונע ע״י AgroData · אופקים</span></div>
+<div class="foot"><span class="wm">agro<b>News</b></span> · <span id="footline">פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים</span></div>
 
 <script>
 var EMO=['🌾','🍅','💧','🚜','🌱','🐄','🍇','🌍','🔬','🏭','🐝','🥬','🌻','🐟','🍊'];
@@ -188,10 +189,10 @@ function timg(i){return PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="
 function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'+t.getMinutes()).slice(-2);return h+':'+m;}catch(e){return '';}}
 var LANG='he';
 var STR={
- he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',
+ he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות והאגרו-טק של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',
   cats:[['news','📰 ראשי'],['news','חקלאות'],['news','חדשנות'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],
   mr:'🔥 הנקראות ביותר',hg:'🪴 חקלאות ביתית',hgb:'9 שיטות לגידול בבית ↗',alb:'📸 אלבום הקהילה',gr:'👥 קבוצות עניין',ha:'🪴 חקלאות ביתית',hab:'כניסה · 9 שיטות ↗',
-  bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'מזג אוויר · תל אביב',foot:'פורטל החקלאות של ישראל · מונע ע״י AgroData · אופקים',
+  bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'מזג אוויר · תל אביב',foot:'פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים',
   more:'📰 עוד בחדשות',op:'✍️ דעות וטורים',glr:'📸 מהשטח · גלריה'},
  en:{dir:'ltr',lang:'en',tag:"Israel's Agri-Tech News Portal",brk:'BREAKING',pw:'Powered by <b>AgroData</b> ↗',region:'world',live:'live',
   cats:[['news','📰 Main'],['news','Agriculture'],['news','Innovation'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],
