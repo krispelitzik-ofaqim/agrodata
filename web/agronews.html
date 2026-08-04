@@ -329,8 +329,9 @@ var EMO=['🌾','🍅','💧','🚜','🌱','🐄','🍇','🌍','🔬','🏭','
 var PHOTOS=[];
 function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
 function timg(i){return PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="">':'';}
-var AGRI_RE=/(חקלא|אגרו|פוד.?טק|אגריטק|מגדל|יבול|גידול|השקי|חממ|דגי|יין|גפן|פרי|ירק|תוצרת|מזון|קרקע|זרע|דשן|טפטוף|חיטה|תירס|עגבני|אורגנ|agri|farm|crop|food.?tech|agtech|harvest|irrigat|greenhouse|aquacult|dairy|vineyard|produce|agricultur|orchard)/i;
-function agriFilter(items){var f=(items||[]).filter(function(n){return AGRI_RE.test(n.title||'');});return f.length>=5?f:(items||[]);}
+var AGRI_RE=/(חקלא|אגרו|פוד.?טק|אגריטק|יבול|גידול|השקי|חממ|מדגה|רפת|לול|כוורת|יין|גפן|מטע|כרם|פרי|ירק|תוצרת|מזון|קרקע|זרע|דשן|טפטוף|חיטה|תירס|עגבני|אורגנ|מגדל(?:י[םן]?)?\s+(?:עוף|תרנגול|בקר|ירק|פרי|חקלא)|agri|farm|crop|food.?tech|agtech|harvest|irrigat|greenhouse|aquacult|dairy|vineyard|produce|agricultur|orchard)/i;
+var BLOCK_RE=/(נפצע|נהרג|נפטר|נעצר|מעצר|רצח|שוד|פשע|תאונ|פיגוע|טרור|דקיר|יריות|אונס|הטרד|דירות|דירה|מגורים|שכונ|נדל.?ן|בחירות|קואליצי|כדורגל|כדורסל|נבחרת|אירוויזיון|קורונה|בית.?משפט|נאשם|כתב.?אישום|הפגנ|חטופ|גזר.?דין|קומות)/i;
+function agriFilter(items){var arr=(items||[]);var f=arr.filter(function(n){var t=n.title||'';return AGRI_RE.test(t)&&!BLOCK_RE.test(t);});return f.length?f:arr.filter(function(n){return !BLOCK_RE.test(n.title||'');});}
 function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'+t.getMinutes()).slice(-2);return h+':'+m;}catch(e){return '';}}
 var LANG='he';
 var STR={
