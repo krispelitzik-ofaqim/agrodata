@@ -109,6 +109,8 @@ a{color:inherit}
 .promo .k{font-family:'Plex Mono';font-size:11px;opacity:.85;font-weight:400}.promo .h{font-size:18px;margin-top:4px}.promo .s{font-weight:500;font-size:12.5px;opacity:.9;margin-top:4px}
 .wx{background:linear-gradient(135deg,var(--teal-l),var(--teal));color:#fff;border-radius:12px;padding:16px;text-align:center;margin-bottom:15px}
 .wx .c{font-family:Rubik;font-weight:900;font-size:34px}.wx .l{font-size:13px;opacity:.9}
+#wxicon{display:flex;justify-content:center;margin-bottom:2px}#wxicon svg{width:66px;height:56px}
+@keyframes wxspin{to{transform:rotate(360deg)}}@keyframes wxrain{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(9px);opacity:0}}
 .wxg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;text-align:center}
 .wxg .i{background:var(--tint);border-radius:8px;padding:7px 4px}
 .wxg .v{font-family:Rubik;font-weight:800;font-size:15px;color:var(--green-d)}
@@ -124,8 +126,14 @@ a{color:inherit}
 .gcard .em{font-size:26px}.gcard h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin:6px 0 4px}.gcard .meta{font-family:'Plex Mono';font-size:12px;color:var(--teal)}
 .big{display:block;text-align:center;background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;text-decoration:none;border-radius:16px;padding:18px;font-family:Rubik;font-weight:800;font-size:17px;max-width:560px;margin:0 auto}
 .load{text-align:center;color:var(--mut);padding:30px}
-.foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:20px 0;text-align:center;font-size:13px;margin-top:14px}
-.foot .wm{font-family:'Space Grotesk';font-weight:700;color:#fff}.foot .wm b{color:#8fe6ad}
+.foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:30px 0 26px;margin-top:20px}
+.foot .wrap{text-align:center}
+.frow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:16px}
+.fbrand{text-align:start}.ftag{font-family:Rubik;font-weight:600;color:rgba(255,255,255,.6);font-size:13px;margin-top:4px}
+.fsocial{display:flex;gap:15px}.fsocial a{color:rgba(255,255,255,.62);transition:.15s}.fsocial a:hover{color:#8fe6ad;transform:translateY(-2px)}.fsocial svg{width:23px;height:23px;display:block}
+.fpartof{font-family:Rubik;font-weight:700;font-size:14px;color:rgba(255,255,255,.85);margin-bottom:8px}
+.fpartof a{color:#8fe6ad;text-decoration:none}.fpartof .wm{font-family:'Space Grotesk';font-weight:700}.fpartof .wm b{color:#8fe6ad}
+.fcopy{font-family:'Plex Mono';font-size:12px;color:rgba(255,255,255,.5)}
 /* commodities market: chart + clickable list */
 .market{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:6px}@media(max-width:760px){.market{grid-template-columns:1fr}}
 .mchart{background:#fff;border-top:3px solid var(--green);padding:16px;box-shadow:0 3px 10px rgba(20,50,35,.05);display:flex;flex-direction:column}
@@ -210,11 +218,12 @@ a{color:inherit}
       <div class="gal" id="gal"></div>
     </div>
     <div class="aside">
-      <div class="wx"><div class="c" id="wxc">…</div><div class="l" id="wxl">אופקים · מזג אוויר חקלאי</div><div class="wxg" id="wxg"></div></div>
+      <div class="wx"><div id="wxicon"></div><div class="c" id="wxc">…</div><div class="l" id="wxl">אופקים · מזג אוויר חקלאי</div><div class="wxg" id="wxg"></div></div>
       <a class="promo brain" href="index.html"><div class="k">THE BRAIN</div><div class="h" id="pbh">🧠 הזירה החכמה</div><div class="s" id="pbs">28 מנועים · דאטה, מחקר וחדשנות</div></a>
       <a class="promo ofa" href="ofakim.html"><div class="k">OFAKIM</div><div class="h" id="poh">🌱 בירת האגרו-טק</div><div class="s" id="pos">מהנגב לעולם</div></a>
       <div class="box"><h4 id="mrh">🔥 הנקראות ביותר</h4><div id="mostread"></div></div>
       <div class="box"><h4 id="hgh">🪴 חקלאות ביתית</h4><a class="big" style="font-size:15px;padding:13px" href="homegarden.html" id="hgbtn">9 שיטות לגידול בבית ↗</a></div>
+      <div class="box"><h4 id="suh">🔥 הסטארטאפים החמים · אגרו-טק</h4><div id="startups" class="load">…</div></div>
     </div>
   </div></div>
   <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
@@ -224,7 +233,21 @@ a{color:inherit}
   <!-- HOME AG --><div class="panel" id="p_home"><div class="sec"><div class="secbar" id="hah">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html" id="habtn">כניסה · 9 שיטות לגידול בבית ↗</a></div></div>
 </div>
 
-<div class="foot"><span class="wm">agro<b>News</b></span> · <span id="footline">פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים</span></div>
+<div class="foot"><div class="wrap">
+  <div class="frow">
+    <div class="fbrand"><span class="logo" style="font-size:30px;color:#fff">agro<b style="color:#8fe6ad">News</b><span style="color:var(--gold)">.</span></span><div class="ftag" id="footline">פורטל החקלאות והאגרו-טק של ישראל</div></div>
+    <div class="fsocial">
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2 0 1.8.3 2.2.4.6.2 1 .4 1.4.9.5.4.7.8.9 1.4.1.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.8s0 3.6-.1 4.9c0 1.2-.3 1.8-.4 2.2-.2.6-.4 1-.9 1.4-.4.5-.8.7-1.4.9-.4.1-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.3-2.2-.4a3.6 3.6 0 0 1-1.4-.9 3.6 3.6 0 0 1-.9-1.4c-.1-.4-.4-1-.4-2.2C2.6 15.6 2.6 15.2 2.6 12s0-3.6.1-4.9c0-1.2.3-1.8.4-2.2.2-.6.4-1 .9-1.4.4-.5.8-.7 1.4-.9.4-.1 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3a6.8 6.8 0 1 0 0 13.6A6.8 6.8 0 0 0 12 5.2zm0 11.2a4.4 4.4 0 1 1 0-8.8 4.4 4.4 0 0 1 0 8.8zm6.4-11.4a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H3l7.5-8.6L2.6 2H9l4.5 6.6L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.5zM9.8 15.3V8.7l5.7 3.3z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.4 3H3.6A.6.6 0 0 0 3 3.6v16.8a.6.6 0 0 0 .6.6h16.8a.6.6 0 0 0 .6-.6V3.6a.6.6 0 0 0-.6-.6zM8.3 18.3H5.5V9.7h2.8zM6.9 8.5a1.6 1.6 0 1 1 0-3.3 1.6 1.6 0 0 1 0 3.3zm11.4 9.8h-2.8v-4.2c0-1 0-2.3-1.4-2.3s-1.6 1.1-1.6 2.2v4.3H9.7V9.7h2.7v1.2h.04c.4-.7 1.3-1.4 2.6-1.4 2.8 0 3.3 1.8 3.3 4.2z"/></svg></a>
+      <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.6.1l-.9 1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.4-1.5 9 9 0 0 1-1.6-2c-.2-.3 0-.4.1-.6l.5-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.6-.5H8c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 5 4.3 2.5 1 3 .8 3.5.7.6 0 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.3A10 10 0 1 0 12 2z"/></svg></a>
+    </div>
+  </div>
+  <div class="fpartof">חלק מ-<a href="index.html"><span class="wm">Agro<b>Data</b></span> Center</a> · <a href="ofakim.html">אופקים · בירת האגרו-טק</a></div>
+  <div class="fcopy">© 2026 agroNews · כל הזכויות שמורות</div>
+</div></div>
 
 <script>
 var EMO=['🌾','🍅','💧','🚜','🌱','🐄','🍇','🌍','🔬','🏭','🐝','🥬','🌻','🐟','🍊'];
@@ -279,7 +302,22 @@ function loadTopic(panel,q){var S=STR[LANG],el=document.getElementById(panel+'li
   if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
   el.innerHTML=it.map(function(n,i){return '<a class="ncard" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+timg(i%Math.max(1,PHOTOS.length))+EMO[i%EMO.length]+'</div><div class="in"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
  }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
+function dt(s){var p=(s||'').split('/');return p.length===3?new Date(p[2],(+p[1])-1,+p[0]).getTime():0;}
+function loadStartups(){var el=document.getElementById('startups');if(!el)return;
+ fetch('/api/companies?q='+encodeURIComponent(LANG==='he'?'חקלאות':'agriculture')+'&limit=30').then(function(r){return r.json();}).then(function(j){
+  var it=(j.items||[]).slice();it.sort(function(a,b){return dt(b.founded)-dt(a.founded);});it=it.slice(0,5);
+  if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
+  var he=LANG==='he';
+  el.innerHTML=it.map(function(c){return '<div class="mr"><span class="n">🌱</span><div style="min-width:0"><div style="font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--ink)">'+esc((he?c.name:(c.name_en||c.name))||'')+'</div><div style="font-family:\'Plex Mono\';font-size:11px;color:var(--teal)">'+(he?'נוסדה ':'est. ')+esc(c.founded||'')+'</div></div></div>';}).join('');
+ }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
+function wxScene(cond){
+ if(cond==='rain')return '<svg viewBox="0 0 80 60"><ellipse cx="44" cy="26" rx="24" ry="14" fill="#b7c2c8"/><circle cx="30" cy="24" r="12" fill="#cdd6db"/><g stroke="#5cb3d0" stroke-width="3.5" stroke-linecap="round"><line x1="28" y1="44" x2="28" y2="52" style="animation:wxrain 1s linear infinite"/><line x1="42" y1="44" x2="42" y2="52" style="animation:wxrain 1s linear .33s infinite"/><line x1="56" y1="44" x2="56" y2="52" style="animation:wxrain 1s linear .66s infinite"/></g></svg>';
+ if(cond==='cloud')return '<svg viewBox="0 0 80 60"><ellipse cx="44" cy="34" rx="24" ry="14" fill="#c7d0d5"/><circle cx="30" cy="32" r="13" fill="#dbe2e6"/><circle cx="52" cy="27" r="11" fill="#eef2f4"/></svg>';
+ return '<svg viewBox="0 0 80 60"><g style="transform-box:fill-box;transform-origin:center;animation:wxspin 16s linear infinite"><g stroke="#e8c56a" stroke-width="3.4" stroke-linecap="round"><line x1="40" y1="5" x2="40" y2="14"/><line x1="40" y1="46" x2="40" y2="55"/><line x1="9" y1="30" x2="18" y2="30"/><line x1="62" y1="30" x2="71" y2="30"/><line x1="18" y1="8" x2="24" y2="14"/><line x1="56" y1="46" x2="62" y2="52"/><line x1="62" y1="8" x2="56" y2="14"/><line x1="24" y1="46" x2="18" y2="52"/></g></g><circle cx="40" cy="30" r="13" fill="#e8c56a"/></svg>';
+}
 function loadWeather(){fetch('/api/weather?lat=31.31&lon=34.62').then(function(r){return r.json();}).then(function(j){var c=j.current||{};
+ var precip=c.precipitation||0,hum=c.relative_humidity_2m||0,cond=precip>0.1?'rain':(hum>80?'cloud':'sun');
+ document.getElementById('wxicon').innerHTML=wxScene(cond);
  document.getElementById('wxc').textContent=Math.round(c.temperature_2m||0)+'°';
  var he=LANG==='he',g=[[Math.round(c.relative_humidity_2m||0)+'%',he?'לחות':'Humidity'],[Math.round(c.wind_speed_10m||0)+(he?' קמ״ש':' km/h'),he?'רוח':'Wind'],[Math.round(c.soil_temperature_0cm||0)+'°',he?'טמפ׳ קרקע':'Soil temp'],[Math.round((c.soil_moisture_0_to_1cm||0)*100)+'%',he?'לחות קרקע':'Soil moist']];
  document.getElementById('wxg').innerHTML=g.map(function(x){return '<div class="i"><div class="v">'+x[0]+'</div><div class="k">'+x[1]+'</div></div>';}).join('');
@@ -311,7 +349,7 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();renderHomeAg();renderOfCubes('ofcubesHome',6);
  }).catch(function(){loadNews();});
- setVideo();renderExpo();renderHomeAg();loadWeather();loadCommod('commodHome');renderOfCubes('ofcubesHome',6);
+ setVideo();renderExpo();renderHomeAg();loadWeather();loadStartups();loadCommod('commodHome');renderOfCubes('ofcubesHome',6);
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
 var EXPO_he=[
