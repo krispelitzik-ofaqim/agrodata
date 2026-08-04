@@ -126,13 +126,21 @@ a{color:inherit}
 .load{text-align:center;color:var(--mut);padding:30px}
 .foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:20px 0;text-align:center;font-size:13px;margin-top:14px}
 .foot .wm{font-family:'Space Grotesk';font-weight:700;color:#fff}.foot .wm b{color:#8fe6ad}
-/* commodities */
-.commod{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:6px}@media(max-width:700px){.commod{grid-template-columns:repeat(2,1fr)}}
-.cmd{background:#fff;padding:14px;text-align:center;box-shadow:0 3px 10px rgba(20,50,35,.05);border-top:3px solid var(--green)}
-.cmd .n{font-family:Rubik;font-weight:800;font-size:15px;color:var(--green-d)}
-.cmd .p{font-family:Rubik;font-weight:900;font-size:22px;margin-top:4px;color:var(--ink)}
-.cmd .ch{font-family:'Plex Mono';font-size:13px;font-weight:700;margin-top:2px}
-.cmd .ch.up{color:#1c8a4a}.cmd .ch.dn{color:#c4562e}
+/* commodities market: chart + clickable list */
+.market{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:6px}@media(max-width:760px){.market{grid-template-columns:1fr}}
+.mchart{background:#fff;border-top:3px solid var(--green);padding:16px;box-shadow:0 3px 10px rgba(20,50,35,.05);display:flex;flex-direction:column}
+.mchart .ct{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d)}
+.mchart .cp{font-family:Rubik;font-weight:900;font-size:28px;color:var(--ink);margin-top:2px}
+.mchart .cc{font-family:'Plex Mono';font-size:13px;font-weight:700}
+.mchart .cc.up{color:#1c8a4a}.mchart .cc.dn{color:#c4562e}
+.mchart svg{width:100%;flex:1;min-height:150px;margin-top:10px;display:block}
+.mlist{background:#fff;box-shadow:0 3px 10px rgba(20,50,35,.05);border-top:3px solid var(--gold);overflow:hidden}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 15px;border-top:1px solid var(--line);cursor:pointer;transition:.12s}
+.mrow:first-child{border-top:0}.mrow:hover{background:var(--tint)}.mrow.on{background:var(--tint);border-inline-start:4px solid var(--green)}
+.mrow .mn{font-family:Rubik;font-weight:700;font-size:15px;color:var(--green-d)}
+.mrow .mp{font-family:Rubik;font-weight:800;font-size:15px;color:var(--ink);margin-inline-start:auto;margin-inline-end:12px}
+.mrow .mc{font-family:'Plex Mono';font-size:12.5px;font-weight:700}
+.mrow .mc.up{color:#1c8a4a}.mrow .mc.dn{color:#c4562e}
 /* video */
 .vid{aspect-ratio:16/9;background:#000;margin-bottom:6px;overflow:hidden}
 .vid iframe{width:100%;height:100%;border:0;display:block}
@@ -234,15 +242,25 @@ var OP_en=[['🔬','Science Reviewer','Why agri-data is Israel’s next big asse
 var GR_he=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
 var GR_en=[['💧','Irrigation & Water','1,240'],['🪴','Home Farming','980'],['🐟','Aquaponics','420'],['🌿','Organic','760'],['🚀','Startups','1,510'],['🏠','Controlled Ag','630']];
 function go(k){['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance'){loadCommod('commod');loadTopic('finance',STR[LANG].qfin);}if(k==='ofakim'){renderOfCubes('ofcubes');loadTopic('ofakim',STR[LANG].qofa);}window.scrollTo(0,0);}
-function spark(series,up){if(!series||series.length<2)return '';var w=100,h=28,mn=Math.min.apply(null,series),mx=Math.max.apply(null,series),rng=(mx-mn)||1;var pts=series.map(function(v,i){return (i/(series.length-1)*w).toFixed(1)+','+(h-((v-mn)/rng)*h).toFixed(1);}).join(' ');var col=up?'#1c8a4a':'#c4562e';return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none" style="width:100%;height:26px;margin-top:7px;display:block"><polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';}
 var COMS=[['ZC=F','תירס','Corn'],['ZW=F','חיטה','Wheat'],['ZS=F','סויה','Soybeans'],['KC=F','קפה','Coffee'],['SB=F','סוכר','Sugar'],['CT=F','כותנה','Cotton'],['CC=F','קקאו','Cocoa'],['LE=F','בקר','Cattle']];
-function loadCommod(id){var el=document.getElementById(id);if(!el)return;el.innerHTML='<div class="load">…</div>';
+function comName(sym){var he=LANG==='he',n='';COMS.forEach(function(c){if(c[0]===sym)n=he?c[1]:c[2];});return n;}
+function bigChart(s,up){if(!s||s.length<2)return '';var w=300,h=150,mn=Math.min.apply(null,s),mx=Math.max.apply(null,s),rng=(mx-mn)||1;
+ var pts=s.map(function(v,i){return (i/(s.length-1)*w).toFixed(1)+','+(h-((v-mn)/rng)*(h-16)-8).toFixed(1);});
+ var col=up?'#1c8a4a':'#c4562e';
+ return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polygon points="0,'+h+' '+pts.join(' ')+' '+w+','+h+'" fill="'+col+'" opacity="0.09"/><polyline points="'+pts.join(' ')+'" fill="none" stroke="'+col+'" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>';}
+function loadCommod(id){var el=document.getElementById(id);if(!el)return;el.classList.remove('commod');el.innerHTML='<div class="load">…</div>';
  fetch('/api/quote?symbols='+COMS.map(function(c){return c[0];}).join(',')).then(function(r){return r.json();}).then(function(arr){
-  var map={};(arr||[]).forEach(function(q){map[q.symbol]=q;});var he=LANG==='he';
-  el.innerHTML=COMS.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
-   return '<div class="cmd"><div class="n">'+(he?c[1]:c[2])+'</div><div class="p">'+q.price.toLocaleString()+'</div><div class="ch '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</div>'+spark(q.series,up)+'</div>';
-  }).join('');
+  var map={};(arr||[]).forEach(function(q){map[q.symbol]=q;});el._q=map;
+  el.innerHTML='<div class="market"><div class="mchart" id="'+id+'c"></div><div class="mlist" id="'+id+'l"></div></div>';
+  renderMlist(id);selectCom(id,COMS[0][0]);
  }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
+function renderMlist(id){var map=document.getElementById(id)._q,he=LANG==='he';
+ document.getElementById(id+'l').innerHTML=COMS.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
+  return '<div class="mrow" data-s="'+c[0]+'" onclick="selectCom(\''+id+'\',\''+c[0]+'\')"><span class="mn">'+(he?c[1]:c[2])+'</span><span class="mp">'+q.price.toLocaleString()+'</span><span class="mc '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(1)+'%</span></div>';
+ }).join('');}
+function selectCom(id,sym){var el=document.getElementById(id),map=el._q,q=map&&map[sym];if(!q)return;var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
+ document.getElementById(id+'c').innerHTML='<div class="ct">'+esc(comName(sym))+'</div><div class="cp">'+q.price.toLocaleString()+'</div><div class="cc '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</div>'+bigChart(q.series,up);
+ [].forEach.call(document.querySelectorAll('#'+id+'l .mrow'),function(r){r.classList.toggle('on',r.getAttribute('data-s')===sym);});}
 var OF_he=[['🎯','חזון','מהנגב לעולם — בירת האגרו-טק של ישראל'],['🏙️','מרכז החדשנות','חממה, האצה ומפגש לחברות ומגדלים'],['🌾','חוות ניסויים','שדות מו״פ לגידולים וטכנולוגיות'],['🏭','אזור תעשייה אגרו','ייצור, לוגיסטיקה ועיבוד תוצרת'],['🎓','אגרו-קמפוס','הכשרה, אקדמיה ודור העתיד'],['🌱','אגרו-סייט','חיישנים ומזג אוויר חקלאי חי'],['🏫','בי״ס רגבים','חינוך חקלאי מגיל צעיר'],['🤝','קהילת המגדלים','שיתוף ידע, אירועים ופיילוטים']];
 var OF_en=[['🎯','Vision','From the Negev to the world'],['🏙️','Innovation Center','incubator & meeting hub'],['🌾','Experiment Farms','R&D fields for crops & tech'],['🏭','Agri Industrial Zone','production & processing'],['🎓','Agro-Campus','training & academia'],['🌱','Agro-Site','live field sensors & weather'],['🏫','Regavim School','agri education from a young age'],['🤝','Growers Community','knowledge, events & pilots']];
 function renderOfCubes(id,limit){var el=document.getElementById(id);if(!el)return;var O=LANG==='he'?OF_he:OF_en;if(limit)O=O.slice(0,limit);el.innerHTML=O.map(function(o){return '<div class="gcard"><div class="em">'+o[0]+'</div><h3>'+esc(o[1])+'</h3><div class="meta" style="color:var(--mut);font-family:Heebo;font-size:13px;margin-top:4px">'+esc(o[2])+'</div></div>';}).join('');}
