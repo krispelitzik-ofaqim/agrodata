@@ -10,8 +10,12 @@
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
 :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--teal-l:#5cb3d0;--gold:#c79a2e;--gold-d:#a87d1c;--yellow:#e8c56a;--ink:#14261c;--mut:#5c6f63;--line:#e3ebe6;--bg2:#f4f9f5;--tint:#eaf4ee}
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden;max-width:100%}
 body{font-family:Heebo,Arial,sans-serif;background:#eef2ef;color:var(--ink)}
 .wrap{max-width:1300px;margin:0 auto;padding:0 24px}
+.ynmain,.colmain,.aside,.two,.op3,.blocks{min-width:0}
+img{max-width:100%}
+.bi .t,.ncard .t,.blk .t{overflow-wrap:anywhere}
 a{color:inherit}
 /* masthead */
 .mast{background:#fff;border-bottom:3px solid var(--green)}
