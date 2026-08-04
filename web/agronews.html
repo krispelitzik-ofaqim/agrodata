@@ -11,7 +11,7 @@
 :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--teal-l:#5cb3d0;--gold:#c79a2e;--gold-d:#a87d1c;--yellow:#e8c56a;--ink:#14261c;--mut:#5c6f63;--line:#e3ebe6;--bg2:#f4f9f5;--tint:#eaf4ee}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{overflow-x:hidden;max-width:100%}
-body{font-family:Heebo,Arial,sans-serif;background:#eef2ef;color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:var(--tint);color:var(--ink)}
 .wrap{max-width:1300px;margin:0 auto;padding:0 24px}
 .ynmain,.colmain,.aside,.two,.op3,.blocks{min-width:0}
 img{max-width:100%}
@@ -78,6 +78,14 @@ a{color:inherit}
 .ncard .t{font-family:Rubik;font-weight:700;font-size:15px;line-height:1.4;color:var(--ink)}
 .ncard .src{font-family:'Plex Mono';font-size:11px;color:var(--teal);margin-top:6px}
 .ncard:hover .t{color:var(--green)}
+/* exhibitions calendar cards */
+.excard{display:flex;background:#fff;box-shadow:0 3px 10px rgba(20,50,35,.05);overflow:hidden}
+.excard .exinfo{flex:1;padding:13px 15px;min-width:0}
+.excard .exn{font-family:Rubik;font-weight:800;font-size:16px;color:var(--green-d)}
+.excard .ext{font-size:13px;color:var(--mut);line-height:1.5;margin-top:5px}
+.excard .cal{width:78px;flex:0 0 auto;background:var(--tint);border-inline-end:1px solid var(--line);display:flex;flex-direction:column;text-align:center}
+.excard .cal .m{background:var(--green);color:#fff;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 0;letter-spacing:.03em}
+.excard .cal .d{font-family:Rubik;font-weight:900;font-size:30px;color:var(--green-d);flex:1;display:flex;align-items:center;justify-content:center}
 /* opinion */
 .op3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:640px){.op3{grid-template-columns:1fr}}
 .op{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 10px rgba(20,50,35,.05)}
@@ -124,7 +132,11 @@ a{color:inherit}
 /* ===== MODERN: square corners + whiter, fewer fills ===== */
 [class]{border-radius:0!important}
 .thumb{background:var(--tint)!important;color:var(--green)!important}
-.secbar{background:#fff!important;color:var(--green-d)!important;border-inline-start:5px solid var(--green);border-bottom:2px solid var(--line);font-size:17px}
+.secbar{background:#e4f1e9!important;color:var(--green-d)!important;border-inline-start:5px solid var(--green);border-bottom:2px solid #cfe6d8;font-size:17px}
+.aside .box{border-top:3px solid var(--tint)}
+.wx{background:#e4f1e9!important}
+.op{border-top:3px solid var(--lime)}
+.excard{border-top:3px solid var(--green)}
 .secbar.gold{border-inline-start-color:var(--gold)}.secbar.teal{border-inline-start-color:var(--teal)}
 .secbar .more{color:var(--teal)}
 .blk{background:#fff!important;color:var(--ink)!important;border-top:4px solid var(--green)}
@@ -161,6 +173,8 @@ a{color:inherit}
       <div class="vid"><iframe id="vid" src="" title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
       <div class="secbar gold">🏛️ תערוכות וכנסים</div>
       <div class="two" id="expo"></div>
+      <div class="secbar teal">🪴 חקלאות ביתית</div>
+      <div class="two" id="homeag"></div>
       <div class="secbar gold">✍️ דעות וטורים</div>
       <div class="op3" id="opinion"></div>
       <div class="secbar teal">📸 מהשטח · גלריה</div>
@@ -245,12 +259,25 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();
  }).catch(function(){loadNews();});
- setVideo();renderExpo();loadWeather();
+ setVideo();renderExpo();renderHomeAg();loadWeather();
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
-var EXPO_he=[['🌱','Agritech Israel','תל אביב · תערוכת האגרו-טק המובילה'],['🍎','Fresh AgroMashov','תל אביב · פירות, ירקות ופרחים'],['🚜','EIMA International','בולוניה · מיכון חקלאי'],['📦','Fruit Logistica','ברלין · שרשרת התוצרת הטרייה']];
-var EXPO_en=[['🌱','Agritech Israel','Tel Aviv · leading agri-tech expo'],['🍎','Fresh AgroMashov','Tel Aviv · fruit, veg & flowers'],['🚜','EIMA International','Bologna · agri machinery'],['📦','Fruit Logistica','Berlin · fresh produce chain']];
-function renderExpo(){var E=LANG==='he'?EXPO_he:EXPO_en;document.getElementById('expo').innerHTML=E.map(function(e){return '<div class="ncard"><div class="th thumb">'+e[0]+'</div><div class="in"><div class="t">'+esc(e[1])+'</div><div class="src">'+esc(e[2])+'</div></div></div>';}).join('');}
+var EXPO_he=[
+ ['🌱','Agritech Israel','מאי','12','תערוכת האגרו-טק המובילה בישראל — חדשנות, סטארטאפים ומשקיעים מכל העולם.'],
+ ['🍎','Fresh AgroMashov','פבר׳','24','פירות, ירקות ופרחים — יצוא, קמעונאות והחקלאות הישראלית.'],
+ ['🚜','EIMA International','נוב׳','05','מיכון חקלאי בבולוניה — אחת התערוכות הגדולות בעולם.'],
+ ['📦','Fruit Logistica','פבר׳','04','שרשרת התוצרת הטרייה — ברלין, נקודת המפגש הגלובלית.']
+];
+var EXPO_en=[
+ ['🌱','Agritech Israel','MAY','12','Israel’s leading agri-tech expo — innovation, startups and global investors.'],
+ ['🍎','Fresh AgroMashov','FEB','24','Fruit, vegetables & flowers — export, retail and Israeli farming.'],
+ ['🚜','EIMA International','NOV','05','Agricultural machinery in Bologna — one of the world’s largest expos.'],
+ ['📦','Fruit Logistica','FEB','04','The fresh-produce chain — Berlin, the global meeting point.']
+];
+function renderExpo(){var E=LANG==='he'?EXPO_he:EXPO_en;document.getElementById('expo').innerHTML=E.map(function(e){return '<div class="excard"><div class="exinfo"><div class="exn">'+e[0]+' '+esc(e[1])+'</div><div class="ext">'+esc(e[4])+'</div></div><div class="cal"><div class="m">'+esc(e[2])+'</div><div class="d">'+esc(e[3])+'</div></div></div>';}).join('');}
+var HOME_he=[['🪴','גינת מרפסת','ירקות ותבלינים במרחב קטן'],['💧','הידרופוניקה ביתית','גידול במים ללא אדמה'],['🌱','מיקרו-גרין','סופר-פוד ביתי תוך ימים'],['♻️','קומפוסט ביתי','מפסולת מטבח לזבל עשיר']];
+var HOME_en=[['🪴','Balcony Garden','veg & herbs in small spaces'],['💧','Home Hydroponics','soil-free water growing'],['🌱','Microgreens','home superfood in days'],['♻️','Home Compost','kitchen waste to fertilizer']];
+function renderHomeAg(){var H=LANG==='he'?HOME_he:HOME_en;document.getElementById('homeag').innerHTML=H.map(function(h){return '<a class="ncard" href="homegarden.html"><div class="th thumb">'+h[0]+'</div><div class="in"><div class="t">'+esc(h[1])+'</div><div class="src">'+esc(h[2])+'</div></div></a>';}).join('');}
 var ALBUM=false;
 function loadAlbum(){if(ALBUM)return;ALBUM=true;
  fetch('/api/flora?q=herb').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
@@ -258,7 +285,7 @@ function loadAlbum(){if(ALBUM)return;ALBUM=true;
   document.getElementById('album').innerHTML='<div class="album">'+it.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
  }).catch(function(){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;});
 }
-function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();}
+function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();renderHomeAg();}
 document.getElementById('date').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 applyStr();boot();
 </script>
