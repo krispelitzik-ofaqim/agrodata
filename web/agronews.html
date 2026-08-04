@@ -11,13 +11,14 @@
 :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--teal-l:#5cb3d0;--gold:#c79a2e;--gold-d:#a87d1c;--yellow:#e8c56a;--ink:#14261c;--mut:#5c6f63;--line:#e3ebe6;--bg2:#f4f9f5;--tint:#eaf4ee}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#eef2ef;color:var(--ink)}
-.wrap{max-width:1220px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 16px}
 a{color:inherit}
 /* masthead */
 .mast{background:#fff;border-bottom:3px solid var(--green)}
-.masthead{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px;flex-wrap:wrap}
-.logo{font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--green-d)}.logo b{color:var(--lime)}.logo .d{color:var(--gold)}
-.tagline{font-family:Rubik;font-weight:700;color:var(--mut);font-size:13.5px}
+.masthead{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 0}
+.brand{text-align:center}
+.logo{font-family:'Space Grotesk';font-weight:700;font-size:clamp(38px,6vw,58px);color:var(--green-d);letter-spacing:-.01em;line-height:1}.logo b{color:var(--lime)}.logo .d{color:var(--gold)}
+.tagline{display:block;font-family:Rubik;font-weight:700;color:var(--mut);font-size:15px;margin-top:5px}
 .mright{display:flex;align-items:center;gap:12px}
 .date{font-family:'Plex Mono';font-size:12.5px;color:var(--mut)}
 .langtog{display:flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
@@ -108,11 +109,28 @@ a{color:inherit}
 .load{text-align:center;color:var(--mut);padding:30px}
 .foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:20px 0;text-align:center;font-size:13px;margin-top:14px}
 .foot .wm{font-family:'Space Grotesk';font-weight:700;color:#fff}.foot .wm b{color:#8fe6ad}
+/* video */
+.vid{aspect-ratio:16/9;background:#000;margin-bottom:6px;overflow:hidden}
+.vid iframe{width:100%;height:100%;border:0;display:block}
+/* ===== MODERN: square corners + whiter, fewer fills ===== */
+[class]{border-radius:0!important}
+.thumb{background:var(--tint)!important;color:var(--green)!important}
+.secbar{background:#fff!important;color:var(--green-d)!important;border-inline-start:5px solid var(--green);border-bottom:2px solid var(--line);font-size:17px}
+.secbar.gold{border-inline-start-color:var(--gold)}.secbar.teal{border-inline-start-color:var(--teal)}
+.secbar .more{color:var(--teal)}
+.blk{background:#fff!important;color:var(--ink)!important;border-top:4px solid var(--green)}
+.blk.c0{border-top-color:var(--green)}.blk.c1{border-top-color:var(--teal)}.blk.c2{border-top-color:var(--gold)}
+.blk .th{background:var(--tint)!important;color:var(--green)!important}
+.blk .t{color:var(--ink)}.blk .src{color:var(--teal)!important;opacity:1}
+.aside h4{background:#fff!important;color:var(--green-d)!important;border-inline-start:4px solid var(--gold);border-bottom:1px solid var(--line);margin:-15px -15px 12px;padding:9px 12px}
+.wx{background:#fff!important;color:var(--teal)!important;border:1px solid var(--line)}
+.op .nm{background:var(--green)!important;color:#fff!important}
+.badge{background:var(--green)!important;color:#fff!important}
 </style>
 </head>
 <body>
 <div class="mast"><div class="wrap"><div class="masthead">
-  <div><span class="logo">agro<b>News</b><span class="d">.</span></span> <span class="tagline" id="tagline">פורטל החקלאות של ישראל</span></div>
+  <div class="brand"><span class="logo">agro<b>News</b><span class="d">.</span></span> <span class="tagline" id="tagline">פורטל החקלאות של ישראל</span></div>
   <div class="mright">
     <span class="date" id="date"></span>
     <div class="langtog"><button id="lg_he" class="on" onclick="setLang('he')">עב</button><button id="lg_en" onclick="setLang('en')">EN</button></div>
@@ -130,6 +148,14 @@ a{color:inherit}
       <div class="blocks" id="blocks"></div>
       <div class="secbar">📰 עוד בחדשות</div>
       <div class="two" id="more"></div>
+      <div class="secbar teal">🎬 וידאו</div>
+      <div class="vid"><iframe id="vid" src="" title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+      <div class="secbar gold">🏛️ תערוכות וכנסים</div>
+      <div class="two" id="expo"></div>
+      <div class="secbar">🔬 פטנטים חדשים · חי</div>
+      <div class="two" id="patents"><div class="load">…</div></div>
+      <div class="secbar gold">📚 ספרים חדשים · חי</div>
+      <div class="two" id="books"><div class="load">…</div></div>
       <div class="secbar gold">✍️ דעות וטורים</div>
       <div class="op3" id="opinion"></div>
       <div class="secbar teal">📸 מהשטח · גלריה</div>
@@ -152,7 +178,9 @@ a{color:inherit}
 
 <script>
 var EMO=['🌾','🍅','💧','🚜','🌱','🐄','🍇','🌍','🔬','🏭','🐝','🥬','🌻','🐟','🍊'];
+var PHOTOS=[];
 function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
+function timg(i){return PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="">':'';}
 function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'+t.getMinutes()).slice(-2);return h+':'+m;}catch(e){return '';}}
 var LANG='he';
 var STR={
@@ -187,19 +215,35 @@ function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<
  fetch('/api/news?region='+S.region).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
   if(!it.length){document.getElementById('lead').innerHTML='<div class="load">—</div>';return;}
   var L=it[0];
-  document.getElementById('lead').innerHTML='<a class="lead" href="'+L.link+'" target="_blank" rel="noopener"><div class="thumb">'+EMO[0]+'</div><div class="in"><span class="badge">'+S.live.toUpperCase()+'</span><div class="t">'+esc(L.title)+'</div><div class="src">'+esc(L.source||'')+' · '+esc((L.date||'').slice(0,16))+'</div></div></a>';
-  document.getElementById('blocks').innerHTML=it.slice(1,4).map(function(n,i){return '<a class="blk c'+i+'" href="'+n.link+'" target="_blank" rel="noopener"><div class="th">'+EMO[(i+1)%EMO.length]+'</div><div class="bin"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
-  document.getElementById('more').innerHTML=it.slice(4,10).map(function(n,i){return '<a class="ncard" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+EMO[(i+4)%EMO.length]+'</div><div class="in"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
+  document.getElementById('lead').innerHTML='<a class="lead" href="'+L.link+'" target="_blank" rel="noopener"><div class="thumb">'+timg(0)+EMO[0]+'</div><div class="in"><span class="badge">'+S.live.toUpperCase()+'</span><div class="t">'+esc(L.title)+'</div><div class="src">'+esc(L.source||'')+' · '+esc((L.date||'').slice(0,16))+'</div></div></a>';
+  document.getElementById('blocks').innerHTML=it.slice(1,4).map(function(n,i){return '<a class="blk c'+i+'" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+timg(i+1)+EMO[(i+1)%EMO.length]+'</div><div class="bin"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
+  document.getElementById('more').innerHTML=it.slice(4,10).map(function(n,i){return '<a class="ncard" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+timg(i+4)+EMO[(i+4)%EMO.length]+'</div><div class="in"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
   document.getElementById('mostread').innerHTML=it.slice(9,15).map(function(n,i){return '<div class="mr"><span class="n">'+(i+1)+'</span><a href="'+n.link+'" target="_blank" rel="noopener">'+esc(n.title)+'</a></div>';}).join('');
   document.getElementById('breaking').innerHTML=it.slice(0,8).map(function(n){return '<a class="bi" href="'+n.link+'" target="_blank" rel="noopener"><div class="t">'+esc(n.title.slice(0,60))+'</div><div class="tm">'+esc(n.source||'')+'</div></a>';}).join('');
  }).catch(function(){document.getElementById('lead').innerHTML='<div class="load">שגיאת חיבור לחדשות.</div>';});
 }
-var GAL=false;
-function loadGal(){if(GAL)return;GAL=true;
- fetch('/api/flora?q=vegetable').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,12);
-  document.getElementById('gal').innerHTML=it.map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
- }).catch(function(){GAL=false;});
+function boot(){
+ fetch('/api/flora?q=vegetable').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;});
+  PHOTOS=it.map(function(x){return x.photo;});
+  document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
+  loadNews();
+ }).catch(function(){loadNews();});
+ setVideo();renderExpo();loadPatents();loadBooks();
 }
+function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
+var EXPO_he=[['🌱','Agritech Israel','תל אביב · תערוכת האגרו-טק המובילה'],['🍎','Fresh AgroMashov','תל אביב · פירות, ירקות ופרחים'],['🚜','EIMA International','בולוניה · מיכון חקלאי'],['📦','Fruit Logistica','ברלין · שרשרת התוצרת הטרייה']];
+var EXPO_en=[['🌱','Agritech Israel','Tel Aviv · leading agri-tech expo'],['🍎','Fresh AgroMashov','Tel Aviv · fruit, veg & flowers'],['🚜','EIMA International','Bologna · agri machinery'],['📦','Fruit Logistica','Berlin · fresh produce chain']];
+function renderExpo(){var E=LANG==='he'?EXPO_he:EXPO_en;document.getElementById('expo').innerHTML=E.map(function(e){return '<div class="ncard"><div class="th thumb">'+e[0]+'</div><div class="in"><div class="t">'+esc(e[1])+'</div><div class="src">'+esc(e[2])+'</div></div></div>';}).join('');}
+function loadPatents(){fetch('/api/patents?num=6&q=agriculture').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).slice(0,6);
+  if(!it.length){document.getElementById('patents').innerHTML='<div class="load">—</div>';return;}
+  document.getElementById('patents').innerHTML=it.map(function(p){return '<a class="ncard" href="'+(p.url||'#')+'" target="_blank" rel="noopener"><div class="th thumb">🔬</div><div class="in"><div class="t">'+esc((p.title||'').slice(0,72))+'</div><div class="src">'+esc(p.assignee||p.num||'')+'</div></div></a>';}).join('');
+ }).catch(function(){document.getElementById('patents').innerHTML='<div class="load">—</div>';});}
+function loadBooks(){var q=LANG==='he'?'חקלאות':'agriculture',lg=LANG==='he'?'heb':'';
+ fetch('/api/books?num=6&lang='+lg+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.cover;}).slice(0,6);
+  if(!it.length)it=(j.items||[]).slice(0,6);
+  if(!it.length){document.getElementById('books').innerHTML='<div class="load">—</div>';return;}
+  document.getElementById('books').innerHTML=it.map(function(b){return '<a class="ncard" href="'+(b.read||'#')+'" target="_blank" rel="noopener"><div class="th thumb">'+(b.cover?'<img src="'+b.cover+'" loading="lazy" alt="">':'📚')+'</div><div class="in"><div class="t">'+esc((b.title||'').slice(0,60))+'</div><div class="src">'+esc(b.author||b.year||'')+'</div></div></a>';}).join('');
+ }).catch(function(){document.getElementById('books').innerHTML='<div class="load">—</div>';});}
 var ALBUM=false;
 function loadAlbum(){if(ALBUM)return;ALBUM=true;
  fetch('/api/flora?q=herb').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
@@ -207,9 +251,9 @@ function loadAlbum(){if(ALBUM)return;ALBUM=true;
   document.getElementById('album').innerHTML='<div class="album">'+it.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
  }).catch(function(){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;});
 }
-function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();}
+function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();loadBooks();}
 document.getElementById('date').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-applyStr();loadNews();loadGal();
+applyStr();boot();
 </script>
 </body>
 </html>
