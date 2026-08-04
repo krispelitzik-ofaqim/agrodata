@@ -987,8 +987,8 @@ def fetch_books(q, num=30, lang=""):
     # עברית: Google Books נותן כיסוי עשיר בהרבה (אם יש מפתח)
     if lang == "heb" and GBOOKS_KEY:
         g = fetch_gbooks(q, num, "heb")
-        if g.get("ok") and g.get("items"):
-            return g
+        if g.get("ok"):
+            return g   # מחזיר גם אם ריק — לא ליפול ל-Open Library שיציג ספרים אנגליים
     if lang in ("heb", "eng"):
         q = q + " language:" + lang
     key = (q, num); now = time.time()
