@@ -126,6 +126,13 @@ a{color:inherit}
 .load{text-align:center;color:var(--mut);padding:30px}
 .foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:20px 0;text-align:center;font-size:13px;margin-top:14px}
 .foot .wm{font-family:'Space Grotesk';font-weight:700;color:#fff}.foot .wm b{color:#8fe6ad}
+/* commodities */
+.commod{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:6px}@media(max-width:700px){.commod{grid-template-columns:repeat(2,1fr)}}
+.cmd{background:#fff;padding:14px;text-align:center;box-shadow:0 3px 10px rgba(20,50,35,.05);border-top:3px solid var(--green)}
+.cmd .n{font-family:Rubik;font-weight:800;font-size:15px;color:var(--green-d)}
+.cmd .p{font-family:Rubik;font-weight:900;font-size:22px;margin-top:4px;color:var(--ink)}
+.cmd .ch{font-family:'Plex Mono';font-size:13px;font-weight:700;margin-top:2px}
+.cmd .ch.up{color:#1c8a4a}.cmd .ch.dn{color:#c4562e}
 /* video */
 .vid{aspect-ratio:16/9;background:#000;margin-bottom:6px;overflow:hidden}
 .vid iframe{width:100%;height:100%;border:0;display:block}
@@ -188,8 +195,8 @@ a{color:inherit}
       <div class="box"><h4 id="hgh">🪴 חקלאות ביתית</h4><a class="big" style="font-size:15px;padding:13px" href="homegarden.html" id="hgbtn">9 שיטות לגידול בבית ↗</a></div>
     </div>
   </div></div>
-  <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
-  <!-- OFAKIM --><div class="panel" id="p_ofakim"><div class="sec"><div class="secbar" id="ofah">🌱 אופקים ואגרו-טק</div><div class="two" id="ofakimlist"><div class="load">…</div></div></div></div>
+  <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
+  <!-- OFAKIM --><div class="panel" id="p_ofakim"><div class="sec"><div class="secbar" id="ofah">🌱 אופקים · בירת האגרו-טק</div><div class="grid3" id="ofcubes"></div><div class="secbar">📰 חדשות מאופקים</div><div class="two" id="ofakimlist"><div class="load">…</div></div></div></div>
   <!-- ALBUM --><div class="panel" id="p_album"><div class="sec"><div class="secbar teal" id="albh">📸 אלבום הקהילה</div><div id="album" class="load">…</div></div></div>
   <!-- GROUPS --><div class="panel" id="p_groups"><div class="sec"><div class="secbar" id="grh">👥 קבוצות עניין</div><div class="grid3" id="groups"></div></div></div>
   <!-- HOME AG --><div class="panel" id="p_home"><div class="sec"><div class="secbar" id="hah">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html" id="habtn">כניסה · 9 שיטות לגידול בבית ↗</a></div></div>
@@ -205,12 +212,12 @@ function timg(i){return PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="
 function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'+t.getMinutes()).slice(-2);return h+':'+m;}catch(e){return '';}}
 var LANG='he';
 var STR={
- he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות והאגרו-טק של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',
+ he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות והאגרו-טק של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',qmain:'חקלאות OR "אגרו טק" OR חקלאי OR פוד-טק OR אגריטק OR מגדלים',
   cats:[['news','📰 ראשי'],['finance','💰 פיננסים'],['ofakim','🌱 אופקים ואגרו-טק'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],qfin:'אגרו-טק השקעות OR גיוס OR מימון חקלאות OR בורסה',qofa:'אופקים אגרו-טק OR אופקים חקלאות OR אופקים חדשנות OR "מרכז חדשנות אופקים"',
   mr:'🔥 הנקראות ביותר',hg:'🪴 חקלאות ביתית',hgb:'9 שיטות לגידול בבית ↗',alb:'📸 אלבום הקהילה',gr:'👥 קבוצות עניין',ha:'🪴 חקלאות ביתית',hab:'כניסה · 9 שיטות ↗',
   bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'אופקים · מזג אוויר חקלאי',foot:'פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים',
   more:'📰 עוד בחדשות',op:'✍️ דעות וטורים',glr:'📸 מהשטח · גלריה'},
- en:{dir:'ltr',lang:'en',tag:"Israel's Agri-Tech News Portal",brk:'BREAKING',pw:'Powered by <b>AgroData</b> ↗',region:'world',live:'live',
+ en:{dir:'ltr',lang:'en',tag:"Israel's Agri-Tech News Portal",brk:'BREAKING',pw:'Powered by <b>AgroData</b> ↗',region:'world',live:'live',qmain:'agriculture OR agritech OR agtech OR "food tech" OR farming',
   cats:[['news','📰 Main'],['finance','💰 Finance'],['ofakim','🌱 Ofakim & Agri-Tech'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],qfin:'agrifood investment OR funding OR IPO agriculture',qofa:'Ofakim agritech OR Ofakim agriculture OR Negev agri innovation',
   mr:'🔥 Most Read',hg:'🪴 Home Farming',hgb:'9 ways to grow at home ↗',alb:'📸 Community Album',gr:'👥 Interest Groups',ha:'🪴 Home Farming',hab:'Enter · 9 ways ↗',
   bh:'🧠 The Smart Arena',bs:'28 engines · data, research, innovation',oh:'🌱 Agri-Tech Capital',os:'From the Negev to the world',wl:'Ofakim · Farm Weather',foot:"Israel's Agri-Tech News Portal · Powered by AgroData · Ofakim",
@@ -220,7 +227,18 @@ var OP_he=[['🔬','לקטור מדעי','למה הדאטה החקלאית הי�
 var OP_en=[['🔬','Science Reviewer','Why agri-data is Israel’s next big asset'],['🌾','Chief Agronomist','Three irrigation mistakes every new grower makes'],['💼','Business Advisor','From idea to company: a plan investors love']];
 var GR_he=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
 var GR_en=[['💧','Irrigation & Water','1,240'],['🪴','Home Farming','980'],['🐟','Aquaponics','420'],['🌿','Organic','760'],['🚀','Startups','1,510'],['🏠','Controlled Ag','630']];
-function go(k){['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance')loadTopic('finance',STR[LANG].qfin);if(k==='ofakim')loadTopic('ofakim',STR[LANG].qofa);window.scrollTo(0,0);}
+function go(k){['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance'){loadCommod();loadTopic('finance',STR[LANG].qfin);}if(k==='ofakim'){renderOfCubes();loadTopic('ofakim',STR[LANG].qofa);}window.scrollTo(0,0);}
+var COMS=[['ZC=F','תירס','Corn'],['ZW=F','חיטה','Wheat'],['ZS=F','סויה','Soybeans'],['KC=F','קפה','Coffee'],['SB=F','סוכר','Sugar'],['CT=F','כותנה','Cotton'],['CC=F','קקאו','Cocoa'],['LE=F','בקר','Cattle']];
+function loadCommod(){document.getElementById('commod').innerHTML='<div class="load">…</div>';
+ fetch('/api/quote?symbols='+COMS.map(function(c){return c[0];}).join(',')).then(function(r){return r.json();}).then(function(arr){
+  var map={};(arr||[]).forEach(function(q){map[q.symbol]=q;});var he=LANG==='he';
+  document.getElementById('commod').innerHTML=COMS.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
+   return '<div class="cmd"><div class="n">'+(he?c[1]:c[2])+'</div><div class="p">'+q.price.toLocaleString()+'</div><div class="ch '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</div></div>';
+  }).join('');
+ }).catch(function(){document.getElementById('commod').innerHTML='<div class="load">—</div>';});}
+var OF_he=[['🎯','חזון','מהנגב לעולם — בירת האגרו-טק של ישראל'],['🏙️','מרכז החדשנות','חממה, האצה ומפגש לחברות ומגדלים'],['🌾','חוות ניסויים','שדות מו״פ לגידולים וטכנולוגיות'],['🏭','אזור תעשייה אגרו','ייצור, לוגיסטיקה ועיבוד תוצרת'],['🎓','אגרו-קמפוס','הכשרה, אקדמיה ודור העתיד'],['🌱','אגרו-סייט','חיישנים ומזג אוויר חקלאי חי'],['🏫','בי״ס רגבים','חינוך חקלאי מגיל צעיר'],['🤝','קהילת המגדלים','שיתוף ידע, אירועים ופיילוטים']];
+var OF_en=[['🎯','Vision','From the Negev to the world'],['🏙️','Innovation Center','incubator & meeting hub'],['🌾','Experiment Farms','R&D fields for crops & tech'],['🏭','Agri Industrial Zone','production & processing'],['🎓','Agro-Campus','training & academia'],['🌱','Agro-Site','live field sensors & weather'],['🏫','Regavim School','agri education from a young age'],['🤝','Growers Community','knowledge, events & pilots']];
+function renderOfCubes(){var O=LANG==='he'?OF_he:OF_en;document.getElementById('ofcubes').innerHTML=O.map(function(o){return '<div class="gcard"><div class="em">'+o[0]+'</div><h3>'+esc(o[1])+'</h3><div class="meta" style="color:var(--mut);font-family:Heebo;font-size:13px;margin-top:4px">'+esc(o[2])+'</div></div>';}).join('');}
 function loadTopic(panel,q){var S=STR[LANG],el=document.getElementById(panel+'list');el.innerHTML='<div class="load">…</div>';
  fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
   if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
@@ -243,7 +261,7 @@ function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.
  var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
 }
 function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';
- fetch('/api/news?region='+S.region).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
+ fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(S.qmain||'')).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
   if(!it.length){document.getElementById('lead').innerHTML='<div class="load">—</div>';return;}
   var L=it[0];
   document.getElementById('lead').innerHTML='<a class="lead" href="'+L.link+'" target="_blank" rel="noopener"><div class="thumb">'+timg(0)+EMO[0]+'</div><div class="in"><span class="badge">'+S.live.toUpperCase()+'</span><div class="t">'+esc(L.title)+'</div><div class="src">'+esc(L.source||'')+' · '+esc((L.date||'').slice(0,16))+'</div></div></a>';
