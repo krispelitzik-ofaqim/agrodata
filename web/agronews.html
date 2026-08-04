@@ -257,6 +257,7 @@ a{color:inherit}
           <div class="mcta">לחצו למפה המלאה ב-AgroData ↗</div>
         </div></a>
       </div>
+      <div class="box"><h4 id="eduh">🎓 לומדים היום את מקצועות העתיד</h4><div class="edusub" id="edusub">אגרו-טק וחקלאות מדייקת · תארים ולימודים</div><div id="edulist"></div></div>
     </div>
   </div></div>
   <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
@@ -335,6 +336,11 @@ function loadTopic(panel,q){var S=STR[LANG],el=document.getElementById(panel+'li
   el.innerHTML=it.map(function(n,i){return '<a class="ncard" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+timg(i%Math.max(1,PHOTOS.length))+EMO[i%EMO.length]+'</div><div class="in"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
  }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
 function toggleMap(){var w=document.getElementById('mapwrap'),a=document.querySelector('.mapbanner .arw');var open=w.classList.toggle('open');if(a)a.style.transform=open?'rotate(180deg)':'';}
+var EDU_he=[['🌾','הפקולטה לחקלאות · העברית','רחובות · חקלאות, מזון וסביבה','https://agri.huji.ac.il/'],['🏜️','בן-גוריון · שדה בוקר','מכונים לחקר המדבר','https://in.bgu.ac.il/bidr/'],['🔬','מכון וולקני · ARO','מחקר חקלאי','https://www.agri.gov.il/'],['⚙️','הטכניון','הנדסה, ביו-טכנולוגיה ומזון','https://www.technion.ac.il/'],['💧','מכללת רופין','הנדסת מים וחקלאות','https://www.ruppin.ac.il/'],['🧬','מכללת תל-חי','מדעי המזון וביוטכנולוגיה','https://www.telhai.ac.il/']];
+var EDU_en=[['🌾','Faculty of Agriculture · HUJI','Rehovot · agriculture & food','https://agri.huji.ac.il/'],['🏜️','Ben-Gurion · Sde Boker','Desert research institutes','https://in.bgu.ac.il/bidr/'],['🔬','Volcani · ARO','Agricultural research','https://www.agri.gov.il/'],['⚙️','Technion','Bio-tech & food engineering','https://www.technion.ac.il/'],['💧','Ruppin College','Water & agri engineering','https://www.ruppin.ac.il/'],['🧬','Tel-Hai College','Food science & biotech','https://www.telhai.ac.il/']];
+function renderEdu(){var el=document.getElementById('edulist');if(!el)return;var E=LANG==='he'?EDU_he:EDU_en;
+ document.getElementById('edusub').textContent=LANG==='he'?'אגרו-טק וחקלאות מדייקת · תארים ולימודים':'Agri-tech & precision agriculture · degrees';
+ el.innerHTML=E.map(function(e){return '<a class="mr" href="'+e[3]+'" target="_blank" rel="noopener" style="text-decoration:none"><span class="n">'+e[0]+'</span><div style="min-width:0"><div style="font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--ink)">'+esc(e[1])+'</div><div style="font-family:\'Plex Mono\';font-size:11px;color:var(--teal)">'+esc(e[2])+'</div></div></a>';}).join('');}
 function dt(s){var p=(s||'').split('/');return p.length===3?new Date(p[2],(+p[1])-1,+p[0]).getTime():0;}
 function loadStartups(){var el=document.getElementById('startups');if(!el)return;
  fetch('/api/companies?q='+encodeURIComponent(LANG==='he'?'חקלאות':'agriculture')+'&limit=30').then(function(r){return r.json();}).then(function(j){
@@ -383,7 +389,7 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();renderHomeAg();renderOfCubes('ofcubesHome',6);
  }).catch(function(){loadNews();});
- setVideo();renderExpo();renderHomeAg();loadWeather();loadStartups();loadCommod('commodHome');renderOfCubes('ofcubesHome',6);
+ setVideo();renderExpo();renderHomeAg();loadWeather();loadStartups();renderEdu();loadCommod('commodHome');renderOfCubes('ofcubesHome',6);
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
 var EXPO_he=[
