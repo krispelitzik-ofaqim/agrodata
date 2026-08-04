@@ -170,7 +170,7 @@ function setMode(m){MODE=m;CUR='all';LIVE=(m==='ios'||m==='android');
  document.getElementById('analysis').innerHTML='';
  var q=document.getElementById('q');
  if(LIVE){q.placeholder='חיפוש חי בחנות (למשל: agriculture, irrigation, farm)…';if(!q.value.trim())q.value='agriculture';loadStore();}
- else{q.placeholder='חיפוש: שם, קטגוריה, מה עושה…';buildFilters();stats();render();}
+ else{q.value='';q.placeholder='חיפוש: שם, קטגוריה, מה עושה…';buildFilters();stats();render();}
 }
 function loadStore(){
  var store=MODE==='ios'?'ios':'android',q=(document.getElementById('q').value||'').trim()||'agriculture';
