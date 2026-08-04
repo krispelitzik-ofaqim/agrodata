@@ -256,7 +256,6 @@ function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.
  document.getElementById('albh').textContent=S.alb;document.getElementById('grh').textContent=S.gr;document.getElementById('hah').textContent=S.ha;document.getElementById('habtn').textContent=S.hab;
  document.getElementById('pbh').textContent=S.bh;document.getElementById('pbs').textContent=S.bs;document.getElementById('poh').textContent=S.oh;document.getElementById('pos').textContent=S.os;
  document.getElementById('wxl').textContent=S.wl;document.getElementById('footline').textContent=S.foot;
- var sb=document.querySelectorAll('.colmain .secbar');if(sb[0])sb[0].firstChild.nodeValue=S.more;if(sb[1])sb[1].firstChild.nodeValue=S.op;if(sb[2])sb[2].firstChild.nodeValue=S.glr;
  var O=LANG==='he'?OP_he:OP_en;document.getElementById('opinion').innerHTML=O.map(function(o){return '<div class="op"><div class="who"><span class="av">'+o[0]+'</span><span class="nm">'+esc(o[1])+'</span></div><div class="t">'+esc(o[2])+'</div></div>';}).join('');
  var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
 }
@@ -275,7 +274,7 @@ function boot(){
  fetch('/api/flora?q=vegetable').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;});
   PHOTOS=it.map(function(x){return x.photo;});
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
-  loadNews();
+  loadNews();renderHomeAg();
  }).catch(function(){loadNews();});
  setVideo();renderExpo();renderHomeAg();loadWeather();
 }
@@ -295,7 +294,7 @@ var EXPO_en=[
 function renderExpo(){var E=LANG==='he'?EXPO_he:EXPO_en;document.getElementById('expo').innerHTML=E.map(function(e){return '<div class="excard"><div class="exinfo"><div class="exn">'+e[0]+' '+esc(e[1])+'</div><div class="ext">'+esc(e[4])+'</div></div><div class="cal"><div class="m">'+esc(e[2])+'</div><div class="d">'+esc(e[3])+'</div></div></div>';}).join('');}
 var HOME_he=[['🪴','גינת מרפסת','ירקות ותבלינים במרחב קטן'],['💧','הידרופוניקה ביתית','גידול במים ללא אדמה'],['🌱','מיקרו-גרין','סופר-פוד ביתי תוך ימים'],['♻️','קומפוסט ביתי','מפסולת מטבח לזבל עשיר']];
 var HOME_en=[['🪴','Balcony Garden','veg & herbs in small spaces'],['💧','Home Hydroponics','soil-free water growing'],['🌱','Microgreens','home superfood in days'],['♻️','Home Compost','kitchen waste to fertilizer']];
-function renderHomeAg(){var H=LANG==='he'?HOME_he:HOME_en;document.getElementById('homeag').innerHTML=H.map(function(h){return '<a class="ncard" href="homegarden.html"><div class="th thumb">'+h[0]+'</div><div class="in"><div class="t">'+esc(h[1])+'</div><div class="src">'+esc(h[2])+'</div></div></a>';}).join('');}
+function renderHomeAg(){var H=LANG==='he'?HOME_he:HOME_en;document.getElementById('homeag').innerHTML=H.map(function(h,i){return '<a class="ncard" href="homegarden.html"><div class="th thumb">'+(PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="">':h[0])+'</div><div class="in"><div class="t">'+esc(h[1])+'</div><div class="src">'+esc(h[2])+'</div></div></a>';}).join('');}
 var ALBUM=false;
 function loadAlbum(){if(ALBUM)return;ALBUM=true;
  fetch('/api/flora?q=herb').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
