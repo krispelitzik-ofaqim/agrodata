@@ -8,149 +8,208 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--teal-l:#5cb3d0;--gold:#c79a2e;--gold-d:#a87d1c;--yellow:#e8c56a;--ink:#14261c;--mut:#5c6f63;--line:#e3ebe6;--bg2:#f4f9f5;--tint:#eaf4ee}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#f6faf7;color:var(--ink)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-.mast{background:#fff;border-bottom:1px solid var(--line)}
-.masthead{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:14px;flex-wrap:wrap}
-.logo{font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--green-d);letter-spacing:-.01em}
-.logo b{color:var(--lime)}
-.logo .dot{color:var(--gold)}
-.tagline{font-family:Rubik;font-weight:700;color:var(--mut);font-size:14px}
-.poweredby{font-family:'Plex Mono';font-size:12px;color:var(--teal);text-decoration:none}
-.poweredby b{color:var(--green-d)}
-.ticker{background:var(--green-d);color:#fff;display:flex;align-items:center;padding:9px 0;overflow:hidden}
-.ticker .lb{background:var(--lime);color:#062;font-family:Rubik;font-weight:900;font-size:12px;padding:3px 10px;border-radius:6px;flex:0 0 auto;margin-inline-start:20px}
-.ticker .track{white-space:nowrap;font-size:14px;animation:scroll 45s linear infinite}
-@keyframes scroll{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-.ticker .track span{margin:0 26px;color:rgba(255,255,255,.9)}
-.tabbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
-.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
-.tab{background:none;border:0;border-bottom:3px solid transparent;padding:14px 15px;font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--mut);cursor:pointer;white-space:nowrap}
-.tab:hover{color:var(--green-d)}.tab.on{color:var(--green-d);border-bottom-color:var(--green)}
-.panel{display:none;padding:22px 0 40px}.panel.on{display:block}
-.sechd{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin:2px 0 16px;display:flex;align-items:center;gap:9px}
-.portal{display:grid;grid-template-columns:1.7fr 1fr;gap:24px}@media(max-width:880px){.portal{grid-template-columns:1fr}}
-.lead{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:16px;text-decoration:none;color:inherit;display:block}
-.lead .band{height:6px;background:linear-gradient(90deg,var(--green),var(--lime))}
-.lead .in{padding:20px}
-.lead .src{font-family:'Plex Mono';font-size:12px;color:var(--teal)}
-.lead .t{font-family:Rubik;font-weight:800;font-size:23px;margin-top:6px;line-height:1.3;color:var(--green-d)}
-.na{display:block;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;text-decoration:none;color:inherit;transition:.15s;margin-bottom:11px}
-.na:hover{box-shadow:0 12px 24px rgba(28,107,69,.12);transform:translateY(-2px)}
-.na .src{font-family:'Plex Mono';font-size:12px;color:var(--teal)}
-.na .t{font-family:Rubik;font-weight:700;font-size:16px;margin-top:5px;line-height:1.4}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-@media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;transition:.15s}
-.card:hover{box-shadow:0 12px 24px rgba(28,107,69,.12);transform:translateY(-2px)}
-.card .em{font-size:26px}.card h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin:6px 0 4px}
-.card p{font-size:13.5px;color:var(--mut);line-height:1.55}.card .meta{margin-top:8px;font-family:'Plex Mono';font-size:12px;color:var(--teal)}
-.post{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px}
-.post .hd{display:flex;align-items:center;gap:11px}.post .av{width:42px;height:42px;border-radius:50%;background:var(--tint);display:grid;place-items:center;font-size:19px;flex:0 0 auto}
-.post .who{font-family:Rubik;font-weight:800;font-size:15px}.post .when{font-size:12px;color:var(--mut)}
-.post .txt{margin:10px 0;font-size:15px;line-height:1.55}
-.post .pic{width:100%;height:200px;border-radius:12px;display:grid;place-items:center;font-size:44px;background:linear-gradient(135deg,#cfe8d8,#a9d8bd);color:#2e6b49}
-.post .st{margin-top:10px;display:flex;gap:16px;font-size:13px;color:var(--teal);font-family:'Plex Mono'}
-.writer{background:#fff;border:1px dashed var(--green);border-radius:16px;padding:14px;margin-bottom:16px;display:flex;gap:11px;align-items:center}
-.writer input{flex:1;border:1.5px solid var(--line);border-radius:999px;padding:11px 16px;font-family:Heebo;font-size:15px;background:var(--bg2)}
-.writer .b{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:999px;padding:11px 20px;font-family:Rubik;font-weight:800;cursor:pointer}.writer .cam{font-size:22px;cursor:pointer}
+body{font-family:Heebo,Arial,sans-serif;background:#eef2ef;color:var(--ink)}
+.wrap{max-width:1220px;margin:0 auto;padding:0 16px}
+a{color:inherit}
+/* masthead */
+.mast{background:#fff;border-bottom:3px solid var(--green)}
+.masthead{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px;flex-wrap:wrap}
+.logo{font-family:'Space Grotesk';font-weight:700;font-size:30px;color:var(--green-d)}.logo b{color:var(--lime)}.logo .d{color:var(--gold)}
+.tagline{font-family:Rubik;font-weight:700;color:var(--mut);font-size:13.5px}
+.mright{display:flex;align-items:center;gap:12px}
+.date{font-family:'Plex Mono';font-size:12.5px;color:var(--mut)}
+.langtog{display:flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.langtog button{background:#fff;border:0;padding:6px 13px;font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);cursor:pointer}
+.langtog button.on{background:var(--green);color:#fff}
+.powered{font-family:'Plex Mono';font-size:12px;color:var(--teal);text-decoration:none}.powered b{color:var(--green-d)}
+/* nav strip */
+.navstrip{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.cats{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.cats::-webkit-scrollbar{display:none}
+.cbtn{background:none;border:0;padding:12px 15px;font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--ink);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
+.cbtn:hover{color:var(--green)}.cbtn.on{color:var(--green-d);border-bottom-color:var(--green)}
+/* breaking bar */
+.brk{background:#fff;border-bottom:1px solid var(--line)}
+.brkrow{display:flex;align-items:stretch;gap:0;overflow-x:auto;scrollbar-width:none;padding:2px 0}.brkrow::-webkit-scrollbar{display:none}
+.brkrow .lb{background:var(--gold);color:#3a2c06;font-family:Rubik;font-weight:900;font-size:12px;display:flex;align-items:center;padding:0 12px;flex:0 0 auto;border-radius:6px;margin:9px 8px 9px 0}
+.bi{flex:0 0 auto;max-width:290px;padding:10px 16px;border-inline-start:1px solid var(--line);text-decoration:none}
+.bi .t{font-family:Rubik;font-weight:700;font-size:13.5px;line-height:1.35;color:var(--ink)}
+.bi .tm{font-family:'Plex Mono';font-size:11px;color:var(--gold-d);margin-top:4px}
+.bi:hover .t{color:var(--green)}
+/* main grid */
+.ynmain{display:grid;grid-template-columns:1fr 330px;gap:22px;padding:18px 0 8px}
+@media(max-width:940px){.ynmain{grid-template-columns:1fr}}
+.panel{display:none}.panel.on{display:block}
+/* lead */
+.lead{display:grid;grid-template-columns:1.15fr 1fr;background:#fff;border-radius:14px;overflow:hidden;text-decoration:none;margin-bottom:16px;box-shadow:0 6px 18px rgba(20,50,35,.07)}
+@media(max-width:620px){.lead{grid-template-columns:1fr}}
+.thumb{position:relative;min-height:230px;display:grid;place-items:center;font-size:72px;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:rgba(255,255,255,.9)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lead .in{padding:18px 20px;display:flex;flex-direction:column;justify-content:center}
+.badge{align-self:flex-start;background:var(--gold);color:#3a2c06;font-family:Rubik;font-weight:900;font-size:12px;padding:4px 10px;border-radius:5px}
+.lead .t{font-family:Rubik;font-weight:900;font-size:26px;line-height:1.28;color:var(--green-d);margin:10px 0 8px}
+.lead .e{font-size:14.5px;color:var(--mut);line-height:1.6}
+.lead .src{font-family:'Plex Mono';font-size:12px;color:var(--teal);margin-top:10px}
+/* colored blocks */
+.blocks{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:720px){.blocks{grid-template-columns:1fr}}
+.blk{display:block;border-radius:12px;overflow:hidden;text-decoration:none;color:#fff;box-shadow:0 5px 14px rgba(20,50,35,.1)}
+.blk .th{aspect-ratio:16/9;display:grid;place-items:center;font-size:38px;background:rgba(255,255,255,.12)}
+.blk .bin{padding:13px 14px}
+.blk .t{font-family:Rubik;font-weight:800;font-size:15.5px;line-height:1.4}
+.blk .src{font-family:'Plex Mono';font-size:11px;opacity:.85;margin-top:6px}
+.blk.c0{background:var(--green-d)}.blk.c1{background:var(--teal)}.blk.c2{background:var(--gold-d)}
+/* section header bar */
+.secbar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,var(--green),var(--green-d));color:#fff;border-radius:8px;padding:9px 15px;margin:22px 0 14px;font-family:Rubik;font-weight:900;font-size:16px}
+.secbar.gold{background:linear-gradient(90deg,var(--gold),var(--gold-d))}
+.secbar.teal{background:linear-gradient(90deg,var(--teal-l),var(--teal))}
+.secbar .more{font-size:12.5px;font-weight:700;opacity:.9;text-decoration:none;color:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:560px){.two{grid-template-columns:1fr}}
+.ncard{display:grid;grid-template-columns:120px 1fr;gap:12px;background:#fff;border-radius:12px;overflow:hidden;text-decoration:none;box-shadow:0 3px 10px rgba(20,50,35,.05)}
+.ncard .th{min-height:88px;font-size:30px}
+.ncard .in{padding:11px 6px 11px 0}
+.ncard .t{font-family:Rubik;font-weight:700;font-size:15px;line-height:1.4;color:var(--ink)}
+.ncard .src{font-family:'Plex Mono';font-size:11px;color:var(--teal);margin-top:6px}
+.ncard:hover .t{color:var(--green)}
+/* opinion */
+.op3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:640px){.op3{grid-template-columns:1fr}}
+.op{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 10px rgba(20,50,35,.05)}
+.op .who{display:flex;align-items:center;gap:10px;padding:12px 14px 0}
+.op .av{width:46px;height:46px;border-radius:50%;background:var(--tint);display:grid;place-items:center;font-size:22px;flex:0 0 auto}
+.op .nm{background:var(--gold);color:#3a2c06;font-family:Rubik;font-weight:900;font-size:12.5px;padding:3px 9px;border-radius:5px}
+.op .t{font-family:Rubik;font-weight:800;font-size:15.5px;color:var(--green-d);padding:11px 14px 15px;line-height:1.4}
+/* gallery strip */
+.gal{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}.gal::-webkit-scrollbar{display:none}
+.gt{flex:0 0 200px;aspect-ratio:3/4;border-radius:12px;overflow:hidden;position:relative;background:var(--tint)}
+.gt img{width:100%;height:100%;object-fit:cover;display:block}
+.gt .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);color:#fff;font-size:12.5px;padding:16px 8px 7px;text-align:center;font-weight:700}
+/* aside */
+.aside .box{background:#fff;border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 3px 10px rgba(20,50,35,.05)}
+.aside h4{font-family:Rubik;font-weight:900;font-size:16px;color:#fff;background:linear-gradient(90deg,var(--gold),var(--gold-d));border-radius:7px;padding:8px 12px;margin:-15px -15px 12px}
+.mr{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}.mr:first-of-type{border-top:0}
+.mr .n{font-family:'Space Grotesk';font-weight:700;font-size:22px;color:var(--gold);flex:0 0 auto;line-height:1}
+.mr a{text-decoration:none;color:var(--ink);font-weight:700;font-size:13.5px;line-height:1.4}.mr a:hover{color:var(--green)}
+.promo{display:block;border-radius:12px;padding:17px;text-decoration:none;color:#fff;font-family:Rubik;font-weight:800;margin-bottom:13px}
+.promo.brain{background:linear-gradient(135deg,#134a30,#1c6b45)}.promo.ofa{background:linear-gradient(135deg,#6a45c0,#2b8fb0)}
+.promo .k{font-family:'Plex Mono';font-size:11px;opacity:.85;font-weight:400}.promo .h{font-size:18px;margin-top:4px}.promo .s{font-weight:500;font-size:12.5px;opacity:.9;margin-top:4px}
+.wx{background:linear-gradient(135deg,var(--teal-l),var(--teal));color:#fff;border-radius:12px;padding:16px;text-align:center;margin-bottom:15px}
+.wx .c{font-family:Rubik;font-weight:900;font-size:34px}.wx .l{font-size:13px;opacity:.9}
+/* generic sections */
+.sec{padding:8px 0 40px}
 .album{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:760px){.album{grid-template-columns:repeat(2,1fr)}}
 .ph2{aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--tint);position:relative}
 .ph2 img{width:100%;height:100%;object-fit:cover;display:block}
 .ph2 .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.65),transparent);color:#fff;font-size:12px;padding:14px 8px 6px;text-align:center}
-.promo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:6px 0 20px}@media(max-width:640px){.promo{grid-template-columns:1fr}}
-.promo a{display:block;border-radius:16px;padding:20px;text-decoration:none;color:#fff;font-family:Rubik;font-weight:800}
-.promo .brain{background:linear-gradient(135deg,#134a30,#1c6b45)}
-.promo .ofa{background:linear-gradient(135deg,#6a45c0,#2b8fb0)}
-.promo .k{font-family:'Plex Mono';font-size:12px;opacity:.85;font-weight:400}
-.promo .h{font-size:20px;margin-top:5px}.promo .s{font-weight:500;font-size:13.5px;opacity:.9;margin-top:5px}
-.big{display:block;text-align:center;background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;text-decoration:none;border-radius:16px;padding:22px;font-family:Rubik;font-weight:800;font-size:19px;max-width:640px;margin:0 auto}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}@media(max-width:700px){.grid3{grid-template-columns:1fr 1fr}}
+.gcard{background:#fff;border-radius:14px;padding:16px;box-shadow:0 3px 10px rgba(20,50,35,.05)}
+.gcard .em{font-size:26px}.gcard h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin:6px 0 4px}.gcard .meta{font-family:'Plex Mono';font-size:12px;color:var(--teal)}
+.big{display:block;text-align:center;background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;text-decoration:none;border-radius:16px;padding:18px;font-family:Rubik;font-weight:800;font-size:17px;max-width:560px;margin:0 auto}
 .load{text-align:center;color:var(--mut);padding:30px}
-.foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:22px 0;text-align:center;font-size:13px;margin-top:20px}
+.foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.75);padding:20px 0;text-align:center;font-size:13px;margin-top:14px}
 .foot .wm{font-family:'Space Grotesk';font-weight:700;color:#fff}.foot .wm b{color:#8fe6ad}
 </style>
 </head>
 <body>
 <div class="mast"><div class="wrap"><div class="masthead">
-  <div><span class="logo">agro<b>News</b><span class="dot">.</span></span> <span class="tagline">פורטל החקלאות של ישראל</span></div>
-  <a class="poweredby" href="index.html">מונע ע״י <b>AgroData</b> · המוח החכם ↗</a>
+  <div><span class="logo">agro<b>News</b><span class="d">.</span></span> <span class="tagline" id="tagline">פורטל החקלאות של ישראל</span></div>
+  <div class="mright">
+    <span class="date" id="date"></span>
+    <div class="langtog"><button id="lg_he" class="on" onclick="setLang('he')">עב</button><button id="lg_en" onclick="setLang('en')">EN</button></div>
+    <a class="powered" href="index.html" id="powered">מונע ע״י <b>AgroData</b> ↗</a>
+  </div>
 </div></div></div>
-<div class="ticker"><span class="lb">● מבזקים</span><div class="track" id="ticker">טוען חדשות…</div></div>
-
-<div class="tabbar"><div class="wrap"><div class="tabs" id="tabs"></div></div></div>
+<div class="navstrip"><div class="wrap"><div class="cats" id="cats"></div></div></div>
+<div class="brk"><div class="wrap"><div class="brkrow"><span class="lb" id="brk">מבזקים</span><div id="breaking" style="display:flex"></div></div></div></div>
 
 <div class="wrap">
-  <!-- חדשות -->
-  <div class="panel on" id="p_news">
-    <div class="promo">
-      <a class="brain" href="index.html"><div class="k">THE BRAIN</div><div class="h">🧠 הזירה החכמה</div><div class="s">28 מנועים · דאטה, מחקר וחדשנות במקום אחד</div></a>
-      <a class="ofa" href="ofakim.html"><div class="k">OFAKIM</div><div class="h">🌱 בירת האגרו-טק</div><div class="s">מהנגב לעולם — מרכז חדשנות וקהילה</div></a>
+  <!-- NEWS PORTAL -->
+  <div class="panel on" id="p_news"><div class="ynmain">
+    <div class="colmain">
+      <div id="lead"></div>
+      <div class="blocks" id="blocks"></div>
+      <div class="secbar">📰 עוד בחדשות</div>
+      <div class="two" id="more"></div>
+      <div class="secbar gold">✍️ דעות וטורים</div>
+      <div class="op3" id="opinion"></div>
+      <div class="secbar teal">📸 מהשטח · גלריה</div>
+      <div class="gal" id="gal"></div>
     </div>
-    <div class="portal">
-      <div><div class="sechd">📰 חדשות אגרו-טק · חי</div><div id="news" class="load">טוען…</div></div>
-      <div><div class="sechd">💬 מהקהילה</div><div id="sideForum"></div>
-        <div class="sechd" style="margin-top:18px">🪴 חקלאות ביתית</div><a class="big" style="font-size:16px;padding:16px" href="homegarden.html">9 שיטות לגידול בבית ↗</a>
-      </div>
+    <div class="aside">
+      <div class="wx"><div class="c" id="wxc">27°</div><div class="l" id="wxl">מזג אוויר · תל אביב</div></div>
+      <a class="promo brain" href="index.html"><div class="k">THE BRAIN</div><div class="h" id="pbh">🧠 הזירה החכמה</div><div class="s" id="pbs">28 מנועים · דאטה, מחקר וחדשנות</div></a>
+      <a class="promo ofa" href="ofakim.html"><div class="k">OFAKIM</div><div class="h" id="poh">🌱 בירת האגרו-טק</div><div class="s" id="pos">מהנגב לעולם</div></a>
+      <div class="box"><h4 id="mrh">🔥 הנקראות ביותר</h4><div id="mostread"></div></div>
+      <div class="box"><h4 id="hgh">🪴 חקלאות ביתית</h4><a class="big" style="font-size:15px;padding:13px" href="homegarden.html" id="hgbtn">9 שיטות לגידול בבית ↗</a></div>
     </div>
-  </div>
-
-  <!-- כתבות -->
-  <div class="panel" id="p_articles"><div class="sechd">📝 כתבות ומדריכים</div><div class="grid" id="articles"></div>
-    <div style="margin-top:18px"><a class="big" href="community.html">כל הכתבות · הבלוג ↗</a></div></div>
-
-  <!-- פורום -->
-  <div class="panel" id="p_forum">
-    <div class="writer"><span class="post-av av">🧑‍🌾</span><input placeholder="שתפו את הקהילה… שאלה, תמונה מהגינה, טיפ"><span class="cam">📷</span><button class="b">פרסום</button></div>
-    <div id="forum"></div>
-  </div>
-
-  <!-- אלבום -->
-  <div class="panel" id="p_album"><div class="sechd">📸 אלבום הקהילה · תמונות חיות</div><div id="album" class="load">טוען תמונות…</div></div>
-
-  <!-- קבוצות -->
-  <div class="panel" id="p_groups"><div class="sechd">👥 קבוצות עניין</div><div class="grid" id="groups"></div></div>
-
-  <!-- חקלאות ביתית -->
-  <div class="panel" id="p_home"><div class="sechd">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html">כניסה · 9 שיטות לגידול בבית ↗</a></div>
+  </div></div>
+  <!-- ALBUM --><div class="panel" id="p_album"><div class="sec"><div class="secbar teal" id="albh">📸 אלבום הקהילה</div><div id="album" class="load">…</div></div></div>
+  <!-- GROUPS --><div class="panel" id="p_groups"><div class="sec"><div class="secbar" id="grh">👥 קבוצות עניין</div><div class="grid3" id="groups"></div></div></div>
+  <!-- HOME AG --><div class="panel" id="p_home"><div class="sec"><div class="secbar" id="hah">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html" id="habtn">כניסה · 9 שיטות לגידול בבית ↗</a></div></div>
 </div>
 
-<div class="foot"><span class="wm">agro<b>News</b></span> · פורטל החקלאות של ישראל · מונע ע״י <span class="wm">Agro<b>Data</b></span> · אופקים</div>
+<div class="foot"><span class="wm">agro<b>News</b></span> · <span id="footline">פורטל החקלאות של ישראל · מונע ע״י AgroData · אופקים</span></div>
 
 <script>
-var TABS=[['news','📰 חדשות'],['articles','📝 כתבות'],['forum','💬 פורום'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']];
-document.getElementById('tabs').innerHTML=TABS.map(function(t,i){return '<button class="tab'+(i===0?' on':'')+'" data-k="'+t[0]+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');
-function go(k){TABS.forEach(function(t){document.getElementById('p_'+t[0]).classList.toggle('on',t[0]===k);});document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();window.scrollTo(0,0);}
+var EMO=['🌾','🍅','💧','🚜','🌱','🐄','🍇','🌍','🔬','🏭','🐝','🥬','🌻','🐟','🍊'];
 function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
-var POSTS=[
- ['🧑‍🌾','דני · מגדל מרפסת','לפני שעה','העגבניות שרי במרפסת עשו קפיצה השבוע! כל כמה זמן להוסיף דשן?','🍅','👍 24 · 💬 8'],
- ['👩‍🔬','מיכל · אקוופוניקה','היום','המערכת הביתית שלי — דגים וחסה במחזור אחד. שאלות?','🐟','👍 41 · 💬 15'],
- ['🧑‍🎓','רון · סטודנט','אתמול','מיקרו-גרין על שיש המטבח — 9 ימים מזריעה לקציר 🌱','🌱','👍 33 · 💬 6']
-];
-function postHTML(p){return '<div class="post"><div class="hd"><span class="av">'+p[0]+'</span><div><div class="who">'+esc(p[1])+'</div><div class="when">'+p[2]+'</div></div></div><div class="txt">'+esc(p[3])+'</div><div class="pic">'+p[4]+'</div><div class="st"><span>'+p[5]+'</span></div></div>';}
-document.getElementById('forum').innerHTML=POSTS.map(postHTML).join('');
-document.getElementById('sideForum').innerHTML=POSTS.slice(0,2).map(postHTML).join('');
-var GR=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
-document.getElementById('groups').innerHTML=GR.map(function(g){return '<div class="card"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+' חברים</div></div>';}).join('');
-var AR=[['💧','השקיה מדויקת — מדריך מתחילים','לבנות מערכת טפטוף חכמה בגינה.'],['🌡️','להתמודד עם גל חום','להגן על הצמחים בקיץ הישראלי.'],['♻️','קומפוסט מושלם','היחס הנכון בין "חום" ל"ירוק".']];
-document.getElementById('articles').innerHTML=AR.map(function(a){return '<div class="card"><div class="em">'+a[0]+'</div><h3>'+a[1]+'</h3><p>'+a[2]+'</p><div class="meta">✍️ צוות AgroData</div></div>';}).join('');
-/* live news */
-fetch('/api/news?region=il').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).slice(0,15);
- if(!it.length){document.getElementById('news').innerHTML='<div class="load">אין חדשות כרגע.</div>';return;}
- var lead=it[0];
- var html='<a class="lead" href="'+lead.link+'" target="_blank" rel="noopener"><div class="band"></div><div class="in"><span class="src">'+esc(lead.source||'')+' · '+esc((lead.date||'').slice(0,16))+'</span><div class="t">'+esc(lead.title)+'</div></div></a>';
- html+=it.slice(1).map(function(n){return '<a class="na" href="'+n.link+'" target="_blank" rel="noopener"><span class="src">'+esc(n.source||'')+' · '+esc((n.date||'').slice(0,16))+'</span><div class="t">'+esc(n.title)+'</div></a>';}).join('');
- document.getElementById('news').innerHTML=html;
- document.getElementById('ticker').innerHTML=it.map(function(n){return '<span>● '+esc(n.title)+'</span>';}).join('');
-}).catch(function(){document.getElementById('news').innerHTML='<div class="load">שגיאת חיבור לחדשות.</div>';});
+function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'+t.getMinutes()).slice(-2);return h+':'+m;}catch(e){return '';}}
+var LANG='he';
+var STR={
+ he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',
+  cats:[['news','📰 ראשי'],['news','חקלאות'],['news','חדשנות'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],
+  mr:'🔥 הנקראות ביותר',hg:'🪴 חקלאות ביתית',hgb:'9 שיטות לגידול בבית ↗',alb:'📸 אלבום הקהילה',gr:'👥 קבוצות עניין',ha:'🪴 חקלאות ביתית',hab:'כניסה · 9 שיטות ↗',
+  bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'מזג אוויר · תל אביב',foot:'פורטל החקלאות של ישראל · מונע ע״י AgroData · אופקים',
+  more:'📰 עוד בחדשות',op:'✍️ דעות וטורים',glr:'📸 מהשטח · גלריה'},
+ en:{dir:'ltr',lang:'en',tag:"Israel's Agri-Tech News Portal",brk:'BREAKING',pw:'Powered by <b>AgroData</b> ↗',region:'world',live:'live',
+  cats:[['news','📰 Main'],['news','Agriculture'],['news','Innovation'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],
+  mr:'🔥 Most Read',hg:'🪴 Home Farming',hgb:'9 ways to grow at home ↗',alb:'📸 Community Album',gr:'👥 Interest Groups',ha:'🪴 Home Farming',hab:'Enter · 9 ways ↗',
+  bh:'🧠 The Smart Arena',bs:'28 engines · data, research, innovation',oh:'🌱 Agri-Tech Capital',os:'From the Negev to the world',wl:'Weather · Tel Aviv',foot:"Israel's Agri-Tech News Portal · Powered by AgroData · Ofakim",
+  more:'📰 More News',op:'✍️ Opinion & Columns',glr:'📸 From The Field · Gallery'}
+};
+var OP_he=[['🔬','לקטור מדעי','למה הדאטה החקלאית היא הנכס הבא של ישראל'],['🌾','אגרונום ראשי','שלוש טעויות שכל מגדל מתחיל עושה בהשקיה'],['💼','יועץ עסקי','מרעיון לחברה: איך בונים תוכנית שמושכת משקיעים']];
+var OP_en=[['🔬','Science Reviewer','Why agri-data is Israel’s next big asset'],['🌾','Chief Agronomist','Three irrigation mistakes every new grower makes'],['💼','Business Advisor','From idea to company: a plan investors love']];
+var GR_he=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
+var GR_en=[['💧','Irrigation & Water','1,240'],['🪴','Home Farming','980'],['🐟','Aquaponics','420'],['🌿','Organic','760'],['🚀','Startups','1,510'],['🏠','Controlled Ag','630']];
+function go(k){['news','album','groups','home'].forEach(function(x){document.getElementById('p_'+x).classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();window.scrollTo(0,0);}
+function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.documentElement.lang=S.lang;
+ document.getElementById('tagline').textContent=S.tag;document.getElementById('brk').textContent=S.brk;document.getElementById('powered').innerHTML=S.pw;
+ document.getElementById('cats').innerHTML=S.cats.map(function(c,i){return '<button class="cbtn'+(i===0?' on':'')+'" data-k="'+c[0]+'" onclick="go(\''+c[0]+'\')">'+c[1]+'</button>';}).join('');
+ document.getElementById('mrh').textContent=S.mr;document.getElementById('hgh').textContent=S.hg;document.getElementById('hgbtn').textContent=S.hgb;
+ document.getElementById('albh').textContent=S.alb;document.getElementById('grh').textContent=S.gr;document.getElementById('hah').textContent=S.ha;document.getElementById('habtn').textContent=S.hab;
+ document.getElementById('pbh').textContent=S.bh;document.getElementById('pbs').textContent=S.bs;document.getElementById('poh').textContent=S.oh;document.getElementById('pos').textContent=S.os;
+ document.getElementById('wxl').textContent=S.wl;document.getElementById('footline').textContent=S.foot;
+ var sb=document.querySelectorAll('.colmain .secbar');if(sb[0])sb[0].firstChild.nodeValue=S.more;if(sb[1])sb[1].firstChild.nodeValue=S.op;if(sb[2])sb[2].firstChild.nodeValue=S.glr;
+ var O=LANG==='he'?OP_he:OP_en;document.getElementById('opinion').innerHTML=O.map(function(o){return '<div class="op"><div class="who"><span class="av">'+o[0]+'</span><span class="nm">'+esc(o[1])+'</span></div><div class="t">'+esc(o[2])+'</div></div>';}).join('');
+ var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
+}
+function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';
+ fetch('/api/news?region='+S.region).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
+  if(!it.length){document.getElementById('lead').innerHTML='<div class="load">—</div>';return;}
+  var L=it[0];
+  document.getElementById('lead').innerHTML='<a class="lead" href="'+L.link+'" target="_blank" rel="noopener"><div class="thumb">'+EMO[0]+'</div><div class="in"><span class="badge">'+S.live.toUpperCase()+'</span><div class="t">'+esc(L.title)+'</div><div class="src">'+esc(L.source||'')+' · '+esc((L.date||'').slice(0,16))+'</div></div></a>';
+  document.getElementById('blocks').innerHTML=it.slice(1,4).map(function(n,i){return '<a class="blk c'+i+'" href="'+n.link+'" target="_blank" rel="noopener"><div class="th">'+EMO[(i+1)%EMO.length]+'</div><div class="bin"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
+  document.getElementById('more').innerHTML=it.slice(4,10).map(function(n,i){return '<a class="ncard" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+EMO[(i+4)%EMO.length]+'</div><div class="in"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
+  document.getElementById('mostread').innerHTML=it.slice(9,15).map(function(n,i){return '<div class="mr"><span class="n">'+(i+1)+'</span><a href="'+n.link+'" target="_blank" rel="noopener">'+esc(n.title)+'</a></div>';}).join('');
+  document.getElementById('breaking').innerHTML=it.slice(0,8).map(function(n){return '<a class="bi" href="'+n.link+'" target="_blank" rel="noopener"><div class="t">'+esc(n.title.slice(0,60))+'</div><div class="tm">'+esc(n.source||'')+'</div></a>';}).join('');
+ }).catch(function(){document.getElementById('lead').innerHTML='<div class="load">שגיאת חיבור לחדשות.</div>';});
+}
+var GAL=false;
+function loadGal(){if(GAL)return;GAL=true;
+ fetch('/api/flora?q=vegetable').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,12);
+  document.getElementById('gal').innerHTML=it.map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
+ }).catch(function(){GAL=false;});
+}
 var ALBUM=false;
 function loadAlbum(){if(ALBUM)return;ALBUM=true;
- fetch('/api/flora?q=vegetable').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
-  if(!it.length){document.getElementById('album').innerHTML='<div class="load">אין תמונות.</div>';ALBUM=false;return;}
+ fetch('/api/flora?q=herb').then(function(r){return r.json();}).then(function(j){var it=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
+  if(!it.length){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;return;}
   document.getElementById('album').innerHTML='<div class="album">'+it.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
- }).catch(function(){document.getElementById('album').innerHTML='<div class="load">שגיאת חיבור.</div>';ALBUM=false;});
+ }).catch(function(){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;});
 }
+function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();}
+document.getElementById('date').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+applyStr();loadNews();loadGal();
 </script>
 </body>
 </html>
