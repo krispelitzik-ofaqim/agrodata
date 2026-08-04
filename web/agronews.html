@@ -133,9 +133,12 @@ a{color:inherit}
 .wx{background:linear-gradient(135deg,var(--teal-l),var(--teal));color:#fff;border-radius:12px;padding:16px;text-align:center;margin-bottom:15px}
 .wx .c{font-family:Rubik;font-weight:900;font-size:34px}.wx .l{font-size:13px;opacity:.9}
 #wxicon{display:flex;justify-content:center;margin-bottom:2px}#wxicon svg{width:66px;height:56px}
-.subanner{position:relative;aspect-ratio:16/9;overflow:hidden;margin:0 -15px 12px;background:var(--tint)}
+.subox{padding:0}
+.subox>h4{margin:0!important;padding:14px 15px 11px!important;border-inline-start:4px solid var(--gold);border-bottom:1px solid var(--line)}
+.subanner{position:relative;aspect-ratio:16/9;overflow:hidden;margin:0;background:var(--tint)}
 .subanner img{width:100%;height:100%;object-fit:cover;display:block}
 .subanner span{position:absolute;inset:auto 0 0 0;background:linear-gradient(0deg,rgba(6,20,12,.88),transparent);color:#fff;font-family:Rubik;font-weight:800;font-size:13px;padding:16px 10px 7px}
+.sulist{padding:0 15px 14px}
 @keyframes wxspin{to{transform:rotate(360deg)}}@keyframes wxrain{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(9px);opacity:0}}
 .wxg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;text-align:center}
 .wxg .i{background:var(--tint);border-radius:8px;padding:7px 4px}
@@ -247,7 +250,7 @@ a{color:inherit}
       <a class="promo ofa" href="ofakim.html"><div class="k">OFAKIM</div><div class="h" id="poh">🌱 בירת האגרו-טק</div><div class="s" id="pos">מהנגב לעולם</div></a>
       <div class="box"><h4 id="mrh">🔥 הנקראות ביותר</h4><div id="mostread"></div></div>
       <div class="box"><h4 id="hgh">🪴 חקלאות ביתית</h4><a class="big" style="font-size:15px;padding:13px" href="homegarden.html" id="hgbtn">9 שיטות לגידול בבית ↗</a></div>
-      <div class="box"><h4 id="suh">🔥 הסטארטאפים החמים · אגרו-טק</h4><div id="startups" class="load">…</div></div>
+      <div class="box subox"><h4 id="suh">🔥 הסטארטאפים החמים · אגרו-טק</h4><div id="startups" class="load">…</div></div>
       <a class="fund" href="index.html"><div class="k">INVESTMENT FUND</div><div class="fh">💰 קרן ההשקעות שלנו</div><div class="fs">משקיעים בסטארטאפים ובחדשנות אגרו-טק — מהרעיון לצמיחה. הצטרפו למסע.</div><div class="fcta">לפרטים ולהשקעה ↗</div></a>
       <div class="mapbox">
         <div class="mapbanner" onclick="toggleMap()"><div><div class="mk">AGROMAP · GIS</div><div class="mh">🗺️ מפת החקלאות של ישראל</div><div class="ms">873 יישובים · חוות · חברות · מו״פים</div></div><span class="arw">▾</span></div>
@@ -348,7 +351,7 @@ function loadStartups(){var el=document.getElementById('startups');if(!el)return
   if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
   var he=LANG==='he';
   var banner='<div class="subanner"><img src="'+(PHOTOS[8]||PHOTOS[2]||PHOTOS[0]||'')+'" loading="lazy" alt=""><span>'+(he?'חדשנות מהשטח':'Innovation from the field')+'</span></div>';
-  el.innerHTML=banner+it.map(function(c){return '<div class="mr"><span class="n">🌱</span><div style="min-width:0"><div style="font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--ink)">'+esc((he?c.name:(c.name_en||c.name))||'')+'</div><div style="font-family:\'Plex Mono\';font-size:11px;color:var(--teal)">'+(he?'נוסדה ':'est. ')+esc(c.founded||'')+'</div></div></div>';}).join('');
+  el.innerHTML=banner+'<div class="sulist">'+it.map(function(c){return '<div class="mr"><span class="n">🌱</span><div style="min-width:0"><div style="font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--ink)">'+esc((he?c.name:(c.name_en||c.name))||'')+'</div><div style="font-family:\'Plex Mono\';font-size:11px;color:var(--teal)">'+(he?'נוסדה ':'est. ')+esc(c.founded||'')+'</div></div></div>';}).join('')+'</div>';
  }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
 function wxScene(cond){
  if(cond==='rain')return '<svg viewBox="0 0 80 60"><ellipse cx="44" cy="26" rx="24" ry="14" fill="#b7c2c8"/><circle cx="30" cy="24" r="12" fill="#cdd6db"/><g stroke="#5cb3d0" stroke-width="3.5" stroke-linecap="round"><line x1="28" y1="44" x2="28" y2="52" style="animation:wxrain 1s linear infinite"/><line x1="42" y1="44" x2="42" y2="52" style="animation:wxrain 1s linear .33s infinite"/><line x1="56" y1="44" x2="56" y2="52" style="animation:wxrain 1s linear .66s infinite"/></g></svg>';
