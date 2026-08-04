@@ -209,6 +209,8 @@ var EMO=['🌾','🍅','💧','🚜','🌱','🐄','🍇','🌍','🔬','🏭','
 var PHOTOS=[];
 function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
 function timg(i){return PHOTOS[i]?'<img src="'+PHOTOS[i]+'" loading="lazy" alt="">':'';}
+var AGRI_RE=/(חקלא|אגרו|פוד.?טק|אגריטק|מגדל|יבול|גידול|השקי|חממ|דגי|יין|גפן|פרי|ירק|תוצרת|מזון|קרקע|זרע|דשן|טפטוף|חיטה|תירס|עגבני|אורגנ|agri|farm|crop|food.?tech|agtech|harvest|irrigat|greenhouse|aquacult|dairy|vineyard|produce|agricultur|orchard)/i;
+function agriFilter(items){var f=(items||[]).filter(function(n){return AGRI_RE.test(n.title||'');});return f.length>=5?f:(items||[]);}
 function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'+t.getMinutes()).slice(-2);return h+':'+m;}catch(e){return '';}}
 var LANG='he';
 var STR={
@@ -260,7 +262,7 @@ function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.
  var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
 }
 function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';
- fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(S.qmain||'')).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
+ fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(S.qmain||'')).then(function(r){return r.json();}).then(function(j){var it=agriFilter(j.items||[]);
   if(!it.length){document.getElementById('lead').innerHTML='<div class="load">—</div>';return;}
   var L=it[0];
   document.getElementById('lead').innerHTML='<a class="lead" href="'+L.link+'" target="_blank" rel="noopener"><div class="thumb">'+timg(0)+EMO[0]+'</div><div class="in"><span class="badge">'+S.live.toUpperCase()+'</span><div class="t">'+esc(L.title)+'</div><div class="src">'+esc(L.source||'')+' · '+esc((L.date||'').slice(0,16))+'</div></div></a>';
