@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>הבלוג · AgroData</title>
+<title>קהילה · פורטל האגרו-טק · AgroData</title>
 <style>
 @font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
@@ -10,118 +10,166 @@
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
 :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
-.wrap{max-width:1300px;margin:0 auto;padding:0 40px}
-.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
-.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
-.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
-.hero{padding:28px 0 6px;text-align:center}
-.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
-h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
-.sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
-.filters{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:24px 0 24px}
-.fbtn{font-family:Rubik;font-weight:600;font-size:15px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:9px 17px;cursor:pointer;transition:.12s}
-.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
-.fbtn:hover:not(.on){background:var(--tint)}
-/* featured */
-.feat{display:grid;grid-template-columns:1.15fr 1fr;gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:34px;box-shadow:0 12px 30px rgba(20,38,28,.07);text-decoration:none;color:inherit;transition:.15s}
-.feat:hover{box-shadow:0 20px 44px rgba(20,38,28,.12);transform:translateY(-3px)}
-.feat .cover{position:relative;min-height:360px;display:flex;align-items:center;justify-content:center;font-size:80px}
-.feat .body{padding:34px 36px;display:flex;flex-direction:column;justify-content:center}
-.feat .cat{align-self:flex-start;font-size:14px;font-weight:700;color:#fff;background:var(--green);border-radius:999px;padding:5px 14px;margin-bottom:14px}
-.feat h2{font-family:Rubik;font-size:32px;font-weight:800;color:var(--green-d);line-height:1.25;margin-bottom:14px}
-.feat p{font-size:16.5px;color:var(--mut);line-height:1.65;margin-bottom:20px}
-.feat .meta{font-size:14px;color:var(--mut);font-weight:600}
-.badge-feat{position:absolute;top:16px;right:16px;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:13px;border-radius:999px;padding:5px 13px}
-/* grid */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:44px}
-@media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}.feat{grid-template-columns:1fr}}
-@media(max-width:640px){.grid{grid-template-columns:1fr}}
-.post{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.15s;text-decoration:none;color:inherit}
-.post:hover{border-color:#bcdcc8;box-shadow:0 16px 34px rgba(20,38,28,.11);transform:translateY(-4px)}
-.post .cover{position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:52px}
-.post .cat{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.94);color:var(--green-d);font-family:Rubik;font-weight:700;font-size:13px;border-radius:999px;padding:5px 12px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
-.post .pbody{padding:17px 18px 18px;display:flex;flex-direction:column;flex:1}
-.post h3{font-family:Rubik;font-size:19px;font-weight:700;color:var(--green-d);line-height:1.35;margin-bottom:8px}
-.post p{font-size:14.5px;color:var(--mut);line-height:1.55;flex:1;margin-bottom:13px}
-.post .meta{font-size:13.5px;color:var(--mut);font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.post .rt{font-family:'Plex Mono';color:var(--green)}
-.social-note{text-align:center;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:18px;padding:26px;margin-bottom:44px}
-.social-note .t{font-family:Rubik;font-weight:800;font-size:22px;margin-bottom:6px}
-.social-note .s{font-size:15px;color:rgba(255,255,255,.9);margin-bottom:16px}
-.social-note .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.sbtn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--green-d);font-family:Rubik;font-weight:700;font-size:15px;text-decoration:none;border-radius:11px;padding:11px 20px;transition:.14s}
-.sbtn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.2)}
-.foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
-.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+body{font-family:Heebo,Arial,sans-serif;background:#f6faf7;color:var(--ink)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.demo{background:#fff8e6;border-bottom:1px solid #f0d98a;color:#7a5b12;text-align:center;font-size:13px;padding:6px;font-family:'Plex Mono'}
+.topbar{background:linear-gradient(135deg,#0c1c13,#134a30)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:13px 0;color:#fff}
+.nav a{color:#fff;text-decoration:none}.back{color:rgba(255,255,255,.85);font-size:14px;font-weight:600}
+.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+/* ticker */
+.ticker{background:var(--green-d);color:#fff;display:flex;align-items:center;gap:12px;padding:9px 0;overflow:hidden}
+.ticker .lb{background:var(--lime);color:#062;font-family:Rubik;font-weight:900;font-size:12px;padding:3px 10px;border-radius:6px;flex:0 0 auto;margin-inline-start:20px}
+.ticker .track{white-space:nowrap;font-size:14px;animation:scroll 40s linear infinite}
+@keyframes scroll{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.ticker .track span{margin:0 26px;color:rgba(255,255,255,.9)}
+/* tabs */
+.tabbar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:14px 16px;font-family:Rubik;font-weight:800;font-size:14.5px;color:var(--mut);cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--green-d)}.tab.on{color:var(--green-d);border-bottom-color:var(--green)}
+.hero{padding:22px 0 6px}
+h1{font-family:Rubik;font-size:30px;font-weight:800;color:var(--green-d)}h1 b{color:var(--lime)}
+.hsub{color:var(--mut);font-size:15px;margin-top:4px}
+.panel{display:none;padding:18px 0 44px}.panel.on{display:block}
+.sechd{font-family:Rubik;font-weight:800;font-size:19px;color:var(--green-d);margin:6px 0 14px;display:flex;align-items:center;gap:9px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:860px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.portal{display:grid;grid-template-columns:1.6fr 1fr;gap:22px}@media(max-width:860px){.portal{grid-template-columns:1fr}}
+.na{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;color:inherit;transition:.15s;margin-bottom:12px}
+.na:hover{box-shadow:0 12px 26px rgba(28,107,69,.12);transform:translateY(-2px)}
+.na .src{font-family:'Plex Mono';font-size:12px;color:var(--teal)}
+.na .t{font-family:Rubik;font-weight:700;font-size:16px;margin-top:5px;line-height:1.4}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;transition:.15s}
+.card:hover{box-shadow:0 12px 26px rgba(28,107,69,.12);transform:translateY(-2px)}
+.card .em{font-size:26px}.card h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin:6px 0 4px}
+.card p{font-size:13.5px;color:var(--mut);line-height:1.55}.card .meta{margin-top:8px;font-family:'Plex Mono';font-size:12px;color:var(--teal)}
+/* forum posts */
+.post{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px}
+.post .hd{display:flex;align-items:center;gap:11px}
+.post .av{width:42px;height:42px;border-radius:50%;background:var(--tint);display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+.post .who{font-family:Rubik;font-weight:800;font-size:15px}.post .when{font-size:12px;color:var(--mut)}
+.post .txt{margin:10px 0;font-size:15px;line-height:1.55}
+.post .pic{width:100%;height:200px;border-radius:12px;object-fit:cover;display:block}
+.post .pic.ph{background:linear-gradient(135deg,#cfe8d8,#a9d8bd);display:grid;place-items:center;color:#2e6b49;font-size:40px}
+.post .st{margin-top:10px;display:flex;gap:16px;font-size:13px;color:var(--teal);font-family:'Plex Mono'}
+.writer{background:#fff;border:1px dashed var(--green);border-radius:16px;padding:16px;margin-bottom:16px;display:flex;gap:11px;align-items:center}
+.writer input{flex:1;border:1.5px solid var(--line);border-radius:999px;padding:11px 16px;font-family:Heebo;font-size:15px;background:var(--bg2)}
+.writer .b{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:999px;padding:11px 20px;font-family:Rubik;font-weight:800;cursor:pointer}
+.writer .cam{font-size:22px;cursor:pointer}
+/* album */
+.album{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:760px){.album{grid-template-columns:repeat(2,1fr)}}
+.ph2{aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--tint);position:relative}
+.ph2 img{width:100%;height:100%;object-fit:cover;display:block}
+.ph2 .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,.65),transparent);color:#fff;font-size:12px;padding:14px 8px 6px;text-align:center}
+.big{display:block;text-align:center;background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;text-decoration:none;border-radius:16px;padding:22px;font-family:Rubik;font-weight:800;font-size:19px;max-width:640px;margin:0 auto}
+.load{text-align:center;color:var(--mut);padding:30px}
+.foot{padding:16px 0 40px;text-align:center;color:var(--mut);font-size:13px}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="wrap"><div class="nav">
-  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a href="index.html"><span class="wm" style="font-size:22px">Agro<b>Data</b></span></a>
   <a class="back" href="index.html">→ חזרה לזירה</a>
 </div></div></div>
+<div class="ticker"><span class="lb">● חדשות חי</span><div class="track" id="ticker">טוען חדשות…</div></div>
+
+<div class="tabbar"><div class="wrap"><div class="tabs" id="tabs"></div></div></div>
 
 <div class="wrap">
-  <div class="hero">
-    <div class="kick">AGRODATA BLOG · ידע ותובנות</div>
-    <h1>הבלוג <b>של הזירה</b></h1>
-    <div class="sub">מדריכים, ניתוחים ותובנות מקצועיות מצוות המומחים של AgroData — ידע מעשי למגדל ולחוקר.</div>
-    <div style="margin-top:16px"><a href="homegarden.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;text-decoration:none;border-radius:12px;padding:12px 24px;font-family:Rubik;font-weight:800;font-size:15px">🪴 חקלאות ביתית · לגדל מזון בבית ↗</a></div>
-  </div>
+  <div class="hero"><h1>פורטל <b>הקהילה</b></h1><div class="hsub">חדשות, כתבות, בלוג, פורום אזרחים עם תמונות, אלבום ועוד — הזירה החיה של קהילת האגרו-טק.</div></div>
 
-  <div class="filters" id="filters"></div>
-  <a class="feat" id="feat" href="#"></a>
-  <div class="grid" id="grid"></div>
-
-  <div class="social-note">
-    <div class="t">💬 רוצים לדון על התכנים?</div>
-    <div class="s">הצטרפו לקהילת האגרו-טק ברשתות שכבר יש לכם — בלי הרשמה חדשה.</div>
-    <div class="btns">
-      <a class="sbtn" href="#">🟢 קבוצת WhatsApp</a>
-      <a class="sbtn" href="#">🔵 קבוצת Facebook</a>
-      <a class="sbtn" href="#">✈️ ערוץ Telegram</a>
+  <!-- ראשי -->
+  <div class="panel on" id="p_home">
+    <div class="portal">
+      <div>
+        <div class="sechd">💬 מהפורום</div><div id="homeForum"></div>
+      </div>
+      <div>
+        <div class="sechd">📰 חדשות אחרונות</div><div id="homeNews" class="load">טוען…</div>
+      </div>
     </div>
   </div>
+
+  <!-- חדשות -->
+  <div class="panel" id="p_news"><div class="sechd">📰 חדשות אגרו-טק · חי</div><div id="news" class="load">טוען חדשות…</div></div>
+
+  <!-- כתבות ובלוג -->
+  <div class="panel" id="p_blog">
+    <div class="sechd">📝 כתבות ובלוג</div>
+    <div class="grid" id="articles"></div>
+    <div style="margin-top:18px"><a class="big" href="blog.html">כל הכתבות · הבלוג של הזירה ↗</a></div>
+  </div>
+
+  <!-- פורום -->
+  <div class="panel" id="p_forum">
+    <div class="writer"><span class="av">🧑‍🌾</span><input placeholder="שתפו את הקהילה… שאלה, תמונה מהגינה, טיפ"><span class="cam">📷</span><button class="b">פרסום</button></div>
+    <div id="forum"></div>
+  </div>
+
+  <!-- אלבום -->
+  <div class="panel" id="p_album"><div class="sechd">📸 אלבום הקהילה · תמונות חיות</div><div id="album" class="load">טוען תמונות…</div></div>
+
+  <!-- קבוצות -->
+  <div class="panel" id="p_groups"><div class="sechd">👥 קבוצות עניין</div><div class="grid" id="groups"></div></div>
+
+  <!-- חקלאות ביתית -->
+  <div class="panel" id="p_home2"><div class="sechd">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html">כניסה · 9 שיטות לגידול בבית ↗</a></div>
+
+  <!-- שאל מומחה -->
+  <div class="panel" id="p_ask"><div class="sechd">🎓 שאל מומחה</div><a class="big" href="#" onclick="return false">פנייה לצוות המומחים (בקרוב)</a></div>
 </div>
 
-<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · הבלוג · <span class="mono">insights & guides</span></div></div></div>
+<div class="foot">פורטל הקהילה · <span class="wm" style="color:var(--green-d)">Agro<b style="color:var(--lime)">Data</b></span> Center</div>
 
 <script>
-const CATS=[["all","הכל"],["guide","מדריכים"],["market","ניתוח שוק"],["tech","טכנולוגיה"],["sustain","קיימות"],["interview","ראיונות"],["lab","מהמעבדה"]];
-const CATN=Object.fromEntries(CATS.map(c=>c));
-const P=[
- {t:"המדריך המלא להשקיה מדייקת בעגבניות: כמה, מתי ואיך",e:"כל מה שצריך לדעת על תזמון, כמויות ומליחות — כולל טבלאות מוכנות לפי אזור ועונה.",cat:"guide",au:"צוות AgroData",d:"31 ביולי 2026",rt:"9 דק׳ קריאה",em:"🍅",kw:"tomato,greenhouse",g:"linear-gradient(135deg,#ff8a5b,#e14b2a)",feat:true},
- {t:"5 חיישני הקרקע המובילים ל-2026 — השוואה מקיפה",e:"CropX, Phytech, Saturas ועוד — יתרונות, מחירים ומתי כל אחד משתלם.",cat:"tech",au:"ד״ר מיכל ברק",d:"29 ביולי 2026",rt:"7 דק׳",em:"📡",kw:"sensor,soil,farm",g:"linear-gradient(135deg,#3aa873,#1c6b45)"},
- {t:"לאן הולכים מחירי החיטה? ניתוח רבעוני",e:"מגמות שוק, השפעת מזג האוויר והמלצות היערכות לעונה הבאה.",cat:"market",au:"מחלקת אנליטיקה",d:"27 ביולי 2026",rt:"6 דק׳",em:"📈",kw:"wheat,field",g:"linear-gradient(135deg,#c79a2e,#a67d1e)"},
- {t:"חקלאות מדבר: איך הופכים את הנגב לחוות מודל",e:"טכנולוגיות מים מליחים, גידולים עמידי-חום וסיפורי הצלחה מהערבה.",cat:"sustain",au:"מו״פ רמת נגב",d:"24 ביולי 2026",rt:"8 דק׳",em:"🏜️",kw:"desert,agriculture",g:"linear-gradient(135deg,#e0a85b,#c47a2e)"},
- {t:"ראיון: פרופ׳ יעל גל על עתיד ההשבחה הגנטית",e:"על CRISPR בחקלאות, רגולציה, והזנים שישנו את השדה הישראלי.",cat:"interview",au:"מערכת הבלוג",d:"22 ביולי 2026",rt:"11 דק׳",em:"🧬",kw:"laboratory,plant,science",g:"linear-gradient(135deg,#7a5cc0,#5a45a0)"},
- {t:"מהמעבדה לשדה: פריצת דרך בקליטת חנקן",e:"חיידק חדש ממכון וולקני שעשוי להפחית תלות בדשן חנקני ב-40%.",cat:"lab",au:"מכון וולקני",d:"20 ביולי 2026",rt:"5 דק׳",em:"🔬",kw:"microscope,soil,science",g:"linear-gradient(135deg,#4fb3d9,#1c6b7f)"},
- {t:"רחפני ריסוס — כל מה שצריך לדעת על הרגולציה החדשה",e:"תהליך האישור ברת״א, עלויות, ואילו יבולים כדאי לרסס מהאוויר.",cat:"guide",au:"יועץ מיכון",d:"17 ביולי 2026",rt:"7 דק׳",em:"🚁",kw:"drone,agriculture",g:"linear-gradient(135deg,#5c6f7a,#33424c)"},
- {t:"פוד-טק ישראלי: 10 הסטארטאפים לעקוב אחריהם ב-2026",e:"מבשר מתורבת ועד חלבון חומוס — המפה המלאה של החדשנות המקומית.",cat:"tech",au:"צוות AgroData",d:"15 ביולי 2026",rt:"8 דק׳",em:"🥩",kw:"food,laboratory",g:"linear-gradient(135deg,#e07a8b,#c4425c)"},
- {t:"ESG בחקלאות: איך מודדים טביעת רגל פחמנית",e:"מדריך מעשי לחישוב פחמן ומים לצורכי יצוא, רגולציה ומיתוג ירוק.",cat:"sustain",au:"מחלקת קיימות",d:"12 ביולי 2026",rt:"6 דק׳",em:"🌍",kw:"sustainability,farm",g:"linear-gradient(135deg,#2e9e63,#1c6b45)"}
+var TABS=[['home','🏠 ראשי'],['news','📰 חדשות'],['blog','📝 כתבות ובלוג'],['forum','💬 פורום'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home2','🪴 חקלאות ביתית'],['ask','🎓 שאל מומחה']];
+document.getElementById('tabs').innerHTML=TABS.map(function(t,i){return '<button class="tab'+(i===0?' on':'')+'" data-k="'+t[0]+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>';}).join('');
+function go(k){TABS.forEach(function(t){document.getElementById('p_'+t[0]).classList.toggle('on',t[0]===k);});document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='news')loadNews('news');if(k==='album')loadAlbum();window.scrollTo(0,0);}
+function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
+
+/* forum (mock user posts with photos) */
+var POSTS=[
+ ['🧑‍🌾','דני · מגדל מרפסת','לפני שעה','העגבניות שרי במרפסת עשו קפיצה השבוע! מישהו יודע כל כמה זמן להוסיף דשן?','🍅','👍 24 · 💬 8'],
+ ['👩‍🔬','מיכל · אקוופוניקה','היום','סיור במערכת האקוופוניקה הביתית שלי — הדגים והחסה במחזור אחד. שאלות?','🐟','👍 41 · 💬 15'],
+ ['🧑‍🎓','רון · סטודנט','אתמול','ניסוי מיקרו-גרין על שיש המטבח — 9 ימים מזריעה לקציר. ממליץ בחום 🌱','🌱','👍 33 · 💬 6'],
+ ['👨‍🌾','אבי · גינת ירק','אתמול','הקומפוסט הביתי סוף סוף מוכן — הירקות בערוגה מרוצים. תמונה מהחצר.','🥬','👍 28 · 💬 11']
 ];
-let CUR='all';
-function coverHTML(p,big){return `<div class="cover" data-kw="${p.kw}" style="background:${p.g}">${big?'<span class="badge-feat">★ מומלץ</span>':`<span class="cat">${CATN[p.cat]}</span>`}<span class="emoji">${p.em}</span></div>`;}
-function render(){
- const list=P.filter(p=>CUR==='all'||p.cat===CUR);
- const feat=list.find(p=>p.feat)||list[0];
- const F=document.getElementById('feat');
- if(feat){F.style.display='';F.innerHTML=coverHTML(feat,true)+`<div class="body"><span class="cat">${CATN[feat.cat]}</span><h2>${feat.t}</h2><p>${feat.e}</p><div class="meta">${feat.au} · ${feat.d} · <span class="rt">${feat.rt}</span></div></div>`;}
- else F.style.display='none';
- const rest=list.filter(p=>p!==feat);
- document.getElementById('grid').innerHTML=rest.map(p=>`<a class="post" href="#">${coverHTML(p,false)}<div class="pbody"><h3>${p.t}</h3><p>${p.e}</p><div class="meta">${p.au}<span>·</span>${p.d}<span>·</span><span class="rt">${p.rt}</span></div></div></a>`).join('');
- loadImages();
+function postHTML(p){return '<div class="post"><div class="hd"><span class="av">'+p[0]+'</span><div><div class="who">'+esc(p[1])+'</div><div class="when">'+p[2]+'</div></div></div><div class="txt">'+esc(p[3])+'</div><div class="pic ph">'+p[4]+'</div><div class="st"><span>'+p[5]+'</span></div></div>';}
+document.getElementById('forum').innerHTML=POSTS.map(postHTML).join('');
+document.getElementById('homeForum').innerHTML=POSTS.slice(0,2).map(postHTML).join('');
+
+/* groups */
+var GR=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
+document.getElementById('groups').innerHTML=GR.map(function(g){return '<div class="card"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+' חברים</div></div>';}).join('');
+
+/* articles (blog teasers) */
+var AR=[['💧','השקיה מדויקת — מדריך מתחילים','איך לבנות מערכת טפטוף חכמה בגינה הביתית.'],['🌡️','להתמודד עם גל חום','טיפים להגן על הצמחים בקיץ הישראלי.'],['♻️','קומפוסט מושלם','היחס הנכון בין "חום" ל"ירוק".']];
+document.getElementById('articles').innerHTML=AR.map(function(a){return '<div class="card"><div class="em">'+a[0]+'</div><h3>'+a[1]+'</h3><p>'+a[2]+'</p><div class="meta">✍️ צוות AgroData</div></div>';}).join('');
+
+/* live news */
+var NEWSCACHE=null;
+function loadNews(target){
+ var render=function(items){
+  var html=items.map(function(n){return '<a class="na" href="'+n.link+'" target="_blank" rel="noopener"><span class="src">'+esc(n.source||'')+' · '+esc((n.date||'').slice(0,16))+'</span><div class="t">'+esc(n.title)+'</div></a>';}).join('');
+  if(target==='news')document.getElementById('news').innerHTML=html;
+ };
+ if(NEWSCACHE){render(NEWSCACHE);return;}
+ fetch('/api/news?region=il').then(function(r){return r.json();}).then(function(j){NEWSCACHE=(j.items||[]).slice(0,15);render(NEWSCACHE);
+  document.getElementById('homeNews').innerHTML=NEWSCACHE.slice(0,5).map(function(n){return '<a class="na" href="'+n.link+'" target="_blank" rel="noopener"><span class="src">'+esc(n.source||'')+'</span><div class="t">'+esc(n.title)+'</div></a>';}).join('');
+  document.getElementById('ticker').innerHTML=NEWSCACHE.map(function(n){return '<span>● '+esc(n.title)+'</span>';}).join('');
+ }).catch(function(){if(target==='news')document.getElementById('news').innerHTML='<div class="load">שגיאת חיבור לחדשות.</div>';});
 }
-function loadImages(){
- document.querySelectorAll('.cover[data-kw]').forEach(function(c){
-  var kw=c.getAttribute('data-kw'); var url='https://loremflickr.com/700/440/'+encodeURIComponent(kw)+'?lock='+(kw.length);
-  var im=new Image();im.onload=function(){c.style.backgroundImage='url("'+url+'")';c.style.backgroundSize='cover';c.style.backgroundPosition='center';var e=c.querySelector('.emoji');if(e)e.style.display='none';};im.src=url;
- });
+/* live album (iNaturalist plant photos as community gallery placeholder) */
+var ALBUM=false;
+function loadAlbum(){if(ALBUM)return;ALBUM=true;
+ fetch('/api/flora?q=vegetable').then(function(r){return r.json();}).then(function(j){
+  var items=(j.items||[]).filter(function(x){return x.photo;}).slice(0,16);
+  if(!items.length){document.getElementById('album').innerHTML='<div class="load">אין תמונות.</div>';ALBUM=false;return;}
+  document.getElementById('album').innerHTML='<div class="album">'+items.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
+ }).catch(function(){document.getElementById('album').innerHTML='<div class="load">שגיאת חיבור.</div>';ALBUM=false;});
 }
-function filt(c,el){CUR=c;document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));el.classList.add('on');render();}
-document.getElementById('filters').innerHTML=CATS.map((c,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${c[0]}',this)">${c[1]}</button>`).join('');
-render();
+loadNews('home');
 </script>
-</body></html>
+</body>
+</html>
