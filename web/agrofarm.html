@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroFarm · חקלאות ובעלי חיים · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#0f3a26,#1c6b45 60%,#2e9e63)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:44px 0 10px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:48px;font-weight:800;margin:6px 0 10px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16.5px;max-width:720px;margin:0 auto;line-height:1.6}
+.stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:26px 0 8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 22px;text-align:center;box-shadow:0 8px 20px rgba(20,38,28,.05)}
+.stat b{display:block;font-family:Rubik;font-weight:800;font-size:28px;color:var(--green-d)}
+.stat span{font-size:13px;color:var(--mut)}
+.sec{margin:40px 0}
+.sectt{font-family:Rubik;font-weight:800;font-size:26px;color:var(--green-d);text-align:center;margin-bottom:6px}
+.secsub{text-align:center;color:var(--mut);font-size:15px;max-width:620px;margin:0 auto 22px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 26px rgba(20,38,28,.05);transition:.16s}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(20,38,28,.1)}
+.card .ic{font-size:34px}
+.card h3{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin:10px 0 6px}
+.card p{color:var(--mut);font-size:14.5px;line-height:1.6}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tg{background:var(--tint);color:var(--green-d);border-radius:12px;padding:3px 10px;font-size:12px;font-weight:600}
+.techlist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:600px){.techlist{grid-template-columns:1fr}}
+.tech{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.tech .te{font-size:26px}
+.tech b{color:var(--green-d);font-family:Rubik;font-size:16px}
+.tech p{color:var(--mut);font-size:13.5px;margin-top:2px}
+.cogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.cogrid{grid-template-columns:1fr 1fr}}
+.co{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;color:inherit;display:block;transition:.15s}
+.co:hover{border-color:#bfe0cc;box-shadow:0 10px 24px rgba(20,38,28,.08)}
+.co b{font-family:Rubik;color:var(--green-d);font-size:16px}
+.co .fl{font-size:12px;color:var(--teal);font-weight:700}
+.co p{color:var(--mut);font-size:13px;margin-top:5px;line-height:1.5}
+.cta{display:inline-block;text-decoration:none;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:13px;padding:14px 30px;font-family:Rubik;font-weight:800;font-size:16px;box-shadow:0 12px 28px rgba(28,107,69,.25)}
+.footbar{background:linear-gradient(135deg,#0f3a26,#1c6b45)}
+.foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.85)}
+.band{background:linear-gradient(135deg,#eef7f1,#e6f2ea);border:1px solid #cfe6d8;border-radius:20px;padding:28px;text-align:center;margin:40px 0}
+.band h3{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:8px}
+.band p{color:var(--mut);font-size:15px;max-width:640px;margin:0 auto 16px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">AGROFARM · LIVESTOCK & ANIMAL AGRICULTURE</div>
+    <h1>חקלאות <b>ובעלי חיים</b> · החווה</h1>
+    <div class="sub">הענף החי של החקלאות — רפת, לול, דיר, מדגה וכוורת. גידול בעלי חיים לחלב, ביצים, בשר ודבש, ומהפכת החקלאות המדייקת (Precision Livestock) שהופכת כל חווה לחווה חכמה מבוססת-נתונים.</div>
+    <div class="stats">
+      <div class="stat"><b>~1.6B</b><span>ליטר חלב בשנה בישראל</span></div>
+      <div class="stat"><b>×1</b><span>תנובת חלב לפרה — שיא עולמי</span></div>
+      <div class="stat"><b>~2.2B</b><span>ביצים בשנה</span></div>
+      <div class="stat"><b>365</b><span>ניטור רציף מסביב לשעון</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sectt">ענפי החווה</div>
+    <div class="secsub">מגידול בעלי החיים המסורתי ועד המשק המעורב — כל ענף והתוצרת שלו.</div>
+    <div class="grid">
+      <div class="card"><div class="ic">🐄</div><h3>רפת · חלב</h3><p>גידול בקר לחלב — הרפת הישראלית מובילה עולמית בתנובה לפרה, בזכות גנטיקה, הזנה מדויקת וניהול נתונים.</p><div class="tagrow"><span class="tg">חלב</span><span class="tg">בקר</span><span class="tg">חליבה רובוטית</span></div></div>
+      <div class="card"><div class="ic">🐔</div><h3>לול · עוף וביצים</h3><p>פטם (בשר עוף) והטלה (ביצים) — הענף היעיל ביותר להמרת מזון לחלבון, עם אוטומציה מלאה בלול.</p><div class="tagrow"><span class="tg">בשר עוף</span><span class="tg">ביצים</span><span class="tg">הודו</span></div></div>
+      <div class="card"><div class="ic">🐑</div><h3>דיר · צאן</h3><p>כבשים ועיזים לחלב ולבשר — גבינות מובחרות, חלב עיזים ורעייה שמשמרת נוף פתוח ומונעת שריפות.</p><div class="tagrow"><span class="tg">חלב צאן</span><span class="tg">גבינות</span><span class="tg">בשר</span></div></div>
+      <div class="card"><div class="ic">🐟</div><h3>מדגה · חקלאות ימית</h3><p>גידול דגים בבריכות, כלובי ים ומערכות RAS. ראו הרחבה בענף המים — <a href="agroaqua.html" style="color:var(--green);font-weight:700;text-decoration:none">AgroAqua ↗</a></p><div class="tagrow"><span class="tg">בורי</span><span class="tg">אמנון</span><span class="tg">RAS</span></div></div>
+      <div class="card"><div class="ic">🐝</div><h3>כוורת · דבורים</h3><p>גידול דבורים לדבש ולהאבקה — הדבורה היא מכפיל היבול של כל החקלאות, וניטור הכוורת הפך דיגיטלי.</p><div class="tagrow"><span class="tg">דבש</span><span class="tg">האבקה</span><span class="tg">שעווה</span></div></div>
+      <div class="card"><div class="ic">🏡</div><h3>חווה מעורבת</h3><p>משק משפחתי המשלב כמה ענפים יחד — רפת, לול, גד״ש ומטע — כלכלת מחזור סגור וחוסן חקלאי.</p><div class="tagrow"><span class="tg">משק מעורב</span><span class="tg">מחזור סגור</span><span class="tg">קומפוסט</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sectt">חקלאות מדייקת · Precision Livestock</div>
+    <div class="secsub">מה שהופך רפת ולול לחווה חכמה מבוססת-נתונים.</div>
+    <div class="techlist">
+      <div class="tech"><div class="te">🤖</div><div><b>חליבה וחליבה רובוטית</b><p>רובוט חליבה עצמאי — הפרה נחלבת מתי שנוח לה, עם ניטור תנובה ואיכות חלב פרטני.</p></div></div>
+      <div class="tech"><div class="te">📡</div><div><b>חיישני גוף וקולר חכם</b><p>ניטור פעילות, גירה, חום ובריאות לכל בהמה — זיהוי מוקדם של מחלה או ייחום.</p></div></div>
+      <div class="tech"><div class="te">🧬</div><div><b>גנטיקה ורבייה</b><p>שיפור גנטי, הזרעה מלאכותית ובחירת גנום — הבסיס לשיא התנובה הישראלי.</p></div></div>
+      <div class="tech"><div class="te">🌾</div><div><b>הזנה מדויקת</b><p>מנת מזון מחושבת לכל קבוצה — אופטימיזציית חלבון, אנרגיה ותנובה מול עלות.</p></div></div>
+      <div class="tech"><div class="te">🧠</div><div><b>AI וניתוח נתונים</b><p>מערכת שמנתחת את כל נתוני החווה וחוזה תנובה, פוריות ובריאות העדר.</p></div></div>
+      <div class="tech"><div class="te">🥩</div><div><b>חלבון חלופי ומתורבת</b><p>בשר מתורבת, חלב וביצים מבוססי-תסיסה — ישראל מובילה עולמית ב-FoodTech החי.</p></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sectt">חברות ישראליות מובילות</div>
+    <div class="secsub">מהטכנולוגיה ברפת ובלול ועד מהפכת החלבון החלופי.</div>
+    <div class="cogrid">
+      <a class="co" href="https://www.scrdairy.com/" target="_blank" rel="noopener"><b>SCR / Allflex</b> <span class="fl">🇮🇱</span><p>ניטור וקולרים חכמים לעדר — פוריות, בריאות וגירה.</p></a>
+      <a class="co" href="https://www.afimilk.com/" target="_blank" rel="noopener"><b>Afimilk</b> <span class="fl">🇮🇱</span><p>מערכות ניהול רפת וחליבה מבוססות-נתונים, מובילות עולמית.</p></a>
+      <a class="co" href="https://www.remilk.com/" target="_blank" rel="noopener"><b>Remilk</b> <span class="fl">🇮🇱</span><p>חלב אמיתי מתסיסה — בלי פרה. חלבון חלב מדויק.</p></a>
+      <a class="co" href="https://aleph-farms.com/" target="_blank" rel="noopener"><b>Aleph Farms</b> <span class="fl">🇮🇱</span><p>בשר בקר מתורבת מתאים — נתח סטייק אמיתי מתאים.</p></a>
+      <a class="co" href="https://believermeats.com/" target="_blank" rel="noopener"><b>Believer Meats</b> <span class="fl">🇮🇱</span><p>בשר עוף מתורבת בקנה מידה תעשייתי.</p></a>
+      <a class="co" href="https://www.eggxyt.com/" target="_blank" rel="noopener"><b>eggXYt</b> <span class="fl">🇮🇱</span><p>מיון מין העובר בביצה — מהפך אתי בענף ההטלה.</p></a>
+      <a class="co" href="https://www.beewise.ag/" target="_blank" rel="noopener"><b>Beewise</b> <span class="fl">🇮🇱</span><p>כוורת רובוטית אוטונומית עם AI לניטור ולהצלת דבורים.</p></a>
+      <a class="co" href="https://www.supermeat.com/" target="_blank" rel="noopener"><b>SuperMeat</b> <span class="fl">🇮🇱</span><p>עוף מתורבת — ייצור בשר ישירות מתאים, בלי שחיטה.</p></a>
+    </div>
+  </div>
+
+  <div class="band">
+    <h3>🐄 מקימים חווה או מפתחים טכנולוגיה לענף החי?</h3>
+    <p>הזירה מחברת מגדלים, רפתנים ויזמים לטכנולוגיה, ידע ומימון בענף בעלי החיים — מהרפת המסורתית ועד החלבון החלופי.</p>
+    <a class="cta" href="invest-apply.html">לפנייה למרכז החדשנות ←</a>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · AgroFarm · <span class="mono">livestock &amp; animal agriculture</span></div></div></div>
+</body></html>
