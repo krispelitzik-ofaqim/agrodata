@@ -364,7 +364,7 @@ function renderEdu(){var el=document.getElementById('edulist');if(!el)return;var
  document.getElementById('edusub').textContent=LANG==='he'?'אגרו-טק וחקלאות מדייקת · תארים ולימודים':'Agri-tech & precision agriculture · degrees';
  el.innerHTML=E.map(function(e){return '<a class="mr" href="'+e[3]+'" target="_blank" rel="noopener" style="text-decoration:none"><span class="n">'+e[0]+'</span><div style="min-width:0"><div style="font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--ink)">'+esc(e[1])+'</div><div style="font-family:\'Plex Mono\';font-size:11px;color:var(--teal)">'+esc(e[2])+'</div></div></a>';}).join('');}
 function dt(s){var p=(s||'').split('/');return p.length===3?new Date(p[2],(+p[1])-1,+p[0]).getTime():0;}
-function loadStartups(){var el=document.getElementById('startups');if(!el)return;
+function loadStartups(){var el=document.getElementById('startups');if(!el)return;el.classList.remove('load');
  fetch('/api/companies?q='+encodeURIComponent(LANG==='he'?'חקלאות':'agriculture')+'&limit=30').then(function(r){return r.json();}).then(function(j){
   var it=(j.items||[]).slice();it.sort(function(a,b){return dt(b.founded)-dt(a.founded);});it=it.slice(0,5);
   if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
