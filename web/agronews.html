@@ -176,6 +176,10 @@ a{color:inherit}
       <div class="blocks" id="blocks"></div>
       <div class="secbar">📰 עוד בחדשות</div>
       <div class="two" id="more"></div>
+      <div class="secbar gold">📈 שוק הסחורות · חי</div>
+      <div class="commod" id="commodHome"><div class="load">…</div></div>
+      <div class="secbar">🌱 אופקים · בירת האגרו-טק</div>
+      <div class="grid3" id="ofcubesHome"></div>
       <div class="secbar teal">🎬 וידאו</div>
       <div class="vid"><iframe id="vid" src="" title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
       <div class="secbar gold">🏛️ תערוכות וכנסים</div>
@@ -229,18 +233,18 @@ var OP_he=[['🔬','לקטור מדעי','למה הדאטה החקלאית הי�
 var OP_en=[['🔬','Science Reviewer','Why agri-data is Israel’s next big asset'],['🌾','Chief Agronomist','Three irrigation mistakes every new grower makes'],['💼','Business Advisor','From idea to company: a plan investors love']];
 var GR_he=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
 var GR_en=[['💧','Irrigation & Water','1,240'],['🪴','Home Farming','980'],['🐟','Aquaponics','420'],['🌿','Organic','760'],['🚀','Startups','1,510'],['🏠','Controlled Ag','630']];
-function go(k){['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance'){loadCommod();loadTopic('finance',STR[LANG].qfin);}if(k==='ofakim'){renderOfCubes();loadTopic('ofakim',STR[LANG].qofa);}window.scrollTo(0,0);}
+function go(k){['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance'){loadCommod('commod');loadTopic('finance',STR[LANG].qfin);}if(k==='ofakim'){renderOfCubes('ofcubes');loadTopic('ofakim',STR[LANG].qofa);}window.scrollTo(0,0);}
 var COMS=[['ZC=F','תירס','Corn'],['ZW=F','חיטה','Wheat'],['ZS=F','סויה','Soybeans'],['KC=F','קפה','Coffee'],['SB=F','סוכר','Sugar'],['CT=F','כותנה','Cotton'],['CC=F','קקאו','Cocoa'],['LE=F','בקר','Cattle']];
-function loadCommod(){document.getElementById('commod').innerHTML='<div class="load">…</div>';
+function loadCommod(id){var el=document.getElementById(id);if(!el)return;el.innerHTML='<div class="load">…</div>';
  fetch('/api/quote?symbols='+COMS.map(function(c){return c[0];}).join(',')).then(function(r){return r.json();}).then(function(arr){
   var map={};(arr||[]).forEach(function(q){map[q.symbol]=q;});var he=LANG==='he';
-  document.getElementById('commod').innerHTML=COMS.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
+  el.innerHTML=COMS.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
    return '<div class="cmd"><div class="n">'+(he?c[1]:c[2])+'</div><div class="p">'+q.price.toLocaleString()+'</div><div class="ch '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</div></div>';
   }).join('');
- }).catch(function(){document.getElementById('commod').innerHTML='<div class="load">—</div>';});}
+ }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
 var OF_he=[['🎯','חזון','מהנגב לעולם — בירת האגרו-טק של ישראל'],['🏙️','מרכז החדשנות','חממה, האצה ומפגש לחברות ומגדלים'],['🌾','חוות ניסויים','שדות מו״פ לגידולים וטכנולוגיות'],['🏭','אזור תעשייה אגרו','ייצור, לוגיסטיקה ועיבוד תוצרת'],['🎓','אגרו-קמפוס','הכשרה, אקדמיה ודור העתיד'],['🌱','אגרו-סייט','חיישנים ומזג אוויר חקלאי חי'],['🏫','בי״ס רגבים','חינוך חקלאי מגיל צעיר'],['🤝','קהילת המגדלים','שיתוף ידע, אירועים ופיילוטים']];
 var OF_en=[['🎯','Vision','From the Negev to the world'],['🏙️','Innovation Center','incubator & meeting hub'],['🌾','Experiment Farms','R&D fields for crops & tech'],['🏭','Agri Industrial Zone','production & processing'],['🎓','Agro-Campus','training & academia'],['🌱','Agro-Site','live field sensors & weather'],['🏫','Regavim School','agri education from a young age'],['🤝','Growers Community','knowledge, events & pilots']];
-function renderOfCubes(){var O=LANG==='he'?OF_he:OF_en;document.getElementById('ofcubes').innerHTML=O.map(function(o){return '<div class="gcard"><div class="em">'+o[0]+'</div><h3>'+esc(o[1])+'</h3><div class="meta" style="color:var(--mut);font-family:Heebo;font-size:13px;margin-top:4px">'+esc(o[2])+'</div></div>';}).join('');}
+function renderOfCubes(id,limit){var el=document.getElementById(id);if(!el)return;var O=LANG==='he'?OF_he:OF_en;if(limit)O=O.slice(0,limit);el.innerHTML=O.map(function(o){return '<div class="gcard"><div class="em">'+o[0]+'</div><h3>'+esc(o[1])+'</h3><div class="meta" style="color:var(--mut);font-family:Heebo;font-size:13px;margin-top:4px">'+esc(o[2])+'</div></div>';}).join('');}
 function loadTopic(panel,q){var S=STR[LANG],el=document.getElementById(panel+'list');el.innerHTML='<div class="load">…</div>';
  fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
   if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
@@ -278,7 +282,7 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();renderHomeAg();
  }).catch(function(){loadNews();});
- setVideo();renderExpo();renderHomeAg();loadWeather();
+ setVideo();renderExpo();renderHomeAg();loadWeather();loadCommod('commodHome');renderOfCubes('ofcubesHome',6);
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
 var EXPO_he=[
@@ -304,7 +308,7 @@ function loadAlbum(){if(ALBUM)return;ALBUM=true;
   document.getElementById('album').innerHTML='<div class="album">'+it.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
  }).catch(function(){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;});
 }
-function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();renderHomeAg();}
+function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();renderHomeAg();loadCommod('commodHome');renderOfCubes('ofcubesHome',6);}
 document.getElementById('date').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 applyStr();boot();
 </script>
