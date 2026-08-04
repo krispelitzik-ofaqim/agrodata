@@ -127,7 +127,7 @@ canvas.brain3d{width:620px;height:620px;filter:drop-shadow(0 0 22px rgba(143,230
 
   <!-- CHIPS -->
   <div class="scene chipsScene">
-    <div class="chipTitle">28 מנועים · <b>זירה אחת</b></div>
+    <div class="chipTitle">30 מנועים · <b>זירה אחת</b></div>
     <div class="chipGrid" id="chipGrid"></div>
   </div>
 
@@ -238,8 +238,8 @@ function brainFrame(){
 }
 requestAnimationFrame(brainFrame);
 
-/* ---------- CHIPS (28 engines, he+en) ---------- */
-var ENG=[['Lake','מאגר'],['Labs','מדען ראשי'],['Library','כתבי עת'],['Gov','מדיניות'],['RnD','מו״פים'],['Scholar','אקדמיה'],['Innovate','חדשנות'],['Map','מפות'],['Expo','כנסים'],['Trade','סחר'],['Pulse','חדשות'],['Mind','AI'],['Directory','חברות'],['Impact','SDG'],['Scout','סטארטאפים'],['Apps','אפליקציות'],['Eco','סביבה'],['Patents','פטנטים'],['Books','ספרים'],['Hub','אקסלרטור'],['Pedia','מילון'],['Flora','צמחים'],['Market','תשומות'],['Pharm','תרופות'],['Aqua','ימית'],['Grow','מבוקרת'],['Academy','חינוך'],['Sense','חיישנים']];
+/* ---------- CHIPS (30 engines, he+en) ---------- */
+var ENG=[['Lake','מאגר'],['Labs','מדען ראשי'],['Library','כתבי עת'],['Gov','מדיניות'],['RnD','מו״פים'],['Scholar','אקדמיה'],['Innovate','חדשנות'],['Map','מפות'],['Expo','כנסים'],['Trade','סחר'],['Pulse','חדשות'],['Mind','AI'],['Directory','חברות'],['Impact','SDG'],['Scout','סטארטאפים'],['Apps','אפליקציות'],['Eco','סביבה'],['Patents','פטנטים'],['Books','ספרים'],['Hub','אקסלרטור'],['Pedia','מילון'],['Flora','צמחים'],['Market','תשומות'],['Pharm','תרופות'],['Aqua','ימית'],['Grow','מבוקרת'],['Academy','חינוך'],['Sense','חיישנים'],['Farm','בעלי חיים'],['News','חדשות']];
 document.getElementById('chipGrid').innerHTML=ENG.map(function(e,i){
  return '<div class="chip" style="animation-delay:'+(i*0.13).toFixed(2)+'s"><div class="en">Agro<b>'+e[0]+'</b></div><div class="he">'+e[1]+'</div></div>';
 }).join('');
