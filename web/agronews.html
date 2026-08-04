@@ -101,6 +101,10 @@ a{color:inherit}
 .promo .k{font-family:'Plex Mono';font-size:11px;opacity:.85;font-weight:400}.promo .h{font-size:18px;margin-top:4px}.promo .s{font-weight:500;font-size:12.5px;opacity:.9;margin-top:4px}
 .wx{background:linear-gradient(135deg,var(--teal-l),var(--teal));color:#fff;border-radius:12px;padding:16px;text-align:center;margin-bottom:15px}
 .wx .c{font-family:Rubik;font-weight:900;font-size:34px}.wx .l{font-size:13px;opacity:.9}
+.wxg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;text-align:center}
+.wxg .i{background:var(--tint);border-radius:8px;padding:7px 4px}
+.wxg .v{font-family:Rubik;font-weight:800;font-size:15px;color:var(--green-d)}
+.wxg .k{font-size:11px;color:var(--mut);margin-top:2px}
 /* generic sections */
 .sec{padding:8px 0 40px}
 .album{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:760px){.album{grid-template-columns:repeat(2,1fr)}}
@@ -167,13 +171,15 @@ a{color:inherit}
       <div class="gal" id="gal"></div>
     </div>
     <div class="aside">
-      <div class="wx"><div class="c" id="wxc">27°</div><div class="l" id="wxl">מזג אוויר · תל אביב</div></div>
+      <div class="wx"><div class="c" id="wxc">…</div><div class="l" id="wxl">אופקים · מזג אוויר חקלאי</div><div class="wxg" id="wxg"></div></div>
       <a class="promo brain" href="index.html"><div class="k">THE BRAIN</div><div class="h" id="pbh">🧠 הזירה החכמה</div><div class="s" id="pbs">28 מנועים · דאטה, מחקר וחדשנות</div></a>
       <a class="promo ofa" href="ofakim.html"><div class="k">OFAKIM</div><div class="h" id="poh">🌱 בירת האגרו-טק</div><div class="s" id="pos">מהנגב לעולם</div></a>
       <div class="box"><h4 id="mrh">🔥 הנקראות ביותר</h4><div id="mostread"></div></div>
       <div class="box"><h4 id="hgh">🪴 חקלאות ביתית</h4><a class="big" style="font-size:15px;padding:13px" href="homegarden.html" id="hgbtn">9 שיטות לגידול בבית ↗</a></div>
     </div>
   </div></div>
+  <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
+  <!-- OFAKIM --><div class="panel" id="p_ofakim"><div class="sec"><div class="secbar" id="ofah">🌱 אופקים ואגרו-טק</div><div class="two" id="ofakimlist"><div class="load">…</div></div></div></div>
   <!-- ALBUM --><div class="panel" id="p_album"><div class="sec"><div class="secbar teal" id="albh">📸 אלבום הקהילה</div><div id="album" class="load">…</div></div></div>
   <!-- GROUPS --><div class="panel" id="p_groups"><div class="sec"><div class="secbar" id="grh">👥 קבוצות עניין</div><div class="grid3" id="groups"></div></div></div>
   <!-- HOME AG --><div class="panel" id="p_home"><div class="sec"><div class="secbar" id="hah">🪴 חקלאות ביתית</div><a class="big" href="homegarden.html" id="habtn">כניסה · 9 שיטות לגידול בבית ↗</a></div></div>
@@ -190,21 +196,31 @@ function hhmm(d){try{var t=new Date(d);var h=('0'+t.getHours()).slice(-2),m=('0'
 var LANG='he';
 var STR={
  he:{dir:'rtl',lang:'he',tag:'פורטל החקלאות והאגרו-טק של ישראל',brk:'מבזקים',pw:'מונע ע״י <b>AgroData</b> ↗',region:'il',live:'חי',
-  cats:[['news','📰 ראשי'],['news','חקלאות'],['news','חדשנות'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],
+  cats:[['news','📰 ראשי'],['finance','💰 פיננסים'],['ofakim','🌱 אופקים ואגרו-טק'],['album','📸 אלבום'],['groups','👥 קבוצות'],['home','🪴 חקלאות ביתית']],qfin:'אגרו-טק השקעות OR גיוס OR מימון חקלאות OR בורסה',qofa:'אופקים OR "אגרו טק" OR חדשנות חקלאית',
   mr:'🔥 הנקראות ביותר',hg:'🪴 חקלאות ביתית',hgb:'9 שיטות לגידול בבית ↗',alb:'📸 אלבום הקהילה',gr:'👥 קבוצות עניין',ha:'🪴 חקלאות ביתית',hab:'כניסה · 9 שיטות ↗',
-  bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'מזג אוויר · תל אביב',foot:'פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים',
+  bh:'🧠 הזירה החכמה',bs:'28 מנועים · דאטה, מחקר וחדשנות',oh:'🌱 בירת האגרו-טק',os:'מהנגב לעולם',wl:'אופקים · מזג אוויר חקלאי',foot:'פורטל החקלאות והאגרו-טק של ישראל · מונע ע״י AgroData · אופקים',
   more:'📰 עוד בחדשות',op:'✍️ דעות וטורים',glr:'📸 מהשטח · גלריה'},
  en:{dir:'ltr',lang:'en',tag:"Israel's Agri-Tech News Portal",brk:'BREAKING',pw:'Powered by <b>AgroData</b> ↗',region:'world',live:'live',
-  cats:[['news','📰 Main'],['news','Agriculture'],['news','Innovation'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],
+  cats:[['news','📰 Main'],['finance','💰 Finance'],['ofakim','🌱 Ofakim & Agri-Tech'],['album','📸 Album'],['groups','👥 Groups'],['home','🪴 Home Farming']],qfin:'agrifood investment OR funding OR IPO agriculture',qofa:'Ofakim agritech OR agri innovation Israel',
   mr:'🔥 Most Read',hg:'🪴 Home Farming',hgb:'9 ways to grow at home ↗',alb:'📸 Community Album',gr:'👥 Interest Groups',ha:'🪴 Home Farming',hab:'Enter · 9 ways ↗',
-  bh:'🧠 The Smart Arena',bs:'28 engines · data, research, innovation',oh:'🌱 Agri-Tech Capital',os:'From the Negev to the world',wl:'Weather · Tel Aviv',foot:"Israel's Agri-Tech News Portal · Powered by AgroData · Ofakim",
+  bh:'🧠 The Smart Arena',bs:'28 engines · data, research, innovation',oh:'🌱 Agri-Tech Capital',os:'From the Negev to the world',wl:'Ofakim · Farm Weather',foot:"Israel's Agri-Tech News Portal · Powered by AgroData · Ofakim",
   more:'📰 More News',op:'✍️ Opinion & Columns',glr:'📸 From The Field · Gallery'}
 };
 var OP_he=[['🔬','לקטור מדעי','למה הדאטה החקלאית היא הנכס הבא של ישראל'],['🌾','אגרונום ראשי','שלוש טעויות שכל מגדל מתחיל עושה בהשקיה'],['💼','יועץ עסקי','מרעיון לחברה: איך בונים תוכנית שמושכת משקיעים']];
 var OP_en=[['🔬','Science Reviewer','Why agri-data is Israel’s next big asset'],['🌾','Chief Agronomist','Three irrigation mistakes every new grower makes'],['💼','Business Advisor','From idea to company: a plan investors love']];
 var GR_he=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
 var GR_en=[['💧','Irrigation & Water','1,240'],['🪴','Home Farming','980'],['🐟','Aquaponics','420'],['🌿','Organic','760'],['🚀','Startups','1,510'],['🏠','Controlled Ag','630']];
-function go(k){['news','album','groups','home'].forEach(function(x){document.getElementById('p_'+x).classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();window.scrollTo(0,0);}
+function go(k){['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance')loadTopic('finance',STR[LANG].qfin);if(k==='ofakim')loadTopic('ofakim',STR[LANG].qofa);window.scrollTo(0,0);}
+function loadTopic(panel,q){var S=STR[LANG],el=document.getElementById(panel+'list');el.innerHTML='<div class="load">…</div>';
+ fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=(j.items||[]);
+  if(!it.length){el.innerHTML='<div class="load">—</div>';return;}
+  el.innerHTML=it.map(function(n,i){return '<a class="ncard" href="'+n.link+'" target="_blank" rel="noopener"><div class="th thumb">'+timg(i%Math.max(1,PHOTOS.length))+EMO[i%EMO.length]+'</div><div class="in"><div class="t">'+esc(n.title)+'</div><div class="src">'+esc(n.source||'')+'</div></div></a>';}).join('');
+ }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
+function loadWeather(){fetch('/api/weather?lat=31.31&lon=34.62').then(function(r){return r.json();}).then(function(j){var c=j.current||{};
+ document.getElementById('wxc').textContent=Math.round(c.temperature_2m||0)+'°';
+ var he=LANG==='he',g=[[Math.round(c.relative_humidity_2m||0)+'%',he?'לחות':'Humidity'],[Math.round(c.wind_speed_10m||0)+(he?' קמ״ש':' km/h'),he?'רוח':'Wind'],[Math.round(c.soil_temperature_0cm||0)+'°',he?'טמפ׳ קרקע':'Soil temp'],[Math.round((c.soil_moisture_0_to_1cm||0)*100)+'%',he?'לחות קרקע':'Soil moist']];
+ document.getElementById('wxg').innerHTML=g.map(function(x){return '<div class="i"><div class="v">'+x[0]+'</div><div class="k">'+x[1]+'</div></div>';}).join('');
+}).catch(function(){});}
 function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.documentElement.lang=S.lang;
  document.getElementById('tagline').textContent=S.tag;document.getElementById('brk').textContent=S.brk;document.getElementById('powered').innerHTML=S.pw;
  document.getElementById('cats').innerHTML=S.cats.map(function(c,i){return '<button class="cbtn'+(i===0?' on':'')+'" data-k="'+c[0]+'" onclick="go(\''+c[0]+'\')">'+c[1]+'</button>';}).join('');
@@ -233,7 +249,7 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();
  }).catch(function(){loadNews();});
- setVideo();renderExpo();loadPatents();loadBooks();
+ setVideo();renderExpo();loadPatents();loadBooks();loadWeather();
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
 var EXPO_he=[['🌱','Agritech Israel','תל אביב · תערוכת האגרו-טק המובילה'],['🍎','Fresh AgroMashov','תל אביב · פירות, ירקות ופרחים'],['🚜','EIMA International','בולוניה · מיכון חקלאי'],['📦','Fruit Logistica','ברלין · שרשרת התוצרת הטרייה']];
