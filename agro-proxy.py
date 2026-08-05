@@ -440,6 +440,7 @@ def extract_spreadsheet(b64, mime="", name=""):
         return ""
 
 NEWSCACHE = {}
+NEWSGOOD = {}   # last successful (non-empty) result per key — fallback when source hiccups
 def fetch_news(q, region):
     q = (q or 'agritech OR agtech OR "agriculture technology" OR "food tech"').strip()
     key = region + "|" + q
@@ -482,9 +483,15 @@ def fetch_news(q, region):
                 out.append({"title": title, "link": link, "source": src, "date": pub})
     except Exception:
         pass
-    res = {"items": out}
-    NEWSCACHE[key] = (now, res)
-    return res
+    if out:
+        res = {"items": out}
+        NEWSCACHE[key] = (now, res)
+        NEWSGOOD[key] = res          # remember last good feed
+        return res
+    # source returned empty / errored — serve the last successful feed if we have one
+    if key in NEWSGOOD:
+        return NEWSGOOD[key]
+    return {"items": []}             # nothing cached yet — don't store empty, retry next call
 
 def fetch_research(q, frm):
     frm = re.sub(r"[^0-9\-]", "", frm or "")[:10] or "2021-01-01"
