@@ -1426,34 +1426,6 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
-        if self.path.startswith("/api/_diag"):
-            info = {"DATA_DIR_env": os.environ.get("DATA_DIR"), "DATA_DIR_resolved": DATA_DIR,
-                    "proc_uid": (os.getuid() if hasattr(os, "getuid") else None)}
-            seen = []
-            for path in ["/data", os.environ.get("DATA_DIR"), HERE]:
-                if not path or path in seen:
-                    continue
-                seen.append(path)
-                d = {"exists": os.path.exists(path), "isdir": os.path.isdir(path)}
-                try:
-                    st = os.stat(path); d["uid"] = st.st_uid; d["gid"] = st.st_gid; d["mode"] = oct(st.st_mode)
-                except Exception as e:
-                    d["stat_err"] = str(e)[:120]
-                try:
-                    pr = os.path.join(path, ".probe"); open(pr, "w").write("x"); os.remove(pr); d["writable"] = True
-                except Exception as e:
-                    d["writable"] = False; d["write_err"] = str(e)[:120]
-                try:
-                    d["contents"] = os.listdir(path)[:20]
-                except Exception as e:
-                    d["ls_err"] = str(e)[:120]
-                info[path] = d
-            body = json.dumps(info, ensure_ascii=False, default=str).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.send_header("Cache-Control", "no-store")
-            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/docs"):
             body = json.dumps({"docs": load_docs()[-500:]}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
