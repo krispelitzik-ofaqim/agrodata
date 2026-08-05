@@ -1533,6 +1533,7 @@ class H(http.server.SimpleHTTPRequestHandler):
                         "title": title[:160],
                         "by": (data.get("by") or "").strip()[:60] or "אנונימי",
                         "cat": (data.get("cat") or "מסמך")[:24],
+                        "status": (data.get("status") or "").strip()[:24],
                         "note": (data.get("note") or "").strip()[:600],
                         "link": (data.get("link") or "").strip()[:600],
                         "fname": "",
