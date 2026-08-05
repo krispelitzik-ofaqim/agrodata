@@ -1426,6 +1426,17 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/_diag"):
+            info = {"env": os.environ.get("DATA_DIR"), "resolved": DATA_DIR, "docs_file": DOCS_FILE}
+            try: info["data_ls"] = os.listdir("/data")
+            except Exception as e: info["data_ls_err"] = str(e)[:120]
+            try: info["resolved_ls"] = os.listdir(DATA_DIR)[:30]
+            except Exception as e: info["resolved_ls_err"] = str(e)[:120]
+            info["docs_file_exists"] = os.path.exists(DOCS_FILE)
+            body = json.dumps(info, ensure_ascii=False, default=str).encode("utf-8")
+            self.send_response(200); self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*"); self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/docs"):
             body = json.dumps({"docs": load_docs()[-500:]}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
