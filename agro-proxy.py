@@ -8,8 +8,26 @@ PORT = int(os.environ.get("PORT", 8787))   # Render מזריק PORT; מקומי�
 HOST = os.environ.get("HOST", "127.0.0.1") # באחסון נגדיר HOST=0.0.0.0
 CACHE = {}; TTL = 60; LOCK = threading.Lock()
 
+def _resolve_data_dir():
+    """Pick a writable data dir: prefer DATA_DIR (persistent volume); fall back to HERE if not writable."""
+    cand = os.environ.get("DATA_DIR", HERE)
+    for d in (cand, HERE):
+        try:
+            os.makedirs(d, exist_ok=True)
+            probe = os.path.join(d, ".wtest")
+            with open(probe, "w") as f:
+                f.write("ok")
+            os.remove(probe)
+            if d != cand:
+                print("WARN: DATA_DIR '%s' not writable — falling back to %s (data will NOT persist across deploys)" % (cand, d))
+            return d
+        except Exception as e:
+            print("WARN: data dir '%s' not writable: %s" % (d, e))
+    return HERE
+DATA_DIR = _resolve_data_dir()
+
 # ---- native discussion board (name + message, no login) ----
-COMMENTS_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "comments.json")
+COMMENTS_FILE = os.path.join(DATA_DIR, "comments.json")
 CLOCK = threading.Lock()
 def load_comments():
     try:
@@ -20,7 +38,7 @@ def load_comments():
 def save_comments(items):
     with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False)
-APPS_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "applications.json")
+APPS_FILE = os.path.join(DATA_DIR, "applications.json")
 def save_application(data):
     rec = {}
     for k in ("name", "email", "phone", "role", "linkedin", "company", "website", "sector",
@@ -55,7 +73,7 @@ def save_application(data):
     return rec
 
 # ---- AgroInvest crowdfunding ----
-CAMP_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "campaigns.json")
+CAMP_FILE = os.path.join(DATA_DIR, "campaigns.json")
 def load_campaigns():
     try:
         return json.load(open(CAMP_FILE, encoding="utf-8"))
@@ -233,7 +251,7 @@ def save_image(dataurl):
         return None
 
 # ===== Strategic Process 2040 — shared documents library =====
-DOCS_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "strategy_docs.json")
+DOCS_FILE = os.path.join(DATA_DIR, "strategy_docs.json")
 
 def load_docs():
     try:
@@ -1517,34 +1535,38 @@ class H(http.server.SimpleHTTPRequestHandler):
                 data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
             except Exception:
                 data = {}
-            docs = load_docs()
-            act = data.get("action", "add")
-            if act == "delete":
-                did = data.get("id"); docs = [d for d in docs if d.get("id") != did]; save_docs(docs)
-                out = {"ok": True}
-            else:
-                title = (data.get("title") or "").strip()
-                if not title:
-                    out = {"ok": False, "error": "title required"}
+            try:
+                docs = load_docs()
+                act = data.get("action", "add")
+                if act == "delete":
+                    did = data.get("id"); docs = [d for d in docs if d.get("id") != did]; save_docs(docs)
+                    out = {"ok": True}
                 else:
-                    rec = {
-                        "id": str(int(time.time() * 1000)) + os.urandom(2).hex(),
-                        "ts": int(time.time()),
-                        "title": title[:160],
-                        "by": (data.get("by") or "").strip()[:60] or "אנונימי",
-                        "cat": (data.get("cat") or "מסמך")[:24],
-                        "status": (data.get("status") or "").strip()[:24],
-                        "note": (data.get("note") or "").strip()[:600],
-                        "link": (data.get("link") or "").strip()[:600],
-                        "fname": "",
-                    }
-                    if data.get("file"):
-                        saved = save_docfile(data["file"], data.get("name") or title)
-                        if saved:
-                            rec["link"] = "/" + saved
-                            rec["fname"] = (data.get("name") or "")[:80]
-                    docs.append(rec); docs = docs[-500:]; save_docs(docs)
-                    out = {"ok": True, "doc": rec}
+                    title = (data.get("title") or "").strip()
+                    if not title:
+                        out = {"ok": False, "error": "title required"}
+                    else:
+                        rec = {
+                            "id": str(int(time.time() * 1000)) + os.urandom(2).hex(),
+                            "ts": int(time.time()),
+                            "title": title[:160],
+                            "by": (data.get("by") or "").strip()[:60] or "אנונימי",
+                            "cat": (data.get("cat") or "מסמך")[:24],
+                            "status": (data.get("status") or "").strip()[:24],
+                            "note": (data.get("note") or "").strip()[:600],
+                            "link": (data.get("link") or "").strip()[:600],
+                            "fname": "",
+                        }
+                        if data.get("file"):
+                            saved = save_docfile(data["file"], data.get("name") or title)
+                            if saved:
+                                rec["link"] = "/" + saved
+                                rec["fname"] = (data.get("name") or "")[:80]
+                        docs.append(rec); docs = docs[-500:]; save_docs(docs)
+                        out = {"ok": True, "doc": rec}
+            except Exception as e:
+                print("ERR /api/docs write:", e)
+                out = {"ok": False, "error": "save failed: " + str(e)[:120]}
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200 if out.get("ok") else 400)
             self.send_header("Content-Type", "application/json; charset=utf-8")
