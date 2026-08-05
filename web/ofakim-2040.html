@@ -135,7 +135,7 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
         <label class="fld">כותרת</label><input id="dTitle" placeholder="שם המסמך/המצגת">
         <label class="fld">מי מוסיף</label><input id="dBy" placeholder="שמך">
         <label class="fld">סוג</label>
-        <select id="dCat"><option>מסמך</option><option>מצגת</option><option>מחקר</option><option>סיכום</option><option>נתונים</option><option>תוצר</option><option>אחר</option></select>
+        <select id="dCat"><option>דרייב</option><option>מסמך</option><option>מצגת</option><option>מחקר</option><option>סיכום</option><option>נתונים</option><option>תוצר</option><option>אחר</option></select>
       </div>
       <div>
         <label class="fld">🔗 קישור מ-Google Drive / דרייב <span style="color:var(--lime)">(מומלץ · בלי להעמיס אחסון)</span></label><input id="dLink" placeholder="הדביקו כאן קישור Drive/דרופבוקס/URL">
@@ -211,10 +211,10 @@ function loadDocs(){
   fetch('/api/docs?_='+Date.now()).then(function(r){return r.json();}).then(function(j){DOCS=(j.docs||[]).reverse();renderFilters();renderDocs();});
 }
 function renderFilters(){
-  var cats=['הכול','תוצר','מסמך','מצגת','מחקר','סיכום','נתונים','אחר'];
+  var cats=['הכול','דרייב','תוצר','מסמך','מצגת','מחקר','סיכום','נתונים','אחר'];
   document.getElementById('filters').innerHTML=cats.map(function(c){return '<span class="fchip'+(c===FILTER?' on':'')+'" onclick="FILTER=\''+c+'\';renderFilters();renderDocs()">'+c+'</span>';}).join('');
 }
-function catColor(c){var m={'תוצר':'#c79a2e','מסמך':'#2e9e63','מצגת':'#2b8fb0','מחקר':'#6a45c0','סיכום':'#1c6b45','נתונים':'#c0693a','נייר עמדה':'#134a30','אחר':'#8a94a6'};return m[c]||'#2e9e63';}
+function catColor(c){var m={'דרייב':'#4285F4','תוצר':'#c79a2e','מסמך':'#2e9e63','מצגת':'#2b8fb0','מחקר':'#6a45c0','סיכום':'#1c6b45','נתונים':'#c0693a','נייר עמדה':'#134a30','אחר':'#8a94a6'};return m[c]||'#2e9e63';}
 function stBadge(s){if(!s)return '—';var c=s==='הושלם'?'st-done':(s==='בעריכה'?'st-edit':'st-draft');return '<span class="stbadge '+c+'">'+esc(s)+'</span>';}
 function renderDocs(){
   var list=DOCS.filter(function(d){return FILTER==='הכול'||d.cat===FILTER;});
