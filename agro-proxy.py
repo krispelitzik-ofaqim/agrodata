@@ -232,6 +232,38 @@ def save_image(dataurl):
     except Exception:
         return None
 
+# ===== Strategic Process 2040 — shared documents library =====
+DOCS_FILE = os.path.join(os.environ.get("DATA_DIR", HERE), "strategy_docs.json")
+
+def load_docs():
+    try:
+        with open(DOCS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+def save_docs(items):
+    with open(DOCS_FILE, "w", encoding="utf-8") as f:
+        json.dump(items, f, ensure_ascii=False)
+
+def save_docfile(dataurl, name):
+    try:
+        m = re.match(r"data:([^;]+);base64,(.+)$", dataurl or "", re.S)
+        if not m:
+            return ""
+        raw = base64.b64decode(m.group(2))
+        if len(raw) > 20 * 1024 * 1024:   # 20MB cap
+            return ""
+        safe = re.sub(r"[^A-Za-z0-9._\-]", "_", (name or "file"))[:60] or "file"
+        fn = str(int(time.time() * 1000)) + "_" + os.urandom(3).hex() + "_" + safe
+        updir = os.path.join(WEB, "uploads", "strategy")
+        os.makedirs(updir, exist_ok=True)
+        with open(os.path.join(updir, fn), "wb") as f:
+            f.write(raw)
+        return "uploads/strategy/" + fn
+    except Exception:
+        return ""
+
 def add_comment(name, text, image=None, parent=None):
     name = (name or "").strip()[:40] or "אנונימי"
     text = (text or "").strip()[:1000]
@@ -1376,6 +1408,13 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/docs"):
+            body = json.dumps({"docs": load_docs()[-500:]}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/comments"):
             body = json.dumps({"comments": load_comments()[-200:]}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
@@ -1468,6 +1507,45 @@ class H(http.server.SimpleHTTPRequestHandler):
             out = {"ok": bool(item), "comment": item}
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200 if item else 400)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/docs"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            docs = load_docs()
+            act = data.get("action", "add")
+            if act == "delete":
+                did = data.get("id"); docs = [d for d in docs if d.get("id") != did]; save_docs(docs)
+                out = {"ok": True}
+            else:
+                title = (data.get("title") or "").strip()
+                if not title:
+                    out = {"ok": False, "error": "title required"}
+                else:
+                    rec = {
+                        "id": str(int(time.time() * 1000)) + os.urandom(2).hex(),
+                        "ts": int(time.time()),
+                        "title": title[:160],
+                        "by": (data.get("by") or "").strip()[:60] or "אנונימי",
+                        "cat": (data.get("cat") or "מסמך")[:24],
+                        "note": (data.get("note") or "").strip()[:600],
+                        "link": (data.get("link") or "").strip()[:600],
+                        "fname": "",
+                    }
+                    if data.get("file"):
+                        saved = save_docfile(data["file"], data.get("name") or title)
+                        if saved:
+                            rec["link"] = "/" + saved
+                            rec["fname"] = (data.get("name") or "")[:80]
+                    docs.append(rec); docs = docs[-500:]; save_docs(docs)
+                    out = {"ok": True, "doc": rec}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200 if out.get("ok") else 400)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תהליך אסטרטגי 2040 · אופקים · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600;font-size:14px}
+.hero{padding:38px 0 6px;text-align:center}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--lime);letter-spacing:.08em}
+h1{font-family:Rubik;font-size:40px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:680px;margin:0 auto;line-height:1.6}
+.sec{margin:30px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.card h2{font-family:Rubik;font-weight:800;font-size:21px;color:var(--green-d);margin-bottom:4px;display:flex;align-items:center;gap:9px}
+.card .cs{font-size:13.5px;color:var(--mut);margin-bottom:16px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{font-family:Rubik;font-weight:700;font-size:14px;color:var(--mut);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer}
+.tab.on{background:var(--green);color:#fff;border-color:var(--green)}
+textarea,input,select{font-family:Heebo;font-size:15px;color:var(--ink);border:1px solid var(--line);border-radius:11px;padding:12px 13px;outline:0;width:100%;background:#fff}
+textarea:focus,input:focus,select:focus{border-color:var(--green)}
+.aitools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.qbtn{font-family:Rubik;font-weight:700;font-size:14px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:10px;padding:9px 15px;cursor:pointer}
+.qbtn:hover{background:var(--green);color:#fff}
+.row2{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.btn{border:0;border-radius:11px;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+.btn.g{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
+.btn.o{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
+.eng{display:flex;gap:6px}
+.echip{font-size:13px;font-weight:700;color:var(--mut);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer}
+.echip.on{background:var(--green-d);color:#fff;border-color:var(--green-d)}
+.out{margin-top:16px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;line-height:1.7;white-space:pre-wrap;font-size:15px;display:none}
+.out.show{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+.doc{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff;position:relative;transition:.14s}
+.doc:hover{box-shadow:0 10px 24px rgba(20,38,28,.08);border-color:#bfe0cc}
+.doc .cat{display:inline-block;font-size:11.5px;font-weight:700;color:var(--green-d);background:var(--tint);border-radius:6px;padding:2px 9px;margin-bottom:7px}
+.doc .cat.t{background:#f6ecd0;color:#8a6a12}
+.doc h4{font-family:Rubik;font-size:16px;color:var(--green-d);margin-bottom:4px}
+.doc h4 a{color:inherit;text-decoration:none}.doc h4 a:hover{text-decoration:underline}
+.doc .meta{font-size:12px;color:var(--mut);font-family:'Plex Mono'}
+.doc p{font-size:13.5px;color:#3d5346;margin-top:7px;line-height:1.55;white-space:pre-wrap}
+.doc .del{position:absolute;top:10px;inset-inline-start:12px;color:#c66;cursor:pointer;font-size:15px;opacity:.6}.doc .del:hover{opacity:1}
+.empty{text-align:center;color:var(--mut);padding:26px;font-size:14px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.fchip{font-size:13px;font-weight:700;color:var(--mut);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:6px 13px;cursor:pointer}
+.fchip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.footbar{background:linear-gradient(135deg,#0f3a26,#1c6b45);margin-top:36px}
+.foot{padding:15px 0;text-align:center;font-size:13.5px;color:rgba(255,255,255,.85)}
+.hint{font-size:12.5px;color:var(--mut)}
+label.fld{display:block;font-size:13px;font-weight:700;color:var(--mut);margin:9px 0 4px}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Data</b></span></a>
+  <a class="back" href="ofakim.html">→ חזרה לאופקים</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">OFAKIM · STRATEGIC PROCESS 2040</div>
+    <h1>תהליך אסטרטגי <b>2040</b></h1>
+    <div class="sub">מרחב העבודה המשותף של חברי התהליך באופקים — העלאת מסמכים, מצגות וכל חומר רלוונטי, ניתוח ותובנות בעזרת ה-AI של AgroData, והצגת התוצרים במקום אחד.</div>
+  </div>
+
+  <!-- AI WORKSPACE -->
+  <div class="sec"><div class="card">
+    <h2>🧠 מרחב הניתוח · AI</h2>
+    <div class="cs">כתבו נושא/שאלה, או בחרו כלי מהיר — קבלו ניתוח, תובנות ורעיונות. ניתן לשמור כל תוצר לספרייה.</div>
+    <div class="aitools">
+      <button class="qbtn" onclick="quick('נתח')">🔍 ניתוח מצב</button>
+      <button class="qbtn" onclick="quick('תובנות')">💡 תובנות</button>
+      <button class="qbtn" onclick="quick('רעיונות')">🚀 רעיונות</button>
+      <button class="qbtn" onclick="quick('סיכום')">📝 סיכום</button>
+    </div>
+    <textarea id="q" rows="4" placeholder="לדוגמה: נתח את יתרונות אופקים כבירת אגרו-טק מול הרשויות השכנות, והצע 3 מהלכים לרבעון הקרוב."></textarea>
+    <div class="row2">
+      <span class="hint">מנוע:</span>
+      <div class="eng"><span class="echip on" data-e="gemini" onclick="pickEng(this)">Gemini</span><span class="echip" data-e="claude" onclick="pickEng(this)">Claude</span></div>
+      <button class="btn g" onclick="ask()" id="askBtn">שלח לניתוח ←</button>
+    </div>
+    <div class="out" id="out"></div>
+    <div class="row2" id="saveRow" style="display:none">
+      <input id="outTitle" placeholder="כותרת לתוצר (לשמירה בספרייה)" style="flex:1;min-width:200px">
+      <button class="btn o" onclick="saveOutput()">💾 שמור כתוצר</button>
+    </div>
+  </div></div>
+
+  <!-- ADD MATERIAL -->
+  <div class="sec"><div class="card">
+    <h2>📎 הוספת חומר לספרייה</h2>
+    <div class="cs">כל חבר בתהליך יכול להוסיף מסמך, מצגת או מחקר — בקישור (Drive/דרופבוקס) או בהעלאת קובץ.</div>
+    <div class="grid2">
+      <div>
+        <label class="fld">כותרת</label><input id="dTitle" placeholder="שם המסמך/המצגת">
+        <label class="fld">מי מוסיף</label><input id="dBy" placeholder="שמך">
+        <label class="fld">סוג</label>
+        <select id="dCat"><option>מסמך</option><option>מצגת</option><option>מחקר</option><option>סיכום</option><option>נתונים</option><option>תוצר</option><option>אחר</option></select>
+      </div>
+      <div>
+        <label class="fld">קישור (אופציונלי)</label><input id="dLink" placeholder="https://…">
+        <label class="fld">או העלאת קובץ (עד 20MB)</label><input id="dFile" type="file">
+        <label class="fld">הערה קצרה</label><input id="dNote" placeholder="על מה זה, למה חשוב">
+      </div>
+    </div>
+    <div class="row2"><button class="btn g" onclick="addDoc()" id="addBtn">➕ הוסף לספרייה</button><span class="hint" id="addMsg"></span></div>
+  </div></div>
+
+  <!-- LIBRARY -->
+  <div class="sec"><div class="card">
+    <h2>🗂️ ספריית החומרים והתוצרים</h2>
+    <div class="cs">כל החומרים שהעלו חברי התהליך — מסוננים לפי סוג.</div>
+    <div class="filters" id="filters"></div>
+    <div id="docs"><div class="empty">טוען…</div></div>
+  </div></div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · תהליך אסטרטגי 2040 · <span class="mono">strategic workspace</span></div></div></div>
+
+<script>
+var ENG='gemini', LASTOUT='', FILTER='הכול', DOCS=[];
+function pickEng(el){ENG=el.getAttribute('data-e');document.querySelectorAll('.echip').forEach(function(x){x.classList.remove('on');});el.classList.add('on');}
+function quick(kind){
+  var base=document.getElementById('q').value.trim();
+  var map={'נתח':'נתח לעומק את המצב בנושא הבא','תובנות':'הפק 3-5 תובנות אסטרטגיות חדות בנושא','רעיונות':'הצע 5 רעיונות מעשיים ומקוריים בנושא','סיכום':'סכם בקצרה ובבהירות את הנושא'};
+  var topic=base||'אופקים כבירת האגרו-טק של ישראל — התהליך האסטרטגי לשנת 2040';
+  document.getElementById('q').value=map[kind]+': '+topic+'. ענה בעברית, מסודר בנקודות, קצר וממוקד.';
+  ask();
+}
+function ask(){
+  var q=document.getElementById('q').value.trim();
+  if(!q){document.getElementById('q').focus();return;}
+  var out=document.getElementById('out');out.className='out show';out.textContent='⏳ חושב…';
+  document.getElementById('askBtn').disabled=true;
+  fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q:q,engine:ENG})})
+   .then(function(r){return r.json();}).then(function(j){
+     LASTOUT=j.answer||j.error||'לא התקבלה תשובה.';
+     out.textContent=LASTOUT;
+     document.getElementById('saveRow').style.display='flex';
+     document.getElementById('askBtn').disabled=false;
+   }).catch(function(){out.textContent='שגיאה בחיבור. נסו שוב.';document.getElementById('askBtn').disabled=false;});
+}
+function saveOutput(){
+  var t=document.getElementById('outTitle').value.trim()||'תוצר AI · '+new Date().toLocaleDateString('he-IL');
+  if(!LASTOUT)return;
+  post({title:t,by:'AgroData AI',cat:'תוצר',note:LASTOUT}).then(function(){
+    document.getElementById('outTitle').value='';loadDocs();
+  });
+}
+function addDoc(){
+  var title=document.getElementById('dTitle').value.trim();
+  if(!title){document.getElementById('addMsg').textContent='נא להזין כותרת';return;}
+  var rec={title:title,by:document.getElementById('dBy').value.trim(),cat:document.getElementById('dCat').value,
+    link:document.getElementById('dLink').value.trim(),note:document.getElementById('dNote').value.trim()};
+  var f=document.getElementById('dFile').files[0];
+  document.getElementById('addBtn').disabled=true;document.getElementById('addMsg').textContent='מוסיף…';
+  if(f){var rd=new FileReader();rd.onload=function(){rec.file=rd.result;rec.name=f.name;finish(rec);};rd.readAsDataURL(f);}
+  else finish(rec);
+}
+function finish(rec){
+  post(rec).then(function(j){
+    document.getElementById('addBtn').disabled=false;
+    if(j&&j.ok){['dTitle','dBy','dLink','dNote'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('dFile').value='';document.getElementById('addMsg').textContent='✓ נוסף';loadDocs();}
+    else document.getElementById('addMsg').textContent='שגיאה';
+  });
+}
+function post(rec){return fetch('/api/docs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(rec)}).then(function(r){return r.json();});}
+function delDoc(id){if(!confirm('למחוק מהספרייה?'))return;post({action:'delete',id:id}).then(function(){loadDocs();});}
+function loadDocs(){
+  fetch('/api/docs?_='+Date.now()).then(function(r){return r.json();}).then(function(j){DOCS=(j.docs||[]).reverse();renderFilters();renderDocs();});
+}
+function renderFilters(){
+  var cats=['הכול','תוצר','מסמך','מצגת','מחקר','סיכום','נתונים','אחר'];
+  document.getElementById('filters').innerHTML=cats.map(function(c){return '<span class="fchip'+(c===FILTER?' on':'')+'" onclick="FILTER=\''+c+'\';renderFilters();renderDocs()">'+c+'</span>';}).join('');
+}
+function renderDocs(){
+  var list=DOCS.filter(function(d){return FILTER==='הכול'||d.cat===FILTER;});
+  var el=document.getElementById('docs');
+  if(!list.length){el.innerHTML='<div class="empty">אין עדיין חומרים בקטגוריה זו — הוסיפו את הראשון ↑</div>';return;}
+  el.innerHTML='<div class="grid2">'+list.map(function(d){
+    var when=d.ts?new Date(d.ts*1000).toLocaleDateString('he-IL'):'';
+    var titleHtml=d.link?('<a href="'+d.link+'" target="_blank" rel="noopener">'+esc(d.title)+' ↗</a>'):esc(d.title);
+    return '<div class="doc"><span class="del" onclick="delDoc(\''+d.id+'\')">🗑</span>'+
+      '<span class="cat'+(d.cat==='תוצר'?' t':'')+'">'+esc(d.cat||'מסמך')+'</span>'+
+      '<h4>'+titleHtml+'</h4>'+
+      '<div class="meta">'+esc(d.by||'')+(when?' · '+when:'')+(d.fname?' · 📎 '+esc(d.fname):'')+'</div>'+
+      (d.note?'<p>'+esc(d.note)+'</p>':'')+'</div>';
+  }).join('')+'</div>';
+}
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+loadDocs();
+</script>
+</body></html>
