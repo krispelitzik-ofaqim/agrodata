@@ -114,6 +114,7 @@ tr:last-child td{border-bottom:0}
     <div class="brand"><div><div class="wm">Agro<b>Data</b></div><div class="tag">ADMIN · לוח ניהול</div></div></div>
     <nav class="snav">
       <a class="on" onclick="go(this,'dashboard')"><span class="i">📊</span><span class="lbl">לוח בקרה</span></a>
+      <a onclick="go(this,'position')"><span class="i">📄</span><span class="lbl">נייר עמדה</span></a>
       <a onclick="go(this,'users')"><span class="i">👥</span><span class="lbl">משתמשים</span></a>
       <a onclick="go(this,'security')"><span class="i">🔐</span><span class="lbl">משתמשים וסיסמאות</span></a>
       <a onclick="go(this,'content')"><span class="i">📝</span><span class="lbl">תוכן ובלוג</span></a>
@@ -167,6 +168,48 @@ tr:last-child td{border-bottom:0}
             <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#F7F3ED"></div><div style="margin-top:7px;font-weight:700;font-size:13px">חום בז׳</div><div style="font-family:monospace;font-size:11px;opacity:.6">#F7F3ED</div><div style="font-size:11px;opacity:.7;margin-top:2px">ענפי החקלאות · 5</div></div>
             <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#BBD8C4"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק כהה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#BBD8C4</div><div style="font-size:11px;opacity:.7;margin-top:2px">שמור להמשך</div></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSITION PAPER -->
+    <section class="screen" id="s-position">
+      <div class="card" style="max-width:920px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px">
+          <h3 style="margin:0">📄 נייר עמדה · אופקים — בירת האגרו-טק</h3>
+          <div style="display:flex;gap:8px">
+            <button class="btn o" onclick="document.getElementById('ppdoc').contentEditable=(document.getElementById('ppdoc').isContentEditable?'false':'true');this.textContent=document.getElementById('ppdoc').isContentEditable?'💾 סיום עריכה':'✏️ עריכה'">✏️ עריכה</button>
+            <button class="btn g" onclick="window.print()">🖨️ ייצוא / הדפסה</button>
+          </div>
+        </div>
+        <div class="sm">טיוטת עבודה · בסיס למצגת ולנייר עמדה. ניתן לערוך ישירות ולהדפיס ל-PDF.</div>
+        <div id="ppdoc" style="line-height:1.7;color:var(--ink);font-size:15px">
+          <p style="color:var(--mut);font-size:13.5px;font-family:'Plex Mono'">מסמך פנימי · חסוי · אופקים AgroData Center</p>
+          <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:16px 0 6px">1 · הרקע והאתגר</h2>
+          <p>אופקים מבקשת להיות בירת האגרו-טק של ישראל. במקביל, רשויות שכנות מתחרות על אותו מרחב: רהט מציעה אזור תעשייה ותנאים למפעלים, שער הנגב הכריז על שאיפה להיות מעבדת אגרו-טק, ושדרות מציעה מענקים. השאלה אינה מי ייתן יותר סובסידיה — אלא מי יבנה אקוסיסטם שלא ניתן להעתקה.</p>
+          <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">2 · התובנה האסטרטגית</h2>
+          <p>עיר הופכת ל״בירה״ לא בכך שהיא מתחרה על מפעלים — אלא בכך שהיא <b>מנהיגה אזור</b>. המהלך המנצח: מיצוב אופקים כבירת <b>אשכול הנגב לאגרו-טק</b>, שבו אופקים היא המוח והידע, רהט הייצור, שער הנגב המעבדות ושדרות המימון. הפיכת המתחרים ללוויינים במקום ליריבים.</p>
+          <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">3 · שבעת צירי המנהיגות</h2>
+          <ol style="padding-inline-start:22px">
+            <li><b>הכרה רשמית ומותג</b> — הכרזה ממשלתית כמרכז אגרו-טק לאומי + רישום המותג ״בירת האגרו-טק״.</li>
+            <li><b>אירוע הדגל</b> — קיבוע הכנס הארצי (אגרו-משוב) באופקים כבית התחום.</li>
+            <li><b>מתחם חדשנות משולב</b> — חממה, אקסלרטור, חוות הדגמה, מעבדות ושדות פיילוט — לא פארק תעשייה.</li>
+            <li><b>חפיר הידע — AgroData</b> — אופקים כ״מקור האמת״ לדאטה, למאגר ולפורטל, בחיבור לאקדמיה.</li>
+            <li><b>צינור כישרון</b> — בית ספר רגבים, מסלולים אקדמיים, הסבות ומלגות מותנות-שירות.</li>
+            <li><b>הון חכם</b> — קרן אגרו-טק ייעודית, נחיתה רכה לחברות זרות וחיבור למשקיעים.</li>
+            <li><b>שער גלובלי</b> — הסכמי שיתוף עם מרכזי אגרו-טק בעולם ומשיכת מו״פ בין-לאומי.</li>
+          </ol>
+          <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">4 · תוכנית 90 יום</h2>
+          <p><b>ממחר – שבועיים (דגלים בלתי-הפיכים):</b> תביעת המותג ופתיחת תיק הכרה ממשלתית · כינוס מייסדי האשכול האזורי בהובלת אופקים · הכרזה על קיבוע אירוע הדגל באופקים.</p>
+          <p><b>90 יום (בניית החפיר):</b> חתימת 2 עוגנים בלעדיים (אוניברסיטה + חברת דגל) · השקת AgroData כאוטוריטת הידע הרשמית · פתיחת גרעין מתחם החדשנות הפיזי.</p>
+          <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">5 · מדוע המתחרים לא ישיגו</h2>
+          <ul style="padding-inline-start:22px">
+            <li><b>הכרה + מותג</b> = זוכה-יחיד, נתפס פעם אחת.</li>
+            <li><b>AgroData</b> = אפקט רשת שמתחזק עם השימוש — יתרון מצטבר של מקדים.</li>
+            <li><b>עוגן אקדמי/חברה</b> = בלעדיות חוזית, שנים להעתקה.</li>
+            <li><b>צינור כישרון</b> = יתרון רב-שנתי שאי אפשר לקצר.</li>
+            <li><b>הובלת האשכול</b> = ברגע שאתה הבירה, השכנים הם הלוויינים.</li>
+          </ul>
         </div>
       </div>
     </section>
