@@ -598,6 +598,47 @@ def ask_gemini(q):
             msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
         return {"answer": msg, "demo": True, "err": code}
 
+# --- auto-translation via Gemini (cached) ---
+_TR_LANGS = {"en":"English","de":"German","fr":"French","zh":"Simplified Chinese","ar":"Arabic","hi":"Hindi","ru":"Russian"}
+_TR_CACHE = {}   # (lang, text) -> translation, in-memory
+
+def translate_batch(texts, lang):
+    langname = _TR_LANGS.get(lang)
+    out = {}
+    if not langname or not GEMINI_KEY:
+        return {t: t for t in texts}
+    todo = []
+    for t in texts:
+        c = _TR_CACHE.get((lang, t))
+        if c is not None: out[t] = c
+        elif t.strip(): todo.append(t)
+        else: out[t] = t
+    url = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + GEMINI_KEY
+    CH = 40
+    for i in range(0, len(todo), CH):
+        chunk = todo[i:i+CH]
+        prompt = ("Translate each string in this JSON array from Hebrew to " + langname +
+                  ". Keep brand names and acronyms as-is (AgroData, AgroBank, POC, SDG, NDVI, FAO, AI, IoT, GIS, World Bank, etc.). "
+                  "Return ONLY a JSON array of the translated strings, same length and same order, nothing else.\n" +
+                  json.dumps(chunk, ensure_ascii=False))
+        body = json.dumps({"contents": [{"parts": [{"text": prompt}]}],
+                           "generationConfig": {"temperature": 0.2, "maxOutputTokens": 4096, "thinkingConfig": {"thinkingBudget": 0}}}).encode("utf-8")
+        try:
+            req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+            d = json.load(urllib.request.urlopen(req, timeout=45))
+            txt = d["candidates"][0]["content"]["parts"][0]["text"].strip()
+            txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", txt).strip()
+            arr = json.loads(txt)
+            for src, tr in zip(chunk, arr):
+                if isinstance(tr, str) and tr.strip():
+                    _TR_CACHE[(lang, src)] = tr; out[src] = tr
+                else:
+                    out[src] = src
+        except Exception as e:
+            print("translate_batch fail:", e)
+            for src in chunk: out[src] = src
+    return out
+
 def ask_gemini_media(q, media):
     """מולטימודאל — Gemini רואה תמונות/איורים/תרשימים/וידאו. q הוא ההנחיה המלאה (בלי עטיפת מערכת)."""
     if not GEMINI_KEY:
@@ -1662,6 +1703,24 @@ class H(http.server.SimpleHTTPRequestHandler):
             except Exception: pass
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/api/translate"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            lang = (data.get("lang") or "").strip()
+            texts = [t for t in (data.get("texts") or []) if isinstance(t, str)][:1200]
+            try:
+                m = translate_batch(texts, lang)
+            except Exception as _e:
+                print("translate endpoint fail:", _e); m = {t: t for t in texts}
+            body = json.dumps({"ok": True, "map": m}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/ask"):
             try:
                 n = int(self.headers.get("Content-Length", 0))
