@@ -236,7 +236,7 @@ function scoreChallenges(){
   var sh=document.getElementById('stHot');if(sh&&CH[hi])sh.textContent=CH[hi].t;
  });
 }
-function pullLiveChallenges(){
+function pullLiveChallenges(auto){
  var btn=document.getElementById('chpullBtn');btn.textContent='🔄 שואב מהחדשות…';btn.disabled=true;
  function reset(){btn.textContent='🔄 שאב אתגרים חדשים מהחדשות';btn.disabled=false;}
  Promise.all([
@@ -247,7 +247,7 @@ function pullLiveChallenges(){
   var prompt='להלן כותרות חדשות אגרו-טק. זהה 4 אתגרים/מגמות בולטים ומתפתחים. לכל אתגר שורה בפורמט המדויק: כותרת קצרה (2-4 מילים) | תיאור במשפט אחד | מילת-מפתח עברית | מילת-מפתח אנגלית. שורה אחת לכל אתגר, בלי מספור ובלי טקסט נוסף. כותרות: '+titles;
   fetch('/api/ask?engine=gemini&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){
    reset();
-   if(j.demo){alert('שאיבת אתגרים חיה דורשת את השרת החי (AI). בקרו ב-www.agrodata.co.il');return;}
+   if(j.demo){if(!auto)alert('שאיבת אתגרים חיה דורשת את השרת החי (AI). בקרו ב-www.agrodata.co.il');return;}
    var lines=(j.answer||'').split('\n').filter(function(l){return l.split('|').length>=3;});
    var colors=['#c4306b','#3a7d44','#2b8fb0','#c99a2e','#7a5cc0','#158a94','#a05a2c'],added=0;
    lines.slice(0,4).forEach(function(l,idx){
@@ -257,11 +257,12 @@ function pullLiveChallenges(){
     CH.push({k:'live'+idx+(CH.length),c:colors[CH.length%colors.length],t:t,d:p[1]||'',kw:[p[2],p[3],t].filter(Boolean),live:true});added++;
    });
    render();scoreChallenges();
-   if(!added)alert('לא נמצאו אתגרים חדשים כרגע — נסו שוב מאוחר יותר.');
+   if(!added&&!auto)alert('לא נמצאו אתגרים חדשים כרגע — נסו שוב מאוחר יותר.');
   }).catch(function(){reset();});
  });
 }
 scoreChallenges();setInterval(scoreChallenges,300000);
+setInterval(function(){pullLiveChallenges(true);},3600000);  // auto-pull new challenges from news via AI, once an hour
 // generate ideas via AgroMind (Claude)
 var CUR=-1,CURQ='',CURTITLE='',CURKW='',CUREN='',ITAB='ideas';
 var ITABS=[['ideas','💡 רעיונות','#8fe6ad'],['gap','🎯 מפת פערים','#f0c14b'],['who','🏢 מי כבר עושה','#5ab0d0'],['trends','📈 מגמות ומחקר','#b39ae0'],['finance','💰 מימון','#3ec9a0']];
