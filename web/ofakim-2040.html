@@ -120,6 +120,11 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
       <button class="btn g" onclick="ask()" id="askBtn">שלח לניתוח ←</button>
     </div>
     <div class="out" id="out"></div>
+    <div class="row2" id="refineRow" style="display:none;flex-wrap:wrap">
+      <input id="refineReq" placeholder="שכללו או הוסיפו קומה — למשל: הרחיבו את סעיף התקציב, הוסיפו ניתוח סיכונים…" style="flex:1;min-width:220px" onkeydown="if(event.key==='Enter')refine()">
+      <button class="btn g" onclick="refine()" id="refineBtn">↑ שכלל / הוסף קומה</button>
+      <span id="verBar" style="width:100%;font-size:12.5px;color:#5c6f63;display:none;margin-top:2px"></span>
+    </div>
     <div class="row2" id="saveRow" style="display:none">
       <input id="outTitle" placeholder="כותרת לתוצר (לשמירה בספרייה)" style="flex:1;min-width:200px">
       <button class="btn o" onclick="saveOutput()">💾 שמור כתוצר</button>
@@ -177,9 +182,42 @@ function ask(){
    .then(function(r){return r.json();}).then(function(j){
      LASTOUT=j.answer||j.error||'לא התקבלה תשובה.';
      out.textContent=LASTOUT;
+     HISTORY=[LASTOUT];updateVer();
+     document.getElementById('refineRow').style.display='flex';
      document.getElementById('saveRow').style.display='flex';
      document.getElementById('askBtn').disabled=false;
    }).catch(function(){out.textContent='שגיאה בחיבור. נסו שוב.';document.getElementById('askBtn').disabled=false;});
+}
+var HISTORY=[];
+function updateVer(){
+  var vb=document.getElementById('verBar');
+  if(HISTORY.length<=1){vb.style.display='none';return;}
+  vb.style.display='block';
+  vb.innerHTML='📚 גרסה '+HISTORY.length+' · <a href="#" onclick="undoVer();return false" style="color:#c0392b;font-weight:700">↩︎ חזרה לגרסה הקודמת</a>';
+}
+function undoVer(){
+  if(HISTORY.length<=1)return;
+  HISTORY.pop();
+  LASTOUT=HISTORY[HISTORY.length-1];
+  document.getElementById('out').textContent=LASTOUT;
+  updateVer();
+}
+function refine(){
+  var req=document.getElementById('refineReq').value.trim();
+  if(!req){document.getElementById('refineReq').focus();return;}
+  if(!LASTOUT)return;
+  var out=document.getElementById('out');out.className='out show';out.textContent='⏳ משכלל…';
+  document.getElementById('refineBtn').disabled=true;
+  var p='זהו הפלט הקודם שיצרת:\n\n"""\n'+LASTOUT+'\n"""\n\nבקשת שיפור/הרחבה מהמשתמש: '+req+'\n\nהחזר גרסה משופרת ומלאה של הפלט (לא רק את התוספת), בעברית, מסודרת בנקודות, קצרה וממוקדת. שמור על מה שכבר טוב, ושפר/הרחב לפי הבקשה.';
+  fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q:p,engine:ENG})})
+   .then(function(r){return r.json();}).then(function(j){
+     LASTOUT=j.answer||j.error||LASTOUT;
+     out.textContent=LASTOUT;
+     HISTORY.push(LASTOUT);
+     document.getElementById('refineReq').value='';
+     document.getElementById('refineBtn').disabled=false;
+     updateVer();
+   }).catch(function(){out.textContent=LASTOUT;document.getElementById('refineBtn').disabled=false;});
 }
 function saveOutput(){
   var t=document.getElementById('outTitle').value.trim()||'תוצר AI · '+new Date().toLocaleDateString('he-IL');
