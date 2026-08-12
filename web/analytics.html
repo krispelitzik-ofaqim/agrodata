@@ -185,4 +185,5 @@ function askA(preset){
  fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){out.textContent=j.answer||'—';}).catch(function(){out.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';});
 }
 </script>
+<script src="autotranslate.js"></script>
 </body></html>

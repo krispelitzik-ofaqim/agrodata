@@ -128,4 +128,5 @@ const FB=[["all","הכל","transparent"]].concat(Object.keys(SC).map(k=>[k,SC[k]
 document.getElementById('filters').innerHTML=FB.map((f,i)=>`<button class="fbtn ${i===0?'on':''}" onclick="filt('${f[0]}',this)">${f[2]!=='transparent'?`<span class="sw" style="background:${f[2]}"></span>`:''}${f[1]}</button>`).join('');
 draw();
 </script>
+<script src="autotranslate.js"></script>
 </body></html>
