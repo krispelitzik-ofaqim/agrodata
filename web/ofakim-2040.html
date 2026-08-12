@@ -89,7 +89,8 @@ label.fld{display:block;font-size:13px;font-weight:700;color:var(--mut);margin:9
 </div>
 <script>
 function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040'){try{sessionStorage.setItem('of2040',1)}catch(e){}document.getElementById('gate').style.display='none';}else{document.getElementById('gerr').textContent='סיסמה שגויה';}}
-(function(){try{var q=new URLSearchParams(location.search);if(q.get('admin')==='1'||sessionStorage.getItem('of2040')){sessionStorage.setItem('of2040',1);document.getElementById('gate').style.display='none';}}catch(e){}})();
+var VIEW=false;
+(function(){try{var q=new URLSearchParams(location.search);VIEW=(q.get('view')==='1');if(VIEW||q.get('admin')==='1'||sessionStorage.getItem('of2040')){if(!VIEW)sessionStorage.setItem('of2040',1);document.getElementById('gate').style.display='none';}}catch(e){}})();
 </script>
 <div class="topbar"><div class="wrap"><div class="nav">
   <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:23px;color:#fff">Agro<b>Data</b></span></a>
@@ -103,8 +104,10 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
     <div class="sub">מרחב העבודה המשותף של חברי התהליך באופקים — העלאת מסמכים, מצגות וכל חומר רלוונטי, ניתוח ותובנות בעזרת ה-AI של AgroData, והצגת התוצרים במקום אחד.</div>
   </div>
 
+  <div id="viewBanner" style="display:none;background:linear-gradient(135deg,#1c6b45,#c79a2e);color:#fff;border-radius:13px;padding:14px 18px;margin:0 0 20px;font-family:Rubik;font-weight:700">👁️ מאגר הידע של התהליך האסטרטגי — <span style="font-weight:500;opacity:.95">לצפייה בלבד. להשתתפות בניתוח ובעריכה — כניסת חברי צוות.</span></div>
+
   <!-- AI WORKSPACE -->
-  <div class="sec"><div class="card">
+  <div class="sec" id="analysisSec"><div class="card">
     <h2>🧠 מרחב הניתוח · AI</h2>
     <div class="cs">כתבו נושא/שאלה, או בחרו כלי מהיר — קבלו ניתוח, תובנות ורעיונות. ניתן לשמור כל תוצר לספרייה.</div>
     <div class="aitools">
@@ -167,7 +170,7 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
 
   <!-- LIBRARY -->
   <div class="sec"><div class="card">
-    <h2 style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">🗂️ ספריית החומרים והתוצרים <button class="btn g" onclick="openAddModal()" style="font-size:13px;padding:7px 12px">➕ הוסף חומר</button></h2>
+    <h2 style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">🗂️ ספריית החומרים והתוצרים <button class="btn g" id="addMatBtn" onclick="openAddModal()" style="font-size:13px;padding:7px 12px">➕ הוסף חומר</button></h2>
     <div class="cs">כל החומרים שהעלו חברי התהליך — מסוננים לפי סוג.</div>
     <div class="filters" id="filters"></div>
     <div id="docs"><div class="empty">טוען…</div></div>
@@ -308,12 +311,18 @@ function renderDocs(){
       '<td>'+esc(d.by||'—')+'</td>'+
       '<td style="white-space:nowrap;font-size:12.5px;color:var(--mut)" class="mono">'+when+'</td>'+
       '<td>'+linkCell+'</td>'+
-      '<td><span class="tdel" onclick="delDoc(\''+d.id+'\')">🗑</span></td>'+
+      (VIEW?'':'<td><span class="tdel" onclick="delDoc(\''+d.id+'\')">🗑</span></td>')+
     '</tr>';
   }).join('');
-  el.innerHTML='<div class="dwrap"><table class="dtable"><thead><tr><th>סוג</th><th>כותרת</th><th>עורך</th><th>תאריך</th><th>מסמך</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  el.innerHTML='<div class="dwrap"><table class="dtable"><thead><tr><th>סוג</th><th>כותרת</th><th>עורך</th><th>תאריך</th><th>מסמך</th>'+(VIEW?'':'<th></th>')+'</tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+if(VIEW){try{
+  var a=document.getElementById('analysisSec');if(a)a.style.display='none';
+  var b=document.getElementById('addMatBtn');if(b)b.style.display='none';
+  var vb=document.getElementById('viewBanner');if(vb)vb.style.display='block';
+  var cs=document.querySelector('#docs');
+}catch(e){}}
 loadDocs();
 </script>
 </body></html>
