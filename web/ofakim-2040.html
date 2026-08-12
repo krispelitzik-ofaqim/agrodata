@@ -117,6 +117,7 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
     <div class="row2">
       <span class="hint">מנוע:</span>
       <div class="eng"><span class="echip on" data-e="gemini" onclick="pickEng(this)">Gemini</span><span class="echip" data-e="claude" onclick="pickEng(this)">Claude</span></div>
+      <button class="btn o" onclick="openLibPicker()" id="libPickBtn" title="בחרו תוצר קיים מהספרייה כבסיס להמשך הניתוח">📎 מהספרייה</button>
       <button class="btn g" onclick="ask()" id="askBtn">שלח לניתוח ←</button>
     </div>
     <div class="out" id="out"></div>
@@ -132,6 +133,15 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
   </div></div>
 
   <!-- ADD MATERIAL -->
+  <div id="libPicker" style="display:none;position:fixed;inset:0;background:rgba(20,40,30,.55);z-index:9999;align-items:flex-start;justify-content:center;overflow:auto;padding:40px 16px">
+   <div class="card" style="max-width:640px;width:100%;position:relative;margin:0">
+    <button onclick="closeLibPicker()" title="סגור" style="position:absolute;top:10px;left:14px;border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:#5c6f63">×</button>
+    <h2>📎 בחרו תוצר מהספרייה</h2>
+    <div class="cs">התוכן ייטען אל תיבת הניתוח למעלה — כבסיס להמשך חשיבה.</div>
+    <div id="libPickList" style="margin-top:10px;max-height:60vh;overflow:auto"></div>
+   </div>
+  </div>
+
   <div id="addModal" style="display:none;position:fixed;inset:0;background:rgba(20,40,30,.55);z-index:9999;align-items:flex-start;justify-content:center;overflow:auto;padding:40px 16px">
    <div class="card" style="max-width:760px;width:100%;position:relative;margin:0">
     <button onclick="closeAddModal()" title="סגור" style="position:absolute;top:10px;left:14px;border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:#5c6f63">×</button>
@@ -228,6 +238,28 @@ function saveOutput(){
     document.getElementById('outTitle').value='';loadDocs();
   });
 }
+function openLibPicker(){
+  var box=document.getElementById('libPickList');
+  var docs=(DOCS||[]).filter(function(d){return /docs\.google\.com\/document/.test(d.url||'');});
+  if(!docs.length){box.innerHTML='<div class="empty">אין עדיין תוצרים (מסמכים) בספרייה.</div>';}
+  else{box.innerHTML=docs.map(function(d){
+    return '<div onclick="pickFromLib(\''+d.id+'\',this)" style="padding:10px 12px;border:1px solid #dbe8df;border-radius:10px;margin-bottom:8px;cursor:pointer;background:#fff">'
+      +'<div style="font-weight:700;color:#1c6b45">'+esc(d.title||'')+'</div>'
+      +'<div style="font-size:12px;color:#5c6f63">'+esc(d.cat||'תוצר')+' · '+(d.ts?new Date(d.ts*1000).toLocaleDateString('he-IL'):'')+'</div></div>';
+  }).join('');}
+  document.getElementById('libPicker').style.display='flex';
+}
+function closeLibPicker(){document.getElementById('libPicker').style.display='none';}
+function pickFromLib(id,el){
+  if(el){el.style.pointerEvents='none';el.style.opacity='.55';}
+  fetch('/api/docs?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(j){
+    var c=(j&&j.content)||'';
+    var q=document.getElementById('q');
+    q.value='על בסיס התוצר הבא מהספרייה, המשך והעמק את הניתוח:\n\n"""\n'+c+'\n"""\n\n';
+    closeLibPicker();q.focus();q.scrollIntoView({behavior:'smooth',block:'center'});
+  }).catch(function(){alert('שגיאה בטעינת התוכן');closeLibPicker();});
+}
+document.addEventListener('click',function(e){if(e.target&&e.target.id==='libPicker')closeLibPicker();});
 function openAddModal(){document.getElementById('addModal').style.display='flex';document.getElementById('addMsg').textContent='';}
 function closeAddModal(){document.getElementById('addModal').style.display='none';}
 document.addEventListener('click',function(e){if(e.target&&e.target.id==='addModal')closeAddModal();});

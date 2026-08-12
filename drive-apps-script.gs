@@ -1,6 +1,7 @@
-// AgroData -> Google Drive bridge (Apps Script Web App)
+// AgroData -> Google Drive bridge (Apps Script Web App) — v2
 // Saves each deliverable as a readable Google Doc in your Agro-Tech folder,
-// and returns the list back to the site library. Runs as you.
+// lists them for the site, returns a single doc's TEXT (for feeding back into
+// the analysis), and stores a category/topic per file. Runs as you.
 
 var FOLDER_ID = '1njNNrpOD5DFySYX-VaRZ5WFS-MlnU15Q';
 
@@ -26,6 +27,7 @@ function doPost(e) {
     var file = DriveApp.getFileById(doc.getId());
     folder.addFile(file);
     try { DriveApp.getRootFolder().removeFile(file); } catch (x) {}
+    if (d.cat) { try { file.setDescription('cat:' + d.cat); } catch (x) {} }
 
     return _json({ ok: true, id: file.getId(), url: file.getUrl(), title: title });
   } catch (err) {
@@ -35,15 +37,26 @@ function doPost(e) {
 
 function doGet(e) {
   try {
+    // single doc's text content (for pulling back into the analysis)
+    var id = e && e.parameter && e.parameter.id;
+    if (id) {
+      var text = '';
+      try { text = DocumentApp.openById(id).getBody().getText(); } catch (x) { text = ''; }
+      return _json({ ok: true, id: id, content: text });
+    }
+
     var folder = DriveApp.getFolderById(FOLDER_ID);
     var it = folder.getFiles(), out = [];
     while (it.hasNext()) {
       var f = it.next();
+      var cat = 'תוצר', desc = '';
+      try { desc = f.getDescription() || ''; } catch (x) {}
+      if (desc.indexOf('cat:') === 0) cat = desc.substring(4);
       out.push({
         id: f.getId(),
         title: f.getName(),
         url: f.getUrl(),
-        cat: 'deliverable',
+        cat: cat,
         by: 'AgroData AI',
         ts: Math.floor(f.getDateCreated().getTime() / 1000)
       });

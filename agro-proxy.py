@@ -282,6 +282,13 @@ def drive_send(payload):
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode("utf-8", "replace"))
 
+def drive_content(doc_id):
+    sep = "&" if "?" in DRIVE_WEBAPP_URL else "?"
+    url = DRIVE_WEBAPP_URL + sep + "id=" + urllib.parse.quote(doc_id)
+    req = urllib.request.Request(url, headers={"User-Agent": "AgroData"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        return json.loads(r.read().decode("utf-8", "replace"))
+
 def save_docfile(dataurl, name):
     try:
         m = re.match(r"data:([^;]+);base64,(.+)$", dataurl or "", re.S)
@@ -1445,6 +1452,19 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/docs"):
+            _q = urllib.parse.urlparse(self.path).query
+            _id = urllib.parse.parse_qs(_q).get("id", [""])[0]
+            if _id:
+                try:
+                    _out = drive_content(_id)
+                except Exception as _e:
+                    _out = {"ok": False, "content": "", "error": str(_e)[:120]}
+                _b = json.dumps(_out, ensure_ascii=False).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers(); self.wfile.write(_b); return
             try:
                 _docs = drive_list()
             except Exception as _e:
