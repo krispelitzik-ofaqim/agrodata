@@ -132,7 +132,9 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
   </div></div>
 
   <!-- ADD MATERIAL -->
-  <div class="sec"><div class="card">
+  <div id="addModal" style="display:none;position:fixed;inset:0;background:rgba(20,40,30,.55);z-index:9999;align-items:flex-start;justify-content:center;overflow:auto;padding:40px 16px">
+   <div class="card" style="max-width:760px;width:100%;position:relative;margin:0">
+    <button onclick="closeAddModal()" title="סגור" style="position:absolute;top:10px;left:14px;border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:#5c6f63">×</button>
     <h2>📎 הוספת חומר לספרייה</h2>
     <div class="cs">כל חבר בתהליך יכול להוסיף מסמך, מצגת או מחקר — בקישור (Drive/דרופבוקס) או בהעלאת קובץ.</div>
     <div class="grid2">
@@ -154,7 +156,7 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
 
   <!-- LIBRARY -->
   <div class="sec"><div class="card">
-    <h2>🗂️ ספריית החומרים והתוצרים</h2>
+    <h2 style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">🗂️ ספריית החומרים והתוצרים <button class="btn g" onclick="openAddModal()" style="font-size:13px;padding:7px 12px">➕ הוסף חומר</button></h2>
     <div class="cs">כל החומרים שהעלו חברי התהליך — מסוננים לפי סוג.</div>
     <div class="filters" id="filters"></div>
     <div id="docs"><div class="empty">טוען…</div></div>
@@ -226,6 +228,9 @@ function saveOutput(){
     document.getElementById('outTitle').value='';loadDocs();
   });
 }
+function openAddModal(){document.getElementById('addModal').style.display='flex';document.getElementById('addMsg').textContent='';}
+function closeAddModal(){document.getElementById('addModal').style.display='none';}
+document.addEventListener('click',function(e){if(e.target&&e.target.id==='addModal')closeAddModal();});
 function addDoc(){
   var title=document.getElementById('dTitle').value.trim();
   if(!title){document.getElementById('addMsg').textContent='נא להזין כותרת';return;}
@@ -239,7 +244,7 @@ function addDoc(){
 function finish(rec){
   post(rec).then(function(j){
     document.getElementById('addBtn').disabled=false;
-    if(j&&j.ok){['dTitle','dBy','dLink','dNote'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('dFile').value='';document.getElementById('addMsg').textContent='✓ נוסף';loadDocs();}
+    if(j&&j.ok){['dTitle','dBy','dLink','dNote'].forEach(function(id){document.getElementById(id).value='';});document.getElementById('dFile').value='';document.getElementById('addMsg').textContent='✓ נוסף';loadDocs();closeAddModal();}
     else document.getElementById('addMsg').textContent='שגיאה';
   });
 }
