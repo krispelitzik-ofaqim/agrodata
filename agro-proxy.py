@@ -321,6 +321,96 @@ def drive_content(doc_id):
             last = e
     raise last if last else RuntimeError("drive_content failed")
 
+# --- visit counter: fast in-memory count, persisted to Apps Script Script Properties ---
+_VISITS_LOCK = threading.Lock()
+_VISITS_TOTAL = 0        # authoritative total (loaded from Drive at startup)
+_VISITS_PENDING = 0      # hits counted but not yet flushed to Drive
+_VISITS_TODAY = 0        # best-effort, in-memory only (resets on server restart)
+_VISITS_TODAY_DAY = ""
+
+def drive_visits_probe():
+    """Return (supported, total). supported is True only once the Apps Script stats
+    endpoint is deployed — an old script echoes the file list ('docs'), so we refuse
+    to POST visits_add against it (that would create junk Docs)."""
+    sep = "&" if "?" in DRIVE_WEBAPP_URL else "?"
+    url = DRIVE_WEBAPP_URL + sep + "stats=1"
+    last = None
+    for _ in range(5):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "AgroData"})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                j = json.loads(r.read().decode("utf-8", "replace"))
+            if "docs" in j:            # old script ignored stats=1 and listed files
+                return (False, 0)
+            return (True, int(j.get("total", 0)))
+        except Exception as e:
+            last = e
+    raise last if last else RuntimeError("visits_probe failed")
+
+def drive_visits_add(n):
+    data = json.dumps({"action": "visits_add", "n": int(n)}).encode("utf-8")
+    last = None
+    for _ in range(4):
+        try:
+            req = urllib.request.Request(DRIVE_WEBAPP_URL, data=data,
+                headers={"Content-Type": "application/json", "User-Agent": "AgroData"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return int(json.loads(r.read().decode("utf-8", "replace")).get("total", 0))
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code != 404:
+                raise
+    raise last if last else RuntimeError("visits_add failed")
+
+def visits_bump():
+    global _VISITS_TOTAL, _VISITS_PENDING, _VISITS_TODAY, _VISITS_TODAY_DAY
+    with _VISITS_LOCK:
+        d = datetime.datetime.now().strftime("%Y-%m-%d")
+        if d != _VISITS_TODAY_DAY:
+            _VISITS_TODAY_DAY = d; _VISITS_TODAY = 0
+        _VISITS_TOTAL += 1
+        _VISITS_PENDING += 1
+        _VISITS_TODAY += 1
+
+def _visits_flusher():
+    global _VISITS_TOTAL, _VISITS_PENDING
+    supported = False
+    try:
+        supported, t = drive_visits_probe()
+        if supported:
+            with _VISITS_LOCK:
+                _VISITS_TOTAL = t + _VISITS_PENDING
+            print("visits loaded from Drive:", t)
+        else:
+            print("visits: Apps Script stats endpoint not deployed yet — counting in memory only, no writes")
+    except Exception as e:
+        print("visits initial probe failed:", e)
+    while True:
+        time.sleep(45)
+        if not supported:                      # keep probing until the script is redeployed
+            try:
+                supported, t = drive_visits_probe()
+                if supported:
+                    with _VISITS_LOCK:
+                        _VISITS_TOTAL = t + _VISITS_PENDING
+                    print("visits: stats endpoint now live, base total =", t)
+            except Exception:
+                pass
+            if not supported:
+                continue
+        with _VISITS_LOCK:
+            n = _VISITS_PENDING
+        if n <= 0:
+            continue
+        try:
+            total = drive_visits_add(n)
+            with _VISITS_LOCK:
+                _VISITS_PENDING -= n
+                if total > _VISITS_TOTAL:
+                    _VISITS_TOTAL = total
+        except Exception as e:
+            print("visits flush failed, will retry:", e)   # keep pending for next cycle
+
 def repo_context(question, max_docs=3):
     """Pull the most relevant deliverables from the Drive repository as context for the AI."""
     try:
@@ -1549,6 +1639,19 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/stats"):
+            with _VISITS_LOCK:
+                out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY}
+            body = json.dumps(out).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        _pp = urllib.parse.urlparse(self.path).path
+        if (_pp == "/" or _pp.endswith(".html")) and _pp != "/admin.html":
+            try: visits_bump()
+            except Exception: pass
         return super().do_GET()
     def do_POST(self):
         if self.path.startswith("/api/ask"):
@@ -1692,6 +1795,7 @@ class H(http.server.SimpleHTTPRequestHandler):
         self.send_response(404); self.end_headers()
 
 socketserver.ThreadingTCPServer.allow_reuse_address = True
+threading.Thread(target=_visits_flusher, daemon=True).start()
 with socketserver.ThreadingTCPServer((HOST, PORT), H) as httpd:
     print(f"AgroData live server → http://localhost:{PORT}/agro-stock.html")
     httpd.serve_forever()

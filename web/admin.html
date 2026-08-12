@@ -149,6 +149,26 @@ tr:last-child td{border-bottom:0}
 
     <!-- DASHBOARD -->
     <section class="screen on" id="s-dashboard">
+      <div class="row"><div class="card" style="grid-column:1/-1;background:linear-gradient(120deg,#1c6b45,#2e9e63);color:#fff;border:0">
+        <h3 style="color:#fff">👁️ כניסות לאתר <span class="sm" style="color:rgba(255,255,255,.82)">· נתונים אמיתיים · נשמר בדרייב</span></h3>
+        <div style="display:flex;gap:48px;flex-wrap:wrap;margin-top:12px">
+          <div><div style="font-size:42px;font-weight:800;font-family:Rubik;line-height:1" id="visTotal">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">סה״כ כניסות</div></div>
+          <div><div style="font-size:42px;font-weight:800;font-family:Rubik;line-height:1" id="visToday">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">היום</div></div>
+        </div>
+      </div></div>
+      <script>
+      (function(){
+        function fmt(n){return (n||0).toLocaleString('he-IL');}
+        function load(){
+          fetch('/api/stats',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+            if(!j||!j.ok)return;
+            document.getElementById('visTotal').textContent=fmt(j.total);
+            document.getElementById('visToday').textContent=fmt(j.today);
+          }).catch(function(){});
+        }
+        load(); setInterval(load,30000);
+      })();
+      </script>
       <div class="kpis" id="kpis"></div>
       <div class="row">
         <div class="card"><h3>תנועה שבועית</h3><div class="sm">מבקרים ייחודים · 7 ימים אחרונים</div><svg id="area" viewBox="0 0 800 240" style="width:100%;height:auto"></svg></div>
