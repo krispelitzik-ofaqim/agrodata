@@ -269,25 +269,57 @@ DRIVE_WEBAPP_URL = os.environ.get(
     "DRIVE_WEBAPP_URL",
     "https://script.google.com/macros/s/AKfycbw-Vn-JNILrtXtyGIi1xZmbswdVqpA1vWzO1RpkQcjPYXvWDzK1RiXsh0BAW-JDcAnc_w/exec")
 
+# The Apps Script /exec endpoint 404s intermittently (Google routing), so every
+# read retries a few times before giving up, and drive_list keeps a last-known-good
+# cache in memory so a momentary failure never blanks the library.
+_DRIVE_CACHE = []
+
 def drive_list():
-    req = urllib.request.Request(DRIVE_WEBAPP_URL, headers={"User-Agent": "AgroData"})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        j = json.loads(r.read().decode("utf-8", "replace"))
-    return j.get("docs", [])
+    global _DRIVE_CACHE
+    last = None
+    for _ in range(5):
+        try:
+            req = urllib.request.Request(DRIVE_WEBAPP_URL, headers={"User-Agent": "AgroData"})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                j = json.loads(r.read().decode("utf-8", "replace"))
+            docs = j.get("docs", [])
+            if docs:
+                _DRIVE_CACHE = docs
+            return docs
+        except Exception as e:
+            last = e
+    if _DRIVE_CACHE:
+        print("drive_list retries failed, serving cache:", last)
+        return _DRIVE_CACHE
+    raise last if last else RuntimeError("drive_list failed")
 
 def drive_send(payload):
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(DRIVE_WEBAPP_URL, data=data,
-        headers={"Content-Type": "application/json", "User-Agent": "AgroData"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode("utf-8", "replace"))
+    last = None
+    for _ in range(4):
+        try:
+            req = urllib.request.Request(DRIVE_WEBAPP_URL, data=data,
+                headers={"Content-Type": "application/json", "User-Agent": "AgroData"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.loads(r.read().decode("utf-8", "replace"))
+        except urllib.error.HTTPError as e:
+            last = e
+            if e.code != 404:   # only a 404 (routing) is safe to retry;
+                raise           # anything else may mean the doc was already created
+    raise last if last else RuntimeError("drive_send failed")
 
 def drive_content(doc_id):
     sep = "&" if "?" in DRIVE_WEBAPP_URL else "?"
     url = DRIVE_WEBAPP_URL + sep + "id=" + urllib.parse.quote(doc_id)
-    req = urllib.request.Request(url, headers={"User-Agent": "AgroData"})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.loads(r.read().decode("utf-8", "replace"))
+    last = None
+    for _ in range(5):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "AgroData"})
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return json.loads(r.read().decode("utf-8", "replace"))
+        except Exception as e:
+            last = e
+    raise last if last else RuntimeError("drive_content failed")
 
 def repo_context(question, max_docs=3):
     """Pull the most relevant deliverables from the Drive repository as context for the AI."""
