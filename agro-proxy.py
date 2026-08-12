@@ -327,6 +327,8 @@ _VISITS_TOTAL = 0        # authoritative total (loaded from Drive at startup)
 _VISITS_PENDING = 0      # hits counted but not yet flushed to Drive
 _VISITS_TODAY = 0        # best-effort, in-memory only (resets on server restart)
 _VISITS_TODAY_DAY = ""
+_UNIQUE_TOTAL = set()    # distinct visitor IPs since server start (in-memory)
+_UNIQUE_TODAY = set()    # distinct visitor IPs today (in-memory)
 
 def drive_visits_probe():
     """Return (supported, total). supported is True only once the Apps Script stats
@@ -362,15 +364,18 @@ def drive_visits_add(n):
                 raise
     raise last if last else RuntimeError("visits_add failed")
 
-def visits_bump():
+def visits_bump(ip=None):
     global _VISITS_TOTAL, _VISITS_PENDING, _VISITS_TODAY, _VISITS_TODAY_DAY
     with _VISITS_LOCK:
         d = datetime.datetime.now().strftime("%Y-%m-%d")
         if d != _VISITS_TODAY_DAY:
-            _VISITS_TODAY_DAY = d; _VISITS_TODAY = 0
+            _VISITS_TODAY_DAY = d; _VISITS_TODAY = 0; _UNIQUE_TODAY.clear()
         _VISITS_TOTAL += 1
         _VISITS_PENDING += 1
         _VISITS_TODAY += 1
+        if ip:
+            _UNIQUE_TOTAL.add(ip)
+            _UNIQUE_TODAY.add(ip)
 
 def _visits_flusher():
     global _VISITS_TOTAL, _VISITS_PENDING
@@ -1641,7 +1646,8 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/stats"):
             with _VISITS_LOCK:
-                out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY}
+                out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY,
+                       "uniqueTotal": len(_UNIQUE_TOTAL), "uniqueToday": len(_UNIQUE_TODAY)}
             body = json.dumps(out).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -1650,7 +1656,9 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         _pp = urllib.parse.urlparse(self.path).path
         if (_pp == "/" or _pp.endswith(".html")) and _pp != "/admin.html":
-            try: visits_bump()
+            try:
+                _ip = (self.headers.get("X-Forwarded-For") or "").split(",")[0].strip() or (self.client_address[0] if self.client_address else "")
+                visits_bump(_ip)
             except Exception: pass
         return super().do_GET()
     def do_POST(self):
