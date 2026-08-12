@@ -115,8 +115,8 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
     </div>
     <textarea id="q" rows="4" placeholder="לדוגמה: נתח את יתרונות אופקים כבירת אגרו-טק מול הרשויות השכנות, והצע 3 מהלכים לרבעון הקרוב."></textarea>
     <div class="row2">
-      <span class="hint">מנוע:</span>
-      <div class="eng"><span class="echip on" data-e="gemini" onclick="pickEng(this)">Gemini</span><span class="echip" data-e="claude" onclick="pickEng(this)">Claude</span></div>
+      <span class="hint" style="display:none">מנוע:</span>
+      <div class="eng" style="display:none"><span class="echip on" data-e="gemini" onclick="pickEng(this)">Gemini</span><span class="echip" data-e="claude" onclick="pickEng(this)">Claude</span></div>
       <label style="display:flex;align-items:center;gap:5px;font-size:13px;color:#1c6b45;cursor:pointer;user-select:none" title="ה-AI יקרא את התוצרים הרלוונטיים מהמאגר ויענה על בסיסם"><input type="checkbox" id="repoToggle" style="width:16px;height:16px"> 🧠 כלול את המאגר</label>
       <button class="btn o" onclick="openLibPicker()" id="libPickBtn" title="בחרו תוצר קיים מהספרייה כבסיס להמשך הניתוח">📎 מהספרייה</button>
       <button class="btn g" onclick="ask()" id="askBtn">שלח לניתוח ←</button>
