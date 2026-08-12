@@ -307,13 +307,11 @@ function renderDocs(){
       '<td>'+titleCell+'</td>'+
       '<td>'+esc(d.by||'—')+'</td>'+
       '<td style="white-space:nowrap;font-size:12.5px;color:var(--mut)" class="mono">'+when+'</td>'+
-      '<td>'+stBadge(d.status)+'</td>'+
-      '<td><span class="dnote" title="'+noteAttr+'">'+(d.note?esc(d.note):'<span style="color:var(--mut)">—</span>')+'</span></td>'+
       '<td>'+linkCell+'</td>'+
       '<td><span class="tdel" onclick="delDoc(\''+d.id+'\')">🗑</span></td>'+
     '</tr>';
   }).join('');
-  el.innerHTML='<div class="dwrap"><table class="dtable"><thead><tr><th>סוג</th><th>כותרת</th><th>עורך</th><th>תאריך</th><th>סטטוס</th><th>הערה</th><th>מסמך</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  el.innerHTML='<div class="dwrap"><table class="dtable"><thead><tr><th>סוג</th><th>כותרת</th><th>עורך</th><th>תאריך</th><th>מסמך</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
 }
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 loadDocs();
