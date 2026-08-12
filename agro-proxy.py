@@ -264,6 +264,24 @@ def save_docs(items):
     with open(DOCS_FILE, "w", encoding="utf-8") as f:
         json.dump(items, f, ensure_ascii=False)
 
+# ---- Google Drive bridge (Apps Script Web App) — persistent deliverables ----
+DRIVE_WEBAPP_URL = os.environ.get(
+    "DRIVE_WEBAPP_URL",
+    "https://script.google.com/macros/s/AKfycbw-Vn-JNILrtXtyGIi1xZmbswdVqpA1vWzO1RpkQcjPYXvWDzK1RiXsh0BAW-JDcAnc_w/exec")
+
+def drive_list():
+    req = urllib.request.Request(DRIVE_WEBAPP_URL, headers={"User-Agent": "AgroData"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        j = json.loads(r.read().decode("utf-8", "replace"))
+    return j.get("docs", [])
+
+def drive_send(payload):
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(DRIVE_WEBAPP_URL, data=data,
+        headers={"Content-Type": "application/json", "User-Agent": "AgroData"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read().decode("utf-8", "replace"))
+
 def save_docfile(dataurl, name):
     try:
         m = re.match(r"data:([^;]+);base64,(.+)$", dataurl or "", re.S)
@@ -1427,7 +1445,11 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/docs"):
-            body = json.dumps({"docs": load_docs()[-500:]}, ensure_ascii=False).encode("utf-8")
+            try:
+                _docs = drive_list()
+            except Exception as _e:
+                print("drive_list fail, local fallback:", _e); _docs = load_docs()[-500:]
+            body = json.dumps({"docs": _docs}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
@@ -1535,6 +1557,17 @@ class H(http.server.SimpleHTTPRequestHandler):
                 data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
             except Exception:
                 data = {}
+            try:
+                dout = drive_send(data)
+                if isinstance(dout, dict):
+                    body = json.dumps(dout, ensure_ascii=False).encode("utf-8")
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.send_header("Access-Control-Allow-Origin", "*")
+                    self.send_header("Cache-Control", "no-store")
+                    self.end_headers(); self.wfile.write(body); return
+            except Exception as de:
+                print("drive_send fail, local fallback:", de)
             try:
                 docs = load_docs()
                 act = data.get("action", "add")
