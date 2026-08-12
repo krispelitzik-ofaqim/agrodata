@@ -13,14 +13,13 @@
 
   function menu(){
     if(document.getElementById('ag-langbox')) return;
-    var side=(de.dir==='rtl')?'left':'right';
     var box=document.createElement('div'); box.id='ag-langbox';
-    box.style.cssText='position:fixed;top:10px;'+side+':10px;z-index:99999;font-family:system-ui,-apple-system,Arial,sans-serif;';
+    box.style.cssText='position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:99999;font-family:system-ui,-apple-system,Arial,sans-serif;';
     var btn=document.createElement('button');
     btn.textContent='🌐 '+(LNAME[lang]||'עברית')+' ▾';
     btn.style.cssText='border:1px solid rgba(0,0,0,.15);background:#fff;color:#1c2b35;border-radius:20px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.14);';
     var list=document.createElement('div');
-    list.style.cssText='display:none;position:absolute;top:40px;'+side+':0;background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.16);overflow:hidden;min-width:150px;';
+    list.style.cssText='display:none;position:absolute;top:40px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.16);overflow:hidden;min-width:150px;';
     LANGS.forEach(function(L){
       var a=document.createElement('div'); a.textContent=L[1];
       a.style.cssText='padding:9px 14px;font-size:13.5px;color:#1c2b35;cursor:pointer;'+(L[0]===lang?'background:#eef7f0;font-weight:800;':'');
