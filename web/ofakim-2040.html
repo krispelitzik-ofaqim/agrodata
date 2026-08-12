@@ -117,6 +117,7 @@ function tryGate(){var v=document.getElementById('gpw').value;if(v==='Ofakim2040
     <div class="row2">
       <span class="hint">מנוע:</span>
       <div class="eng"><span class="echip on" data-e="gemini" onclick="pickEng(this)">Gemini</span><span class="echip" data-e="claude" onclick="pickEng(this)">Claude</span></div>
+      <label style="display:flex;align-items:center;gap:5px;font-size:13px;color:#1c6b45;cursor:pointer;user-select:none" title="ה-AI יקרא את התוצרים הרלוונטיים מהמאגר ויענה על בסיסם"><input type="checkbox" id="repoToggle" style="width:16px;height:16px"> 🧠 כלול את המאגר</label>
       <button class="btn o" onclick="openLibPicker()" id="libPickBtn" title="בחרו תוצר קיים מהספרייה כבסיס להמשך הניתוח">📎 מהספרייה</button>
       <button class="btn g" onclick="ask()" id="askBtn">שלח לניתוח ←</button>
     </div>
@@ -190,7 +191,7 @@ function ask(){
   if(!q){document.getElementById('q').focus();return;}
   var out=document.getElementById('out');out.className='out show';out.textContent='⏳ חושב…';
   document.getElementById('askBtn').disabled=true;
-  fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q:q,engine:ENG})})
+  fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q:q,engine:ENG,repo:!!(document.getElementById('repoToggle')&&document.getElementById('repoToggle').checked)})})
    .then(function(r){return r.json();}).then(function(j){
      LASTOUT=j.answer||j.error||'לא התקבלה תשובה.';
      out.textContent=LASTOUT;

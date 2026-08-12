@@ -289,6 +289,31 @@ def drive_content(doc_id):
     with urllib.request.urlopen(req, timeout=25) as r:
         return json.loads(r.read().decode("utf-8", "replace"))
 
+def repo_context(question, max_docs=3):
+    """Pull the most relevant deliverables from the Drive repository as context for the AI."""
+    try:
+        docs = [d for d in drive_list() if "document" in (d.get("url") or "")]
+    except Exception as e:
+        print("repo_context list fail:", e); return ""
+    words = [w for w in re.split(r"\W+", question or "") if len(w) >= 3]
+    def score(d):
+        t = d.get("title", "")
+        return sum(1 for w in words if w in t)
+    docs.sort(key=lambda d: (score(d), d.get("ts", 0)), reverse=True)
+    blocks = []
+    for d in docs[:max_docs]:
+        try:
+            c = (drive_content(d["id"]).get("content") or "").strip()
+        except Exception:
+            c = ""
+        if c:
+            blocks.append("• " + (d.get("title") or "") + ":\n" + c[:2000])
+    if not blocks:
+        return ""
+    return ("== מאגר הידע האסטרטגי · רקע מהתוצרים הקיימים ==\n" +
+            "\n\n".join(blocks) +
+            "\n== סוף הרקע · ענה תוך התבססות על הרקע כשרלוונטי ==\n\n")
+
 def save_docfile(dataurl, name):
     try:
         m = re.match(r"data:([^;]+);base64,(.+)$", dataurl or "", re.S)
@@ -1501,6 +1526,12 @@ class H(http.server.SimpleHTTPRequestHandler):
             except Exception:
                 data = {}
             q = (data.get("q") or "").strip(); eng = data.get("engine", "gemini"); media = data.get("media") or []
+            if data.get("repo") and q and not media:
+                try:
+                    _ctx = repo_context(q)
+                    if _ctx: q = _ctx + "השאלה/המשימה: " + q
+                except Exception as _e:
+                    print("repo_context fail:", _e)
             if not q:
                 out = {"answer": "נא להזין שאלה.", "demo": True}
             elif media:
