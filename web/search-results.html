@@ -138,6 +138,15 @@ h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;displa
     <div class="lb-track"><div class="lb-fill" id="lbFill"></div></div>
   </div>
 
+  <div id="quotaBadge" style="display:none;font-family:'Plex Mono',monospace;font-size:13px;color:#c79a2e;font-weight:700;margin:0 0 12px"></div>
+  <div id="quotaGate" style="display:none;background:#fff;border:1.5px solid #eddca8;border-radius:16px;padding:32px 26px;text-align:center;box-shadow:0 12px 30px rgba(20,60,40,.08);margin-bottom:22px">
+    <div style="font-size:44px">⭐</div>
+    <h2 style="color:#134a30;font-size:24px;margin:8px 0 6px">הגעת ל-5 החיפושים החינמיים</h2>
+    <p style="color:#6b7f73;font-size:15px;margin:0 auto 18px;max-width:440px">שדרגו למנוי פרימיום לחיפושים ללא הגבלה, ייצוא נתונים וכלי מחקר מתקדמים.</p>
+    <button onclick="doUpgradeFromSearch()" style="background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;border:0;border-radius:12px;padding:14px 32px;font-size:16px;font-weight:800;cursor:pointer">💳 שדרג לפרימיום — $9/חודש</button>
+    <p style="color:#9bb0a3;font-size:12.5px;margin-top:12px">תשלום מאובטח · ניתן לבטל בכל עת</p>
+  </div>
+
   <!-- FIXED SUMMARY -->
   <div class="summary" id="summary">
     <div class="sumhead">
@@ -303,7 +312,35 @@ function askAI(q){
  ask('claude','claudeAnswer','claudeBadge',q,'קלוד · Claude');
  ask('gemini','geminiAnswer','geminiBadge',q,'Gemini');
 }
-if(Q&&Q.trim()){askAI(Q.trim());}else{hideOrb();}
+/* free-tier quota: 5 searches per ACCOUNT (server-side, IP-proof), then upgrade */
+function showQuotaBadge(q){
+  if(!q||q.unlimited||!q.limit)return;
+  var b=document.getElementById('quotaBadge'); if(!b)return;
+  var left=Math.max(0,q.limit-(q.used||0));
+  b.textContent='🔎 חיפוש חינמי · נותרו '+left+' מתוך '+q.limit;
+  b.style.display='block';
+}
+function showQuotaGate(){
+  finishBar();
+  var g=document.getElementById('quotaGate'); if(g)g.style.display='block';
+  var s=document.getElementById('summary'); if(s)s.style.display='none';
+  var a=document.getElementById('aigrid'); if(a)a.style.display='none';
+}
+function doUpgradeFromSearch(){
+  var sid=''; try{sid=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+  fetch('/api/upgrade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:sid})})
+    .then(function(r){return r.json();}).then(function(){try{localStorage.setItem('agro_sub','premium');localStorage.setItem('agro_role','premium');}catch(e){} location.reload();}).catch(function(){});
+}
+function startSearch(){
+  if(!(Q&&Q.trim())){ hideOrb(); return; }
+  var sid=''; try{sid=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+  fetch('/api/search-quota',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:sid})})
+    .then(function(r){return r.json();}).then(function(q){
+      if(q&&q.allowed===false){ showQuotaGate(); }
+      else { showQuotaBadge(q); askAI(Q.trim()); }
+    }).catch(function(){ askAI(Q.trim()); });   // fail-open on network error
+}
+startSearch();
 
 /* ===== dynamic sections (research / related / google) ===== */
 function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}

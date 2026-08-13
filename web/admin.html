@@ -141,9 +141,21 @@ tr:last-child td{border-bottom:0}
         <a class="btn g" href="deck.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#6a45c0,#2e9e63)" title="מצגת קולנועית 15 שקפים · 3 דקות">🎞️ מצגת</a>
         <a class="btn g" href="agronews.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#c79a2e,#2e9e63)" title="פורטל חדשות החקלאות (עד דומיין נפרד)">📰 agroNews</a>
         <a class="btn g" href="index.html" target="_blank" rel="noopener" style="text-decoration:none">🌐 צפייה באתר ↗</a>
-        <a class="btn g" onclick="try{localStorage.removeItem('agroAdminAuthed')}catch(e){};location.href='index.html'" style="text-decoration:none;background:#e6ebe8;color:#5c6f63;cursor:pointer" title="יציאה וניקוי הסשן">🚪 יציאה</a>
+        <a class="btn g" onclick="adminLogout()" style="text-decoration:none;background:#e6ebe8;color:#5c6f63;cursor:pointer" title="יציאה וניקוי הסשן">🚪 יציאה</a>
         <div class="iconbtn">🔔<span class="notdot"></span></div>
         <div class="avatar">א</div>
+      </div>
+    </div>
+
+    <!-- ADMIN LOGIN GATE -->
+    <div id="adminGate" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#134a30,#1c6b45);display:none;align-items:center;justify-content:center">
+      <div style="background:#fff;border-radius:18px;padding:34px 30px;width:min(360px,90vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)">
+        <div style="font-size:40px">🔒</div>
+        <h2 style="color:#134a30;font-size:22px;margin:8px 0 2px">כניסת מנהלים</h2>
+        <p style="color:#6b7f73;font-size:13.5px;margin-bottom:18px">לוח הניהול · AgroData</p>
+        <input id="adminPass" type="password" placeholder="סיסמת מנהל" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 14px;border:1px solid #dbe8df;border-radius:10px;font-size:15px;text-align:center;margin-bottom:8px;box-sizing:border-box">
+        <div id="adminErr" style="color:#c4562e;font-size:13px;min-height:18px;margin-bottom:4px"></div>
+        <button onclick="adminLogin()" style="width:100%;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;border:0;border-radius:10px;padding:13px;font-size:16px;font-weight:800;cursor:pointer">כניסה</button>
       </div>
     </div>
 
@@ -157,8 +169,63 @@ tr:last-child td{border-bottom:0}
           <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="visUniq">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">מבקרים שונים</div></div>
           <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="visUniqToday">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">שונים היום</div></div>
         </div>
+        <div class="sm" style="color:rgba(255,255,255,.9);margin-top:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700" onclick="toggleSubs()">🗂️ נתוני מנויים (בק־אופיס) <span id="subsChev" style="transition:transform .3s;display:inline-block">▾</span></div>
+      </div></div>
+
+      <!-- SUBSCRIBERS BACK-OFFICE (fans down from the visits block) -->
+      <div class="row"><div class="card" style="grid-column:1/-1;padding:0;overflow:hidden">
+        <div id="subsPanel" style="max-height:0;overflow:hidden;transition:max-height .5s ease">
+          <div style="padding:20px 22px 22px">
+            <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+              <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbReg">—</div><div class="sm">👤 מנוי רגיל</div></div>
+              <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1;color:#c79a2e" id="sbPrem">—</div><div class="sm">⭐ פרימיום</div></div>
+              <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbTot">—</div><div class="sm">סה״כ מנויים</div></div>
+              <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbConv">—</div><div class="sm">המרה לפרימיום</div></div>
+              <a id="sbExp" href="#" style="margin-inline-start:auto;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:999px">⬇️ ייצוא כל המנויים (CSV)</a>
+            </div>
+            <div style="overflow-x:auto"><table style="min-width:640px"><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th></tr></thead><tbody id="sbBody"><tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">טוען…</td></tr></tbody></table></div>
+            <div class="sm" style="margin-top:8px">טבלה: 20 האחרונים · כל השאר בקובץ ה-CSV</div>
+          </div>
+        </div>
       </div></div>
       <script>
+      var ADMIN_TOKEN=''; try{ADMIN_TOKEN=localStorage.getItem('agroAdminToken')||'';}catch(e){}
+      function _adg(v){var g=document.getElementById('adminGate');if(g)g.style.display=v;}
+      function adminLogin(){
+        var p=(document.getElementById('adminPass').value||'');
+        fetch('/api/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:p})})
+         .then(function(r){return r.json();}).then(function(d){
+           if(d&&d.ok&&d.token){try{localStorage.setItem('agroAdminToken',d.token);}catch(e){} location.reload();}
+           else{document.getElementById('adminErr').textContent='סיסמה שגויה';}
+         }).catch(function(){document.getElementById('adminErr').textContent='שגיאת חיבור';});
+      }
+      function adminLogout(){ try{fetch('/api/admin-logout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:ADMIN_TOKEN})});}catch(e){} try{localStorage.removeItem('agroAdminToken');}catch(e){} location.href='index.html'; }
+      (function(){ if(!ADMIN_TOKEN){ _adg('flex'); return; }
+        fetch('/api/subs-list?token='+ADMIN_TOKEN).then(function(r){ if(r.status===403){ try{localStorage.removeItem('agroAdminToken');}catch(e){} _adg('flex'); } }).catch(function(){}); })();
+      (function(){ var e=document.getElementById('sbExp'); if(e)e.href='/api/subs-export?token='+ADMIN_TOKEN; })();
+      function _e(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+      var _subsOpen=false;
+      function toggleSubs(){
+        var p=document.getElementById('subsPanel'),c=document.getElementById('subsChev');
+        _subsOpen=!_subsOpen;
+        if(_subsOpen){ loadSubsPanel(); p.style.maxHeight=p.scrollHeight+'px'; c.style.transform='rotate(180deg)'; }
+        else{ p.style.maxHeight='0px'; c.style.transform=''; }
+      }
+      function loadSubsPanel(){
+        fetch('/api/subs-list?token='+ADMIN_TOKEN).then(function(r){return r.json();}).then(function(d){
+          var reg=d.regular||0,prem=d.premium||0,tot=d.total||(reg+prem);
+          document.getElementById('sbReg').textContent=reg.toLocaleString('en');
+          document.getElementById('sbPrem').textContent=prem.toLocaleString('en');
+          document.getElementById('sbTot').textContent=tot.toLocaleString('en');
+          document.getElementById('sbConv').textContent=tot?Math.round(prem/tot*100)+'%':'0%';
+          var items=d.items||[], b=document.getElementById('sbBody');
+          b.innerHTML=items.length?items.map(function(r){
+            var st=(r.role==='admin')?'⭐ מנהל':((r.plan==='premium')?'⭐ פרימיום':'רגיל');
+            return '<tr><td>'+_e(r.ts)+'</td><td>'+_e(r.provider||'—')+'</td><td>'+_e(r.name||'—')+'</td><td>'+_e(r.email||'—')+'</td><td>'+_e(r.org||'—')+'</td><td>'+st+'</td></tr>';}).join('')
+            :'<tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">אין מנויים עדיין</td></tr>';
+          if(_subsOpen){var p=document.getElementById('subsPanel');p.style.maxHeight=p.scrollHeight+'px';}
+        }).catch(function(){});
+      }
       (function(){
         function fmt(n){return (n||0).toLocaleString('he-IL');}
         function load(){
@@ -175,12 +242,11 @@ tr:last-child td{border-bottom:0}
       </script>
       <div class="kpis" id="kpis"></div>
       <div class="row">
-        <div class="card"><h3>תנועה שבועית</h3><div class="sm">מבקרים ייחודים · 7 ימים אחרונים</div><svg id="area" viewBox="0 0 800 240" style="width:100%;height:auto"></svg></div>
-        <div class="card"><h3>התפלגות מנויים</h3><div class="sm">לפי סוג משתמש</div><div class="donut-wrap"><div class="donut" id="donut"></div><div class="dlegend" id="dlegend"></div></div></div>
+        <div class="card"><h3>הרשמות · 7 ימים אחרונים</h3><div class="sm">מנויים חדשים ליום · נתונים אמיתיים</div><svg id="area" viewBox="0 0 800 240" style="width:100%;height:auto"></svg></div>
+        <div class="card"><h3>התפלגות מנויים</h3><div class="sm">רגיל מול פרימיום · נתונים אמיתיים</div><div class="donut-wrap"><div class="donut" id="donut"></div><div class="dlegend" id="dlegend"></div></div></div>
       </div>
       <div class="row">
-        <div class="card"><h3>הרשמות אחרונות</h3><div class="sm">משתמשים חדשים שנרשמו לזירה</div><table><thead><tr><th>משתמש</th><th>תחום</th><th>תאריך</th><th>סטטוס</th></tr></thead><tbody id="recentU"></tbody></table></div>
-        <div class="card"><h3>מנועים מובילים</h3><div class="sm">שימוש לפי בלוק (השבוע)</div><div class="bars" id="bars"></div></div>
+        <div class="card" style="grid-column:1/-1"><h3>הרשמות לפי ערוץ</h3><div class="sm">מאיזה ספק נרשמו · נתונים אמיתיים</div><div class="bars" id="bars"></div></div>
       </div>
       <div class="row">
         <div class="card" style="grid-column:1/-1">
@@ -472,14 +538,30 @@ function donut(id,lid,data){let acc=0,seg=[];data.forEach(s=>{seg.push(`${s[2]} 
 function tbl(id,html){document.getElementById(id).innerHTML=html;}
 function pill(s){return s==='ok'?'<span class="pill p-ok">פעיל</span>':s==='wait'?'<span class="pill p-wait">ממתין</span>':s==='off'?'<span class="pill p-off">מושהה</span>':s==='pub'?'<span class="pill p-ok">פורסם</span>':s==='draft'?'<span class="pill p-draft">טיוטה</span>':s;}
 
-// dashboard
-const KPI=[["👥","i-green","6,910","משתמשים רשומים","+12.4%",1],["🏢","i-teal","48","חברות בזירה","+3",1],["📝","i-gold","1,284","כתבות ותוכן","+48",1],["⭐","i-green","312","מנויים פעילים","+8.1%",1],["💰","i-gold","₪48.2K","הכנסה חודשית","+15%",1],["🔌","i-teal","1.2M","קריאות API","+22%",1]];
-tbl('kpis',KPI.map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div><div class="ch ${k[5]?'up':'down'}">${k[5]?'▲':'▼'} ${k[4]}</div></div>`).join(''));
-areaChart('area',[420,510,480,620,700,650,780],'#1c6b45');
-donut('donut','dlegend',[["מגדלים",45,"#1c6b45"],["חברות",28,"#2b8fb0"],["מחקר",17,"#c79a2e"],["ממשלה",10,"#8fe6ad"]]);
-const RU=[["דנה כהן","אגרונומית","היום","ok","#2b8fb0"],["רון אבידן","מגדל","היום","ok","#1c6b45"],["Equinom","סטארטאפ","אתמול","wait","#c79a2e"],["ד״ר מיכל ברק","מחקר","אתמול","ok","#8b6fc0"],["משרד החקלאות","ממשלה","לפני יומיים","ok","#5c6f63"]];
-tbl('recentU',RU.map(u=>`<tr><td><span class="uav" style="background:${u[4]}">${u[0][0]}</span> ${u[0]}</td><td>${u[1]}</td><td class="mono" style="color:var(--mut)">${u[2]}</td><td>${pill(u[3])}</td></tr>`).join(''));
-tbl('bars',[["AgroMind",92],["AgroStock",78],["AgroPulse",64],["AgroMap",51],["AgroDirectory",43],["AgroScholar",38]].map(b=>`<div class="bar"><span class="bn">${b[0]}</span><div class="bt"><div class="bf" style="width:${b[1]}%"></div></div><span class="bv">${b[1]}</span></div>`).join(''));
+// dashboard — real data (subscribers + traffic)
+function renderDash(){
+  Promise.all([
+    fetch('/api/subs-list?token='+ADMIN_TOKEN).then(function(r){return r.json();}).catch(function(){return {};}),
+    fetch('/api/stats',{cache:'no-store'}).then(function(r){return r.json();}).catch(function(){return {};})
+  ]).then(function(a){
+    var s=a[0]||{}, v=a[1]||{};
+    var reg=s.regular||0, prem=s.premium||0, tot=s.total||0, conv=tot?Math.round(prem/tot*100):0;
+    var KPI=[["👥","i-green",tot.toLocaleString('en'),"מנויים רשומים"],
+             ["⭐","i-gold",prem.toLocaleString('en'),"מנויי פרימיום"],
+             ["📈","i-teal",conv+'%',"המרה לפרימיום"],
+             ["👁️","i-green",(v.total||0).toLocaleString('en'),"סה״כ כניסות"],
+             ["📅","i-teal",(v.today||0).toLocaleString('en'),"כניסות היום"],
+             ["🧍","i-gold",(v.uniqueTotal||0).toLocaleString('en'),"מבקרים ייחודיים"]];
+    tbl('kpis',KPI.map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div></div>`).join(''));
+    var series=s.byDay||[]; if(series.length) areaChart('area',series.map(d=>d.count),'#1c6b45');
+    if(tot>0) donut('donut','dlegend',[["רגיל",Math.round(reg/tot*100),"#1c6b45"],["פרימיום",Math.round(prem/tot*100),"#c79a2e"]]);
+    else donut('donut','dlegend',[["רגיל",100,"#eef4ef"]]);
+    var pm={google:'Google',facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',email:'מייל',other:'אחר'};
+    var bp=s.byProvider||{}, bd=Object.keys(bp).map(k=>[pm[k]||k,bp[k]]).sort((x,y)=>y[1]-x[1]);
+    tbl('bars', bd.length ? bd.map(b=>`<div class="bar"><span class="bn">${b[0]}</span><div class="bt"><div class="bf" style="width:${Math.round(b[1]/bd[0][1]*100)}%"></div></div><span class="bv">${b[1]}</span></div>`).join('') : '<div class="sm">אין הרשמות עדיין</div>');
+  });
+}
+renderDash(); setInterval(renderDash,30000);
 
 // users
 tbl('uKpis',[["👥","i-green","6,910","סה״כ משתמשים","+12%",1],["✅","i-teal","6,540","פעילים","+9%",1],["🆕","i-gold","214","חדשים החודש","+31%",1],["⏳","i-purple","12","ממתינים לאישור","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:''}</div>`).join(''));

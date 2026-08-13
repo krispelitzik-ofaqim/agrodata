@@ -299,7 +299,8 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
       <button class="cta" onclick="openReg()">הרשמה</button>
     </div>
   </div>
-  <div id="subCount" style="display:flex;justify-content:flex-start;align-items:center;gap:18px;padding:0 0 14px;font-family:'Plex Mono',monospace;font-size:14.5px;color:#8fe6ad">
+  <div id="subCount" style="display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 0 14px;font-family:'Plex Mono',monospace;font-size:14.5px;color:#8fe6ad">
+    <span id="scHello" style="color:#fff;font-weight:700;margin-inline-end:auto;display:none">שלום, <span id="scHelloName"></span> 👋</span>
     <span>👤 מנויים רשומים: <b id="scReg" style="color:#fff">—</b></span>
     <span>⭐ פרימיום: <b id="scPrem" style="color:#fff">—</b></span>
     <span id="scUpgrade" onclick="upgradePremium()" style="display:none;cursor:pointer;color:#ffd76a;font-weight:700;border:1px solid rgba(255,215,106,.5);border-radius:999px;padding:3px 12px">שדרג לפרימיום ⭐</span>
@@ -520,18 +521,18 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">הרשמה לפלטפורמה</h2>
     <p style="color:var(--mut);font-size:14px;margin-bottom:18px">פתחו חשבון וקבלו גישה למאגר, לחיפוש ולמחקר.</p>
     <div class="social">
-      <button class="sbtn" onclick="doRegister('google')"><b style="color:#4285F4">G</b> <span>הרשמה עם Google</span></button>
-      <button class="sbtn" onclick="doRegister('facebook')"><b style="color:#1877F2">f</b> <span>הרשמה עם Facebook</span></button>
-      <button class="sbtn" onclick="doRegister('instagram')"><b style="color:#E1306C">◉</b> <span>הרשמה עם Instagram</span></button>
-      <button class="sbtn" onclick="doRegister('tiktok')"><b style="color:#111">♪</b> <span>הרשמה עם TikTok</span></button>
+      <button class="sbtn" onclick="soonMsg()" style="opacity:.5;cursor:not-allowed"><b style="color:#4285F4">G</b> <span>Google</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
+      <button class="sbtn" onclick="soonMsg()" style="opacity:.5;cursor:not-allowed"><b style="color:#1877F2">f</b> <span>Facebook</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
+      <button class="sbtn" onclick="soonMsg()" style="opacity:.5;cursor:not-allowed"><b style="color:#E1306C">◉</b> <span>Instagram</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
+      <button class="sbtn" onclick="soonMsg()" style="opacity:.5;cursor:not-allowed"><b style="color:#111">♪</b> <span>TikTok</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
     </div>
+    <div id="soonNote" style="display:none;font-size:12.5px;color:#c4562e;text-align:center;margin-top:8px">התחברות עם רשתות חברתיות תיפתח בקרוב — בינתיים הירשמו במהירות עם מייל 👇</div>
     <div class="ordiv"><span>או במייל</span></div>
     <div class="frm">
       <input id="regName" placeholder="שם מלא">
       <input id="regEmail" placeholder="אימייל" type="email">
       <input id="regOrg" placeholder="ארגון / חברה">
       <select id="regField"><option value="">תחום עיסוק…</option><option>מגדל/ת</option><option>חברה / סטארטאפ</option><option>מחקר / אקדמיה</option><option>ממשלה / רשות</option></select>
-      <input id="regPass" placeholder="סיסמה" type="password">
       <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);cursor:pointer"><input id="regConsent" type="checkbox"> אני מאשר/ת קבלת עדכונים ואת <a href="privacy.html" target="_blank" style="color:var(--green);font-weight:700">מדיניות הפרטיות</a></label>
       <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none" onclick="doRegister('email')">הרשמה →</button>
     </div>
@@ -560,8 +561,8 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">התחברות</h2>
     <p style="color:var(--mut);font-size:14px;margin-bottom:18px">ברוכים השבים לזירת האגרו-טק.</p>
     <div class="social">
-      <button class="sbtn"><b style="color:#4285F4">G</b> <span>התחברות עם Google</span></button>
-      <button class="sbtn"><b style="color:#1877F2">f</b> <span>התחברות עם Facebook</span></button>
+      <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#4285F4">G</b> <span>Google</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
+      <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#1877F2">f</b> <span>Facebook</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
     </div>
     <div class="ordiv"><span>או</span></div>
     <div class="frm">
@@ -728,6 +729,12 @@ function renderSubs(d){
   var up=document.getElementById('scUpgrade'); if(up)up.style.display=(_subKey()==='regular')?'inline-block':'none';
 }
 function loadSubs(){fetch('/api/subs').then(function(r){return r.json();}).then(renderSubs).catch(function(){});}
+function renderHello(){ /* greet on registration AND on every return visit */
+  var nm=''; try{nm=localStorage.getItem('agro_name')||'';}catch(e){}
+  var h=document.getElementById('scHello'), n=document.getElementById('scHelloName');
+  if(h&&n){ if(nm){ n.textContent=nm; h.style.display='inline'; } else { h.style.display='none'; } }
+}
+function soonMsg(){var n=document.getElementById('soonNote');if(n)n.style.display='block';var e=document.getElementById('regName');if(e)e.focus();}
 function _val(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
 function doRegister(provider){
   var payload={provider:provider,name:_val('regName'),email:_val('regEmail'),org:_val('regOrg'),field:_val('regField')};
@@ -736,8 +743,9 @@ function doRegister(provider){
     var c=document.getElementById('regConsent'); if(c&&!c.checked){alert('יש לאשר את מדיניות הפרטיות');return;}
   }
   var done=function(d){
-    try{localStorage.setItem('agro_sub','regular'); if(d&&d.id)localStorage.setItem('agro_sub_id',d.id);}catch(e){}
-    closeReg(); if(d)renderSubs(d); else loadSubs();
+    var role=(d&&d.role)?d.role:'regular';
+    try{localStorage.setItem('agro_sub', role==='admin'?'admin':'regular'); if(d&&d.id)localStorage.setItem('agro_sub_id',d.id); localStorage.setItem('agro_role',role); if(payload.name)localStorage.setItem('agro_name',payload.name);}catch(e){}
+    closeReg(); if(d)renderSubs(d); else loadSubs(); renderHello();
   };
   fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
@@ -756,7 +764,7 @@ document.addEventListener('click',function(ev){
   if(!t.closest('button,a,[onclick],.cta,.plus,.go,.links span,.scope a,input,select'))return;
   ev.preventDefault();ev.stopPropagation();openReg();
 },true);
-window.addEventListener('load',function(){ loadSubs(); if(subGated())setTimeout(openReg,350); });
+window.addEventListener('load',function(){ loadSubs(); renderHello(); if(subGated())setTimeout(openReg,350); });
 function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
 const DICT={
 "מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",

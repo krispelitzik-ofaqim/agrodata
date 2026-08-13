@@ -602,6 +602,19 @@ def ask_gemini(q):
 # ---- subscribers — real persistent records (details + plan) for traffic/valuation ----
 SUBS_FILE = os.path.join(DATA_DIR, "subscribers.json")
 SUBS_KEY = os.environ.get("SUBS_KEY", "ofakim2040")   # guard for viewing/exporting personal data
+ADMIN_EMAILS = set(e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "krispelitzik@gmail.com").split(",") if e.strip())
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "ofakim-agro-2026")   # server-side admin gate — SET THIS on the host
+_ADMIN_TOKENS = {}          # session token -> expiry epoch (in-memory; cleared on restart)
+_ADMIN_TTL = 12 * 3600
+def _new_admin_token():
+    import secrets
+    t = secrets.token_urlsafe(24); _ADMIN_TOKENS[t] = time.time() + _ADMIN_TTL; return t
+def _admin_token_valid(t):
+    if not t: return False
+    exp = _ADMIN_TOKENS.get(t)
+    if not exp: return False
+    if exp < time.time(): _ADMIN_TOKENS.pop(t, None); return False
+    return True
 _SUBS_LOCK = threading.Lock()
 def _load_subs():
     try:
@@ -617,9 +630,13 @@ def _save_subs():
             json.dump(_SUBS, f, ensure_ascii=False)
     except Exception as e:
         print("save subs fail:", e)
-def _subs_counts():
-    prem = sum(1 for r in _SUBS if r.get("plan") == "premium")
-    return len(_SUBS) - prem, prem
+def _subs_counts():   # admins are excluded from customer counts
+    reg = prem = 0
+    for r in _SUBS:
+        if r.get("role") == "admin": continue
+        if r.get("plan") == "premium": prem += 1
+        else: reg += 1
+    return reg, prem
 
 _TR_LANGS = {"en":"English","de":"German","fr":"French","zh":"Simplified Chinese","ar":"Arabic","hi":"Hindi","ru":"Russian","es":"Spanish","pt":"Portuguese"}
 _TR_CACHE = {}   # (lang, text) -> translation, in-memory
@@ -1709,14 +1726,14 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/subs-export"):
             q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
-            if (q.get("key", [""])[0]) != SUBS_KEY:
+            if not _admin_token_valid(q.get("token", [""])[0]):
                 self.send_response(403); self.end_headers(); self.wfile.write(b"forbidden"); return
             import io, csv
             with _SUBS_LOCK: rows = list(_SUBS)
             buf = io.StringIO(); w = csv.writer(buf)
-            w.writerow(["time", "provider", "name", "email", "org", "field", "plan"])
+            w.writerow(["time", "provider", "name", "email", "org", "field", "plan", "role"])
             for r in rows:
-                w.writerow([r.get("ts",""), r.get("provider",""), r.get("name",""), r.get("email",""), r.get("org",""), r.get("field",""), r.get("plan","")])
+                w.writerow([r.get("ts",""), r.get("provider",""), r.get("name",""), r.get("email",""), r.get("org",""), r.get("field",""), r.get("plan",""), r.get("role","user")])
             body = ("﻿" + buf.getvalue()).encode("utf-8")   # BOM so Excel reads Hebrew
             self.send_response(200)
             self.send_header("Content-Type", "text/csv; charset=utf-8")
@@ -1725,11 +1742,23 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/subs-list"):
             q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
-            if (q.get("key", [""])[0]) != SUBS_KEY:
+            tok = q.get("token", [""])[0] or (self.headers.get("X-Admin-Token") or "")
+            if not _admin_token_valid(tok):
                 self.send_response(403); self.end_headers(); self.wfile.write(b"forbidden"); return
             with _SUBS_LOCK:
                 reg, prem = _subs_counts()
-                out = {"ok": True, "total": len(_SUBS), "regular": reg, "premium": prem,
+                prov = {}; daycnt = {}
+                for r in _SUBS:
+                    if r.get("role") == "admin": continue   # keep customer stats clean
+                    p = r.get("provider") or "other"; prov[p] = prov.get(p, 0) + 1
+                    day = (r.get("ts") or "")[:10]
+                    if day: daycnt[day] = daycnt.get(day, 0) + 1
+                today = datetime.date.today(); series = []
+                for i in range(6, -1, -1):
+                    d = today - datetime.timedelta(days=i)
+                    series.append({"day": d.strftime("%d/%m"), "count": daycnt.get(d.strftime("%Y-%m-%d"), 0)})
+                out = {"ok": True, "total": reg + prem, "regular": reg, "premium": prem,
+                       "byProvider": prov, "byDay": series,
                        "items": list(_SUBS[-20:])[::-1]}   # last 20, newest first
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
@@ -1783,6 +1812,51 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/admin-login") or self.path.startswith("/api/admin-logout"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            if self.path.startswith("/api/admin-logout"):
+                _ADMIN_TOKENS.pop(str(data.get("token") or ""), None)
+                out = {"ok": True}
+            else:
+                if ADMIN_PASSWORD and str(data.get("password") or "") == ADMIN_PASSWORD:
+                    out = {"ok": True, "token": _new_admin_token()}
+                else:
+                    out = {"ok": False}
+            body = json.dumps(out).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/search-quota"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            sid = str(data.get("id") or ""); limit = int(os.environ.get("FREE_SEARCH_LIMIT", "5"))
+            with _SUBS_LOCK:
+                rec = None
+                for r in _SUBS:
+                    if r.get("id") == sid: rec = r; break
+                if rec is None:
+                    out = {"ok": True, "allowed": True, "unknown": True}
+                elif rec.get("role") == "admin" or rec.get("plan") == "premium":
+                    out = {"ok": True, "allowed": True, "unlimited": True}
+                else:
+                    used = int(rec.get("searches", 0) or 0) + 1
+                    rec["searches"] = used; _save_subs()
+                    out = {"ok": True, "allowed": used <= limit, "used": used, "limit": limit, "plan": rec.get("plan", "regular")}
+            body = json.dumps(out).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/subscribe") or self.path.startswith("/api/upgrade"):
             try:
                 n = int(self.headers.get("Content-Length", 0))
@@ -1803,14 +1877,15 @@ class H(http.server.SimpleHTTPRequestHandler):
                             if r.get("plan") != "premium": r["plan"] = "premium"; break
                 else:
                     new_id = "s%d_%d" % (len(_SUBS) + 1, int(time.time()))
+                    new_role = "admin" if _s("email").lower() in ADMIN_EMAILS else "user"
                     _SUBS.append({"id": new_id,
                                   "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
                                   "provider": _s("provider"), "name": _s("name"), "email": _s("email"),
-                                  "org": _s("org"), "field": _s("field"), "plan": "regular"})
+                                  "org": _s("org"), "field": _s("field"), "plan": "regular", "role": new_role})
                 _save_subs()
                 reg, prem = _subs_counts()
                 out = {"ok": True, "regular": reg, "premium": prem}
-                if new_id: out["id"] = new_id
+                if new_id: out["id"] = new_id; out["role"] = new_role
             body = json.dumps(out).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
