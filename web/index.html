@@ -179,7 +179,8 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .fsocial a:hover{color:#8fe6ad;transform:translateY(-2px)}
 .modal{position:fixed;inset:0;background:rgba(10,36,24,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
 .modal.open{display:flex}
-.modal-card{background:#fff;border-radius:20px;padding:32px 30px;width:100%;max-width:420px;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.35);text-align:center}
+.modal-card{background:#fff;border-radius:20px;padding:32px 30px;width:100%;max-width:420px;position:relative;box-shadow:0 30px 70px rgba(0,0,0,.35);text-align:center;max-height:calc(100vh - 32px);overflow-y:auto}
+@media(max-height:760px){.modal-card{padding:20px 26px}.modal-card .social{gap:8px}.modal-card .frm{gap:9px}}
 .modal-x{position:absolute;top:12px;left:16px;background:none;border:0;font-size:26px;color:#9aab9f;cursor:pointer;line-height:1}
 .pwrap{position:relative;display:flex;align-items:center}
 .pwrap input{width:100%;padding-left:46px!important}

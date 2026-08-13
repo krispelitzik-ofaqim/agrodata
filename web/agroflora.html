@@ -61,6 +61,7 @@ tr:hover td{background:#fafdf8}
 <div class="wrap">
   <div class="hero">
     <div class="kick">AGROFLORA · IDENTIFY & FORAGE</div>
+    <div style="margin:6px 0 2px"><style>.ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d57;box-shadow:0 0 0 0 rgba(31,157,87,.6);animation:ldp 1.5s infinite}@keyframes ldp{70%{box-shadow:0 0 0 8px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}</style><span style="display:inline-flex;align-items:center;gap:7px;font-family:'Plex Mono',monospace;font-size:12px;font-weight:700;color:#1f9d57;background:#eaf4ee;border:1px solid #cfe6d8;border-radius:999px;padding:3px 12px"><span class="ldot"></span>חי · iNaturalist</span></div>
     <h1>מזהה צמחים <b>וליקוט בר</b></h1>
     <div class="sub">מגדיר צמחי ישראל חי — חפשו שם (עברית/מדעי) וקבלו תמונה, זיהוי ומקורות. ומדריך ליקוט בר: מה אוכלים, מתי ואיך. מבוסס מקורות פתוחים (iNaturalist · ויקיפדיה) וידע אצור.</div>
   </div>
@@ -117,11 +118,21 @@ function drawId(){
  else fetch('data/flora_db.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){FLORADB=j;renderFlora(j.items);setCount(j.items.length);}).catch(function(){document.getElementById('grid').innerHTML='<div class="load" style="grid-column:1/-1">שגיאה בטעינת המאגר.</div>';});
 }
 function setCount(n){var el=document.getElementById('floracount');if(el)el.innerHTML='מאגר צמחי ישראל — <b>'+(FLORADB?FLORADB.count:n)+'</b> מינים · מציג '+n+' · חיפוש מיידי בעברית או בשם מדעי';}
+var _floraT=null;
+function _floraLocal(q){var lq=q.toLowerCase();return FLORADB?FLORADB.items.filter(function(p){return (p.he+' '+p.sci).toLowerCase().indexOf(lq)>=0;}):[];}
 function floraFilter(){
- if(!FLORADB)return;
- var q=(document.getElementById('q').value||'').trim().toLowerCase();
- var rows=q?FLORADB.items.filter(function(p){return (p.he+' '+p.sci).toLowerCase().indexOf(q)>=0;}):FLORADB.items;
- renderFlora(rows.slice(0,120));setCount(Math.min(rows.length,120));
+ var q=(document.getElementById('q').value||'').trim();
+ if(!q){ if(FLORADB){renderFlora(FLORADB.items.slice(0,120));setCount(Math.min(FLORADB.items.length,120));} return; }
+ clearTimeout(_floraT);
+ _floraT=setTimeout(function(){
+  var g=document.getElementById('grid');
+  g.innerHTML='<div class="load" style="grid-column:1/-1">🧠 המוח מחפש חי ב-iNaturalist…</div>';
+  fetch('/api/flora?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+   var items=(j&&j.items)||[];
+   if(!items.length) items=_floraLocal(q);   // fallback to local DB
+   renderFlora(items.slice(0,120));setCount(Math.min(items.length,120));
+  }).catch(function(){ var rows=_floraLocal(q); renderFlora(rows.slice(0,120));setCount(Math.min(rows.length,120)); });
+ },350);
 }
 function renderFlora(items){
  var g=document.getElementById('grid');
