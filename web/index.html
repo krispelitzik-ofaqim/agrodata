@@ -814,7 +814,7 @@ function updLive(){
  var ds,ts;
  try{ ds=d.toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long',year:'numeric'}); ts=d.toLocaleTimeString(loc,{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}); }
  catch(e){ ds=d.toLocaleDateString(); ts=d.toLocaleTimeString(); }
- el.textContent=upd+' '+ds+' · '+ts;
+ el.innerHTML=upd+' '+ds+' · '+ts+' · <b style="color:var(--gold);letter-spacing:.02em" class="notrans" data-notrans>🌍 Ofakim Time</b>';
 }
 window.updLive=updLive;
 updLive();setInterval(updLive,1000);
