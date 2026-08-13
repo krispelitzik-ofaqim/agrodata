@@ -492,26 +492,10 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M16.6 2h-3v13.2a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.6a5.6 5.6 0 1 0 4.8 5.6V8.5a7 7 0 0 0 4.1 1.3V6.7a4.1 4.1 0 0 1-4.1-4.1z"/></svg></a>
   </div>
   <div style="margin-top:16px"><span class="wm">Ofakim Agro<b>Data</b> Center</span> · <span class="ftag">זירת האגרו-טק של ישראל</span> · <span class="mono">demo v0.2 · 30-07-2026</span></div>
-  <div style="margin-top:12px"><a onclick="openAdmin()" style="cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-family:'Plex Mono';text-decoration:none">🔒 כניסת צוות ניהול</a></div>
+  <div style="margin-top:12px"><a href="admin.html" style="cursor:pointer;color:rgba(255,255,255,.65);font-size:13px;font-family:'Plex Mono';text-decoration:none">🔒 כניסת צוות ניהול</a></div>
 </div></div></div>
 
-<!-- ADMIN LOGIN MODAL (username + 3 passwords) -->
-<div id="adminmodal" class="modal" onclick="if(event.target===this)closeAdmin()">
-  <div class="modal-card">
-    <button class="modal-x" onclick="closeAdmin()">×</button>
-    <div class="kicker">Admin Access</div>
-    <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">🔒 כניסת צוות ניהול</h2>
-    <p style="color:var(--mut);font-size:14px;margin-bottom:18px">אזור מוגן — נדרש שם משתמש ו-3 סיסמאות.</p>
-    <div class="frm">
-      <input id="adUser" placeholder="שם משתמש">
-      <div class="pwrap"><input id="adP1" type="password" placeholder="סיסמה 1"><button type="button" class="eye" onclick="toggleEye('adP1',this)" title="הצג/הסתר">👁️</button></div>
-      <div class="pwrap"><input id="adP2" type="password" placeholder="סיסמה 2"><button type="button" class="eye" onclick="toggleEye('adP2',this)" title="הצג/הסתר">👁️</button></div>
-      <div class="pwrap"><input id="adP3" type="password" placeholder="סיסמה 3"><button type="button" class="eye" onclick="toggleEye('adP3',this)" title="הצג/הסתר">👁️</button></div>
-      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none" onclick="checkAdmin()">כניסה →</button>
-      <div id="adMsg" style="color:#c4562e;font-size:14px;min-height:18px;margin-top:8px;text-align:center"></div>
-    </div>
-  </div>
-</div>
+<!-- old client-side 3-password admin modal removed — admin.html is now server-gated -->
 
 <!-- REGISTRATION MODAL -->
 <div id="regmodal" class="modal" onclick="if(event.target===this)closeReg()">
@@ -696,20 +680,7 @@ loadComments();
 bAuthRender();
 function scrollTopics(d){const t=document.querySelector('.topicbar .track');if(t)t.scrollBy({left:d*220,behavior:'smooth'});}
 /* admin gate — username + 3 passwords (reads saved creds from admin panel, falls back to defaults) */
-function adminCreds(){var d={u:"ofakim",p1:"agro1",p2:"data2",p3:"center3"};try{var s=JSON.parse(localStorage.getItem('agroAdmin'));if(s&&s.u)return {u:s.u,p1:s.p1,p2:s.p2,p3:s.p3};}catch(e){}return d;}
-var ADMIN=adminCreds();
-function toggleEye(id,btn){var el=document.getElementById(id);if(el.type==='password'){el.type='text';btn.classList.add('on');btn.textContent='🙈';}else{el.type='password';btn.classList.remove('on');btn.textContent='👁️';}}
-function openAdmin(){
- if(localStorage.getItem('agroAdminAuthed')==='1'){location.href='admin.html';return;}
- document.getElementById('adMsg').textContent='';document.getElementById('adminmodal').classList.add('open');
-}
-function closeAdmin(){document.getElementById('adminmodal').classList.remove('open');}
-function checkAdmin(){
- var A=adminCreds();
- var u=document.getElementById('adUser').value.trim(),p1=document.getElementById('adP1').value,p2=document.getElementById('adP2').value,p3=document.getElementById('adP3').value;
- if(u===A.u&&p1===A.p1&&p2===A.p2&&p3===A.p3){try{localStorage.setItem('agroAdminAuthed','1');}catch(e){}document.getElementById('adMsg').style.color='var(--green)';document.getElementById('adMsg').textContent='מתחבר… (תישאר מחובר)';location.href='admin.html';}
- else{document.getElementById('adMsg').style.color='#c4562e';document.getElementById('adMsg').textContent='שם משתמש או אחת הסיסמאות שגויים.';}
-}
+function openAdmin(){location.href='admin.html';}
 function openReg(){var m=document.getElementById('regmodal');m.classList.add('open');var x=m.querySelector('.modal-x');if(x)x.style.display=subGated()?'none':'';}
 function closeReg(){if(subGated())return;document.getElementById('regmodal').classList.remove('open')}
 function openLogin(){document.getElementById('loginmodal').classList.add('open')}

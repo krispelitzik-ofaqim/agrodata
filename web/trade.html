@@ -132,6 +132,7 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <div class="panel">
       <h2 id="pTitle">מוצרי היצוא המובילים</h2>
       <div class="sm" id="pSub">תוצרת חקלאית ישראלית · שווי · שוק יעד · שינוי שנתי</div>
+      <div class="commsel" id="prodsel" style="margin:8px 0 14px"></div>
       <div class="prods" id="prods"></div>
     </div>
     <div class="panel">
@@ -206,16 +207,32 @@ const DATA={
   ],
   partners:[["🇺🇸","ארה״ב",24],["🇧🇷","ברזיל",18],["🇷🇺","רוסיה",12],["🇺🇦","אוקראינה",10],["🇦🇷","ארגנטינה",9],["🌍","אחר",27]]}
 };
-function render(mode){
- const D=DATA[mode];
- document.getElementById('pTitle').textContent=D.title;
- document.getElementById('pSub').textContent=D.sub;
- document.getElementById('cTitle').textContent=D.ctitle;
- document.getElementById('prods').innerHTML=D.prods.map(p=>{const u=p.ch.trim().charAt(0)!=='-';return `<div class="prod"><div class="pemoji">${p.em}</div><div><div class="pn">${p.n}</div><div class="pv">${p.v}</div><div class="pdest">${p.fl}</div></div><div class="pval"><b>${p.val}</b><div class="ch ${u?'up':'down'}">${u?'▲':'▼'} ${p.ch.replace('-','')}</div></div></div>`;}).join('');
- document.getElementById('partners').innerHTML=D.partners.map(c=>`<div class="prow"><span class="pflag">${c[0]}</span><span class="pcty">${c[1]}</span><div class="ptrack"><div class="pfill" style="width:${c[2]}%"></div></div><span class="ppct">${c[2]}%</span></div>`).join('');
+/* ===== LIVE trade — UN Comtrade (Israel = reporter 376), per commodity + flow ===== */
+(function(){var s=document.createElement('style');s.textContent='.tbrain{display:flex;flex-direction:column;align-items:center;gap:12px;padding:34px 10px}.tb-orb{font-size:44px;animation:tbpulse 1.4s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(46,158,99,.55))}@keyframes tbpulse{0%,100%{transform:scale(.9);opacity:.75}50%{transform:scale(1.14);opacity:1}}.tb-tx{font-family:"Plex Mono",monospace;font-size:13.5px;color:#2b8fb0;font-weight:700}.tb-d{animation:tbd 1s infinite}.tb-d:nth-child(2){animation-delay:.2s}.tb-d:nth-child(3){animation-delay:.4s}@keyframes tbd{0%,100%{opacity:.3}50%{opacity:1}}';document.head.appendChild(s);})();
+var COMS=[{k:'0804',em:'🌴',name:'תמרים/טרופי'},{k:'0805',em:'🍊',name:'הדרים'},{k:'080440',em:'🥑',name:'אבוקדו'},{k:'0702',em:'🍅',name:'עגבניות'},{k:'0709',em:'🫑',name:'ירקות טריים'},{k:'0603',em:'🌷',name:'פרחים'},{k:'1209',em:'🌱',name:'זרעים לזריעה'},{k:'0806',em:'🍇',name:'ענבים'},{k:'1001',em:'🌾',name:'חיטה'},{k:'1005',em:'🌽',name:'תירס'},{k:'1201',em:'🫘',name:'סויה'},{k:'0901',em:'☕',name:'קפה'}];
+var TMODE='exp', TCUR=COMS[0];
+function tFmt(v){v=+v||0;if(v>=1e9)return '$'+(v/1e9).toFixed(1)+'B';if(v>=1e6)return '$'+(v/1e6).toFixed(0)+'M';if(v>=1e3)return '$'+(v/1e3).toFixed(0)+'K';return '$'+v;}
+function tBrain(el){el.innerHTML='<div class="tbrain"><div class="tb-orb">🧠</div><div class="tb-tx">המוח שולף נתוני סחר חיים מ-UN&nbsp;Comtrade<span class="tb-d">.</span><span class="tb-d">.</span><span class="tb-d">.</span></div></div>';}
+function loadTrade(){
+ var pEl=document.getElementById('prods'), bEl=document.getElementById('partners');
+ var flowN=(TMODE==='exp'?'יצוא':'יבוא');
+ document.getElementById('pTitle').textContent=flowN+' · '+TCUR.name;
+ document.getElementById('pSub').textContent='ישראל · שותפי סחר מובילים לפי מדינה · 🟢 נתונים חיים';
+ document.getElementById('cTitle').textContent='שותפות סחר · '+flowN;
+ tBrain(pEl); bEl.innerHTML='';
+ fetch('/api/trade?cmd='+encodeURIComponent(TCUR.k)+'&flow='+(TMODE==='exp'?'X':'M'))
+  .then(function(r){return r.json();}).then(function(j){
+    var labels=(j&&j.labels)||[], vals=(j&&j.series&&j.series[0]&&j.series[0].data)||[];
+    if(!j||!j.ok||!labels.length){pEl.innerHTML='<div class="prod" style="justify-content:center;color:#6b7f73">אין נתונים למוצר זה (או הגבלת קצב Comtrade). נסו מוצר אחר.</div>';return;}
+    var tot=vals.reduce(function(a,b){return a+b;},0)||1, mx=Math.max.apply(null,vals)||1;
+    pEl.innerHTML=labels.map(function(nm,i){var v=vals[i];return '<div class="prod"><div class="pemoji">'+TCUR.em+'</div><div><div class="pn">'+nm+'</div><div class="pv">'+(TMODE==='exp'?'שוק יעד':'מקור')+'</div></div><div class="pval"><b>'+tFmt(v)+'</b><div class="ch up">'+Math.round(v/tot*100)+'%</div></div></div>';}).join('');
+    bEl.innerHTML=labels.map(function(nm,i){var v=vals[i];return '<div class="prow"><span class="pcty">'+nm+'</span><div class="ptrack"><div class="pfill" style="width:'+Math.round(v/mx*100)+'%"></div></div><span class="ppct">'+tFmt(v)+'</span></div>';}).join('');
+  }).catch(function(){pEl.innerHTML='<div class="prod" style="justify-content:center;color:#c4562e">שגיאת חיבור לשרת.</div>';});
 }
-function setMode(m){document.getElementById('tExp').classList.toggle('on',m==='exp');document.getElementById('tImp').classList.toggle('on',m==='imp');render(m);}
-render('exp');
+function setMode(m){TMODE=(m==='imp'?'imp':'exp');document.getElementById('tExp').classList.toggle('on',TMODE==='exp');document.getElementById('tImp').classList.toggle('on',TMODE==='imp');loadTrade();}
+function pickCom(k,el){for(var i=0;i<COMS.length;i++)if(COMS[i].k===k)TCUR=COMS[i];document.querySelectorAll('#prodsel .csbtn').forEach(function(b){b.classList.remove('on');});el.classList.add('on');loadTrade();}
+document.getElementById('prodsel').innerHTML=COMS.map(function(c,i){return '<button class="csbtn'+(i===0?' on':'')+'" onclick="pickCom(\''+c.k+'\',this)">'+c.em+' '+c.name+'</button>';}).join('');
+loadTrade();
 // ===== world trade map =====
 const CO={US:["ארה״ב",236,147,"🇺🇸"],CA:["קנדה",206,94,"🇨🇦"],BR:["ברזיל",356,278,"🇧🇷"],AR:["ארגנטינה",322,344,"🇦🇷"],RU:["רוסיה",750,81,"🇷🇺"],UA:["אוקראינה",589,114,"🇺🇦"],DE:["גרמניה · EU",528,108,"🇪🇺"],FR:["צרפת",506,122,"🇫🇷"],NL:["הולנד",514,106,"🇳🇱"],CN:["סין",792,153,"🇨🇳"],IN:["הודו",719,189,"🇮🇳"],IL:["ישראל",597,164,"🇮🇱"],AU:["אוסטרליה",869,319,"🇦🇺"],TR:["טורקיה",597,142,"🇹🇷"],VN:["וייטנאם",800,206,"🇻🇳"],CO:["קולומביה",297,239,"🇨🇴"],EG:["מצרים",583,178,"🇪🇬"],NG:["ניגריה",522,225,"🇳🇬"],MX:["מקסיקו",217,186,"🇲🇽"],SA:["מפרץ",625,183,"🇸🇦"]};
 const COMMOD={
