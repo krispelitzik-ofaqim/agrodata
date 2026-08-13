@@ -316,7 +316,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <input id="q" placeholder="שאל: מהו המשקל הסגולי האופטימלי להשקיה בעגבניות באזור הערבה?" onkeydown="if(event.key==='Enter')doSearch()">
     <button class="go" onclick="doSearch()">חפש</button>
   </div>
-  <div class="liveline"><span class="livedot"></span> <b>LIVE</b> · מעודכן ליום <span id="liveTime">—</span></div>
+  <div class="liveline"><span class="livedot"></span> <b>LIVE</b> · <span id="liveTime">—</span></div>
   <div id="topicpanel" class="topicpanel">
     <div class="scope"><a onclick="setScope(this)">בית</a><a onclick="setScope(this)">שכונה</a><a onclick="setScope(this)">קהילה</a><a onclick="setScope(this)">עיר</a><a onclick="setScope(this)">חקלאי</a><a onclick="setScope(this)">מדינה</a><a onclick="setScope(this)">יבשת</a><a class="on" onclick="setScope(this)">גלובאלי</a></div>
     <div class="grid">
@@ -779,6 +779,7 @@ const PH={
 };
 const TXT_SEL='.links span, .lcard h4, .lcard p, .subttl, .subhead, .subcap, .scope a, .topicpanel .grid a, .lead, .card h3, .card p, .tinfo h3, .tinfo p, .stat span, .modal-card .rk, .modal-card > p, .sbtn span, .ordiv span, button, option, .lede-c, .ftag, .lsub, .modal-card p a, .frm a';
 function applyLang(lang){
+ window._agroLang=lang; if(window.updLive)updLive();
  const D = lang==='en' ? DICT : ((window.TXX&&window.TXX[lang])||null);
  const D2 = (window.TXX2&&window.TXX2[lang])||null;
  const P = lang==='en' ? PH : ((window.TXXP&&window.TXXP[lang])||null);
@@ -805,7 +806,17 @@ function setLang(a){document.getElementById('langlbl').textContent=a.textContent
 document.addEventListener('click',function(){var m=document.querySelector('.langmenu');if(m)m.classList.remove('open');});
 function toggleTopics(){var p=document.getElementById('topicpanel');var b=document.querySelector('.plus');var open=p.classList.toggle('open');b.textContent=open?'−':'+';b.title=open?'סגור':'כל הנושאים';}
 function doSearch(){var q=(document.getElementById('q').value||'').trim();location.href='search-results.html?q='+encodeURIComponent(q);}
-function updLive(){var d=new Date();var wd=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];var mo=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];var p=n=>String(n).padStart(2,'0');var el=document.getElementById('liveTime');if(el)el.textContent='יום '+wd[d.getDay()]+', '+d.getDate()+' ב'+mo[d.getMonth()]+' '+d.getFullYear()+' · '+p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds());}
+function updLive(){
+ var d=new Date(), lang=(window._agroLang||'he');
+ var loc={he:'he-IL',en:'en-US',de:'de-DE',fr:'fr-FR',zh:'zh-CN',ar:'ar',ru:'ru-RU',hi:'hi-IN',es:'es-ES',pt:'pt-PT'}[lang]||'he-IL';
+ var upd={he:'מעודכן',en:'Updated',de:'Aktualisiert',fr:'Mis à jour',zh:'更新于',ar:'محدّث',ru:'Обновлено',hi:'अपडेट किया गया',es:'Actualizado',pt:'Atualizado'}[lang]||'מעודכן';
+ var el=document.getElementById('liveTime'); if(!el)return;
+ var ds,ts;
+ try{ ds=d.toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long',year:'numeric'}); ts=d.toLocaleTimeString(loc,{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}); }
+ catch(e){ ds=d.toLocaleDateString(); ts=d.toLocaleTimeString(); }
+ el.textContent=upd+' '+ds+' · '+ts;
+}
+window.updLive=updLive;
 updLive();setInterval(updLive,1000);
 // scope-based topic filtering (בית=0 … גלובאלי=7)
 const TMIN={"אנרגיה":3,"אקלים":5,"בריאות הצומח":0,"גידולים":0,"גנטיקה":5,"דישון":0,"הדברה":0,"השבחה":5,"השוק הסיטונאי":3,"השקיה":0,"זנים":2,"זרעים":0,"חיישנים":1,"חממות":0,"חקלאות ימית":5,"חקלאות מדבר":5,"טפטוף":0,"יבול":2,"יערות":6,"כלכלה חקלאית":5,"לוויין":5,"מזיקים":0,"מחקר":5,"מים":0,"עיור":3,"ערים":3,"פוד-טק":4,"פקעות":1,"פרחים":0,"ציוד ומיכון חקלאי":4,"קטיף":2,"קרקע":0,"רחפנים":4,"ריסוס":2,"שוק ומחירים":3,"תבלינים":0};
