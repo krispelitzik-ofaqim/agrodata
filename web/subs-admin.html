@@ -1,0 +1,96 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>בק־אופיס · AgroData</title>
+<style>
+  :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#6b7f73;--line:#dbe8df;--bg:#eef6f0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,Heebo,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  .top{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;padding:22px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+  .top h1{font-size:22px;font-weight:800}.top .wm b{color:#8fe6ad}
+  .top .live{font-family:'Plex Mono',monospace;font-size:13px;color:#8fe6ad;display:inline-flex;align-items:center;gap:8px}
+  .top .dot{width:9px;height:9px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:p 1.6s infinite}
+  @keyframes p{70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}}
+  .wrap{max-width:1100px;margin:0 auto;padding:26px 20px}
+  .sect{font-size:14px;font-weight:800;color:var(--green-d);margin:8px 2px 12px;letter-spacing:.02em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:26px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:0 10px 26px rgba(20,60,40,.06)}
+  .card .lbl{font-size:13.5px;color:var(--mut);font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .card .num{font-family:'Plex Mono',monospace;font-size:40px;font-weight:800;color:var(--green-d);line-height:1;font-variant-numeric:tabular-nums}
+  .card.prem{background:linear-gradient(135deg,#fff,#fffaf0);border-color:#eddca8}
+  .card.prem .num{color:var(--gold)}
+  .card.tot{background:linear-gradient(135deg,var(--green-d),var(--lime));border:0}
+  .card.tot .lbl{color:rgba(255,255,255,.85)}.card.tot .num{color:#fff}
+  .card .sub{font-size:12.5px;color:var(--mut);margin-top:6px}
+  .foot{color:var(--mut);font-size:12.5px;text-align:center;margin-top:8px}
+  a.back{color:#8fe6ad;text-decoration:none;font-weight:700;font-size:14px}
+  .rowsect{display:flex;justify-content:space-between;align-items:center}
+  .expbtn{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:8px 16px;border-radius:999px}
+  .tablewrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 26px rgba(20,60,40,.06);margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:660px}
+  th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{color:var(--mut);font-weight:700;font-size:12.5px;background:#f6faf7}
+  td .pill{font-size:12px;font-weight:800;padding:2px 10px;border-radius:999px}
+  .pill.reg{background:#eef7f0;color:var(--green-d)}.pill.prem{background:#fdf3d6;color:var(--gold)}
+  tr:last-child td{border-bottom:0}
+  .empty{padding:22px;text-align:center;color:var(--mut);font-size:14px}
+  @media (prefers-color-scheme:dark){body{background:#0d1f16;color:#eaf4ee}.card{background:#12291d;border-color:#26402f}.card .num{color:#8fe6ad}.sect{color:#8fe6ad}.card.prem{background:#241f12;border-color:#4a3f1e}.tablewrap{background:#12291d;border-color:#26402f}th{background:#0f2419;color:#a9c4b6}td{color:#eaf4ee}th,td{border-color:#26402f}}
+</style></head><body>
+  <div class="top">
+    <div><h1>בק־אופיס — <span class="wm">Agro<b>Data</b></span></h1></div>
+    <div style="display:flex;align-items:center;gap:18px">
+      <span class="live"><span class="dot"></span> מתעדכן חי</span>
+      <a class="back" href="index.html">→ לאתר</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="sect">מנויים</div>
+    <div class="grid">
+      <div class="card tot"><div class="lbl">👥 סה״כ מנויים רשומים</div><div class="num" id="mTot">—</div><div class="sub" id="mConv"></div></div>
+      <div class="card"><div class="lbl">👤 מנוי רגיל</div><div class="num" id="mReg">—</div></div>
+      <div class="card prem"><div class="lbl">⭐ מנוי פרימיום</div><div class="num" id="mPrem">—</div><div class="sub">משלמים</div></div>
+    </div>
+    <div class="sect">תנועה באתר</div>
+    <div class="grid">
+      <div class="card"><div class="lbl">📈 כניסות (סה״כ)</div><div class="num" id="vTot">—</div></div>
+      <div class="card"><div class="lbl">📅 כניסות היום</div><div class="num" id="vToday">—</div></div>
+      <div class="card"><div class="lbl">🧍 מבקרים ייחודיים</div><div class="num" id="vUniq">—</div></div>
+    </div>
+    <div class="sect rowsect">
+      <span>מנויים אחרונים <span id="lastCount" style="color:var(--mut);font-weight:600;font-size:12.5px"></span></span>
+      <a class="expbtn" id="expBtn" href="#">⬇️ ייצוא כל המנויים (CSV)</a>
+    </div>
+    <div class="tablewrap">
+      <table><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th></tr></thead>
+      <tbody id="subsBody"><tr><td colspan="6" class="empty">טוען…</td></tr></tbody></table>
+    </div>
+    <div class="foot">טבלה: 20 האחרונים · כל השאר בקובץ ה-CSV · מתעדכן כל 5 שניות · נתונים אמיתיים ומצטברים בשרת</div>
+  </div>
+<script>
+  var KEY='ofakim2040';
+  document.getElementById('expBtn').href='/api/subs-export?key='+KEY;
+  function n(x){return (x||0).toLocaleString('en');}
+  function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function load(){
+    fetch('/api/subs-list?key='+KEY).then(function(r){return r.json();}).then(function(d){
+      var reg=d.regular||0,prem=d.premium||0,tot=d.total||(reg+prem);
+      document.getElementById('mReg').textContent=n(reg);
+      document.getElementById('mPrem').textContent=n(prem);
+      document.getElementById('mTot').textContent=n(tot);
+      document.getElementById('mConv').textContent=tot?('שיעור המרה לפרימיום: '+Math.round(prem/tot*100)+'%'):'';
+      document.getElementById('lastCount').textContent='(מתוך '+n(tot)+')';
+      var items=d.items||[], b=document.getElementById('subsBody');
+      if(!items.length){ b.innerHTML='<tr><td colspan="6" class="empty">אין מנויים עדיין</td></tr>'; return; }
+      b.innerHTML=items.map(function(r){
+        var prem=(r.plan==='premium');
+        return '<tr><td>'+esc(r.ts)+'</td><td>'+esc(r.provider||'—')+'</td><td>'+esc(r.name||'—')+'</td><td>'+esc(r.email||'—')+'</td><td>'+esc(r.org||'—')+'</td><td><span class="pill '+(prem?'prem':'reg')+'">'+(prem?'⭐ פרימיום':'רגיל')+'</span></td></tr>';
+      }).join('');
+    }).catch(function(){});
+    fetch('/api/stats').then(function(r){return r.json();}).then(function(d){
+      document.getElementById('vTot').textContent=n(d.total);
+      document.getElementById('vToday').textContent=n(d.today);
+      document.getElementById('vUniq').textContent=n(d.uniqueTotal);
+    }).catch(function(){});
+  }
+  load();setInterval(load,5000);
+</script>
+</body></html>

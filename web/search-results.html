@@ -119,7 +119,24 @@ h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;displa
     <input id="q" value="מהי כמות ההשקיה המיטבית לעגבניות באזור הערבה?" onkeydown="if(event.key==='Enter')reSearch()">
     <button class="go" onclick="reSearch()">חפש</button>
   </div>
-  <div class="meta">כ-<b>1,240</b> תוצאות · דאטה + מחקר · <span class="mono">0.28s</span></div>
+
+  <!-- LOADING BAR (shown while thinking, hidden when the summary arrives) -->
+  <style>
+    #loadbar{margin:22px 0 26px;transition:opacity .4s ease}
+    #loadbar.hide{display:none}
+    #loadbar .lb-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;font-family:'Plex Mono',monospace}
+    #loadbar .lb-label{font-size:14px;font-weight:700;color:#1c6b45}
+    #loadbar .lb-pct{font-size:16px;font-weight:800;color:#2b8fb0;font-variant-numeric:tabular-nums}
+    #loadbar .lb-track{position:relative;height:9px;border-radius:999px;background:#dbe8df;overflow:hidden}
+    #loadbar .lb-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#1c6b45,#2e9e63,#2b8fb0);box-shadow:0 0 12px rgba(46,158,99,.55);transition:width .35s cubic-bezier(.4,0,.2,1)}
+    #loadbar .lb-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:lb-shine 1.3s ease-in-out infinite}
+    @keyframes lb-shine{100%{transform:translateX(100%)}}
+    @media (prefers-reduced-motion:reduce){#loadbar .lb-fill::after{animation:none;display:none}}
+  </style>
+  <div id="loadbar">
+    <div class="lb-top"><span class="lb-label">סורק את עולם האגרו־טק…</span><span class="lb-pct" id="lbPct">0%</span></div>
+    <div class="lb-track"><div class="lb-fill" id="lbFill"></div></div>
+  </div>
 
   <!-- FIXED SUMMARY -->
   <div class="summary" id="summary">
@@ -254,20 +271,39 @@ function ask(engine,ansEl,badgeEl,q,label){
   var txt=j.answer||'—';setAnswer(a,txt);
   b.textContent='✦ תשובת AgroMind';
   var box=a.closest('.ai');if(box){box.dataset.len=txt.length;reorder();}
- }).catch(function(){a.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';});
+  resultDone();
+ }).catch(function(){a.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';resultDone();});
 }
+/* loading bar: advances as each engine finishes; completes only when all results are in */
+var _lbP=0,_lbTotal=3,_lbDoneN=0,_lbFin=false,_lbTimer=null;
+function _lbSet(p){var f=document.getElementById('lbFill'),t=document.getElementById('lbPct');if(f)f.style.width=p+'%';if(t)t.textContent=Math.round(p)+'%';}
+_lbTimer=setInterval(function(){
+  if(_lbFin)return;
+  var target=6+(_lbDoneN/_lbTotal)*90;               // reflects how many engines returned
+  _lbP += _lbP<target ? Math.max(0.6,(target-_lbP)*0.14) : 0.04;   // creep, never pass the target
+  if(_lbP>96)_lbP=96;
+  _lbSet(_lbP);
+},90);
+function resultDone(){ if(_lbFin)return; _lbDoneN++; if(_lbDoneN>=_lbTotal) finishBar(); }
+function finishBar(){
+  if(_lbFin)return;_lbFin=true;
+  if(_lbTimer)clearInterval(_lbTimer);_lbSet(100);
+  var lb=document.getElementById('loadbar');
+  setTimeout(function(){if(lb){lb.style.opacity='0';setTimeout(function(){lb.classList.add('hide');},420);}},350);
+}
+function hideOrb(){ finishBar(); }   // empty-query fallback
 function askSummary(q){
  var a=document.getElementById('sumAnswer');
  fetch('/api/ask?engine=claude&q='+encodeURIComponent('סכם בתמצית ב-2-3 משפטים קצרים וברורים, ללא כותרות וללא סימני עיצוב, את התשובה לשאלה: '+q)).then(function(r){return r.json();}).then(function(j){
-  setAnswer(a,j.answer||'—');
- }).catch(function(){a.textContent='—';});
+  resultDone();setAnswer(a,j.answer||'—');
+ }).catch(function(){resultDone();a.textContent='—';});
 }
 function askAI(q){
  askSummary(q);
  ask('claude','claudeAnswer','claudeBadge',q,'קלוד · Claude');
  ask('gemini','geminiAnswer','geminiBadge',q,'Gemini');
 }
-if(Q&&Q.trim()){askAI(Q.trim());}
+if(Q&&Q.trim()){askAI(Q.trim());}else{hideOrb();}
 
 /* ===== dynamic sections (research / related / google) ===== */
 function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}

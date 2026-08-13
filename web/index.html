@@ -299,6 +299,11 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
       <button class="cta" onclick="openReg()">הרשמה</button>
     </div>
   </div>
+  <div id="subCount" style="display:flex;justify-content:flex-start;align-items:center;gap:18px;padding:0 0 14px;font-family:'Plex Mono',monospace;font-size:14.5px;color:#8fe6ad">
+    <span>👤 מנויים רשומים: <b id="scReg" style="color:#fff">—</b></span>
+    <span>⭐ פרימיום: <b id="scPrem" style="color:#fff">—</b></span>
+    <span id="scUpgrade" onclick="upgradePremium()" style="display:none;cursor:pointer;color:#ffd76a;font-weight:700;border:1px solid rgba(255,215,106,.5);border-radius:999px;padding:3px 12px">שדרג לפרימיום ⭐</span>
+  </div>
 </div></div>
 
 <div class="hero"><div class="wrap hero-c">
@@ -515,20 +520,35 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">הרשמה לפלטפורמה</h2>
     <p style="color:var(--mut);font-size:14px;margin-bottom:18px">פתחו חשבון וקבלו גישה למאגר, לחיפוש ולמחקר.</p>
     <div class="social">
-      <button class="sbtn"><b style="color:#4285F4">G</b> <span>הרשמה עם Google</span></button>
-      <button class="sbtn"><b style="color:#1877F2">f</b> <span>הרשמה עם Facebook</span></button>
-      <button class="sbtn"><b></b> <span>הרשמה עם Apple</span></button>
+      <button class="sbtn" onclick="doRegister('google')"><b style="color:#4285F4">G</b> <span>הרשמה עם Google</span></button>
+      <button class="sbtn" onclick="doRegister('facebook')"><b style="color:#1877F2">f</b> <span>הרשמה עם Facebook</span></button>
+      <button class="sbtn" onclick="doRegister('instagram')"><b style="color:#E1306C">◉</b> <span>הרשמה עם Instagram</span></button>
+      <button class="sbtn" onclick="doRegister('tiktok')"><b style="color:#111">♪</b> <span>הרשמה עם TikTok</span></button>
     </div>
     <div class="ordiv"><span>או במייל</span></div>
     <div class="frm">
-      <input placeholder="שם מלא">
-      <input placeholder="אימייל" type="email">
-      <input placeholder="ארגון / חברה">
-      <select><option>תחום עיסוק…</option><option>מגדל/ת</option><option>חברה / סטארטאפ</option><option>מחקר / אקדמיה</option><option>ממשלה / רשות</option></select>
-      <input placeholder="סיסמה" type="password">
-      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none">הרשמה →</button>
+      <input id="regName" placeholder="שם מלא">
+      <input id="regEmail" placeholder="אימייל" type="email">
+      <input id="regOrg" placeholder="ארגון / חברה">
+      <select id="regField"><option value="">תחום עיסוק…</option><option>מגדל/ת</option><option>חברה / סטארטאפ</option><option>מחקר / אקדמיה</option><option>ממשלה / רשות</option></select>
+      <input id="regPass" placeholder="סיסמה" type="password">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);cursor:pointer"><input id="regConsent" type="checkbox"> אני מאשר/ת קבלת עדכונים ואת <a href="privacy.html" target="_blank" style="color:var(--green);font-weight:700">מדיניות הפרטיות</a></label>
+      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none" onclick="doRegister('email')">הרשמה →</button>
     </div>
     <p style="text-align:center;color:var(--mut);font-size:14px;margin-top:14px"><span class="lsub">כבר רשומים?</span> <a style="color:var(--green);font-weight:700;cursor:pointer" onclick="closeReg();openLogin()">התחברות</a></p>
+  </div>
+</div>
+
+<!-- PREMIUM / PAYMENT MODAL -->
+<div id="premmodal" class="modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-card">
+    <button class="modal-x" onclick="document.getElementById('premmodal').classList.remove('open')">×</button>
+    <div class="kicker">Premium</div>
+    <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">שדרוג למנוי פרימיום ⭐</h2>
+    <p style="color:var(--mut);font-size:14px;margin-bottom:14px">גישה מלאה למאגר, ייצוא נתונים וכלי מחקר מתקדמים.</p>
+    <div style="text-align:center;font-family:'Plex Mono';margin:4px 0 16px"><span style="font-size:42px;font-weight:800;color:var(--green-d)">$9</span><span style="color:var(--mut)"> / חודש</span></div>
+    <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none" onclick="payPremium()">💳 שלם ושדרג לפרימיום</button>
+    <p style="text-align:center;color:var(--mut);font-size:12.5px;margin-top:12px">תשלום מאובטח · ניתן לבטל בכל עת</p>
   </div>
 </div>
 
@@ -559,6 +579,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 
 <script src="i18n-agro.js"></script>
 <script src="i18n-agro2.js"></script>
+<script src="i18n-agro-espt.js"></script>
 <script>
 /* live discussion arena bar: ticking clock + member/online counters */
 (function(){
@@ -692,10 +713,50 @@ function checkAdmin(){
  if(u===A.u&&p1===A.p1&&p2===A.p2&&p3===A.p3){try{localStorage.setItem('agroAdminAuthed','1');}catch(e){}document.getElementById('adMsg').style.color='var(--green)';document.getElementById('adMsg').textContent='מתחבר… (תישאר מחובר)';location.href='admin.html';}
  else{document.getElementById('adMsg').style.color='#c4562e';document.getElementById('adMsg').textContent='שם משתמש או אחת הסיסמאות שגויים.';}
 }
-function openReg(){document.getElementById('regmodal').classList.add('open')}
-function closeReg(){document.getElementById('regmodal').classList.remove('open')}
+function openReg(){var m=document.getElementById('regmodal');m.classList.add('open');var x=m.querySelector('.modal-x');if(x)x.style.display=subGated()?'none':'';}
+function closeReg(){if(subGated())return;document.getElementById('regmodal').classList.remove('open')}
 function openLogin(){document.getElementById('loginmodal').classList.add('open')}
 function closeLogin(){document.getElementById('loginmodal').classList.remove('open')}
+
+/* ---- subscription gate + live counters (regular / premium) ---- */
+function _subKey(){try{return localStorage.getItem('agro_sub')||'';}catch(e){return '';}}
+function subGated(){return !_subKey();}
+function renderSubs(d){
+  if(d){var r=document.getElementById('scReg'),p=document.getElementById('scPrem');
+    if(r)r.textContent=(d.regular||0).toLocaleString('en');
+    if(p)p.textContent=(d.premium||0).toLocaleString('en');}
+  var up=document.getElementById('scUpgrade'); if(up)up.style.display=(_subKey()==='regular')?'inline-block':'none';
+}
+function loadSubs(){fetch('/api/subs').then(function(r){return r.json();}).then(renderSubs).catch(function(){});}
+function _val(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';}
+function doRegister(provider){
+  var payload={provider:provider,name:_val('regName'),email:_val('regEmail'),org:_val('regOrg'),field:_val('regField')};
+  if(provider==='email'){
+    if(!payload.name||!payload.email){alert('נא למלא שם ואימייל');return;}
+    var c=document.getElementById('regConsent'); if(c&&!c.checked){alert('יש לאשר את מדיניות הפרטיות');return;}
+  }
+  var done=function(d){
+    try{localStorage.setItem('agro_sub','regular'); if(d&&d.id)localStorage.setItem('agro_sub_id',d.id);}catch(e){}
+    closeReg(); if(d)renderSubs(d); else loadSubs();
+  };
+  fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
+}
+function upgradePremium(){document.getElementById('premmodal').classList.add('open');}
+function payPremium(){ /* demo payment -> premium */
+  var id=''; try{id=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+  fetch('/api/upgrade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})})
+    .then(function(r){return r.json();}).then(function(d){try{localStorage.setItem('agro_sub','premium');}catch(e){} document.getElementById('premmodal').classList.remove('open'); renderSubs(d);}).catch(function(){});
+}
+/* lock: until registered, every action routes to the mandatory registration window */
+document.addEventListener('click',function(ev){
+  if(!subGated())return;
+  var t=ev.target; if(!t||!t.closest)return;
+  if(t.closest('#regmodal')||t.closest('#loginmodal')||t.closest('.lang'))return; // allow the modal itself + language switch
+  if(!t.closest('button,a,[onclick],.cta,.plus,.go,.links span,.scope a,input,select'))return;
+  ev.preventDefault();ev.stopPropagation();openReg();
+},true);
+window.addEventListener('load',function(){ loadSubs(); if(subGated())setTimeout(openReg,350); });
 function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
 const DICT={
 "מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",
@@ -741,7 +802,7 @@ const PH={
 "שאל: מהו המשקל הסגולי האופטימלי להשקיה בעגבניות באזור הערבה?":"Ask: what is the optimal specific gravity for tomato irrigation in the Arava region?",
 "שם מלא":"Full name","אימייל":"Email","ארגון / חברה":"Organization / company","סיסמה":"Password","שם משתמש / אימייל":"Username / email"
 };
-const TXT_SEL='.links span, .lcard h4, .lcard p, .subttl, .scope a, .topicpanel .grid a, .lead, .card h3, .card p, .tinfo h3, .tinfo p, .stat span, .modal-card .rk, .modal-card > p, .sbtn span, .ordiv span, button, option, .lede-c, .ftag, .lsub, .modal-card p a, .frm a';
+const TXT_SEL='.links span, .lcard h4, .lcard p, .subttl, .subhead, .subcap, .scope a, .topicpanel .grid a, .lead, .card h3, .card p, .tinfo h3, .tinfo p, .stat span, .modal-card .rk, .modal-card > p, .sbtn span, .ordiv span, button, option, .lede-c, .ftag, .lsub, .modal-card p a, .frm a';
 function applyLang(lang){
  const D = lang==='en' ? DICT : ((window.TXX&&window.TXX[lang])||null);
  const D2 = (window.TXX2&&window.TXX2[lang])||null;

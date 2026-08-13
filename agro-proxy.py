@@ -599,7 +599,29 @@ def ask_gemini(q):
         return {"answer": msg, "demo": True, "err": code}
 
 # --- auto-translation via Gemini (cached) ---
-_TR_LANGS = {"en":"English","de":"German","fr":"French","zh":"Simplified Chinese","ar":"Arabic","hi":"Hindi","ru":"Russian"}
+# ---- subscribers — real persistent records (details + plan) for traffic/valuation ----
+SUBS_FILE = os.path.join(DATA_DIR, "subscribers.json")
+SUBS_KEY = os.environ.get("SUBS_KEY", "ofakim2040")   # guard for viewing/exporting personal data
+_SUBS_LOCK = threading.Lock()
+def _load_subs():
+    try:
+        with open(SUBS_FILE, "r", encoding="utf-8") as f:
+            d = json.load(f)
+            return d if isinstance(d, list) else []   # migrate old {regular,premium} -> fresh list
+    except Exception:
+        return []
+_SUBS = _load_subs()   # list of {id, ts, provider, name, email, org, field, plan}
+def _save_subs():
+    try:
+        with open(SUBS_FILE, "w", encoding="utf-8") as f:
+            json.dump(_SUBS, f, ensure_ascii=False)
+    except Exception as e:
+        print("save subs fail:", e)
+def _subs_counts():
+    prem = sum(1 for r in _SUBS if r.get("plan") == "premium")
+    return len(_SUBS) - prem, prem
+
+_TR_LANGS = {"en":"English","de":"German","fr":"French","zh":"Simplified Chinese","ar":"Arabic","hi":"Hindi","ru":"Russian","es":"Spanish","pt":"Portuguese"}
 _TR_CACHE = {}   # (lang, text) -> translation, in-memory
 
 def translate_batch(texts, lang):
@@ -1685,6 +1707,46 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/subs-export"):
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            if (q.get("key", [""])[0]) != SUBS_KEY:
+                self.send_response(403); self.end_headers(); self.wfile.write(b"forbidden"); return
+            import io, csv
+            with _SUBS_LOCK: rows = list(_SUBS)
+            buf = io.StringIO(); w = csv.writer(buf)
+            w.writerow(["time", "provider", "name", "email", "org", "field", "plan"])
+            for r in rows:
+                w.writerow([r.get("ts",""), r.get("provider",""), r.get("name",""), r.get("email",""), r.get("org",""), r.get("field",""), r.get("plan","")])
+            body = ("﻿" + buf.getvalue()).encode("utf-8")   # BOM so Excel reads Hebrew
+            self.send_response(200)
+            self.send_header("Content-Type", "text/csv; charset=utf-8")
+            self.send_header("Content-Disposition", "attachment; filename=agrodata-subscribers.csv")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/subs-list"):
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            if (q.get("key", [""])[0]) != SUBS_KEY:
+                self.send_response(403); self.end_headers(); self.wfile.write(b"forbidden"); return
+            with _SUBS_LOCK:
+                reg, prem = _subs_counts()
+                out = {"ok": True, "total": len(_SUBS), "regular": reg, "premium": prem,
+                       "items": list(_SUBS[-20:])[::-1]}   # last 20, newest first
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/subs"):
+            with _SUBS_LOCK:
+                reg, prem = _subs_counts()
+                out = {"ok": True, "regular": reg, "premium": prem}
+            body = json.dumps(out).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/stats"):
             with _VISITS_LOCK:
                 out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY,
@@ -1716,6 +1778,40 @@ class H(http.server.SimpleHTTPRequestHandler):
             except Exception as _e:
                 print("translate endpoint fail:", _e); m = {t: t for t in texts}
             body = json.dumps({"ok": True, "map": m}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/subscribe") or self.path.startswith("/api/upgrade"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            def _s(k):
+                v = data.get(k)
+                return (str(v)[:200].strip() if v is not None else "")
+            new_id = ""
+            with _SUBS_LOCK:
+                if self.path.startswith("/api/upgrade"):
+                    sid = _s("id"); done = False
+                    for r in _SUBS:
+                        if r.get("id") == sid: r["plan"] = "premium"; done = True; break
+                    if not done:
+                        for r in reversed(_SUBS):
+                            if r.get("plan") != "premium": r["plan"] = "premium"; break
+                else:
+                    new_id = "s%d_%d" % (len(_SUBS) + 1, int(time.time()))
+                    _SUBS.append({"id": new_id,
+                                  "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                  "provider": _s("provider"), "name": _s("name"), "email": _s("email"),
+                                  "org": _s("org"), "field": _s("field"), "plan": "regular"})
+                _save_subs()
+                reg, prem = _subs_counts()
+                out = {"ok": True, "regular": reg, "premium": prem}
+                if new_id: out["id"] = new_id
+            body = json.dumps(out).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")

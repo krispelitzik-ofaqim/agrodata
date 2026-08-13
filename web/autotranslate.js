@@ -2,8 +2,8 @@
    language via /api/translate (Gemini, cached). Choice persists in localStorage.
    Mark elements you do NOT want translated with class="notrans" or data-notrans. */
 (function(){
-  var LANGS=[['he','🇮🇱 עברית'],['en','🇬🇧 English'],['de','🇩🇪 Deutsch'],['fr','🇫🇷 Français'],['zh','🇨🇳 中文'],['ar','🇸🇦 العربية'],['ru','🇷🇺 Русский'],['hi','🇮🇳 हिन्दी']];
-  var LNAME={he:'עברית',en:'English',de:'Deutsch',fr:'Français',zh:'中文',ar:'العربية',ru:'Русский',hi:'हिन्दी'};
+  var LANGS=[['he','🇮🇱 עברית'],['en','🇬🇧 English'],['de','🇩🇪 Deutsch'],['fr','🇫🇷 Français'],['zh','🇨🇳 中文'],['ar','🇸🇦 العربية'],['ru','🇷🇺 Русский'],['hi','🇮🇳 हिन्दी'],['es','🇪🇸 Español'],['pt','🇵🇹 Português']];
+  var LNAME={he:'עברית',en:'English',de:'Deutsch',fr:'Français',zh:'中文',ar:'العربية',ru:'Русский',hi:'हिन्दी',es:'Español',pt:'Português'};
   function get(){try{return localStorage.getItem('agrolang')||'he';}catch(e){return 'he';}}
   var lang=get(), de=document.documentElement;
   de.lang=lang; de.dir=(lang==='he'||lang==='ar')?'rtl':'ltr';
@@ -46,25 +46,59 @@
     return false;
   }
 
-  function translate(){
-    var walker=document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), nodes=[], set={}, uniq=[], n;
-    while(n=walker.nextNode()){
-      var v=n.nodeValue; if(!v) continue;
-      var t=v.trim(); if(!t || !HEB.test(t)) continue;
-      if(skip(n)) continue;
-      nodes.push(n); if(!(t in set)){ set[t]=1; uniq.push(t); }
-    }
-    var phEls=[].slice.call(document.querySelectorAll('[placeholder]'));
-    phEls.forEach(function(el){ var t=(el.getAttribute('placeholder')||'').trim(); if(t&&HEB.test(t)&&!(t in set)){set[t]=1;uniq.push(t);} });
-    if(!uniq.length) return;
+  var SEEN = window.WeakSet ? new WeakSet() : null;
+  function addNode(n,nodes,set,uniq){
+    var v=n.nodeValue; if(!v) return;
+    var t=v.trim(); if(!t || !HEB.test(t)) return;   // translated text has no Hebrew -> loop-safe
+    if(SEEN && SEEN.has(n)) return;
+    if(skip(n)) return;
+    nodes.push(n); if(!(t in set)){ set[t]=1; uniq.push(t); }
+  }
+  function gather(root,nodes,set,uniq){
+    if(!root) return;
+    if(root.nodeType===3){ addNode(root,nodes,set,uniq); return; }
+    if(root.nodeType!==1) return;
+    var walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), n;
+    while(n=walker.nextNode()) addNode(n,nodes,set,uniq);
+  }
+  function send(uniq,nodes,phEls){
     fetch('/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:lang,texts:uniq})})
      .then(function(r){return r.json();}).then(function(j){
         var m=(j&&j.map)||{};
-        nodes.forEach(function(nn){ var v=nn.nodeValue, t=v.trim(); if(m[t]&&m[t]!==t){ nn.nodeValue=v.replace(t, m[t]); } });
+        nodes.forEach(function(nn){ var v=nn.nodeValue, t=v.trim(); if(m[t]&&m[t]!==t){ nn.nodeValue=v.replace(t, m[t]); if(SEEN) SEEN.add(nn); } });
         phEls.forEach(function(el){ var t=(el.getAttribute('placeholder')||'').trim(); if(m[t]) el.setAttribute('placeholder', m[t]); });
      }).catch(function(){});
   }
+  function translate(){
+    var nodes=[], set={}, uniq=[];
+    gather(document.body, nodes, set, uniq);
+    var phEls=[].slice.call(document.querySelectorAll('[placeholder]'));
+    phEls.forEach(function(el){ var t=(el.getAttribute('placeholder')||'').trim(); if(t&&HEB.test(t)&&!(t in set)){set[t]=1;uniq.push(t);} });
+    if(!uniq.length) return;
+    send(uniq, nodes, phEls);
+  }
 
-  function init(){ menu(); if(lang!=='he') translate(); }
+  /* re-translate content injected after load (AI answers, live data cards, etc.) */
+  var pend=[], timer=null;
+  function flush(){
+    timer=null; if(lang==='he'){ pend=[]; return; }
+    var roots=pend; pend=[];
+    var nodes=[], set={}, uniq=[];
+    for(var i=0;i<roots.length;i++) gather(roots[i], nodes, set, uniq);
+    if(uniq.length) send(uniq, nodes, []);
+  }
+  function watch(){
+    if(!window.MutationObserver) return;
+    new MutationObserver(function(muts){
+      for(var i=0;i<muts.length;i++){
+        var mu=muts[i];
+        if(mu.type==='characterData'){ pend.push(mu.target); }
+        else { for(var k=0;k<mu.addedNodes.length;k++) pend.push(mu.addedNodes[k]); }
+      }
+      if(pend.length){ if(timer) clearTimeout(timer); timer=setTimeout(flush, 220); }
+    }).observe(document.body, {childList:true, subtree:true, characterData:true});
+  }
+
+  function init(){ menu(); if(lang!=='he'){ translate(); watch(); } }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
 })();

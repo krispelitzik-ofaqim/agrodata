@@ -1,0 +1,23 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>בדיקת סרגל טעינה</title>
+<style>
+  body{margin:0;background:#eef6f0;min-height:100vh;display:grid;place-items:center;font-family:system-ui,Arial;padding:20px}
+  #loadbar{width:100%;max-width:560px}
+  #loadbar .lb-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;font-family:monospace}
+  #loadbar .lb-label{font-size:14px;font-weight:700;color:#1c6b45}
+  #loadbar .lb-pct{font-size:16px;font-weight:800;color:#2b8fb0;font-variant-numeric:tabular-nums}
+  #loadbar .lb-track{position:relative;height:9px;border-radius:999px;background:#dbe8df;overflow:hidden}
+  #loadbar .lb-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#1c6b45,#2e9e63,#2b8fb0);box-shadow:0 0 12px rgba(46,158,99,.55);transition:width .35s cubic-bezier(.4,0,.2,1)}
+  #loadbar .lb-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:lb-shine 1.3s ease-in-out infinite}
+  @keyframes lb-shine{100%{transform:translateX(100%)}}
+</style></head><body>
+  <div id="loadbar">
+    <div class="lb-top"><span class="lb-label">סורק את עולם האגרו־טק…</span><span class="lb-pct" id="lbPct">0%</span></div>
+    <div class="lb-track"><div class="lb-fill" id="lbFill"></div></div>
+  </div>
+<script>
+  var p=0;function set(v){document.getElementById('lbFill').style.width=v+'%';document.getElementById('lbPct').textContent=Math.round(v)+'%';}
+  setInterval(function(){p+=Math.max(0.6,(100-p)*0.04);if(p>=100){p=0;set(0);return;}set(p);},110);
+</script>
+</body></html>
