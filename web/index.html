@@ -287,7 +287,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
         <span class="wm" style="font-size:19px;color:#fff;align-self:flex-end;font-weight:600;letter-spacing:.01em">Center</span>
       </div>
     </div>
-    <div class="links"><span onclick="location.href='about.html'">מי אנחנו</span><span onclick="location.href='pricing.html'">מנויים</span><span onclick="location.href='mailto:krispelitzik@gmail.com'">צור קשר</span><span onclick="location.href='privacy.html'">מדיניות פרטיות</span><span onclick="location.href='terms.html'">תקנון</span><span style="color:#8fe6ad;font-weight:800;cursor:pointer" onclick="location.href='ofakim.html'">אופקים</span></div>
+    <div class="links"><span onclick="location.href='about.html'">מי אנחנו</span><span onclick="location.href='pricing.html'">מנויים</span><span onclick="location.href='agromedia.html'">מדיה</span><span onclick="location.href='mailto:krispelitzik@gmail.com'">צור קשר</span><span onclick="location.href='privacy.html'">מדיניות פרטיות</span><span onclick="location.href='terms.html'">תקנון</span><span style="color:#8fe6ad;font-weight:800;cursor:pointer" onclick="location.href='ofakim.html'">אופקים</span></div>
     <div class="navright">
       <div class="lang">
         <button class="langbtn" onclick="toggleLang(event)">🌐 <span id="langlbl">עברית</span> ▾</button>
@@ -299,16 +299,19 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
       <button class="cta" onclick="openReg()">הרשמה</button>
     </div>
   </div>
-  <div id="subCount" style="display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 0 14px;font-family:'Plex Mono',monospace;font-size:14.5px;color:#8fe6ad">
-    <span id="scHello" style="color:#fff;font-weight:700;margin-inline-end:auto;display:none">שלום, <span id="scHelloName"></span> 👋</span>
-    <span>👤 מנויים רשומים: <b id="scReg" style="color:#fff">—</b></span>
-    <span>⭐ פרימיום: <b id="scPrem" style="color:#fff">—</b></span>
-    <span id="scUpgrade" onclick="upgradePremium()" style="display:none;cursor:pointer;color:#ffd76a;font-weight:700;border:1px solid rgba(255,215,106,.5);border-radius:999px;padding:3px 12px">שדרג לפרימיום ⭐</span>
+  <div id="subCount" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:2px 0 14px;font-family:'Plex Mono',monospace;font-size:14.5px;color:#8fe6ad">
+    <div style="display:flex;align-items:center;gap:16px">
+      <span id="scHello" style="color:#fff;font-weight:700;display:none">שלום, <span id="scHelloName"></span> 👋</span>
+      <span>👤 מנויים רשומים: <b id="scReg" style="color:#fff">—</b></span>
+      <span>⭐ פרימיום: <b id="scPrem" style="color:#fff">—</b></span>
+      <span id="scUpgrade" onclick="upgradePremium()" style="display:none;cursor:pointer;color:#ffd76a;font-weight:700;border:1px solid rgba(255,215,106,.5);border-radius:999px;padding:3px 12px">שדרג לפרימיום ⭐</span>
+    </div>
+    <div class="mediaicons" style="display:flex;align-items:center;gap:13px;font-size:13px;font-weight:700"><a href="agronews.html" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v14a2 2 0 0 0 2 2H5a2 2 0 0 1-2-2V4zm2 3v2h9V7H5zm0 4v2h9v-2H5zm0 4v2h6v-2H5zM19 9v9a1 1 0 0 0 2 0V9h-2z"/></svg>אתר החדשות</a><span style="color:rgba(255,255,255,.25)">|</span><a href="#" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 3.9 12 3.9 12 3.9s-7.5 0-9.4.5A3 3 0 0 0 .5 6.5 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.5zM9.6 15.5v-7l6.3 3.5-6.3 3.5z"/></svg>ערוץ האגרו-טק</a><span style="color:rgba(255,255,255,.25)">|</span><a href="#" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 1 0 12 24 12 12 0 0 0 12 0zm5.5 17.3c-.2.35-.66.46-1 .25-2.8-1.7-6.3-2.1-10.5-1.14a.75.75 0 1 1-.33-1.46c4.6-1.05 8.5-.6 11.6 1.3.35.22.46.68.23 1.05zm1.47-3.27c-.28.44-.86.58-1.3.31-3.2-1.97-8.08-2.54-11.86-1.4a.94.94 0 1 1-.55-1.8c4.32-1.3 9.7-.67 13.38 1.6.44.27.58.85.33 1.29zm.13-3.4C15.4 8.35 8.9 8.12 5.3 9.22a1.12 1.12 0 1 1-.65-2.15c4.13-1.25 11.3-1 15.76 1.66a1.12 1.12 0 0 1-1.15 1.92z"/></svg>אולפן הפודקאסט</a><span style="color:rgba(255,255,255,.25)">|</span><a href="#" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5zm2.4.5 7.6 5.2 7.6-5.2H4.4zM20 8.1l-7.4 5.1a1 1 0 0 1-1.2 0L4 8.1V19h16V8.1z"/></svg>ניוזלייטר</a></div>
   </div>
 </div></div>
 
 <div class="hero"><div class="wrap hero-c">
-  <div class="h1big">זירת <span>האגרו-טק</span> של ישראל</div>
+    <div class="h1big">זירת <span>האגרו-טק</span> של ישראל</div>
   <div class="subttl" style="font-family:Rubik;font-size:30px;font-weight:700;color:var(--green);margin:4px 0 22px">מרכז נתונים מבוססי מחקר וידע חקלאי מתעדכן</div>
   <div class="mindtag"><span class="wm">Agro<b>Mind</b></span> · הקופיילוט שמבין את כל הזירה</div>
   <div class="search search-c" style="margin-top:30px">
@@ -346,7 +349,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
         <a class="card" href="ofakim.html" style="background:#CDE8D5;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="sensor"></div><div class="cbrand wm">Agro<b>Sense</b></div><h3>חיישנים ו-IoT ↗</h3><p>רשת חיישני שדה ומזג אוויר חי — נתונים בזמן אמת מאזור אופקים.</p></a>
         <a class="card" href="community.html" style="background:#CDE8D5;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="hub"></div><div class="cbrand wm">Agro<b>Hub</b></div><h3>Hub ואקסלרטור ↗</h3><p>מפגש למגדלים, חברות ומחקר — והאצת פיילוטים.</p></a>
         <a class="card" href="ideas.html" style="background:#CDE8D5;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="bulb"></div><div class="cbrand wm">Agro<b>Innovate</b></div><h3>מנוע החדשנות ↗</h3><p>אתגרים חיים → בנק רעיונות לסטארטאפים, שנשאבים מכל הדאטה. AI שמזהה בעיות ומייצר הזדמנויות.</p></a>
-        <a class="card" href="agronews.html" style="background:#CDE8D5;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="news"></div><div class="cbrand wm">agro<b>News</b></div><h3>פורטל החקלאות והאגרו-טק ↗</h3><p>פורטל החדשות הארצי — חדשות, שווקים, תערוכות, אופקים וקהילה. מונע ע״י המוח של AgroData.</p></a>
+        <a class="card" href="agromedia.html" style="background:#CDE8D5;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="news"></div><div class="cbrand wm">agro<b>Media</b></div><h3>מרכז המדיה של הזירה ↗</h3><p>אתר החדשות, ערוץ האגרו-טק (וידאו), אולפן הפודקאסטים וניוזלייטר — כל התוכן במקום אחד.</p></a>
       </div>
       <div class="subrow4">
         <a class="card" href="agroeco.html" style="background:#F7F3ED;text-decoration:none;color:inherit;display:block"><div class="ic" data-i="leaf"></div><div class="cbrand wm">Agro<b>Eco</b></div><h3>חקלאות וסביבה ↗</h3><p>הנגזרות הסביבתיות של החקלאות — קיימות, אנרגיה, אקלים ופחמן, מים וביו-חומרים, עם דגש על ישראל.</p></a>
