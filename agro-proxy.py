@@ -1886,7 +1886,8 @@ class H(http.server.SimpleHTTPRequestHandler):
                     _SUBS.append({"id": new_id,
                                   "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
                                   "provider": _s("provider"), "name": _s("name"), "email": _s("email"),
-                                  "org": _s("org"), "field": _s("field"), "plan": "regular", "role": new_role})
+                                  "org": _s("org"), "field": _s("field"),
+                                  "plan": "premium" if new_role == "admin" else "regular", "role": new_role})
                 _save_subs()
                 reg, prem = _subs_counts()
                 out = {"ok": True, "regular": reg, "premium": prem}
