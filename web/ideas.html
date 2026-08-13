@@ -294,10 +294,27 @@ function drawTab(){
  document.getElementById('bankSel').textContent='אתגר: '+CURTITLE;
  (document.querySelector('.bank')||document.getElementById('ideas')).scrollIntoView({behavior:'smooth',block:'nearest'});
  if(!CURQ){document.getElementById('ideas').innerHTML='<div class="bankempty">בחרו אתגר או כתבו בעיה.</div>';return;}
- if(ITAB==='ideas')renderIdeas();else if(ITAB==='gap')renderGap();else if(ITAB==='who')renderWho();else if(ITAB==='trends')renderTrends();else renderFinance();
+ checkInnovQuota(function(ok){
+   if(!ok){document.getElementById('ideas').innerHTML=innovGate();return;}
+   if(ITAB==='ideas')renderIdeas();else if(ITAB==='gap')renderGap();else if(ITAB==='who')renderWho();else if(ITAB==='trends')renderTrends();else renderFinance();
+ });
 }
 function thinking(msg){document.getElementById('ideas').innerHTML='<div class="thinking"><span>'+msg+'</span><span class="dots"><i></i><i></i><i></i></span></div>';}
 function isPremium(){return true;/* פתוח לכולם בינתיים — להחזיר נעילה: localStorage.getItem('agroPremium')==='1' */}
+/* free-tier: 5 innovation attempts per account (separate counter, IP-proof) */
+var _innovCountedQ=null,_innovBlocked=false;
+function checkInnovQuota(cb){
+  if(CURQ===_innovCountedQ){ cb(!_innovBlocked); return; }
+  var sid=''; try{sid=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+  fetch('/api/search-quota',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:sid,feature:'innovation'})})
+   .then(function(r){return r.json();}).then(function(q){ _innovCountedQ=CURQ; _innovBlocked=!!(q&&q.allowed===false); cb(!_innovBlocked); })
+   .catch(function(){ _innovCountedQ=CURQ; _innovBlocked=false; cb(true); });
+}
+function innovGate(){
+  return '<div class="lock"><div class="lockic">⭐</div><div class="lockt">הגעת ל-5 ניסיונות החינם במנוע החדשנות</div>'
+   +'<div class="lockp">שדרגו למנוי פרימיום לרעיונות ללא הגבלה, מכל נתוני הזירה.</div>'
+   +'<div class="lockb"><a class="lbtn" href="pricing.html">🚀 שדרגו למנוי →</a></div></div>';
+}
 function unlock(){try{localStorage.setItem('agroPremium','1');}catch(e){}location.reload();}
 function gate(){
  return '<div class="lock"><div class="lockic">🔒</div><div class="lockt">בנק הרעיונות פתוח למנויי <b>Professional</b> ומעלה</div>'

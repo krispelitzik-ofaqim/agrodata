@@ -563,14 +563,10 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <div class="social">
       <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#4285F4">G</b> <span>Google</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
       <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#1877F2">f</b> <span>Facebook</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
+      <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#E1306C">◉</b> <span>Instagram</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
+      <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#111">♪</b> <span>TikTok</span> <span style="font-size:11px;background:#eef4ef;color:#5c6f63;border-radius:6px;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
     </div>
-    <div class="ordiv"><span>או</span></div>
-    <div class="frm">
-      <input placeholder="שם משתמש / אימייל">
-      <input placeholder="סיסמה" type="password">
-      <div style="text-align:left;margin-top:-2px"><a style="color:var(--mut);font-size:14px;cursor:pointer">שכחת סיסמה?</a></div>
-      <button class="cta" style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;box-shadow:none">התחברות →</button>
-    </div>
+    <p style="text-align:center;color:var(--mut);font-size:13px;margin-top:14px;line-height:1.6">התחברות מאובטחת עם Google / Facebook — בקרוב.<br>אם נרשמת, באותו מכשיר אתה מחובר אוטומטית.</p>
     <p style="text-align:center;color:var(--mut);font-size:14px;margin-top:14px"><span class="lsub">אין חשבון?</span> <a style="color:var(--green);font-weight:700;cursor:pointer" onclick="closeLogin();openReg()">הרשמה</a></p>
   </div>
 </div>
@@ -750,7 +746,7 @@ function doRegister(provider){
   fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
 }
-function upgradePremium(){document.getElementById('premmodal').classList.add('open');}
+function upgradePremium(){location.href='pricing.html';}
 function payPremium(){ /* demo payment -> premium */
   var id=''; try{id=localStorage.getItem('agro_sub_id')||'';}catch(e){}
   fetch('/api/upgrade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})})

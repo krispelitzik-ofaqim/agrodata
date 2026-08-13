@@ -1838,7 +1838,12 @@ class H(http.server.SimpleHTTPRequestHandler):
                 data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
             except Exception:
                 data = {}
-            sid = str(data.get("id") or ""); limit = int(os.environ.get("FREE_SEARCH_LIMIT", "5"))
+            sid = str(data.get("id") or "")
+            feature = str(data.get("feature") or "search")
+            _limits = {"search": int(os.environ.get("FREE_SEARCH_LIMIT", "5")),
+                       "innovation": int(os.environ.get("FREE_INNOVATION_LIMIT", "5"))}
+            limit = _limits.get(feature, 5)
+            ckey = "searches" if feature == "search" else (feature + "_searches")
             with _SUBS_LOCK:
                 rec = None
                 for r in _SUBS:
@@ -1848,9 +1853,9 @@ class H(http.server.SimpleHTTPRequestHandler):
                 elif rec.get("role") == "admin" or rec.get("plan") == "premium":
                     out = {"ok": True, "allowed": True, "unlimited": True}
                 else:
-                    used = int(rec.get("searches", 0) or 0) + 1
-                    rec["searches"] = used; _save_subs()
-                    out = {"ok": True, "allowed": used <= limit, "used": used, "limit": limit, "plan": rec.get("plan", "regular")}
+                    used = int(rec.get(ckey, 0) or 0) + 1
+                    rec[ckey] = used; _save_subs()
+                    out = {"ok": True, "allowed": used <= limit, "used": used, "limit": limit, "feature": feature, "plan": rec.get("plan", "regular")}
             body = json.dumps(out).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

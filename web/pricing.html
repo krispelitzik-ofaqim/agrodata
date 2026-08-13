@@ -75,10 +75,6 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:6px 0 10px}h1 b{color
     <div class="kick">MEMBERSHIP · מסלולי מנוי</div>
     <h1>בחרו את <b>המסלול</b> שלכם</h1>
     <div class="sub">גישה מלאה לזירת האגרו-טק של ישראל — מאגר נתונים, מחקר, AgroMind (AI), נתונים פיננסיים חיים ומפות. התחילו חינם, שדרגו מתי שתרצו.</div>
-    <div class="toggle">
-      <button class="on" onclick="setBill('m',this)">חודשי</button>
-      <button onclick="setBill('y',this)">שנתי <span class="save">חיסכון 67%</span></button>
-    </div>
   </div>
 
   <div class="plans">
@@ -92,7 +88,8 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:6px 0 10px}h1 b{color
       <a class="cta ghost" href="index.html">התחילו חינם</a>
       <ul class="feat">
         <li><span class="ck">✓</span> גישה למאגר הבסיסי</li>
-        <li><span class="ck">✓</span> AgroMind — עד 5 חיפושים ביום</li>
+        <li><span class="ck">✓</span> AgroMind — עד 5 חיפושים</li>
+        <li><span class="ck">✓</span> מנוע החדשנות — עד 5 ניסיונות</li>
         <li><span class="ck">✓</span> חדשות ומדדי שוק</li>
         <li><span class="ck">✓</span> כתבי עת ומחקרים (צפייה)</li>
         <li class="off"><span class="ck">✗</span> נתונים פיננסיים בזמן אמת</li>
@@ -100,56 +97,56 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:6px 0 10px}h1 b{color
       </ul>
     </div>
 
-    <!-- PROFESSIONAL -->
-    <div class="plan pop">
-      <div class="pname">PROFESSIONAL</div>
-      <div class="pheb">מקצועי</div>
-      <div class="price"><span class="amt" data-m="25" data-y="25">25</span><span class="cur">$</span><span class="per" data-per>/ לחודש</span></div>
-      <div class="priceyr" data-yr>&nbsp;</div>
-      <div class="pdesc">לחוקרים, מגדלים וחברות — כל היכולות ללא הגבלה.</div>
-      <a class="cta primary" href="contact.html">שדרגו למקצועי</a>
+    <!-- MONTHLY -->
+    <div class="plan">
+      <div class="pname">MONTHLY</div>
+      <div class="pheb">חודשי</div>
+      <div class="price"><span class="amt">25</span><span class="cur">$</span><span class="per">/ לחודש</span></div>
+      <div class="priceyr">גמישות מלאה · ביטול בכל עת</div>
+      <div class="pdesc">כל היכולות ללא הגבלה, בתשלום חודשי.</div>
+      <button class="cta primary" onclick="choosePlan('monthly')">בחרו חודשי</button>
       <ul class="feat">
         <li><span class="ck">✓</span> <b>הכל בחינם, ובנוסף:</b></li>
         <li><span class="ck">✓</span> AgroMind ללא הגבלה (Gemini + Claude)</li>
+        <li><span class="ck">✓</span> מנוע החדשנות ללא הגבלה</li>
         <li><span class="ck">✓</span> נתונים פיננסיים בזמן אמת</li>
-        <li><span class="ck">✓</span> מפות GIS מתקדמות</li>
         <li><span class="ck">✓</span> ייצוא ל-Excel / PDF</li>
         <li><span class="ck">✓</span> תמיכה מועדפת</li>
       </ul>
     </div>
 
+    <!-- QUARTERLY -->
+    <div class="plan pop">
+      <div class="pname">QUARTERLY</div>
+      <div class="pheb">תלת-חודשי</div>
+      <div class="price"><span class="amt">59</span><span class="cur">$</span><span class="per">/ 3 חודשים</span></div>
+      <div class="priceyr">≈ $19.67 לחודש · חיסכון 21%</div>
+      <div class="pdesc">אותן יכולות מקצועיות — במחיר משתלם יותר.</div>
+      <button class="cta primary" onclick="choosePlan('quarterly')">בחרו תלת-חודשי</button>
+      <ul class="feat">
+        <li><span class="ck">✓</span> <b>כל המסלול המקצועי</b></li>
+        <li><span class="ck">✓</span> חיסכון ~21% מול חודשי</li>
+        <li><span class="ck">✓</span> חיוב אחת ל-3 חודשים</li>
+        <li><span class="ck">✓</span> נתונים פיננסיים בזמן אמת</li>
+        <li><span class="ck">✓</span> ייצוא ו-API בסיסי</li>
+      </ul>
+    </div>
+
     <!-- ANNUAL -->
-    <div class="plan">
+    <div class="plan gold">
+      <div class="ptag">BEST VALUE</div>
       <div class="pname">ANNUAL</div>
       <div class="pheb">שנתי</div>
       <div class="price"><span class="amt">99</span><span class="cur">$</span><span class="per">/ לשנה</span></div>
       <div class="priceyr">≈ $8.25 לחודש · חיסכון 67%</div>
-      <div class="pdesc">אותן יכולות מקצועיות — במחיר שנתי משתלם.</div>
-      <a class="cta primary" href="contact.html">בחרו שנתי</a>
+      <div class="pdesc">אותן יכולות — במחיר השנתי הכי משתלם.</div>
+      <button class="cta goldc" onclick="choosePlan('annual')">בחרו שנתי</button>
       <ul class="feat">
-        <li><span class="ck">✓</span> <b>כל מסלול מקצועי</b></li>
+        <li><span class="ck">✓</span> <b>כל המסלול המקצועי</b></li>
         <li><span class="ck">✓</span> חיסכון של $201 מול חודשי</li>
         <li><span class="ck">✓</span> דוחות מותאמים אישית</li>
-        <li><span class="ck">✓</span> גישת API בסיסית</li>
+        <li><span class="ck">✓</span> גישת API</li>
         <li><span class="ck">✓</span> חיוב אחד בשנה</li>
-      </ul>
-    </div>
-
-    <!-- 5-YEAR -->
-    <div class="plan gold">
-      <div class="ptag">BEST VALUE</div>
-      <div class="pname">5-YEAR</div>
-      <div class="pheb">5 שנים</div>
-      <div class="price"><span class="amt">399</span><span class="cur">$</span></div>
-      <div class="priceyr">≈ $6.65 לחודש · מחיר נעול ל-5 שנים</div>
-      <div class="pdesc">לארגונים ומוסדות — התחייבות ארוכה, מחיר מוקפא.</div>
-      <a class="cta goldc" href="contact.html">בחרו 5 שנים</a>
-      <ul class="feat">
-        <li><span class="ck">✓</span> <b>כל המסלול השנתי</b></li>
-        <li><span class="ck">✓</span> מחיר נעול — ללא העלאות 5 שנים</li>
-        <li><span class="ck">✓</span> גישת API מלאה</li>
-        <li><span class="ck">✓</span> מנהל לקוח ייעודי</li>
-        <li><span class="ck">✓</span> אפשרות מיתוג (White-label)</li>
       </ul>
     </div>
   </div>
@@ -164,20 +161,24 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:6px 0 10px}h1 b{color
   <div class="faq">
     <h2>שאלות נפוצות</h2>
     <div class="qa"><h4>אפשר להתחיל בחינם?</h4><p>בהחלט. מסלול החינם זמין לתמיד, ללא כרטיס אשראי. אפשר לשדרג למקצועי בכל רגע.</p></div>
-    <div class="qa"><h4>מה ההבדל בין חודשי לשנתי?</h4><p>אותן יכולות בדיוק — ההבדל הוא במחיר. השנתי ($99) חוסך כ-67% מול תשלום חודשי ($25×12=$300).</p></div>
-    <div class="qa"><h4>מה כולל מסלול 5 השנים?</h4><p>כל היכולות המקצועיות, מחיר נעול ל-5 שנים ללא העלאות, API מלא, מנהל לקוח ייעודי ואפשרות מיתוג לארגון.</p></div>
-    <div class="qa"><h4>אפשר לבטל?</h4><p>כן, אפשר לבטל בכל עת. במסלולים השנתי וה-5 שנים — ההטבה מותנית בתקופת ההתחייבות.</p></div>
+    <div class="qa"><h4>מה ההבדל בין המסלולים?</h4><p>אותן יכולות בדיוק בכל המסלולים בתשלום — ההבדל הוא במחיר ובמחזור: חודשי ($25), תלת-חודשי ($59, חיסכון ~21%), ושנתי ($99, חיסכון 67% מול $25×12=$300).</p></div>
+    <div class="qa"><h4>איך משלמים?</h4><p>התשלום מאובטח דרך PayPal או כרטיס אשראי, עם חשבונית מס כדין. ההרשמה מתחילה חינם — משדרגים מתי שרוצים.</p></div>
+    <div class="qa"><h4>אפשר לבטל?</h4><p>כן, אפשר לבטל בכל עת. במסלול השנתי ההטבה מותנית בתקופת ההתחייבות.</p></div>
   </div>
 </div>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · מסלולי מנוי · <span class="mono">membership</span></div></div></div>
 
 <script>
-function setBill(mode,el){
- document.querySelectorAll('.toggle button').forEach(function(b){b.classList.remove('on');});el.classList.add('on');
- var amt=document.querySelector('.plan.pop .amt'),per=document.querySelector('.plan.pop [data-per]'),yr=document.querySelector('.plan.pop [data-yr]');
- if(mode==='y'){amt.textContent='99';per.textContent='/ לשנה';yr.innerHTML='במקום $300 · חיסכון 67%';}
- else{amt.textContent='25';per.textContent='/ לחודש';yr.innerHTML='&nbsp;';}
+var PLANS={monthly:{name:'חודשי',price:'$25'},quarterly:{name:'תלת-חודשי',price:'$59'},annual:{name:'שנתי',price:'$99'}};
+/* TODO: replace with PayPal subscription buttons — one plan_id per tier */
+function choosePlan(plan){
+ var p=PLANS[plan]||{name:plan,price:''};
+ if(!confirm('מסלול '+p.name+' ('+p.price+')\n\nתשלום דרך PayPal יחובר בקרוב. להפעיל שדרוג בדמו עכשיו?'))return;
+ var sid=''; try{sid=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+ fetch('/api/upgrade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:sid})})
+  .then(function(r){return r.json();}).then(function(){try{localStorage.setItem('agro_sub','premium');localStorage.setItem('agro_role','premium');}catch(e){} alert('שודרגת לפרימיום ✓ (דמו)'); location.href='index.html';})
+  .catch(function(){alert('שגיאת חיבור לשרת');});
 }
 </script>
 <script src="autotranslate.js"></script>
