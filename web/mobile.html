@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#134a30">
+<title>AgroData · נייד</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#e2ece5;--bg:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
+/* phone shell — narrow, app-like; on desktop shows a centered device frame */
+.phone{max-width:460px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;box-shadow:0 0 60px rgba(12,40,25,.25);display:flex;flex-direction:column;overflow:hidden}
+@media(min-width:520px){body{padding:22px 0}.phone{min-height:calc(100vh - 44px);border-radius:34px;overflow:hidden}}
+/* app bar */
+.appbar{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;padding:16px 18px 15px;display:flex;align-items:center;justify-content:space-between}
+.appbar .brand{font-family:'Space Grotesk';font-weight:700;font-size:22px}.appbar .brand b{color:#8fe6ad}
+.appbar .r{display:flex;align-items:center;gap:14px}
+.iconbtn{background:rgba(255,255,255,.14);border:0;color:#fff;width:36px;height:36px;border-radius:11px;font-size:16px;display:grid;place-items:center;cursor:pointer}
+.hi{color:#cdecd8;font-size:13px;font-weight:600;padding:0 18px 12px;background:linear-gradient(135deg,#134a30,#1c6b45);margin-top:-1px}
+/* content */
+.body{flex:1;padding:16px 16px 96px}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 6px 18px rgba(20,50,35,.06);margin-bottom:16px}
+.search input{border:0;outline:0;flex:1;font-family:Heebo;font-size:16px;background:transparent;color:var(--ink)}
+.search .mag{font-size:18px;color:var(--green)}
+.splus{flex:0 0 auto;width:34px;height:34px;border-radius:10px;border:0;background:var(--tint);color:var(--green);font-size:23px;font-weight:400;line-height:1;cursor:pointer;display:grid;place-items:center}
+.splus:active{background:var(--green);color:#fff}
+.topchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.topchip{background:var(--tint);border:1px solid var(--line);color:var(--green-d);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:600;text-decoration:none}
+/* live ticker */
+.tick{display:flex;align-items:center;gap:10px;background:var(--green-d);color:#eafff3;border-radius:14px;padding:11px 14px;margin-bottom:18px;overflow:hidden}
+.tick .lbl{flex:0 0 auto;font-family:Rubik;font-weight:800;font-size:12px;color:#8fe6ad;display:flex;align-items:center;gap:6px}
+.tick .dot{width:8px;height:8px;border-radius:50%;background:#d24b4b;animation:pz 1.5s infinite}
+@keyframes pz{70%{box-shadow:0 0 0 7px rgba(210,75,75,0)}}
+.tick .txt{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px;font-weight:600;transition:opacity .35s}
+.tick .txt.out{opacity:0}
+.tick a{color:#eafff3;text-decoration:none}
+.sect{font-family:Rubik;font-weight:800;font-size:16px;color:var(--green-d);margin:4px 2px 11px}
+/* weather */
+.wx{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:20px;padding:16px 17px;margin-bottom:18px;box-shadow:0 10px 26px rgba(20,50,35,.18)}
+.wxtop{display:flex;align-items:center;justify-content:space-between}
+.wxc{font-family:Rubik;font-weight:900;font-size:40px;line-height:1}
+.wxl{font-size:12.5px;color:#bfe6cd;margin-top:3px}
+.wxem{font-size:42px}
+.wxalert{background:rgba(255,255,255,.14);border-radius:12px;padding:9px 12px;font-size:13px;font-weight:700;margin:13px 0 12px;display:flex;gap:8px;align-items:center}
+.wxg{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.wxi{background:rgba(255,255,255,.1);border-radius:11px;padding:9px 6px;text-align:center}
+.wxi .v{font-family:Rubik;font-weight:800;font-size:15px}.wxi .k{font-size:10.5px;color:#bfe6cd;margin-top:2px}
+/* market */
+.mkt{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:22px;box-shadow:0 4px 14px rgba(20,50,35,.05)}
+.mrow{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--line)}
+.mrow:last-child{border-bottom:0}
+.mrow .nm{font-family:Rubik;font-weight:700;font-size:14.5px;color:var(--ink)}
+.mrow .rt{display:flex;align-items:center;gap:12px}
+.mrow .pr{font-family:'Plex Mono',monospace;font-weight:700;font-size:14px;color:var(--ink)}
+.mrow .ch{font-family:'Plex Mono',monospace;font-size:12.5px;font-weight:700}
+.mrow .ch.up{color:#1c8a4a}.mrow .ch.dn{color:#c4562e}
+.mrow.load{justify-content:center;color:var(--mut);font-size:13px}
+/* commodities running line */
+.ctick{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 13px;margin-bottom:18px;overflow:hidden}
+.ctlbl{flex:0 0 auto;font-family:Rubik;font-weight:800;font-size:12px;color:var(--gold)}
+.ctmask{flex:1;overflow:hidden;position:relative}
+.ctrun{display:inline-flex;gap:20px;white-space:nowrap;animation:ctrun 22s linear infinite;font-family:'Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--ink)}
+.ctmask:hover .ctrun{animation-play-state:paused}
+@keyframes ctrun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ctrun .up{color:#1c8a4a}.ctrun .dn{color:#c4562e}
+.ctickbox{margin-bottom:22px}
+.ctickbox .ctick{margin-bottom:0;cursor:pointer;border-radius:14px 14px 0 0}
+.ctar{flex:0 0 auto;color:var(--gold);font-size:14px;transition:transform .3s}
+.companel{max-height:0;overflow:hidden;transition:max-height .4s ease;background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px}
+.comin{padding:4px 14px 12px}
+.comrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.comrow:last-child{border-bottom:0}
+.cnm{font-family:Rubik;font-weight:600;font-size:13.5px;color:var(--ink);flex:0 0 auto;width:56px}
+.csp{flex:1;text-align:center}.csp svg{width:110px;height:32px;vertical-align:middle}
+.cpr{font-family:'Plex Mono',monospace;font-size:13px;font-weight:700;flex:0 0 auto;color:var(--ink)}
+.cpr .up{color:#1c8a4a}.cpr .dn{color:#c4562e}
+/* news slider (10 articles) */
+.nslider{overflow-x:auto;margin:0 -16px 20px;padding:2px 16px 8px;scrollbar-width:none}
+.nslider::-webkit-scrollbar{display:none}
+.nstrack{display:flex;gap:12px;width:max-content}
+.nc{flex:0 0 220px;width:220px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 4px 12px rgba(20,50,35,.05)}
+.nc .th{aspect-ratio:16/10;background:var(--tint) center/cover no-repeat;position:relative}
+.nc .src{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.94);color:var(--green-d);font-size:11px;font-weight:700;border-radius:8px;padding:3px 8px}
+.nc .b{padding:11px 12px 13px}
+.nc h4{font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--ink);line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* engine tiles */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.gridslider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -16px 9px;padding:0 16px;scrollbar-width:none}
+.gridslider::-webkit-scrollbar{display:none}
+.gridpage{flex:0 0 100%;scroll-snap-align:center;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.griddots{display:flex;justify-content:center;gap:6px;margin-bottom:22px}
+.vidwrap{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;margin-bottom:22px;box-shadow:0 8px 22px rgba(20,50,35,.15);background:#000}
+.vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ofbar{display:flex;overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:22px;padding:0 4px;scrollbar-width:none;box-shadow:0 3px 10px rgba(20,50,35,.05)}
+.ofbar::-webkit-scrollbar{display:none}
+.ofbar a{flex:0 0 auto;padding:13px 16px;font-family:Heebo;font-weight:500;font-size:14px;color:var(--lime);text-decoration:none;white-space:nowrap;border-inline-start:1px solid var(--line)}
+.ofbar a:first-child{border-inline-start:0}
+.ofbar a:active{color:var(--green-d)}
+.tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 15px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 14px rgba(20,50,35,.05);transition:.12s}
+.tile:active{transform:scale(.97)}
+.tile .em{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:22px;background:rgba(255,255,255,.6)}
+.tile h3{font-family:Rubik;font-weight:500;font-size:15.5px;color:var(--green-d)}
+.tile p{font-size:12px;color:var(--mut);line-height:1.35}
+.innovbox{margin-bottom:22px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px rgba(20,50,35,.06)}
+.innov{width:100%;display:flex;align-items:center;gap:13px;background:#CDE8D5;color:var(--ink);border:0;padding:16px;text-align:right;cursor:pointer;font-family:Heebo}
+.innov .em{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:23px;background:rgba(255,255,255,.6);flex:0 0 auto}
+.innov h3{font-family:Rubik;font-weight:500;font-size:16px;color:var(--green-d)}
+.innov p{font-size:12px;color:var(--mut);margin-top:2px}
+.innov .ar{margin-inline-start:auto;font-size:16px;color:var(--green);transition:transform .3s}
+.innov.open .ar{transform:rotate(180deg)}
+.innovpanel{max-height:0;overflow:hidden;transition:max-height .4s ease;background:#eaf4ee}
+.innovin{padding:6px 16px 16px}
+.itxt{font-size:13px;color:var(--ink);line-height:1.55;margin-bottom:11px}
+.iwords{font-size:13.5px;color:var(--green-d);font-weight:600;line-height:1.8;margin-bottom:13px}
+.ibtn{display:block;text-align:center;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border-radius:12px;padding:12px;font-family:Rubik;font-weight:800;font-size:14px;text-decoration:none}
+/* feature card */
+.featslider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px 9px;padding:0 16px;scrollbar-width:none}
+.featslider::-webkit-scrollbar{display:none}
+.featslider .feat{flex:0 0 88%;scroll-snap-align:center;margin-bottom:0}
+.featdots{display:flex;justify-content:center;gap:6px;margin-bottom:22px}
+.fdot{width:6px;height:6px;border-radius:50%;background:var(--line)}.fdot.on{background:var(--green)}
+.feat{display:block;border-radius:20px;overflow:hidden;text-decoration:none;color:#fff;position:relative;margin-bottom:22px;box-shadow:0 10px 26px rgba(20,50,35,.18);min-height:150px}
+.feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feat .ov{position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,20,12,.9),rgba(6,20,12,.15) 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
+.feat .k{font-family:'Plex Mono';font-size:11px;color:#8fe6ad;font-weight:700;letter-spacing:.06em}
+.feat h3{font-family:Rubik;font-weight:900;font-size:21px;margin-top:3px}
+.feat .go{font-family:Rubik;font-weight:700;font-size:13px;color:#cdecd8;margin-top:6px}
+/* experts */
+.expslider{overflow-x:auto;margin:0 -16px 22px;padding:2px 16px 6px;scrollbar-width:none}.expslider::-webkit-scrollbar{display:none}
+.expstrack{display:flex;gap:11px;width:max-content}
+.expc{flex:0 0 148px;width:148px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 12px;text-decoration:none;color:inherit;text-align:center;box-shadow:0 4px 12px rgba(20,50,35,.05)}
+.expc img{width:64px;height:64px;border-radius:50%;object-fit:cover;margin:0 auto 9px;display:block;border:2px solid var(--tint)}
+.expc h4{font-family:Rubik;font-weight:800;font-size:14px;color:var(--green-d)}
+.expc p{font-size:11.5px;color:var(--mut);margin-top:3px}
+/* fundraising */
+.fundc{display:block;border-radius:20px;padding:20px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#0f3a26,#134a30);border-top:3px solid var(--gold);margin-bottom:22px;box-shadow:0 10px 26px rgba(15,58,38,.22)}
+.fundc .fundk{font-family:'Plex Mono',monospace;font-size:11px;color:#8fe6ad;font-weight:700;letter-spacing:.06em}
+.fundc h3{font-family:Rubik;font-weight:900;font-size:19px;margin:5px 0 6px}
+.fundc p{font-size:13px;color:rgba(255,255,255,.85);line-height:1.5}
+.fundc .fundcta{margin-top:10px;font-family:Rubik;font-weight:800;font-size:13.5px;color:var(--gold)}
+/* exhibitions */
+.expo{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;text-decoration:none;color:inherit;box-shadow:0 3px 10px rgba(20,50,35,.04)}
+.expo:active{transform:scale(.98)}
+.expo .ed{flex:0 0 auto;width:54px;background:var(--green-d);color:#fff;border-radius:11px;padding:8px 0;text-align:center;font-family:Rubik}
+.expo .ed b{display:block;font-size:20px;font-weight:500;line-height:1}
+.expo .ed em{font-style:normal;font-size:11px;color:#8fe6ad}
+.expo .ex h4{font-family:Rubik;font-weight:800;font-size:15px;color:var(--green-d)}
+.expo .ex p{font-size:12px;color:var(--mut);margin-top:2px}
+.expocar{margin-bottom:22px}
+.expocar .expo{margin-bottom:8px;transition:opacity .35s,transform .35s}
+.expocar .expo.out{opacity:0;transform:translateY(-14px)}
+.expodots{display:flex;justify-content:center;gap:6px}
+.exdot{width:6px;height:6px;border-radius:50%;background:var(--line)}.exdot.on{background:var(--green)}
+/* bottom nav */
+.tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:#fff;border-top:1px solid var(--line);display:flex;padding:9px 6px calc(9px + env(safe-area-inset-bottom));z-index:30;box-shadow:0 -6px 20px rgba(20,50,35,.07)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--mut);font-size:11px;font-weight:700;padding:5px 0}
+.tab .i{font-size:20px;line-height:1}
+.tab.on{color:var(--green)}
+@media(min-width:520px){.tabbar{border-radius:0 0 34px 34px}}
+/* compact signup gate (bottom sheet) */
+.gate{position:fixed;inset:0;z-index:100;background:rgba(6,20,12,.6);display:none;align-items:flex-end;justify-content:center}
+.gate.open{display:flex}
+.sheet{width:100%;max-width:460px;background:#fff;border-radius:22px 22px 0 0;padding:12px 20px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.35);animation:shup .25s ease}
+@keyframes shup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.grab{width:40px;height:4px;background:var(--line);border-radius:3px;margin:0 auto 12px}
+.sheet h3{font-family:Rubik;font-weight:900;font-size:20px;color:var(--green-d);text-align:center}
+.ssub{font-size:13px;color:var(--mut);text-align:center;margin:4px 0 14px}
+.soc{display:flex;gap:8px;margin-bottom:11px}
+.soc button{flex:1;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 0;font-size:14px;font-weight:700;cursor:pointer}
+.orline{text-align:center;font-size:12px;color:var(--mut);margin:2px 0 11px}
+.gin{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:Heebo;font-size:15px;margin-bottom:9px;outline:0}
+.gin:focus{border-color:var(--green)}
+.gconsent{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--mut);margin-bottom:11px;line-height:1.4}
+.gbtn{width:100%;background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:14px;padding:14px;font-family:Rubik;font-weight:800;font-size:16px;cursor:pointer}
+.gnote{font-size:11.5px;color:var(--teal);text-align:center;margin-top:8px;display:none}
+.englist{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;max-height:46vh;overflow-y:auto}
+.engi{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#fff;border-radius:13px;padding:11px 12px;font-family:Heebo;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer;text-align:right}
+.engi.on{border-color:var(--green);background:var(--tint)}
+.engi .ee{font-size:18px;flex:0 0 auto}.engi .en{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.engi .ck{color:var(--green);font-weight:800;flex:0 0 auto}
+</style></head>
+<body>
+<div class="phone">
+  <div class="appbar">
+    <div class="brand">agro<b>Data</b></div>
+    <div class="r"><button class="iconbtn" onclick="location.href='mobile.html'">🌐</button><button class="iconbtn" onclick="openEngs()">☰</button></div>
+  </div>
+  <div class="hi" id="hi">שלום 👋 · הזירה של האגרו-טק בכיס שלך</div>
+
+  <div class="body">
+    <div class="search"><button class="splus" onclick="openTopics()" title="כל הנושאים">+</button><span class="mag">🔎</span><input placeholder="חפש: מחקר · שווקים · יבול · מזג אוויר…" id="q" onkeydown="if(event.key==='Enter')doSearch()"></div>
+
+    <div class="tick"><span class="lbl"><span class="dot"></span>חי</span><div class="txt" id="tk">טוען חדשות…</div></div>
+
+    <div class="nslider"><div class="nstrack" id="nsl"><div style="padding:16px;color:var(--mut);font-size:13px">טוען כתבות…</div></div></div>
+
+    <div class="ctickbox">
+      <div class="ctick" onclick="toggleCom()"><span class="ctlbl">📈 סחורות · חי</span><div class="ctmask"><div class="ctrun" id="ctk">טוען…</div></div><span class="ctar" id="comAr">▾</span></div>
+      <div class="companel" id="comPanel"><div class="comin" id="comin"></div></div>
+    </div>
+
+    <div class="sect">🚀 בלוקים חשובים <span style="font-family:Heebo;font-weight:600;font-size:12px;color:var(--mut)">· החליקו →</span></div>
+    <div class="gridslider" id="mgridSlider"></div>
+    <div class="griddots" id="mgridDots"></div>
+    <div class="innovbox">
+      <button class="innov" id="innovBtn" onclick="toggleInnov()"><span class="em">💡</span><div><h3>AgroInnovate · מנוע החדשנות</h3><p>אתגרים, פתרונות ורעיונות אגרו-טק</p></div><span class="ar">▾</span></button>
+      <div class="innovpanel" id="innovPanel"><div class="innovin">
+        <p class="itxt">מנוע החדשנות מזהה אתגרים חיים מהשטח ומחבר אותם לפתרונות אגרו-טק, מחקר וסטארטאפים — מהרעיון ליישום.</p>
+        <div class="iwords">השקיה חכמה &nbsp;|&nbsp; רובוטיקה &nbsp;|&nbsp; אקלים &nbsp;|&nbsp; גנטיקה &nbsp;|&nbsp; פוד-טק &nbsp;|&nbsp; סחר</div>
+        <a class="ibtn" href="ideas.html">כניסה למנוע החדשנות ↗</a>
+      </div></div>
+    </div>
+
+    <div class="sect">🎬 אופקים · בירת האגרו-טק</div>
+    <div class="vidwrap"><iframe src="https://www.youtube-nocookie.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1" title="אופקים" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+    <div class="ofbar">
+      <a href="ofakim.html">חזון</a><a href="granary.html">אסם התבואה</a><a href="ofakim.html">מרכז החדשנות</a><a href="ofakim.html">החווה העירונית</a><a href="research.html">אגרו-קמפוס</a><a href="ofakim.html">חוות ניסויים</a><a href="ofakim.html">אגרו-סייט</a><a href="labs.html">מעבדות</a><a href="ofakim.html">אזור תעשייה</a><a href="ofakim.html">בי״ס רגבים</a><a href="ofakim.html">תיכון לחקלאות</a><a href="ofakim.html">קהילת המגדלים</a><a href="maps.html">מפת האגרו-טק</a>
+    </div>
+
+    <div class="sect">⭐ מומלץ</div>
+    <div class="featslider" id="featSlider">
+      <a class="feat" href="granary.html"><img src="img/granary-hero.jpg" alt=""><div class="ov"><div class="k">אופקים · הנגב המערבי</div><h3>אסם התבואה של ישראל</h3><div class="go">נתונים, מפה וכתבות ↗</div></div></a>
+      <a class="feat" href="ofakim.html"><img src="img/agrosite.jpg" alt=""><div class="ov"><div class="k">אופקים</div><h3>בירת האגרו-טק של ישראל</h3><div class="go">האקוסיסטם, סרטון ומפה ↗</div></div></a>
+      <a class="feat" href="agronews.html"><img src="img/inv-drip.jpg" alt=""><div class="ov"><div class="k">חדשנות ישראלית</div><h3>המצאות שעשו היסטוריה</h3><div class="go">טפטוף וחדשנות אגרו-טק ↗</div></div></a>
+    </div>
+    <div class="featdots" id="featDots"></div>
+
+    <div class="sect">👨‍🔬 מומחים</div>
+    <div class="expslider"><div class="expstrack">
+      <a class="expc" href="agronews.html"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt=""><h4>לקטור מדעי</h4><p>דאטה ומחקר חקלאי</p></a>
+      <a class="expc" href="agronews.html"><img src="https://randomuser.me/api/portraits/men/64.jpg" alt=""><h4>אגרונום ראשי</h4><p>גידול והשקיה</p></a>
+      <a class="expc" href="agronews.html"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt=""><h4>יועצת עסקית</h4><p>מרעיון לחברה</p></a>
+    </div></div>
+
+    <div class="sect">💰 גיוס כספים</div>
+    <a class="fundc" href="index.html"><div class="fundk">INVESTMENT FUND</div><h3>קרן ההשקעות של הזירה</h3><p>משקיעים בסטארטאפים ובחדשנות אגרו-טק — מהרעיון לצמיחה.</p><div class="fundcta">להצטרפות ↗</div></a>
+
+    <div class="sect">🗓️ תערוכות אגרו-טק בעולם</div>
+    <div class="expocar"><a class="expo" id="expoCard" href="conferences.html"></a><div class="expodots" id="expoDots"></div></div>
+  </div>
+
+  <div class="tabbar">
+    <a class="tab on" href="mobile.html"><span class="i">🏠</span>בית</a>
+    <a class="tab" href="agronews.html"><span class="i">📰</span>חדשות</a>
+    <a class="tab" href="#" onclick="document.getElementById('q').focus();return false"><span class="i">🔎</span>חיפוש</a>
+    <a class="tab" href="maps.html"><span class="i">🗺️</span>מפה</a>
+    <a class="tab" href="index.html"><span class="i">⋯</span>עוד</a>
+  </div>
+</div>
+<div class="gate" id="gate">
+  <div class="sheet">
+    <div class="grab"></div>
+    <h3>כניסה חינם לזירה 🌱</h3>
+    <div class="ssub">הרשמה מהירה — דאטה, מחקר וחדשנות אגרו-טק</div>
+    <div class="soc"><button onclick="gSoon()">Google</button><button onclick="gSoon()">Facebook</button><button onclick="gSoon()">Apple</button></div>
+    <div class="orline">— או במייל —</div>
+    <input class="gin" id="gName" placeholder="שם מלא">
+    <input class="gin" id="gEmail" type="email" placeholder="אימייל">
+    <label class="gconsent"><input type="checkbox" id="gConsent"><span>אני מאשר/ת את מדיניות הפרטיות ותנאי השימוש</span></label>
+    <button class="gbtn" onclick="gRegister()">הרשמה חינם →</button>
+    <div class="gnote" id="gNote">התחברות חברתית — בקרוב. נא להירשם במייל.</div>
+  </div>
+</div>
+<div class="gate" id="topics">
+  <div class="sheet">
+    <div class="grab"></div>
+    <h3>כל הנושאים 🔎</h3>
+    <div class="ssub">בחרו נושא לחיפוש חכם</div>
+    <div class="topchips" id="topchips"></div>
+    <button class="gbtn" onclick="closeTopics()">סגור</button>
+  </div>
+</div>
+<div class="gate" id="engs">
+  <div class="sheet">
+    <div class="grab"></div>
+    <h3>כל הבלוקים 🧩</h3>
+    <div class="ssub">בחרו בלוק למעבר מהיר</div>
+    <div class="englist" id="englist"></div>
+    <button class="gbtn" onclick="closeEngs()">סגור</button>
+  </div>
+</div>
+<script>
+var ENGINES=[
+ {k:'gov',n:'AgroGov',e:'🏛️',h:'gov.html',c:'#EAF4EE',d:'נתוני ממשלה'},
+ {k:'research',n:'AgroScholar',e:'🎓',h:'research.html',c:'#EAF4EE',d:'מחקר אקדמי'},
+ {k:'conferences',n:'AgroExpo',e:'🎪',h:'conferences.html',c:'#FDF8DE',d:'תערוכות וכנסים'},
+ {k:'trade',n:'AgroTrade',e:'🌍',h:'trade.html',c:'#FDF8DE',d:'סחר בינלאומי'},
+ {k:'agromedia',n:'AgroMedia',e:'📺',h:'agromedia.html',c:'#CDE8D5',d:'מרכז המדיה'},
+ {k:'agropedia',n:'AgroPedia',e:'📖',h:'agropedia.html',c:'#DDEEF6',d:'אנציקלופדיה'},
+ {k:'agronews',n:'agroNews',e:'📰',h:'agronews.html',c:'#FDF8DE',d:'פורטל החדשות'},
+ {k:'maps',n:'AgroMap',e:'🗺️',h:'maps.html',c:'#EAF4EE',d:'מפה חכמה'},
+ {k:'agroflora',n:'AgroFlora',e:'🌿',h:'agroflora.html',c:'#EAF4EE',d:'צמחים ועצים'},
+ {k:'agrobooks',n:'AgroBooks',e:'📚',h:'agrobooks.html',c:'#DDEEF6',d:'ספרים וכותרים'},
+ {k:'ofakim',n:'אופקים',e:'🌱',h:'ofakim.html',c:'#CDE8D5',d:'בירת האגרו-טק'}
+];
+function chunk(a,n){var o=[];for(var i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o;}
+function tileHTML(x){return '<a class="tile" href="'+x.h+'" style="background:'+x.c+'"><span class="em">'+x.e+'</span><h3>'+x.n+'</h3><p>'+x.d+'</p></a>';}
+function renderGrid(){
+ var sl=document.getElementById('mgridSlider'),dots=document.getElementById('mgridDots');if(!sl)return;
+ var pages=chunk(ENGINES,6);
+ sl.innerHTML=pages.map(function(pg){return '<div class="gridpage">'+pg.map(tileHTML).join('')+'</div>';}).join('');
+ if(dots)dots.innerHTML=pages.map(function(_,i){return '<span class="fdot'+(i===0?' on':'')+'"></span>';}).join('');
+ sl.onscroll=function(){if(!dots)return;var idx=Math.round(Math.abs(sl.scrollLeft)/sl.clientWidth);var ds=dots.querySelectorAll('.fdot');for(var i=0;i<ds.length;i++)ds[i].classList.toggle('on',i===idx);};
+}
+function renderEngList(){document.getElementById('englist').innerHTML=ENGINES.map(function(x){return '<a class="engi" href="'+x.h+'"><span class="ee">'+x.e+'</span><span class="en">'+x.n+'</span></a>';}).join('');}
+function openEngs(){renderEngList();document.getElementById('engs').classList.add('open');}
+function closeEngs(){document.getElementById('engs').classList.remove('open');}
+function toggleInnov(){var b=document.getElementById('innovBtn'),p=document.getElementById('innovPanel');var open=b.classList.toggle('open');p.style.maxHeight=open?p.scrollHeight+'px':'0px';}
+renderGrid();
+(function(){try{if(!localStorage.getItem('agro_sub'))document.getElementById('gate').classList.add('open');}catch(e){}})();
+function gSoon(){var n=document.getElementById('gNote');if(n)n.style.display='block';var e=document.getElementById('gName');if(e)e.focus();}
+function gRegister(){
+ var name=(document.getElementById('gName').value||'').trim(),email=(document.getElementById('gEmail').value||'').trim();
+ if(!name||!email){alert('נא למלא שם ואימייל');return;}
+ if(!document.getElementById('gConsent').checked){alert('יש לאשר את מדיניות הפרטיות');return;}
+ function done(d){var role=(d&&d.role)?d.role:'regular';try{localStorage.setItem('agro_sub',role==='admin'?'admin':'regular');if(d&&d.id)localStorage.setItem('agro_sub_id',d.id);localStorage.setItem('agro_role',role);localStorage.setItem('agro_name',name);}catch(e){}document.getElementById('gate').classList.remove('open');}
+ fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:'email',name:name,email:email,org:'',field:''})})
+  .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
+}
+function doSearch(){var v=(document.getElementById('q').value||'').trim();if(v)location.href='search-results.html?q='+encodeURIComponent(v);}
+var TOPICS=['השקיה חכמה','פוד-טק','גנטיקה וזרעים','רובוטיקה','אקלים וקיימות','שווקים ומחירים','סחר ויצוא','חדשנות','מחקר','בשר מתורבת','חקלאות מדייקת','אקוופוניקה'];
+function openTopics(){document.getElementById('topchips').innerHTML=TOPICS.map(function(t){return '<a class="topchip" href="search-results.html?q='+encodeURIComponent(t)+'">'+t+'</a>';}).join('');document.getElementById('topics').classList.add('open');}
+function closeTopics(){document.getElementById('topics').classList.remove('open');}
+// exhibitions — vertical carousel
+(function(){
+ var EXPO=[[12,'מאי','Agritech Israel','תל אביב · תערוכת האגרו-טק המובילה'],[4,'פבר׳','Fruit Logistica','ברלין · שרשרת התוצרת הטרייה'],[5,'נוב׳','EIMA International','בולוניה · מיכון חקלאי'],[30,'נוב׳','אגרומשוב','אופקים · אירוע החקלאות של ישראל'],[24,'פבר׳','Fresh AgroMashov','פירות, ירקות ופרחים · יצוא']];
+ var ei=0,c=document.getElementById('expoCard'),d=document.getElementById('expoDots');
+ function draw(){if(!c)return;var e=EXPO[ei%EXPO.length];c.innerHTML='<span class="ed"><b>'+e[0]+'</b><em>'+e[1]+'</em></span><div class="ex"><h4>'+e[2]+'</h4><p>'+e[3]+'</p></div>';if(d)d.innerHTML=EXPO.map(function(_,k){return '<span class="exdot'+(k===ei%EXPO.length?' on':'')+'"></span>';}).join('');}
+ function nxt(){if(!c)return;c.classList.add('out');setTimeout(function(){ei++;draw();c.classList.remove('out');},350);}
+ draw();setInterval(nxt,4000);
+})();
+// recommended banners — dots
+(function(){var sl=document.getElementById('featSlider'),d=document.getElementById('featDots');if(!sl||!d||!sl.children.length)return;var n=sl.children.length;var html='';for(var i=0;i<n;i++)html+='<span class="fdot'+(i===0?' on':'')+'"></span>';d.innerHTML=html;
+ sl.addEventListener('scroll',function(){var sw=sl.children[0].getBoundingClientRect().width+12;var idx=Math.round(Math.abs(sl.scrollLeft)/sw);var ds=d.querySelectorAll('.fdot');for(var i=0;i<ds.length;i++)ds[i].classList.toggle('on',i===idx);});})();
+// live commodities — running line + accordion with sparkline graphs
+function comSpark(s,up){if(!s||s.length<2)return '';var w=120,h=32,mn=Math.min.apply(null,s),mx=Math.max.apply(null,s),rng=(mx-mn)||1;var pts=s.map(function(v,i){return (i/(s.length-1)*w).toFixed(1)+','+(h-((v-mn)/rng)*(h-6)-3).toFixed(1);});var col=up?'#1c8a4a':'#c4562e';return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><polyline points="'+pts.join(' ')+'" fill="none" stroke="'+col+'" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>';}
+function toggleCom(){var p=document.getElementById('comPanel'),a=document.getElementById('comAr');var open=p.classList.toggle('open');p.style.maxHeight=open?p.scrollHeight+'px':'0px';if(a)a.style.transform=open?'rotate(180deg)':'';}
+(function(){
+ var COM=[['ZC=F','תירס'],['ZW=F','חיטה'],['ZS=F','סויה'],['KC=F','קפה'],['SB=F','סוכר'],['CT=F','כותנה'],['CC=F','קקאו']];
+ fetch('/api/quote?symbols='+COM.map(function(c){return c[0];}).join(','),{cache:'no-store'}).then(function(r){return r.json();}).then(function(arr){
+  var m={};(arr||[]).forEach(function(q){m[q.symbol]=q;});
+  var row=COM.map(function(c){var q=m[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
+   return '<span><b>'+c[1]+'</b> '+q.price.toLocaleString()+' <span class="'+(up?'up':'dn')+'">'+(up?'▲':'▼')+Math.abs(ch).toFixed(1)+'%</span></span>';
+  }).filter(Boolean).join('<span style="opacity:.4">·</span>');
+  document.getElementById('ctk').innerHTML=row?(row+'<span style="opacity:.4">·</span>'+row):'—';
+  document.getElementById('comin').innerHTML=COM.map(function(c){var q=m[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
+   return '<div class="comrow"><span class="cnm">'+c[1]+'</span><span class="csp">'+comSpark(q.series,up)+'</span><span class="cpr">'+q.price.toLocaleString()+' <span class="'+(up?'up':'dn')+'">'+(up?'▲':'▼')+Math.abs(ch).toFixed(1)+'%</span></span></div>';
+  }).filter(Boolean).join('');
+ }).catch(function(){document.getElementById('ctk').textContent='—';});
+})();
+// live running news
+(function(){
+ var items=[],i=0,el=document.getElementById('tk');
+ function lang(){try{return localStorage.getItem('agrolang')||'he';}catch(e){return 'he';}}
+ var L=lang(),region=(L==='he')?'il':'world',q=(L==='he')?'חקלאות OR אגרוטק OR פודטק':'agritech OR agtech OR "agriculture technology" OR "food tech"';
+ var FB=['img/experfarm.jpg','img/urbanfarm.jpg','img/negev.jpg','img/ecosystem.jpg','img/agrosite.jpg'];
+ function hash(s){var h=0;s=s||'';for(var k=0;k<s.length;k++)h=(h*31+s.charCodeAt(k))>>>0;return h;}
+ function show(){if(!items.length)return;var a=items[i%items.length];el.innerHTML='<a href="'+a.link+'" target="_blank" rel="noopener">'+a.title+'</a>';}
+ function next(){if(!items.length)return;el.classList.add('out');setTimeout(function(){i++;show();el.classList.remove('out');},350);}
+ function slider(){var tr=document.getElementById('nsl');if(!tr)return;var top=items.slice(0,10);if(!top.length){tr.innerHTML='';return;}
+  tr.innerHTML=top.map(function(a){var fb=FB[hash(a.link)%FB.length],img=a.image||fb;
+   return '<a class="nc" href="'+a.link+'" target="_blank" rel="noopener"><div class="th" data-img="'+img+'" data-fb="'+fb+'"><span class="src">'+(a.source||'מקור')+'</span></div><div class="b"><h4>'+a.title+'</h4></div></a>';}).join('');
+  tr.querySelectorAll('.th[data-img]').forEach(function(t){var u=t.getAttribute('data-img'),fb=t.getAttribute('data-fb');var im=new Image();im.onload=function(){t.style.backgroundImage='url("'+u+'")';};im.onerror=function(){t.style.backgroundImage='url("'+fb+'")';};im.src=u;});
+ }
+ fetch('/api/news?region='+region+'&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'})
+  .then(function(r){return r.json();}).then(function(j){items=(j.items||[]);show();setInterval(next,4500);slider();})
+  .catch(function(){el.textContent='—';var tr=document.getElementById('nsl');if(tr)tr.innerHTML='';});
+})();
+</script>
+<script src="autotranslate.js"></script>
+</body></html>
