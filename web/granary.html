@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>אסם התבואה של ישראל · הנגב המערבי · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 40px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav .wm{font-family:'Space Grotesk';font-weight:700;font-size:20px}.nav .wm b{color:#8fe6ad}
+.nav a.back{color:rgba(255,255,255,.9);text-decoration:none;font-weight:700;font-size:14px}
+/* hero */
+.hero{position:relative;min-height:420px;display:flex;align-items:flex-end;background:#0c2f1f center/cover no-repeat;color:#fff}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,20,12,.9),rgba(6,20,12,.25) 55%,rgba(6,20,12,.45))}
+.hero .in{position:relative;z-index:2;padding:48px 0 78px;width:100%}
+.kick{font-family:'Plex Mono';font-size:14px;color:#8fe6ad;letter-spacing:.1em;text-transform:uppercase}
+.hero h1{font-family:Rubik;font-size:58px;font-weight:900;line-height:1.05;margin:10px 0 12px;text-shadow:0 3px 18px rgba(0,0,0,.5)}
+.hero h1 b{color:#e9c766}
+.hero p{font-size:18px;max-width:680px;color:rgba(255,255,255,.92);line-height:1.5}
+@media(max-width:640px){.hero h1{font-size:38px}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:-42px 0 44px;position:relative;z-index:3}
+@media(max-width:820px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:16px;padding:20px 18px;box-shadow:0 10px 30px rgba(20,38,28,.09)}
+.stat .v{font-family:Rubik;font-weight:900;font-size:34px;color:var(--green-d);line-height:1}
+.stat .u{font-family:'Plex Mono';font-size:12px;color:var(--lime);font-weight:700;margin-top:3px}
+.stat .l{font-size:13.5px;color:var(--mut);margin-top:8px;line-height:1.45}
+.stat .cite{display:block;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-family:'Plex Mono',monospace;font-size:10.5px;font-weight:700;color:var(--teal);text-decoration:none}
+.stat .cite:hover{color:var(--green)}
+/* sections */
+section{margin:0 0 46px}
+.h2{font-family:Rubik;font-weight:900;font-size:26px;color:var(--green-d);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.lead{color:var(--mut);font-size:16px;max-width:760px;line-height:1.6;margin-bottom:18px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--tint);border:1px solid var(--line);color:var(--green-d);border-radius:999px;padding:9px 16px;font-weight:700;font-size:14.5px}
+.split{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:stretch}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.mapwrap{border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:360px;box-shadow:0 8px 24px rgba(20,38,28,.08)}
+.mapwrap iframe{width:100%;height:100%;min-height:360px;border:0;display:block}
+.mapcap{font-family:'Plex Mono';font-size:12px;color:var(--mut);padding:8px 12px;background:var(--bg2);border-top:1px solid var(--line)}
+.note{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.note h3{font-family:Rubik;font-weight:800;font-size:19px;color:var(--green-d);margin-bottom:10px}
+.note ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.note li{padding-inline-start:24px;position:relative;font-size:15px;line-height:1.5;color:var(--ink)}
+.note li::before{content:"🌾";position:absolute;inset-inline-start:0;top:0}
+/* sources */
+.arts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:820px){.arts{grid-template-columns:1fr}}
+.art{display:block;border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;background:#fff;transition:.15s}
+.art:hover{border-color:#bcdcc8;box-shadow:0 12px 28px rgba(20,38,28,.1);transform:translateY(-3px)}
+.art .src{font-family:'Plex Mono';font-size:12px;color:var(--teal);font-weight:700}
+.art h4{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin:7px 0 6px;line-height:1.35}
+.art p{font-size:13.5px;color:var(--mut);line-height:1.5}
+.art .go{font-family:Rubik;font-weight:700;font-size:13px;color:var(--lime);margin-top:9px}
+.foot{background:linear-gradient(135deg,#0c1c13,#134a30);color:rgba(255,255,255,.72);padding:26px 0;text-align:center;font-size:13px}
+.foot b{color:#8fe6ad}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px}
+.lgi{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--ink)}
+.lgd{width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.ecomap{height:480px;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(20,38,28,.08);z-index:1}
+.ecomap .leaflet-popup-content{font-family:Heebo,sans-serif;direction:rtl;text-align:right}
+.ecopop b{font-family:Rubik;font-weight:800;color:var(--green-d);font-size:14.5px}
+.ecopop .tp{font-family:'Plex Mono',monospace;font-size:11px;color:var(--teal);font-weight:700}
+.ecopop .ds{font-size:12.5px;color:var(--mut);margin-top:3px}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/></head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav"><span class="wm">Agro<b>Data</b> · אופקים</span><a class="back" href="ofakim.html">→ חזרה לאופקים</a></div></div></div>
+
+<div class="hero" style="background-image:url('img/granary-hero.jpg')"><div class="wrap"><div class="in">
+  <div class="kick">אופקים · הנגב המערבי</div>
+  <h1>אסם התבואה<br><b>של ישראל</b></h1>
+  <p>המישור הפתוח של הנגב המערבי והעוטף הוא לב גידולי השדה של המדינה — חיטה, שעורה וקטניות על מאות אלפי דונמים, וביטחון המזון של ישראל.</p>
+</div></div></div>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="v">1.1M</div><div class="u">דונם</div><div class="l">שטח החיטה השנתי בישראל — מחציתו לגרעינים ומחציתו למספוא</div><a class="cite" href="https://www.timesofisrael.com/winter-showers-boost-wheat-crop-but-water-worries-continue-to-stalk-farmers/" target="_blank" rel="noopener">מקור: The Times of Israel ↗</a></div>
+    <div class="stat"><div class="v">~400K</div><div class="u">דונם · דרום</div><div class="l">שטחי חיטה בדרום; 120,000 מהם עד 7 ק״מ מגבול עזה</div><a class="cite" href="https://www.timesofisrael.com/winter-showers-boost-wheat-crop-but-water-worries-continue-to-stalk-farmers/" target="_blank" rel="noopener">מקור: The Times of Israel ↗</a></div>
+    <div class="stat"><div class="v">~75%</div><div class="u">מהירקות</div><div class="l">מירקות ישראל גדלים בעוטף ובנגב המערבי</div><a class="cite" href="https://www.mako.co.il/finances-news/Article-4bc5f7637373b81027.htm" target="_blank" rel="noopener">מקור: mako · N12 ↗</a></div>
+    <div class="stat"><div class="v">~20%</div><div class="u">מהפירות</div><div class="l">מפירות ישראל מקורם באותו מרחב חקלאי</div><a class="cite" href="https://www.ynet.co.il/food/article/yokra14441392" target="_blank" rel="noopener">מקור: ynet ↗</a></div>
+  </div>
+
+  <section>
+    <div class="h2">🌾 מה גדל כאן</div>
+    <div class="lead">מישור לס פתוח וכמעט מישורי — אידיאלי לפלחה מכנית בקנה מידה גדול. עיקר הגידולים:</div>
+    <div class="chips">
+      <span class="chip">חיטה</span><span class="chip">שעורה</span><span class="chip">חימצה</span><span class="chip">אפונה</span>
+      <span class="chip">קנולה</span><span class="chip">עדשים</span><span class="chip">פול</span><span class="chip">תלתן</span><span class="chip">טריטיקלה</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="h2">🗺️ המרחב · הנגב המערבי</div>
+    <div class="lead">ליבת האסם משתרעת סביב אופקים, נתיבות, שדרות וקיבוצי העוטף — שטחי הפלחה הפתוחים של צפון-מערב הנגב.</div>
+    <div class="split">
+      <div class="mapwrap">
+        <iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=34.15%2C31.15%2C34.85%2C31.72&layer=mapnik&marker=31.3167%2C34.6167" title="מפת הנגב המערבי"></iframe>
+        <div class="mapcap">מפה: OpenStreetMap · הסמן על אופקים</div>
+      </div>
+      <div class="note">
+        <h3>למה דווקא כאן?</h3>
+        <ul>
+          <li>קרקע לס עמוקה ומישור פתוח — עיבוד מכני יעיל על שטחים גדולים.</li>
+          <li>חקלאות בעל (גשם) + השקיה משלימה במים מותפלים וקולחים.</li>
+          <li>אזור עדיפות לאומית — קרקע, מים ותשתית לוגיסטית לחקלאות.</li>
+          <li>קיבוצי העוטף מאחדים פעילות חקלאית להתייעלות ולחוסן.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="h2">📰 הוכחות · כתבות ומקורות</div>
+    <div class="lead">הכינוי "אסם התבואה" אינו סיסמה — כך מדווחים מקורות מובילים:</div>
+    <div class="arts">
+      <a class="art" href="https://www.timesofisrael.com/winter-showers-boost-wheat-crop-but-water-worries-continue-to-stalk-farmers/" target="_blank" rel="noopener">
+        <div class="src">The Times of Israel</div><h4>"Israel's breadbasket"</h4><p>הנגב המערבי מכונה במפורש אסם התבואה של ישראל; ~1.1 מיליון דונם חיטה בשנה.</p><div class="go">קרא במקור ↗</div></a>
+      <a class="art" href="https://www.ynet.co.il/economy/article/rko8frhkr" target="_blank" rel="noopener">
+        <div class="src">ynet · כלכלה</div><h4>קיבוצי העוטף מאחדים חקלאות</h4><p>לראשונה מאחדים קיבוצי העוטף את הפעילות החקלאית באסם התבואה של ישראל.</p><div class="go">קרא במקור ↗</div></a>
+      <a class="art" href="https://www.davar1.co.il/140214/" target="_blank" rel="noopener">
+        <div class="src">דבר</div><h4>שנת בצורת · פיצוי לחקלאי הנגב</h4><p>רוב המפוצים מגדלי פלחה — חיטה, שעורה, חימצה, אפונה, קנולה, עדשים ותלתן.</p><div class="go">קרא במקור ↗</div></a>
+    </div>
+  </section>
+</div>
+
+  <section>
+    <div class="h2">📍 מפת האקוסיסטם · מועצות, יישובים ומו״פים</div>
+    <div class="lead">כל המועצות האזוריות סביב אופקים — היישובים והקיבוצים לפי מועצה, לצד מו״פים, מרכזי מחקר וחברות אגרו-טק. לחצו על נקודה לפרטים.</div>
+    <div class="legend" id="ecoLegend"></div>
+    <div id="ecomap" class="ecomap"></div>
+    <div class="mapcap" style="border:1px solid var(--line);border-top:0;border-radius:0 0 16px 16px">נתונים: AgroData · מפה: OpenStreetMap · ⭐ = מו״פ / חברת אגרו-טק</div>
+  </section>
+</div>
+
+<div class="foot"><div class="wrap">חלק מ-<b>AgroData Center</b> · אופקים · בירת האגרו-טק של ישראל</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+ var COUNCILS={'מרחבים':'#1c6b45','שדות נגב':'#2b8fb0','בני שמעון':'#c79a2e','אשכול':'#c4562e','שער הנגב':'#7b52ab','רמת נגב':'#5c6f63'};
+ var ANCHORS=[
+  {n:'זירת אופקים · בירת האגרו-טק',t:'זירה',c:[31.3072,34.6197]},
+  {n:'מו״פ בשור · תחנת ניסיונות',t:'מו״פ',c:[31.30,34.41]},
+  {n:'מרכז מחקר גילת · מכון וולקני',t:'מו״פ',c:[31.328,34.657]},
+  {n:'מו״פ רמת נגב',t:'מו״פ',c:[30.98,34.71]},
+  {n:'נטפים · קיבוץ חצרים',t:'חברה',c:[31.233,34.667]},
+  {n:'אוניברסיטת בן-גוריון בנגב',t:'אקדמיה',c:[31.262,34.801]}
+ ];
+ var map=L.map('ecomap',{scrollWheelZoom:false}).setView([31.30,34.55],10);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
+ var lg=document.getElementById('ecoLegend');
+ // settlements by council + count for legend
+ fetch('data/settlements_geo.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+  var items=Array.isArray(d)?d:(d.items||Object.values(d)[0]);var cnt={};
+  items.forEach(function(s){
+   if(!s.lat||!s.lon)return;if(!COUNCILS[s.council])return;
+   cnt[s.council]=(cnt[s.council]||0)+1;
+   L.circleMarker([s.lat,s.lon],{radius:6,color:'#fff',weight:1.5,fillColor:COUNCILS[s.council],fillOpacity:.9}).addTo(map)
+    .bindPopup('<div class="ecopop"><b>'+s.name+'</b><div class="tp">'+(s.type||'יישוב')+' · '+s.council+'</div>'+(s.factory?'<div class="ds">🏭 '+s.factory+'</div>':'')+'</div>');
+  });
+  var html='';for(var k in COUNCILS){html+='<span class="lgi"><span class="lgd" style="background:'+COUNCILS[k]+'"></span>'+k+' ('+(cnt[k]||0)+')</span>';}
+  html+='<span class="lgi"><span class="lgd" style="background:#e9c766">⭐</span>מו״פ · חברה ('+ANCHORS.length+')</span>';
+  lg.innerHTML=html;
+ }).catch(function(){lg.textContent='';});
+ // agri-tech anchors (star markers on top)
+ ANCHORS.forEach(function(a){
+  var ic=L.divIcon({className:'',html:'<div style="font-size:22px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))">⭐</div>',iconSize:[24,24],iconAnchor:[12,12]});
+  L.marker(a.c,{icon:ic}).addTo(map).bindPopup('<div class="ecopop"><b>'+a.n+'</b><div class="tp">'+a.t+' · אגרו-טק</div></div>');
+ });
+})();
+</script>
+<script src="autotranslate.js"></script>
+</body></html>

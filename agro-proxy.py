@@ -498,12 +498,59 @@ def fetch_symbol(sym):
         CACHE[sym] = (now, out)
     return out
 
+BROWSER_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36"
+_OGSEM = threading.Semaphore(6)
+GNCACHE = {}
+def resolve_gnews(u):
+    """Google News redirect link -> real publisher article URL (for authentic og:image)."""
+    if "news.google.com" not in u or "/articles/" not in u:
+        return u
+    with LOCK:
+        if u in GNCACHE:
+            return GNCACHE[u]
+    real = u
+    try:
+        art = u.split("/articles/")[1].split("?")[0]
+        req = urllib.request.Request(u, headers={"User-Agent": BROWSER_UA})
+        html = urllib.request.urlopen(req, timeout=12).read(900000).decode("utf-8", "ignore")
+        sig = re.search(r'data-n-a-sg="([^"]+)"', html)
+        ts = re.search(r'data-n-a-ts="([^"]+)"', html)
+        if sig and ts:
+            inner = ('["garturlreq",[["X","X",["X","X"],null,null,1,1,"US:en",null,1,null,null,'
+                     'null,null,null,0,1],"X","X",1,[1,1,1],1,1,null,0,0,null,0],"%s",%s,"%s"]'
+                     % (art, ts.group(1), sig.group(1)))
+            body = "f.req=" + urllib.parse.quote(json.dumps([[["Fbv4je", inner]]]))
+            r = urllib.request.urlopen(urllib.request.Request(
+                "https://news.google.com/_/DotsSplashUi/data/batchexecute",
+                data=body.encode(),
+                headers={"User-Agent": BROWSER_UA,
+                         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"}),
+                timeout=10).read().decode("utf-8", "ignore")
+            tail = r.split("garturlres")[-1] if "garturlres" in r else r
+            m = re.search(r'(https?://[^"\\]+)', tail)
+            if m:
+                real = m.group(1).replace("\\u003d", "=").replace("\\u0026", "&").rstrip("\\")
+    except Exception:
+        pass
+    with LOCK:
+        GNCACHE[u] = real
+    return real
+
 OGCACHE = {}; OGTTL = 3600
 def fetch_ogimage(u):
     now = time.time()
     with LOCK:
         if u in OGCACHE and now - OGCACHE[u][0] < OGTTL:
             return OGCACHE[u][1]
+    # limit concurrent decodes so Google doesn't rate-limit under the initial request storm
+    with _OGSEM:
+        with LOCK:   # re-check: another thread may have resolved it while we queued
+            if u in OGCACHE and time.time() - OGCACHE[u][0] < OGTTL:
+                return OGCACHE[u][1]
+        return _fetch_ogimage_inner(u)
+
+def _fetch_ogimage_inner(u):
+    now = time.time()
     img = None; title = None; desc = None
     def meta(raw, key):
         for p in (r'<meta[^>]+property=["\']'+key+r'["\'][^>]+content=["\']([^"\']+)',
@@ -513,11 +560,12 @@ def fetch_ogimage(u):
             if m:
                 return m.group(1).replace("&amp;", "&").strip()
         return None
+    target = resolve_gnews(u)
     try:
-        req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0 (compatible; AgroDataBot/1.0)"})
-        raw = urllib.request.urlopen(req, timeout=10).read(500000).decode("utf-8", "ignore")
+        req = urllib.request.Request(target, headers={"User-Agent": BROWSER_UA})
+        raw = urllib.request.urlopen(req, timeout=10).read(600000).decode("utf-8", "ignore")
         im = meta(raw, "og:image") or meta(raw, "og:image:url") or meta(raw, "twitter:image")
-        if im: img = urllib.parse.urljoin(u, im)
+        if im: img = urllib.parse.urljoin(target, im)
         title = meta(raw, "og:title") or meta(raw, "twitter:title")
         desc = meta(raw, "og:description") or meta(raw, "description") or meta(raw, "twitter:description")
         if not title:
@@ -529,6 +577,23 @@ def fetch_ogimage(u):
     with LOCK:
         OGCACHE[u] = (now, out)
     return out
+
+def prewarm_og(items):
+    """Resolve og:images for news items in the background so client requests hit warm cache."""
+    links = [it.get("link") for it in (items or []) if it.get("link")]
+    if not links:
+        return
+    def worker(shard):
+        for lk in shard:
+            try:
+                fetch_ogimage(lk)
+            except Exception:
+                pass
+    N = 6
+    for i in range(N):
+        shard = links[i::N]
+        if shard:
+            threading.Thread(target=worker, args=(shard,), daemon=True).start()
 
 GEMINI_KEY   = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
@@ -800,9 +865,10 @@ def fetch_news(q, region):
         return NEWSGOOD[key]
     return {"items": []}             # nothing cached yet — don't store empty, retry next call
 
-def fetch_research(q, frm):
+def fetch_research(q, frm, scope="il"):
     frm = re.sub(r"[^0-9\-]", "", frm or "")[:10] or "2021-01-01"
-    base = ("https://api.openalex.org/works?filter=institutions.country_code:IL,"
+    inst_f = "" if scope == "world" else "institutions.country_code:IL,"
+    base = ("https://api.openalex.org/works?filter=" + inst_f +
             "concepts.id:C118518473,from_publication_date:" + frm +
             "&sort=publication_date:desc&per-page=30&mailto=krispelitzik@gmail.com")
     if q and q.strip():
@@ -816,16 +882,16 @@ def fetch_research(q, frm):
             if not title:
                 continue
             authors = ", ".join((a.get("author", {}) or {}).get("display_name", "") for a in (w.get("authorships") or [])[:3])
-            inst = ""
+            inst = ""; country = ""
             for a in (w.get("authorships") or []):
                 for it in (a.get("institutions") or []):
-                    if it.get("country_code") == "IL":
-                        inst = it.get("display_name", ""); break
+                    if scope == "world" or it.get("country_code") == "IL":
+                        inst = it.get("display_name", ""); country = it.get("country_code", ""); break
                 if inst:
                     break
             url = w.get("doi") or (w.get("primary_location", {}) or {}).get("landing_page_url") or w.get("id") or ""
             out.append({"title": title, "authors": authors, "year": w.get("publication_year"),
-                        "inst": inst, "type": w.get("type", ""), "url": url})
+                        "inst": inst, "country": country, "type": w.get("type", ""), "url": url})
         return {"items": out, "count": d.get("meta", {}).get("count")}
     except Exception as e:
         return {"items": [], "err": str(getattr(e, "code", "") or type(e).__name__)}
@@ -1488,6 +1554,11 @@ class H(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
         super().__init__(*a, directory=WEB, **k)
     def log_message(self, *a): pass
+    def end_headers(self):
+        p = self.path.split("?")[0]
+        if p.endswith(".html") or p.endswith("/"):
+            self.send_header("Cache-Control", "no-store")
+        super().end_headers()
     def do_GET(self):
         if self.path.startswith("/api/quote"):
             q = urllib.parse.urlparse(self.path).query
@@ -1518,7 +1589,7 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/research"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
-            out = fetch_research(qs.get("q", [""])[0], qs.get("from", ["2021-01-01"])[0])
+            out = fetch_research(qs.get("q", [""])[0], qs.get("from", ["2021-01-01"])[0], qs.get("scope", ["il"])[0])
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -1661,7 +1732,15 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/news"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_news(qs.get("q", [""])[0], qs.get("region", ["world"])[0])
-            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            # attach already-cached og:image inline so the client needs no extra requests
+            items = [dict(it) for it in out.get("items", [])]
+            for it in items:
+                c = OGCACHE.get(it.get("link"))
+                if c and c[1].get("image"):
+                    it["image"] = c[1]["image"]
+            try: prewarm_og(items)   # warm the rest in the background for next load
+            except Exception: pass
+            body = json.dumps({"items": items}, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
@@ -1841,7 +1920,9 @@ class H(http.server.SimpleHTTPRequestHandler):
             sid = str(data.get("id") or "")
             feature = str(data.get("feature") or "search")
             _limits = {"search": int(os.environ.get("FREE_SEARCH_LIMIT", "5")),
-                       "innovation": int(os.environ.get("FREE_INNOVATION_LIMIT", "5"))}
+                       "innovation": int(os.environ.get("FREE_INNOVATION_LIMIT", "5")),
+                       "markets": int(os.environ.get("FREE_MARKETS_LIMIT", "5")),
+                       "expo": int(os.environ.get("FREE_EXPO_LIMIT", "5"))}
             limit = _limits.get(feature, 5)
             ckey = "searches" if feature == "search" else (feature + "_searches")
             with _SUBS_LOCK:
