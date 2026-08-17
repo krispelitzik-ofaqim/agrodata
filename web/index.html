@@ -756,13 +756,13 @@ function payPremium(){ /* demo payment -> premium */
 }
 /* lock: until registered, every action routes to the mandatory registration window */
 document.addEventListener('click',function(ev){
-  if(!subGated()||location.hostname==='localhost'||location.hostname==='127.0.0.1')return;
+  if(!subGated()||location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.search.indexOf('dev')>-1)return;
   var t=ev.target; if(!t||!t.closest)return;
   if(t.closest('#regmodal')||t.closest('#loginmodal')||t.closest('.lang'))return; // allow the modal itself + language switch
   if(!t.closest('button,a,[onclick],.cta,.plus,.go,.links span,.scope a,input,select'))return;
   ev.preventDefault();ev.stopPropagation();openReg();
 },true);
-window.addEventListener('load',function(){ loadSubs(); renderHello(); if(location.search.indexOf('dev')>-1){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'); if(subGated()&&!_local)setTimeout(openReg,350); });
+window.addEventListener('load',function(){ loadSubs(); renderHello(); var _dev=(location.search.indexOf('dev')>-1); if(_dev){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'); if(subGated()&&!_local&&!_dev)setTimeout(openReg,350); });
 function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
 const DICT={
 "מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",

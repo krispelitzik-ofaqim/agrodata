@@ -350,7 +350,7 @@ function openEngs(){renderEngList();document.getElementById('engs').classList.ad
 function closeEngs(){document.getElementById('engs').classList.remove('open');}
 function toggleInnov(){var b=document.getElementById('innovBtn'),p=document.getElementById('innovPanel');var open=b.classList.toggle('open');p.style.maxHeight=open?p.scrollHeight+'px':'0px';}
 renderGrid();
-(function(){try{if(location.search.indexOf('dev')>-1){localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1');if(!localStorage.getItem('agro_sub')&&!_local)document.getElementById('gate').classList.add('open');}catch(e){}})();
+(function(){var _dev=(location.search.indexOf('dev')>-1);var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1');if(_dev||_local)return;var has=false;try{has=!!localStorage.getItem('agro_sub');}catch(e){}if(!has)document.getElementById('gate').classList.add('open');})();
 function gSoon(){var n=document.getElementById('gNote');if(n)n.style.display='block';var e=document.getElementById('gName');if(e)e.focus();}
 function gRegister(){
  var name=(document.getElementById('gName').value||'').trim(),email=(document.getElementById('gEmail').value||'').trim();
