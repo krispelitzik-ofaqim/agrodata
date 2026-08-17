@@ -188,7 +188,8 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
 /* bottom nav */
 .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:#fff;border-top:1px solid var(--line);display:flex;padding:9px 6px calc(9px + env(safe-area-inset-bottom));z-index:30;box-shadow:0 -6px 20px rgba(20,50,35,.07)}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:var(--mut);font-size:11px;font-weight:700;padding:5px 0}
-.tab .i{font-size:20px;line-height:1}
+.tab .i{line-height:0}
+.tab .i svg{width:24px;height:24px;display:block}
 .tab.on{color:var(--green)}
 @media(min-width:520px){.tabbar{border-radius:0 0 34px 34px}}
 /* compact signup gate (bottom sheet) */
@@ -281,11 +282,11 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
   </div>
 
   <div class="tabbar">
-    <a class="tab on" href="mobile.html"><span class="i">🏠</span>בית</a>
-    <a class="tab" href="agronews.html"><span class="i">📰</span>חדשות</a>
-    <a class="tab" href="#" onclick="document.getElementById('q').focus();return false"><span class="i">🔎</span>חיפוש</a>
-    <a class="tab" href="maps.html"><span class="i">🗺️</span>מפה</a>
-    <a class="tab" href="index.html"><span class="i">⋯</span>עוד</a>
+    <a class="tab on" href="mobile.html"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></svg></span>בית</a>
+    <a class="tab" href="agronews.html"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 8.5h7M7 12h7M7 15.5h4"/></svg></span>חדשות</a>
+    <a class="tab" href="#" onclick="document.getElementById('q').focus();return false"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>חיפוש</a>
+    <a class="tab" href="maps.html"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></span>מפה</a>
+    <a class="tab" href="index.html"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg></span>עוד</a>
   </div>
 </div>
 <div class="gate" id="gate">
