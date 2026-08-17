@@ -24,11 +24,24 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
 .hi{color:#cdecd8;font-size:13px;font-weight:600;padding:0 18px 12px;background:linear-gradient(135deg,#134a30,#1c6b45);margin-top:-1px}
 /* content */
 .body{flex:1;padding:16px 16px 96px}
-.search{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 6px 18px rgba(20,50,35,.06);margin-bottom:16px}
-.search input{border:0;outline:0;flex:1;font-family:Heebo;font-size:16px;background:transparent;color:var(--ink)}
+.search{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 18px;box-shadow:0 8px 22px rgba(20,50,35,.08);margin-bottom:16px}
+.search input{border:0;outline:0;flex:1;font-family:Heebo;font-size:17.5px;background:transparent;color:var(--ink)}
 .search .mag{font-size:18px;color:var(--green)}
 .splus{flex:0 0 auto;width:34px;height:34px;border-radius:10px;border:0;background:var(--tint);color:var(--green);font-size:23px;font-weight:400;line-height:1;cursor:pointer;display:grid;place-items:center}
 .splus:active{background:var(--green);color:#fff}
+.saibtn{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;font-family:Rubik;font-weight:800;font-size:14px;letter-spacing:.3px;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 12px rgba(34,150,80,.4)}
+.saibtn:active{transform:scale(.95)}
+.aivoice{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#fff;border-radius:16px}
+.aivoice.open{max-height:660px;margin:0 0 16px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(20,50,35,.08)}
+.aivoice-in{padding:18px}
+.micbig{width:82px;height:82px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;font-size:34px;cursor:pointer;display:grid;place-items:center;margin:2px auto 0;box-shadow:0 8px 22px rgba(34,150,80,.4)}
+.micbig.rec{background:linear-gradient(135deg,#ef4444,#f87171);animation:micpulse 1.2s infinite}
+@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(239,68,68,.5)}70%{box-shadow:0 0 0 20px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+.ai-status{text-align:center;color:var(--mut);font-family:Heebo;font-size:14px;margin:12px 0 4px}
+.ai-q{background:var(--tint);border-radius:11px;padding:10px 13px;font-family:Heebo;font-size:15px;font-weight:700;color:var(--ink);margin:8px 0;text-align:right}
+.ai-ans{background:#f7faf8;border:1px solid var(--line);border-radius:11px;padding:13px 15px;font-family:Heebo;font-size:15px;line-height:1.7;color:var(--ink);text-align:right;white-space:pre-wrap;max-height:260px;overflow:auto;margin-top:6px}
+.ai-row{display:flex;gap:9px;justify-content:center;margin-top:11px}
+.ai-row button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 16px;font-family:Rubik;font-weight:700;cursor:pointer;color:var(--green);font-size:14px}
 .topchips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .topchip{background:var(--tint);border:1px solid var(--line);color:var(--green-d);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:600;text-decoration:none}
 /* live ticker */
@@ -92,7 +105,7 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
 .gridslider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -16px 9px;padding:0 16px;scrollbar-width:none}
 .gridslider::-webkit-scrollbar{display:none}
-.gridpage{flex:0 0 100%;scroll-snap-align:center;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gridpage{flex:0 0 100%;scroll-snap-align:center;display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
 .griddots{display:flex;justify-content:center;gap:6px;margin-bottom:22px}
 .vidwrap{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;margin-bottom:22px;box-shadow:0 8px 22px rgba(20,50,35,.15);background:#000}
 .vidwrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -101,11 +114,11 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
 .ofbar a{flex:0 0 auto;padding:13px 16px;font-family:Heebo;font-weight:500;font-size:14px;color:var(--lime);text-decoration:none;white-space:nowrap;border-inline-start:1px solid var(--line)}
 .ofbar a:first-child{border-inline-start:0}
 .ofbar a:active{color:var(--green-d)}
-.tile{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 15px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 14px rgba(20,50,35,.05);transition:.12s}
+.tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 4px;text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;box-shadow:0 3px 10px rgba(20,50,35,.05);transition:.12s;min-height:88px;justify-content:flex-start}
 .tile:active{transform:scale(.97)}
-.tile .em{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:22px;background:rgba(255,255,255,.6)}
-.tile h3{font-family:Rubik;font-weight:500;font-size:15.5px;color:var(--green-d)}
-.tile p{font-size:12px;color:var(--mut);line-height:1.35}
+.tile .em{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:18px;background:rgba(255,255,255,.6)}
+.tile h3{font-family:Rubik;font-weight:600;font-size:10px;line-height:1.15;color:var(--green-d);word-break:break-word}
+.tile p{display:none}
 .innovbox{margin-bottom:22px;border-radius:18px;overflow:hidden;box-shadow:0 4px 14px rgba(20,50,35,.06)}
 .innov{width:100%;display:flex;align-items:center;gap:13px;background:#CDE8D5;color:var(--ink);border:0;padding:16px;text-align:right;cursor:pointer;font-family:Heebo}
 .innov .em{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:23px;background:rgba(255,255,255,.6);flex:0 0 auto}
@@ -192,7 +205,14 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
   <div class="hi" id="hi">שלום 👋 · הזירה של האגרו-טק בכיס שלך</div>
 
   <div class="body">
-    <div class="search"><button class="splus" onclick="openTopics()" title="כל הנושאים">+</button><span class="mag">🔎</span><input placeholder="חפש: מחקר · שווקים · יבול · מזג אוויר…" id="q" onkeydown="if(event.key==='Enter')doSearch()"></div>
+    <div class="search"><button class="saibtn" onclick="toggleAI()" title="חיפוש קולי AI" aria-label="חיפוש קולי AI">AI</button><span class="mag">🔎</span><input placeholder="חפש: מחקר · שווקים · יבול · מזג אוויר…" id="q" onkeydown="if(event.key==='Enter')doSearch()"></div>
+    <div id="aivoice" class="aivoice"><div class="aivoice-in">
+      <button id="micBtn" class="micbig" onclick="micToggle()" aria-label="דבר">🎤</button>
+      <div id="aiStatus" class="ai-status">לחצו על המיקרופון ושאלו בקול — AgroMind יענה</div>
+      <div id="aiQ" class="ai-q" style="display:none"></div>
+      <div id="aiAns" class="ai-ans" style="display:none"></div>
+      <div class="ai-row"><button id="aiListenBtn" onclick="aiSpeak()" style="display:none">🔊 השמע</button><button onclick="toggleAI()">סגור</button></div>
+    </div></div>
 
     <div class="tick"><span class="lbl"><span class="dot"></span>חי</span><div class="txt" id="tk">טוען חדשות…</div></div>
 
@@ -285,23 +305,42 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
 </div>
 <script>
 var ENGINES=[
+ {k:'agrolake',n:'AgroLake',e:'💧',h:'agrolake.html',c:'#EAF4EE',d:'מאגר נתונים'},
+ {k:'labs',n:'AgroLabs',e:'🔬',h:'labs.html',c:'#EAF4EE',d:'מדען ראשי'},
  {k:'gov',n:'AgroGov',e:'🏛️',h:'gov.html',c:'#EAF4EE',d:'נתוני ממשלה'},
+ {k:'rnd',n:'AgroRnD',e:'🔗',h:'rnd.html',c:'#EAF4EE',d:'מרכזי מו״פ'},
  {k:'research',n:'AgroScholar',e:'🎓',h:'research.html',c:'#EAF4EE',d:'מחקר אקדמי'},
- {k:'conferences',n:'AgroExpo',e:'🎪',h:'conferences.html',c:'#FDF8DE',d:'תערוכות וכנסים'},
+ {k:'conferences',n:'AgroExpo',e:'🎪',h:'conferences.html',c:'#FDF8DE',d:'כנסים'},
  {k:'trade',n:'AgroTrade',e:'🌍',h:'trade.html',c:'#FDF8DE',d:'סחר בינלאומי'},
+ {k:'agronews',n:'AgroNews',e:'📰',h:'agronews.html',c:'#FDF8DE',d:'חדשות'},
+ {k:'academy',n:'AgroAcademy',e:'👥',h:'community.html',c:'#FDF8DE',d:'חינוך וקהילה'},
+ {k:'sdg',n:'AgroImpact',e:'🍃',h:'sdg.html',c:'#CDE8D5',d:'ביטחון תזונתי'},
+ {k:'analytics',n:'AgroMind',e:'🧠',h:'analytics.html',c:'#CDE8D5',d:'אנליטיקת AI'},
+ {k:'ofakim',n:'AgroSense',e:'📡',h:'ofakim.html',c:'#CDE8D5',d:'חיישנים IoT'},
+ {k:'hub',n:'AgroHub',e:'🤝',h:'community.html',c:'#CDE8D5',d:'האב ואקסלרטור'},
+ {k:'ideas',n:'AgroInnovate',e:'💡',h:'ideas.html',c:'#CDE8D5',d:'מנוע חדשנות'},
  {k:'agromedia',n:'AgroMedia',e:'📺',h:'agromedia.html',c:'#CDE8D5',d:'מרכז המדיה'},
+ {k:'agroeco',n:'AgroEco',e:'🌿',h:'agroeco.html',c:'#F7F3ED',d:'חקלאות וסביבה'},
+ {k:'agropharm',n:'AgroPharm',e:'💊',h:'agropharm.html',c:'#F7F3ED',d:'רוקחות'},
+ {k:'agroaqua',n:'AgroAqua',e:'🐟',h:'agroaqua.html',c:'#F7F3ED',d:'חקלאות ימית'},
+ {k:'agrogrow',n:'AgroGrow',e:'🌱',h:'agrogrow.html',c:'#F7F3ED',d:'חקלאות מבוקרת'},
+ {k:'agrofarm',n:'AgroFarm',e:'🐄',h:'agrofarm.html',c:'#F7F3ED',d:'בעלי חיים'},
  {k:'agropedia',n:'AgroPedia',e:'📖',h:'agropedia.html',c:'#DDEEF6',d:'אנציקלופדיה'},
- {k:'agronews',n:'agroNews',e:'📰',h:'agronews.html',c:'#FDF8DE',d:'פורטל החדשות'},
- {k:'maps',n:'AgroMap',e:'🗺️',h:'maps.html',c:'#EAF4EE',d:'מפה חכמה'},
- {k:'agroflora',n:'AgroFlora',e:'🌿',h:'agroflora.html',c:'#EAF4EE',d:'צמחים ועצים'},
- {k:'agrobooks',n:'AgroBooks',e:'📚',h:'agrobooks.html',c:'#DDEEF6',d:'ספרים וכותרים'},
- {k:'ofakim',n:'אופקים',e:'🌱',h:'ofakim.html',c:'#CDE8D5',d:'בירת האגרו-טק'}
+ {k:'agroflora',n:'AgroFlora',e:'🌺',h:'agroflora.html',c:'#DDEEF6',d:'מזהה צמחים'},
+ {k:'maps',n:'AgroMap',e:'🗺️',h:'maps.html',c:'#DDEEF6',d:'מפות ו-GIS'},
+ {k:'agromarket',n:'AgroMarket',e:'🛒',h:'agromarket.html',c:'#DDEEF6',d:'תשומות וציוד'},
+ {k:'agrobooks',n:'AgroBooks',e:'📚',h:'agrobooks.html',c:'#DDEEF6',d:'ספרים'},
+ {k:'journals',n:'AgroLibrary',e:'📓',h:'journals.html',c:'#DDEEF6',d:'כתבי עת'},
+ {k:'agropatents',n:'AgroPatents',e:'📜',h:'agropatents.html',c:'#DDEEF6',d:'פטנטים'},
+ {k:'agroapps',n:'AgroApps',e:'📱',h:'agroapps.html',c:'#DDEEF6',d:'אפליקציות'},
+ {k:'companies',n:'AgroDirectory',e:'🏢',h:'companies.html',c:'#DDEEF6',d:'חברות'},
+ {k:'scout',n:'AgroScout',e:'🚀',h:'scout.html',c:'#DDEEF6',d:'סטארטאפים'}
 ];
 function chunk(a,n){var o=[];for(var i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o;}
 function tileHTML(x){return '<a class="tile" href="'+x.h+'" style="background:'+x.c+'"><span class="em">'+x.e+'</span><h3>'+x.n+'</h3><p>'+x.d+'</p></a>';}
 function renderGrid(){
  var sl=document.getElementById('mgridSlider'),dots=document.getElementById('mgridDots');if(!sl)return;
- var pages=chunk(ENGINES,6);
+ var pages=chunk(ENGINES,15);
  sl.innerHTML=pages.map(function(pg){return '<div class="gridpage">'+pg.map(tileHTML).join('')+'</div>';}).join('');
  if(dots)dots.innerHTML=pages.map(function(_,i){return '<span class="fdot'+(i===0?' on':'')+'"></span>';}).join('');
  sl.onscroll=function(){if(!dots)return;var idx=Math.round(Math.abs(sl.scrollLeft)/sl.clientWidth);var ds=dots.querySelectorAll('.fdot');for(var i=0;i<ds.length;i++)ds[i].classList.toggle('on',i===idx);};
@@ -311,7 +350,7 @@ function openEngs(){renderEngList();document.getElementById('engs').classList.ad
 function closeEngs(){document.getElementById('engs').classList.remove('open');}
 function toggleInnov(){var b=document.getElementById('innovBtn'),p=document.getElementById('innovPanel');var open=b.classList.toggle('open');p.style.maxHeight=open?p.scrollHeight+'px':'0px';}
 renderGrid();
-(function(){try{if(!localStorage.getItem('agro_sub'))document.getElementById('gate').classList.add('open');}catch(e){}})();
+(function(){try{if(location.search.indexOf('dev')>-1){localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1');if(!localStorage.getItem('agro_sub')&&!_local)document.getElementById('gate').classList.add('open');}catch(e){}})();
 function gSoon(){var n=document.getElementById('gNote');if(n)n.style.display='block';var e=document.getElementById('gName');if(e)e.focus();}
 function gRegister(){
  var name=(document.getElementById('gName').value||'').trim(),email=(document.getElementById('gEmail').value||'').trim();
@@ -322,6 +361,30 @@ function gRegister(){
   .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
 }
 function doSearch(){var v=(document.getElementById('q').value||'').trim();if(v)location.href='search-results.html?q='+encodeURIComponent(v);}
+function toggleAI(){var p=document.getElementById('aivoice');var open=p.classList.toggle('open');if(!open&&window._aiRec){try{window._aiRec.stop();}catch(e){}}}
+function _aiLang(){return 'he-IL';}
+function _aiMd(t){return (t||'').replace(/^#{1,6}\s*/gm,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/^\s*[-*]\s+/gm,'\u2022 ').trim();}
+function micToggle(){
+ var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ var st=document.getElementById('aiStatus'),mic=document.getElementById('micBtn');
+ if(!SR){st.textContent='\u05d4\u05d3\u05e4\u05d3\u05e4\u05df \u05dc\u05d0 \u05ea\u05d5\u05de\u05da \u05d1\u05d6\u05d9\u05d4\u05d5\u05d9 \u05e7\u05d5\u05dc\u05d9 \u2014 \u05d4\u05e7\u05dc\u05d9\u05d3\u05d5 \u05d1\u05ea\u05d9\u05d1\u05d4.';return;}
+ if(window._aiRec){try{window._aiRec.stop();}catch(e){}return;}
+ var r=new SR();window._aiRec=r;r.lang=_aiLang();r.interimResults=true;r.continuous=false;
+ mic.classList.add('rec');st.textContent='\u05de\u05e7\u05e9\u05d9\u05d1\u2026 \u05d3\u05d1\u05e8\u05d5 \u05e2\u05db\u05e9\u05d9\u05d5';
+ var finalTxt='';
+ r.onresult=function(e){var t='';for(var i=0;i<e.results.length;i++){t+=e.results[i][0].transcript;}finalTxt=t;var q=document.getElementById('aiQ');q.style.display='block';q.textContent=t;};
+ r.onerror=function(){st.textContent='\u05dc\u05d0 \u05e0\u05e7\u05dc\u05d8 \u05e7\u05d5\u05dc. \u05e0\u05e1\u05d5 \u05e9\u05d5\u05d1.';mic.classList.remove('rec');window._aiRec=null;};
+ r.onend=function(){mic.classList.remove('rec');window._aiRec=null;if(finalTxt.trim()){aiAsk(finalTxt.trim());}else{st.textContent='\u05dc\u05d0 \u05e0\u05e7\u05dc\u05d8 \u05e7\u05d5\u05dc. \u05e0\u05e1\u05d5 \u05e9\u05d5\u05d1.';}};
+ try{r.start();}catch(e){st.textContent='\u05e9\u05d2\u05d9\u05d0\u05d4 \u05d1\u05de\u05d9\u05e7\u05e8\u05d5\u05e4\u05d5\u05df.';mic.classList.remove('rec');window._aiRec=null;}
+}
+function aiAsk(q){
+ var st=document.getElementById('aiStatus'),ans=document.getElementById('aiAns'),lb=document.getElementById('aiListenBtn');
+ st.textContent='\u05e8\u05d2\u05e2, \u05d7\u05d5\u05e9\u05d1 \u05e2\u05dc \u05d4\u05ea\u05e9\u05d5\u05d1\u05d4\u2026';ans.style.display='block';ans.textContent='\u2026';lb.style.display='none';
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){
+  var a=_aiMd((d&&d.answer)||'\u05dc\u05d0 \u05d4\u05ea\u05e7\u05d1\u05dc\u05d4 \u05ea\u05e9\u05d5\u05d1\u05d4.');window._aiLast=a;ans.textContent=a;st.textContent='\u05ea\u05e9\u05d5\u05d1\u05d4 \u05de-AgroMind';lb.style.display='inline-block';aiSpeak();
+ }).catch(function(){ans.textContent='\u05e9\u05d2\u05d9\u05d0\u05d4 \u05d1\u05d7\u05d9\u05d1\u05d5\u05e8. \u05e0\u05e1\u05d5 \u05e9\u05d5\u05d1.';st.textContent='';});
+}
+function aiSpeak(){var a=window._aiLast;if(!a||!window.speechSynthesis)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(a);u.lang=_aiLang();speechSynthesis.speak(u);}catch(e){}}
 var TOPICS=['השקיה חכמה','פוד-טק','גנטיקה וזרעים','רובוטיקה','אקלים וקיימות','שווקים ומחירים','סחר ויצוא','חדשנות','מחקר','בשר מתורבת','חקלאות מדייקת','אקוופוניקה'];
 function openTopics(){document.getElementById('topchips').innerHTML=TOPICS.map(function(t){return '<a class="topchip" href="search-results.html?q='+encodeURIComponent(t)+'">'+t+'</a>';}).join('');document.getElementById('topics').classList.add('open');}
 function closeTopics(){document.getElementById('topics').classList.remove('open');}
