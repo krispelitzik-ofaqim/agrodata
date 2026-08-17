@@ -762,7 +762,7 @@ document.addEventListener('click',function(ev){
   if(!t.closest('button,a,[onclick],.cta,.plus,.go,.links span,.scope a,input,select'))return;
   ev.preventDefault();ev.stopPropagation();openReg();
 },true);
-window.addEventListener('load',function(){ loadSubs(); renderHello(); var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'); if(subGated()&&!_local)setTimeout(openReg,350); });
+window.addEventListener('load',function(){ loadSubs(); renderHello(); if(location.search.indexOf('dev')>-1){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'); if(subGated()&&!_local)setTimeout(openReg,350); });
 function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
 const DICT={
 "מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",
