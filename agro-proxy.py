@@ -670,16 +670,26 @@ SUBS_KEY = os.environ.get("SUBS_KEY", "ofakim2040")   # guard for viewing/export
 ADMIN_EMAILS = set(e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "krispelitzik@gmail.com").split(",") if e.strip())
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "ofakim-agro-2026")   # server-side admin gate — SET THIS on the host
 _ADMIN_TOKENS = {}          # session token -> expiry epoch (in-memory; cleared on restart)
-_ADMIN_TTL = 12 * 3600
+_ADMIN_TTL = 60 * 24 * 3600   # 60 days
+def _admin_secret():
+    import hashlib
+    return hashlib.sha256(("agro-admin::" + (ADMIN_PASSWORD or "agro")).encode()).digest()
 def _new_admin_token():
-    import secrets
-    t = secrets.token_urlsafe(24); _ADMIN_TOKENS[t] = time.time() + _ADMIN_TTL; return t
+    # stateless HMAC token — survives server restarts/redeploys (no in-memory store)
+    import time as _t, hmac, hashlib
+    exp = str(int(_t.time() + _ADMIN_TTL))
+    sig = hmac.new(_admin_secret(), exp.encode(), hashlib.sha256).hexdigest()[:32]
+    return exp + "." + sig
 def _admin_token_valid(t):
+    import time as _t, hmac, hashlib
     if not t: return False
-    exp = _ADMIN_TOKENS.get(t)
-    if not exp: return False
-    if exp < time.time(): _ADMIN_TOKENS.pop(t, None); return False
-    return True
+    try:
+        exp, sig = str(t).split(".", 1)
+        if int(exp) < _t.time(): return False
+        good = hmac.new(_admin_secret(), exp.encode(), hashlib.sha256).hexdigest()[:32]
+        return hmac.compare_digest(sig, good)
+    except Exception:
+        return False
 _SUBS_LOCK = threading.Lock()
 def _load_subs():
     try:
