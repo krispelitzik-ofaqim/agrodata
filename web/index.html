@@ -45,7 +45,18 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .wm{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.01em}
 .wm b{color:var(--lime)}
 /* nav */
+.topgap{height:46px;background:#fff}
 .topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.mediastrip{background:#fff}
+.mediastrip .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 24px;flex-wrap:nowrap}
+.mediastrip .ms-links{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.mediastrip .ms-right{display:flex;align-items:center;gap:16px;font-family:Heebo;font-size:14px}
+.mediastrip a{display:inline-flex;align-items:center;gap:7px;color:var(--green-d);text-decoration:none;font-family:Heebo;font-weight:600;font-size:14px;white-space:nowrap;transition:.12s}
+.mediastrip a:hover{color:var(--lime)}
+.mediastrip a svg{opacity:.85}
+#scUpgrade2{cursor:pointer;color:var(--green-d);font-weight:700;border:1px solid var(--green);border-radius:999px;padding:3px 13px;transition:.12s}
+#scUpgrade2:hover{background:var(--green);color:#fff}
+@media(max-width:640px){.mediastrip .wrap{gap:12px;padding:11px 16px;justify-content:center}.mediastrip .ms-links{gap:16px}.mediastrip a{font-size:12.5px}}
 .topbar .wrap{max-width:1600px}
 .nav{gap:24px}
 .links{flex:1;justify-content:center}
@@ -54,7 +65,8 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .nav .wm b{color:#8fe6ad}
 .nav .kick{color:#8fe6ad!important}
 .nav .links{display:flex;gap:30px;color:rgba(255,255,255,.92);font-size:20px;font-weight:600;flex-wrap:wrap}
-.nav .links span{cursor:pointer}
+.nav .links span{cursor:pointer;transition:color .18s ease}
+.links span:hover{color:#8fe6ad}
 .cta{background:#fff;color:var(--green-d);border:0;border-radius:11px;padding:11px 20px;font-family:Rubik;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.16)}
 .cta.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.42);box-shadow:none}
 .cta.ghost:hover{background:rgba(255,255,255,.12)}
@@ -304,7 +316,8 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .ordiv::before,.ordiv::after{content:"";flex:1;height:1px;background:var(--line)}
 </style>
 </head>
-<body><!--persist-test v1-->
+<body>
+<div class="topgap"></div>
 <div class="topbar"><div class="wrap">
   <div class="nav">
     <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onclick="location.href='index.html'">
@@ -330,12 +343,21 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
   </div>
   <div id="subCount" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:2px 0 14px;font-family:'Plex Mono',monospace;font-size:14.5px;color:#8fe6ad">
     <div style="display:flex;align-items:center;gap:16px">
-      <span id="scHello" style="color:#fff;font-weight:700;display:none">שלום, <span id="scHelloName"></span> 👋</span>
-      <span>👤 מנויים רשומים: <b id="scReg" style="color:#fff">—</b></span>
-      <span>⭐ פרימיום: <b id="scPrem" style="color:#fff">—</b></span>
-      <span id="scUpgrade" onclick="upgradePremium()" style="display:none;cursor:pointer;color:#ffd76a;font-weight:700;border:1px solid rgba(255,215,106,.5);border-radius:999px;padding:3px 12px">שדרג לפרימיום ⭐</span>
+      <span id="scRegWrap" style="display:none">מנויים רשומים: <b id="scReg" style="color:#fff">—</b></span>
+      <span id="scPremWrap" style="display:none">פרימיום: <b id="scPrem" style="color:#fff">—</b></span>
     </div>
-    <div class="mediaicons" style="display:flex;align-items:center;gap:13px;font-size:13px;font-weight:700"><a href="agronews.html" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v14a2 2 0 0 0 2 2H5a2 2 0 0 1-2-2V4zm2 3v2h9V7H5zm0 4v2h9v-2H5zm0 4v2h6v-2H5zM19 9v9a1 1 0 0 0 2 0V9h-2z"/></svg>אתר החדשות</a><span style="color:rgba(255,255,255,.25)">|</span><a href="#" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 3.9 12 3.9 12 3.9s-7.5 0-9.4.5A3 3 0 0 0 .5 6.5 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.5zM9.6 15.5v-7l6.3 3.5-6.3 3.5z"/></svg>ערוץ האגרו-טק</a><span style="color:rgba(255,255,255,.25)">|</span><a href="#" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 1 0 12 24 12 12 0 0 0 12 0zm5.5 17.3c-.2.35-.66.46-1 .25-2.8-1.7-6.3-2.1-10.5-1.14a.75.75 0 1 1-.33-1.46c4.6-1.05 8.5-.6 11.6 1.3.35.22.46.68.23 1.05zm1.47-3.27c-.28.44-.86.58-1.3.31-3.2-1.97-8.08-2.54-11.86-1.4a.94.94 0 1 1-.55-1.8c4.32-1.3 9.7-.67 13.38 1.6.44.27.58.85.33 1.29zm.13-3.4C15.4 8.35 8.9 8.12 5.3 9.22a1.12 1.12 0 1 1-.65-2.15c4.13-1.25 11.3-1 15.76 1.66a1.12 1.12 0 0 1-1.15 1.92z"/></svg>אולפן הפודקאסט</a><span style="color:rgba(255,255,255,.25)">|</span><a href="#" style="color:#8fe6ad;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5zm2.4.5 7.6 5.2 7.6-5.2H4.4zM20 8.1l-7.4 5.1a1 1 0 0 1-1.2 0L4 8.1V19h16V8.1z"/></svg>ניוזלייטר</a></div>
+  </div>
+</div></div>
+<div class="mediastrip"><div class="wrap">
+  <div class="ms-right">
+    <span id="scHello2" style="display:none;font-weight:700;color:var(--green-d)">שלום, <span id="scHelloName2"></span></span>
+    <span id="scUpgrade2" onclick="upgradePremium()" style="display:none">שדרג לפרימיום</span>
+  </div>
+  <div class="ms-links">
+  <a href="agronews.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v14a2 2 0 0 0 2 2H5a2 2 0 0 1-2-2V4zm2 3v2h9V7H5zm0 4v2h9v-2H5zm0 4v2h6v-2H5zM19 9v9a1 1 0 0 0 2 0V9h-2z"/></svg>אתר החדשות</a>
+  <a href="#"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 3.9 12 3.9 12 3.9s-7.5 0-9.4.5A3 3 0 0 0 .5 6.5 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.5 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.5zM9.6 15.5v-7l6.3 3.5-6.3 3.5z"/></svg>ערוץ האגרו-טק</a>
+  <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 1 0 12 24 12 12 0 0 0 12 0zm5.5 17.3c-.2.35-.66.46-1 .25-2.8-1.7-6.3-2.1-10.5-1.14a.75.75 0 1 1-.33-1.46c4.6-1.05 8.5-.6 11.6 1.3.35.22.46.68.23 1.05zm1.47-3.27c-.28.44-.86.58-1.3.31-3.2-1.97-8.08-2.54-11.86-1.4a.94.94 0 1 1-.55-1.8c4.32-1.3 9.7-.67 13.38 1.6.44.27.58.85.33 1.29zm.13-3.4C15.4 8.35 8.9 8.12 5.3 9.22a1.12 1.12 0 1 1-.65-2.15c4.13-1.25 11.3-1 15.76 1.66a1.12 1.12 0 0 1-1.15 1.92z"/></svg>אולפן הפודקאסט</a>
+  <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5zm2.4.5 7.6 5.2 7.6-5.2H4.4zM20 8.1l-7.4 5.1a1 1 0 0 1-1.2 0L4 8.1V19h16V8.1z"/></svg>ניוזלייטר</a>
   </div>
 </div></div>
 
@@ -731,14 +753,20 @@ function _subKey(){try{return localStorage.getItem('agro_sub')||'';}catch(e){ret
 function subGated(){return !_subKey();}
 function renderSubs(d){
   if(d){var r=document.getElementById('scReg'),p=document.getElementById('scPrem');
-    if(r)r.textContent=(d.regular||0).toLocaleString('en');
-    if(p)p.textContent=(d.premium||0).toLocaleString('en');}
-  var up=document.getElementById('scUpgrade'); if(up)up.style.display=(_subKey()==='regular')?'inline-block':'none';
+    var rw=document.getElementById('scRegWrap'),pw=document.getElementById('scPremWrap');
+    var reg=d.regular||0, prem=d.premium||0;
+    if(r)r.textContent=reg.toLocaleString('en');
+    if(p)p.textContent=prem.toLocaleString('en');
+    /* show a counter only once it has real numbers — 0 reads as empty/weak */
+    if(rw)rw.style.display=reg>0?'inline':'none';
+    if(pw)pw.style.display=prem>0?'inline':'none';}
+  var showUp=(_subKey()==='regular');
+  var up2=document.getElementById('scUpgrade2'); if(up2)up2.style.display=showUp?'inline-block':'none';
 }
 function loadSubs(){fetch('/api/subs').then(function(r){return r.json();}).then(renderSubs).catch(function(){});}
-function renderHello(){ /* greet on registration AND on every return visit */
+function renderHello(){ /* greet on registration AND on every return visit (white media strip, right side) */
   var nm=''; try{nm=localStorage.getItem('agro_name')||'';}catch(e){}
-  var h=document.getElementById('scHello'), n=document.getElementById('scHelloName');
+  var h=document.getElementById('scHello2'), n=document.getElementById('scHelloName2');
   if(h&&n){ if(nm){ n.textContent=nm; h.style.display='inline'; } else { h.style.display='none'; } }
 }
 function soonMsg(){var n=document.getElementById('soonNote');if(n)n.style.display='block';var e=document.getElementById('regName');if(e)e.focus();}
