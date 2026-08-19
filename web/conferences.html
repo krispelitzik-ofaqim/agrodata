@@ -107,6 +107,19 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .vcard .vc{font-size:13px;opacity:.85;font-family:'Plex Mono'}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45);color:rgba(255,255,255,.8)}
 .foot{padding:16px 0;text-align:center;font-size:14px}
+.sect2{margin:34px 0}
+.cbar{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--green),var(--green-d));color:#fff;border-radius:12px;padding:11px 16px;font-family:Rubik;font-weight:800;font-size:16px;margin-bottom:14px}
+.livewrap{margin-inline-start:auto;display:flex;align-items:center;gap:6px;font-family:'Plex Mono',monospace;font-size:12px;font-weight:700}
+.livedot{width:8px;height:8px;border-radius:50%;background:#ff5a5a;animation:lvp 1.5s infinite}
+@keyframes lvp{70%{box-shadow:0 0 0 7px rgba(255,90,90,0)}100%{box-shadow:0 0 0 0 rgba(255,90,90,0)}}
+.confnews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:820px){.confnews{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.confnews{grid-template-columns:1fr}}
+.cnews{background:#fff;border:1px solid var(--line);border-inline-start:3px solid var(--lime);border-radius:12px;padding:13px 15px;text-decoration:none;color:inherit;transition:.14s;display:block}
+.cnews:hover{box-shadow:0 10px 24px rgba(20,50,35,.1);transform:translateY(-2px)}
+.cnews h4{font-family:Heebo;font-weight:700;font-size:14px;line-height:1.4;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.cnews .m{font-family:'Plex Mono',monospace;font-size:11px;color:var(--mut);margin-top:6px}
+.confnews .ld{color:var(--mut);font-size:14px;padding:10px 2px}
 </style>
 </head>
 <body>
@@ -121,6 +134,47 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <h1>כנסים <b>ותערוכות</b></h1>
     <div class="sub">יומן אירועי האגרו-טק בעולם — לפי חודש, מדינה ונושא.</div>
   </div>
+
+  <div class="panel" style="margin-bottom:20px">
+    <h2 style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:2px">🎪 באיזו תערוכה להציג את המוצר שלי? <span style="display:inline-flex;align-items:center;gap:6px;font-family:'Plex Mono',monospace;font-size:11px;font-weight:800;color:#127a43;background:#eaf4ee;border-radius:14px;padding:3px 10px"><span class="mxdot"></span>AI</span></h2>
+    <div class="sm" style="color:var(--mut);font-size:14px;margin-bottom:12px">הקלד מוצר או טכנולוגיה — והמוח יתאים את התערוכות מהאינדקס שהכי כדאי להציג בהן.</div>
+    <style>.mxdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d57;animation:mxp 1.5s infinite}@keyframes mxp{0%,100%{box-shadow:0 0 0 0 rgba(31,157,87,.5)}70%{box-shadow:0 0 0 7px rgba(31,157,87,0)}}
+    #mxq{flex:1;min-width:220px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-family:Heebo;font-size:15.5px;outline:0}#mxq:focus{border-color:var(--green)}
+    .mxgo{background:linear-gradient(90deg,var(--green),#2e9e63);color:#fff;border:0;border-radius:12px;padding:13px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+    .mxc{background:#fff;border:1px solid var(--line);border-inline-start:4px solid #6a45c0;border-radius:14px;padding:16px 18px;box-shadow:0 8px 20px rgba(20,60,40,.05)}
+    .mxc .cty{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d)}.mxc .r{font-size:13.5px;color:#3a4a41;margin-top:6px;line-height:1.5}
+    .mxc .b{background:#eef7f0;border:1px solid #cfe6d8;color:#134a30;border-radius:8px;padding:4px 11px;font-size:12.5px;font-weight:700;cursor:pointer}</style>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><input id="mxq" placeholder="עגבניות שרי · מערכת טפטוף · חיישני קרקע · יין" onkeydown="if(event.key==='Enter')matchExpo()"><button class="mxgo" onclick="matchExpo()">🎪 מצא תערוכות</button></div>
+    <div id="mxout"></div>
+  </div>
+  <script>
+  function matchExpo(){
+    var q=(document.getElementById('mxq').value||'').trim(); if(!q){document.getElementById('mxq').focus();return;}
+    var sid=''; try{sid=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+    document.getElementById('mxout').innerHTML='<div style="text-align:center;padding:26px"><div style="font-size:40px;animation:mxp 1.4s infinite">🧠</div><div style="font-family:\'Plex Mono\',monospace;color:#2b8fb0;font-weight:700;margin-top:6px">המוח מתאים תערוכות…</div></div>';
+    fetch('/api/search-quota',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:sid,feature:'expo'})}).then(function(r){return r.json();}).then(function(qd){
+      if(qd&&qd.allowed===false){document.getElementById('mxout').innerHTML='<div style="background:#fff;border:1.5px solid #eddca8;border-radius:16px;padding:26px;text-align:center;margin-top:14px"><div style="font-size:40px">⭐</div><div style="font-weight:800;color:#134a30;font-size:20px;margin:6px 0">הגעת ל-5 ההתאמות החינמיות</div><a href="pricing.html" style="display:inline-block;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;text-decoration:none;border-radius:12px;padding:12px 28px;font-weight:800;margin-top:8px">🚀 שדרגו למנוי →</a></div>';return;}
+      var listStr=CONF.map(function(c){return c.n+' ('+c.cy+', '+c.t.join('/')+')';}).join('; ');
+      var prompt='אתה מומחה תערוכות אגרו-טק. המשתמש רוצה להציג/לשווק: "'+q+'". מתוך הרשימה הבאה בלבד, בחר את 5 התערוכות המתאימות ביותר להציג בהן את זה. לכל אחת שורה בפורמט: [שם מדויק מהרשימה] | למה מתאים: משפט קצר. רק 5 שורות, בעברית, בלי מספור. הרשימה: '+listStr;
+      fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){
+        var lines=(j.answer||'').split('\n').filter(function(l){return l.indexOf('|')>0;});
+        if(!lines.length){document.getElementById('mxout').innerHTML='<div class="sm" style="padding:16px">'+((j.answer||'').slice(0,400)||'לא התקבלה תשובה.')+'</div>';return;}
+        var html='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px">'+lines.slice(0,6).map(function(l){
+          var p=l.split('|').map(function(x){return x.replace(/^\[|\]$/g,'').replace(/^[-•\d.\s]+/,'').trim();});
+          var name=p[0]||''; var why=p.slice(1).join(' · ').replace(/^למה מתאים:\s*/,'');
+          var idx=-1; for(var i=0;i<CONF.length;i++){ if(name&&(name.indexOf(CONF[i].n)>=0||CONF[i].n.indexOf(name)>=0)){idx=i;break;} }
+          var c=idx>=0?CONF[idx]:null;
+          var fl=c?c.fl:'🎪';
+          var site=(c&&c.u&&c.u!=='#')?'<a href="'+c.u+'" target="_blank" rel="noopener" style="color:#2b8fb0;font-weight:700;text-decoration:none;font-size:12.5px">אתר ↗</a>':'';
+          var ai=idx>=0?'<button class="b" onclick="openExpoIdx('+idx+')">🧠 ניתוח</button>':'';
+          return '<div class="mxc"><div class="cty">'+fl+' '+name+'</div><div class="r">'+why+'</div><div style="margin-top:10px;display:flex;gap:12px;align-items:center">'+site+ai+'</div></div>';
+        }).join('')+'</div>';
+        if(qd&&!qd.unlimited&&qd.limit){var left=Math.max(0,qd.limit-(qd.used||0));html+='<div style="text-align:center;color:#c79a2e;font-family:\'Plex Mono\',monospace;font-size:13px;font-weight:700;margin-top:14px">🎪 התאמה חינמית · נותרו '+left+' מתוך '+qd.limit+'</div>';}
+        document.getElementById('mxout').innerHTML=html;
+      }).catch(function(){document.getElementById('mxout').innerHTML='<div class="sm" style="padding:16px">שגיאת חיבור לשרת.</div>';});
+    }).catch(function(){document.getElementById('mxout').innerHTML='<div class="sm" style="padding:16px">שגיאת חיבור.</div>';});
+  }
+  </script>
 
   <div class="cal panel">
     <div class="chead"><div class="calnav"><button class="calarrow" onclick="navMonth(-1)" aria-label="חודש קודם">›</button><h2 id="calMonth">יולי 2026</h2><button class="calarrow" onclick="navMonth(1)" aria-label="חודש הבא">‹</button></div><span class="mono" style="color:var(--mut);font-size:14px">לוח החודש · כנסי אגרו-טק</span></div>
@@ -152,6 +206,22 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
   </div>
 
   <div class="vidsec">
+    <h2 class="vsh">📇 אינדקס תערוכות האגרו-טק בעולם <span style="font-size:14px;color:var(--mut);font-weight:600" id="idxcount"></span></h2>
+    <div class="vsub">אינדקס מרוכז · לחיצה על כותרת עמודה למיון · "ניתוח" = הסבר AI חכם לכל תערוכה.</div>
+    <style>#idxtbl th{padding:11px 14px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-family:Rubik;font-weight:800;color:var(--green-d);font-size:13.5px}#idxtbl td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:middle}#idxtbl tbody tr:hover{background:#f6faf7}#idxtbl th[data-s]{cursor:pointer}#idxtbl th[data-s]:hover{color:var(--lime)}</style>
+    <div class="searchbar" style="margin:10px 0"><span>🔎</span><input id="idxq" placeholder="חיפוש באינדקס: שם, מדינה, תחום…" oninput="renderIndexTable()"></div>
+    <div style="overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:34px">
+      <table id="idxtbl" style="width:100%;border-collapse:collapse;font-size:14px;min-width:660px">
+        <thead><tr style="background:#f6faf7">
+          <th data-s onclick="idxSortBy('n')">תערוכה ↕</th>
+          <th data-s onclick="idxSortBy('cy')">מדינה ↕</th>
+          <th data-s onclick="idxSortBy('m')">חודש ↕</th>
+          <th>תחומים</th><th>אתר</th><th>ניתוח</th>
+        </tr></thead>
+        <tbody id="idxbody"></tbody>
+      </table>
+    </div>
+
     <h2 class="vsh">🎬 סרטונים מתערוכות</h2>
     <div class="vsub">הצצה לתערוכות ולכנסים המובילים באגרו-טק בעולם.</div>
     <div class="vidgrid" id="vidgrid"></div>
@@ -178,11 +248,21 @@ h1{font-family:Rubik;font-size:60px;font-weight:800;margin:4px 0 6px}h1 b{color:
   </div>
 </div>
 
+  <div class="sect2">
+    <div class="cbar">📰 חדשות מהתערוכות והכנסים · חי <span class="livewrap"><span class="livedot"></span>חי</span></div>
+    <div class="confnews" id="confNews"><div class="ld">טוען חדשות…</div></div>
+  </div>
+
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · כנסים ותערוכות · <span class="mono">agenda</span></div></div></div>
 
 <script>
 const CONF=[
  // group: 0=this month, 1=next month, 2=later
+ {n:"Desert Tech · חדשנות מדברית",d:12,m:"נובמבר",g:2,fl:"🇮🇱",cy:"ישראל",city:"מדרשת שדה בוקר · הנגב",t:["חקלאות מדבר","קיימות","מים"],u:"https://www.bgu.ac.il/",home:1},
+ {n:"Agritech Israel",d:6,m:"מאי",g:2,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["אגרו-טק","השקיה","חדשנות"],u:"https://www.agritech.org.il/"},
+ {n:"World Agri-Tech · San Francisco",d:18,m:"מרץ",g:2,fl:"🇺🇸",cy:"ארה״ב",city:"סן פרנסיסקו",t:["אגרו-טק","השקעות"],u:"https://worldagritechusa.com/"},
+ {n:"Fruit Logistica",d:5,m:"פברואר",g:2,fl:"🇩🇪",cy:"גרמניה",city:"ברלין",t:["תוצרת","סחר","יצוא"],u:"https://www.fruitlogistica.com/"},
+ {n:"EIMA International",d:6,m:"נובמבר",g:2,fl:"🇮🇹",cy:"איטליה",city:"בולוניה",t:["מיכון","ציוד חקלאי"],u:"https://www.eima.it/"},
  {n:"GreenTech Amsterdam",d:14,m:"יולי",g:0,fl:"🇳🇱",cy:"הולנד",city:"אמסטרדם",t:["גננות","הידרופוניקה"],u:"https://www.greentech.nl/"},
  {n:"AgriVest",d:22,m:"יולי",g:0,fl:"🇮🇱",cy:"ישראל",city:"תל אביב",t:["השקעות"],u:"#"},
  {n:"תערוכת אגרו-משוב · אופקים",d:30,m:"נובמבר",g:2,fl:"🇮🇱",cy:"ישראל",city:"אופקים · בירת האגרו-טק",t:["אגרו-טק","חקלאות","תוצרת"],u:"https://www.agromashovgroup.com/",home:1},
@@ -292,17 +372,47 @@ function navMonth(dir){
 buildCal();
 render();
 
+// ===== smart index table =====
+var MONTHORD={'ינואר':1,'פברואר':2,'מרץ':3,'אפריל':4,'מאי':5,'יוני':6,'יולי':7,'אוגוסט':8,'ספטמבר':9,'אוקטובר':10,'נובמבר':11,'דצמבר':12};
+var idxSort={key:'m',dir:1};
+function idxSortBy(k){ if(idxSort.key===k)idxSort.dir*=-1; else {idxSort.key=k;idxSort.dir=1;} renderIndexTable(); }
+function renderIndexTable(){
+ var q=(document.getElementById('idxq').value||'').trim().toLowerCase();
+ var rows=CONF.filter(function(c){return !q||(c.n+' '+c.city+' '+c.cy+' '+c.t.join(' ')).toLowerCase().indexOf(q)>=0;});
+ rows.sort(function(a,b){var k=idxSort.key,va,vb; if(k==='m'){va=MONTHORD[a.m]||0;vb=MONTHORD[b.m]||0;} else {va=String(a[k]||'');vb=String(b[k]||'');} if(va<vb)return -idxSort.dir; if(va>vb)return idxSort.dir; return 0;});
+ document.getElementById('idxbody').innerHTML=rows.map(function(c){
+  var i=CONF.indexOf(c);
+  var tags=c.t.map(function(t){var col=TCOL[t]||'#1c6b45';return '<span style="background:'+col+'1f;color:'+col+';border-radius:6px;padding:1px 8px;font-size:11.5px;font-weight:700;margin-inline-end:3px;white-space:nowrap">'+t+'</span>';}).join('');
+  var site=(c.u&&c.u!=='#')?'<a href="'+c.u+'" target="_blank" rel="noopener" style="color:#2b8fb0;font-weight:700;text-decoration:none">אתר ↗</a>':'—';
+  return '<tr><td style="font-weight:700">'+c.fl+' '+c.n+'</td><td style="white-space:nowrap">'+c.cy+'</td><td style="white-space:nowrap">'+c.m+'</td><td>'+tags+'</td><td>'+site+'</td><td><button onclick="openExpoIdx('+i+')" style="background:#eef7f0;border:1px solid #cfe6d8;color:#134a30;border-radius:8px;padding:5px 11px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap">🧠 ניתוח</button></td></tr>';
+ }).join('');
+ document.getElementById('idxcount').textContent='· '+rows.length+' תערוכות';
+}
+function openExpoIdx(i){var c=CONF[i];if(!c)return;
+ document.getElementById('exTitle').textContent=c.fl+' '+c.n;
+ document.getElementById('exMeta').textContent='📅 '+c.m+' · 📍 '+c.city+', '+c.cy;
+ document.getElementById('exTags').innerHTML=c.t.map(function(t){return '<span class="ex-t">'+t+'</span>';}).join('');
+ var lk=document.getElementById('exLink'); lk.href=c.u; lk.style.display=(c.u&&c.u!=='#')?'inline-block':'none';
+ document.getElementById('exAI').textContent='';
+ document.getElementById('exmodal').dataset.q=c.n+' ('+c.cy+')';
+ document.getElementById('exmodal').classList.add('open');
+}
+renderIndexTable();
+
 // video gallery from expos (opens YouTube search in new tab)
 var VIDS=[
- ['GreenTech Amsterdam','🇳🇱 הולנד','linear-gradient(135deg,#2e9e63,#134a30)','rJd-6ICRFns'],
- ['Agritechnica','🇩🇪 גרמניה','linear-gradient(135deg,#c79a2e,#8a6a16)','CLNsND6hPqU'],
- ['World Agri-Tech Summit','🇬🇧 בריטניה','linear-gradient(135deg,#6a45c0,#3a2680)','2gWjXAKfPNM'],
- ['MJBizCon · קנביס','🇺🇸 ארה״ב','linear-gradient(135deg,#4f8f3a,#2f5a22)','Fc-z_NZP2M8'],
- ['אגרומשוב · Agromashov','🇮🇱 ישראל','linear-gradient(135deg,#1c6b45,#0f3a26)','Kv6huzbNwGk'],
- ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)','bGMGg60TTC0']
+ ['GreenTech Amsterdam','🇳🇱 הולנד','linear-gradient(135deg,#2e9e63,#134a30)','rJd-6ICRFns','2025'],
+ ['Agritechnica','🇩🇪 גרמניה','linear-gradient(135deg,#c79a2e,#8a6a16)','CLNsND6hPqU','2025'],
+ ['World Agri-Tech Summit','🇬🇧 בריטניה','linear-gradient(135deg,#6a45c0,#3a2680)','2gWjXAKfPNM','2025'],
+ ['MJBizCon · קנביס','🇺🇸 ארה״ב','linear-gradient(135deg,#4f8f3a,#2f5a22)','Fc-z_NZP2M8','2024'],
+ ['אגרומשוב · Agromashov','🇮🇱 ישראל','linear-gradient(135deg,#1c6b45,#0f3a26)','Kv6huzbNwGk','2024'],
+ ['Vinitech-Sifel · גפן ויין','🇫🇷 צרפת','linear-gradient(135deg,#8a1f47,#5a0f2d)','bGMGg60TTC0','2024']
 ];
 document.getElementById('vidgrid').innerHTML=VIDS.map(function(v,i){
- return '<a class="vcard" style="--c:'+v[2].match(/#[0-9a-f]{6}/i)[0]+';background:'+v[2]+'" href="#" onclick="playVid('+i+');return false"><span class="play">▶</span><div class="vinfo"><div class="vn">'+v[0]+'</div><div class="vc">'+v[1]+'</div></div></a>';
+ var thumb=v[3]?('https://img.youtube.com/vi/'+v[3]+'/hqdefault.jpg'):'';
+ var bg=thumb?('linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.72)),url('+thumb+') center/cover'):v[2];
+ var yr=v[4]?('<span style="position:absolute;top:10px;inset-inline-end:10px;background:rgba(0,0,0,.6);color:#fff;font-family:\'Plex Mono\',monospace;font-size:12px;font-weight:800;border-radius:8px;padding:2px 9px">'+v[4]+'</span>'):'';
+ return '<a class="vcard" style="--c:'+v[2].match(/#[0-9a-f]{6}/i)[0]+';background:'+bg+';position:relative" href="#" onclick="playVid('+i+');return false">'+yr+'<span class="play">▶</span><div class="vinfo"><div class="vn">'+v[0]+'</div><div class="vc">'+v[1]+'</div></div></a>';
 }).join('');
 function playVid(i){
  var v=VIDS[i];
@@ -311,6 +421,19 @@ function playVid(i){
  document.getElementById('vidmodal').classList.add('open');
 }
 function closeVidModal(){document.getElementById('vidmodal').classList.remove('open');document.getElementById('vframe').innerHTML='';}
+
+/* live news from conferences & expos */
+(function loadConfNews(){
+  var el=document.getElementById('confNews');if(!el)return;
+  function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var q='כנס חקלאות OR תערוכת אגרו OR Desert Tech OR agritech conference OR agri expo OR חדשנות מדברית';
+  fetch('/api/news?region=il&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'})
+   .then(function(r){return r.json();}).then(function(j){
+    var it=(j.items||[]).slice(0,6);
+    if(!it.length){el.innerHTML='<div class="ld">אין כתבות כרגע.</div>';return;}
+    el.innerHTML=it.map(function(n){return '<a class="cnews" href="'+esc(n.link)+'" target="_blank" rel="noopener"><h4>'+esc(n.title)+'</h4><div class="m">'+esc(n.source||'')+(n.date?' · '+esc(n.date):'')+'</div></a>';}).join('');
+   }).catch(function(){el.innerHTML='<div class="ld">שגיאת חיבור.</div>';});
+})();
 </script>
 <script src="autotranslate.js"></script>
 </body></html>
