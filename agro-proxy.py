@@ -1107,6 +1107,41 @@ def fetch_lake(ds):
     except Exception as e:
         return {"ok": False, "id": ds, "err": str(getattr(e, "code", "") or type(e).__name__)}
 
+# ---- country comparison: same World Bank indicator, Israel vs peers ----
+CMPCACHE = {}
+# label, country code, colour (Israel first / highlighted)
+CMP_PEERS = [("ישראל", "ISR", "#1c6b45"), ("האיחוד האירופי", "EUU", "#2b8fb0"),
+             ("עולם", "WLD", "#c79a2e"), ("ארה״ב", "USA", "#8a6d3b"),
+             ("הולנד", "NLD", "#6a45c0"), ("ספרד", "ESP", "#c4562e")]
+def fetch_compare(ds):
+    now = time.time()
+    if ds in CMPCACHE and now - CMPCACHE[ds][0] < 3600:
+        return CMPCACHE[ds][1]
+    if ds not in WB:
+        return {"ok": False, "err": "unknown dataset"}
+    ind, title, unit, _ = WB[ds]
+    series = []
+    latest = []   # [{name, cc, colour, value, year}] — for a map / ranked view
+    labels_ref = []
+    for name, cc, colour in CMP_PEERS:
+        try:
+            rows = _wb(ind, cc)
+        except Exception:
+            rows = []
+        data = [round(r[1], 2) for r in rows]
+        yrs = [r[0] for r in rows]
+        if len(yrs) > len(labels_ref):
+            labels_ref = yrs
+        series.append({"name": name, "cc": cc, "colour": colour, "data": data})
+        if rows:
+            latest.append({"name": name, "cc": cc, "colour": colour,
+                           "value": round(rows[-1][1], 2), "year": rows[-1][0]})
+    out = {"ok": True, "id": ds, "title": title, "unit": unit,
+           "source": "World Bank Open Data", "labels": labels_ref,
+           "series": series, "latest": latest}
+    CMPCACHE[ds] = (now, out)
+    return out
+
 # ---- data.gov.il — Israeli government open data (CKAN, no key) ----
 GOVCACHE = {}
 def fetch_govdata(q):
@@ -1793,6 +1828,15 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/lake"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_lake(qs.get("ds", ["climate"])[0])
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/compare"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            out = fetch_compare(qs.get("ds", ["foodprod"])[0])
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
