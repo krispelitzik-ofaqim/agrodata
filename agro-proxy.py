@@ -618,9 +618,56 @@ KB = (
  "יצוא חקלאי ~$2.4B/שנה (תמרים #1 עולמי, פלפל, אבוקדו, עגבניות שרי, פרחים, עשבי תיבול, הדרים; שוק עיקרי EU). יבוא ~$6.1B (חיטה, תירס, סויה, בשר, קפה). מאזן שלילי ~$3.7B.\n"
  "== עובדות מפתח ==\n"
  "ישראל מובילה עולמית בהשקיה בטפטוף ובחקלאות מדבר. ~700 חברות אגריפוד-טק פעילות. אופקים והנגב = לב מתפתח של חדשנות חקלאית.")
+# ---- live data injection: real-time snapshot fed into every AgroMind answer ----
+_LIVE_CACHE = {"t": 0, "txt": ""}
+_LIVE_TTL = 300   # 5 min — avoid hammering Yahoo/Open-Meteo on every question
+_LIVE_STOCKS = [
+    ("ICL", "כיל · דשנים"), ("EVGN", "אבוג׳ן · גנומיקה"), ("000553.SZ", "אדמה · הגנת הצומח"),
+    ("GILT", "גילת"), ("DE", "John Deere · מיכון"), ("CTVA", "Corteva · זרעים"),
+    ("NTR", "Nutrien · דשנים"), ("ZW=F", "חיטה CBOT"), ("ZC=F", "תירס CBOT"),
+]
+def live_snapshot():
+    import time as _t
+    now = _t.time()
+    if _LIVE_CACHE["txt"] and now - _LIVE_CACHE["t"] < _LIVE_TTL:
+        return _LIVE_CACHE["txt"]
+    lines = []
+    # live market prices
+    try:
+        rows = []
+        for sym, name in _LIVE_STOCKS:
+            try:
+                d = fetch_symbol(sym)
+                if d and d.get("price") is not None:
+                    p, pv = d["price"], d.get("prev")
+                    ch = ("%+.1f%%" % ((p - pv) / pv * 100)) if pv else ""
+                    rows.append("  %s (%s): %s %s %s" % (name, sym, round(p, 2), d.get("currency", ""), ch))
+            except Exception:
+                pass
+        if rows:
+            lines.append("מחירים חיים (Yahoo, מתעדכן):\n" + "\n".join(rows))
+    except Exception:
+        pass
+    # live weather / field — Ofakim
+    try:
+        w = fetch_weather(31.31, 34.62)
+        c = (w or {}).get("current", {})
+        if c:
+            sm = c.get("soil_moisture_0_to_1cm")
+            lines.append("מזג אוויר וקרקע · אופקים כעת (Open-Meteo): טמפ׳ אוויר %s°C, לחות %s%%, טמפ׳ קרקע %s°C, לחות קרקע %s, רוח %s קמ״ש, משקעים %s מ״מ."
+                         % (c.get("temperature_2m", "—"), c.get("relative_humidity_2m", "—"),
+                            c.get("soil_temperature_0cm", "—"),
+                            (str(round(sm*100)) + "%") if isinstance(sm, (int, float)) else "—",
+                            c.get("wind_speed_10m", "—"), c.get("precipitation", "—")))
+    except Exception:
+        pass
+    txt = ("\n\n=== נתונים חיים (בזמן אמת, מהאתר) ===\n" + "\n".join(lines)) if lines else ""
+    _LIVE_CACHE["t"] = now; _LIVE_CACHE["txt"] = txt
+    return txt
+
 def build_prompt(q):
     return ("אתה AgroMind, מנוע הידע של זירת האגרו-טק AgroData. ענה בעברית תשובה מלאה, מפורטת ומובנית (פתיח קצר ואז נקודות/פסקאות). "
-            "בסס את התשובה בעיקר על מאגר הזירה שלהלן, והוסף ידע מקצועי עדכני היכן שרלוונטי. אל תפתח את התשובה במילים ׳כ-AgroMind׳ — ענה ישירות לעניין. ציין חברות, מוסדות ונתונים ספציפיים מהמאגר. אל תמציא.\n\n=== מאגר הזירה ===\n" + KB + "\n\n=== שאלת המשתמש ===\n" + q)
+            "בסס את התשובה בעיקר על מאגר הזירה והנתונים החיים שלהלן, והוסף ידע מקצועי עדכני היכן שרלוונטי. כשהשאלה נוגעת למחירים, שוק, מזג אוויר או מצב השדה — השתמש בנתונים החיים וצטט אותם במפורש. אל תפתח את התשובה במילים ׳כ-AgroMind׳ — ענה ישירות לעניין. ציין חברות, מוסדות ונתונים ספציפיים. אל תמציא.\n\n=== מאגר הזירה ===\n" + KB + live_snapshot() + "\n\n=== שאלת המשתמש ===\n" + q)
 
 ANTHROPIC_KEY   = os.environ.get("ANTHROPIC_API_KEY", "")
 ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5")
