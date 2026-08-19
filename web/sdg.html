@@ -59,6 +59,20 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .sdgsec{margin-top:30px}
 .sdgbar{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--green),var(--green-d));color:#fff;border-radius:12px;padding:11px 16px;font-family:Rubik;font-weight:800;font-size:16px;margin-bottom:14px}
 .sdgbar.gold{background:linear-gradient(90deg,#DDA63A,#bf8b2e)}
+.sdgbar.teal{background:linear-gradient(90deg,#2b8fb0,#1c6b8a)}
+.sdgbar select{margin-inline-start:auto;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 10px;font-family:Heebo;font-size:13.5px;font-weight:700;cursor:pointer}
+.sdgbar select option{color:#14261c}
+.cmpwrap{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.cmpbars{display:flex;flex-direction:column;gap:13px}
+.cmprow{display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:14px}
+.cmprow .cn{font-family:Heebo;font-weight:700;font-size:14px;color:var(--ink);text-align:left}
+.cmprow.me .cn{color:var(--green);font-weight:800}
+.cmptrack{background:#f0f5f2;border-radius:8px;height:26px;overflow:hidden;position:relative}
+.cmpfill{height:100%;border-radius:8px;transition:width .9s cubic-bezier(.2,.8,.2,1);min-width:2px}
+.cmprow.me .cmptrack{box-shadow:0 0 0 2px var(--lime)}
+.cmpval{font-family:'Plex Mono',monospace;font-weight:700;font-size:14px;color:var(--ink);min-width:52px;text-align:left}
+.cmprow.me .cmpval{color:var(--green)}
+.cmpnote{font-family:'Plex Mono',monospace;font-size:11.5px;color:var(--mut);margin-top:14px;text-align:center}
 .livewrap{margin-inline-start:auto;display:flex;align-items:center;gap:6px;font-family:'Plex Mono',monospace;font-size:12px;font-weight:700}
 .livedot{width:8px;height:8px;border-radius:50%;background:#ff5a5a;animation:lvp 1.5s infinite}
 @keyframes lvp{70%{box-shadow:0 0 0 7px rgba(255,90,90,0)}100%{box-shadow:0 0 0 0 rgba(255,90,90,0)}}
@@ -115,6 +129,22 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
       <div class="cs">חוסר-ביטחון תזונתי מתון/חמור · % מהאוכלוסייה</div>
       <svg id="cfs" viewBox="0 0 480 300" style="width:100%;height:auto"></svg>
     </div>
+  </div>
+
+  <!-- COMPARISON · ישראל מול העולם -->
+  <div class="sdgsec">
+    <div class="sdgbar teal">🌍 ישראל מול העולם · השוואה חיה
+      <select id="cmpSel" onchange="loadCompare(this.value)">
+        <option value="foodprod">מדד ייצור מזון</option>
+        <option value="cropprod">מדד ייצור צומח</option>
+        <option value="lvskprod">מדד ייצור מהחי</option>
+        <option value="undernour">תת-תזונה</option>
+        <option value="water">צריכת מים לחקלאות</option>
+        <option value="forest">שטח יער</option>
+      </select>
+    </div>
+    <div class="cmpwrap"><div class="cmpbars" id="cmpBars"><div class="ld">טוען השוואה…</div></div>
+      <div class="cmpnote" id="cmpNote"></div></div>
   </div>
 
   <!-- LIVE NEWS · ביטחון תזונתי וקיימות -->
@@ -212,8 +242,27 @@ Promise.all([api('foodinsec')]).then(function(r){
 function openVenn(){document.getElementById('vennModal').style.display='flex';}
 function closeVenn(){document.getElementById('vennModal').style.display='none';}
 
-/* ===== enrichment: live SDG news + CEO/leadership corner ===== */
+/* ===== enrichment: live SDG news + CEO/leadership corner + country comparison ===== */
 function _esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+/* Israel vs the world — live World Bank comparison, ranked bars, Israel highlighted */
+function loadCompare(ds){
+  var el=document.getElementById('cmpBars'),note=document.getElementById('cmpNote');
+  el.innerHTML='<div class="ld">טוען השוואה…</div>';note.textContent='';
+  fetch('/api/compare?ds='+ds+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    var rows=(d.latest||[]).filter(function(x){return x.value!=null;});
+    if(!rows.length){el.innerHTML='<div class="ld">אין נתונים להשוואה.</div>';return;}
+    rows.sort(function(a,b){return b.value-a.value;});
+    var max=Math.max.apply(null,rows.map(function(x){return x.value;}))||1;
+    el.innerHTML=rows.map(function(x){
+      var me=x.cc==='ISR'?' me':'';var w=Math.max(2,(x.value/max)*100);
+      return '<div class="cmprow'+me+'"><span class="cn">'+(x.cc==='ISR'?'🇮🇱 ':'')+_esc(x.name)+'</span><div class="cmptrack"><div class="cmpfill" style="width:'+w.toFixed(1)+'%;background:'+_esc(x.colour)+'"></div></div><span class="cmpval">'+x.value.toLocaleString('he-IL')+'</span></div>';
+    }).join('');
+    var il=rows.filter(function(x){return x.cc==='ISR';})[0];
+    var rank=rows.map(function(x){return x.cc;}).indexOf('ISR')+1;
+    note.textContent=(d.title||'')+' · '+(d.unit||'')+' · מקור: '+(d.source||'World Bank')+(il?(' · ישראל במקום '+rank+' מתוך '+rows.length):'');
+  }).catch(function(){el.innerHTML='<div class="ld">שגיאת חיבור.</div>';});
+}
+loadCompare('foodprod');
 /* live news — food security & sustainability */
 (function loadSdgNews(){
   var el=document.getElementById('sdgNews');if(!el)return;
