@@ -31,6 +31,20 @@ body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .summary .spk.on{background:linear-gradient(135deg,#c4562e,#a3401f);border-color:transparent}
 .aigrid{display:flex;flex-direction:column;gap:16px;margin-bottom:22px}
 .ai{background:linear-gradient(180deg,#f2faf5,#eaf6ee);border:1px solid #cfe6d8;border-radius:18px;padding:22px 24px}
+.followup{background:#fff;border:1px solid #cfe6d8;border-radius:18px;padding:20px 22px;margin-bottom:18px;box-shadow:0 8px 24px rgba(20,38,28,.06)}
+.fuhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fubadge{font-family:'Plex Mono';font-size:14px;color:var(--green);background:#eaf6ee;border:1px solid #cfe6d8;border-radius:999px;padding:5px 13px;font-weight:700}
+.fuhint{font-size:13px;color:var(--mut,#5c6f63)}
+.futhread{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.fumsg{border-radius:14px;padding:12px 15px;font-size:15px;line-height:1.7;max-width:92%}
+.fumsg.q{align-self:flex-start;background:#134a30;color:#fff;font-weight:600}
+.fumsg.a{align-self:flex-end;background:#f5f9f6;border:1px solid #e2ece5;color:var(--ink,#14261c);text-align:right;white-space:pre-wrap}
+.fumsg.a.think{color:#8aa093;font-style:italic}
+.fubar{display:flex;gap:10px}
+.fubar input{flex:1;border:1.5px solid #cfe6d8;border-radius:12px;padding:13px 15px;font-family:inherit;font-size:15px;outline:0;color:var(--ink,#14261c)}
+.fubar input:focus{border-color:var(--green)}
+.fubar button{background:var(--green);color:#fff;border:0;border-radius:12px;padding:0 24px;font-weight:800;font-size:15px;cursor:pointer;white-space:nowrap}
+.fubar button:disabled{opacity:.5;cursor:default}
 .ai.gem{background:linear-gradient(180deg,#f3f7fd,#eaf1fb);border-color:#cfddf0}
 .ai .badge{display:inline-flex;align-items:center;gap:7px;font-family:'Plex Mono';font-size:14px;color:var(--green);background:#fff;border:1px solid #cfe6d8;border-radius:999px;padding:5px 12px;margin-bottom:14px}
 .ai.gem .badge{color:#2b6cb0;border-color:#cfddf0}
@@ -168,6 +182,16 @@ h3.sec{font-family:Rubik;font-size:18px;font-weight:700;margin:8px 0 14px;displa
     </div>
   </div>
 
+  <!-- FOLLOW-UP · המשך שיחה מחקרית עם AgroMind -->
+  <div class="followup" id="followup" style="display:none">
+    <div class="fuhead"><span class="fubadge">💬 המשך המחקר</span><span class="fuhint">AgroMind זוכר את השיחה — שאלו שאלת המשך בהקשר</span></div>
+    <div class="futhread" id="fuThread"></div>
+    <div class="fubar">
+      <input id="fuInput" placeholder="שאל שאלת המשך… (למשל: ומה לגבי אזור הערבה?)" onkeydown="if(event.key==='Enter')askFollow()">
+      <button id="fuSend" onclick="askFollow()">שאל ↗</button>
+    </div>
+  </div>
+
   <!-- GOOGLE WEB SEARCH (inline results) -->
   <div class="gsec">
     <div class="grow">
@@ -283,6 +307,58 @@ function ask(engine,ansEl,badgeEl,q,label){
   resultDone();
  }).catch(function(){a.textContent='שגיאת חיבור לשרת — ודא ש-agro-proxy.py רץ.';resultDone();});
 }
+
+/* ===== FOLLOW-UP · conversational research with Claude (remembers context) ===== */
+var FU=[];            // conversation history: [{role, content}]
+var _fuBusy=false;
+function fuSeed(){
+  // seed the thread with the original question + Claude's first answer, once it's in
+  if(FU.length)return;
+  var firstA=document.getElementById('claudeAnswer');
+  var plain=(firstA&&firstA.dataset&&firstA.dataset.plain)||'';
+  if(!Q||!plain||plain==='🔎 טוען…')return;
+  FU.push({role:'user',content:Q});
+  FU.push({role:'assistant',content:plain});
+  var fu=document.getElementById('followup'); if(fu)fu.style.display='block';
+}
+function fuAdd(cls,txt){
+  var t=document.getElementById('fuThread');
+  var d=document.createElement('div');d.className='fumsg '+cls;
+  if(cls==='a'&&!/think/.test(cls)===false){}
+  d.innerHTML = cls==='a' ? mdToHtml(txt) : esc(txt);
+  t.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'});
+  return d;
+}
+function askFollow(){
+  if(_fuBusy)return;
+  var inp=document.getElementById('fuInput');
+  var q=(inp.value||'').trim(); if(!q)return;
+  fuSeed(); if(!FU.length){ /* first answer not ready yet */ return; }
+  inp.value='';_fuBusy=true;
+  document.getElementById('fuSend').disabled=true;
+  fuAdd('q',q);
+  var thinking=fuAdd('a think','חושב…');
+  FU.push({role:'user',content:q});
+  fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({engine:'claude',q:q,history:FU.slice(0,-1)})})
+   .then(function(r){return r.json();}).then(function(j){
+    var ans=j.answer||'—';
+    thinking.className='fumsg a';thinking.innerHTML=mdToHtml(ans);thinking.dataset.plain=stripMd(ans);
+    FU.push({role:'assistant',content:ans});
+    _fuBusy=false;document.getElementById('fuSend').disabled=false;inp.focus();
+   }).catch(function(){
+    thinking.className='fumsg a';thinking.textContent='שגיאת חיבור. נסו שוב.';
+    FU.pop();_fuBusy=false;document.getElementById('fuSend').disabled=false;
+   });
+}
+/* reveal follow-up once Claude's first answer settles */
+var _fuWatch=setInterval(function(){
+  var a=document.getElementById('claudeAnswer');
+  if(a&&a.dataset&&a.dataset.plain&&a.dataset.plain.length>2){
+    var fu=document.getElementById('followup'); if(fu)fu.style.display='block';
+    clearInterval(_fuWatch);
+  }
+},600);
 /* loading bar: advances as each engine finishes; completes only when all results are in */
 var _lbP=0,_lbTotal=3,_lbDoneN=0,_lbFin=false,_lbTimer=null;
 function _lbSet(p){var f=document.getElementById('lbFill'),t=document.getElementById('lbPct');if(f)f.style.width=p+'%';if(t)t.textContent=Math.round(p)+'%';}

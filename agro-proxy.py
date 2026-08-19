@@ -624,11 +624,24 @@ def build_prompt(q):
 
 ANTHROPIC_KEY   = os.environ.get("ANTHROPIC_API_KEY", "")
 ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-5")
-def ask_claude(q):
+def ask_claude(q, history=None):
     if not ANTHROPIC_KEY:
         return {"answer": "מנוע Claude אינו מחובר. הגדר ANTHROPIC_API_KEY והפעל מחדש.", "demo": True}
+    # Follow-up support: prior turns come as [{role:'user'|'assistant', content:'...'}].
+    # Only the FIRST user turn gets the grounded build_prompt() wrapper; follow-ups are raw.
+    msgs = []
+    if history:
+        for m in history[-8:]:
+            role = "assistant" if m.get("role") == "assistant" else "user"
+            content = str(m.get("content") or "").strip()
+            if content:
+                msgs.append({"role": role, "content": content})
+    if msgs:
+        msgs.append({"role": "user", "content": q})           # follow-up: keep context, don't re-wrap
+    else:
+        msgs = [{"role": "user", "content": build_prompt(q)}]  # first turn: grounded prompt
     body = json.dumps({"model": ANTHROPIC_MODEL, "max_tokens": 1600,
-                       "messages": [{"role": "user", "content": build_prompt(q)}]}).encode("utf-8")
+                       "messages": msgs}).encode("utf-8")
     last = ""
     for attempt in range(2):
         req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body,
@@ -1996,6 +2009,7 @@ class H(http.server.SimpleHTTPRequestHandler):
             except Exception:
                 data = {}
             q = (data.get("q") or "").strip(); eng = data.get("engine", "gemini"); media = data.get("media") or []
+            history = data.get("history") or []   # follow-up conversation turns (Claude only)
             if data.get("repo") and q and not media:
                 try:
                     _ctx = repo_context(q)
@@ -2007,7 +2021,7 @@ class H(http.server.SimpleHTTPRequestHandler):
             elif media:
                 out = ask_gemini_media(q, media)      # מולטימודאל תמיד דרך Gemini
             elif eng == "claude":
-                out = ask_claude(q)
+                out = ask_claude(q, history)          # history → follow-up context
             else:
                 out = ask_gemini(q)
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
