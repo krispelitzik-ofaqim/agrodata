@@ -64,7 +64,21 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .bankhead h3{font-family:Rubik;font-weight:800;font-size:22px;color:#fff}
 .bankhead .sel{font-family:'Plex Mono';font-size:13px;color:#8fe6ad}
 .ideas{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(max-width:760px){.ideas{grid-template-columns:1fr}}
+@media(max-width:760px){.ideas{grid-template-columns:1fr}
+.ifollow{background:#fff;border:1px solid #e2d8f2;border-radius:16px;padding:20px 22px;margin-top:20px;box-shadow:0 8px 24px rgba(60,40,110,.06)}
+.ifhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.ifbadge{font-family:'Plex Mono',monospace;font-size:14px;color:var(--purple);background:#f2ecfb;border:1px solid #e2d8f2;border-radius:999px;padding:5px 13px;font-weight:700}
+.ifhint{font-size:13px;color:var(--mut)}
+.ifthread{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.ifmsg{border-radius:14px;padding:12px 15px;font-size:15px;line-height:1.7;max-width:92%}
+.ifmsg.q{align-self:flex-start;background:var(--purple);color:#fff;font-weight:600}
+.ifmsg.a{align-self:flex-end;background:#faf8fd;border:1px solid #ece4f7;color:var(--ink);text-align:right;white-space:pre-wrap}
+.ifmsg.a.think{color:#a494c4;font-style:italic}
+.ifbar{display:flex;gap:10px}
+.ifbar input{flex:1;border:1.5px solid #e2d8f2;border-radius:12px;padding:13px 15px;font-family:inherit;font-size:15px;outline:0;color:var(--ink)}
+.ifbar input:focus{border-color:var(--purple)}
+.ifbar button{background:var(--purple);color:#fff;border:0;border-radius:12px;padding:0 24px;font-weight:800;font-size:15px;cursor:pointer;white-space:nowrap}
+.ifbar button:disabled{opacity:.5;cursor:default}}
 .idea{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:18px;border-inline-start:4px solid #8fe6ad;position:relative}
 .idea .it{padding-inline-end:38px}
 .idea .it{font-family:Rubik;font-weight:800;font-size:17px;color:#fff;margin-bottom:8px}
@@ -149,6 +163,16 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
     <div id="selChallenge"></div>
     <div class="itabs" id="itabs"></div>
     <div class="ideas" id="ideas"><div class="bankempty">עדיין לא נוצרו רעיונות — בחרו אתגר או כתבו בעיה.</div></div>
+
+    <!-- FOLLOW-UP · המשך חקר החדשנות -->
+    <div class="ifollow" id="ifollow" style="display:none">
+      <div class="ifhead"><span class="ifbadge">💬 המשך החדשנות</span><span class="ifhint">שאלו על רעיון · בקשו להרחיב · שלבו כיוונים — המנוע זוכר את האתגר</span></div>
+      <div class="ifthread" id="ifThread"></div>
+      <div class="ifbar">
+        <input id="ifInput" placeholder="למשל: הרחב את רעיון 2 · שלב עם טפטוף · מי המתחרים?" onkeydown="if(event.key==='Enter')askIFollow()">
+        <button id="ifSend" onclick="askIFollow()">שאל ↗</button>
+      </div>
+    </div>
     <div class="custom"><input id="cq" placeholder="כתבו בעיה/אתגר משלכם… (למשל: מחסור במים בעונת הקיץ)" onkeydown="if(event.key==='Enter')genCustom()"><button onclick="genCustom()">💡 ייצר רעיונות</button></div>
   </div>
 </div>
@@ -359,7 +383,42 @@ function renderIdeas(){
     +'<a href="grants.html" title="מענק">'+NSICO.grant+'<span class="lbl">מענק</span></a><a href="scholarships.html" title="מלגה">'+NSICO.team+'<span class="lbl">מלגה</span></a><a href="ofakim.html" title="האצה">'+NSICO.accel+'<span class="lbl">האצה</span></a><a href="analytics.html" title="שוק">'+NSICO.market+'<span class="lbl">שוק</span></a></div>'
     +'</div>';
   }).join('');
+  ifSeed(CURQ, txt);   // enable follow-up with challenge + generated ideas as context
  }).catch(function(){box.innerHTML='<div class="bankempty">שגיאת חיבור לשרת — האם ה-AI מחובר?</div>';});
+}
+
+/* ===== FOLLOW-UP · conversational innovation with Claude (remembers challenge + ideas) ===== */
+var IFU=[]; var _ifBusy=false;
+function _ifEsc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function _ifMd(t){return _ifEsc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^\s*[-•]\s+/gm,'• ').replace(/\n/g,'<br>');}
+function ifSeed(challenge, ideasTxt){
+  IFU=[
+    {role:'user',content:'אני חוקר את האתגר באגרו-טק: '+challenge+'. הצע רעיונות לסטארטאפים.'},
+    {role:'assistant',content:ideasTxt||''}
+  ];
+  var f=document.getElementById('ifollow'); if(f)f.style.display='block';
+  var t=document.getElementById('ifThread'); if(t)t.innerHTML='';
+}
+function ifAdd(cls,txt){
+  var t=document.getElementById('ifThread');
+  var d=document.createElement('div');d.className='ifmsg '+cls;
+  d.innerHTML = /a/.test(cls) ? _ifMd(txt) : _ifEsc(txt);
+  t.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'});return d;
+}
+function askIFollow(){
+  if(_ifBusy||!IFU.length)return;
+  var inp=document.getElementById('ifInput');var q=(inp.value||'').trim();if(!q)return;
+  inp.value='';_ifBusy=true;document.getElementById('ifSend').disabled=true;
+  ifAdd('q',q);
+  var think=ifAdd('a think','המנוע חושב…');
+  IFU.push({role:'user',content:q});
+  fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({engine:'claude',q:q,history:IFU.slice(0,-1)})})
+   .then(function(r){return r.json();}).then(function(j){
+    var a=j.answer||'—';think.className='ifmsg a';think.innerHTML=_ifMd(a);
+    IFU.push({role:'assistant',content:a});
+    _ifBusy=false;document.getElementById('ifSend').disabled=false;inp.focus();
+   }).catch(function(){think.className='ifmsg a';think.textContent='שגיאת חיבור. נסו שוב.';IFU.pop();_ifBusy=false;document.getElementById('ifSend').disabled=false;});
 }
 function renderGap(){
  var box=document.getElementById('ideas');thinking('סורק את השוק — כמה חברות, כמה אזכורים…');
