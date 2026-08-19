@@ -56,6 +56,25 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .leg span{display:inline-flex;align-items:center;gap:6px}
 .leg i{width:12px;height:12px;border-radius:4px;display:inline-block}
 .note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:16px;padding:18px 20px;margin:30px 0 40px;font-size:13.5px;line-height:1.6}
+.sdgsec{margin-top:30px}
+.sdgbar{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--green),var(--green-d));color:#fff;border-radius:12px;padding:11px 16px;font-family:Rubik;font-weight:800;font-size:16px;margin-bottom:14px}
+.sdgbar.gold{background:linear-gradient(90deg,#DDA63A,#bf8b2e)}
+.livewrap{margin-inline-start:auto;display:flex;align-items:center;gap:6px;font-family:'Plex Mono',monospace;font-size:12px;font-weight:700}
+.livedot{width:8px;height:8px;border-radius:50%;background:#ff5a5a;animation:lvp 1.5s infinite}
+@keyframes lvp{70%{box-shadow:0 0 0 7px rgba(255,90,90,0)}100%{box-shadow:0 0 0 0 rgba(255,90,90,0)}}
+.sdgnews{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:640px){.sdgnews{grid-template-columns:1fr}}
+.snews{background:#fff;border:1px solid var(--line);border-inline-start:3px solid var(--lime);border-radius:12px;padding:13px 15px;text-decoration:none;color:inherit;transition:.14s;display:block}
+.snews:hover{box-shadow:0 10px 24px rgba(20,50,35,.1);transform:translateY(-2px)}
+.snews h4{font-family:Heebo;font-weight:700;font-size:14.5px;line-height:1.4;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.snews .m{font-family:'Plex Mono',monospace;font-size:11px;color:var(--mut);margin-top:6px}
+.ceo{background:#fffdf6;border:1px solid #f0e3c0;border-radius:14px;padding:18px 20px}
+.ceo .q{font-family:Heebo;font-size:16px;line-height:1.8;color:var(--ink);white-space:pre-wrap}
+.ceo .qlist a{display:block;text-decoration:none;color:inherit;padding:11px 0;border-bottom:1px solid #f0e3c0}
+.ceo .qlist a:last-child{border-bottom:0}
+.ceo .qlist h4{font-family:Heebo;font-weight:700;font-size:14.5px;color:var(--ink);line-height:1.4}
+.ceo .qlist .m{font-family:'Plex Mono',monospace;font-size:11px;color:#bf8b2e;margin-top:4px}
+.ceo .ld,.sdgnews .ld{color:var(--mut);font-size:14px;padding:10px 2px}
 .note b{color:#8fe6ad}.note a{color:#8fe6ad}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
 .foot{padding:16px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.8)}
@@ -96,6 +115,18 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
       <div class="cs">חוסר-ביטחון תזונתי מתון/חמור · % מהאוכלוסייה</div>
       <svg id="cfs" viewBox="0 0 480 300" style="width:100%;height:auto"></svg>
     </div>
+  </div>
+
+  <!-- LIVE NEWS · ביטחון תזונתי וקיימות -->
+  <div class="sdgsec">
+    <div class="sdgbar">📰 חדשות · ביטחון תזונתי וקיימות <span class="livewrap"><span class="livedot"></span>חי</span></div>
+    <div class="sdgnews" id="sdgNews"><div class="ld">טוען חדשות…</div></div>
+  </div>
+
+  <!-- CEO CORNER · פינת המנכ"לית -->
+  <div class="sdgsec">
+    <div class="sdgbar gold">🎙️ בזירה · דברים על ביטחון תזונתי וקיימות</div>
+    <div class="ceo" id="ceoCorner"><div class="ld">טוען…</div></div>
   </div>
 
   <div class="note">🎯 <b>איך לקרוא:</b> המדדים מבטאים את תרומת החקלאות הישראלית ליעדי הפיתוח בר-קיימא (SDG). ייצור מזון גבוה ותת-תזונה נמוכה = ביטחון תזונתי חזק (SDG 2). מקור: <b>World Bank Open Data</b> · נתונים פתוחים, ללא מפתח. חלק ממאגר הנתונים המרכזי של הזירה.</div>
@@ -180,6 +211,31 @@ Promise.all([api('foodinsec')]).then(function(r){
 });
 function openVenn(){document.getElementById('vennModal').style.display='flex';}
 function closeVenn(){document.getElementById('vennModal').style.display='none';}
+
+/* ===== enrichment: live SDG news + CEO/leadership corner ===== */
+function _esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+/* live news — food security & sustainability */
+(function loadSdgNews(){
+  var el=document.getElementById('sdgNews');if(!el)return;
+  var q='ביטחון תזונתי OR קיימות OR "בר קיימא" OR חקלאות בת-קיימא OR מזון OR SDG';
+  fetch('/api/news?region=il&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'})
+   .then(function(r){return r.json();}).then(function(j){
+    var it=(j.items||[]).slice(0,6);
+    if(!it.length){el.innerHTML='<div class="ld">אין כתבות כרגע.</div>';return;}
+    el.innerHTML=it.map(function(n){return '<a class="snews" href="'+_esc(n.link)+'" target="_blank" rel="noopener"><h4>'+_esc(n.title)+'</h4><div class="m">'+_esc(n.source||'')+(n.date?' · '+_esc(n.date):'')+'</div></a>';}).join('');
+   }).catch(function(){el.innerHTML='<div class="ld">שגיאת חיבור.</div>';});
+})();
+/* CEO / leadership corner — statements on food security & sustainability */
+(function loadCeo(){
+  var el=document.getElementById('ceoCorner');if(!el)return;
+  var q='יעל איפרגן OR "מנכ״לית משרד החקלאות" OR "ביטחון תזונתי" הצהרה OR נאום OR ראיון קיימות חקלאות';
+  fetch('/api/news?region=il&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'})
+   .then(function(r){return r.json();}).then(function(j){
+    var it=(j.items||[]).slice(0,5);
+    if(!it.length){el.innerHTML='<div class="ld">אין דברים/הצהרות זמינים כרגע.</div>';return;}
+    el.innerHTML='<div class="qlist">'+it.map(function(n){return '<a href="'+_esc(n.link)+'" target="_blank" rel="noopener"><h4>“'+_esc(n.title)+'”</h4><div class="m">'+_esc(n.source||'')+(n.date?' · '+_esc(n.date):'')+'</div></a>';}).join('')+'</div>';
+   }).catch(function(){el.innerHTML='<div class="ld">שגיאת חיבור.</div>';});
+})();
 </script>
 
 <div id="vennModal" onclick="if(event.target===this)closeVenn()" style="display:none;position:fixed;inset:0;background:rgba(10,26,17,.62);z-index:80;align-items:center;justify-content:center;padding:20px">
