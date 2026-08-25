@@ -750,6 +750,36 @@ def _admin_token_valid(t):
         return hmac.compare_digest(sig, good)
     except Exception:
         return False
+# ---- multi-admin team accounts (real logins beyond the single owner password) ----
+ADMINS_FILE = os.path.join(DATA_DIR, "admins.json")
+_ADMINS_LOCK = threading.Lock()
+OWNER_NAME = os.environ.get("OWNER_NAME", "Itzik Krispel")
+OWNER_USER = os.environ.get("OWNER_USER", "ofakim")
+def _hash_pw(p):
+    import hashlib
+    return hashlib.sha256(("agro-pw::" + str(p)).encode()).hexdigest()
+def _load_admins():
+    try:
+        with open(ADMINS_FILE, "r", encoding="utf-8") as f:
+            d = json.load(f)
+            return d if isinstance(d, list) else []
+    except Exception:
+        return []
+_ADMINS = _load_admins()
+def _save_admins():
+    try:
+        with open(ADMINS_FILE, "w", encoding="utf-8") as f:
+            json.dump(_ADMINS, f, ensure_ascii=False)
+    except Exception as e:
+        print("save admins fail:", e)
+def _find_admin(username, password):
+    u = str(username or "").strip().lower()
+    ph = _hash_pw(password)
+    for a in _ADMINS:
+        if a.get("username", "").lower() == u and a.get("pw") == ph:
+            return a
+    return None
+
 _SUBS_LOCK = threading.Lock()
 def _load_subs():
     try:
@@ -1968,6 +1998,21 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Content-Disposition", "attachment; filename=agrodata-subscribers.csv")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/admins-list"):
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            if not _admin_token_valid(q.get("token", [""])[0]):
+                self.send_response(403); self.end_headers(); self.wfile.write(b"forbidden"); return
+            team = [{"name": a.get("name", ""), "username": a.get("username", ""),
+                     "role": a.get("role", "מנהל"), "ts": a.get("ts", "")} for a in _ADMINS]
+            out = {"ok": True,
+                   "owner": {"name": OWNER_NAME, "username": OWNER_USER, "role": "מנהל ראשי", "owner": True},
+                   "team": team}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/subs-list"):
             q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             tok = q.get("token", [""])[0] or (self.headers.get("X-Admin-Token") or "")
@@ -2050,11 +2095,49 @@ class H(http.server.SimpleHTTPRequestHandler):
                 _ADMIN_TOKENS.pop(str(data.get("token") or ""), None)
                 out = {"ok": True}
             else:
-                if ADMIN_PASSWORD and str(data.get("password") or "") == ADMIN_PASSWORD:
-                    out = {"ok": True, "token": _new_admin_token()}
+                pw = str(data.get("password") or "")
+                uname = str(data.get("username") or "").strip()
+                if ADMIN_PASSWORD and pw == ADMIN_PASSWORD:
+                    out = {"ok": True, "token": _new_admin_token(), "role": "owner"}
+                elif _find_admin(uname, pw):
+                    out = {"ok": True, "token": _new_admin_token(), "role": "team"}
                 else:
                     out = {"ok": False}
             body = json.dumps(out).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/admin-add") or self.path.startswith("/api/admin-remove"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            if not _admin_token_valid(str(data.get("token") or "")):
+                out = {"ok": False, "error": "unauthorized"}
+            elif self.path.startswith("/api/admin-add"):
+                import time as _t
+                uname = str(data.get("username") or "").strip()
+                pw = str(data.get("password") or "")
+                if not uname or not pw:
+                    out = {"ok": False, "error": "missing"}
+                else:
+                    with _ADMINS_LOCK:
+                        _ADMINS[:] = [a for a in _ADMINS if a.get("username", "").lower() != uname.lower()]
+                        _ADMINS.append({"name": str(data.get("name") or "").strip(), "username": uname,
+                                        "pw": _hash_pw(pw), "role": str(data.get("role") or "מנהל").strip(),
+                                        "ts": _t.strftime("%Y-%m-%d %H:%M")})
+                        _save_admins()
+                    out = {"ok": True}
+            else:
+                uname = str(data.get("username") or "").strip().lower()
+                with _ADMINS_LOCK:
+                    _ADMINS[:] = [a for a in _ADMINS if a.get("username", "").lower() != uname]
+                    _save_admins()
+                out = {"ok": True}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")

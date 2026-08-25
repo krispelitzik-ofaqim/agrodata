@@ -162,8 +162,9 @@ body{background:#ebe4cf}
         <div style="font-size:40px">🔒</div>
         <h2 style="color:#0f2a1e;font-size:22px;margin:8px 0 2px">כניסת מנהלים</h2>
         <p style="color:#6b7f73;font-size:13.5px;margin-bottom:18px">לוח הניהול · AgroData</p>
+        <input id="adminUser" placeholder="שם משתמש (לא חובה לבעלים)" autocomplete="off" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 14px;border:1px solid #f4efe3;border-radius:0;font-size:15px;text-align:center;box-sizing:border-box;margin-bottom:8px">
         <div style="position:relative;margin-bottom:8px">
-          <input id="adminPass" type="password" placeholder="סיסמת מנהל" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 44px 12px 14px;border:1px solid #f4efe3;border-radius:0;font-size:15px;text-align:center;box-sizing:border-box">
+          <input id="adminPass" type="password" placeholder="סיסמה" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 44px 12px 14px;border:1px solid #f4efe3;border-radius:0;font-size:15px;text-align:center;box-sizing:border-box">
           <button type="button" onclick="var i=document.getElementById('adminPass');var s=i.type==='password';i.type=s?'text':'password';this.textContent=s?'🙈':'👁️'" title="הצג/הסתר סיסמה" style="position:absolute;top:50%;inset-inline-start:8px;transform:translateY(-50%);background:transparent;border:0;font-size:18px;cursor:pointer;line-height:1">👁️</button>
         </div>
         <div id="adminErr" style="color:#c4562e;font-size:13px;min-height:18px;margin-bottom:4px"></div>
@@ -205,7 +206,8 @@ body{background:#ebe4cf}
       function _adg(v){var g=document.getElementById('adminGate');if(g)g.style.display=v;}
       function adminLogin(){
         var p=(document.getElementById('adminPass').value||'');
-        fetch('/api/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:p})})
+        var u=(document.getElementById('adminUser')?document.getElementById('adminUser').value||'':'');
+        fetch('/api/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})})
          .then(function(r){return r.json();}).then(function(d){
            if(d&&d.ok&&d.token){try{localStorage.setItem('agroAdminToken',d.token);}catch(e){} location.reload();}
            else{document.getElementById('adminErr').textContent='סיסמה שגויה';}
@@ -360,25 +362,22 @@ body{background:#ebe4cf}
     <!-- SECURITY / ADMIN CREDENTIALS -->
     <section class="screen" id="s-security">
       <div class="card">
-        <h3 style="margin-bottom:4px">🔐 ניהול משתמשים וסיסמאות</h3>
-        <div class="sm" style="margin-bottom:16px">חשבונות צוות הניהול והרשאות הכניסה לזירה. כניסה דורשת שם משתמש ו-3 סיסמאות.</div>
-        <table><thead><tr><th>שם</th><th>תפקיד</th><th>שם משתמש</th><th>סטטוס</th><th>פעולות</th></tr></thead>
-          <tbody id="adminsT"></tbody></table>
+        <h3 style="margin-bottom:4px">🔐 צוות הניהול</h3>
+        <div class="sm" style="margin-bottom:16px">מנהלי הזירה. כל מנהל נכנס עם שם המשתמש והסיסמה שלו. הסיסמאות נשמרות מוצפנות בשרת.</div>
+        <table><thead><tr><th>שם</th><th>תפקיד</th><th>שם משתמש</th><th>נוסף</th><th>פעולות</th></tr></thead>
+          <tbody id="adminsT"><tr><td colspan="5" style="color:var(--mut);padding:14px">טוען…</td></tr></tbody></table>
       </div>
-      <div class="card" id="credCard">
-        <h3 style="margin-bottom:12px">כרטיס כניסה — <span id="credName">איציק</span></h3>
+      <div class="card">
+        <h3 style="margin-bottom:12px">➕ הוספת מנהל חדש</h3>
         <div class="credgrid">
-          <label>שם פרטי<input id="cFirst" value="Itzik"></label>
-          <label>שם משפחה (אנגלית)<input id="cLast" value="Krispel"></label>
-          <label>טלפון<input id="cPhone" placeholder="05X-XXXXXXX"></label>
-          <label>שם משתמש<input id="cUser" value="ofakim"></label>
-          <label>סיסמה 1<input id="cP1" value="agro1"></label>
-          <label>סיסמה 2<input id="cP2" value="data2"></label>
-          <label>סיסמה 3<input id="cP3" value="center3"></label>
+          <label>שם מלא<input id="aName" placeholder="שם המנהל"></label>
+          <label>שם משתמש<input id="aUser" placeholder="username" autocomplete="off"></label>
+          <label>סיסמה<input id="aPass" type="text" placeholder="סיסמה" autocomplete="off"></label>
+          <label>תפקיד<input id="aRole" placeholder="למשל: עורך תוכן"></label>
         </div>
         <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
-          <button class="btn g" onclick="saveCreds()">💾 שמירת פרטי כניסה</button>
-          <span id="credMsg" style="font-size:14px;color:var(--green)"></span>
+          <button class="btn g" onclick="addAdmin()">➕ הוסף מנהל</button>
+          <span id="admMsg" style="font-size:14px;color:var(--green)"></span>
         </div>
       </div>
     </section>
@@ -576,37 +575,51 @@ function renderDash(){
 renderDash(); setInterval(renderDash,30000);
 
 // users
-tbl('uKpis',[["👥","i-green","6,910","סה״כ משתמשים","+12%",1],["✅","i-teal","6,540","פעילים","+9%",1],["🆕","i-gold","214","חדשים החודש","+31%",1],["⏳","i-purple","12","ממתינים לאישור","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:''}</div>`).join(''));
-const USERS=[["דנה כהן","dana@agri.co.il","אגרונומית","12/07/26","ok","#2e7d52"],["רון אבידן","ron@farm.il","מגדל","12/07/26","ok","#1e5137"],["Equinom","hr@equinom.com","סטארטאפ","11/07/26","wait","#a5824a"],["ד״ר מיכל ברק","barak@bgu.ac.il","מחקר","11/07/26","ok","#a5824a"],["משרד החקלאות","gov@moag.gov.il","ממשלה","10/07/26","ok","#5c6f63"],["עמית שרון","amit@negev.il","מגדל","09/07/26","ok","#1e5137"],["נועה פרי","noa@startup.io","סטארטאפ","08/07/26","off","#a5824a"],["פרופ׳ יעל גל","gal@volcani.gov.il","מחקר","07/07/26","ok","#a5824a"]];
-tbl('usersT',USERS.map(u=>`<tr><td><span class="uav" style="background:${u[5]}">${u[0][0]}</span> ${u[0]}</td><td class="mono" style="color:var(--mut);font-size:13px">${u[1]}</td><td>${u[2]}</td><td class="mono" style="color:var(--mut)">${u[3]}</td><td>${pill(u[4])}</td><td><span class="act">✏️</span><span class="act">🚫</span></td></tr>`).join(''));
+(function loadRealUsers(){
+  fetch('/api/subs-list?token='+ADMIN_TOKEN).then(function(r){return r.json();}).then(function(d){
+    var items=d.items||[], reg=d.regular||0, prem=d.premium||0, tot=d.total||items.length;
+    var now=new Date();
+    var mNew=items.filter(function(r){var t=new Date((r.ts||'').replace(' ','T'));return !isNaN(t)&&t.getMonth()===now.getMonth()&&t.getFullYear()===now.getFullYear();}).length;
+    tbl('uKpis',[["👥","i-green",tot.toLocaleString('en'),"סה״כ משתמשים"],["🆕","i-gold",String(mNew),"חדשים החודש"],["⭐","i-teal",String(prem),"פרימיום"],["👤","i-green",String(reg),"רגיל"]].map(function(k){return '<div class="kpi"><div class="ic '+k[1]+'">'+k[0]+'</div><div class="v">'+k[2]+'</div><div class="l">'+k[3]+'</div></div>';}).join(''));
+    var COL=['#1e5137','#2e7d52','#a5824a','#0f2a1e','#5c6f63'];
+    document.getElementById('usersT').innerHTML=items.length?items.map(function(r,i){
+      var nm=r.name||'—', st=(r.role==='admin')?'<span class="pill" style="background:#f0e6c8;color:#7a6414">⭐ מנהל</span>':((r.plan==='premium')?'<span class="pill" style="background:#f0e6c8;color:#7a6414">⭐ פרימיום</span>':'<span class="pill" style="background:#eef1ec;color:#5c6a5e">רגיל</span>');
+      return '<tr><td><span class="uav" style="background:'+COL[i%COL.length]+'">'+_e(nm[0]||'?')+'</span> '+_e(nm)+'</td><td class="mono" style="color:var(--mut);font-size:13px">'+_e(r.email||'—')+'</td><td>'+_e(r.field||r.org||'—')+'</td><td class="mono" style="color:var(--mut)">'+_e(r.ts||'—')+'</td><td>'+st+'</td><td><span class="act">✏️</span><span class="act">🚫</span></td></tr>';
+    }).join(''):'<tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">אין משתמשים עדיין</td></tr>';
+  }).catch(function(){ document.getElementById('usersT').innerHTML='<tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">נדרשת התחברות מנהל</td></tr>'; });
+})();
 
 // security / admin credentials
 function loadCreds(){try{return JSON.parse(localStorage.getItem('agroAdmin'))||{};}catch(e){return {};}}
-function fillCreds(){
- var c=loadCreds();
- if(c.first)document.getElementById('cFirst').value=c.first;
- if(c.last)document.getElementById('cLast').value=c.last;
- if(c.phone)document.getElementById('cPhone').value=c.phone;
- if(c.u)document.getElementById('cUser').value=c.u;
- if(c.p1)document.getElementById('cP1').value=c.p1;
- if(c.p2)document.getElementById('cP2').value=c.p2;
- if(c.p3)document.getElementById('cP3').value=c.p3;
- renderAdmins();
-}
 function renderAdmins(){
- var v=function(id){return document.getElementById(id).value;};
- var name=(v('cFirst')+' '+v('cLast')).trim();
- document.getElementById('credName').textContent=name||'—';
- tbl('adminsT','<tr><td><span class="uav" style="background:#1e5137">'+((v('cFirst')||'?')[0])+'</span> '+name+'</td><td>מנהל ראשי</td><td class="mono">'+v('cUser')+'</td><td>'+pill('ok')+'</td><td><span class="act">✏️</span></td></tr>');
+ fetch('/api/admins-list?token='+ADMIN_TOKEN).then(function(r){return r.json();}).then(function(d){
+  if(!d||!d.ok){document.getElementById('adminsT').innerHTML='<tr><td colspan="5" style="color:var(--mut);padding:14px">נדרשת התחברות מנהל</td></tr>';return;}
+  var rows=[];
+  var o=d.owner||{};
+  rows.push('<tr><td><span class="uav" style="background:#1e5137">'+((o.name||'?')[0])+'</span> '+_e(o.name||'')+'</td><td><span class="pill" style="background:#f0e6c8;color:#7a6414">'+_e(o.role||'מנהל ראשי')+'</span></td><td class="mono">'+_e(o.username||'')+'</td><td class="mono" style="color:var(--mut)">—</td><td><span style="color:var(--mut);font-size:12px">בעלים</span></td></tr>');
+  (d.team||[]).forEach(function(a){
+   rows.push('<tr><td><span class="uav" style="background:#a5824a">'+((a.name||a.username||'?')[0])+'</span> '+_e(a.name||'')+'</td><td>'+_e(a.role||'מנהל')+'</td><td class="mono">'+_e(a.username||'')+'</td><td class="mono" style="color:var(--mut)">'+_e(a.ts||'')+'</td><td><span class="act" title="הסר" onclick="removeAdmin(\''+encodeURIComponent(a.username)+'\')">🗑️</span></td></tr>');
+  });
+  document.getElementById('adminsT').innerHTML=rows.join('');
+ }).catch(function(){document.getElementById('adminsT').innerHTML='<tr><td colspan="5" style="color:var(--mut);padding:14px">שגיאה בטעינה</td></tr>';});
 }
-function saveCreds(){
- var v=function(id){return document.getElementById(id).value;};
- var c={first:v('cFirst'),last:v('cLast'),phone:v('cPhone'),u:v('cUser'),p1:v('cP1'),p2:v('cP2'),p3:v('cP3')};
- localStorage.setItem('agroAdmin',JSON.stringify(c));
- renderAdmins();
- var m=document.getElementById('credMsg');m.textContent='נשמר ✅';setTimeout(function(){m.textContent='';},2500);
+function addAdmin(){
+ var v=function(id){return (document.getElementById(id).value||'').trim();};
+ var name=v('aName'),user=v('aUser'),pass=document.getElementById('aPass').value,role=v('aRole');
+ var m=document.getElementById('admMsg');
+ if(!user||!pass){m.style.color='#c4562e';m.textContent='נא למלא שם משתמש וסיסמה';return;}
+ fetch('/api/admin-add',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:ADMIN_TOKEN,name:name,username:user,password:pass,role:role})})
+  .then(function(r){return r.json();}).then(function(d){
+   if(d&&d.ok){m.style.color='var(--green)';m.textContent='נוסף ✅';document.getElementById('aName').value='';document.getElementById('aUser').value='';document.getElementById('aPass').value='';document.getElementById('aRole').value='';renderAdmins();setTimeout(function(){m.textContent='';},2500);}
+   else{m.style.color='#c4562e';m.textContent='שגיאה — '+((d&&d.error)||'');}
+  }).catch(function(){m.style.color='#c4562e';m.textContent='שגיאת רשת';});
 }
-fillCreds();
+function removeAdmin(u){
+ if(!confirm('להסיר את המנהל?'))return;
+ fetch('/api/admin-remove',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:ADMIN_TOKEN,username:decodeURIComponent(u)})})
+  .then(function(r){return r.json();}).then(function(){renderAdmins();}).catch(function(){});
+}
+renderAdmins();
 
 // content
 const CONTENT=[["המדריך המלא להשקיה מדייקת בעגבניות","מדריכים","צוות AgroData","31/07/26","2,340","pub"],["5 חיישני הקרקע המובילים ל-2026","טכנולוגיה","ד״ר מיכל ברק","29/07/26","1,890","pub"],["לאן הולכים מחירי החיטה?","ניתוח שוק","מחלקת אנליטיקה","27/07/26","1,120","pub"],["חקלאות מדבר: חוות מודל בנגב","קיימות","מו״פ רמת נגב","24/07/26","980","pub"],["ראיון: פרופ׳ יעל גל על ההשבחה","ראיונות","מערכת","22/07/26","1,450","pub"],["ESG בחקלאות — מדריך פחמן","קיימות","מחלקת קיימות","—","0","draft"],["פוד-טק ישראלי 2026","טכנולוגיה","צוות AgroData","—","0","draft"]];
