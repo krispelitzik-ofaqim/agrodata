@@ -8,12 +8,12 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#8b6fc0;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3;--up:#1f9d57;--down:#d24b4b}
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#2e7d52;--gold:#a5824a;--purple:#a5824a;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3;--up:#1f9d57;--down:#d24b4b}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
 .app{display:flex;min-height:100vh}
-.side{width:250px;flex:0 0 auto;background:linear-gradient(180deg,#134a30,#0f3d28);color:#fff;padding:22px 16px;position:sticky;top:0;height:100vh}
+.side{width:250px;flex:0 0 auto;background:linear-gradient(180deg,#0f2a1e,#0f3d28);color:#fff;padding:22px 16px;position:sticky;top:0;height:100vh}
 .brand{display:flex;align-items:center;gap:8px;padding:6px 10px 18px}
 .brand .wm{font-size:22px}.brand .tag{font-size:11px;color:#8fe6ad;font-family:'Plex Mono'}
 .snav a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:0;color:rgba(255,255,255,.82);text-decoration:none;font-weight:600;font-size:15px;margin-bottom:4px;cursor:pointer}
@@ -22,10 +22,11 @@ body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .snav a.on{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
 .sfoot{position:absolute;bottom:18px;right:16px;left:16px;font-size:12px;color:rgba(255,255,255,.5)}
 .main{flex:1;min-width:0;padding:22px 28px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.top{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:22px}
 .top h1{font-family:Rubik;font-size:28px;font-weight:800;color:var(--green-d)}
 .top .sm{font-size:13.5px;color:var(--mut);margin-top:2px}
-.tright{display:flex;align-items:center;gap:11px;flex-wrap:wrap;justify-content:flex-end;max-width:640px}
+.tright{display:flex;flex-direction:column;align-items:flex-start;gap:10px;width:100%}
+.trow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:flex-start}
 .top{align-items:flex-start}
 .tsearch{background:#fff;border:1px solid var(--line);border-radius:0;padding:10px 14px;font-family:Heebo;font-size:14px;outline:0;width:230px}
 .iconbtn{width:42px;height:42px;border-radius:0;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:18px;cursor:pointer;position:relative}
@@ -137,38 +138,42 @@ body{background:#ebe4cf}
     <div class="top">
       <div><h1 id="scTitle">לוח בקרה</h1><div class="sm">Ofakim AgroData Center · <span id="today"></span></div></div>
       <div class="tright">
-        <input class="tsearch" placeholder="חיפוש בניהול…">
-        <a class="btn g" href="sitemap-brain.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#6a45c0,#2b8fb0)">🧠 מפת חשיבה</a>
-        <a class="btn g" href="ofakim-2040.html?admin=1" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#c0392b,#2e9e63)" title="מרחב חברי התהליך — כניסה ישירה ללא סיסמה">🎯 תוכנית אסטרטגית</a>
-        <a class="btn g" href="agroplan.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#1c6b45,#c79a2e)" title="בונה התוכנית העסקית (AI)">📋 AgroPlan</a>
-        <a class="btn g" href="intro.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#134a30,#2e9e63)" title="סרטון הפתיח למשקיעים">🎬 סרטון פתיח</a>
-        <a class="btn g" href="deck.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#6a45c0,#2e9e63)" title="מצגת קולנועית 15 שקפים · 3 דקות">🎞️ מצגת</a>
-        <a class="btn g" href="agronews.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#c79a2e,#2e9e63)" title="פורטל חדשות החקלאות (עד דומיין נפרד)">📰 agroNews</a>
-        <a class="btn g" href="index.html" target="_blank" rel="noopener" style="text-decoration:none">🌐 צפייה באתר ↗</a>
-        <a class="btn g" onclick="adminLogout()" style="text-decoration:none;background:#f4efe3;color:#5c6f63;cursor:pointer" title="יציאה וניקוי הסשן">🚪 יציאה</a>
-        <div class="iconbtn">🔔<span class="notdot"></span></div>
-        <div class="avatar">א</div>
+        <div class="trow">
+          <a class="btn g" href="sitemap-brain.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#1e5137,#2e7d52)">🧠 מפת חשיבה</a>
+          <a class="btn g" href="ofakim-2040.html?admin=1" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#a5824a,#2e7d52)" title="מרחב חברי התהליך — כניסה ישירה ללא סיסמה">🎯 תוכנית אסטרטגית</a>
+          <a class="btn g" href="agroplan.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#1e5137,#a5824a)" title="בונה התוכנית העסקית (AI)">📋 AgroPlan</a>
+          <a class="btn g" href="intro.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#0f2a1e,#2e7d52)" title="סרטון הפתיח למשקיעים">🎬 סרטון פתיח</a>
+          <a class="btn g" href="deck.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#1e5137,#2e7d52)" title="מצגת קולנועית 15 שקפים · 3 דקות">🎞️ מצגת</a>
+          <a class="btn g" href="agronews.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#a5824a,#2e7d52)" title="פורטל חדשות החקלאות (עד דומיין נפרד)">📰 agroNews</a>
+        </div>
+        <div class="trow">
+          <input class="tsearch" placeholder="חיפוש בניהול…">
+          <a class="btn g" href="index.html" target="_blank" rel="noopener" style="text-decoration:none">🌐 צפייה באתר ↗</a>
+          <a class="btn g" onclick="adminLogout()" style="text-decoration:none;background:#f4efe3;color:#5c6f63;cursor:pointer" title="יציאה וניקוי הסשן">🚪 יציאה</a>
+          <div class="iconbtn">🔔<span class="notdot"></span></div>
+          <div class="avatar">א</div>
+        </div>
       </div>
     </div>
 
     <!-- ADMIN LOGIN GATE -->
-    <div id="adminGate" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#134a30,#1c6b45);display:none;align-items:center;justify-content:center">
+    <div id="adminGate" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0f2a1e,#1e5137);display:none;align-items:center;justify-content:center">
       <div style="background:#fff;border-radius:0;padding:34px 30px;width:min(360px,90vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)">
         <div style="font-size:40px">🔒</div>
-        <h2 style="color:#134a30;font-size:22px;margin:8px 0 2px">כניסת מנהלים</h2>
+        <h2 style="color:#0f2a1e;font-size:22px;margin:8px 0 2px">כניסת מנהלים</h2>
         <p style="color:#6b7f73;font-size:13.5px;margin-bottom:18px">לוח הניהול · AgroData</p>
         <div style="position:relative;margin-bottom:8px">
           <input id="adminPass" type="password" placeholder="סיסמת מנהל" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 44px 12px 14px;border:1px solid #f4efe3;border-radius:0;font-size:15px;text-align:center;box-sizing:border-box">
           <button type="button" onclick="var i=document.getElementById('adminPass');var s=i.type==='password';i.type=s?'text':'password';this.textContent=s?'🙈':'👁️'" title="הצג/הסתר סיסמה" style="position:absolute;top:50%;inset-inline-start:8px;transform:translateY(-50%);background:transparent;border:0;font-size:18px;cursor:pointer;line-height:1">👁️</button>
         </div>
         <div id="adminErr" style="color:#c4562e;font-size:13px;min-height:18px;margin-bottom:4px"></div>
-        <button onclick="adminLogin()" style="width:100%;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;border:0;border-radius:0;padding:13px;font-size:16px;font-weight:800;cursor:pointer">כניסה</button>
+        <button onclick="adminLogin()" style="width:100%;background:linear-gradient(90deg,#1e5137,#2e7d52);color:#fff;border:0;border-radius:0;padding:13px;font-size:16px;font-weight:800;cursor:pointer">כניסה</button>
       </div>
     </div>
 
     <!-- DASHBOARD -->
     <section class="screen on" id="s-dashboard">
-      <div class="row"><div class="card" style="grid-column:1/-1;background:linear-gradient(120deg,#1c6b45,#2e9e63);color:#fff;border:0">
+      <div class="row"><div class="card" style="grid-column:1/-1;background:linear-gradient(120deg,#1e5137,#2e7d52);color:#fff;border:0">
         <h3 style="color:#fff">👁️ כניסות לאתר <span class="sm" style="color:rgba(255,255,255,.82)">· צפיות נשמרות בדרייב · מבקרים שונים מאז הפעלת השרת</span></h3>
         <div style="display:flex;gap:36px;flex-wrap:wrap;margin-top:12px">
           <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="visTotal">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">סה״כ צפיות</div></div>
@@ -185,10 +190,10 @@ body{background:#ebe4cf}
           <div style="padding:20px 22px 22px">
             <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbReg">—</div><div class="sm">👤 מנוי רגיל</div></div>
-              <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1;color:#c79a2e" id="sbPrem">—</div><div class="sm">⭐ פרימיום</div></div>
+              <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1;color:#a5824a" id="sbPrem">—</div><div class="sm">⭐ פרימיום</div></div>
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbTot">—</div><div class="sm">סה״כ מנויים</div></div>
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbConv">—</div><div class="sm">המרה לפרימיום</div></div>
-              <a id="sbExp" href="#" style="margin-inline-start:auto;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">⬇️ ייצוא כל המנויים (CSV)</a>
+              <a id="sbExp" href="#" style="margin-inline-start:auto;background:linear-gradient(90deg,#1e5137,#2e7d52);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">⬇️ ייצוא כל המנויים (CSV)</a>
             </div>
             <div style="overflow-x:auto"><table style="min-width:640px"><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th></tr></thead><tbody id="sbBody"><tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">טוען…</td></tr></tbody></table></div>
             <div class="sm" style="margin-top:8px">טבלה: 20 האחרונים · כל השאר בקובץ ה-CSV</div>
@@ -257,14 +262,14 @@ body{background:#ebe4cf}
       </div>
       <div class="row">
         <div class="card" style="grid-column:1/-1">
-          <h3>🎨 פלטת צבעי הבלוקים</h3><div class="sm">קוד הצבע הרשמי לקבוצות המנועים בדף הבית</div>
+          <h3>🎨 פלטת האתר החדשה</h3><div class="sm">קוד הצבע הרשמי של AgroData — אקדמי: קרם · ירוק מחקר · זהב</div>
           <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#f4efe3"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק בהיר</div><div style="font-family:monospace;font-size:11px;opacity:.6">#f4efe3</div><div style="font-size:11px;opacity:.7;margin-top:2px">מאגרים ומחקר · 5</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#f4efe3"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק בינוני</div><div style="font-family:monospace;font-size:11px;opacity:.6">#f4efe3</div><div style="font-size:11px;opacity:.7;margin-top:2px">אימפקט → ניוז · 6</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#DDEEF6"></div><div style="margin-top:7px;font-weight:700;font-size:13px">תכלת שמיים</div><div style="font-family:monospace;font-size:11px;opacity:.6">#DDEEF6</div><div style="font-size:11px;opacity:.7;margin-top:2px">מילוני ידע → סטארטאפים · 10</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#FDF8DE"></div><div style="margin-top:7px;font-weight:700;font-size:13px">צהוב בננה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#FDF8DE</div><div style="font-size:11px;opacity:.7;margin-top:2px">כנסים → חינוך וקהילה · 4</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#F7F3ED"></div><div style="margin-top:7px;font-weight:700;font-size:13px">חום בז׳</div><div style="font-family:monospace;font-size:11px;opacity:.6">#F7F3ED</div><div style="font-size:11px;opacity:.7;margin-top:2px">ענפי החקלאות · 5</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#BBD8C4"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק כהה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#BBD8C4</div><div style="font-size:11px;opacity:.7;margin-top:2px">שמור להמשך</div></div>
+            <div style="flex:1;min-width:140px"><div style="height:64px;border:1px solid #0001;background:#ebe4cf"></div><div style="margin-top:7px;font-weight:700;font-size:13px">קרם · רקע</div><div style="font-family:monospace;font-size:11px;opacity:.6">#ebe4cf</div></div>
+            <div style="flex:1;min-width:140px"><div style="height:64px;border:1px solid #0001;background:#faf6ec"></div><div style="margin-top:7px;font-weight:700;font-size:13px">קרם בהיר · כרטיסים</div><div style="font-family:monospace;font-size:11px;opacity:.6">#faf6ec</div></div>
+            <div style="flex:1;min-width:140px"><div style="height:64px;border:1px solid #0001;background:#1e5137"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק מחקר</div><div style="font-family:monospace;font-size:11px;opacity:.6">#1e5137</div></div>
+            <div style="flex:1;min-width:140px"><div style="height:64px;border:1px solid #0001;background:#0f2a1e"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק עמוק</div><div style="font-family:monospace;font-size:11px;opacity:.6">#0f2a1e</div></div>
+            <div style="flex:1;min-width:140px"><div style="height:64px;border:1px solid #0001;background:#a5824a"></div><div style="margin-top:7px;font-weight:700;font-size:13px">זהב</div><div style="font-family:monospace;font-size:11px;opacity:.6">#a5824a</div></div>
+            <div style="flex:1;min-width:140px"><div style="height:64px;border:1px solid #0001;background:#1a2118"></div><div style="margin-top:7px;font-weight:700;font-size:13px;">דיו · טקסט</div><div style="font-family:monospace;font-size:11px;opacity:.6">#1a2118</div></div>
           </div>
         </div>
       </div>
@@ -293,11 +298,11 @@ body{background:#ebe4cf}
           <p>אופקים במרכז — מוח, דאטה ומטה; סביבה הלוויינים, כל אחד בתפקידו: נתיבות (כישרון והכשרה), רהט (ייצור ותעשייה), שדרות (מימון ומענקים) ושדות הנגב (שדות ניסוי ומעבדה חיה).</p>
           <div style="margin:16px 0;padding:14px;background:#f4efe3;border:1px solid #f4efe3;border-radius:0"><svg viewBox="0 0 680 430" style="width:100%;max-width:600px;height:auto;font-family:Rubik,Arial;display:block;margin:8px auto">
 <g stroke="#9ec9ae" stroke-width="2.5"><line x1="340" y1="215" x2="340" y2="70"/><line x1="340" y1="215" x2="545" y2="215"/><line x1="340" y1="215" x2="135" y2="215"/><line x1="340" y1="215" x2="340" y2="360"/></g>
-<g><ellipse cx="340" cy="62" rx="86" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="340" y="56" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">נתיבות</text><text x="340" y="78" text-anchor="middle" font-size="12.5" fill="#3d5346">כישרון והכשרה</text></g>
-<g><ellipse cx="558" cy="215" rx="96" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="558" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">רהט</text><text x="558" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">ייצור ותעשייה</text></g>
-<g><ellipse cx="122" cy="215" rx="96" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="122" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">שדרות</text><text x="122" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">מימון ומענקים</text></g>
-<g><ellipse cx="340" cy="368" rx="104" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="340" y="362" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">שדות הנגב</text><text x="340" y="384" text-anchor="middle" font-size="12.5" fill="#3d5346">שדות ניסוי · מעבדה חיה</text></g>
-<circle cx="340" cy="215" r="70" fill="#134a30"/><circle cx="340" cy="215" r="70" fill="none" stroke="#8fe6ad" stroke-width="2.5"/><text x="340" y="209" text-anchor="middle" font-weight="900" font-size="22" fill="#fff">אופקים</text><text x="340" y="233" text-anchor="middle" font-size="12" fill="#8fe6ad">בירה · מוח · דאטה</text>
+<g><ellipse cx="340" cy="62" rx="86" ry="36" fill="#f4efe3" stroke="#1e5137" stroke-width="2"/><text x="340" y="56" text-anchor="middle" font-weight="800" font-size="18" fill="#0f2a1e">נתיבות</text><text x="340" y="78" text-anchor="middle" font-size="12.5" fill="#3d5346">כישרון והכשרה</text></g>
+<g><ellipse cx="558" cy="215" rx="96" ry="36" fill="#f4efe3" stroke="#1e5137" stroke-width="2"/><text x="558" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#0f2a1e">רהט</text><text x="558" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">ייצור ותעשייה</text></g>
+<g><ellipse cx="122" cy="215" rx="96" ry="36" fill="#f4efe3" stroke="#1e5137" stroke-width="2"/><text x="122" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#0f2a1e">שדרות</text><text x="122" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">מימון ומענקים</text></g>
+<g><ellipse cx="340" cy="368" rx="104" ry="36" fill="#f4efe3" stroke="#1e5137" stroke-width="2"/><text x="340" y="362" text-anchor="middle" font-weight="800" font-size="18" fill="#0f2a1e">שדות הנגב</text><text x="340" y="384" text-anchor="middle" font-size="12.5" fill="#3d5346">שדות ניסוי · מעבדה חיה</text></g>
+<circle cx="340" cy="215" r="70" fill="#0f2a1e"/><circle cx="340" cy="215" r="70" fill="none" stroke="#8fe6ad" stroke-width="2.5"/><text x="340" y="209" text-anchor="middle" font-weight="900" font-size="22" fill="#fff">אופקים</text><text x="340" y="233" text-anchor="middle" font-size="12" fill="#8fe6ad">בירה · מוח · דאטה</text>
 </svg><div style="text-align:center;font-size:12.5px;color:#5c6f63;margin-top:6px">מפת האשכול האזורי — אופקים כבירה, והלוויינים סביבה</div></div>
           <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">◆ כיווני הפעולה</h2>
           <ol><li><b>פנימה — בניית המוח:</b> AgroData, מתחם חדשנות, ועוגני אקדמיה וידע.</li><li><b>אזורית — הובלת האשכול:</b> חלוקת תפקידים עם נתיבות, רהט, שדרות ושדות הנגב.</li><li><b>כלפי הממשלה:</b> הכרה רשמית, החלטת ממשלה ייעודית ותקציב אזורי.</li><li><b>גלובלית — שער בין-לאומי:</b> הסכמי שיתוף, משיכת מו"פ ויצוא.</li></ol>
@@ -435,7 +440,7 @@ body{background:#ebe4cf}
         .svtbl th{background:var(--bg2);color:var(--mut);font-weight:700}
         .svtbl .nm{font-weight:800;color:var(--green-d)}
         .pill{display:inline-block;border-radius:0;padding:3px 11px;font-size:12px;font-weight:800;white-space:nowrap}
-        .p-ok{background:#f4efe3;color:#1c6b45}.p-pay{background:#fbecd6;color:#a3611c}.p-key{background:#fde8e8;color:#c0392b}.p-off{background:#eceff0;color:#6b7a72}.p-free{background:#e7f2fb;color:#1c6b8a}
+        .p-ok{background:#f4efe3;color:#1e5137}.p-pay{background:#fbecd6;color:#a3611c}.p-key{background:#fde8e8;color:#a5824a}.p-off{background:#eceff0;color:#6b7a72}.p-free{background:#e7f2fb;color:#1c6b8a}
         .svnote{font-size:12.5px;color:var(--mut)}
       </style>
       <div class="kpis k4">
@@ -539,8 +544,8 @@ function go(el,s){document.querySelectorAll('.snav a').forEach(a=>a.classList.re
 document.querySelectorAll('.chip,.tab').forEach(c=>c.addEventListener('click',function(){this.parentNode.querySelectorAll(this.className.split(' ')[0]==='tab'?'.tab':'.chip').forEach(x=>x.classList.remove('on'));this.classList.add('on');}));
 document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',function(){this.classList.toggle('off');}));
 function dom(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');return p.slice(-(h.endsWith('.il')?3:2)).join('.');}catch(e){return '';}}
-function areaChart(id,d,stroke){const w=800,h=240,pad=26,mn=Math.min(...d),mx=Math.max(...d),rx=(w-2*pad)/(d.length-1),ry=(h-2*pad)/((mx-mn)||1);const pts=d.map((v,i)=>[pad+i*rx,h-pad-(v-mn)*ry]);const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');const area=path+` L${pts[pts.length-1][0]},${h-pad} L${pad},${h-pad} Z`;let g=`<defs><linearGradient id="ag${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${stroke}" stop-opacity=".28"/><stop offset="1" stop-color="#c79a2e" stop-opacity="0"/></linearGradient></defs>`;for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#f4efe3"/>`;}g+=`<path d="${area}" fill="url(#ag${id})"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="3"/>`;pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#fff" stroke="#c79a2e" stroke-width="2.5"/>`);document.getElementById(id).innerHTML=g;}
-function barChart(id,val){const w=800,h=240,pad=30,mx=Math.max(...val.map(v=>v[1])),bw=(w-2*pad)/val.length*0.55,gap=(w-2*pad)/val.length;let g='';for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#f4efe3"/>`;}val.forEach((v,i)=>{const bh=(v[1]/mx)*(h-2*pad-14),x=pad+i*gap+(gap-bw)/2,y=h-pad-bh;g+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="url(#bg)"/><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" font-family="'Plex Mono'" font-size="12" fill="#5c6f63">${v[0]}</text>`;});g=`<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e9e63"/><stop offset="1" stop-color="#c79a2e"/></linearGradient></defs>`+g;document.getElementById(id).innerHTML=g;}
+function areaChart(id,d,stroke){const w=800,h=240,pad=26,mn=Math.min(...d),mx=Math.max(...d),rx=(w-2*pad)/(d.length-1),ry=(h-2*pad)/((mx-mn)||1);const pts=d.map((v,i)=>[pad+i*rx,h-pad-(v-mn)*ry]);const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');const area=path+` L${pts[pts.length-1][0]},${h-pad} L${pad},${h-pad} Z`;let g=`<defs><linearGradient id="ag${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${stroke}" stop-opacity=".28"/><stop offset="1" stop-color="#a5824a" stop-opacity="0"/></linearGradient></defs>`;for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#f4efe3"/>`;}g+=`<path d="${area}" fill="url(#ag${id})"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="3"/>`;pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#fff" stroke="#a5824a" stroke-width="2.5"/>`);document.getElementById(id).innerHTML=g;}
+function barChart(id,val){const w=800,h=240,pad=30,mx=Math.max(...val.map(v=>v[1])),bw=(w-2*pad)/val.length*0.55,gap=(w-2*pad)/val.length;let g='';for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#f4efe3"/>`;}val.forEach((v,i)=>{const bh=(v[1]/mx)*(h-2*pad-14),x=pad+i*gap+(gap-bw)/2,y=h-pad-bh;g+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="url(#bg)"/><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" font-family="'Plex Mono'" font-size="12" fill="#5c6f63">${v[0]}</text>`;});g=`<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e7d52"/><stop offset="1" stop-color="#a5824a"/></linearGradient></defs>`+g;document.getElementById(id).innerHTML=g;}
 function donut(id,lid,data){let acc=0,seg=[];data.forEach(s=>{seg.push(`${s[2]} ${acc}% ${acc+s[1]}%`);acc+=s[1];});document.getElementById(id).style.background=`conic-gradient(${seg.join(',')})`;document.getElementById(lid).innerHTML=data.map(s=>`<div class="dl"><span class="ds" style="background:${s[2]}"></span>${s[0]} <b>${s[1]}%</b></div>`).join('');}
 function tbl(id,html){document.getElementById(id).innerHTML=html;}
 function pill(s){return s==='ok'?'<span class="pill p-ok">פעיל</span>':s==='wait'?'<span class="pill p-wait">ממתין</span>':s==='off'?'<span class="pill p-off">מושהה</span>':s==='pub'?'<span class="pill p-ok">פורסם</span>':s==='draft'?'<span class="pill p-draft">טיוטה</span>':s;}
@@ -560,8 +565,8 @@ function renderDash(){
              ["📅","i-teal",(v.today||0).toLocaleString('en'),"כניסות היום"],
              ["🧍","i-gold",(v.uniqueTotal||0).toLocaleString('en'),"מבקרים ייחודיים"]];
     tbl('kpis',KPI.map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div></div>`).join(''));
-    var series=s.byDay||[]; if(series.length) areaChart('area',series.map(d=>d.count),'#1c6b45');
-    if(tot>0) donut('donut','dlegend',[["רגיל",Math.round(reg/tot*100),"#1c6b45"],["פרימיום",Math.round(prem/tot*100),"#c79a2e"]]);
+    var series=s.byDay||[]; if(series.length) areaChart('area',series.map(d=>d.count),'#1e5137');
+    if(tot>0) donut('donut','dlegend',[["רגיל",Math.round(reg/tot*100),"#1e5137"],["פרימיום",Math.round(prem/tot*100),"#a5824a"]]);
     else donut('donut','dlegend',[["רגיל",100,"#f4efe3"]]);
     var pm={google:'Google',facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',email:'מייל',other:'אחר'};
     var bp=s.byProvider||{}, bd=Object.keys(bp).map(k=>[pm[k]||k,bp[k]]).sort((x,y)=>y[1]-x[1]);
@@ -572,7 +577,7 @@ renderDash(); setInterval(renderDash,30000);
 
 // users
 tbl('uKpis',[["👥","i-green","6,910","סה״כ משתמשים","+12%",1],["✅","i-teal","6,540","פעילים","+9%",1],["🆕","i-gold","214","חדשים החודש","+31%",1],["⏳","i-purple","12","ממתינים לאישור","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:''}</div>`).join(''));
-const USERS=[["דנה כהן","dana@agri.co.il","אגרונומית","12/07/26","ok","#2b8fb0"],["רון אבידן","ron@farm.il","מגדל","12/07/26","ok","#1c6b45"],["Equinom","hr@equinom.com","סטארטאפ","11/07/26","wait","#c79a2e"],["ד״ר מיכל ברק","barak@bgu.ac.il","מחקר","11/07/26","ok","#8b6fc0"],["משרד החקלאות","gov@moag.gov.il","ממשלה","10/07/26","ok","#5c6f63"],["עמית שרון","amit@negev.il","מגדל","09/07/26","ok","#1c6b45"],["נועה פרי","noa@startup.io","סטארטאפ","08/07/26","off","#c79a2e"],["פרופ׳ יעל גל","gal@volcani.gov.il","מחקר","07/07/26","ok","#8b6fc0"]];
+const USERS=[["דנה כהן","dana@agri.co.il","אגרונומית","12/07/26","ok","#2e7d52"],["רון אבידן","ron@farm.il","מגדל","12/07/26","ok","#1e5137"],["Equinom","hr@equinom.com","סטארטאפ","11/07/26","wait","#a5824a"],["ד״ר מיכל ברק","barak@bgu.ac.il","מחקר","11/07/26","ok","#a5824a"],["משרד החקלאות","gov@moag.gov.il","ממשלה","10/07/26","ok","#5c6f63"],["עמית שרון","amit@negev.il","מגדל","09/07/26","ok","#1e5137"],["נועה פרי","noa@startup.io","סטארטאפ","08/07/26","off","#a5824a"],["פרופ׳ יעל גל","gal@volcani.gov.il","מחקר","07/07/26","ok","#a5824a"]];
 tbl('usersT',USERS.map(u=>`<tr><td><span class="uav" style="background:${u[5]}">${u[0][0]}</span> ${u[0]}</td><td class="mono" style="color:var(--mut);font-size:13px">${u[1]}</td><td>${u[2]}</td><td class="mono" style="color:var(--mut)">${u[3]}</td><td>${pill(u[4])}</td><td><span class="act">✏️</span><span class="act">🚫</span></td></tr>`).join(''));
 
 // security / admin credentials
@@ -592,7 +597,7 @@ function renderAdmins(){
  var v=function(id){return document.getElementById(id).value;};
  var name=(v('cFirst')+' '+v('cLast')).trim();
  document.getElementById('credName').textContent=name||'—';
- tbl('adminsT','<tr><td><span class="uav" style="background:#1c6b45">'+((v('cFirst')||'?')[0])+'</span> '+name+'</td><td>מנהל ראשי</td><td class="mono">'+v('cUser')+'</td><td>'+pill('ok')+'</td><td><span class="act">✏️</span></td></tr>');
+ tbl('adminsT','<tr><td><span class="uav" style="background:#1e5137">'+((v('cFirst')||'?')[0])+'</span> '+name+'</td><td>מנהל ראשי</td><td class="mono">'+v('cUser')+'</td><td>'+pill('ok')+'</td><td><span class="act">✏️</span></td></tr>');
 }
 function saveCreds(){
  var v=function(id){return document.getElementById(id).value;};
@@ -618,7 +623,7 @@ tbl('newsT',NEWS.map(n=>`<tr><td style="font-weight:600;max-width:340px">${n[0]}
 // finance
 tbl('fKpis',[["💰","i-gold","₪48.2K","MRR","+15%",1],["⭐","i-green","312","מנויים","+8%",1],["📊","i-teal","₪154","ARPU","+4%",1],["📉","i-purple","2.1%","נטישה","",1]].map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div>${k[4]?`<div class="ch up">▲ ${k[4]}</div>`:'<div class="ch down">▼ 0.3%</div>'}</div>`).join(''));
 barChart('rev',[["ינו",22],["פבר",26],["מרץ",25],["אפר",31],["מאי",34],["יונ",33],["יול",38],["אוג",41],["ספט",39],["אוק",44],["נוב",46],["דצמ",48]]);
-donut('fdonut','fdlegend',[["מנויים",62,"#c79a2e"],["עמלות סחר",20,"#1c6b45"],["API",12,"#2b8fb0"],["אחר",6,"#8fe6ad"]]);
+donut('fdonut','fdlegend',[["מנויים",62,"#a5824a"],["עמלות סחר",20,"#1e5137"],["API",12,"#2e7d52"],["אחר",6,"#8fe6ad"]]);
 const TX=[["Netafim","Enterprise","₪4,200","31/07/26","ok"],["מו״פ ערבה","Pro","₪890","30/07/26","ok"],["Equinom","Startup","₪450","29/07/26","wait"],["פרופ׳ גל","Academic","₪120","28/07/26","ok"],["Trendlines","Enterprise","₪4,200","27/07/26","ok"]];
 tbl('txT',TX.map(t=>`<tr><td><b>${t[0]}</b></td><td><span class="pill p-draft">${t[1]}</span></td><td class="mono" style="font-weight:700">${t[2]}</td><td class="mono" style="color:var(--mut)">${t[3]}</td><td>${pill(t[4])}</td></tr>`).join(''));
 
@@ -628,9 +633,9 @@ const MAPS=[["Sentinel-2","ירק · NDVI","לפני 5 דק׳","ok"],["CHIRPS","
 tbl('mapsT',MAPS.map(m=>`<tr><td><b>${m[0]}</b></td><td>${m[1]}</td><td class="mono" style="color:var(--mut)">${m[2]}</td><td>${pill(m[3])}</td></tr>`).join(''));
 
 // analytics
-areaChart('area2',[300,420,380,510,470,560,620,590,680,720,700,780,760,830],'#2b8fb0');
+areaChart('area2',[300,420,380,510,470,560,620,590,680,720,700,780,760,830],'#2e7d52');
 tbl('pagesB',[["דף הבית",100],["אגרו סטוק",72],["חדשות",58],["חברות",44],["מפות",36],["בלוג",29]].map(b=>`<div class="bar"><span class="bn">${b[0]}</span><div class="bt"><div class="bf" style="width:${b[1]}%"></div></div><span class="bv">${b[1]}</span></div>`).join(''));
-donut('srcDonut','srcLegend',[["ישיר",38,"#1c6b45"],["חיפוש",30,"#c79a2e"],["רשתות",20,"#2b8fb0"],["הפניות",12,"#8fe6ad"]]);
+donut('srcDonut','srcLegend',[["ישיר",38,"#1e5137"],["חיפוש",30,"#a5824a"],["רשתות",20,"#2e7d52"],["הפניות",12,"#8fe6ad"]]);
 
 function openM(t){document.getElementById('mTitle').textContent=t;document.getElementById('mName').value='';document.getElementById('modal').classList.add('open');}
 function closeM(){document.getElementById('modal').classList.remove('open');}
