@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>מאגר הגופים · ספר הטלפונים של האגרו · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--gold:#a5824a;--gold-d:#8a6a37;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9;--paper:#faf6ec}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.wm{font-family:'Space Grotesk';font-weight:700}.mono{font-family:'Plex Mono'}
+.topbar{background:linear-gradient(135deg,#134a30,#1e5137)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.nav .wm{font-size:24px;color:#fff}.nav .wm b{color:#c6a875}
+.hero{text-align:center;padding:38px 0 6px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--gold-d);letter-spacing:.12em;text-transform:uppercase}
+h1{font-family:Rubik;font-size:42px;font-weight:800;margin:8px 0}h1 b{color:var(--green)}
+.sub{color:var(--mut);font-size:16px;max-width:720px;margin:0 auto;line-height:1.6}
+.tools{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:22px 0 6px}
+.fbtn{background:var(--paper);border:1px solid var(--line);padding:8px 15px;font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--mut);cursor:pointer}
+.fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
+.search{display:block;width:100%;max-width:520px;margin:8px auto 0;border:1px solid var(--line);padding:11px 15px;font-family:Heebo;font-size:15px;outline:0;background:#fff}
+.count{text-align:center;color:var(--mut);font-size:13px;margin:12px 0}
+.tbl{background:var(--paper);border:1px solid var(--line);margin:6px 0 46px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+th,td{padding:12px 14px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:Rubik;font-weight:800;color:var(--mut);font-size:12.5px;text-transform:uppercase;letter-spacing:.02em;background:var(--bg2);position:sticky;top:0}
+.nm{font-family:Rubik;font-weight:800;color:var(--green-d);font-size:15px}
+.catpill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;background:var(--tint);color:var(--green-d);white-space:nowrap}
+.budget{font-family:'Plex Mono';font-size:12.5px;color:var(--gold-d)}
+.fact{color:var(--mut);font-size:13px;line-height:1.5}
+.lnk{color:var(--green);font-weight:700;text-decoration:none;font-size:13px;white-space:nowrap}
+.treebtn{background:transparent;border:1px solid var(--gold);color:var(--gold-d);font-family:Rubik;font-weight:700;font-size:12.5px;padding:5px 11px;cursor:pointer;white-space:nowrap}
+.treebtn.on{background:var(--gold);color:#fff}
+.treerow td{background:#fff8ef;border-bottom:2px solid var(--gold)}
+.fan{display:flex;gap:14px;flex-wrap:wrap;padding:6px 2px}
+.fannode{flex:1;min-width:190px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--green);padding:12px 14px}
+.fannode.center{border-top-color:var(--gold);background:var(--paper)}
+.fannode h4{font-family:Rubik;font-weight:800;font-size:14px;color:var(--green-d);margin-bottom:5px}
+.fannode .fl{font-family:'Plex Mono';font-size:10.5px;color:var(--gold-d);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.fannode ul{list-style:none;font-size:13px;color:var(--mut);line-height:1.75}
+.fannode li:before{content:'• ';color:var(--gold)}
+.foot{padding:18px 0 40px;text-align:center;font-size:14px;color:var(--mut)}.foot .wm b{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm">Agro<b>Data</b></span></a>
+  <a class="back" href="index.html">→ חזרה לזירה</a>
+</div></div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">Directory · ספר הטלפונים</div>
+    <h1>מאגר <b>הגופים</b></h1>
+    <div class="sub">כל הגופים בישראל העוסקים בחקלאות ובאגרו-טק — ממשלה, מו״פ, אקדמיה, חממות, קרנות, מועצות וחברות. עם שיוך, היקף תקציב ונתון מפתח. לכל גוף — עץ שליטה שנפתח כמניפה.</div>
+  </div>
+  <div class="tools" id="filters"></div>
+  <input class="search" id="q" placeholder="חיפוש גוף: שם, קטגוריה, נתון…" oninput="render()">
+  <div class="count" id="count"></div>
+  <div class="tbl"><table>
+    <thead><tr><th>גוף</th><th>קטגוריה</th><th>היקף / תקציב</th><th>נתון מפתח</th><th>קישור</th><th>עץ</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</div>
+<div class="foot">מאגר הגופים · <span class="wm">Agro<b>Data</b></span> Center · גרסה 1 · בהרחבה מתמדת</div>
+
+<script>
+// [name, category, budget/scope, key-fact, url, tree{שיוך,יחידות,שותפים,מימון}]
+var B=[
+ ["משרד החקלאות ופיתוח הכפר","ממשלה","~1.9 מיליארד ₪ (2025)","המשרד המוביל את מדיניות החקלאות, המים החקלאיים והכפר.","https://www.gov.il/he/departments/ministry_of_agriculture",{ש:"ממשלת ישראל",י:["המדען הראשי","שה״מ · שירות ההדרכה","השירותים הווטרינריים","הגנת הצומח"],ש2:["רשות המים","מועצות הייצור"],מ:["תקציב המדינה"]}],
+ ["המדען הראשי · משרד החקלאות","ממשלה · מו״פ","עשרות מיליוני ₪ למחקר יישומי","מממן מחקר חקלאי יישומי, מכון וולקני והמו״פים האזוריים.","https://www.gov.il/he/departments/units/moag_chief_scientist",{ש:"משרד החקלאות",י:["מכון וולקני","מו״פים אזוריים"],ש2:["רשות החדשנות","אקדמיה"],מ:["תקציב המשרד"]}],
+ ["רשות החדשנות","ממשלה · חדשנות","~2 מיליארד ₪ לשנה","הגוף הלאומי לחדשנות — חממות, מענקי מו״פ, מגנ״ט ומרכזי חדשנות בפריפריה.","https://innovationisrael.org.il/",{ש:"משרד הכלכלה",י:["מסלול חממות","תנופה","קרן המו״פ","מרכזי חדשנות פריפריה"],ש2:["אקדמיה","תעשייה"],מ:["תקציב המדינה"]}],
+ ["מכון וולקני (ARO)","מו״פ · מחקר","~330 מיליון ₪ לשנה","ליבת המחקר החקלאי בישראל, מוכר עולמית; שה״מ פועל לצדו.","https://www.agri.gov.il/",{ש:"משרד החקלאות · המדען הראשי",י:["מכוני מחקר (גד״ש, מים, בע״ח, מזון)"],ש2:["אוניברסיטאות","מו״פים"],מ:["המדען הראשי","מענקי מחקר"]}],
+ ["שה״מ · שירות ההדרכה והמקצוע","ממשלה · הדרכה","יחידת הדרכה ממשלתית","מעביר ידע מהמחקר לשטח — הדרכה מקצועית לחקלאים.","https://www.gov.il/he/departments/units/shaham",{ש:"משרד החקלאות",י:["מדריכים אזוריים"],ש2:["וולקני","מו״פים"],מ:["תקציב המשרד"]}],
+ ["רשות המים","ממשלה · מים","רגולטור המים הלאומי","מכסות מים לחקלאות, תמחור והקצאה — קריטי לחקלאות הישראלית.","https://www.gov.il/he/departments/water_authority",{ש:"ממשלת ישראל",י:["אגף צריכה חקלאית"],ש2:["מקורות","משרד החקלאות"],מ:["אגרות מים"]}],
+ ["הפקולטה לחקלאות, מזון וסביבה · האונ׳ העברית","אקדמיה","פקולטה מובילה · רחובות","המוסד האקדמי המרכזי להשכלה ומחקר חקלאי בישראל.","https://agri.huji.ac.il/",{ש:"האוניברסיטה העברית",י:["מחלקות מחקר","בי״ס לתזונה"],ש2:["וולקני","תעשייה"],מ:["ות״ת","מענקי מחקר"]}],
+ ["אונ׳ בן-גוריון · מכונים לחקר המדבר (שדה בוקר)","אקדמיה · מדבר","מחקר חקלאות מדבר וקיימות","מומחיות עולמית בחקלאות מדברית, מים מליחים ואנרגיה.","https://www.bgu.ac.il/",{ש:"אוניברסיטת בן-גוריון",י:["מכון בלאושטיין","מחקר מים ומדבר"],ש2:["מו״פ רמת נגב","ערבה"],מ:["ות״ת","מענקים"]}],
+ ["מכון ויצמן למדע","אקדמיה · מדע","מחקר בסיסי · רחובות","מחקר בסיסי בביולוגיה צמחית וגנטיקה שמזין את האגרו-ביוטק.","https://www.weizmann.ac.il/",{ש:"עצמאי",י:["מחלקות מדעי הצמח"],ש2:["תעשיית ביוטק"],מ:["תרומות","מענקים"]}],
+ ["מו״פ ערבה","מו״פ אזורי","מחקר חקלאי מדברי · ערבה","פלפל, ירקות יצוא ותמרים בהשקיה במים מליחים בתנאי קיצון.","https://www.arava.co.il/",{ש:"המדען הראשי + מועצות אזוריות",י:["תחנות ניסיון"],ש2:["וולקני","חקלאי הערבה"],מ:["המדען הראשי","רשויות מקומיות"]}],
+ ["מרכז מו״פ רמת נגב","מו״פ אזורי","מחקר לנגב","גידולים במים מליחים, חקלאות מדבר, אקוופוניקה ואנרגיה.","https://www.rngv.org.il/",{ש:"מועצה אזורית רמת נגב + המדען הראשי",י:["תחנות ניסיון"],ש2:["בן-גוריון","וולקני"],מ:["המדען הראשי"]}],
+ ["מו״פ צפון · מכון מיג״ל","מו״פ אזורי","מחקר יישומי לגליל","גד״ש, מטעים, רפת, מזון ומים דרך מכון המחקר הגליל.","https://www.migal.org.il/",{ש:"מו״פ גליל עליון",י:["מעבדות מחקר"],ש2:["תל-חי","וולקני"],מ:["המדען הראשי","מענקים"]}],
+ ["מו״פ בקעת הירדן","מו״פ אזורי","מחקר לבקעה החמה","תמרים, ענבי מאכל וירקות ופתרונות לעקת חום ומליחות.","https://www.gov.il/he/departments/units/moag_chief_scientist",{ש:"מועצות הבקעה + המדען הראשי",י:["תחנות ניסיון"],ש2:["וולקני"],מ:["המדען הראשי"]}],
+ ["Fresh Start","חממה · פוד-טק","חממת פוד-טק · קרית שמונה","חממת הפוד-טק המובילה — מדגירה סטארטאפים עם תעשיית המזון.","https://www.freshstart.org.il/",{ש:"רשות החדשנות",י:["סטארטאפים בחממה"],ש2:["תנובה","טמפו","Finistere","מיג״ל"],מ:["רשות החדשנות","משקיעים"]}],
+ ["The Kitchen Hub (שטראוס)","חממה · פוד-טק","חממת פוד-טק · אשדוד","חממת פוד-טק של שטראוס — חלבון חלופי ומזון בר-קיימא.","https://www.thekitchenhub.com/",{ש:"רשות החדשנות",י:["סטארטאפים"],ש2:["שטראוס"],מ:["רשות החדשנות","שטראוס"]}],
+ ["Trendlines Agrifood","חממה · השקעות","חממה וקרן · מיסגב","מדגירה ומשקיעה בסטארטאפים אגרו-טק ופוד-טק בשלב מוקדם.","https://trendlines.com/",{ש:"Trendlines Group",י:["פורטפוליו סטארטאפים"],ש2:["משקיעים גלובליים"],מ:["הקרן","רשות החדשנות"]}],
+ ["התאחדות חקלאי ישראל","ארגון חקלאים","ארגון הגג של החקלאים","מייצג את החקלאים מול הממשלה — מדיניות, מים ותמיכות.","https://www.iufo.org.il/",{ש:"עצמאי",י:["ועדי מגדלים"],ש2:["תנועת המושבים","התנועה הקיבוצית"],מ:["דמי חבר"]}],
+ ["מועצת הצמחים","מועצת ייצור","מועצה סטטוטורית","מייצגת מגדלי פירות, ירקות ופרחים — קידום, מחקר ושיווק.","https://www.plants.org.il/",{ש:"משרד החקלאות",י:["ענף פירות","ענף ירקות","ענף פרחים"],ש2:["מגדלים","יצואנים"],מ:["היטלי ענף"]}],
+ ["מועצת החלב","מועצת ייצור","מכסות ותכנון · רפת","מתכננת ומווסתת את משק החלב הישראלי.","https://www.milk.org.il/",{ש:"משרד החקלאות",י:["רפתות"],ש2:["תנובה","מחלבות"],מ:["היטלים"]}],
+ ["מועצת הצמחים · ענף הפרחים","מועצת ייצור · פרחים","קידום ויצוא פרחים","מייצגת את מגדלי הפרחים — מחקר, שיווק ויצוא הפרח הישראלי.","https://www.plants.org.il/",{ש:"מועצת הצמחים",י:["מגדלי פרחים","משתלות"],ש2:["יצואנים","שדה תעופה נתב״ג"],מ:["היטלי ענף"]}],
+ ["תנועת המושבים","ארגון חקלאים","ארגון גג · מושבים","הארגון המרכזי של המושבים — קרקע, מים, קהילה וייצוג מול הממשלה.","https://www.tmoshavim.org.il/",{ש:"עצמאי",י:["מושבים חברים","אגודות מים"],ש2:["התאחדות חקלאי ישראל","משרד החקלאות"],מ:["דמי חבר"]}],
+ ["התנועה הקיבוצית","ארגון חקלאים","ארגון גג · קיבוצים","מייצגת את הקיבוצים — חקלאות, תעשייה קיבוצית וקהילה.","https://www.kibbutz.org.il/",{ש:"עצמאי",י:["קיבוצים חברים","מפעלים חקלאיים"],ש2:["התאחדות חקלאי ישראל"],מ:["דמי חבר"]}],
+ ["ארגון מגדלי הירקות","ארגון ענפי","ייצוג מגדלי ירקות","מייצג את מגדלי הירקות בישראל — מדיניות, מחירים ותכנון.","https://www.yerakot.org.il/",{ש:"מועצת הצמחים",י:["ועדי מגדלים אזוריים"],ש2:["רשתות שיווק","יצואנים"],מ:["היטלי ענף"]}],
+ ["מרכז חדשנות אופקים","מרכז חדשנות · פריפריה","~10 מ׳ ₪ + 5 דונם ניסויים","מרכז חדשנות בפריפריה עם קרקע לניסויים חקלאיים — בית AgroData.","https://innovationisrael.org.il/",{ש:"רשות החדשנות + עיריית אופקים",י:["חללי עבודה","חלקת ניסויים"],ש2:["חברות הייטק","AgroData"],מ:["רשות החדשנות","העירייה"]}],
+ ["מטרופולין באר שבע · חדשנות","מרכז חדשנות · פריפריה","25 מ׳ ₪ ל-4 שנים","מסלול להפיכת באר שבע למטרופולין הייטק בנגב.","https://innovationisrael.org.il/",{ש:"רשות החדשנות + עיריית ב״ש",י:["מסלול יזמות"],ש2:["בן-גוריון","חברות"],מ:["רשות החדשנות"]}]
+];
+var CATS=['הכל'].concat(Array.from(new Set(B.map(function(b){return b[1].split(' · ')[0];}))));
+var cur='הכל';
+document.getElementById('filters').innerHTML=CATS.map(function(c,i){return '<button class="fbtn '+(i===0?'on':'')+'" onclick="setC(\''+c+'\',this)">'+c+'</button>';}).join('');
+function setC(c,el){cur=c;document.querySelectorAll('.fbtn').forEach(function(x){x.classList.remove('on');});el.classList.add('on');render();}
+function esc(s){return (s||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function treeHTML(t){
+  if(!t)return '<div class="fact">אין עדיין נתוני עץ לגוף זה.</div>';
+  function node(fl,title,items){return '<div class="fannode"><div class="fl">'+fl+'</div><h4>'+esc(title)+'</h4>'+(items&&items.length?'<ul>'+items.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>':'')+'</div>';}
+  var h='<div class="fan">';
+  if(t.ש)h+=node('שיוך / גוף-אם',t.ש,[]);
+  if(t.י)h+=node('תת-יחידות',' ',t.י);
+  if(t.ש2)h+=node('שותפים',' ',t.ש2);
+  if(t.מ)h+=node('מקורות מימון',' ',t.מ);
+  h+='</div>';
+  return h;
+}
+function render(){
+  var q=(document.getElementById('q').value||'').trim();
+  var rows=B.filter(function(b){
+    var okc=(cur==='הכל'||b[1].indexOf(cur)===0);
+    var okq=!q||(b[0]+' '+b[1]+' '+b[3]).indexOf(q)!==-1;
+    return okc&&okq;
+  });
+  document.getElementById('count').textContent=rows.length+' גופים';
+  document.getElementById('rows').innerHTML=rows.map(function(b,i){
+    var id='t'+i;
+    return '<tr>'+
+      '<td class="nm">'+esc(b[0])+'</td>'+
+      '<td><span class="catpill">'+esc(b[1])+'</span></td>'+
+      '<td class="budget">'+esc(b[2])+'</td>'+
+      '<td class="fact">'+esc(b[3])+'</td>'+
+      '<td><a class="lnk" href="'+b[4]+'" target="_blank" rel="noopener">אתר ↗</a></td>'+
+      '<td><button class="treebtn" onclick="tog(this,\''+id+'\')">🌿 עץ ▾</button></td>'+
+    '</tr>'+
+    '<tr class="treerow" id="'+id+'" style="display:none"><td colspan="6">'+treeHTML(b[5])+'</td></tr>';
+  }).join('');
+}
+function tog(btn,id){var r=document.getElementById(id);var open=r.style.display!=='none';r.style.display=open?'none':'table-row';btn.classList.toggle('on',!open);btn.innerHTML=open?'🌿 עץ ▾':'🌿 עץ ▲';}
+render();
+</script>
+</body>
+</html>
