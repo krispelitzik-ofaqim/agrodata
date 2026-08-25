@@ -303,11 +303,8 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
         <div class="note"><div class="nt">🐛 טיפול B הפחית נזק ב-31% מול טיפול A</div><div class="nd">נשמר · 3 אוג׳</div></div>
         <div class="note"><div class="nt">☀️ הסולארי כיסה 62% מצריכת המשאבות</div><div class="nd">נשמר · 28 יולי</div></div>
 
-        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:18px 0 6px">היסטוריית שאילתות</div>
-        <div class="hist" onclick="ask('מתי השקיתי הכי הרבה?')">מתי השקיתי הכי הרבה?<span class="ha">היום</span></div>
-        <div class="hist" onclick="ask('איזה טיפול הדברה עבד?')">איזה טיפול הדברה עבד?<span class="ha">אתמול</span></div>
-        <div class="hist" onclick="ask('כמה אנרגיה חסכתי?')">כמה אנרגיה חסכתי?<span class="ha">3 אוג׳</span></div>
-        <div class="hist" onclick="ask('השוואת יבול בין חלקות')">השוואת יבול בין חלקות<span class="ha">1 אוג׳</span></div>
+        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:18px 0 6px">היסטוריית שאילתות · נשמר מהמנועים</div>
+        <div id="realHist"></div>
       </div>
     </div>
 
@@ -503,6 +500,19 @@ function answerFor(q){
   if(/אזור|ממוצע|מול/.test(q))return 'החלקה שלך <b>מובילה ביבול</b> (+8% מהאזור) אך <b>צורכת יותר מים</b> (+19%). יש פוטנציאל התייעלות בהשקייה בלי לפגוע ביבול.';
   return 'לפי הנתונים שהעלית — זו שאלה טובה. במערכת המלאה ה-AI ינתח את הקבצים שלך ויחזיר תשובה מדויקת עם גרף ומקור. (זהו מסך הדגמה).';
 }
+
+(function(){
+ var arr=[]; try{arr=JSON.parse(localStorage.getItem('agro_threads')||'[]');}catch(e){}
+ var el=document.getElementById('realHist'); if(!el)return;
+ if(!arr.length){el.innerHTML='<div class="hist" style="opacity:.6">אין עדיין שיחות שמורות — שאלו במנוע החדשנות/האנליטי והן יופיעו כאן.</div>';return;}
+ function esc2(x){return (x||'').replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+ el.innerHTML=arr.slice(0,15).map(function(h){
+   var d=new Date(h.t); var dd=isNaN(d)?'':(d.getDate()+'/'+(d.getMonth()+1));
+   var q=esc2(h.q||h.title||'שאילתה');
+   return '<div class="hist" title="'+esc2(h.kind||'')+'">'+q+'<span class="ha">'+dd+'</span></div>';
+ }).join('');
+})();
+
 </script>
 </body>
 </html>

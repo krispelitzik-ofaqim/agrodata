@@ -181,11 +181,11 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
     <!-- FOLLOW-UP · המשך חקר החדשנות -->
     <div class="ifollow" id="ifollow" style="display:none">
       <div class="ifhead"><span class="ifbadge">💬 המשך החדשנות</span><span class="ifhint">שאלו על רעיון · בקשו להרחיב · שלבו כיוונים — המנוע זוכר את האתגר</span></div>
-      <div class="ifthread" id="ifThread"></div>
       <div class="ifbar">
         <input id="ifInput" placeholder="למשל: הרחב את רעיון 2 · שלב עם טפטוף · מי המתחרים?" onkeydown="if(event.key==='Enter')askIFollow()">
         <button id="ifSend" onclick="askIFollow()">שאל ↗</button>
       </div>
+      <div class="ifthread" id="ifThread" style="margin-top:14px"></div>
     </div>
     <div class="custom"><input id="cq" placeholder="כתבו בעיה/אתגר משלכם… (למשל: מחסור במים בעונת הקיץ)" onkeydown="if(event.key==='Enter')genCustom()"><button onclick="genCustom()">💡 ייצר רעיונות</button></div>
   </div>
@@ -430,6 +430,13 @@ function ifAdd(cls,txt){
   d.innerHTML = /a/.test(cls) ? _ifMd(txt) : _ifEsc(txt);
   t.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'nearest'});return d;
 }
+function saveToPersonal(kind,title,q,a){
+  try{
+    var arr=JSON.parse(localStorage.getItem('agro_threads')||'[]');
+    arr.unshift({t:(new Date()).toISOString(),kind:kind,title:title||'',q:q||'',a:a||''});
+    localStorage.setItem('agro_threads',JSON.stringify(arr.slice(0,200)));
+  }catch(e){}
+}
 function askIFollow(){
   if(_ifBusy||!IFU.length)return;
   var inp=document.getElementById('ifInput');var q=(inp.value||'').trim();if(!q)return;
@@ -442,6 +449,7 @@ function askIFollow(){
    .then(function(r){return r.json();}).then(function(j){
     var a=j.answer||'—';think.className='ifmsg a';think.innerHTML=_ifMd(a);
     IFU.push({role:'assistant',content:a});
+    saveToPersonal('חדשנות',CURTITLE,q,a);
     _ifBusy=false;document.getElementById('ifSend').disabled=false;inp.focus();
    }).catch(function(){think.className='ifmsg a';think.textContent='שגיאת חיבור. נסו שוב.';IFU.pop();_ifBusy=false;document.getElementById('ifSend').disabled=false;});
 }
