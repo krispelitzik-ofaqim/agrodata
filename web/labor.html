@@ -124,7 +124,7 @@ var JOBS=[
  {k:'offer',t:'אגרונום/ית פרילנס',loc:'מרכז/שפלה',d:'ייעוץ צמחי, תוכניות דישון והדברה, ליווי חלקות.'},
  {k:'offer',t:'טכנאי חקלאות מדויקת',loc:'עמקים',d:'התקנה וכיול חיישנים, מיפוי וניטור שדה.'}
 ];
-var jcur='want';
+var jcur='web';
 function esc(x){return (x||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 function fmtDate(d){try{var t=new Date(d);if(isNaN(t))return '';return t.getDate()+'/'+(t.getMonth()+1)+'/'+t.getFullYear();}catch(e){return '';}}
 function jrender(){
@@ -152,9 +152,9 @@ function jrender(){
 }
 function jset(k,id){jcur=k;['jt_want','jt_offer','jt_web'].forEach(function(x){document.getElementById(x).classList.remove('on');});document.getElementById(id).classList.add('on');jrender();}
 document.getElementById('jtabs').innerHTML=
- '<button class="jtab on" id="jt_want" onclick="jset(\'want\',\'jt_want\')">🧑‍🌾 דרושים</button>'+
- '<button class="jtab" id="jt_offer" onclick="jset(\'offer\',\'jt_offer\')">💼 היצע ושירותים</button>'+
- '<button class="jtab" id="jt_web" onclick="jset(\'web\',\'jt_web\')">🌐 מהרשת · חי</button>';
+ '<button class="jtab on" id="jt_web" onclick="jset(\'web\',\'jt_web\')">🌐 מהרשת · חי</button>'+
+ '<button class="jtab" id="jt_want" onclick="jset(\'want\',\'jt_want\')">🧑‍🌾 דרושים</button>'+
+ '<button class="jtab" id="jt_offer" onclick="jset(\'offer\',\'jt_offer\')">💼 היצע ושירותים</button>';
 jrender();
 </script>
 </body>
