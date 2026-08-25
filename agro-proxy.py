@@ -1865,6 +1865,19 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/jobs"):
+            # aggregate agri job posts (with real source + date), Israeli sources only
+            q = 'דרושים חקלאות OR "דרוש לחקלאות" OR "עובדים חקלאיים" OR קטיף דרושים OR "כוח אדם חקלאי" OR חממה דרושים'
+            out = fetch_news(q, "il")
+            items = [{"title": it.get("title",""), "link": it.get("link",""),
+                      "source": it.get("source",""), "date": it.get("date","")}
+                     for it in out.get("items", [])][:24]
+            body = json.dumps({"items": items}, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/news"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             out = fetch_news(qs.get("q", [""])[0], qs.get("region", ["world"])[0])

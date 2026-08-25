@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AgroMedia · מרכז המדיה · AgroData</title>
 <style>
-  :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#6b7f73;--line:#dbe8df;--bg:#eef6f0;--tint:#eaf4ee}
+  :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#6b7f73;--line:#f4efe3;--bg:#f4efe3;--tint:#f4efe3}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:system-ui,-apple-system,Heebo,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
   .top{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;padding:20px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
@@ -15,17 +15,20 @@
   .hero h1 b{color:var(--lime)}
   .hero p{color:var(--mut);font-size:16px;max-width:620px;margin:0 auto;line-height:1.6}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-  .mcard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px 24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;box-shadow:0 10px 28px rgba(20,60,40,.07);transition:.16s}
+  .mcard{background:#fff;border:1px solid var(--line);border-radius:0;padding:28px 24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;box-shadow:0 10px 28px rgba(20,60,40,.07);transition:.16s}
   .mcard:hover{transform:translateY(-4px);box-shadow:0 22px 46px rgba(20,60,40,.14);border-color:#bfe0cb}
-  .mic{width:60px;height:60px;border-radius:16px;background:var(--tint);display:grid;place-items:center;color:var(--green);margin-bottom:16px}
+  .mic{width:60px;height:60px;border-radius:0;background:var(--tint);display:grid;place-items:center;color:var(--green);margin-bottom:16px}
   .mic svg{width:32px;height:32px}
   .mcard h3{font-size:21px;font-weight:800;color:var(--green-d);margin-bottom:5px}
   .mcard .en{font-family:'Plex Mono',monospace;font-size:12.5px;color:var(--lime);font-weight:700;margin-bottom:10px;letter-spacing:.03em}
   .mcard p{color:var(--mut);font-size:14.5px;line-height:1.6;flex:1}
   .mcard .go{margin-top:16px;color:var(--green);font-weight:800;font-size:14.5px}
-  .soon{display:inline-block;font-size:11px;background:var(--tint);color:var(--mut);border-radius:6px;padding:2px 8px;margin-inline-start:8px;vertical-align:middle}
+  .soon{display:inline-block;font-size:11px;background:var(--tint);color:var(--mut);border-radius:0;padding:2px 8px;margin-inline-start:8px;vertical-align:middle}
   .foot{text-align:center;color:var(--mut);font-size:13px;margin-top:36px}
-  @media (prefers-color-scheme:dark){body{background:#0d1f16;color:#eaf4ee}.mcard{background:#12291d;border-color:#26402f}.mic{background:#0f2419;color:#8fe6ad}.mcard h3{color:#8fe6ad}.hero h1{color:#8fe6ad}.hero p,.mcard p{color:#a9c4b6}}
+  @media (prefers-color-scheme:dark){body{background:#0d1f16;color:#f4efe3}.mcard{background:#12291d;border-color:#26402f}.mic{background:#0f2419;color:#8fe6ad}.mcard h3{color:#8fe6ad}.hero h1{color:#8fe6ad}.hero p,.mcard p{color:#a9c4b6}}
+/* AgroData unified */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style></head><body>
   <div class="top">
     <div class="wm">Ofakim Agro<b>Data</b> · <span style="font-size:15px;color:#8fe6ad">Media</span></div>
