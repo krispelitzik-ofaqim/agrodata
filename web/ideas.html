@@ -134,6 +134,9 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .rowitm{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:0;padding:13px 15px;margin-bottom:9px;text-decoration:none;color:#eaf4ee;grid-column:1/-1}
 .rowitm:hover{background:rgba(255,255,255,.11)}
 .rowitm b{color:#8fe6ad}.rowitm .mt{font-size:12.5px;color:rgba(234,244,238,.6);margin-top:3px}
+.sinewave path{fill:none;stroke:#8fe6ad;stroke-width:2;stroke-linecap:round;animation:sineflow 1.8s linear infinite;opacity:.7}
+@keyframes sineflow{from{transform:translateX(0)}to{transform:translateX(-36px)}}
+.sinewave.active path{animation-duration:.7s;stroke:#c9f7d8;opacity:1}
 </style>
 </head>
 <body>
@@ -153,7 +156,11 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
   <div class="h2">🌍 אתגרי האגרו-טק <span class="live"><i></i>מתעדכן מהחדשות</span></div>
   <div class="h2sub">לחצו על אתגר → המוח יייצר רעיונות סטארטאפ שפותרים אותו. עוצמת הפס = כמה האתגר "חם" בחדשות עכשיו.</div>
   <div class="chstats" id="chstats"></div>
-  <div style="margin:0 0 16px"><button class="chpull" id="chpullBtn" onclick="pullLiveChallenges()">🔄 שאב אתגרים חדשים מהחדשות</button></div>
+  <div style="margin:0 0 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <button class="chpull" id="chpullBtn" onclick="pullLiveChallenges()">🔄 שאב אתגרים חדשים מהחדשות</button>
+    <svg class="sinewave" id="sineWave" width="72" height="20" viewBox="0 0 72 20" title="חשיבת המנוע" style="display:none;vertical-align:middle"><path d="M0,10 Q9,2 18,10 T36,10 T54,10 T72,10 T90,10 T108,10"/></svg>
+    <span id="chUpdated" style="font-family:'Plex Mono',monospace;font-size:12px;color:#8fe6ad;opacity:.85"></span>
+  </div>
   <div class="chgrid" id="chgrid"></div>
 
   <div class="h2">💡 בנק הרעיונות</div>
@@ -260,9 +267,11 @@ function scoreChallenges(){
   var sh=document.getElementById('stHot');if(sh&&CH[hi])sh.textContent=CH[hi].t;
  });
 }
+function stampUpdated(){var e=document.getElementById('chUpdated');if(!e)return;var d=new Date();var day=d.toLocaleDateString('he-IL',{weekday:'long'});var hh=('0'+d.getHours()).slice(-2),mm=('0'+d.getMinutes()).slice(-2);e.textContent='עודכן: '+day+' · '+hh+':'+mm;}
 function pullLiveChallenges(auto){
  var btn=document.getElementById('chpullBtn');btn.textContent='🔄 שואב מהחדשות…';btn.disabled=true;
- function reset(){btn.textContent='🔄 שאב אתגרים חדשים מהחדשות';btn.disabled=false;}
+ var sw=document.getElementById('sineWave');if(sw){sw.style.display='inline-block';sw.classList.add('active');}
+ function reset(){btn.textContent='🔄 שאב אתגרים חדשים מהחדשות';btn.disabled=false;if(sw){sw.classList.remove('active');sw.style.display='none';}stampUpdated();}
  Promise.all([
   fetch('/api/news?region=world&q=agritech OR agtech OR agriculture').then(function(r){return r.json();}).catch(function(){return{items:[]};}),
   fetch('/api/news?region=il&q=חקלאות OR אגרוטק').then(function(r){return r.json();}).catch(function(){return{items:[]};})
@@ -286,6 +295,7 @@ function pullLiveChallenges(auto){
  });
 }
 scoreChallenges();setInterval(scoreChallenges,300000);
+stampUpdated();
 setInterval(function(){pullLiveChallenges(true);},3600000);  // auto-pull new challenges from news via AI, once an hour
 // generate ideas via AgroMind (Claude)
 var CUR=-1,CURQ='',CURTITLE='',CURKW='',CUREN='',ITAB='ideas';
