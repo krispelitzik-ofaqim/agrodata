@@ -8,27 +8,27 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--gold-d:#a67d1e;--ink:#14261c;--mut:#67786e;--line:#e3ebe6;--bg2:#f5f9f6;--tint:#eef6f0;--red:#d1544a;--pos:#1c9e5a}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--gold-d:#a67d1e;--ink:#14261c;--mut:#67786e;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3;--red:#d1544a;--pos:#1c9e5a}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
 .mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:var(--gold)}
-.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:0;box-shadow:0 6px 16px rgba(0,0,0,.2)}
 .top{background:linear-gradient(135deg,#0f3a26,#1c6b45)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff;gap:14px;flex-wrap:wrap}
 .brand{font-family:'Space Grotesk';font-weight:700;font-size:52px;color:#fff;line-height:1;letter-spacing:-1px}.brand b{color:var(--gold)}
 .brand small{display:block;font-family:Heebo;font-weight:600;font-size:16px;color:#bcd8ca;letter-spacing:0;margin-top:8px}
 .navr{display:flex;align-items:center;gap:18px;font-size:14px}
 .navr a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:600}
-.hello{color:#cfe6da;font-size:14px}
+.hello{color:#f4efe3;font-size:14px}
 .menu{background:#0f3a26;border-top:1px solid rgba(255,255,255,.1)}
 .menu .wrap{display:flex;gap:26px;padding:12px 22px;overflow-x:auto}
 .menu a{color:rgba(255,255,255,.82);text-decoration:none;font-weight:600;font-size:14.5px;white-space:nowrap;cursor:pointer;padding:4px 0;border-bottom:2px solid transparent}
 .menu a.on,.menu a:hover{color:#fff;border-color:var(--gold)}
 .grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin:22px 0}
 @media(max-width:880px){.grid{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 26px rgba(20,38,28,.05)}
-.balance{background:linear-gradient(135deg,#124a30,#1c6b45);color:#fff;border-radius:20px;padding:26px 28px;position:relative;overflow:hidden}
+.card{background:#fff;border:1px solid var(--line);border-radius:0;box-shadow:0 10px 26px rgba(20,38,28,.05)}
+.balance{background:linear-gradient(135deg,#124a30,#1c6b45);color:#fff;border-radius:0;padding:26px 28px;position:relative;overflow:hidden}
 .balance::after{content:"🌿";position:absolute;left:-10px;bottom:-20px;font-size:120px;opacity:.08}
 .balance .lbl{font-size:14px;color:#bcd8ca}
 .balance .amt{font-family:Rubik;font-weight:800;font-size:44px;margin:4px 0 2px;letter-spacing:-1px}
@@ -37,7 +37,7 @@ body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
 .balance .accno{font-family:'Plex Mono';font-size:13px;color:#8fbfa4;margin-top:12px}
 .qa{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:22px}
 @media(max-width:700px){.qa{grid-template-columns:repeat(3,1fr)}}
-.qbtn{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px 8px;text-align:center;cursor:pointer;transition:.15s}
+.qbtn{background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:16px 8px;text-align:center;cursor:pointer;transition:.15s}
 .qbtn:hover{background:var(--tint);border-color:#bfe0cc;transform:translateY(-2px)}
 .qbtn .qi{font-size:24px}.qbtn div{font-size:12.5px;font-weight:700;color:var(--green-d);margin-top:6px}
 .side{display:flex;flex-direction:column;gap:16px}
@@ -53,14 +53,14 @@ body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
 table{width:100%;border-collapse:collapse}
 .tx td{padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px}
 .tx tr:last-child td{border:0}
-.tx .ico{width:40px}.tx .ico span{display:inline-flex;width:36px;height:36px;border-radius:10px;align-items:center;justify-content:center;font-size:17px;background:var(--tint)}
+.tx .ico{width:40px}.tx .ico span{display:inline-flex;width:36px;height:36px;border-radius:0;align-items:center;justify-content:center;font-size:17px;background:var(--tint)}
 .tx .desc b{display:block;color:var(--ink)}.tx .desc small{color:var(--mut)}
 .tx .amt{text-align:left;font-family:Rubik;font-weight:800;white-space:nowrap}
 .tx .amt.neg{color:var(--red)}.tx .amt.pos{color:var(--pos)}
 .tx .bal{text-align:left;color:var(--mut);font-size:13px;font-family:'Plex Mono'}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media(max-width:800px){.cols{grid-template-columns:1fr}}
-.ccard{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:16px;padding:20px;position:relative;min-height:150px}
+.ccard{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:0;padding:20px;position:relative;min-height:150px}
 .ccard.gold{background:linear-gradient(135deg,#c79a2e,#a67d1e)}
 .ccard .ct{font-size:13px;opacity:.85}.ccard .cn{font-family:'Plex Mono';font-size:18px;letter-spacing:2px;margin:14px 0}
 .ccard .cf{display:flex;justify-content:space-between;font-size:12px;opacity:.9}
@@ -70,18 +70,21 @@ table{width:100%;border-collapse:collapse}
 .finrow:last-child{border:0}
 .finrow .fi b{color:var(--green-d);font-family:Rubik;font-size:15.5px}
 .finrow .fi p{color:var(--mut);font-size:13px;margin-top:2px}
-.finrow .fb{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border:0;border-radius:10px;padding:9px 18px;font-family:Rubik;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
-.bar{height:8px;background:#e9f1ec;border-radius:5px;overflow:hidden;margin:8px 0 4px}
+.finrow .fb{background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border:0;border-radius:0;padding:9px 18px;font-family:Rubik;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.bar{height:8px;background:#f4efe3;border-radius:0;overflow:hidden;margin:8px 0 4px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--lime))}
 .chartcard{padding:20px}
 .chartcard .bars{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:14px}
 .chartcard .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
-.chartcard .bcol i{width:60%;background:linear-gradient(180deg,#2e9e63,#1c6b45);border-radius:6px 6px 0 0}
+.chartcard .bcol i{width:60%;background:linear-gradient(180deg,#2e9e63,#1c6b45);border-radius:0 6px 0 0}
 .chartcard .bcol span{font-size:11.5px;color:var(--mut)}
 .foot{background:#0f3a26;color:#a9c6b8;padding:24px 0;text-align:center;font-size:13.5px;margin-top:30px}
 .foot a{color:#8fe6ad;text-decoration:none}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green-d);color:#fff;padding:13px 24px;border-radius:12px;font-weight:700;font-size:14.5px;box-shadow:0 12px 30px rgba(0,0,0,.3);transition:.3s;z-index:100}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green-d);color:#fff;padding:13px 24px;border-radius:0;font-weight:700;font-size:14.5px;box-shadow:0 12px 30px rgba(0,0,0,.3);transition:.3s;z-index:100}
 .toast.on{transform:translateX(-50%) translateY(0)}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>

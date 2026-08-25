@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>האזור האישי לחקלאי · AgroData</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:#f6f9f7;color:var(--ink)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
+.topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;color:#fff}
+.nav a.back{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.live{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);border:1px solid rgba(143,230,173,.5);border-radius:20px;padding:6px 13px;font-size:13px;font-weight:700;color:#d7f7e2}
+.dot{width:9px;height:9px;border-radius:50%;background:#3ee87e;box-shadow:0 0 0 0 rgba(62,232,126,.7);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(62,232,126,.7)}70%{box-shadow:0 0 0 8px rgba(62,232,126,0)}100%{box-shadow:0 0 0 0 rgba(62,232,126,0)}}
+
+/* personal header */
+.phead{background:linear-gradient(135deg,#fbfaf4,#eef6f0);border-bottom:1px solid var(--line)}
+.phead-in{display:flex;align-items:center;gap:18px;padding:24px 0}
+.avatar{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;font-family:Rubik;font-weight:800;font-size:26px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 10px 26px rgba(20,50,32,.22)}
+.pmeta{flex:1}
+.pkick{font-family:'Plex Mono';font-size:12.5px;color:var(--lime);letter-spacing:.08em}
+.pname{font-family:Rubik;font-weight:800;font-size:28px;color:var(--green-d);margin:2px 0}
+.psub{color:var(--mut);font-size:14.5px}
+.pstats{display:flex;gap:26px}
+.pstat{text-align:center}
+.pstat b{display:block;font-family:Rubik;font-weight:800;font-size:24px;color:var(--green)}
+.pstat span{font-size:12.5px;color:var(--mut)}
+@media(max-width:720px){.pstats{display:none}}
+.plan{display:inline-flex;align-items:center;gap:8px;border-radius:20px;padding:6px 14px;font-family:Rubik;font-weight:800;font-size:13.5px}
+.plan .exp{font-family:Heebo;font-weight:600;font-size:12.5px;opacity:.9}
+.plan.free{background:#eef1ee;color:#5c6f63;border:1px solid #d9e0da}
+.plan.regular{background:#e7f6ee;color:#12703f;border:1px solid #b9e4cc}
+.plan.premium{background:linear-gradient(135deg,#fbf1d4,#f6e6b0);color:#8a6a12;border:1px solid #e6cf86}
+.plan.expired{background:#fdecec;color:#b23b3b;border:1px solid #f0c4c4}
+/* minimal risk cubes */
+.riskrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 2px}
+@media(max-width:640px){.riskrow{grid-template-columns:1fr}}
+.riskcube{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 20px rgba(20,38,28,.04)}
+.riskcube .rc-ic{width:40px;height:40px;border-radius:11px;background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto}
+.riskcube .rc-lbl{font-family:Rubik;font-weight:800;font-size:14px;color:var(--green-d)}
+.riskcube .rc-st{font-size:12.5px;color:var(--mut);margin-top:2px;display:flex;align-items:center;gap:6px}
+.riskcube .rc-dot{width:8px;height:8px;border-radius:50%;background:#2e9e63;flex:0 0 auto}
+.riskcube.alert{border-color:#ecd9a3;background:#fff8e6}
+.riskcube.alert .rc-ic{background:#fbedcb}
+.riskcube.alert .rc-st{color:#7a6414;font-weight:700}
+.riskcube.alert .rc-dot{background:#e0a92e;animation:pulse 1.8s infinite}
+.riskcube.frost{border-color:#c3d9f0;background:#eaf2fb}
+.riskcube.frost .rc-ic{background:#d6e6f7}.riskcube.frost .rc-st{color:#2c4d76;font-weight:700}.riskcube.frost .rc-dot{background:#3f78c4}
+.riskcube.heat{border-color:#f0cfb0;background:#fdeee4}
+.riskcube.heat .rc-ic{background:#f8dcc4}.riskcube.heat .rc-st{color:#8a4a1e;font-weight:700}.riskcube.heat .rc-dot{background:#d9772f}
+.rc-soon{margin-inline-start:auto;font-size:10.5px;color:#9aa89f;font-family:'Plex Mono'}
+
+/* consent banner */
+.consent{background:#fff8e6;border:1px solid #ecd9a3;border-radius:14px;padding:14px 18px;margin:18px 0 4px;display:flex;align-items:center;gap:14px;font-size:14px;color:#6b5a1e}
+.consent b{color:#7a6414}
+.consent .cx{margin-inline-start:auto;background:var(--green);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
+
+/* 4-col notebook */
+.book{display:grid;grid-template-columns:290px 1fr 250px 280px;gap:18px;margin:20px 0 46px}
+@media(max-width:1280px){.book{grid-template-columns:260px 1fr 260px}.col.plot{grid-column:1/-1}}
+@media(max-width:1080px){.book{grid-template-columns:1fr;}.col.plot{grid-column:auto}}
+.col{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 26px rgba(20,38,28,.05);display:flex;flex-direction:column;overflow:hidden}
+.col-h{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
+.col-h .ic{font-size:20px}
+.col-h h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d)}
+.col-h .cnt{margin-inline-start:auto;background:var(--tint);color:var(--green-d);border-radius:11px;padding:2px 9px;font-size:12px;font-weight:800}
+.col-b{padding:16px 18px;flex:1;overflow:auto}
+
+/* sources */
+.drop{border:2px dashed #bcd6c6;border-radius:14px;padding:20px;text-align:center;color:var(--mut);font-size:13.5px;cursor:pointer;transition:.15s;background:var(--bg2)}
+.drop:hover{border-color:var(--lime);background:#eef7f1;color:var(--green-d)}
+.drop .big{font-size:30px;display:block;margin-bottom:6px}
+.drop small{display:block;margin-top:5px;font-size:11.5px;color:#9aa89f}
+.src{display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}
+.src:last-child{border-bottom:0}
+.src .sic{width:38px;height:38px;border-radius:10px;background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:19px;flex:0 0 auto}
+.src .sname{font-family:Rubik;font-weight:700;font-size:14.5px;color:var(--ink);line-height:1.3}
+.src .smeta{font-size:11.5px;color:var(--mut);font-family:'Plex Mono';margin-top:2px}
+.share{margin-top:6px;display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.share button{border:0;background:#fff;color:var(--mut);font-family:Heebo;font-weight:700;font-size:11.5px;padding:4px 9px;cursor:pointer}
+.share button.on{background:var(--green);color:#fff}
+.share button.on.pub{background:var(--gold)}
+
+/* chat */
+.msg{margin-bottom:16px}
+.msg .who{font-size:11.5px;font-weight:800;color:var(--mut);margin-bottom:4px}
+.bub{border-radius:14px;padding:12px 15px;font-size:14.5px;line-height:1.65}
+.bub.q{background:var(--tint);color:var(--green-d)}
+.bub.a{background:linear-gradient(135deg,#fbfaf4,#f4f9f5);border:1px solid var(--line)}
+.bub.a .cite{display:inline-block;margin-top:8px;font-size:11.5px;font-family:'Plex Mono';color:var(--teal);background:#fff;border:1px solid var(--line);border-radius:8px;padding:2px 7px}
+.compare{margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px}
+.compare .bar{height:12px;background:#eef4f0;border-radius:6px;overflow:hidden;margin:5px 0}
+.compare .bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#2e9e63,#1c6b45)}
+.compare .bar.you i{background:linear-gradient(90deg,#e0b23a,#c79a2e)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:7px 13px;font-size:12.5px;font-weight:700;color:var(--green-d);cursor:pointer}
+.chip:hover{border-color:var(--lime);background:var(--tint)}
+.askbar{border-top:1px solid var(--line);padding:14px 18px;display:flex;gap:10px;align-items:center;background:#fff}
+.askbar input{flex:1;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0}
+.askbar input:focus{border-color:var(--lime)}
+.askbar button{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:12px;width:46px;height:46px;font-size:18px;cursor:pointer;flex:0 0 auto}
+
+/* notebook / saved */
+.note{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin-bottom:11px}
+.note .nt{font-family:Rubik;font-weight:700;font-size:13.5px;color:var(--green-d);line-height:1.4}
+.note .nd{font-size:11px;color:var(--mut);font-family:'Plex Mono';margin-top:5px}
+.hist{padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--ink);cursor:pointer;display:flex;gap:8px}
+.hist:hover{color:var(--green)}
+.hist:last-child{border-bottom:0}
+.hist .ha{color:var(--mut);font-size:11px;font-family:'Plex Mono';margin-inline-start:auto;white-space:nowrap}
+
+/* satellite / plot */
+.field{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1/1;background:#20301f}
+.field svg{display:block;width:100%;height:100%}
+.ndvi-badge{position:absolute;top:8px;inset-inline-start:8px;background:rgba(15,30,22,.82);color:#eafff1;font-family:'Plex Mono';font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:9px}
+.hscore{display:flex;align-items:center;gap:10px;margin:12px 0 6px}
+.hscore .hnum{font-family:Rubik;font-weight:800;font-size:30px;color:var(--green)}
+.hscore .hlbl{font-size:13px;color:var(--mut);line-height:1.35}
+.hscore .hlbl b{color:var(--green-d)}
+.trend{display:flex;align-items:flex-end;gap:5px;height:44px;margin:8px 0 4px}
+.trend .tb{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#2e9e63,#1c6b45)}
+.trend .tb.warn{background:linear-gradient(180deg,#e6b93a,#c79a2e)}
+.tlbls{display:flex;justify-content:space-between;font-size:10.5px;color:var(--mut);font-family:'Plex Mono'}
+.alertline{background:#fff8e6;border:1px solid #ecd9a3;border-radius:10px;padding:9px 11px;font-size:12.5px;color:#6b5a1e;margin:10px 0}
+.plotbtn{width:100%;background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border:0;border-radius:11px;padding:11px;font-family:Rubik;font-weight:800;font-size:13.5px;cursor:pointer;margin-top:6px}
+.ndvi-leg{display:flex;gap:12px;justify-content:center;font-size:12px;color:var(--mut);margin-top:10px;flex-wrap:wrap}
+.ndvi-leg span{display:inline-flex;align-items:center;gap:5px}
+.ndvi-leg i{width:12px;height:12px;border-radius:3px;display:inline-block}
+/* modal */
+.pmodal{position:fixed;inset:0;background:rgba(15,30,22,.6);display:none;align-items:center;justify-content:center;z-index:70;padding:24px}
+.pmodal.open{display:flex}
+.psheet{background:#fff;border-radius:20px;max-width:640px;width:100%;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.mtabs{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
+.mtab{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-family:Heebo;font-weight:700;font-size:12.5px;color:var(--mut);cursor:pointer}
+.mtab.on{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-color:transparent}
+.footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+.foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+.demo-tag{position:fixed;bottom:14px;inset-inline-start:14px;background:#14261c;color:#8fe6ad;font-family:'Plex Mono';font-size:11px;padding:5px 11px;border-radius:20px;opacity:.8;z-index:80}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:24px;color:#fff">Agro<b>Data</b></span></a>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span class="live"><span class="dot"></span>מחובר</span>
+    <a class="back" href="agrolake.html">→ חזרה למאגר</a>
+  </div>
+</div></div></div>
+
+<div class="phead"><div class="wrap"><div class="phead-in">
+  <div class="avatar" id="pAvatar">יכ</div>
+  <div class="pmeta">
+    <div class="pkick">האזור האישי שלי</div>
+    <div class="pname" id="pName">שלום</div>
+    <div class="psub" id="pSub">טוען את פרטי המנוי…</div>
+    <div id="pPlan" style="margin-top:9px"></div>
+  </div>
+  <div class="pstats">
+    <div class="pstat"><b>6</b><span>מקורות</span></div>
+    <div class="pstat"><b>23</b><span>שאילתות</span></div>
+    <div class="pstat"><b>2</b><span>שיתפתי</span></div>
+  </div>
+</div></div></div>
+
+<div class="wrap">
+  <div class="consent">
+    🔒 <div><b>הנתונים שלך פרטיים כברירת מחדל.</b> אתה בוחר לכל מקור אם להשאיר פרטי, לשתף אנונימית לממוצעים, או לפרסם לספריית המחקר. שום דבר לא משותף בלי אישורך.</div>
+    <button class="cx" onclick="this.parentElement.style.display='none'">הבנתי</button>
+  </div>
+
+  <div class="riskrow">
+    <div class="riskcube" id="rcWeather">
+      <div class="rc-ic" id="rcwIc">🌡️</div>
+      <div style="flex:1"><div class="rc-lbl">מזג אוויר</div><div class="rc-st"><span class="rc-dot"></span><span id="rcwSt">בודק…</span></div></div>
+    </div>
+    <div class="riskcube" id="rcFire">
+      <div class="rc-ic">🔥</div>
+      <div style="flex:1"><div class="rc-lbl">שריפות</div><div class="rc-st"><span class="rc-dot"></span><span>אין מוקדים באזור</span></div></div>
+      <span class="rc-soon">NASA FIRMS</span>
+    </div>
+    <div class="riskcube" id="rcPest">
+      <div class="rc-ic">🐛</div>
+      <div style="flex:1"><div class="rc-lbl">מזיקים</div><div class="rc-st"><span class="rc-dot"></span><span>אין התרעה פעילה</span></div></div>
+      <span class="rc-soon">EPPO</span>
+    </div>
+  </div>
+
+  <div class="book">
+
+    <!-- ===== SOURCES (right in RTL) ===== -->
+    <div class="col">
+      <div class="col-h"><span class="ic">📂</span><h3>המקורות שלי</h3><span class="cnt">6</span></div>
+      <div class="col-b">
+        <div class="drop" onclick="alert('דמו — כאן ייפתח חלון העלאה')">
+          <span class="big">⬆️</span>
+          גרור לכאן קובץ או לחץ להעלאה
+          <small>CSV · Excel · PDF · תמונות · נתוני חיישנים</small>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="src">
+            <div class="sic">💧</div>
+            <div style="flex:1">
+              <div class="sname">יומן השקייה 2026</div>
+              <div class="smeta">irrigation_2026.csv · 128KB</div>
+              <div class="share"><button class="on">פרטי</button><button>אנונימי</button><button class="pub-btn">פתוח</button></div>
+            </div>
+          </div>
+          <div class="src">
+            <div class="sic">🐛</div>
+            <div style="flex:1">
+              <div class="sname">טיפולי הדברה — אביב</div>
+              <div class="smeta">pest_spring.xlsx · 64KB</div>
+              <div class="share"><button>פרטי</button><button class="on">אנונימי</button><button class="pub-btn">פתוח</button></div>
+            </div>
+          </div>
+          <div class="src">
+            <div class="sic">☀️</div>
+            <div style="flex:1">
+              <div class="sname">צריכת אנרגיה — מערכת סולארית</div>
+              <div class="smeta">solar_kwh.csv · 92KB</div>
+              <div class="share"><button class="on">פרטי</button><button>אנונימי</button><button class="pub-btn">פתוח</button></div>
+            </div>
+          </div>
+          <div class="src">
+            <div class="sic">🌱</div>
+            <div style="flex:1">
+              <div class="sname">ניסוי זני עגבנייה</div>
+              <div class="smeta">tomato_trial.pdf · 1.2MB</div>
+              <div class="share"><button>פרטי</button><button>אנונימי</button><button class="on pub">פתוח</button></div>
+            </div>
+          </div>
+          <div class="src">
+            <div class="sic">📡</div>
+            <div style="flex:1">
+              <div class="sname">חיישני לחות קרקע</div>
+              <div class="smeta">soil_sensors.json · 340KB</div>
+              <div class="share"><button class="on">פרטי</button><button>אנונימי</button><button class="pub-btn">פתוח</button></div>
+            </div>
+          </div>
+          <div class="src">
+            <div class="sic">🌾</div>
+            <div style="flex:1">
+              <div class="sname">נתוני יבול לפי חלקה</div>
+              <div class="smeta">yield_by_plot.xlsx · 78KB</div>
+              <div class="share"><button>פרטי</button><button class="on">אנונימי</button><button class="pub-btn">פתוח</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CHAT / ASK (center) ===== -->
+    <div class="col">
+      <div class="col-h"><span class="ic">💬</span><h3>שאל את הנתונים שלי</h3></div>
+      <div class="col-b" id="chat">
+        <div class="chips">
+          <span class="chip" onclick="ask(this.textContent)">מתי השקיתי הכי הרבה?</span>
+          <span class="chip" onclick="ask(this.textContent)">איזה טיפול הדברה עבד?</span>
+          <span class="chip" onclick="ask(this.textContent)">כמה אנרגיה חסכתי?</span>
+          <span class="chip" onclick="ask(this.textContent)">מה שלום החלקה בלוויין?</span>
+        </div>
+
+        <div class="msg">
+          <div class="who">אתה</div>
+          <div class="bub q">כמה מים צרכתי בקיץ מול הממוצע באזור?</div>
+        </div>
+        <div class="msg">
+          <div class="who">🌾 AgroData</div>
+          <div class="bub a">
+            בקיץ 2026 צרכת <b>4,180 מ״ק</b> לדונם. זה <b>19% יותר</b> מהממוצע בחלקות דומות ברמת נגב.
+            עיקר הפער ביולי — 3 ימים של השקיית-יתר אחרי גל החום.
+            <div class="compare">
+              <div style="display:flex;justify-content:space-between"><span>אתה</span><b>4,180 מ״ק/דונם</b></div>
+              <div class="bar you"><i style="width:100%"></i></div>
+              <div style="display:flex;justify-content:space-between"><span>ממוצע אזורי</span><b>3,510 מ״ק/דונם</b></div>
+              <div class="bar"><i style="width:84%"></i></div>
+            </div>
+            <span class="cite">מקור: יומן השקייה שלך + ממוצע אנונימי (11 חלקות)</span>
+          </div>
+        </div>
+      </div>
+      <div class="askbar">
+        <input id="q" placeholder="שאל בשפה חופשית על הנתונים שלך…" onkeydown="if(event.key==='Enter')ask()">
+        <button onclick="ask()">➤</button>
+      </div>
+    </div>
+
+    <!-- ===== NOTEBOOK / SAVED (left) ===== -->
+    <div class="col">
+      <div class="col-h"><span class="ic">📓</span><h3>המחברת</h3></div>
+      <div class="col-b">
+        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin-bottom:9px">תובנות שמורות</div>
+        <div class="note"><div class="nt">💧 השקיית-יתר ביולי — לכייל טפטפות אחרי גלי חום</div><div class="nd">נשמר · 12 אוג׳</div></div>
+        <div class="note"><div class="nt">🐛 טיפול B הפחית נזק ב-31% מול טיפול A</div><div class="nd">נשמר · 3 אוג׳</div></div>
+        <div class="note"><div class="nt">☀️ הסולארי כיסה 62% מצריכת המשאבות</div><div class="nd">נשמר · 28 יולי</div></div>
+
+        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:18px 0 6px">היסטוריית שאילתות</div>
+        <div class="hist" onclick="ask('מתי השקיתי הכי הרבה?')">מתי השקיתי הכי הרבה?<span class="ha">היום</span></div>
+        <div class="hist" onclick="ask('איזה טיפול הדברה עבד?')">איזה טיפול הדברה עבד?<span class="ha">אתמול</span></div>
+        <div class="hist" onclick="ask('כמה אנרגיה חסכתי?')">כמה אנרגיה חסכתי?<span class="ha">3 אוג׳</span></div>
+        <div class="hist" onclick="ask('השוואת יבול בין חלקות')">השוואת יבול בין חלקות<span class="ha">1 אוג׳</span></div>
+      </div>
+    </div>
+
+    <!-- ===== SATELLITE / MY PLOT (4th col) ===== -->
+    <div class="col plot">
+      <div class="col-h"><span class="ic">🛰️</span><h3>החלקה שלי</h3><span class="cnt">NDVI</span></div>
+      <div class="col-b">
+        <div class="field">
+          <div class="ndvi-badge">בריאות · 14 אוג׳</div>
+          <div id="fieldSvg"></div>
+        </div>
+        <div class="hscore">
+          <div class="hnum">0.71</div>
+          <div class="hlbl">בריאות גידול <b>טובה</b><br>מדד צמחייה NDVI</div>
+        </div>
+        <div class="trend" id="trend"></div>
+        <div class="tlbls"><span>מרץ</span><span>אפר׳</span><span>מאי</span><span>יוני</span><span>יולי</span><span>אוג׳</span></div>
+        <div class="alertline">⚠️ אזור צפוני — עקה קלה (NDVI 0.52). בדוק השקייה/דישון.</div>
+        <button class="plotbtn" onclick="openPlot()">🗺️ מפה מלאה + היסטוריה ←</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- plot modal -->
+<div class="pmodal" id="pmodal" onclick="if(event.target===this)closePlot()">
+  <div class="psheet">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div class="pkick" style="color:var(--lime)">🛰️ מפת לוויין · Sentinel-2</div>
+        <div style="font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d)">בריאות החלקה — מטעים רמת נגב</div>
+      </div>
+      <button class="x" style="background:var(--bg2);border:1px solid var(--line);border-radius:10px;width:38px;height:38px;font-size:18px;cursor:pointer;color:var(--mut)" onclick="closePlot()">✕</button>
+    </div>
+    <div class="mtabs" id="mtabs"></div>
+    <div class="field" style="aspect-ratio:16/10;margin-top:4px"><div id="fieldBig"></div></div>
+    <div class="ndvi-leg">
+      <span><i style="background:#c0392b"></i>עקה 0.2</span>
+      <span><i style="background:#e6b93a"></i>בינוני 0.5</span>
+      <span><i style="background:#2e9e63"></i>טוב 0.7</span>
+      <span><i style="background:#134a30"></i>מצוין 0.9</span>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-top:14px;font-size:14px;line-height:1.6;color:var(--ink)">
+      <b>סיכום AI:</b> בריאות כללית טובה ויציבה. זוהתה ירידה מקומית בפינה הצפונית מאז יולי — תואם את השקיית-היתר שזוהתה ביומן. מומלץ לכייל את קו הטפטוף הצפוני.
+    </div>
+    <div style="font-size:11.5px;color:var(--mut);font-family:'Plex Mono';margin-top:10px;text-align:center">מקור: Copernicus Sentinel-2 · עדכון כל 5 ימים · דמו</div>
+  </div>
+</div>
+
+<div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · האזור האישי · <span class="mono">private research workspace</span></div></div></div>
+
+<div class="demo-tag">DEMO · מסך הדגמה</div>
+
+<script>
+/* ---- load the logged-in subscriber + plan/expiry (30-day package) ---- */
+var PACKAGE_DAYS = 30;
+function initials(name){var p=(name||'').trim().split(/\s+/);return ((p[0]||'')[0]||'')+((p[1]||'')[0]||'');}
+function planInfo(plan, role){
+  if(role==='admin') return {cls:'premium', label:'⭐ פרימיום', days:false};
+  if(plan==='premium') return {cls:'premium', label:'⭐ פרימיום', days:true};
+  if(plan==='free')    return {cls:'free', label:'חינמי', days:false};
+  return {cls:'regular', label:'רגיל', days:true};
+}
+function fmtDate(d){return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();}
+function renderPlan(rec){
+  var name = rec && rec.name ? rec.name : 'חקלאי';
+  document.getElementById('pName').textContent = 'שלום, ' + name;
+  document.getElementById('pAvatar').textContent = initials(name) || '👤';
+  var subline = [];
+  if(rec && rec.org) subline.push(rec.org);
+  if(rec && rec.field) subline.push(rec.field);
+  document.getElementById('pSub').textContent = subline.join(' · ') || 'חבר AgroData';
+  var pi = planInfo(rec && rec.plan, rec && rec.role);
+  var html = '<span class="plan '+pi.cls+'">'+pi.label;
+  if(pi.days && rec && rec.ts){
+    var start = new Date((rec.ts||'').replace(' ','T'));
+    if(!isNaN(start)){
+      var end = new Date(start.getTime()+PACKAGE_DAYS*864e5);
+      var left = Math.ceil((end - new Date())/864e5);
+      if(left<=0){ html='<span class="plan expired">'+pi.label+' · פג תוקף<span class="exp"> · חדֵש מנוי</span>'; }
+      else{ html += '<span class="exp"> · בתוקף עד '+fmtDate(end)+' · נותרו '+left+' ימים</span>'; }
+    }
+  } else if(!pi.days){
+    html += '<span class="exp"> · '+(pi.cls==='free'?'ללא הגבלת זמן':'מנוי קבוע')+'</span>';
+  }
+  html += '</span>';
+  document.getElementById('pPlan').innerHTML = html;
+}
+(function loadMe(){
+  var id=''; try{ id=localStorage.getItem('agro_sub_id')||''; }catch(e){}
+  if(!id){ // not logged in / demo
+    renderPlan({name:'יוסי כהן', org:'חלקת מטעים · רמת נגב', field:'42 דונם', plan:'premium', ts:'2026-08-10 09:00'});
+    return;
+  }
+  fetch('/api/me?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(d){
+    if(d && d.found) renderPlan(d);
+    else renderPlan({name:'חקלאי', plan:'regular', ts:''});
+  }).catch(function(){ renderPlan({name:'חקלאי', plan:'regular', ts:''}); });
+})();
+
+function esc(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function scrollChat(){var c=document.getElementById('chat');c.scrollTop=c.scrollHeight;}
+function ask(text){
+  var inp=document.getElementById('q');
+  var q=(text||inp.value||'').trim();
+  if(!q)return;
+  inp.value='';
+  var chat=document.getElementById('chat');
+  chat.insertAdjacentHTML('beforeend','<div class="msg"><div class="who">אתה</div><div class="bub q">'+esc(q)+'</div></div>');
+  chat.insertAdjacentHTML('beforeend','<div class="msg" id="tmp"><div class="who">🌾 AgroData</div><div class="bub a">חושב על הנתונים שלך…</div></div>');
+  scrollChat();
+  setTimeout(function(){
+    var ans=answerFor(q);
+    document.getElementById('tmp').outerHTML='<div class="msg"><div class="who">🌾 AgroData</div><div class="bub a">'+ans+'<br><span class="cite">מקור: הנתונים שהעלית · דמו</span></div></div>';
+    scrollChat();
+  },650);
+}
+/* ---- minimal risk-alert strip — live from existing /api/weather ---- */
+(function loadAlert(){
+  var lat=30.98, lon=34.70;   // farmer plot (demo)
+  function setWeather(cls,ic,txt){
+    var cube=document.getElementById('rcWeather');
+    cube.className='riskcube'+(cls?' '+cls:'');
+    document.getElementById('rcwIc').textContent=ic;
+    document.getElementById('rcwSt').innerHTML=txt;
+  }
+  // preview mode for demo only: ?preview=frost or ?preview=heat — does not affect real logic
+  var pv=(location.search.match(/preview=(frost|heat)/)||[])[1];
+  if(pv==='frost'){ setWeather('frost','❄️','קרה הלילה · <b>2°C</b>'); return; }
+  if(pv==='heat'){ setWeather('heat','🔥','גל חום · <b>39°C</b>'); return; }
+  fetch('/api/weather?lat='+lat+'&lon='+lon).then(function(r){return r.json();}).then(function(d){
+    if(!d||!d.daily){ setWeather('', '🌡️', 'תקין'); return; }
+    var mn=(d.daily.temperature_2m_min||[])[0];
+    var mx=(d.daily.temperature_2m_max||[])[0];
+    if(typeof mn==='number' && mn<=3){ setWeather('frost','❄️','קרה הלילה · <b>'+Math.round(mn)+'°C</b>'); }
+    else if(typeof mx==='number' && mx>=38){ setWeather('heat','🔥','גל חום · <b>'+Math.round(mx)+'°C</b>'); }
+    else { setWeather('','🌡️', typeof mx==='number' ? ('תקין · '+Math.round(mn)+'°–'+Math.round(mx)+'°') : 'תקין'); }
+  }).catch(function(){ setWeather('','🌡️','תקין'); });
+})();
+
+/* ---- satellite NDVI field (SVG, demo) ---- */
+function ndviColor(v){
+  if(v<0.35)return '#c0392b';
+  if(v<0.5)return '#e07b39';
+  if(v<0.62)return '#e6b93a';
+  if(v<0.75)return '#2e9e63';
+  if(v<0.85)return '#1c6b45';
+  return '#134a30';
+}
+var GRID=14;
+// base health map: healthy field with a stressed north strip (top rows)
+function baseVal(x,y){
+  var v=0.78 - 0.03*Math.sin(x*0.9) + 0.02*Math.cos(y*1.1);
+  if(y<3){ v -= (3-y)*0.11; }                 // northern stress
+  v -= (Math.abs(x-GRID/2)/GRID)*0.05;
+  return v;
+}
+function makeField(monthShift){
+  var cell=100/GRID, s='<svg viewBox="0 0 100 100" preserveAspectRatio="none">';
+  for(var y=0;y<GRID;y++)for(var x=0;x<GRID;x++){
+    var v=baseVal(x,y)+ (monthShift||0);
+    v=Math.max(0.15,Math.min(0.95,v));
+    s+='<rect x="'+(x*cell)+'" y="'+(y*cell)+'" width="'+(cell+0.4)+'" height="'+(cell+0.4)+'" fill="'+ndviColor(v)+'"/>';
+  }
+  s+='</svg>';
+  return s;
+}
+document.getElementById('fieldSvg').innerHTML=makeField(0);
+// trend bars (6 months, dip then recovery, last month slight warn)
+var TR=[0.58,0.63,0.7,0.74,0.66,0.71];
+document.getElementById('trend').innerHTML=TR.map(function(v,i){
+  var cls=(i===4)?'tb warn':'tb';
+  return '<div class="'+cls+'" style="height:'+Math.round(v*100)+'%" title="NDVI '+v+'"></div>';
+}).join('');
+// modal
+var MSHIFT={'מרץ':-0.16,'מאי':-0.06,'יולי':-0.12,'אוגוסט':0};
+var MONTHS=['מרץ','מאי','יולי','אוגוסט'];
+function renderBig(m){
+  document.getElementById('fieldBig').innerHTML=makeField(MSHIFT[m]||0);
+  document.getElementById('mtabs').innerHTML=MONTHS.map(function(x){
+    return '<button class="mtab '+(x===m?'on':'')+'" onclick="renderBig(\''+x+'\')">'+x+' 2026</button>';
+  }).join('');
+}
+function openPlot(){renderBig('אוגוסט');document.getElementById('pmodal').classList.add('open');}
+function closePlot(){document.getElementById('pmodal').classList.remove('open');}
+
+function answerFor(q){
+  if(/לוו|לווין|לוויין|חלק|NDVI|בריאות|צמחי/.test(q))return 'לפי לוויין Sentinel-2, בריאות החלקה <b>0.71 (טובה)</b>. יש עקה קלה בפינה הצפונית (0.52) מאז יולי — כדאי לבדוק את קו הטפטוף שם.';
+  if(/השקי|מים/.test(q))return 'שיא ההשקייה שלך היה ב-<b>14 ביולי</b> — 58 מ״ק בחלקה הצפונית, יום אחרי גל החום. סה״כ יולי היה החודש הגבוה ביותר.';
+  if(/הדברה|מזיק/.test(q))return 'טיפול <b>B</b> (שמן מינרלי) הפחית את הנזק ב-<b>31%</b> מול טיפול A, ובעלות נמוכה ב-12%.';
+  if(/אנרגי|סול|חשמל/.test(q))return 'המערכת הסולארית סיפקה <b>62%</b> מצריכת המשאבות הקיץ — חיסכון מוערך של <b>₪7,400</b>.';
+  if(/אזור|ממוצע|מול/.test(q))return 'החלקה שלך <b>מובילה ביבול</b> (+8% מהאזור) אך <b>צורכת יותר מים</b> (+19%). יש פוטנציאל התייעלות בהשקייה בלי לפגוע ביבול.';
+  return 'לפי הנתונים שהעלית — זו שאלה טובה. במערכת המלאה ה-AI ינתח את הקבצים שלך ויחזיר תשובה מדויקת עם גרף ומקור. (זהו מסך הדגמה).';
+}
+</script>
+</body>
+</html>

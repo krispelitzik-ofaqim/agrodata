@@ -8,9 +8,9 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#1f8f8f;--teal-d:#136b6b;--purple:#7a5cc0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe9e6;--bg2:#f2f9f8;--tint:#e8f5f3}
+:root{--green:#1c6b45;--green-d:#0f3a26;--lime:#2e9e63;--teal:#1f8f8f;--teal-d:#136b6b;--purple:#7a5cc0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#f4faf9;color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
 .wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#7fe3d6}.mono{font-family:'Plex Mono',monospace}
 .top{background:linear-gradient(135deg,#136b6b,#1f8f8f)}
@@ -21,37 +21,40 @@ body{font-family:Heebo,Arial,sans-serif;background:#f4faf9;color:var(--ink)}
 h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#124a4a}h1 b{color:var(--teal)}
 .sub{color:var(--mut);font-size:16px;max-width:660px;margin:0 auto}
 .tabs{display:flex;gap:10px;justify-content:center;margin:26px 0 18px;flex-wrap:wrap}
-.tab{background:#fff;border:1px solid #cfe6e2;border-radius:24px;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#2a6b6b;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tab{background:#fff;border:1px solid #f4efe3;border-radius:0;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#2a6b6b;cursor:pointer;display:flex;align-items:center;gap:8px}
 .tab.on{background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(31,143,143,.28)}
-.tab .cnt{background:rgba(0,0,0,.12);border-radius:11px;padding:1px 8px;font-size:12px;font-weight:800}
+.tab .cnt{background:rgba(0,0,0,.12);border-radius:0;padding:1px 8px;font-size:12px;font-weight:800}
 .tab.on .cnt{background:rgba(255,255,255,.25)}
-.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(19,107,107,.07);margin-bottom:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:0;padding:22px;box-shadow:0 14px 34px rgba(19,107,107,.07);margin-bottom:20px}
 .ptitle{font-family:Rubik;font-weight:800;font-size:22px;color:#124a4a;margin-bottom:10px}
-.search{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px}
+.search{width:100%;border:1px solid var(--line);border-radius:0;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px}
 .search:focus{border-color:var(--teal)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.chip{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-family:Heebo;font-weight:700;font-size:13px;color:var(--mut);cursor:pointer}
+.chip{background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:7px 15px;font-family:Heebo;font-weight:700;font-size:13px;color:var(--mut);cursor:pointer}
 .chip.on{background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;border-color:transparent}
-.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:0}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
 th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
 tr:hover td{background:#fbfdfd}
 .ic{font-size:22px}
-.cat{border-radius:12px;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.cat{border-radius:0;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
 .nm b{color:#124a4a;font-family:Rubik}
 .cogrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media(max-width:760px){.cogrid{grid-template-columns:1fr}}
-.co{border:1px solid var(--line);border-radius:15px;padding:18px;display:flex;gap:14px;align-items:flex-start}
-.co .cl{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;flex:0 0 auto}
+.co{border:1px solid var(--line);border-radius:0;padding:18px;display:flex;gap:14px;align-items:flex-start}
+.co .cl{width:48px;height:48px;border-radius:0;background:linear-gradient(135deg,#1f8f8f,#136b6b);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;flex:0 0 auto}
 .co h3{font-family:Rubik;font-weight:800;font-size:18px;color:#124a4a;margin-bottom:2px}
 .co .tag{font-size:12px;color:var(--teal);font-weight:700;margin-bottom:6px}
 .co p{color:#4a5c58;font-size:13.5px;line-height:1.6}
 .co a{color:var(--teal);font-weight:700;text-decoration:none;font-size:13px}
-.livecta{display:block;text-decoration:none;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:14px;padding:18px 22px;margin:0 0 40px;box-shadow:0 12px 28px rgba(20,60,45,.2)}
+.livecta{display:block;text-decoration:none;background:linear-gradient(135deg,#1c6b45,#0f3a26);color:#fff;border-radius:0;padding:18px 22px;margin:0 0 40px;box-shadow:0 12px 28px rgba(20,60,45,.2)}
 .foot{background:#0f3a3a;color:#a9d6d0;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
 .foot a{color:#7fe3d6;text-decoration:none}
-.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:0}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>
@@ -74,7 +77,7 @@ tr:hover td{background:#fbfdfd}
     <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
       <div><div style="font-family:'Plex Mono';font-size:12px;color:#8fe6ad">LIVE · משרד הבריאות</div>
       <div style="font-family:Rubik;font-weight:800;font-size:19px">🌿 קנביס רפואי — נתוני רישוי חיים</div>
-      <div style="font-size:13.5px;color:#cfe6da">חברות מגדלות, בתי מרקחת ורופאים מוסמכים — חי מ-data.gov.il (ב-AgroMarket)</div></div>
+      <div style="font-size:13.5px;color:#f4efe3">חברות מגדלות, בתי מרקחת ורופאים מוסמכים — חי מ-data.gov.il (ב-AgroMarket)</div></div>
       <div style="font-family:Rubik;font-weight:800">פתיחה ←</div>
     </div>
   </a>
@@ -226,7 +229,7 @@ function cosmCoBlock(){
 }
 function drawCo(){
  document.getElementById('panel').innerHTML='<div class="ptitle">🧬 מולקולר-פארמינג וחברות אגרו-פארמה</div><div class="cogrid">'+
-  CO.map(function(c){var col=cc(c[1]);var stock=c[4]?' · <a href="agro-stock.html" style="color:#1c9e5a">📈 מניה חיה '+c[4]+' ↗</a>':'';return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+(c[4]?' <span style="font-size:11px;background:#e7f9ee;color:#127a43;border-radius:10px;padding:1px 8px;font-weight:800">בורסה</span>':'')+'</h3><div class="tag" style="color:'+col+'">'+c[1]+'</div><p>'+c[2]+'</p><a href="'+c[3]+'" target="_blank" rel="noopener">אתר החברה ↗</a>'+stock+'</div></div>';}).join('')+'</div>';
+  CO.map(function(c){var col=cc(c[1]);var stock=c[4]?' · <a href="agro-stock.html" style="color:#1c9e5a">📈 מניה חיה '+c[4]+' ↗</a>':'';return '<div class="co"><div class="cl">'+c[0].charAt(0)+'</div><div><h3>'+c[0]+(c[4]?' <span style="font-size:11px;background:#f4efe3;color:#127a43;border-radius:0;padding:1px 8px;font-weight:800">בורסה</span>':'')+'</h3><div class="tag" style="color:'+col+'">'+c[1]+'</div><p>'+c[2]+'</p><a href="'+c[3]+'" target="_blank" rel="noopener">אתר החברה ↗</a>'+stock+'</div></div>';}).join('')+'</div>';
 }
 draw();
 </script>

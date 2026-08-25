@@ -9,6 +9,9 @@ body{margin:0;background:#fff;color:#14261c;font-family:Rubik,Arial;text-align:c
 h1{font-size:34px;font-weight:800;margin:6px 0 2px}
 p{color:#5c6f63;font-family:Rubik;margin:0 0 6px}
 svg{width:100%;max-width:820px;height:auto}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style></head>
 <body>
 <div class="k">THE BRAIN · המוח</div>
@@ -25,7 +28,7 @@ svg.innerHTML=`<defs>
 const P=D.map((d,i)=>{const a=(-90+i*360/D.length)*Math.PI/180;return{x:CX+R*Math.cos(a),y:CY+R*Math.sin(a),t:d[0],c:d[1]};});
 for(let i=0;i<P.length;i++){const p=P[i],q=P[(i+1)%P.length];svg.appendChild(el('path',{d:`M${p.x},${p.y} L${q.x},${q.y}`,stroke:"#bcdcc8","stroke-width":"1",fill:"none"}));}
 P.forEach(p=>svg.appendChild(el('path',{d:`M${CX},${CY} L${p.x},${p.y}`,stroke:p.c,"stroke-opacity":".5","stroke-width":"1.8",fill:"none"})));
-[100,148,192].forEach(r=>svg.appendChild(el('circle',{cx:CX,cy:CY,r,fill:"none",stroke:"#cde7d6","stroke-width":"1"})));
+[100,148,192].forEach(r=>svg.appendChild(el('circle',{cx:CX,cy:CY,r,fill:"none",stroke:"#f4efe3","stroke-width":"1"})));
 P.forEach(p=>{svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:"8",fill:p.c,filter:"url(#g)"}));
   svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:"15",fill:"none",stroke:p.c,"stroke-opacity":".35"}));
   const top=p.y<CY-60, bot=p.y>CY+60; let lx=p.x,ly,anchor;
@@ -35,7 +38,7 @@ P.forEach(p=>{svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:"8",fill:p.c,filter:"
   const t=el('text',{x:lx,y:ly,"text-anchor":anchor,fill:"#14261c",style:"font:700 14px Rubik"});t.textContent=p.t;svg.appendChild(t);});
 svg.appendChild(el('circle',{cx:CX,cy:CY,r:"72",fill:"url(#c)",filter:"url(#g)"}));
 const t1=el('text',{x:CX,y:CY-4,"text-anchor":"middle",fill:"#fff",style:"font:700 24px 'Space Grotesk'"});t1.textContent="AgroData";
-const t2=el('text',{x:CX,y:CY+20,"text-anchor":"middle",fill:"#dff3e6",style:"font:700 13px Rubik"});t2.textContent="מרכז הידע";
+const t2=el('text',{x:CX,y:CY+20,"text-anchor":"middle",fill:"#f4efe3",style:"font:700 13px Rubik"});t2.textContent="מרכז הידע";
 svg.appendChild(t1);svg.appendChild(t2);
 </script>
 <script src="autotranslate.js"></script>

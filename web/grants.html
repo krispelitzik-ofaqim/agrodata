@@ -8,7 +8,7 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#6a45c0;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#6a45c0;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .wrap{max-width:1320px;margin:0 auto;padding:0 32px}
@@ -21,27 +21,30 @@ body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 h1{font-family:Rubik;font-size:52px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
 .sub{color:var(--mut);font-size:17px;max-width:740px;margin:0 auto}
 .filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:24px 0 8px}
-.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.12s}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:9px 16px;cursor:pointer;transition:.12s}
 .fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}.fbtn:hover:not(.on){background:var(--tint)}
-.jsearchbar{display:flex;align-items:center;gap:10px;max-width:640px;margin:14px auto 6px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar{display:flex;align-items:center;gap:10px;max-width:640px;margin:14px auto 6px;background:#fff;border:1.6px solid #f4efe3;border-radius:0;padding:11px 16px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
 .jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;background:transparent}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:26px 0 40px}
 @media(max-width:980px){.grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.grid{grid-template-columns:1fr}}
-.gcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:5px solid var(--c)}
+.gcard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:0;padding:22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:5px solid var(--c)}
 .gcard:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,38,28,.1);border-color:#bcdcc8}
 .gtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.gtag{font-family:'Plex Mono';font-size:12px;font-weight:700;border-radius:999px;padding:4px 11px;color:#fff;background:var(--c)}
-.glogo{width:44px;height:44px;border-radius:11px;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;position:relative;flex:0 0 auto}
+.gtag{font-family:'Plex Mono';font-size:12px;font-weight:700;border-radius:0;padding:4px 11px;color:#fff;background:var(--c)}
+.glogo{width:44px;height:44px;border-radius:0;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;position:relative;flex:0 0 auto}
 .glogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7px;background:#fff}
 .gn{font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin-bottom:4px}
 .gd{font-size:14.5px;color:var(--mut);line-height:1.55;flex:1;margin-bottom:12px}
 .gmeta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
-.gm{font-size:12.5px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:999px;padding:3px 10px}
+.gm{font-size:12.5px;color:var(--green-d);background:var(--tint);border:1px solid #f4efe3;border-radius:0;padding:3px 10px}
 .glink{font-family:'Plex Mono';font-size:13px;color:var(--lime);font-weight:700}
 .note{text-align:center;color:var(--mut);font-size:13.5px;margin-bottom:40px}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
 .foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>

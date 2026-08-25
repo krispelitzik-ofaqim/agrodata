@@ -8,7 +8,7 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee;--up:#1f9d57;--down:#d24b4b}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3;--up:#1f9d57;--down:#d24b4b}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .wrap{max-width:1300px;margin:0 auto;padding:0 40px}
@@ -21,24 +21,24 @@ body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
 .sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
 .stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:22px 0 20px}
-.stat{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px 26px;text-align:center;min-width:170px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:16px 26px;text-align:center;min-width:170px}
 .stat b{font-family:Rubik;font-size:28px;font-weight:800;display:block}
 .stat.exp b{color:var(--up)}.stat.imp b{color:var(--teal)}.stat.bal b{color:var(--down)}
 .stat span{font-size:14px;color:var(--mut)}
 .toggle{display:flex;gap:0;justify-content:center;margin:6px 0 24px}
 .tbtn{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d);background:var(--bg2);border:1.5px solid var(--line);padding:13px 40px;cursor:pointer;transition:.14s}
-.tbtn:first-child{border-radius:0 14px 14px 0}.tbtn:last-child{border-radius:14px 0 0 14px;border-inline-start:0}
+.tbtn:first-child{border-radius:0 14px 14px 0}.tbtn:last-child{border-radius:0 0 0 14px;border-inline-start:0}
 .tbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
 .split{display:grid;grid-template-columns:1.5fr 1fr;gap:26px;margin-bottom:50px;align-items:start}
 @media(max-width:1000px){.split{grid-template-columns:1fr}}
-.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:0;padding:24px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
 .panel h2{font-family:Rubik;font-size:23px;font-weight:800;color:var(--green-d);margin-bottom:4px}
 .panel .sm{font-size:14px;color:var(--mut);margin-bottom:18px}
 .prods{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(max-width:640px){.prods{grid-template-columns:1fr}}
-.prod{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:.14s}
+.prod{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:0;padding:15px 16px;transition:.14s}
 .prod:hover{border-color:#bcdcc8;box-shadow:0 8px 20px rgba(20,38,28,.06)}
-.pemoji{width:48px;height:48px;border-radius:12px;background:var(--tint);display:grid;place-items:center;font-size:26px;flex:0 0 auto}
+.pemoji{width:48px;height:48px;border-radius:0;background:var(--tint);display:grid;place-items:center;font-size:26px;flex:0 0 auto}
 .pn{font-family:Rubik;font-weight:700;font-size:17px;color:var(--green-d)}
 .pv{font-family:'Plex Mono';font-size:14px;color:var(--mut);margin-top:2px}
 .pdest{font-size:20px;letter-spacing:2px;margin-top:3px}
@@ -50,17 +50,17 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .prow{display:flex;align-items:center;gap:12px}
 .pflag{font-size:24px;flex:0 0 auto}
 .pcty{font-size:15.5px;font-weight:600;color:var(--ink);width:96px;flex:0 0 auto}
-.ptrack{flex:1;height:12px;background:var(--bg2);border-radius:999px;overflow:hidden}
-.pfill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--lime),var(--green))}
+.ptrack{flex:1;height:12px;background:var(--bg2);border-radius:0;overflow:hidden}
+.pfill{height:100%;border-radius:0;background:linear-gradient(90deg,var(--lime),var(--green))}
 .ppct{font-family:'Plex Mono';font-size:14px;color:var(--green-d);font-weight:700;width:46px;text-align:left}
 .worldmap{margin-bottom:30px}
 .wmtop{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px}
 .wmtop h2{font-family:Rubik;font-size:24px;font-weight:800;color:var(--green-d)}
 .commsel{display:flex;gap:8px;flex-wrap:wrap}
-.csbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;transition:.12s}
+.csbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:7px 14px;cursor:pointer;transition:.12s}
 .csbtn.on{background:var(--green);color:#fff;border-color:var(--green)}
 .csbtn:hover:not(.on){background:var(--tint)}
-.wsvg{width:100%;height:auto;background:linear-gradient(180deg,#edf5fa,#e5eff4);border:1px solid var(--line);border-radius:14px;display:block}.wland{fill:#d7e6dc;stroke:#b7d3c0;stroke-width:.5;opacity:.85}.wcont text{fill:#8fb0a0;font-family:Rubik,Heebo,sans-serif;font-weight:800;font-size:15px;text-anchor:middle;opacity:.75;letter-spacing:.02em}
+.wsvg{width:100%;height:auto;background:linear-gradient(180deg,#edf5fa,#e5eff4);border:1px solid var(--line);border-radius:0;display:block}.wland{fill:#f4efe3;stroke:#b7d3c0;stroke-width:.5;opacity:.85}.wcont text{fill:#8fb0a0;font-family:Rubik,Heebo,sans-serif;font-weight:800;font-size:15px;text-anchor:middle;opacity:.75;letter-spacing:.02em}
 @keyframes flow{to{stroke-dashoffset:-24}}
 .arc{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-dasharray:7 6;animation:flow 1s linear infinite;opacity:.9}
 .node-ex{fill:var(--green);stroke:#fff;stroke-width:1.5}
@@ -74,24 +74,27 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .teamsh{font-family:Rubik;font-size:28px;font-weight:800;color:var(--green-d);text-align:center;margin:8px 0 20px}
 .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px}
 @media(max-width:900px){.tgrid{grid-template-columns:1fr 1fr}}
-.tcard{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;transition:.14s}
+.tcard{background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:22px;text-align:center;transition:.14s}
 .tcard:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.07);transform:translateY(-3px)}
 .tcard .ic{font-size:34px;margin-bottom:8px}
 .tcard h3{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);margin-bottom:6px}
 .tcard p{font-size:14.5px;color:var(--mut);line-height:1.55;margin-bottom:14px}
-.tbtn2{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:10px;padding:10px 20px;font-family:Rubik;font-weight:700;font-size:14.5px;cursor:pointer}
+.tbtn2{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:0;padding:10px 20px;font-family:Rubik;font-weight:700;font-size:14.5px;cursor:pointer}
 .inq{max-width:840px;margin:0 auto 34px}
 .inq h2{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);margin-bottom:16px;text-align:center}
 .inq .frm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .inq .full{grid-column:1/-1}
-.inq input,.inq select,.inq textarea{width:100%;border:1.5px solid #cfe0d5;border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0}
+.inq input,.inq select,.inq textarea{width:100%;border:1.5px solid #f4efe3;border-radius:0;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0}
 .inq input:focus,.inq textarea:focus,.inq select:focus{border-color:var(--green)}
 .inq textarea{min-height:96px;resize:vertical}
-.inq .send{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:11px;padding:13px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
-.inq .ok{display:none;background:var(--tint);border:1px solid #cfe6d8;border-radius:11px;padding:14px;color:var(--green-d);font-weight:600}
-.note{background:var(--tint);border:1px solid #cfe6d8;border-radius:12px;padding:14px 18px;font-size:14px;color:var(--green-d);margin-bottom:40px}
+.inq .send{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:0;padding:13px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+.inq .ok{display:none;background:var(--tint);border:1px solid #f4efe3;border-radius:0;padding:14px;color:var(--green-d);font-weight:600}
+.note{background:var(--tint);border:1px solid #f4efe3;border-radius:0;padding:14px 18px;font-size:14px;color:var(--green-d);margin-bottom:40px}
 .foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>
@@ -116,6 +119,54 @@ h1{font-family:Rubik;font-size:56px;font-weight:800;margin:4px 0 6px}h1 b{color:
       <button class="tbtn" id="tImp" onclick="setMode('imp')">📥 יבוא</button>
     </div>
   </div>
+
+  <div class="panel" style="margin-bottom:22px">
+    <h2 style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:2px">🌍 מנוע שווקי סחר <span style="display:inline-flex;align-items:center;gap:6px;font-family:'Plex Mono',monospace;font-size:11px;font-weight:800;color:#127a43;background:#f4efe3;border-radius:0;padding:3px 10px"><span class="xdot"></span>Comtrade + AI</span></h2>
+    <div class="sm" style="color:var(--mut);font-size:14px;margin-bottom:12px">הקלד מוצר או טכנולוגיה — קבל 5 מדינות מומלצות + קישור לנספח הכלכלי בשגרירות.</div>
+    <div id="exdir" style="display:flex;gap:8px;margin-bottom:12px">
+      <button onclick="setXDir('export',this)" style="background:linear-gradient(90deg,#1c6b45,#2e9e63);border:1px solid transparent;color:#fff;border-radius:0;padding:8px 18px;font-family:Heebo;font-weight:700;font-size:14px;cursor:pointer">📤 לאן לייצא</button>
+      <button onclick="setXDir('import',this)" style="background:#f4efe3;border:1px solid #f4efe3;color:#134a30;border-radius:0;padding:8px 18px;font-family:Heebo;font-weight:700;font-size:14px;cursor:pointer">📥 מאיפה לייבא</button>
+    </div>
+    <style>.xdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d57;animation:xp 1.5s infinite}@keyframes xp{0%,100%{box-shadow:0 0 0 0 rgba(31,157,87,.5)}70%{box-shadow:0 0 0 7px rgba(31,157,87,0)}}
+    #exq{flex:1;min-width:220px;border:1px solid var(--line);border-radius:0;padding:13px 15px;font-family:Heebo;font-size:15.5px;outline:0}#exq:focus{border-color:var(--green)}
+    .exgo{background:linear-gradient(90deg,var(--green),#2e9e63);color:#fff;border:0;border-radius:0;padding:13px 26px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer}
+    .exmc{background:#fff;border:1px solid var(--line);border-inline-start:4px solid #2e9e63;border-radius:0;padding:16px 18px;box-shadow:0 8px 20px rgba(20,60,40,.05)}
+    .exmc .cty{font-family:Rubik;font-weight:800;font-size:19px;color:var(--green-d)}
+    .exmc .r{font-size:13.5px;color:#3a4a41;margin-top:6px;line-height:1.5}.exmc .r b{color:var(--green-d)}
+    .exmc .att{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:#2b8fb0;text-decoration:none}</style>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><input id="exq" placeholder="עגבניות שרי · תמרים · מערכת טפטוף · חיישני קרקע" onkeydown="if(event.key==='Enter')exAnalyze()"><button class="exgo" onclick="exAnalyze()">🌍 מצא שווקים</button></div>
+    <div id="exout"></div>
+  </div>
+  <script>
+  var XFLAGS={'ארצות הברית':'🇺🇸','ארה״ב':'🇺🇸','גרמניה':'🇩🇪','הולנד':'🇳🇱','צרפת':'🇫🇷','בריטניה':'🇬🇧','רוסיה':'🇷🇺','סין':'🇨🇳','הודו':'🇮🇳','יפן':'🇯🇵','קנדה':'🇨🇦','ברזיל':'🇧🇷','אוסטרליה':'🇦🇺','ספרד':'🇪🇸','איטליה':'🇮🇹','האיחוד האירופי':'🇪🇺','שוויץ':'🇨🇭','בלגיה':'🇧🇪','פולין':'🇵🇱','טורקיה':'🇹🇷','איחוד האמירויות':'🇦🇪','אמירויות':'🇦🇪','סעודיה':'🇸🇦','מצרים':'🇪🇬','מקסיקו':'🇲🇽','דרום קוריאה':'🇰🇷','סינגפור':'🇸🇬','ניו זילנד':'🇳🇿','ארגנטינה':'🇦🇷','ויאטנם':'🇻🇳','תאילנד':'🇹🇭','אוקראינה':'🇺🇦'};
+  function xflag(n){for(var k in XFLAGS){if(n.indexOf(k)>=0)return XFLAGS[k];}return '🌍';}
+  var XDIR='export';
+  function setXDir(d,el){XDIR=d;document.querySelectorAll('#exdir button').forEach(function(b){b.style.background='#f4efe3';b.style.color='#134a30';b.style.borderColor='#f4efe3';});el.style.background='linear-gradient(90deg,#1c6b45,#2e9e63)';el.style.color='#fff';el.style.borderColor='transparent';document.getElementById('exq').placeholder=(d==='import'?'חיטה · תירס · קפה · דשנים…':'עגבניות שרי · תמרים · מערכת טפטוף · חיישני קרקע');}
+  function exAnalyze(){
+    var q=(document.getElementById('exq').value||'').trim(); if(!q){document.getElementById('exq').focus();return;}
+    var sid=''; try{sid=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+    document.getElementById('exout').innerHTML='<div style="text-align:center;padding:30px"><div style="font-size:42px;animation:xp 1.4s infinite">🧠</div><div style="font-family:\'Plex Mono\',monospace;color:#2b8fb0;font-weight:700;margin-top:8px">המוח מנתח שווקי יעד…</div></div>';
+    fetch('/api/search-quota',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:sid,feature:'markets'})}).then(function(r){return r.json();}).then(function(qd){
+      if(qd&&qd.allowed===false){ document.getElementById('exout').innerHTML='<div style="background:#fff;border:1.5px solid #eddca8;border-radius:0;padding:26px;text-align:center;margin-top:14px"><div style="font-size:40px">⭐</div><div style="font-weight:800;color:#134a30;font-size:20px;margin:6px 0">הגעת ל-5 הניתוחים החינמיים</div><a href="pricing.html" style="display:inline-block;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;text-decoration:none;border-radius:0;padding:12px 28px;font-weight:800;margin-top:8px">🚀 שדרגו למנוי →</a></div>'; return; }
+      var prompt = XDIR==='import'
+        ? 'אתה מנוע שווקי סחר לאגרו-טק ישראלי. המשתמש רוצה לייבא לישראל: "'+q+'". המלץ על בדיוק 5 מדינות מקור אופטימליות לייבוא (הכי כדאי לקנות מהן). התחשב באיכות, מחיר, אמינות אספקה, הסכמי סחר ומרחק. החזר בדיוק 5 שורות, בפורמט: [שם המדינה] | יתרון: משפט קצר | שיקול: משפט קצר | התאמה: גבוהה או בינונית. רק 5 שורות, בלי מספור, בעברית.'
+        : 'אתה מנוע שווקי יעד ליצואן וליזם אגרו-טק ישראלי. המשתמש רוצה לייצא או להשיק: "'+q+'". המלץ על בדיוק 5 שווקי יעד אופטימליים בעולם. התחשב בביקוש, מחסור/פער מקומי, אקלים, רגולציה, הסכמי סחר ויתרון ישראלי. החזר בדיוק 5 שורות, בפורמט: [שם המדינה] | הזדמנות: משפט קצר | יתרון ישראלי: משפט קצר | התאמה: גבוהה או בינונית. רק 5 שורות, בלי מספור, בעברית.';
+      fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){
+        var lines=(j.answer||'').split('\n').filter(function(l){return l.indexOf('|')>0;});
+        if(!lines.length){document.getElementById('exout').innerHTML='<div class="sm" style="padding:16px">'+((j.answer||'').slice(0,400)||'לא התקבלה תשובה.')+'</div>';return;}
+        var html='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:16px">'+lines.slice(0,6).map(function(l){
+          var p=l.split('|').map(function(x){return x.replace(/^\[|\]$/g,'').replace(/^[-•\d.\s]+/,'').trim();});
+          var cty=p[0]||'שוק';
+          var body=p.slice(1).map(function(x){var kv=x.split(':');return kv.length>1?'<div class="r"><b>'+kv[0].trim()+':</b> '+kv.slice(1).join(':').trim()+'</div>':'<div class="r">'+x+'</div>';}).join('');
+          var att='https://www.google.com/search?q='+encodeURIComponent('נספח מסחרי ישראל '+cty+' מנהל סחר חוץ');
+          return '<div class="exmc"><div class="cty">'+xflag(cty)+' '+cty+'</div>'+body+'<a class="att" href="'+att+'" target="_blank" rel="noopener">📞 נספח כלכלי בשגרירות · '+cty+' ↗</a></div>';
+        }).join('')+'</div>';
+        if(qd&&!qd.unlimited&&qd.limit){var left=Math.max(0,qd.limit-(qd.used||0));html+='<div style="text-align:center;color:#c79a2e;font-family:\'Plex Mono\',monospace;font-size:13px;font-weight:700;margin-top:14px">🔎 ניתוח חינמי · נותרו '+left+' מתוך '+qd.limit+'</div>';}
+        document.getElementById('exout').innerHTML=html;
+      }).catch(function(){document.getElementById('exout').innerHTML='<div class="sm" style="padding:16px">שגיאת חיבור לשרת.</div>';});
+    }).catch(function(){document.getElementById('exout').innerHTML='<div class="sm" style="padding:16px">שגיאת חיבור.</div>';});
+  }
+  </script>
 
   <div class="panel worldmap">
     <div class="wmtop"><h2>🌍 מפת סחר עולמית — מי מייצר, מי קונה</h2><div class="commsel" id="commsel"></div></div>
@@ -285,12 +336,12 @@ var MARKETS=[
  {em:"🥬",n:"New Covent Garden",loc:"לונדון · בריטניה",t:"שוק הסיטונאות הגדול בבריטניה לפירות, ירקות ופרחים.",il:"נקודת כניסה לתוצרת טרייה ופרחים ישראליים לבריטניה.",u:"https://www.newcoventgarden.com"}
 ];
 document.getElementById('mktgrid').innerHTML=MARKETS.map(function(m){
- return '<a href="'+m.u+'" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line,#dbe8df);border-radius:16px;padding:18px;text-decoration:none;color:inherit;box-shadow:0 8px 20px rgba(20,38,28,.05);transition:.14s" onmouseover="this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.transform=\'\'">'+
+ return '<a href="'+m.u+'" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line,#f4efe3);border-radius:0;padding:18px;text-decoration:none;color:inherit;box-shadow:0 8px 20px rgba(20,38,28,.05);transition:.14s" onmouseover="this.style.transform=\'translateY(-3px)\'" onmouseout="this.style.transform=\'\'">'+
   '<div style="font-size:28px">'+m.em+'</div>'+
   '<div style="font-family:Rubik;font-weight:800;font-size:18px;color:#134a30">'+m.n+'</div>'+
   '<div style="font-family:\'Plex Mono\',monospace;font-size:12.5px;color:#5c6f63">📍 '+m.loc+'</div>'+
   '<div style="font-size:14px;color:#14261c;line-height:1.5;margin-top:2px">'+m.t+'</div>'+
-  '<div style="font-size:13px;color:#134a30;background:#eaf4ee;border:1px solid #cfe6d8;border-radius:10px;padding:7px 10px;margin-top:6px">🇮🇱 '+m.il+'</div>'+
+  '<div style="font-size:13px;color:#134a30;background:#f4efe3;border:1px solid #f4efe3;border-radius:0;padding:7px 10px;margin-top:6px">🇮🇱 '+m.il+'</div>'+
   '<div style="font-family:Rubik;font-weight:800;font-size:13px;color:#2e9e63;margin-top:4px">לאתר השוק ↗</div></a>';
 }).join('');
 </script>

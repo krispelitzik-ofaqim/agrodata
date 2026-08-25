@@ -8,7 +8,7 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .wrap{max-width:1300px;margin:0 auto;padding:0 40px}
@@ -21,18 +21,18 @@ body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
 .sub{color:var(--mut);font-size:16px;max-width:760px;margin:0 auto}
 .filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 8px}
-.fbtn{font-family:Rubik;font-weight:600;font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:7px}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:8px 15px;cursor:pointer;transition:.12s;display:inline-flex;align-items:center;gap:7px}
 .fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}.fbtn:hover:not(.on){background:var(--tint)}
-.fbtn .sw{width:11px;height:11px;border-radius:3px}
+.fbtn .sw{width:11px;height:11px;border-radius:0}
 .split{display:grid;grid-template-columns:1.4fr 1fr;gap:26px;margin:16px 0 50px;align-items:start}
 @media(max-width:1000px){.split{grid-template-columns:1fr}}
-.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
-.mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border-radius:14px;padding:10px;display:flex;justify-content:center}
+.panel{background:#fff;border:1px solid var(--line);border-radius:0;padding:20px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.mapbox{background:linear-gradient(180deg,#eef6f9,#e7f1f5);border-radius:0;padding:10px;display:flex;justify-content:center}
 .mapbox svg{width:auto;height:620px;max-width:100%}
 .pin{cursor:pointer;transition:.1s}.pin:hover circle{r:7}
 .clist h3{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);margin-bottom:4px}
 .clist .sm{font-size:13px;color:var(--mut);margin-bottom:12px}
-.citem{display:flex;align-items:center;gap:11px;padding:9px 6px;border-bottom:1px solid #eef4ef;text-decoration:none;color:inherit;font-size:14.5px}
+.citem{display:flex;align-items:center;gap:11px;padding:9px 6px;border-bottom:1px solid #f4efe3;text-decoration:none;color:inherit;font-size:14.5px}
 .citem:hover{background:var(--bg2)}
 .cdot{width:12px;height:12px;border-radius:50%;flex:0 0 auto}
 .cn{font-weight:700;color:var(--green-d)}
@@ -41,6 +41,9 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .note a{color:var(--lime);font-weight:700;text-decoration:none}
 .foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>
@@ -61,7 +64,7 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <div class="panel">
       <div class="mapbox">
         <svg viewBox="0 0 200 400">
-          <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="#dce9e0" stroke="#134a30" stroke-width="1.4" stroke-linejoin="round"/>
+          <path d="M110,6 L128,18 L140,50 L147,92 L151,120 L130,150 L125,182 L114,236 L120,300 L112,394 L103,300 L99,236 L86,176 L69,150 L57,120 L62,82 L79,42 L97,16 Z" fill="#f4efe3" stroke="#134a30" stroke-width="1.4" stroke-linejoin="round"/>
           <g id="cityLabels" font-family="Rubik" font-size="7" font-weight="700" fill="#5c6f63">
             <text x="70" y="64" text-anchor="middle">חיפה</text>
             <text x="60" y="120" text-anchor="middle">ת״א</text>

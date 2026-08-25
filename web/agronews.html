@@ -207,6 +207,13 @@ a{color:inherit}
 .agx{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}@media(max-width:720px){.agx{grid-template-columns:1fr 1fr}}@media(max-width:440px){.agx{grid-template-columns:1fr}}
 .agxcard{background:#fff;border-top:3px solid var(--green);border-radius:12px!important;padding:14px 14px 12px;box-shadow:0 3px 10px rgba(20,50,35,.05);display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:.14s}
 .agxcard:hover{box-shadow:0 12px 26px rgba(20,50,35,.12);transform:translateY(-3px)}
+.agxcard-il{border-top-color:var(--teal)}
+.agxcard-il .agxgo{color:var(--teal)}
+.agxil-slider{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:8px;margin-bottom:6px}
+.agxil-slider::-webkit-scrollbar{height:7px}
+.agxil-slider::-webkit-scrollbar-thumb{background:var(--teal-l);border-radius:8px}
+.agxil-slider .agxcard{flex:0 0 210px;scroll-snap-align:start}
+@media(max-width:520px){.agxil-slider .agxcard{flex:0 0 72%}}
 .agxgo{margin-top:8px;font-family:Rubik;font-weight:700;font-size:12.5px;color:var(--lime)}
 .agxtop{display:flex;align-items:center;justify-content:space-between}
 .agxsym{font-family:'Space Grotesk','Plex Mono',monospace;font-weight:800;font-size:15px;color:var(--green-d)}
@@ -309,6 +316,8 @@ a{color:inherit}
       <div class="commod" id="commodHome"><div class="load">…</div></div>
       <div class="secbar gold">📊 מדדי אגרו-טק בעולם · חי</div>
       <div class="agx" id="agxHome"><div class="load">…</div></div>
+      <div class="secbar teal">🇮🇱 מניות אגרו-טק ישראליות · חי</div>
+      <div class="agx" id="agxilHome"><div class="load">…</div></div>
       <div class="secbar teal">🎬 וידאו</div>
       <div class="vid"><iframe id="vid" src="" title="video" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
       <div class="ofpanel"><div class="oftitle">🌱 אופקים · <b>בירת האגרו-טק</b></div><div class="ofgrid" id="ofcubesHome"></div></div>
@@ -345,7 +354,7 @@ a{color:inherit}
       <a class="admashv" href="https://www.agromashovgroup.com/" target="_blank" rel="noopener"><div class="adcarpet"><div class="rug">תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · </div></div><div class="adshine"></div><div class="admtxt v"><b>תערוכת<br>אגרו-משוב</b><span class="addate">📅 30/11 – 01/12</span><span class="adofa">אופקים ·<br><b>בירת האגרו-טק</b><br>של ישראל</span><span class="adcta">פרטים והרשמה כאן ↗</span></div><span class="adtag">פרסומת</span></a>
     </div>
   </div></div>
-  <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold">📊 מדדי אגרו-טק בעולם · חי</div><div class="agx" id="agx"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
+  <!-- FINANCE --><div class="panel" id="p_finance"><div class="sec"><div class="secbar gold">📈 שוק הסחורות · חי</div><div class="commod" id="commod"><div class="load">…</div></div><div class="secbar gold">📊 מדדי אגרו-טק בעולם · חי</div><div class="agx" id="agx"><div class="load">…</div></div><div class="secbar teal">🇮🇱 מניות אגרו-טק ישראליות · חי</div><div class="agx" id="agxil"><div class="load">…</div></div><div class="secbar gold" id="finh">💰 פיננסים · אגרו-טק והשקעות</div><div class="two" id="financelist"><div class="load">…</div></div></div></div>
   <!-- OFAKIM --><div class="panel" id="p_ofakim"><div class="sec"><div class="secbar" id="ofah">🌱 אופקים · בירת האגרו-טק</div><div class="vid"><iframe id="ofvid" src="" title="Ofakim" allow="autoplay; encrypted-media" allowfullscreen></iframe></div><div class="ofpanel"><div class="oftitle">🏙️ מרכיבי הזירה באופקים</div><div class="ofgrid" id="ofcubes"></div></div><div class="secbar">📰 חדשות מאופקים</div><div class="two" id="ofakimlist"><div class="load">…</div></div></div></div>
   <!-- ALBUM --><div class="panel" id="p_album"><div class="sec"><div class="secbar teal" id="albh">📸 אלבום הקהילה</div><div id="album" class="load">…</div></div></div>
   <!-- GROUPS --><div class="panel" id="p_groups"><div class="sec"><div class="secbar" id="grh">👥 קבוצות עניין</div><div class="grid3" id="groups"></div></div></div>
@@ -539,7 +548,7 @@ var OP_he=[['🔬','לקטור מדעי','למה הדאטה החקלאית הי�
 var OP_en=[['🔬','Science Reviewer','Why agri-data is Israel’s next big asset','https://randomuser.me/api/portraits/men/32.jpg'],['🌾','Chief Agronomist','Three irrigation mistakes every new grower makes','https://randomuser.me/api/portraits/men/64.jpg'],['💼','Business Advisor','From idea to company: a plan investors love','https://randomuser.me/api/portraits/women/68.jpg']];
 var GR_he=[['💧','השקיה ומים','1,240'],['🪴','חקלאות ביתית','980'],['🐟','אקוופוניקה','420'],['🌿','גידול אורגני','760'],['🚀','סטארטאפים','1,510'],['🏠','חקלאות מבוקרת','630']];
 var GR_en=[['💧','Irrigation & Water','1,240'],['🪴','Home Farming','980'],['🐟','Aquaponics','420'],['🌿','Organic','760'],['🚀','Startups','1,510'],['🏠','Controlled Ag','630']];
-function go(k){if(k==='ofakim'){window.location.href='ofakim.html';return;}['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance'){loadCommod('commod');loadAgx('agx');loadTopic('finance',STR[LANG].qfin);}if(k==='ofakim'){var ov=document.getElementById('ofvid');if(ov&&!ov.src)ov.src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';renderOfCubes('ofcubes');loadTopic('ofakim',STR[LANG].qofa);}window.scrollTo(0,0);}
+function go(k){if(k==='ofakim'){window.location.href='ofakim.html';return;}['news','finance','ofakim','album','groups','home'].forEach(function(x){var el=document.getElementById('p_'+x);if(el)el.classList.toggle('on',x===k);});document.querySelectorAll('.cbtn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-k')===k);});if(k==='album')loadAlbum();if(k==='finance'){loadCommod('commod');loadAgx('agx');loadAgxIl('agxil');loadTopic('finance',STR[LANG].qfin);}if(k==='ofakim'){var ov=document.getElementById('ofvid');if(ov&&!ov.src)ov.src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';renderOfCubes('ofcubes');loadTopic('ofakim',STR[LANG].qofa);}window.scrollTo(0,0);}
 var COMS=[['ZC=F','תירס','Corn'],['ZW=F','חיטה','Wheat'],['ZS=F','סויה','Soybeans'],['KC=F','קפה','Coffee'],['SB=F','סוכר','Sugar'],['CT=F','כותנה','Cotton'],['CC=F','קקאו','Cocoa'],['LE=F','בקר','Cattle']];
 function comName(sym){var he=LANG==='he',n='';COMS.forEach(function(c){if(c[0]===sym)n=he?c[1]:c[2];});return n;}
 function bigChart(s,up){if(!s||s.length<2)return '';var w=300,h=150,mn=Math.min.apply(null,s),mx=Math.max.apply(null,s),rng=(mx-mn)||1;
@@ -559,13 +568,23 @@ function renderMlist(id){var map=document.getElementById(id)._q,he=LANG==='he';
 function selectCom(id,sym){var el=document.getElementById(id),map=el._q,q=map&&map[sym];if(!q)return;var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
  document.getElementById(id+'c').innerHTML='<div class="ct">'+esc(comName(sym))+'</div><div class="cp">'+q.price.toLocaleString()+'</div><div class="cc '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</div>'+bigChart(q.series,up);
  [].forEach.call(document.querySelectorAll('#'+id+'l .mrow'),function(r){r.classList.toggle('on',r.getAttribute('data-s')===sym);});}
-var AGX=[['KROP','אגרו-טק ופודטק','AgTech & FoodTech'],['MOO','אגרו-ביזנס','Agribusiness'],['VEGI','חקלאות גלובלי','Global Agri'],['DBA','סחורות חקלאיות','Farm Commodities']];
+var AGX=[['KROP','אגרו-טק ופודטק','AgTech & FoodTech'],['MOO','אגרו-ביזנס','Agribusiness'],['VEGI','חקלאות גלובלי','Global Agri'],['DBA','סחורות חקלאיות','Farm Commodities'],['DE','ג׳ון דיר · מיכון','John Deere'],['CTVA','קורטבה · זרעים','Corteva'],['NTR','נוטריאן · דשנים','Nutrien'],['BG','בונגה · סחר תבואות','Bunge'],['ADM','ארצ׳ר דניאלס','Archer-Daniels'],['MOS','מוזאיק · אשלג','Mosaic']];
 function loadAgx(id){var el=document.getElementById(id||'agx');if(!el)return;el.classList.remove('agx');el.innerHTML='<div class="load">…</div>';
  fetch('/api/quote?symbols='+AGX.map(function(c){return c[0];}).join(',')).then(function(r){return r.json();}).then(function(arr){
   var map={};(arr||[]).forEach(function(q){map[q.symbol]=q;});var he=LANG==='he';
-  el.classList.add('agx');
+  el.classList.add('agxil-slider');
   el.innerHTML=AGX.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;
    return '<a class="agxcard" href="https://finance.yahoo.com/quote/'+c[0]+'" target="_blank" rel="noopener"><div class="agxtop"><span class="agxsym">'+c[0]+'</span><span class="agxch '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</span></div><div class="agxname">'+esc(he?c[1]:c[2])+'</div><div class="agxprice">$'+q.price.toFixed(2)+'</div><div class="agxspark">'+bigChart(q.series,up)+'</div><div class="agxgo">'+(he?'למדד המלא ↗':'View index ↗')+'</div></a>';
+  }).join('');
+ }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
+// Israeli agritech stocks — live prices + sparkline, teal-branded (bidul from the world block)
+var AGXIL=[['ICL','כיל · דשנים ומינרלים','ICL · Fertilizers','$'],['EVGN','אבוג׳ן · גנומיקה','Evogene · Genomics','$'],['GILT','גילת · לוויין וחקלאות','Gilat','$'],['WILC','וילי-פוד · מזון','Willi-Food','$'],['PLX','פרוטליקס · אגרו-פארמה','Protalix','$'],['000553.SZ','אדמה · הגנת הצומח','ADAMA · Crop Protection','¥']];
+function loadAgxIl(id){var el=document.getElementById(id||'agxil');if(!el)return;el.classList.remove('agx');el.innerHTML='<div class="load">…</div>';
+ fetch('/api/quote?symbols='+AGXIL.map(function(c){return c[0];}).join(',')).then(function(r){return r.json();}).then(function(arr){
+  var map={};(arr||[]).forEach(function(q){map[q.symbol]=q;});var he=LANG==='he';
+  el.classList.add('agxil-slider');
+  el.innerHTML=AGXIL.map(function(c){var q=map[c[0]];if(!q)return '';var ch=q.prev?((q.price-q.prev)/q.prev*100):0,up=ch>=0;var lbl=(c[0]==='000553.SZ'?'ADAMA':c[0]);
+   return '<a class="agxcard agxcard-il" href="https://finance.yahoo.com/quote/'+c[0]+'" target="_blank" rel="noopener"><div class="agxtop"><span class="agxsym">'+lbl+'</span><span class="agxch '+(up?'up':'dn')+'">'+(up?'▲ ':'▼ ')+Math.abs(ch).toFixed(2)+'%</span></div><div class="agxname">'+esc(he?c[1]:c[2])+'</div><div class="agxprice">'+c[3]+q.price.toFixed(2)+'</div><div class="agxspark">'+bigChart(q.series,up)+'</div><div class="agxgo">'+(he?'לפרטי המניה ↗':'View stock ↗')+'</div></a>';
   }).join('');
  }).catch(function(){el.innerHTML='<div class="load">—</div>';});}
 var OF_he=[['🎯','חזון','מהנגב לעולם — בירת האגרו-טק של ישראל','img/urbanfarm.jpg'],['🏙️','מרכז החדשנות','חממה, האצה ומפגש לחברות ומגדלים','img/innovation.jpg'],['🌾','חוות ניסויים','שדות מו״פ לגידולים וטכנולוגיות','img/experfarm.jpg'],['🏭','אזור תעשייה אגרו','ייצור, לוגיסטיקה ועיבוד תוצרת','img/agrosite-plan.jpg'],['🎓','אגרו-קמפוס','הכשרה, אקדמיה ודור העתיד','img/campus.jpg'],['🌱','אגרו-סייט','חיישנים ומזג אוויר חקלאי חי','img/agrosite.jpg'],['🏫','בי״ס רגבים','חינוך חקלאי מגיל צעיר','img/regavim.jpg'],['🤝','קהילת המגדלים','שיתוף ידע, אירועים ופיילוטים','img/map.jpg']];
@@ -648,7 +667,7 @@ function boot(){
   document.getElementById('gal').innerHTML=it.slice(0,12).map(function(x){return '<div class="gt"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('');
   loadNews();renderHomeAg();renderOfCubes('ofcubesHome',6);
  }).catch(function(){loadNews();});
- setVideo();renderExpo();renderHomeAg();loadWeather();loadStartups();renderEdu();loadCommod('commodHome');loadAgx('agxHome');renderOfCubes('ofcubesHome',6);invRender();
+ setVideo();renderExpo();renderHomeAg();loadWeather();loadStartups();renderEdu();loadCommod('commodHome');loadAgx('agxHome');loadAgxIl('agxilHome');renderOfCubes('ofcubesHome',6);invRender();
 }
 function setVideo(){document.getElementById('vid').src='https://www.youtube.com/embed/m06pYkUvvGQ?rel=0&modestbranding=1';}
 var EXPO_he=[
@@ -674,7 +693,7 @@ function loadAlbum(){if(ALBUM)return;ALBUM=true;
   document.getElementById('album').innerHTML='<div class="album">'+it.map(function(x){return '<div class="ph2"><img src="'+x.photo+'" loading="lazy" alt=""><div class="cap">'+esc(x.he||x.sci||'')+'</div></div>';}).join('')+'</div>';
  }).catch(function(){document.getElementById('album').innerHTML='<div class="load">—</div>';ALBUM=false;});
 }
-function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();renderHomeAg();loadCommod('commodHome');loadAgx('agxHome');renderOfCubes('ofcubesHome',6);}
+function setLang(l){LANG=l;document.getElementById('lg_he').classList.toggle('on',l==='he');document.getElementById('lg_en').classList.toggle('on',l==='en');applyStr();go('news');loadNews();renderExpo();renderHomeAg();loadCommod('commodHome');loadAgx('agxHome');loadAgxIl('agxilHome');renderOfCubes('ofcubesHome',6);}
 document.getElementById('date').textContent=new Date().toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 applyStr();boot();setInterval(refreshGallery,6*3600*1000);
 </script>

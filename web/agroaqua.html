@@ -21,36 +21,39 @@ body{font-family:Heebo,Arial,sans-serif;background:#f3f9fb;color:var(--ink)}
 h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#123a52}h1 b{color:var(--blue)}
 .sub{color:var(--mut);font-size:16px;max-width:660px;margin:0 auto}
 .tabs{display:flex;gap:10px;justify-content:center;margin:26px 0 18px;flex-wrap:wrap}
-.tab{background:#fff;border:1px solid #cfe2ec;border-radius:24px;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#2a5f7a;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tab{background:#fff;border:1px solid #cfe2ec;border-radius:0;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#2a5f7a;cursor:pointer;display:flex;align-items:center;gap:8px}
 .tab.on{background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(28,111,158,.28)}
-.tab .cnt{background:rgba(0,0,0,.12);border-radius:11px;padding:1px 8px;font-size:12px;font-weight:800}
+.tab .cnt{background:rgba(0,0,0,.12);border-radius:0;padding:1px 8px;font-size:12px;font-weight:800}
 .tab.on .cnt{background:rgba(255,255,255,.25)}
-.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(18,74,107,.07);margin-bottom:40px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:0;padding:22px;box-shadow:0 14px 34px rgba(18,74,107,.07);margin-bottom:40px}
 .ptitle{font-family:Rubik;font-weight:800;font-size:22px;color:#123a52;margin-bottom:10px}
-.search{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px}
+.search{width:100%;border:1px solid var(--line);border-radius:0;padding:12px 14px;font-family:Heebo;font-size:15px;outline:0;margin-bottom:10px}
 .search:focus{border-color:var(--blue)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.chip{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-family:Heebo;font-weight:700;font-size:13px;color:var(--mut);cursor:pointer}
+.chip{background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:7px 15px;font-family:Heebo;font-weight:700;font-size:13px;color:var(--mut);cursor:pointer}
 .chip.on{background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;border-color:transparent}
-.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:0}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
 th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
 tr:hover td{background:#fafdff}
 .ic{font-size:22px}
-.cat{border-radius:12px;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.cat{border-radius:0;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
 .nm b{color:#123a52;font-family:Rubik}
 .cogrid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 @media(max-width:760px){.cogrid{grid-template-columns:1fr}}
-.co{border:1px solid var(--line);border-radius:15px;padding:18px;display:flex;gap:14px;align-items:flex-start}
-.co .cl{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;flex:0 0 auto}
+.co{border:1px solid var(--line);border-radius:0;padding:18px;display:flex;gap:14px;align-items:flex-start}
+.co .cl{width:48px;height:48px;border-radius:0;background:linear-gradient(135deg,#1c6f9e,#124a6b);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Rubik;font-weight:800;font-size:20px;flex:0 0 auto}
 .co h3{font-family:Rubik;font-weight:800;font-size:18px;color:#123a52;margin-bottom:2px}
 .co .tag{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:6px}
 .co p{color:#4a5c58;font-size:13.5px;line-height:1.6}
 .co a{color:var(--blue);font-weight:700;text-decoration:none;font-size:13px}
 .foot{background:#123a52;color:#a9cfe0;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
 .foot a{color:#7fc7e8;text-decoration:none}
-.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:20px}
+.demo{position:fixed;top:12px;left:12px;z-index:90;background:var(--gold);color:#3a2c05;font-family:Rubik;font-weight:800;font-size:12px;padding:5px 12px;border-radius:0}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>

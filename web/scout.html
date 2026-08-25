@@ -8,7 +8,7 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--red:#c4562e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .wrap{max-width:1320px;margin:0 auto;padding:0 40px}
@@ -20,7 +20,7 @@ body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .kick{font-family:'Plex Mono';font-size:14px;color:var(--lime);letter-spacing:.08em}
 h1{font-family:Rubik;font-size:54px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
 .sub{color:var(--mut);font-size:17px;max-width:720px;margin:0 auto}
-.jsearchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:10px 18px;margin:26px auto 6px;max-width:640px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
+.jsearchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #f4efe3;border-radius:0;padding:10px 18px;margin:26px auto 6px;max-width:640px;box-shadow:0 10px 26px rgba(20,38,28,.07)}
 .jsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:16px;color:var(--ink);background:transparent}
 .sec{margin:34px 0 10px}
 .sech{font-family:Rubik;font-size:32px;font-weight:800;color:var(--green-d);display:flex;align-items:center;gap:12px;margin-bottom:4px}
@@ -30,22 +30,25 @@ h1{font-family:Rubik;font-size:54px;font-weight:800;margin:6px 0 8px}h1 b{color:
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
 @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.grid{grid-template-columns:1fr}}
-.scard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:18px;background:#fff;box-shadow:0 8px 20px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:4px solid var(--lime)}
+.scard{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:0;padding:18px;background:#fff;box-shadow:0 8px 20px rgba(20,38,28,.05);text-decoration:none;color:inherit;transition:.14s;border-top:4px solid var(--lime)}
 .scard.food{border-top-color:var(--gold)}
 .scard:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(20,38,28,.1);border-color:#bcdcc8}
 .stop{display:flex;align-items:center;gap:11px;margin-bottom:10px}
-.slogo{width:46px;height:46px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-family:Rubik;font-weight:800;color:var(--green);flex:0 0 auto;position:relative}
+.slogo{width:46px;height:46px;border-radius:0;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-family:Rubik;font-weight:800;color:var(--green);flex:0 0 auto;position:relative}
 .slogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:7px;background:#fff}
 .sname{font-family:Rubik;font-weight:800;font-size:18px;color:var(--green-d)}
 .syr{font-family:'Plex Mono';font-size:12px;color:var(--mut)}
 .sdesc{font-size:14px;color:var(--mut);line-height:1.5;flex:1;margin-bottom:12px}
 .stags{display:flex;flex-wrap:wrap;gap:6px}
-.stag{font-size:12px;color:var(--green-d);background:var(--tint);border:1px solid #cfe6d8;border-radius:999px;padding:3px 10px}
+.stag{font-size:12px;color:var(--green-d);background:var(--tint);border:1px solid #f4efe3;border-radius:0;padding:3px 10px}
 .scard.food .stag{color:#a3401f;background:rgba(199,154,46,.12);border-color:rgba(199,154,46,.3)}
 .slink{margin-top:12px;font-family:'Plex Mono';font-size:12.5px;color:var(--lime)}
 .foodbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
 .foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
 .empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:24px}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>

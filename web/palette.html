@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AgroData · פלטה אקדמית</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{
+  --paper:#ffffff; --paper-2:#f7f5ef; --paper-3:#efece3;
+  --gold:#c9a84c; --gold-d:#a8863a; --gold-soft:#f3ebd3;
+  --green:#1f6b45; --green-d:#143a28; --green-soft:#e8f1ea;
+  --ink:#1b1f1a; --grey:#5b655f; --muted:#8a8f88; --line:#e4e1d7;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding:0 26px}
+.mono{font-family:'Plex Mono',monospace}
+.rk{font-family:Rubik}
+
+/* header band */
+.hd{border-bottom:2px solid var(--ink);background:var(--paper)}
+.hd-in{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:30px 0 18px}
+.hd .brand{font-family:Rubik;font-weight:800;font-size:30px;letter-spacing:-.01em}
+.hd .brand b{color:var(--gold-d)}
+.hd .tag{font-family:'Plex Mono';font-size:12.5px;color:var(--grey);letter-spacing:.08em;text-transform:uppercase}
+.hd .rule{height:4px;background:var(--gold)}
+
+h2.sec{font-family:Rubik;font-weight:800;font-size:15px;letter-spacing:.02em;color:var(--grey);text-transform:uppercase;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+
+/* swatches */
+.sw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line)}
+@media(max-width:760px){.sw-grid{grid-template-columns:repeat(2,1fr)}}
+.sw{border-inline-end:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sw .chip{height:98px}
+.sw .meta{padding:11px 13px;background:var(--paper)}
+.sw .nm{font-family:Rubik;font-weight:700;font-size:14px}
+.sw .hx{font-family:'Plex Mono';font-size:12px;color:var(--muted);margin-top:2px}
+.sw .role{font-size:11.5px;color:var(--grey);margin-top:5px}
+
+/* type scale */
+.type-row{display:flex;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.type-row .lab{font-family:'Plex Mono';font-size:11.5px;color:var(--muted);width:120px;flex:0 0 auto}
+
+/* applied sample */
+.sample{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+@media(max-width:760px){.sample{grid-template-columns:1fr}}
+.card{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--gold)}
+.card .cardin{padding:20px}
+.kick{font-family:'Plex Mono';font-size:11.5px;color:var(--gold-d);letter-spacing:.07em;text-transform:uppercase}
+.card h3{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin:6px 0 8px}
+.card p{font-size:14px;color:var(--grey)}
+.stat{display:flex;gap:26px;margin-top:16px}
+.stat b{display:block;font-family:Rubik;font-weight:800;font-size:26px;color:var(--green)}
+.stat span{font-size:12px;color:var(--muted)}
+.btnrow{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{font-family:Rubik;font-weight:700;font-size:14px;padding:10px 20px;cursor:pointer;border:0}
+.btn.pri{background:var(--green);color:#fff}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.btn.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+.tag-chip{display:inline-block;background:var(--green-soft);color:var(--green-d);font-size:12px;font-weight:700;padding:4px 11px;border:1px solid #cfe3d6}
+.tag-chip.g{background:var(--gold-soft);color:var(--gold-d);border-color:#e6d6a6}
+.note{font-size:13px;color:var(--grey);background:var(--paper-2);border:1px solid var(--line);padding:14px 16px;margin-top:8px}
+.foot{border-top:2px solid var(--ink);margin-top:44px;padding:18px 0 40px;font-family:'Plex Mono';font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <div class="wrap"><div class="hd-in">
+    <div>
+      <div class="brand">Agro<b>Data</b></div>
+      <div class="tag">Research Data Platform · פלטה אקדמית</div>
+    </div>
+    <div class="tag">v1 · הצעה</div>
+  </div></div>
+  <div class="rule"></div>
+</div>
+
+<div class="wrap">
+
+  <h2 class="sec">צבעי בסיס</h2>
+  <div class="sw-grid">
+    <div class="sw"><div class="chip" style="background:#ffffff;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="nm">נייר לבן</div><div class="hx">#FFFFFF</div><div class="role">רקע ראשי</div></div></div>
+    <div class="sw"><div class="chip" style="background:#f7f5ef"></div><div class="meta"><div class="nm">נייר חם</div><div class="hx">#F7F5EF</div><div class="role">אזורים משניים</div></div></div>
+    <div class="sw"><div class="chip" style="background:#1b1f1a"></div><div class="meta"><div class="nm">דיו</div><div class="hx">#1B1F1A</div><div class="role">טקסט וכותרות</div></div></div>
+    <div class="sw"><div class="chip" style="background:#5b655f"></div><div class="meta"><div class="nm">אפור</div><div class="hx">#5B655F</div><div class="role">טקסט משני</div></div></div>
+  </div>
+
+  <h2 class="sec">צבעי מותג</h2>
+  <div class="sw-grid">
+    <div class="sw"><div class="chip" style="background:#c9a84c"></div><div class="meta"><div class="nm">זהב אקדמי</div><div class="hx">#C9A84C</div><div class="role">מבטא ראשי</div></div></div>
+    <div class="sw"><div class="chip" style="background:#a8863a"></div><div class="meta"><div class="nm">זהב כהה</div><div class="hx">#A8863A</div><div class="role">קישורים/הדגשה</div></div></div>
+    <div class="sw"><div class="chip" style="background:#1f6b45"></div><div class="meta"><div class="nm">ירוק מחקר</div><div class="hx">#1F6B45</div><div class="role">פעולה/חי</div></div></div>
+    <div class="sw"><div class="chip" style="background:#143a28"></div><div class="meta"><div class="nm">ירוק עמוק</div><div class="hx">#143A28</div><div class="role">כותרות כהות</div></div></div>
+  </div>
+
+  <h2 class="sec">גוונים רכים (רקעי תגיות/כרטיסים)</h2>
+  <div class="sw-grid">
+    <div class="sw"><div class="chip" style="background:#f3ebd3"></div><div class="meta"><div class="nm">זהב רך</div><div class="hx">#F3EBD3</div><div class="role">תגית זהב</div></div></div>
+    <div class="sw"><div class="chip" style="background:#e8f1ea"></div><div class="meta"><div class="nm">ירוק רך</div><div class="hx">#E8F1EA</div><div class="role">תגית ירוקה</div></div></div>
+    <div class="sw"><div class="chip" style="background:#efece3"></div><div class="meta"><div class="nm">אפור נייר</div><div class="hx">#EFECE3</div><div class="role">מסגרות</div></div></div>
+    <div class="sw"><div class="chip" style="background:#e4e1d7"></div><div class="meta"><div class="nm">קו הפרדה</div><div class="hx">#E4E1D7</div><div class="role">גבולות דקים</div></div></div>
+  </div>
+
+  <h2 class="sec">טיפוגרפיה</h2>
+  <div class="type-row"><span class="lab">Rubik 800</span><span class="rk" style="font-weight:800;font-size:30px">כותרת ראשית · AgroData</span></div>
+  <div class="type-row"><span class="lab">Rubik 700</span><span class="rk" style="font-weight:700;font-size:21px;color:var(--green-d)">כותרת משנה מחקרית</span></div>
+  <div class="type-row"><span class="lab">Heebo 400</span><span style="font-size:15px;color:var(--grey)">גוף טקסט — נקי, אוורירי, קריא. מדדים, מקורות והסברים.</span></div>
+  <div class="type-row"><span class="lab">Plex Mono</span><span class="mono" style="font-size:13px;color:var(--muted);letter-spacing:.06em">DATA · SOURCE · 2026 · תוויות ומספרים</span></div>
+
+  <h2 class="sec">הפלטה בשימוש</h2>
+  <div class="sample">
+    <div class="card"><div class="cardin">
+      <div class="kick">AgroLake · Data Repository</div>
+      <h3>מאגר הנתונים המרכזי</h3>
+      <p>נתוני אקלים, יבול, קרקע ומים — ממקורות פתוחים, עם גרף, טבלה והסבר.</p>
+      <div class="stat"><div><b>28</b><span>מאגרים</span></div><div><b>177</b><span>מדינות</span></div><div><b>1,725</b><span>נקודות</span></div></div>
+      <div class="btnrow"><button class="btn pri">פתיחת נתונים ←</button><button class="btn ghost">מקורות</button></div>
+    </div></div>
+    <div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="tag-chip">חי · API</span><span class="tag-chip g">פרימיום</span><span class="tag-chip">SDG 2</span>
+      </div>
+      <div class="note"><b>למה זה אקדמי:</b> רקע לבן, פינות חדות (בלי עיגולים), קו זהב דק ככותרת, מספרים ב-mono, ומבטא זהב אחד — נקי כמו כתב-עת מחקרי.</div>
+      <div class="btnrow"><button class="btn gold">שדרג לפרימיום</button><button class="btn pri">הרשמה</button></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="foot"><div class="wrap">Ofakim AgroData Center · academic palette proposal · #C9A84C / #1F6B45 / #1B1F1A</div></div>
+
+</body>
+</html>

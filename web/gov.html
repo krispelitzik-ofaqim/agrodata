@@ -8,7 +8,7 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dbe8df;--bg2:#f4f9f5;--tint:#eaf4ee}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 .wrap{max-width:1300px;margin:0 auto;padding:0 40px}.narrow{max-width:1180px;margin:0 auto}
@@ -21,21 +21,21 @@ body{font-family:Heebo,Arial,sans-serif;background:#fff;color:var(--ink)}
 h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:var(--lime)}
 .sub{color:var(--mut);font-size:16px;max-width:800px;margin:0 auto}
 .filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:22px 0 22px}
-.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:.12s}
+.fbtn{font-family:Rubik;font-weight:600;font-size:14.5px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:8px 16px;cursor:pointer;transition:.12s}
 .fbtn.on{background:var(--green);color:#fff;border-color:var(--green)}.fbtn:hover:not(.on){background:var(--tint)}
 .sech{font-family:Rubik;font-size:26px;font-weight:800;color:var(--green-d);margin:20px 0 16px;display:flex;align-items:center;gap:10px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:28px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
-.dec{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.14s;text-decoration:none;color:inherit;border-inline-start:4px solid var(--gold)}
+.dec{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:0;padding:20px 22px;background:#fff;box-shadow:0 8px 22px rgba(20,38,28,.05);transition:.14s;text-decoration:none;color:inherit;border-inline-start:4px solid var(--gold)}
 /* search bar */
-.gsearchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #cfe0d5;border-radius:14px;padding:10px 16px;margin-bottom:18px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
+.gsearchbar{display:flex;align-items:center;gap:10px;background:#fff;border:1.6px solid #f4efe3;border-radius:0;padding:10px 16px;margin-bottom:18px;box-shadow:0 8px 22px rgba(20,38,28,.05)}
 .gsearchbar span{font-size:17px}
 .gsearchbar input{flex:1;border:0;outline:0;font-family:Heebo;font-size:15.5px;color:var(--ink);background:transparent}
 /* timeline — thin block-rows */
 .timeline{display:flex;flex-direction:column;gap:9px;margin-bottom:28px}
-.trow{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:12px;padding:12px 18px;background:#fff;box-shadow:0 4px 12px rgba(20,38,28,.04);text-decoration:none;color:inherit;transition:.13s;border-inline-start:4px solid var(--gold)}
+.trow{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:0;padding:12px 18px;background:#fff;box-shadow:0 4px 12px rgba(20,38,28,.04);text-decoration:none;color:inherit;transition:.13s;border-inline-start:4px solid var(--gold)}
 .trow:hover{border-color:#bcdcc8;box-shadow:0 10px 24px rgba(20,38,28,.08);transform:translateX(-2px)}
-.trow .tyr{font-family:'Plex Mono';font-weight:700;font-size:13px;color:#fff;background:var(--green);border-radius:8px;padding:5px 11px;flex:0 0 auto}
+.trow .tyr{font-family:'Plex Mono';font-weight:700;font-size:13px;color:#fff;background:var(--green);border-radius:0;padding:5px 11px;flex:0 0 auto}
 .trow .tnum{font-family:'Plex Mono';font-size:13.5px;font-weight:700;color:var(--gold);flex:0 0 auto}
 .trow .ttitle{font-family:Rubik;font-weight:700;color:var(--green-d);font-size:15.5px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .trow .tmin{font-size:13px;color:var(--mut);flex:0 0 auto;white-space:nowrap}
@@ -43,23 +43,26 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
 @media(max-width:720px){.trow .tmin{display:none}.trow .ttitle{white-space:normal}}
 .dec:hover{border-color:#bcdcc8;box-shadow:0 14px 30px rgba(20,38,28,.1);transform:translateY(-3px)}
 .dtop{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
-.dnum{font-family:'Plex Mono';font-size:13px;font-weight:700;color:#fff;background:var(--gold);border-radius:8px;padding:4px 10px}
+.dnum{font-family:'Plex Mono';font-size:13px;font-weight:700;color:#fff;background:var(--gold);border-radius:0;padding:4px 10px}
 .ddate{font-family:'Plex Mono';font-size:13px;color:var(--mut);margin-inline-start:auto}
 .dtitle{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);line-height:1.3;margin-bottom:6px}
 .ddesc{font-size:14.5px;color:var(--mut);line-height:1.55;flex:1;margin-bottom:12px}
 .dmin{font-size:13.5px;color:var(--green-d);font-weight:600;margin-bottom:10px}
 .dtags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
-.dtag{font-size:13px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+.dtag{font-size:13px;color:var(--green-d);background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:4px 11px}
 .dlink{font-family:Rubik;font-weight:700;font-size:14px;color:var(--lime)}
 .gcards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:34px}
 @media(max-width:820px){.gcards{grid-template-columns:1fr}}
-.gcard{border:1px solid var(--line);border-radius:16px;padding:22px;background:var(--bg2)}
+.gcard{border:1px solid var(--line);border-radius:0;padding:22px;background:var(--bg2)}
 .gcard .ic{font-size:30px;margin-bottom:8px}
 .gcard h3{font-family:Rubik;font-size:19px;font-weight:800;color:var(--green-d);margin-bottom:6px}
 .gcard p{font-size:14.5px;color:var(--mut);line-height:1.55}
-.note{background:var(--tint);border:1px solid #cfe6d8;border-radius:12px;padding:14px 18px;font-size:14px;color:var(--green-d);margin:6px 0 40px}
+.note{background:var(--tint);border:1px solid #f4efe3;border-radius:0;padding:14px 18px;font-size:14px;color:var(--green-d);margin:6px 0 40px}
 .foot{padding:16px 0;text-align:center;font-size:14px;color:rgba(255,255,255,.8)}
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>
@@ -77,21 +80,24 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
   </div>
 
   <style>@keyframes gpulse{0%{box-shadow:0 0 0 0 rgba(62,232,126,.65)}70%{box-shadow:0 0 0 9px rgba(62,232,126,0)}100%{box-shadow:0 0 0 0 rgba(62,232,126,0)}}
-  #govwrap input{width:100%;border:1px solid #dbe8df;border-radius:11px;padding:11px 14px;font-family:Heebo;font-size:15px;margin-bottom:14px;outline:0}
+  #govwrap input{width:100%;border:1px solid #f4efe3;border-radius:0;padding:11px 14px;font-family:Heebo;font-size:15px;margin-bottom:14px;outline:0}
   .gds{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(max-width:700px){.gds{grid-template-columns:1fr}}
-  .gd{background:#fff;border:1px solid #dbe8df;border-radius:14px;padding:15px 17px;text-decoration:none;color:inherit;display:block;transition:.15s}
+  .gd{background:#fff;border:1px solid #f4efe3;border-radius:0;padding:15px 17px;text-decoration:none;color:inherit;display:block;transition:.15s}
   .gd:hover{border-color:#bfe0cc;box-shadow:0 10px 24px rgba(20,38,28,.08)}
   .gd b{font-family:Rubik;color:#134a30;font-size:15.5px;line-height:1.4}
   .gd .gmeta{font-size:12px;color:#5c6f63;margin-top:5px}
-  .gd .gfmt{display:inline-block;background:#eaf4ee;color:#1c6b45;border-radius:9px;padding:1px 8px;font-size:11px;font-weight:700;margin-inline-start:6px}
-  .livebox{background:linear-gradient(135deg,#f0faf3,#eaf7ee);border:1.6px solid #bfe6cd;border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 10px 26px rgba(20,80,50,.06)}
+  .gd .gfmt{display:inline-block;background:#f4efe3;color:#1c6b45;border-radius:0;padding:1px 8px;font-size:11px;font-weight:700;margin-inline-start:6px}
+  .livebox{background:linear-gradient(135deg,#f4efe3,#f4efe3);border:1.6px solid #bfe6cd;border-radius:0;padding:20px;margin-bottom:24px;box-shadow:0 10px 26px rgba(20,80,50,.06)}
   .livehead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);margin-bottom:4px}
-  .livedot{display:inline-flex;align-items:center;gap:7px;background:#127a43;color:#fff;border-radius:16px;padding:4px 13px;font-size:12.5px;font-weight:800}
+  .livedot{display:inline-flex;align-items:center;gap:7px;background:#127a43;color:#fff;border-radius:0;padding:4px 13px;font-size:12.5px;font-weight:800}
   .livedot i{width:9px;height:9px;border-radius:50%;background:#8dffb6;box-shadow:0 0 0 0 rgba(141,255,182,.7);animation:gpulse 1.6s infinite}
   .livesub{color:#4c6957;font-size:14px;margin:2px 0 14px}</style>
   <div class="livebox">
     <div class="livehead">📡 מאגרי ממשלה חיים · data.gov.il <span class="livedot"><i></i>API חי</span></div>
     <div class="livesub">חיבור חי ל-CKAN API של data.gov.il — מאגרי ממשלה אמיתיים מתעדכנים בזמן אמת.</div>
+    <div class="livehead" style="font-size:18px;margin:10px 0 2px">🌾 משרד החקלאות</div>
+    <div class="livesub" style="margin-bottom:10px">מאגרי הנתונים הפתוחים של משרד החקלאות וביטחון המזון · חי.</div>
+    <div class="gds" id="agrimin" style="margin-bottom:20px"><div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:20px">📡 טוען מאגרי משרד החקלאות…</div></div>
     <div id="govwrap">
       <input id="govq" placeholder="🔎 חיפוש מאגרי ממשלה (חקלאות, מים, מחירים…)" onkeydown="if(event.key==='Enter')loadGov()">
       <div class="gds" id="govlist"><div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:24px">📡 טוען מאגרים חיים מ-data.gov.il…</div></div>
@@ -109,10 +115,10 @@ h1{font-family:Rubik;font-size:52px;font-weight:800;margin:4px 0 6px}h1 b{color:
   <div class="sech">💧 התפלת מים · תשתית המים של ישראל</div>
   <div style="color:var(--mut);font-size:15px;margin:-6px 0 16px;max-width:820px">ישראל מובילה עולמית בהתפלת מי-ים ובמחזור קולחים לחקלאות — מה שמשחרר מים שפירים ומבטיח יציבות אספקה לחקלאות גם בשנות בצורת.</div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px" id="deskpis">
-    <div style="background:linear-gradient(180deg,#eef7fb,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#2b8fb0">~585<span style="font-size:15px"> מ׳ מ״ק</span></div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">כושר התפלה שנתי</div></div>
-    <div style="background:linear-gradient(180deg,#eef7fb,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#2b8fb0">~80%</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">ממי השתייה העירוניים</div></div>
-    <div style="background:linear-gradient(180deg,#f1faf4,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#1c6b45">~90%</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">קולחים ממוחזרים לחקלאות · שיא עולמי</div></div>
-    <div style="background:linear-gradient(180deg,#fbf6e9,#fff);border:1px solid var(--line);border-radius:14px;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#c79a2e">5+</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">מתקני התפלה גדולים לאורך החוף</div></div>
+    <div style="background:linear-gradient(180deg,#eef7fb,#fff);border:1px solid var(--line);border-radius:0;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#2b8fb0">~585<span style="font-size:15px"> מ׳ מ״ק</span></div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">כושר התפלה שנתי</div></div>
+    <div style="background:linear-gradient(180deg,#eef7fb,#fff);border:1px solid var(--line);border-radius:0;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#2b8fb0">~80%</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">ממי השתייה העירוניים</div></div>
+    <div style="background:linear-gradient(180deg,#f4efe3,#fff);border:1px solid var(--line);border-radius:0;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#1c6b45">~90%</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">קולחים ממוחזרים לחקלאות · שיא עולמי</div></div>
+    <div style="background:linear-gradient(180deg,#fbf6e9,#fff);border:1px solid var(--line);border-radius:0;padding:16px"><div style="font-family:Rubik;font-weight:800;font-size:28px;color:#c79a2e">5+</div><div style="font-size:13px;color:var(--mut);font-weight:600;margin-top:4px">מתקני התפלה גדולים לאורך החוף</div></div>
   </div>
   <div class="grid" id="desalgrid"></div>
   <div class="note">🌱 <b>הקשר לחקלאות:</b> ההתפלה משחררת מים שפירים, והקולחים המטופלים משקים כ-50% מהחקלאות בישראל — המחזור הגבוה בעולם. חברת <b>IDE Technologies</b> הישראלית היא מהמובילות העולמיות בהתפלה. נתונים לאימות מול <b>רשות המים</b>.</div>
@@ -222,6 +228,17 @@ function loadGov(){
   }).join('');
  }).catch(function(){list.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#5c6f63;padding:24px">שגיאת חיבור לשרת.</div>';});
 }
+function loadAgriMin(){
+ var box=document.getElementById('agrimin'); if(!box)return;
+ fetch('/api/govdata?q='+encodeURIComponent('משרד החקלאות')+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  if(!j.ok||!j.items||!j.items.length){box.innerHTML='<div style="grid-column:1/-1;color:#5c6f63;padding:16px">לא נמצאו מאגרים כרגע.</div>';return;}
+  box.innerHTML=j.items.map(function(d){
+   var fmt=(d.formats||[]).slice(0,3).map(function(f){return '<span class="gfmt">'+f+'</span>';}).join('');
+   return '<a class="gd" href="'+d.url+'" target="_blank" rel="noopener"><b>'+d.title+'</b> ↗<div class="gmeta">'+(d.org||'')+' · עודכן '+(d.updated||'—')+' · '+d.resources+' קבצים'+fmt+'</div></a>';
+  }).join('');
+ }).catch(function(){box.innerHTML='<div style="grid-column:1/-1;color:#5c6f63;padding:16px">שגיאת חיבור.</div>';});
+}
+loadAgriMin();
 loadGov();
 </script>
 <script src="autotranslate.js"></script>

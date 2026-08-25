@@ -8,10 +8,10 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--ink:#14261c;--mut:#5c6f63;--line:#e2ebe5;--bg2:#f4f9f5;--tint:#eaf4ee;
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3;
 --sdg2:#DDA63A;--sdg6:#26BDE2;--sdg12:#BF8B2E;--sdg13:#3F7E44;--sdg15:#56C02B}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#f6faf7;color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .wrap{max-width:1320px;margin:0 auto;padding:0 24px}
 .mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
 .topbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
@@ -29,7 +29,7 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
 @media(max-width:1000px){.kpis{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.kpis{grid-template-columns:1fr 1fr}}
-.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;box-shadow:0 8px 20px rgba(20,38,28,.05);position:relative;overflow:hidden}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:0;padding:16px 16px 14px;box-shadow:0 8px 20px rgba(20,38,28,.05);position:relative;overflow:hidden}
 .kpi::before{content:'';position:absolute;top:0;right:0;left:0;height:4px;background:var(--c,#2e9e63)}
 .kpi .kl{font-size:12.5px;color:var(--mut);font-weight:600;line-height:1.3;min-height:32px}
 .kpi .kv{font-family:Rubik;font-weight:800;font-size:30px;color:var(--green-d);margin-top:6px;line-height:1}
@@ -40,8 +40,8 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .goals{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:1000px){.goals{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.goals{grid-template-columns:1fr}}
-.goal{border-radius:18px;padding:20px;color:#fff;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;box-shadow:0 12px 28px rgba(20,38,28,.12)}
-.goal .num{font-family:Rubik;font-weight:900;font-size:15px;background:rgba(255,255,255,.22);border-radius:8px;padding:3px 9px;align-self:flex-start;letter-spacing:.03em}
+.goal{border-radius:0;padding:20px;color:#fff;position:relative;overflow:hidden;min-height:150px;display:flex;flex-direction:column;box-shadow:0 12px 28px rgba(20,38,28,.12)}
+.goal .num{font-family:Rubik;font-weight:900;font-size:15px;background:rgba(255,255,255,.22);border-radius:0;padding:3px 9px;align-self:flex-start;letter-spacing:.03em}
 .goal h3{font-family:Rubik;font-weight:800;font-size:19px;margin:12px 0 4px}
 .goal .gd{font-size:13px;opacity:.92;line-height:1.5;flex:1}
 .goal .gbig{font-family:Rubik;font-weight:900;font-size:34px;margin-top:8px;line-height:1}
@@ -49,26 +49,26 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 /* charts */
 .charts{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
 @media(max-width:900px){.charts{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 20px rgba(20,38,28,.05)}
+.card{background:#fff;border:1px solid var(--line);border-radius:0;padding:20px;box-shadow:0 8px 20px rgba(20,38,28,.05)}
 .card h3{font-family:Rubik;font-weight:800;font-size:17px;color:var(--green-d);margin-bottom:2px}
 .card .cs{font-size:13px;color:var(--mut);margin-bottom:12px}
 .leg{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:13px;font-weight:600}
 .leg span{display:inline-flex;align-items:center;gap:6px}
-.leg i{width:12px;height:12px;border-radius:4px;display:inline-block}
-.note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:16px;padding:18px 20px;margin:30px 0 40px;font-size:13.5px;line-height:1.6}
+.leg i{width:12px;height:12px;border-radius:0;display:inline-block}
+.note{background:linear-gradient(135deg,#1c6b45,#134a30);color:#fff;border-radius:0;padding:18px 20px;margin:30px 0 40px;font-size:13.5px;line-height:1.6}
 .sdgsec{margin-top:30px}
-.sdgbar{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--green),var(--green-d));color:#fff;border-radius:12px;padding:11px 16px;font-family:Rubik;font-weight:800;font-size:16px;margin-bottom:14px}
+.sdgbar{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--green),var(--green-d));color:#fff;border-radius:0;padding:11px 16px;font-family:Rubik;font-weight:800;font-size:16px;margin-bottom:14px}
 .sdgbar.gold{background:linear-gradient(90deg,#DDA63A,#bf8b2e)}
 .sdgbar.teal{background:linear-gradient(90deg,#2b8fb0,#1c6b8a)}
-.sdgbar select{margin-inline-start:auto;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 10px;font-family:Heebo;font-size:13.5px;font-weight:700;cursor:pointer}
+.sdgbar select{margin-inline-start:auto;background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:0;padding:5px 10px;font-family:Heebo;font-size:13.5px;font-weight:700;cursor:pointer}
 .sdgbar select option{color:#14261c}
-.cmpwrap{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.cmpwrap{background:#fff;border:1px solid var(--line);border-radius:0;padding:20px 22px}
 .cmpbars{display:flex;flex-direction:column;gap:13px}
 .cmprow{display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:14px}
 .cmprow .cn{font-family:Heebo;font-weight:700;font-size:14px;color:var(--ink);text-align:left}
 .cmprow.me .cn{color:var(--green);font-weight:800}
-.cmptrack{background:#f0f5f2;border-radius:8px;height:26px;overflow:hidden;position:relative}
-.cmpfill{height:100%;border-radius:8px;transition:width .9s cubic-bezier(.2,.8,.2,1);min-width:2px}
+.cmptrack{background:#f4efe3;border-radius:0;height:26px;overflow:hidden;position:relative}
+.cmpfill{height:100%;border-radius:0;transition:width .9s cubic-bezier(.2,.8,.2,1);min-width:2px}
 .cmprow.me .cmptrack{box-shadow:0 0 0 2px var(--lime)}
 .cmpval{font-family:'Plex Mono',monospace;font-weight:700;font-size:14px;color:var(--ink);min-width:52px;text-align:left}
 .cmprow.me .cmpval{color:var(--green)}
@@ -78,11 +78,11 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 @keyframes lvp{70%{box-shadow:0 0 0 7px rgba(255,90,90,0)}100%{box-shadow:0 0 0 0 rgba(255,90,90,0)}}
 .sdgnews{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(max-width:640px){.sdgnews{grid-template-columns:1fr}}
-.snews{background:#fff;border:1px solid var(--line);border-inline-start:3px solid var(--lime);border-radius:12px;padding:13px 15px;text-decoration:none;color:inherit;transition:.14s;display:block}
+.snews{background:#fff;border:1px solid var(--line);border-inline-start:3px solid var(--lime);border-radius:0;padding:13px 15px;text-decoration:none;color:inherit;transition:.14s;display:block}
 .snews:hover{box-shadow:0 10px 24px rgba(20,50,35,.1);transform:translateY(-2px)}
 .snews h4{font-family:Heebo;font-weight:700;font-size:14.5px;line-height:1.4;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .snews .m{font-family:'Plex Mono',monospace;font-size:11px;color:var(--mut);margin-top:6px}
-.ceo{background:#fffdf6;border:1px solid #f0e3c0;border-radius:14px;padding:18px 20px}
+.ceo{background:#fffdf6;border:1px solid #f0e3c0;border-radius:0;padding:18px 20px}
 .ceo .q{font-family:Heebo;font-size:16px;line-height:1.8;color:var(--ink);white-space:pre-wrap}
 .ceo .qlist a{display:block;text-decoration:none;color:inherit;padding:11px 0;border-bottom:1px solid #f0e3c0}
 .ceo .qlist a:last-child{border-bottom:0}
@@ -93,6 +93,9 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
 .footbar{background:linear-gradient(135deg,#134a30,#1c6b45)}
 .foot{padding:16px 0;text-align:center;font-size:13px;color:rgba(255,255,255,.8)}
 .loading{color:var(--mut);font-size:14px;padding:8px}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>
@@ -107,7 +110,7 @@ h1{font-family:Rubik;font-size:40px;font-weight:800;margin:4px 0 6px}h1 b{color:
     <h1>לוח <b>SDG</b> · ביטחון תזונתי וקיימות</h1>
     <div class="sub">תרומת החקלאות והאגרו-טק הישראלי ליעדי הפיתוח בר-קיימא של האו״ם — מדדים חיים מ-World Bank, ממופים ליעדים 2, 6, 12 ו-15.</div>
     <div class="live"><span class="dot"></span> <span id="upd">נתונים חיים · World Bank Open Data</span></div>
-    <button onclick="openVenn()" style="margin-top:14px;background:linear-gradient(135deg,#3F7E44,#56C02B);color:#fff;border:0;border-radius:14px;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 10px 26px rgba(63,126,68,.28)">📊 כמה מ-17 היעדים נוגעים לחקלאות? · פתח סיכום ←</button>
+    <button onclick="openVenn()" style="margin-top:14px;background:linear-gradient(135deg,#3F7E44,#56C02B);color:#fff;border:0;border-radius:0;padding:12px 22px;font-family:Rubik;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 10px 26px rgba(63,126,68,.28)">📊 כמה מ-17 היעדים נוגעים לחקלאות? · פתח סיכום ←</button>
   </div>
 
   <div class="sect">מדדי מפתח · ישראל</div>
@@ -218,7 +221,7 @@ function lineChart(svgId,legId,seriesList,w,h){
  var pad=34,all=[];seriesList.forEach(function(s){all=all.concat(s.data.filter(function(v){return v!=null;}));});
  if(!all.length){svg.innerHTML='<text x="'+(w/2)+'" y="'+(h/2)+'" text-anchor="middle" fill="#9bb0a3" font-family="Heebo">אין נתונים</text>';return;}
  var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),r=(mx-mn)||1;var n=Math.max.apply(null,seriesList.map(function(s){return s.data.length;}));
- var g='';for(var i=0;i<=4;i++){var y=pad+i*(h-2*pad)/4;g+='<line x1="'+pad+'" y1="'+y+'" x2="'+(w-pad)+'" y2="'+y+'" stroke="#eef4ef"/>';g+='<text x="'+(w-pad+4)+'" y="'+(y+4)+'" font-size="11" fill="#9bb0a3" font-family="Plex Mono">'+Math.round(mx-(mx-mn)*i/4)+'</text>';}
+ var g='';for(var i=0;i<=4;i++){var y=pad+i*(h-2*pad)/4;g+='<line x1="'+pad+'" y1="'+y+'" x2="'+(w-pad)+'" y2="'+y+'" stroke="#f4efe3"/>';g+='<text x="'+(w-pad+4)+'" y="'+(y+4)+'" font-size="11" fill="#9bb0a3" font-family="Plex Mono">'+Math.round(mx-(mx-mn)*i/4)+'</text>';}
  seriesList.forEach(function(s){
   var pts=s.data.map(function(v,i){var x=pad+(n>1?i/(n-1):0)*(w-2*pad);var y=v==null?null:h-pad-((v-mn)/r)*(h-2*pad);return [x,y];}).filter(function(p){return p[1]!=null;});
   var path=pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1);}).join(' ');
@@ -288,10 +291,10 @@ loadCompare('foodprod');
 </script>
 
 <div id="vennModal" onclick="if(event.target===this)closeVenn()" style="display:none;position:fixed;inset:0;background:rgba(10,26,17,.62);z-index:80;align-items:center;justify-content:center;padding:20px">
- <div style="background:#fff;border-radius:20px;max-width:720px;width:100%;max-height:92vh;overflow:auto;padding:26px;box-shadow:0 30px 70px rgba(0,0,0,.35)">
+ <div style="background:#fff;border-radius:0;max-width:720px;width:100%;max-height:92vh;overflow:auto;padding:26px;box-shadow:0 30px 70px rgba(0,0,0,.35)">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
    <h2 style="font-family:Rubik;font-weight:800;font-size:24px;color:#134a30">🎯 חקלאות בלב יעדי ה-SDG</h2>
-   <button onclick="closeVenn()" style="border:0;background:#eef4f0;color:#5c6f63;font-size:22px;line-height:1;border-radius:10px;width:36px;height:36px;cursor:pointer">×</button>
+   <button onclick="closeVenn()" style="border:0;background:#f4efe3;color:#5c6f63;font-size:22px;line-height:1;border-radius:0;width:36px;height:36px;cursor:pointer">×</button>
   </div>
   <p style="color:#14261c;font-size:15px;line-height:1.7;margin:8px 0 4px">מבין <b>17 יעדי הפיתוח בר-קיימא</b> של האו״ם, לפי ה-FAO כ-<b>12</b> קשורים ישירות למערכת המזון והחקלאות. ארבעה צירים מרכזיים — <b>חקלאות, מזון, אנרגיה ואקלים</b> — נפגשים ומזינים זה את זה, והחקלאות יושבת בדיוק בנקודת החיבור.</p>
 
@@ -319,7 +322,7 @@ loadCompare('foodprod');
    </g>
   </svg>
 
-  <div style="background:#f4f9f5;border:1px solid #dbe8df;border-radius:12px;padding:16px;font-size:14px;line-height:1.7;color:#14261c">
+  <div style="background:#f4efe3;border:1px solid #f4efe3;border-radius:0;padding:16px;font-size:14px;line-height:1.7;color:#14261c">
    <b style="color:#134a30">היעדים הקשורים לחקלאות ומזון:</b><br>
    <b>2</b> חיסול הרעב · <b>3</b> בריאות ותזונה · <b>6</b> מים נקיים · <b>7</b> אנרגיה מתחדשת · <b>9</b> תעשייה וחדשנות · <b>12</b> צריכה וייצור אחראיים · <b>13</b> פעולת אקלים · <b>14</b> חיים במים · <b>15</b> חיים ביבשה · <b>1</b> מיגור עוני · <b>8</b> עבודה וצמיחה כלכלית (כפרית).
    <div style="margin-top:10px;color:#5c6f63;font-size:13px">מקור: FAO — "Food and Agriculture: Key to Achieving the 2030 Agenda".</div>

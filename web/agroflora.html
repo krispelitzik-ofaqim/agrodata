@@ -8,9 +8,9 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#2e7d46;--green-d:#14401f;--lime:#4caf50;--olive:#6b8e23;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#dde8dc;--bg2:#f4f9f2;--tint:#eaf5e8}
+:root{--green:#2e7d46;--green-d:#14401f;--lime:#4caf50;--olive:#6b8e23;--gold:#c79a2e;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#f5faf2;color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
 .wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#a7e39a}.mono{font-family:'Plex Mono',monospace}
 .top{background:linear-gradient(135deg,#14401f,#2e7d46)}
@@ -21,35 +21,38 @@ body{font-family:Heebo,Arial,sans-serif;background:#f5faf2;color:var(--ink)}
 h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px;color:#173e20}h1 b{color:var(--green)}
 .sub{color:var(--mut);font-size:16px;max-width:680px;margin:0 auto}
 .tabs{display:flex;gap:10px;justify-content:center;margin:26px 0 18px;flex-wrap:wrap}
-.tab{background:#fff;border:1px solid #cfe2c9;border-radius:24px;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#3a6b3f;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tab{background:#fff;border:1px solid #cfe2c9;border-radius:0;padding:11px 22px;font-family:Rubik;font-weight:700;font-size:15px;color:#3a6b3f;cursor:pointer;display:flex;align-items:center;gap:8px}
 .tab.on{background:linear-gradient(135deg,#2e7d46,#14401f);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(46,125,70,.28)}
-.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 14px 34px rgba(20,64,31,.07);margin-bottom:20px}
-.search{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-family:Heebo;font-size:16px;outline:0;margin-bottom:8px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:0;padding:22px;box-shadow:0 14px 34px rgba(20,64,31,.07);margin-bottom:20px}
+.search{width:100%;border:1px solid var(--line);border-radius:0;padding:13px 15px;font-family:Heebo;font-size:16px;outline:0;margin-bottom:8px}
 .search:focus{border-color:var(--green)}
 .hint{font-size:13px;color:var(--mut);margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.grid{grid-template-columns:1fr}}
-.pc{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#fff;transition:.15s}
+.pc{border:1px solid var(--line);border-radius:0;overflow:hidden;background:#fff;transition:.15s}
 .pc:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,64,31,.12)}
-.pc .img{height:150px;background:#e8f0e5 center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-size:34px;color:#9bbf94}
+.pc .img{height:150px;background:#f4efe3 center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-size:34px;color:#9bbf94}
 .pc .b{padding:13px 15px}
 .pc h3{font-family:Rubik;font-weight:800;font-size:16.5px;color:#173e20}
 .pc .sci{font-style:italic;color:var(--mut);font-size:12.5px;margin-top:2px}
 .pc .meta{font-size:11.5px;color:#9aa;margin-top:6px}
 .pc .lnk{display:flex;gap:8px;margin-top:9px}
-.pc .lnk a{font-size:12px;font-weight:700;text-decoration:none;color:var(--green);background:var(--tint);border-radius:9px;padding:3px 9px}
+.pc .lnk a{font-size:12px;font-weight:700;text-decoration:none;color:var(--green);background:var(--tint);border-radius:0;padding:3px 9px}
 .load{text-align:center;color:var(--mut);padding:40px}
-.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:0}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:11px 13px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
 th{background:var(--bg2);color:var(--mut);font-weight:700;position:sticky;top:0}
-tr:hover td{background:#fafdf8}
+tr:hover td{background:#f4efe3}
 .pl b{color:#173e20;font-family:Rubik}.pl i{color:var(--mut);font-style:italic;font-size:12px;display:block}
 .warn{color:#b5482e;font-weight:600}
-.safebox{background:#fff7ed;border:1px solid #f0d9b8;border-radius:12px;padding:13px 16px;font-size:13.5px;color:#8a5a1e;margin-bottom:14px}
+.safebox{background:#fff7ed;border:1px solid #f0d9b8;border-radius:0;padding:13px 16px;font-size:13.5px;color:#8a5a1e;margin-bottom:14px}
 .foot{background:#14401f;color:#a9d0a2;padding:24px 0;text-align:center;font-size:13.5px;margin-top:10px}
 .foot a{color:#a7e39a;text-decoration:none}
+/* AgroData unified (homepage design) */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf!important}
 </style>
 </head>
 <body>
@@ -61,7 +64,7 @@ tr:hover td{background:#fafdf8}
 <div class="wrap">
   <div class="hero">
     <div class="kick">AGROFLORA · IDENTIFY & FORAGE</div>
-    <div style="margin:6px 0 2px"><style>.ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d57;box-shadow:0 0 0 0 rgba(31,157,87,.6);animation:ldp 1.5s infinite}@keyframes ldp{70%{box-shadow:0 0 0 8px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}</style><span style="display:inline-flex;align-items:center;gap:7px;font-family:'Plex Mono',monospace;font-size:12px;font-weight:700;color:#1f9d57;background:#eaf4ee;border:1px solid #cfe6d8;border-radius:999px;padding:3px 12px"><span class="ldot"></span>חי · iNaturalist</span></div>
+    <div style="margin:6px 0 2px"><style>.ldot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1f9d57;box-shadow:0 0 0 0 rgba(31,157,87,.6);animation:ldp 1.5s infinite}@keyframes ldp{70%{box-shadow:0 0 0 8px rgba(31,157,87,0)}100%{box-shadow:0 0 0 0 rgba(31,157,87,0)}}</style><span style="display:inline-flex;align-items:center;gap:7px;font-family:'Plex Mono',monospace;font-size:12px;font-weight:700;color:#1f9d57;background:#f4efe3;border:1px solid #f4efe3;border-radius:0;padding:3px 12px"><span class="ldot"></span>חי · iNaturalist</span></div>
     <h1>מזהה צמחים <b>וליקוט בר</b></h1>
     <div class="sub">מגדיר צמחי ישראל חי — חפשו שם (עברית/מדעי) וקבלו תמונה, זיהוי ומקורות. ומדריך ליקוט בר: מה אוכלים, מתי ואיך. מבוסס מקורות פתוחים (iNaturalist · ויקיפדיה) וידע אצור.</div>
   </div>
@@ -105,19 +108,22 @@ function renderTrees(){
   var col=TCOL[p.cat]||'#5c6f63';
   var inat=p.id?'https://www.inaturalist.org/taxa/'+p.id:'#';
   var links='<a href="'+inat+'" target="_blank" rel="noopener">iNaturalist ↗</a>'+(p.wiki?'<a href="'+p.wiki+'" target="_blank" rel="noopener">ויקיפדיה ↗</a>':'');
-  return '<div class="pc"><div class="img" '+img+'>'+(p.photo?'':'🌳')+'</div><div class="b"><h3>'+(p.he||p.sci)+'</h3><div class="sci">'+p.sci+'</div><div class="meta"><span style="background:'+col+'1a;color:'+col+';border-radius:9px;padding:1px 8px;font-weight:700">'+p.cat+'</span> · '+(p.obs||0).toLocaleString()+' תצפיות</div><div class="lnk">'+links+'</div></div></div>';
+  return '<div class="pc"><div class="img" '+img+'>'+(p.photo?'':'🌳')+'</div><div class="b"><h3>'+(p.he||p.sci)+'</h3><div class="sci">'+p.sci+'</div><div class="meta"><span style="background:'+col+'1a;color:'+col+';border-radius:0;padding:1px 8px;font-weight:700">'+p.cat+'</span> · '+(p.obs||0).toLocaleString()+' תצפיות</div><div class="lnk">'+links+'</div></div></div>';
  }).join(''):'<div class="load" style="grid-column:1/-1">לא נמצא.</div>';
 }
 var FLORADB=null;
+var FLORACATS=[['עצי הדר','Citrus','🍊'],['מדבר · שיטה','Acacia','🌵'],['שיחים · לוטם','Cistus','🌿'],['עצי פרי · זית','Olea','🌳'],['מרפא · זעתר','Origanum','💊'],['דגניים','Poaceae','🌾'],['נוי · ורד','Rosa','🌸'],['סוקולנטים · אלוֹוי','Aloe','🪴']];
 function drawId(){
  document.getElementById('panel').innerHTML=
-  '<input class="search" id="q" placeholder="🔎 חיפוש במאגר: חלמית · זעתר · Salvia · חרצית…" oninput="floraFilter()">'+
+  '<input class="search" id="q" placeholder="🔎 חיפוש חי ב-iNaturalist: חלמית · זעתר · Citrus · אלון…" oninput="floraFilter()">'+
+  '<div class="chips" id="fcats" style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px">'+FLORACATS.map(function(c){return '<button class="tab" style="padding:7px 14px;font-size:13px" onclick="floraCat(\''+c[1]+'\',this)">'+c[2]+' '+c[0]+'</button>';}).join('')+'</div>'+
   '<div class="hint" id="floracount">🌿 טוען מאגר צמחי ישראל…</div>'+
   '<div class="grid" id="grid"></div>';
- if(FLORADB){renderFlora(FLORADB.items);setCount(FLORADB.items.length);}
- else fetch('data/flora_db.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){FLORADB=j;renderFlora(j.items);setCount(j.items.length);}).catch(function(){document.getElementById('grid').innerHTML='<div class="load" style="grid-column:1/-1">שגיאה בטעינת המאגר.</div>';});
+ if(FLORADB){renderFlora(FLORADB.items.slice(0,120));setCount(Math.min(FLORADB.items.length,120));}
+ else fetch('data/flora_db.json?_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){FLORADB=j;renderFlora(j.items.slice(0,120));setCount(Math.min(j.items.length,120));}).catch(function(){document.getElementById('grid').innerHTML='<div class="load" style="grid-column:1/-1">שגיאה בטעינת המאגר.</div>';});
 }
-function setCount(n){var el=document.getElementById('floracount');if(el)el.innerHTML='מאגר צמחי ישראל — <b>'+(FLORADB?FLORADB.count:n)+'</b> מינים · מציג '+n+' · חיפוש מיידי בעברית או בשם מדעי';}
+function floraCat(term,el){var box=document.getElementById('fcats');if(box)box.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on');});if(el)el.classList.add('on');var q=document.getElementById('q');if(q)q.value=term;floraFilter();}
+function setCount(n){var el=document.getElementById('floracount');if(!el)return;var tot=FLORADB?FLORADB.items.length:n;el.innerHTML='מאגר צמחי ישראל — <b>'+tot.toLocaleString()+'</b> מינים · מציג '+n+' · חיפוש חי בעברית או בשם מדעי (iNaturalist)';}
 var _floraT=null;
 function _floraLocal(q){var lq=q.toLowerCase();return FLORADB?FLORADB.items.filter(function(p){return (p.he+' '+p.sci).toLowerCase().indexOf(lq)>=0;}):[];}
 function floraFilter(){
@@ -130,7 +136,8 @@ function floraFilter(){
   fetch('/api/flora?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
    var items=(j&&j.items)||[];
    if(!items.length) items=_floraLocal(q);   // fallback to local DB
-   renderFlora(items.slice(0,120));setCount(Math.min(items.length,120));
+   renderFlora(items.slice(0,120));
+   var el=document.getElementById('floracount'); if(el)el.innerHTML='🟢 <b>'+items.length+'</b> תוצאות חיות מ-iNaturalist · חיפוש: '+q;
   }).catch(function(){ var rows=_floraLocal(q); renderFlora(rows.slice(0,120));setCount(Math.min(rows.length,120)); });
  },350);
 }

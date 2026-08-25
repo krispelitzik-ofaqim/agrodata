@@ -968,11 +968,13 @@ def fetch_research(q, frm, scope="il"):
 
 def fetch_weather(lat, lon):
     url = ("https://api.open-meteo.com/v1/forecast?latitude=" + str(lat) + "&longitude=" + str(lon) +
-           "&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,soil_temperature_0cm,soil_moisture_0_to_1cm&timezone=auto")
+           "&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,soil_temperature_0cm,soil_moisture_0_to_1cm" +
+           "&daily=temperature_2m_min,temperature_2m_max,precipitation_probability_max,wind_speed_10m_max&forecast_days=2&timezone=auto")
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "AgroData/1.0"})
         d = json.load(urllib.request.urlopen(req, timeout=15))
-        return {"ok": True, "current": d.get("current", {}), "units": d.get("current_units", {})}
+        return {"ok": True, "current": d.get("current", {}), "units": d.get("current_units", {}),
+                "daily": d.get("daily", {})}
     except Exception as e:
         return {"ok": False, "err": str(getattr(e, "code", "") or type(e).__name__)}
 
@@ -1686,6 +1688,26 @@ class H(http.server.SimpleHTTPRequestHandler):
             if not q.strip(): out = {"answer": "נא להזין שאלה.", "demo": True}
             elif eng == "claude": out = ask_claude(q)
             else: out = ask_gemini(q)
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/me"):
+            # self-lookup by the subscriber id the browser holds (agro_sub_id) — returns plan + join date
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            sid = qs.get("id", [""])[0].strip()
+            rec = None
+            for r in _SUBS:
+                if r.get("id") == sid:
+                    rec = r; break
+            if rec:
+                out = {"found": True, "name": rec.get("name", ""), "org": rec.get("org", ""),
+                       "field": rec.get("field", ""), "plan": rec.get("plan", "regular"),
+                       "role": rec.get("role", ""), "ts": rec.get("ts", "")}
+            else:
+                out = {"found": False}
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

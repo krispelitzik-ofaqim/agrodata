@@ -1,0 +1,71 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ארכיון · agroNews · AgroData</title>
+<style>
+  @font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+  @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+  @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+  @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+  :root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--ink:#14261c;--mut:#6b7f73;--line:#dbe8df;--bg:#eef6f0;--tint:#eaf4ee}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Heebo,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  .top{background:linear-gradient(135deg,#134a30,#1c6b45);color:#fff;padding:18px 26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+  .top .logo{font-family:'Space Grotesk';font-size:22px;font-weight:700}.top .logo b{color:#8fe6ad}
+  .top a.back{color:#8fe6ad;text-decoration:none;font-weight:700;font-size:14px}
+  .wrap{max-width:1000px;margin:0 auto;padding:26px 20px 50px}
+  .h{font-family:Rubik;font-weight:800;font-size:28px;color:var(--green-d);margin-bottom:4px}
+  .sub{color:var(--mut);font-size:15px;margin-bottom:18px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  #aq{flex:1;min-width:220px;border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-family:Heebo;font-size:15.5px;outline:0}#aq:focus{border-color:var(--green)}
+  .go{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border:0;border-radius:12px;padding:13px 24px;font-family:Rubik;font-weight:800;cursor:pointer}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .chip{background:var(--tint);border:1px solid var(--line);color:var(--green-d);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;cursor:pointer}
+  .chip.on{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff;border-color:transparent}
+  .list{display:grid;gap:10px}
+  .art{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:inherit;transition:.14s}
+  .art:hover{border-color:#bcdcc8;box-shadow:0 8px 20px rgba(20,38,28,.07);transform:translateY(-2px)}
+  .art h3{font-family:Rubik;font-size:16.5px;font-weight:700;color:var(--green-d);line-height:1.4}
+  .art .m{font-size:12.5px;color:var(--mut);margin-top:5px;font-family:'Plex Mono',monospace}
+  .load{text-align:center;color:var(--mut);padding:34px}
+  @media (prefers-color-scheme:dark){body{background:#0d1f16;color:#eaf4ee}.h,.art h3{color:#8fe6ad}.art{background:#12291d;border-color:#26402f}#aq{background:#0f2419;border-color:#26402f;color:#eaf4ee}}
+</style></head><body>
+  <div class="top">
+    <div class="logo">agro<b>News</b> · <span style="font-size:15px;color:#8fe6ad">ארכיון</span></div>
+    <a class="back" href="agronews.html">→ לפורטל</a>
+  </div>
+  <div class="wrap">
+    <div class="h">📚 ארכיון הכתבות</div>
+    <div class="sub">כל כתבות החקלאות והאגרו-טק — מישראל ומהעולם. חיפוש חי לפי נושא וקטגוריה.</div>
+    <div class="bar">
+      <input id="aq" placeholder="חיפוש בארכיון: השקיה · פוד-טק · גנטיקה · אקלים…" onkeydown="if(event.key==='Enter')load()">
+      <button class="go" onclick="load()">🔎 חפש</button>
+    </div>
+    <div class="chips" id="regchips">
+      <button class="chip on" onclick="setReg('il',this)">🇮🇱 ישראל</button>
+      <button class="chip" onclick="setReg('world',this)">🌍 עולם</button>
+    </div>
+    <div class="chips" id="catchips"></div>
+    <div class="list" id="list"><div class="load">📡 טוען ארכיון…</div></div>
+  </div>
+<script>
+var REG='il', CAT='';
+var CATS=[['','הכול'],['irrigation water','💧 השקיה ומים'],['food-tech','🍽️ פוד-טק'],['genetics breeding','🧬 גנטיקה וזרעים'],['climate sustainability','🌍 אקלים וקיימות'],['dairy livestock','🐄 חלב ובשר'],['cannabis','🌿 קנביס'],['robotics automation','🤖 רובוטיקה'],['export trade','📦 סחר ויצוא']];
+document.getElementById('catchips').innerHTML=CATS.map(function(c,i){return '<button class="chip'+(i===0?' on':'')+'" onclick="setCat(\''+c[0]+'\',this)">'+c[1]+'</button>';}).join('');
+function setReg(r,el){REG=r;document.querySelectorAll('#regchips .chip').forEach(function(b){b.classList.remove('on');});el.classList.add('on');load();}
+function setCat(c,el){CAT=c;document.querySelectorAll('#catchips .chip').forEach(function(b){b.classList.remove('on');});el.classList.add('on');load();}
+function load(){
+ var q=((document.getElementById('aq').value||'')+' '+CAT).trim()||'agriculture agtech';
+ var list=document.getElementById('list');
+ list.innerHTML='<div class="load">📡 מושך כתבות חי…</div>';
+ fetch('/api/news?region='+REG+'&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var it=(j.items||[]);
+  if(!it.length){list.innerHTML='<div class="load">לא נמצאו כתבות — נסו נושא אחר.</div>';return;}
+  list.innerHTML=it.map(function(a){
+   return '<a class="art" href="'+a.link+'" target="_blank" rel="noopener"><h3>'+a.title+'</h3><div class="m">'+(a.source||'')+(a.date?' · '+a.date:'')+'</div></a>';
+  }).join('');
+ }).catch(function(){list.innerHTML='<div class="load">שגיאת חיבור לשרת.</div>';});
+}
+load();
+</script>
+<script src="autotranslate.js"></script>
+</body></html>
