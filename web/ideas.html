@@ -137,6 +137,13 @@ h1{font-family:Rubik;font-size:46px;font-weight:800;margin:6px 0 8px;color:#fff}
 .sinewave path{fill:none;stroke:#8fe6ad;stroke-width:2;stroke-linecap:round;animation:sineflow 1.8s linear infinite;opacity:.7}
 @keyframes sineflow{from{transform:translateX(0)}to{transform:translateX(-36px)}}
 .sinewave.active path{animation-duration:.7s;stroke:#c9f7d8;opacity:1}
+.thinking{display:flex;flex-direction:column;align-items:center;gap:14px;padding:34px 0}
+.neuro{width:190px;height:118px}
+.neuro line{stroke:#2e9e63;stroke-width:1.6;stroke-dasharray:4 6;animation:neuroflow 1.1s linear infinite;opacity:.7}
+.neuro circle{fill:#8fe6ad;transform-box:fill-box;transform-origin:center;animation:neuropulse 1.4s ease-in-out infinite}
+@keyframes neuroflow{to{stroke-dashoffset:-20}}
+@keyframes neuropulse{0%,100%{opacity:.35;transform:scale(.75)}50%{opacity:1;transform:scale(1.3)}}
+.thinkmsg{font-family:Rubik;font-weight:800;color:#d9bd5e;font-size:15px;letter-spacing:.02em}
 </style>
 </head>
 <body>
@@ -333,7 +340,15 @@ function drawTab(){
    if(ITAB==='ideas')renderIdeas();else if(ITAB==='gap')renderGap();else if(ITAB==='who')renderWho();else if(ITAB==='trends')renderTrends();else renderFinance();
  });
 }
-function thinking(msg){document.getElementById('ideas').innerHTML='<div class="thinking"><span>'+msg+'</span><span class="dots"><i></i><i></i><i></i></span></div>';}
+function thinking(msg){
+ var N=[[22,32],[22,82],[90,20],[90,57],[90,94],[160,42],[160,78]];
+ var L=[[0,2],[0,3],[1,3],[1,4],[2,5],[3,5],[3,6],[4,6]];
+ var svg='<svg class="neuro" viewBox="0 0 182 114">';
+ L.forEach(function(e){svg+='<line x1="'+N[e[0]][0]+'" y1="'+N[e[0]][1]+'" x2="'+N[e[1]][0]+'" y2="'+N[e[1]][1]+'"/>';});
+ N.forEach(function(p,i){svg+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="6" style="animation-delay:'+(i*0.16).toFixed(2)+'s"/>';});
+ svg+='</svg>';
+ document.getElementById('ideas').innerHTML='<div class="thinking">'+svg+'<div class="thinkmsg">'+(msg||'AgroMind חושב…')+'</div></div>';
+}
 function isPremium(){return true;/* פתוח לכולם בינתיים — להחזיר נעילה: localStorage.getItem('agroPremium')==='1' */}
 /* free-tier: 5 innovation attempts per account (separate counter, IP-proof) */
 var _innovCountedQ=null,_innovBlocked=false;
