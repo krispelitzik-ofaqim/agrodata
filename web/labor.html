@@ -100,9 +100,11 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:8px 0}h1 b{color:var(
   </div>
 
   <div class="sec"><div class="st">לוח דרושים והיצע · כוח אדם חקלאי</div></div>
-  <div class="jtabs" id="jtabs"></div>
-  <div class="jgrid" id="jgrid"></div>
-  <div style="text-align:center;margin:16px 0 6px"><a class="postbtn" href="mailto:krispelitzik@gmail.com?subject=פרסום מודעה - לוח כוח אדם חקלאי">+ פרסם מודעה (דרושים / היצע)</a></div>
+  <div class="card" style="text-align:center">
+    <div style="font-family:Rubik;font-weight:800;font-size:20px;color:var(--green-d);margin-bottom:6px">הלוח ייפתח בקרוב</div>
+    <div style="font-size:14.5px;color:var(--mut);line-height:1.6;max-width:560px;margin:0 auto">מרחב פרסום למודעות דרושים והיצע בכוח אדם חקלאי — מעסיקים, קבלנים ועובדים. פרסמו והיו הראשונים בלוח.</div>
+    <div style="margin-top:16px"><a class="postbtn" href="mailto:krispelitzik@gmail.com?subject=פרסום מודעה - לוח כוח אדם חקלאי">+ פרסם מודעה (דרושים / היצע)</a></div>
+  </div>
 
   <div class="sec"><div class="st">מקורות רשמיים</div></div>
   <div class="srcs">
@@ -113,49 +115,6 @@ h1{font-family:Rubik;font-size:44px;font-weight:800;margin:8px 0}h1 b{color:var(
 </div>
 
 <div class="foot">כוח אדם בחקלאות · <span class="wm">Agro<b>Data</b></span> Center · נתונים ממשלתיים</div>
-<script>
-var JOBS=[
- {k:'want',t:'דרושים 6 קוטפים',loc:'מושב · הנגב',d:'קטיף עונתי, מיידי. לינה במקום. שכר לפי חוק.'},
- {k:'want',t:'מפעיל טרקטור/מיכון',loc:'עמק יזרעאל',d:'משרה מלאה, ניסיון בעיבוד שדה. רישיון נדרש.'},
- {k:'want',t:'עובדי חממה',loc:'ערבה',d:'גד״ש פלפל וירקות יצוא — 4 משרות, לטווח ארוך.'},
- {k:'want',t:'מנהל/ת רפת',loc:'גליל',d:'ניהול צוות ורפת חולבות, כולל בקרת הזנה.'},
- {k:'offer',t:'קבלן כוח אדם חקלאי',loc:'כל הארץ',d:'אספקת עובדים מיומנים לקטיף, אריזה ומיכון.'},
- {k:'offer',t:'צוות קטיף זמין',loc:'דרום',d:'צוות מנוסה של 8, זמין מיידית לעונת הקטיף.'},
- {k:'offer',t:'אגרונום/ית פרילנס',loc:'מרכז/שפלה',d:'ייעוץ צמחי, תוכניות דישון והדברה, ליווי חלקות.'},
- {k:'offer',t:'טכנאי חקלאות מדויקת',loc:'עמקים',d:'התקנה וכיול חיישנים, מיפוי וניטור שדה.'}
-];
-var jcur='web';
-function esc(x){return (x||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
-function fmtDate(d){try{var t=new Date(d);if(isNaN(t))return '';return t.getDate()+'/'+(t.getMonth()+1)+'/'+t.getFullYear();}catch(e){return '';}}
-function jrender(){
- var g=document.getElementById('jgrid');
- if(jcur==='web'){
-  g.innerHTML='<div style="grid-column:1/-1;color:var(--mut);padding:20px">🌐 טוען מודעות מהרשת…</div>';
-  fetch('/api/jobs').then(function(r){return r.json();}).then(function(d){
-   var its=(d.items||[]);
-   if(!its.length){g.innerHTML='<div style="grid-column:1/-1;color:var(--mut);padding:20px">לא נמצאו מודעות כרגע.</div>';return;}
-   g.innerHTML=its.map(function(it){
-    return '<div class="jcard web"><span class="jbadge web">מהרשת</span>'+
-     '<div class="jt">'+esc(it.title)+'</div>'+
-     '<div class="jloc">🗞️ '+esc(it.source||'מקור')+(it.date?(' · '+fmtDate(it.date)):'')+'</div>'+
-     '<a class="jcontact" href="'+it.link+'" target="_blank" rel="noopener">למודעה במקור ←</a></div>';
-   }).join('');
-  }).catch(function(){g.innerHTML='<div style="grid-column:1/-1;color:var(--mut);padding:20px">שגיאה בטעינת מודעות.</div>';});
-  return;
- }
- g.innerHTML=JOBS.filter(function(j){return j.k===jcur;}).map(function(j){
-  var off=j.k==='offer';
-  return '<div class="jcard'+(off?' offer':'')+'"><span class="jbadge'+(off?' offer':'')+'">'+(off?'היצע':'דרוש')+'</span>'+
-   '<div class="jt">'+j.t+'</div><div class="jloc">📍 '+j.loc+'</div><div class="jd">'+j.d+'</div>'+
-   '<a class="jcontact" href="mailto:krispelitzik@gmail.com?subject='+encodeURIComponent((off?'היצע':'דרוש')+' - '+j.t)+'">צור קשר ←</a></div>';
- }).join('');
-}
-function jset(k,id){jcur=k;['jt_want','jt_offer','jt_web'].forEach(function(x){document.getElementById(x).classList.remove('on');});document.getElementById(id).classList.add('on');jrender();}
-document.getElementById('jtabs').innerHTML=
- '<button class="jtab on" id="jt_web" onclick="jset(\'web\',\'jt_web\')">🌐 מהרשת · חי</button>'+
- '<button class="jtab" id="jt_want" onclick="jset(\'want\',\'jt_want\')">🧑‍🌾 דרושים</button>'+
- '<button class="jtab" id="jt_offer" onclick="jset(\'offer\',\'jt_offer\')">💼 היצע ושירותים</button>';
-jrender();
-</script>
+
 </body>
 </html>
