@@ -8,15 +8,15 @@
 @font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
 @font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
 @font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
-:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#8b6fc0;--ink:#14261c;--mut:#5c6f63;--line:#e6edea;--bg2:#f4f9f5;--tint:#eaf4ee;--up:#1f9d57;--down:#d24b4b}
+:root{--green:#1c6b45;--green-d:#134a30;--lime:#2e9e63;--teal:#2b8fb0;--gold:#c79a2e;--purple:#8b6fc0;--ink:#14261c;--mut:#5c6f63;--line:#f4efe3;--bg2:#f4efe3;--tint:#f4efe3;--up:#1f9d57;--down:#d24b4b}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
+body{font-family:Heebo,Arial,sans-serif;background:#f4efe3;color:var(--ink)}
 .mono{font-family:'Plex Mono',monospace}.wm{font-family:'Space Grotesk';font-weight:700}.wm b{color:#8fe6ad}
 .app{display:flex;min-height:100vh}
 .side{width:250px;flex:0 0 auto;background:linear-gradient(180deg,#134a30,#0f3d28);color:#fff;padding:22px 16px;position:sticky;top:0;height:100vh}
 .brand{display:flex;align-items:center;gap:8px;padding:6px 10px 18px}
 .brand .wm{font-size:22px}.brand .tag{font-size:11px;color:#8fe6ad;font-family:'Plex Mono'}
-.snav a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;color:rgba(255,255,255,.82);text-decoration:none;font-weight:600;font-size:15px;margin-bottom:4px;cursor:pointer}
+.snav a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:0;color:rgba(255,255,255,.82);text-decoration:none;font-weight:600;font-size:15px;margin-bottom:4px;cursor:pointer}
 .snav a .i{font-size:18px}
 .snav a:hover{background:rgba(255,255,255,.08);color:#fff}
 .snav a.on{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
@@ -27,18 +27,18 @@ body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
 .top .sm{font-size:13.5px;color:var(--mut);margin-top:2px}
 .tright{display:flex;align-items:center;gap:11px;flex-wrap:wrap;justify-content:flex-end;max-width:640px}
 .top{align-items:flex-start}
-.tsearch{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 14px;font-family:Heebo;font-size:14px;outline:0;width:230px}
-.iconbtn{width:42px;height:42px;border-radius:11px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:18px;cursor:pointer;position:relative}
+.tsearch{background:#fff;border:1px solid var(--line);border-radius:0;padding:10px 14px;font-family:Heebo;font-size:14px;outline:0;width:230px}
+.iconbtn{width:42px;height:42px;border-radius:0;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:18px;cursor:pointer;position:relative}
 .notdot{position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
-.avatar{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;display:grid;place-items:center;font-family:Rubik;font-weight:800}
+.avatar{width:42px;height:42px;border-radius:0;background:linear-gradient(135deg,var(--green),var(--lime));color:#fff;display:grid;place-items:center;font-family:Rubik;font-weight:800}
 /* generic */
 .screen{display:none}.screen.on{display:block}
 .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-bottom:20px}
 .kpis.k4{grid-template-columns:repeat(4,1fr)}
 @media(max-width:1300px){.kpis{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 6px 16px rgba(20,38,28,.04)}
-.kpi .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;margin-bottom:10px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:0;padding:18px;box-shadow:0 6px 16px rgba(20,38,28,.04)}
+.kpi .ic{width:40px;height:40px;border-radius:0;display:grid;place-items:center;font-size:20px;margin-bottom:10px}
 .kpi .v{font-family:Rubik;font-size:26px;font-weight:800;color:var(--ink);line-height:1}
 .kpi .l{font-size:13px;color:var(--mut);margin-top:4px}
 .kpi .ch{font-family:'Plex Mono';font-size:13px;font-weight:700;margin-top:6px}
@@ -47,66 +47,69 @@ body{font-family:Heebo,Arial,sans-serif;background:#eef3f0;color:var(--ink)}
 .row{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:20px}
 .row.eq{grid-template-columns:1fr 1fr}
 @media(max-width:1000px){.row,.row.eq{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 6px 16px rgba(20,38,28,.04);margin-bottom:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:0;padding:20px;box-shadow:0 6px 16px rgba(20,38,28,.04);margin-bottom:20px}
 .card h3{font-family:Rubik;font-size:18px;font-weight:800;color:var(--green-d);margin-bottom:2px}
 .card .sm{font-size:13px;color:var(--mut);margin-bottom:14px}
 .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.toolbar input{flex:1;min-width:180px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-family:Heebo;font-size:14.5px;outline:0}
-.chip{font-size:14px;font-weight:600;color:var(--green-d);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer}
+.toolbar input{flex:1;min-width:180px;background:#fff;border:1px solid var(--line);border-radius:0;padding:11px 14px;font-family:Heebo;font-size:14.5px;outline:0}
+.chip{font-size:14px;font-weight:600;color:var(--green-d);background:#fff;border:1px solid var(--line);border-radius:0;padding:8px 15px;cursor:pointer}
 .chip.on{background:var(--green);color:#fff;border-color:var(--green)}
-.btn{border:0;border-radius:11px;padding:11px 20px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap}
+.btn{border:0;border-radius:0;padding:11px 20px;font-family:Rubik;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap}
 .btn.g{background:linear-gradient(90deg,var(--green),var(--lime));color:#fff}
 .credgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(max-width:640px){.credgrid{grid-template-columns:1fr}}
 .credgrid label{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:700;color:var(--mut)}
-.credgrid input{border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:Heebo;font-size:15px;color:var(--ink);outline:0}
+.credgrid input{border:1px solid var(--line);border-radius:0;padding:11px 13px;font-family:Heebo;font-size:15px;color:var(--ink);outline:0}
 .credgrid input:focus{border-color:var(--green)}
 .btn.gold{background:linear-gradient(90deg,var(--gold),#e3c65a);color:#3a2c05}
 .btn.o{background:#fff;color:var(--green-d);border:1.5px solid var(--line)}
 .bars .bar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .bars .bn{font-size:14.5px;font-weight:600;width:120px;flex:0 0 auto}
-.bars .bt{flex:1;height:12px;background:var(--bg2);border-radius:999px;overflow:hidden}
-.bars .bf{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--lime))}
+.bars .bt{flex:1;height:12px;background:var(--bg2);border-radius:0;overflow:hidden}
+.bars .bf{height:100%;border-radius:0;background:linear-gradient(90deg,var(--green),var(--lime))}
 .bars .bv{font-family:'Plex Mono';font-size:13.5px;color:var(--green-d);font-weight:700;width:40px;text-align:left}
 .donut-wrap{display:flex;align-items:center;gap:22px}
 .donut{width:150px;height:150px;border-radius:50%;flex:0 0 auto;position:relative}
 .donut::after{content:"";position:absolute;inset:26px;background:#fff;border-radius:50%}
 .dlegend .dl{display:flex;align-items:center;gap:9px;font-size:14.5px;margin-bottom:9px}
-.dlegend .ds{width:13px;height:13px;border-radius:4px}
+.dlegend .ds{width:13px;height:13px;border-radius:0}
 .dlegend b{margin-inline-start:auto;font-family:'Plex Mono'}
 table{width:100%;border-collapse:collapse}
 th{font-size:12.5px;color:var(--mut);text-align:right;font-weight:700;padding:9px 8px;border-bottom:1px solid var(--line)}
-td{padding:12px 8px;border-bottom:1px solid #eef4ef;font-size:14.5px;vertical-align:middle}
+td{padding:12px 8px;border-bottom:1px solid #f4efe3;font-size:14.5px;vertical-align:middle}
 tr:last-child td{border-bottom:0}
-.uav{width:34px;height:34px;border-radius:9px;display:inline-grid;place-items:center;color:#fff;font-family:Rubik;font-weight:800;font-size:13px;vertical-align:middle}
-.clogo{width:34px;height:34px;border-radius:9px;background:var(--tint);border:1px solid var(--line);display:inline-grid;place-items:center;overflow:hidden;position:relative;vertical-align:middle;font-family:Rubik;font-weight:800;color:var(--green);font-size:12px}
+.uav{width:34px;height:34px;border-radius:0;display:inline-grid;place-items:center;color:#fff;font-family:Rubik;font-weight:800;font-size:13px;vertical-align:middle}
+.clogo{width:34px;height:34px;border-radius:0;background:var(--tint);border:1px solid var(--line);display:inline-grid;place-items:center;overflow:hidden;position:relative;vertical-align:middle;font-family:Rubik;font-weight:800;color:var(--green);font-size:12px}
 .clogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:4px;background:#fff}
-.pill{font-size:12.5px;font-weight:700;border-radius:999px;padding:4px 11px;white-space:nowrap}
+.pill{font-size:12.5px;font-weight:700;border-radius:0;padding:4px 11px;white-space:nowrap}
 .p-ok{background:rgba(31,157,87,.12);color:var(--up)}.p-wait{background:rgba(199,154,46,.16);color:#a67d1e}.p-off{background:rgba(210,75,75,.1);color:var(--down)}.p-draft{background:rgba(92,111,99,.12);color:var(--mut)}
 .act{cursor:pointer;font-size:16px;margin-inline-start:8px;opacity:.7}.act:hover{opacity:1}
 .tabs{display:flex;gap:8px;margin-bottom:16px}
-.tab{font-family:Rubik;font-weight:700;font-size:14.5px;color:var(--mut);padding:9px 18px;border-radius:10px;cursor:pointer}
+.tab{font-family:Rubik;font-weight:700;font-size:14.5px;color:var(--mut);padding:9px 18px;border-radius:0;cursor:pointer}
 .tab.on{background:var(--tint);color:var(--green-d)}
 .setgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 @media(max-width:800px){.setgrid{grid-template-columns:1fr}}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:13.5px;font-weight:600;color:var(--green-d);margin-bottom:5px}
-.field input,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:Heebo;font-size:14.5px;outline:0}
-.toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eef4ef}
-.sw{width:44px;height:25px;border-radius:999px;background:var(--green);position:relative;cursor:pointer;flex:0 0 auto}
-.sw.off{background:#cdd6d1}
+.field input,.field select{width:100%;border:1px solid var(--line);border-radius:0;padding:11px 13px;font-family:Heebo;font-size:14.5px;outline:0}
+.toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f4efe3}
+.sw{width:44px;height:25px;border-radius:0;background:var(--green);position:relative;cursor:pointer;flex:0 0 auto}
+.sw.off{background:#f4efe3}
 .sw::after{content:"";position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.15s}
 .sw.off::after{right:auto;left:3px}
 .foot{padding:16px 0 4px;text-align:center;font-size:12.5px;color:var(--mut)}
 .modal{position:fixed;inset:0;background:rgba(15,40,26,.5);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
 .modal.open{display:flex}
-.modal-card{background:#fff;border-radius:18px;max-width:540px;width:100%;padding:26px;box-shadow:0 30px 70px rgba(0,0,0,.3)}
+.modal-card{background:#fff;border-radius:0;max-width:540px;width:100%;padding:26px;box-shadow:0 30px 70px rgba(0,0,0,.3)}
 .modal-card h3{font-family:Rubik;font-size:22px;font-weight:800;color:var(--green-d);margin-bottom:16px}
 .modal-x{float:left;font-size:26px;line-height:1;cursor:pointer;color:var(--mut);border:0;background:none}
-.modal-card textarea{width:100%;min-height:92px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:Heebo;font-size:14.5px;outline:0;resize:vertical}
-.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--green-d);color:#fff;padding:14px 28px;border-radius:12px;font-weight:700;box-shadow:0 14px 34px rgba(0,0,0,.28);display:none;z-index:60}
+.modal-card textarea{width:100%;min-height:92px;border:1px solid var(--line);border-radius:0;padding:11px 13px;font-family:Heebo;font-size:14.5px;outline:0;resize:vertical}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--green-d);color:#fff;padding:14px 28px;border-radius:0;font-weight:700;box-shadow:0 14px 34px rgba(0,0,0,.28);display:none;z-index:60}
 .toast.show{display:block;animation:tin .3s ease}
 @keyframes tin{from{opacity:0;transform:translateX(-50%) translateY(12px)}}
+/* AgroData unified */
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--teal:#8a9b8c;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9}
+body{background:#ebe4cf}
 </style>
 </head>
 <body>
@@ -142,7 +145,7 @@ tr:last-child td{border-bottom:0}
         <a class="btn g" href="deck.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#6a45c0,#2e9e63)" title="מצגת קולנועית 15 שקפים · 3 דקות">🎞️ מצגת</a>
         <a class="btn g" href="agronews.html" target="_blank" rel="noopener" style="text-decoration:none;background:linear-gradient(90deg,#c79a2e,#2e9e63)" title="פורטל חדשות החקלאות (עד דומיין נפרד)">📰 agroNews</a>
         <a class="btn g" href="index.html" target="_blank" rel="noopener" style="text-decoration:none">🌐 צפייה באתר ↗</a>
-        <a class="btn g" onclick="adminLogout()" style="text-decoration:none;background:#e6ebe8;color:#5c6f63;cursor:pointer" title="יציאה וניקוי הסשן">🚪 יציאה</a>
+        <a class="btn g" onclick="adminLogout()" style="text-decoration:none;background:#f4efe3;color:#5c6f63;cursor:pointer" title="יציאה וניקוי הסשן">🚪 יציאה</a>
         <div class="iconbtn">🔔<span class="notdot"></span></div>
         <div class="avatar">א</div>
       </div>
@@ -150,13 +153,16 @@ tr:last-child td{border-bottom:0}
 
     <!-- ADMIN LOGIN GATE -->
     <div id="adminGate" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#134a30,#1c6b45);display:none;align-items:center;justify-content:center">
-      <div style="background:#fff;border-radius:18px;padding:34px 30px;width:min(360px,90vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)">
+      <div style="background:#fff;border-radius:0;padding:34px 30px;width:min(360px,90vw);text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)">
         <div style="font-size:40px">🔒</div>
         <h2 style="color:#134a30;font-size:22px;margin:8px 0 2px">כניסת מנהלים</h2>
         <p style="color:#6b7f73;font-size:13.5px;margin-bottom:18px">לוח הניהול · AgroData</p>
-        <input id="adminPass" type="password" placeholder="סיסמת מנהל" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 14px;border:1px solid #dbe8df;border-radius:10px;font-size:15px;text-align:center;margin-bottom:8px;box-sizing:border-box">
+        <div style="position:relative;margin-bottom:8px">
+          <input id="adminPass" type="password" placeholder="סיסמת מנהל" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px 44px 12px 14px;border:1px solid #f4efe3;border-radius:0;font-size:15px;text-align:center;box-sizing:border-box">
+          <button type="button" onclick="var i=document.getElementById('adminPass');var s=i.type==='password';i.type=s?'text':'password';this.textContent=s?'🙈':'👁️'" title="הצג/הסתר סיסמה" style="position:absolute;top:50%;inset-inline-start:8px;transform:translateY(-50%);background:transparent;border:0;font-size:18px;cursor:pointer;line-height:1">👁️</button>
+        </div>
         <div id="adminErr" style="color:#c4562e;font-size:13px;min-height:18px;margin-bottom:4px"></div>
-        <button onclick="adminLogin()" style="width:100%;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;border:0;border-radius:10px;padding:13px;font-size:16px;font-weight:800;cursor:pointer">כניסה</button>
+        <button onclick="adminLogin()" style="width:100%;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;border:0;border-radius:0;padding:13px;font-size:16px;font-weight:800;cursor:pointer">כניסה</button>
       </div>
     </div>
 
@@ -182,7 +188,7 @@ tr:last-child td{border-bottom:0}
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1;color:#c79a2e" id="sbPrem">—</div><div class="sm">⭐ פרימיום</div></div>
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbTot">—</div><div class="sm">סה״כ מנויים</div></div>
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbConv">—</div><div class="sm">המרה לפרימיום</div></div>
-              <a id="sbExp" href="#" style="margin-inline-start:auto;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:999px">⬇️ ייצוא כל המנויים (CSV)</a>
+              <a id="sbExp" href="#" style="margin-inline-start:auto;background:linear-gradient(90deg,#1c6b45,#2e9e63);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">⬇️ ייצוא כל המנויים (CSV)</a>
             </div>
             <div style="overflow-x:auto"><table style="min-width:640px"><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th></tr></thead><tbody id="sbBody"><tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">טוען…</td></tr></tbody></table></div>
             <div class="sm" style="margin-top:8px">טבלה: 20 האחרונים · כל השאר בקובץ ה-CSV</div>
@@ -253,12 +259,12 @@ tr:last-child td{border-bottom:0}
         <div class="card" style="grid-column:1/-1">
           <h3>🎨 פלטת צבעי הבלוקים</h3><div class="sm">קוד הצבע הרשמי לקבוצות המנועים בדף הבית</div>
           <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#EAF4EE"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק בהיר</div><div style="font-family:monospace;font-size:11px;opacity:.6">#EAF4EE</div><div style="font-size:11px;opacity:.7;margin-top:2px">מאגרים ומחקר · 5</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#CDE8D5"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק בינוני</div><div style="font-family:monospace;font-size:11px;opacity:.6">#CDE8D5</div><div style="font-size:11px;opacity:.7;margin-top:2px">אימפקט → ניוז · 6</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#DDEEF6"></div><div style="margin-top:7px;font-weight:700;font-size:13px">תכלת שמיים</div><div style="font-family:monospace;font-size:11px;opacity:.6">#DDEEF6</div><div style="font-size:11px;opacity:.7;margin-top:2px">מילוני ידע → סטארטאפים · 10</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#FDF8DE"></div><div style="margin-top:7px;font-weight:700;font-size:13px">צהוב בננה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#FDF8DE</div><div style="font-size:11px;opacity:.7;margin-top:2px">כנסים → חינוך וקהילה · 4</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#F7F3ED"></div><div style="margin-top:7px;font-weight:700;font-size:13px">חום בז׳</div><div style="font-family:monospace;font-size:11px;opacity:.6">#F7F3ED</div><div style="font-size:11px;opacity:.7;margin-top:2px">ענפי החקלאות · 5</div></div>
-            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:10px;border:1px solid #0001;background:#BBD8C4"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק כהה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#BBD8C4</div><div style="font-size:11px;opacity:.7;margin-top:2px">שמור להמשך</div></div>
+            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#f4efe3"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק בהיר</div><div style="font-family:monospace;font-size:11px;opacity:.6">#f4efe3</div><div style="font-size:11px;opacity:.7;margin-top:2px">מאגרים ומחקר · 5</div></div>
+            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#f4efe3"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק בינוני</div><div style="font-family:monospace;font-size:11px;opacity:.6">#f4efe3</div><div style="font-size:11px;opacity:.7;margin-top:2px">אימפקט → ניוז · 6</div></div>
+            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#DDEEF6"></div><div style="margin-top:7px;font-weight:700;font-size:13px">תכלת שמיים</div><div style="font-family:monospace;font-size:11px;opacity:.6">#DDEEF6</div><div style="font-size:11px;opacity:.7;margin-top:2px">מילוני ידע → סטארטאפים · 10</div></div>
+            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#FDF8DE"></div><div style="margin-top:7px;font-weight:700;font-size:13px">צהוב בננה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#FDF8DE</div><div style="font-size:11px;opacity:.7;margin-top:2px">כנסים → חינוך וקהילה · 4</div></div>
+            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#F7F3ED"></div><div style="margin-top:7px;font-weight:700;font-size:13px">חום בז׳</div><div style="font-family:monospace;font-size:11px;opacity:.6">#F7F3ED</div><div style="font-size:11px;opacity:.7;margin-top:2px">ענפי החקלאות · 5</div></div>
+            <div style="flex:1;min-width:150px"><div style="height:64px;border-radius:0;border:1px solid #0001;background:#BBD8C4"></div><div style="margin-top:7px;font-weight:700;font-size:13px">ירוק כהה</div><div style="font-family:monospace;font-size:11px;opacity:.6">#BBD8C4</div><div style="font-size:11px;opacity:.7;margin-top:2px">שמור להמשך</div></div>
           </div>
         </div>
       </div>
@@ -285,12 +291,12 @@ tr:last-child td{border-bottom:0}
           <p>עיר הופכת ל״בירה״ לא בכך שהיא מתחרה על מפעלים — אלא בכך שהיא <b>מנהיגה אזור</b>. המהלך המנצח: מיצוב אופקים כבירת <b>אשכול הנגב לאגרו-טק</b>, שבו אופקים היא המוח והידע, רהט הייצור, שער הנגב המעבדות ושדרות המימון. הפיכת המתחרים ללוויינים במקום ליריבים.</p>
           <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">◆ מפת האשכול האזורי · נתיבות · רהט · שדרות · שדות הנגב</h2>
           <p>אופקים במרכז — מוח, דאטה ומטה; סביבה הלוויינים, כל אחד בתפקידו: נתיבות (כישרון והכשרה), רהט (ייצור ותעשייה), שדרות (מימון ומענקים) ושדות הנגב (שדות ניסוי ומעבדה חיה).</p>
-          <div style="margin:16px 0;padding:14px;background:#f6f9f7;border:1px solid #dbe8df;border-radius:12px"><svg viewBox="0 0 680 430" style="width:100%;max-width:600px;height:auto;font-family:Rubik,Arial;display:block;margin:8px auto">
+          <div style="margin:16px 0;padding:14px;background:#f4efe3;border:1px solid #f4efe3;border-radius:0"><svg viewBox="0 0 680 430" style="width:100%;max-width:600px;height:auto;font-family:Rubik,Arial;display:block;margin:8px auto">
 <g stroke="#9ec9ae" stroke-width="2.5"><line x1="340" y1="215" x2="340" y2="70"/><line x1="340" y1="215" x2="545" y2="215"/><line x1="340" y1="215" x2="135" y2="215"/><line x1="340" y1="215" x2="340" y2="360"/></g>
-<g><ellipse cx="340" cy="62" rx="86" ry="36" fill="#eaf4ee" stroke="#1c6b45" stroke-width="2"/><text x="340" y="56" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">נתיבות</text><text x="340" y="78" text-anchor="middle" font-size="12.5" fill="#3d5346">כישרון והכשרה</text></g>
-<g><ellipse cx="558" cy="215" rx="96" ry="36" fill="#eaf4ee" stroke="#1c6b45" stroke-width="2"/><text x="558" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">רהט</text><text x="558" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">ייצור ותעשייה</text></g>
-<g><ellipse cx="122" cy="215" rx="96" ry="36" fill="#eaf4ee" stroke="#1c6b45" stroke-width="2"/><text x="122" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">שדרות</text><text x="122" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">מימון ומענקים</text></g>
-<g><ellipse cx="340" cy="368" rx="104" ry="36" fill="#eaf4ee" stroke="#1c6b45" stroke-width="2"/><text x="340" y="362" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">שדות הנגב</text><text x="340" y="384" text-anchor="middle" font-size="12.5" fill="#3d5346">שדות ניסוי · מעבדה חיה</text></g>
+<g><ellipse cx="340" cy="62" rx="86" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="340" y="56" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">נתיבות</text><text x="340" y="78" text-anchor="middle" font-size="12.5" fill="#3d5346">כישרון והכשרה</text></g>
+<g><ellipse cx="558" cy="215" rx="96" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="558" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">רהט</text><text x="558" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">ייצור ותעשייה</text></g>
+<g><ellipse cx="122" cy="215" rx="96" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="122" y="209" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">שדרות</text><text x="122" y="231" text-anchor="middle" font-size="12.5" fill="#3d5346">מימון ומענקים</text></g>
+<g><ellipse cx="340" cy="368" rx="104" ry="36" fill="#f4efe3" stroke="#1c6b45" stroke-width="2"/><text x="340" y="362" text-anchor="middle" font-weight="800" font-size="18" fill="#134a30">שדות הנגב</text><text x="340" y="384" text-anchor="middle" font-size="12.5" fill="#3d5346">שדות ניסוי · מעבדה חיה</text></g>
 <circle cx="340" cy="215" r="70" fill="#134a30"/><circle cx="340" cy="215" r="70" fill="none" stroke="#8fe6ad" stroke-width="2.5"/><text x="340" y="209" text-anchor="middle" font-weight="900" font-size="22" fill="#fff">אופקים</text><text x="340" y="233" text-anchor="middle" font-size="12" fill="#8fe6ad">בירה · מוח · דאטה</text>
 </svg><div style="text-align:center;font-size:12.5px;color:#5c6f63;margin-top:6px">מפת האשכול האזורי — אופקים כבירה, והלוויינים סביבה</div></div>
           <h2 style="font-family:Rubik;color:var(--green-d);font-size:22px;margin:20px 0 6px">◆ כיווני הפעולה</h2>
@@ -327,10 +333,10 @@ tr:last-child td{border-bottom:0}
         <h3>🗄️ מאגר התוכניות והחשיבה</h3>
         <div class="sm">ארכיון ניירות עמדה ותוכניות — לפי תאריך, שם, עורך, סטטוס וקישור למסמך.</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px">
-          <div style="flex:2;min-width:160px"><label style="font-size:12px;color:var(--mut);font-weight:700">שם הנייר</label><input id="ppTitle" placeholder="שם המסמך" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-family:Heebo;font-size:14px"></div>
-          <div style="flex:1;min-width:110px"><label style="font-size:12px;color:var(--mut);font-weight:700">עורך</label><input id="ppBy" placeholder="שם העורך" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-family:Heebo;font-size:14px"></div>
-          <div style="flex:1;min-width:110px"><label style="font-size:12px;color:var(--mut);font-weight:700">סטטוס</label><select id="ppStatus" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-family:Heebo;font-size:14px"><option>לא ערוך</option><option>בעריכה</option><option>הושלם</option></select></div>
-          <div style="flex:2;min-width:150px"><label style="font-size:12px;color:var(--mut);font-weight:700">קישור למסמך</label><input id="ppLink" placeholder="https://… או /position-paper.html" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-family:Heebo;font-size:14px"></div>
+          <div style="flex:2;min-width:160px"><label style="font-size:12px;color:var(--mut);font-weight:700">שם הנייר</label><input id="ppTitle" placeholder="שם המסמך" style="width:100%;border:1px solid var(--line);border-radius:0;padding:9px 11px;font-family:Heebo;font-size:14px"></div>
+          <div style="flex:1;min-width:110px"><label style="font-size:12px;color:var(--mut);font-weight:700">עורך</label><input id="ppBy" placeholder="שם העורך" style="width:100%;border:1px solid var(--line);border-radius:0;padding:9px 11px;font-family:Heebo;font-size:14px"></div>
+          <div style="flex:1;min-width:110px"><label style="font-size:12px;color:var(--mut);font-weight:700">סטטוס</label><select id="ppStatus" style="width:100%;border:1px solid var(--line);border-radius:0;padding:9px 11px;font-family:Heebo;font-size:14px"><option>לא ערוך</option><option>בעריכה</option><option>הושלם</option></select></div>
+          <div style="flex:2;min-width:150px"><label style="font-size:12px;color:var(--mut);font-weight:700">קישור למסמך</label><input id="ppLink" placeholder="https://… או /position-paper.html" style="width:100%;border:1px solid var(--line);border-radius:0;padding:9px 11px;font-family:Heebo;font-size:14px"></div>
           <button class="btn g" onclick="ppAdd()">➕ הוסף</button>
         </div>
         <table><thead><tr><th>תאריך</th><th>שם הנייר</th><th>עורך</th><th>סטטוס</th><th>קישור</th><th></th></tr></thead><tbody id="ppRows"><tr><td colspan="6" style="color:var(--mut)">טוען…</td></tr></tbody></table>
@@ -428,8 +434,8 @@ tr:last-child td{border-bottom:0}
         .svtbl td,.svtbl th{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
         .svtbl th{background:var(--bg2);color:var(--mut);font-weight:700}
         .svtbl .nm{font-weight:800;color:var(--green-d)}
-        .pill{display:inline-block;border-radius:20px;padding:3px 11px;font-size:12px;font-weight:800;white-space:nowrap}
-        .p-ok{background:#e5f4ea;color:#1c6b45}.p-pay{background:#fbecd6;color:#a3611c}.p-key{background:#fde8e8;color:#c0392b}.p-off{background:#eceff0;color:#6b7a72}.p-free{background:#e7f2fb;color:#1c6b8a}
+        .pill{display:inline-block;border-radius:0;padding:3px 11px;font-size:12px;font-weight:800;white-space:nowrap}
+        .p-ok{background:#f4efe3;color:#1c6b45}.p-pay{background:#fbecd6;color:#a3611c}.p-key{background:#fde8e8;color:#c0392b}.p-off{background:#eceff0;color:#6b7a72}.p-free{background:#e7f2fb;color:#1c6b8a}
         .svnote{font-size:12.5px;color:var(--mut)}
       </style>
       <div class="kpis k4">
@@ -533,8 +539,8 @@ function go(el,s){document.querySelectorAll('.snav a').forEach(a=>a.classList.re
 document.querySelectorAll('.chip,.tab').forEach(c=>c.addEventListener('click',function(){this.parentNode.querySelectorAll(this.className.split(' ')[0]==='tab'?'.tab':'.chip').forEach(x=>x.classList.remove('on'));this.classList.add('on');}));
 document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',function(){this.classList.toggle('off');}));
 function dom(u){try{var h=new URL(u).hostname.replace(/^www\./,'');var p=h.split('.');return p.slice(-(h.endsWith('.il')?3:2)).join('.');}catch(e){return '';}}
-function areaChart(id,d,stroke){const w=800,h=240,pad=26,mn=Math.min(...d),mx=Math.max(...d),rx=(w-2*pad)/(d.length-1),ry=(h-2*pad)/((mx-mn)||1);const pts=d.map((v,i)=>[pad+i*rx,h-pad-(v-mn)*ry]);const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');const area=path+` L${pts[pts.length-1][0]},${h-pad} L${pad},${h-pad} Z`;let g=`<defs><linearGradient id="ag${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${stroke}" stop-opacity=".28"/><stop offset="1" stop-color="#c79a2e" stop-opacity="0"/></linearGradient></defs>`;for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#eef4ef"/>`;}g+=`<path d="${area}" fill="url(#ag${id})"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="3"/>`;pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#fff" stroke="#c79a2e" stroke-width="2.5"/>`);document.getElementById(id).innerHTML=g;}
-function barChart(id,val){const w=800,h=240,pad=30,mx=Math.max(...val.map(v=>v[1])),bw=(w-2*pad)/val.length*0.55,gap=(w-2*pad)/val.length;let g='';for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#eef4ef"/>`;}val.forEach((v,i)=>{const bh=(v[1]/mx)*(h-2*pad-14),x=pad+i*gap+(gap-bw)/2,y=h-pad-bh;g+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="url(#bg)"/><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" font-family="'Plex Mono'" font-size="12" fill="#5c6f63">${v[0]}</text>`;});g=`<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e9e63"/><stop offset="1" stop-color="#c79a2e"/></linearGradient></defs>`+g;document.getElementById(id).innerHTML=g;}
+function areaChart(id,d,stroke){const w=800,h=240,pad=26,mn=Math.min(...d),mx=Math.max(...d),rx=(w-2*pad)/(d.length-1),ry=(h-2*pad)/((mx-mn)||1);const pts=d.map((v,i)=>[pad+i*rx,h-pad-(v-mn)*ry]);const path=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');const area=path+` L${pts[pts.length-1][0]},${h-pad} L${pad},${h-pad} Z`;let g=`<defs><linearGradient id="ag${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${stroke}" stop-opacity=".28"/><stop offset="1" stop-color="#c79a2e" stop-opacity="0"/></linearGradient></defs>`;for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#f4efe3"/>`;}g+=`<path d="${area}" fill="url(#ag${id})"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="3"/>`;pts.forEach(p=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="4.5" fill="#fff" stroke="#c79a2e" stroke-width="2.5"/>`);document.getElementById(id).innerHTML=g;}
+function barChart(id,val){const w=800,h=240,pad=30,mx=Math.max(...val.map(v=>v[1])),bw=(w-2*pad)/val.length*0.55,gap=(w-2*pad)/val.length;let g='';for(let i=0;i<=4;i++){const y=pad+i*(h-2*pad)/4;g+=`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="#f4efe3"/>`;}val.forEach((v,i)=>{const bh=(v[1]/mx)*(h-2*pad-14),x=pad+i*gap+(gap-bw)/2,y=h-pad-bh;g+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="url(#bg)"/><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" font-family="'Plex Mono'" font-size="12" fill="#5c6f63">${v[0]}</text>`;});g=`<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e9e63"/><stop offset="1" stop-color="#c79a2e"/></linearGradient></defs>`+g;document.getElementById(id).innerHTML=g;}
 function donut(id,lid,data){let acc=0,seg=[];data.forEach(s=>{seg.push(`${s[2]} ${acc}% ${acc+s[1]}%`);acc+=s[1];});document.getElementById(id).style.background=`conic-gradient(${seg.join(',')})`;document.getElementById(lid).innerHTML=data.map(s=>`<div class="dl"><span class="ds" style="background:${s[2]}"></span>${s[0]} <b>${s[1]}%</b></div>`).join('');}
 function tbl(id,html){document.getElementById(id).innerHTML=html;}
 function pill(s){return s==='ok'?'<span class="pill p-ok">פעיל</span>':s==='wait'?'<span class="pill p-wait">ממתין</span>':s==='off'?'<span class="pill p-off">מושהה</span>':s==='pub'?'<span class="pill p-ok">פורסם</span>':s==='draft'?'<span class="pill p-draft">טיוטה</span>':s;}
@@ -556,7 +562,7 @@ function renderDash(){
     tbl('kpis',KPI.map(k=>`<div class="kpi"><div class="ic ${k[1]}">${k[0]}</div><div class="v">${k[2]}</div><div class="l">${k[3]}</div></div>`).join(''));
     var series=s.byDay||[]; if(series.length) areaChart('area',series.map(d=>d.count),'#1c6b45');
     if(tot>0) donut('donut','dlegend',[["רגיל",Math.round(reg/tot*100),"#1c6b45"],["פרימיום",Math.round(prem/tot*100),"#c79a2e"]]);
-    else donut('donut','dlegend',[["רגיל",100,"#eef4ef"]]);
+    else donut('donut','dlegend',[["רגיל",100,"#f4efe3"]]);
     var pm={google:'Google',facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',email:'מייל',other:'אחר'};
     var bp=s.byProvider||{}, bd=Object.keys(bp).map(k=>[pm[k]||k,bp[k]]).sort((x,y)=>y[1]-x[1]);
     tbl('bars', bd.length ? bd.map(b=>`<div class="bar"><span class="bn">${b[0]}</span><div class="bt"><div class="bf" style="width:${Math.round(b[1]/bd[0][1]*100)}%"></div></div><span class="bv">${b[1]}</span></div>`).join('') : '<div class="sm">אין הרשמות עדיין</div>');
