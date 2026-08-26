@@ -649,9 +649,13 @@ function loadResearch(){
   var seen={},it=(j.items||[]).filter(function(w){if(!w.url||!w.date||w.date<frm)return false;var k=(w.title||'').slice(0,40);if(seen[k])return false;seen[k]=1;return true;}).slice(0,3);
   if(!it.length){box.innerHTML='<div class="load">אין מחקרים חדשים ב-90 הימים האחרונים.</div>';return;}
   it.forEach(function(w,i){w.image=RES_FB[i%RES_FB.length];});
-  box.innerHTML=it.map(function(w,i){return '<a class="op" href="'+w.url+'" target="_blank" rel="noopener" style="text-decoration:none;display:block"><img id="rimg'+i+'" class="opimg" src="'+w.image+'" alt="" loading="lazy" onerror="this.src=\''+RES_FB[i%RES_FB.length]+'\'"><div class="who" style="padding-top:12px"><span class="av">🔬</span><span class="nm">'+esc(w.inst||'מחקר')+'</span></div><div class="t">'+esc(w.title)+'</div><div class="src" style="padding:0 14px 14px;color:var(--mut);font-size:12.5px">📅 '+esc((w.date||'').slice(0,10))+'</div></a>';}).join('');
-  // upgrade to the paper's real image where the publisher exposes one
-  it.forEach(function(w,i){fetch('/api/ogimage?url='+encodeURIComponent(w.url),{cache:'no-store'}).then(function(r){return r.json();}).then(function(g){if(g&&g.image){var im=document.getElementById('rimg'+i);if(im)im.src=g.image;}}).catch(function(){});});
+  function paint(){
+   box.innerHTML=it.map(function(w,i){return '<a class="op" href="'+w.url+'" target="_blank" rel="noopener" style="text-decoration:none;display:block"><img id="rimg'+i+'" class="opimg" src="'+w.image+'" alt="" loading="lazy" onerror="this.src=\''+RES_FB[i%RES_FB.length]+'\'"><div class="who" style="padding-top:12px"><span class="av">🔬</span><span class="nm">'+esc(w.inst||'מחקר')+'</span></div><div class="t">'+esc(w.title)+'</div><div class="src" style="padding:0 14px 14px;color:var(--mut);font-size:12.5px">📅 '+esc((w.date||'').slice(0,10))+'</div></a>';}).join('');
+   it.forEach(function(w,i){fetch('/api/ogimage?url='+encodeURIComponent(w.url),{cache:'no-store'}).then(function(r){return r.json();}).then(function(g){if(g&&g.image){var im=document.getElementById('rimg'+i);if(im)im.src=g.image;}}).catch(function(){});});
+  }
+  if(LANG==='he'){
+   fetch('/api/tohe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({texts:it.map(function(w){return w.title;})})}).then(function(r){return r.json();}).then(function(t){var m=(t&&t.map)||{};it.forEach(function(w){if(m[w.title])w.title=m[w.title];});paint();}).catch(paint);
+  } else { paint(); }
  }).catch(function(){box.innerHTML='<div class="load">—</div>';});
 }
 function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';nregPaint();
