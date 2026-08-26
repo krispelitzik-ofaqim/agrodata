@@ -4,6 +4,19 @@ import http.server, socketserver, json, urllib.request, urllib.parse, time, thre
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 WEB  = os.path.join(HERE, "web")
+
+# Israel local time — Railway/servers run in UTC; stamp records in Asia/Jerusalem.
+try:
+    from zoneinfo import ZoneInfo
+    _IL_TZ = ZoneInfo("Asia/Jerusalem")
+except Exception:
+    _IL_TZ = None
+def il_now():
+    if _IL_TZ is not None:
+        return datetime.datetime.now(_IL_TZ)
+    # fallback: Israel is UTC+3 during DST (Mar–Oct), UTC+2 otherwise
+    m = datetime.datetime.utcnow().month
+    return datetime.datetime.utcnow() + datetime.timedelta(hours=3 if 3 <= m <= 10 else 2)
 PORT = int(os.environ.get("PORT", 8787))   # Render מזריק PORT; מקומית 8787
 HOST = os.environ.get("HOST", "127.0.0.1") # באחסון נגדיר HOST=0.0.0.0
 CACHE = {}; TTL = 60; LOCK = threading.Lock()
@@ -367,7 +380,7 @@ def drive_visits_add(n):
 def visits_bump(ip=None):
     global _VISITS_TOTAL, _VISITS_PENDING, _VISITS_TODAY, _VISITS_TODAY_DAY
     with _VISITS_LOCK:
-        d = datetime.datetime.now().strftime("%Y-%m-%d")
+        d = il_now().strftime("%Y-%m-%d")
         if d != _VISITS_TODAY_DAY:
             _VISITS_TODAY_DAY = d; _VISITS_TODAY = 0; _UNIQUE_TODAY.clear()
         _VISITS_TOTAL += 1
@@ -2065,7 +2078,7 @@ class H(http.server.SimpleHTTPRequestHandler):
             with _VISITS_LOCK:
                 out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY,
                        "uniqueTotal": len(_UNIQUE_TOTAL), "uniqueToday": len(_UNIQUE_TODAY)}
-            _today = datetime.datetime.now().strftime("%Y-%m-%d")
+            _today = il_now().strftime("%Y-%m-%d")
             _ltot = 0; _ltoday = 0
             with _SUBS_LOCK:
                 for _r in _SUBS:
@@ -2162,6 +2175,43 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/subs-dedup"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            if not _admin_token_valid(str(data.get("token") or "")):
+                out = {"ok": False, "error": "unauthorized"}
+            else:
+                removed = 0
+                with _SUBS_LOCK:
+                    keep = []; first_by_email = {}
+                    for r in _SUBS:
+                        em = (r.get("email") or "").strip().lower()
+                        if not em:                       # no email → can't dedup, keep as-is
+                            keep.append(r); continue
+                        prev = first_by_email.get(em)
+                        if prev is None:                 # first time this email appears — keep it
+                            first_by_email[em] = r; keep.append(r)
+                        else:                            # duplicate — merge into the original, drop this one
+                            prev["logins"] = int(prev.get("logins", 0) or 0) + int(r.get("logins", 0) or 0)
+                            if r.get("plan") == "premium": prev["plan"] = "premium"
+                            if r.get("role") == "admin": prev["role"] = "admin"
+                            if not prev.get("name") and r.get("name"): prev["name"] = r.get("name")
+                            ll = str(r.get("last_login", ""));
+                            if ll > str(prev.get("last_login", "")): prev["last_login"] = ll
+                            removed += 1
+                    if removed:
+                        _SUBS[:] = keep; _save_subs()
+                    reg, prem = _subs_counts()
+                out = {"ok": True, "removed": removed, "regular": reg, "premium": prem}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/search-quota"):
             try:
                 n = int(self.headers.get("Content-Length", 0))
@@ -2225,7 +2275,7 @@ class H(http.server.SimpleHTTPRequestHandler):
                         new_name = existing.get("name", "") or _s("name")
                         if not existing.get("name") and _s("name"): existing["name"] = _s("name")
                         existing["logins"] = int(existing.get("logins", 0) or 0) + 1
-                        existing["last_login"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+                        existing["last_login"] = il_now().strftime("%Y-%m-%d %H:%M")
                     elif data.get("login"):
                         # login-only: email not found → don't create a record
                         body = json.dumps({"ok": False, "notfound": True}).encode("utf-8")
@@ -2239,7 +2289,7 @@ class H(http.server.SimpleHTTPRequestHandler):
                         new_role = "admin" if em in ADMIN_EMAILS else "user"
                         new_name = _s("name")
                         _SUBS.append({"id": new_id,
-                                      "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                      "ts": il_now().strftime("%Y-%m-%d %H:%M"),
                                       "provider": _s("provider"), "name": _s("name"), "email": _s("email"),
                                       "org": _s("org"), "field": _s("field"),
                                       "plan": "premium" if new_role == "admin" else "regular", "role": new_role})

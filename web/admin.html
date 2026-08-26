@@ -196,8 +196,10 @@ body{background:#ebe4cf}
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1;color:#a5824a" id="sbPrem">—</div><div class="sm">⭐ פרימיום</div></div>
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbTot">—</div><div class="sm">סה״כ מנויים</div></div>
               <div><div style="font-size:34px;font-weight:800;font-family:Rubik;line-height:1" id="sbConv">—</div><div class="sm">המרה לפרימיום</div></div>
-              <a id="sbExp" href="#" style="margin-inline-start:auto;background:linear-gradient(90deg,#1e5137,#2e7d52);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">⬇️ ייצוא כל המנויים (CSV)</a>
+              <button onclick="dedupSubs()" style="margin-inline-start:auto;background:#fff;color:#1e5137;border:1px solid #1e5137;cursor:pointer;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">🧹 מזג כפילויות</button>
+              <a id="sbExp" href="#" style="background:linear-gradient(90deg,#1e5137,#2e7d52);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">⬇️ ייצוא כל המנויים (CSV)</a>
             </div>
+            <div id="dedupMsg" class="sm" style="display:none;margin-top:8px;font-weight:700"></div>
             <div style="overflow-x:auto"><table style="min-width:640px"><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th></tr></thead><tbody id="sbBody"><tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">טוען…</td></tr></tbody></table></div>
             <div class="sm" style="margin-top:8px">טבלה: 20 האחרונים · כל השאר בקובץ ה-CSV</div>
           </div>
@@ -226,6 +228,16 @@ body{background:#ebe4cf}
         _subsOpen=!_subsOpen;
         if(_subsOpen){ loadSubsPanel(); p.style.maxHeight=p.scrollHeight+'px'; c.style.transform='rotate(180deg)'; }
         else{ p.style.maxHeight='0px'; c.style.transform=''; }
+      }
+      function dedupSubs(){
+        if(!confirm('למזג רשומות עם מייל זהה? נשמרת הרשומה המקורית בלבד. פעולה זו אינה הפיכה.'))return;
+        var m=document.getElementById('dedupMsg'); m.style.display='block'; m.style.color='#5c6a5e'; m.textContent='ממזג…';
+        fetch('/api/subs-dedup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:ADMIN_TOKEN})})
+          .then(function(r){return r.json();}).then(function(d){
+            if(!d||!d.ok){m.style.color='#c4562e';m.textContent='שגיאה — נסה שוב';return;}
+            m.style.color='#1e5137';m.textContent='✓ הוסרו '+d.removed+' כפילויות. מנויים רגילים: '+d.regular+' · פרימיום: '+d.premium;
+            loadSubsPanel();
+          }).catch(function(){m.style.color='#c4562e';m.textContent='שגיאת חיבור';});
       }
       function loadSubsPanel(){
         fetch('/api/subs-list?token='+ADMIN_TOKEN).then(function(r){return r.json();}).then(function(d){
