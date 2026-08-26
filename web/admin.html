@@ -181,6 +181,8 @@ body{background:#ebe4cf}
           <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="visToday">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">צפיות היום</div></div>
           <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="visUniq">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">מבקרים שונים</div></div>
           <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="visUniqToday">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">שונים היום</div></div>
+          <div style="border-inline-start:1px solid rgba(255,255,255,.25);padding-inline-start:36px"><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="logToday">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">כניסות מנויים היום</div></div>
+          <div><div style="font-size:40px;font-weight:800;font-family:Rubik;line-height:1" id="logTotal">—</div><div class="sm" style="color:rgba(255,255,255,.85);margin-top:4px">סה״כ כניסות מנויים</div></div>
         </div>
         <div class="sm" style="color:rgba(255,255,255,.9);margin-top:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700" onclick="toggleSubs()">🗂️ נתוני מנויים (בק־אופיס) <span id="subsChev" style="transition:transform .3s;display:inline-block">▾</span></div>
       </div></div>
@@ -249,6 +251,8 @@ body{background:#ebe4cf}
             document.getElementById('visToday').textContent=fmt(j.today);
             document.getElementById('visUniq').textContent=fmt(j.uniqueTotal);
             document.getElementById('visUniqToday').textContent=fmt(j.uniqueToday);
+            document.getElementById('logToday').textContent=fmt(j.loginsToday);
+            document.getElementById('logTotal').textContent=fmt(j.loginsTotal);
           }).catch(function(){});
         }
         load(); setInterval(load,30000);

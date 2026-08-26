@@ -2065,6 +2065,13 @@ class H(http.server.SimpleHTTPRequestHandler):
             with _VISITS_LOCK:
                 out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY,
                        "uniqueTotal": len(_UNIQUE_TOTAL), "uniqueToday": len(_UNIQUE_TODAY)}
+            _today = datetime.datetime.now().strftime("%Y-%m-%d")
+            _ltot = 0; _ltoday = 0
+            with _SUBS_LOCK:
+                for _r in _SUBS:
+                    _n = int(_r.get("logins", 0) or 0); _ltot += _n
+                    if _n and str(_r.get("last_login", ""))[:10] == _today: _ltoday += 1
+            out["loginsTotal"] = _ltot; out["loginsToday"] = _ltoday
             body = json.dumps(out).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -2217,6 +2224,8 @@ class H(http.server.SimpleHTTPRequestHandler):
                         new_id = existing.get("id", ""); new_role = existing.get("role", "user")
                         new_name = existing.get("name", "") or _s("name")
                         if not existing.get("name") and _s("name"): existing["name"] = _s("name")
+                        existing["logins"] = int(existing.get("logins", 0) or 0) + 1
+                        existing["last_login"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
                     elif data.get("login"):
                         # login-only: email not found → don't create a record
                         body = json.dumps({"ok": False, "notfound": True}).encode("utf-8")
