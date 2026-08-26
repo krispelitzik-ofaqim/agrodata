@@ -200,7 +200,7 @@ body{background:#ebe4cf}
               <a id="sbExp" href="#" style="background:linear-gradient(90deg,#1e5137,#2e7d52);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:0">⬇️ ייצוא כל המנויים (CSV)</a>
             </div>
             <div id="dedupMsg" class="sm" style="display:none;margin-top:8px;font-weight:700"></div>
-            <div style="overflow-x:auto"><table style="min-width:640px"><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th></tr></thead><tbody id="sbBody"><tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">טוען…</td></tr></tbody></table></div>
+            <div style="overflow-x:auto"><table style="min-width:640px"><thead><tr><th>מתי</th><th>ספק</th><th>שם</th><th>אימייל</th><th>ארגון</th><th>סטטוס</th><th></th></tr></thead><tbody id="sbBody"><tr><td colspan="7" style="text-align:center;color:#8a9b90;padding:18px">טוען…</td></tr></tbody></table></div>
             <div class="sm" style="margin-top:8px">טבלה: 20 האחרונים · כל השאר בקובץ ה-CSV</div>
           </div>
         </div>
@@ -239,6 +239,14 @@ body{background:#ebe4cf}
             loadSubsPanel();
           }).catch(function(){m.style.color='#c4562e';m.textContent='שגיאת חיבור';});
       }
+      function delSub(id,email){
+        if(!confirm('למחוק את המנוי '+(email||id)+'? פעולה זו אינה הפיכה.'))return;
+        fetch('/api/sub-remove',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:ADMIN_TOKEN,id:id})})
+          .then(function(r){return r.json();}).then(function(d){
+            if(!d||!d.ok){alert('שגיאה במחיקה');return;}
+            loadSubsPanel();
+          }).catch(function(){alert('שגיאת חיבור');});
+      }
       function loadSubsPanel(){
         fetch('/api/subs-list?token='+ADMIN_TOKEN).then(function(r){return r.json();}).then(function(d){
           var reg=d.regular||0,prem=d.premium||0,tot=d.total||(reg+prem);
@@ -249,8 +257,9 @@ body{background:#ebe4cf}
           var items=d.items||[], b=document.getElementById('sbBody');
           b.innerHTML=items.length?items.map(function(r){
             var st=(r.role==='admin')?'⭐ מנהל':((r.plan==='premium')?'⭐ פרימיום':'רגיל');
-            return '<tr><td>'+_e(r.ts)+'</td><td>'+_e(r.provider||'—')+'</td><td>'+_e(r.name||'—')+'</td><td>'+_e(r.email||'—')+'</td><td>'+_e(r.org||'—')+'</td><td>'+st+'</td></tr>';}).join('')
-            :'<tr><td colspan="6" style="text-align:center;color:#8a9b90;padding:18px">אין מנויים עדיין</td></tr>';
+            var del=(r.role==='admin')?'':'<button onclick="delSub(\''+_e(r.id)+'\',\''+_e(r.email||'')+'\')" title="מחק מנוי" style="background:none;border:0;cursor:pointer;color:#c4562e;font-size:16px;padding:2px 6px">🗑️</button>';
+            return '<tr><td>'+_e(r.ts)+'</td><td>'+_e(r.provider||'—')+'</td><td>'+_e(r.name||'—')+'</td><td>'+_e(r.email||'—')+'</td><td>'+_e(r.org||'—')+'</td><td>'+st+'</td><td>'+del+'</td></tr>';}).join('')
+            :'<tr><td colspan="7" style="text-align:center;color:#8a9b90;padding:18px">אין מנויים עדיין</td></tr>';
           if(_subsOpen){var p=document.getElementById('subsPanel');p.style.maxHeight=p.scrollHeight+'px';}
         }).catch(function(){});
       }

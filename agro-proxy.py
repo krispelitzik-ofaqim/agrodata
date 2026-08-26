@@ -2175,6 +2175,30 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/sub-remove"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            if not _admin_token_valid(str(data.get("token") or "")):
+                out = {"ok": False, "error": "unauthorized"}
+            else:
+                sid = str(data.get("id") or "")
+                removed = 0
+                with _SUBS_LOCK:
+                    before = len(_SUBS)
+                    _SUBS[:] = [r for r in _SUBS if r.get("id") != sid]
+                    removed = before - len(_SUBS)
+                    if removed: _save_subs()
+                    reg, prem = _subs_counts()
+                out = {"ok": True, "removed": removed, "regular": reg, "premium": prem}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/subs-dedup"):
             try:
                 n = int(self.headers.get("Content-Length", 0))
