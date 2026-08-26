@@ -633,12 +633,24 @@ function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.
  document.getElementById('albh').textContent=S.alb;document.getElementById('grh').textContent=S.gr;document.getElementById('hah').textContent=S.ha;document.getElementById('habtn').textContent=S.hab;
  document.getElementById('pbh').textContent=S.bh;document.getElementById('pbs').textContent=S.bs;document.getElementById('poh').textContent=S.oh;document.getElementById('pos').textContent=S.os;
  document.getElementById('wxl').textContent=S.wl;document.getElementById('footline').textContent=S.foot;
- var O=LANG==='he'?OP_he:OP_en;document.getElementById('opinion').innerHTML=O.map(function(o){return '<div class="op"><img class="opimg" src="'+o[3]+'" alt="" loading="lazy"><div class="who"><span class="av">'+o[0]+'</span><span class="nm">'+esc(o[1])+'</span></div><div class="t">'+esc(o[2])+'</div></div>';}).join('');
+ loadOpinion();
  var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
 }
 var NEWSREGION='il';
 function nregPaint(){var a=document.getElementById('nreg_il'),b=document.getElementById('nreg_world');function p(el,act){if(!el)return;el.style.background=act?'#1e5137':'#fff';el.style.color=act?'#fff':'#1e5137';}p(a,NEWSREGION==='il');p(b,NEWSREGION==='world');}
-function setNewsRegion(r){NEWSREGION=r;nregPaint();loadNews();}
+function setNewsRegion(r){NEWSREGION=r;nregPaint();loadNews();loadOpinion();}
+function loadOpinion(){
+ var box=document.getElementById('opinion');if(!box)return;
+ var qil='(חקלאות OR אגרוטק OR חקלאי OR פודטק OR "אגרו טק" OR סביבה) (דעה OR טור OR פרשנות OR עמדה OR "זווית")';
+ var qw='agriculture OR agritech OR "food tech" (opinion OR "op-ed" OR column OR commentary)';
+ var q=(NEWSREGION==='il')?qil:qw;
+ box.innerHTML='<div class="load">…</div>';
+ fetch('/api/news?region='+NEWSREGION+'&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var it=agriFilter(j.items||[]).slice(0,3);
+  if(!it.length){box.innerHTML='<div class="load">—</div>';return;}
+  box.innerHTML=it.map(function(n){return '<a class="op" href="'+n.link+'" target="_blank" rel="noopener" style="text-decoration:none;display:block"><div class="who" style="padding-top:14px"><span class="av">✍️</span><span class="nm">'+esc(n.source||'טור')+'</span></div><div class="t">'+esc(n.title)+'</div></a>';}).join('');
+ }).catch(function(){box.innerHTML='<div class="load">—</div>';});
+}
 function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';nregPaint();
  var q=(NEWSREGION==='il')?(STR.he.qmain||''):(STR.en.qmain||'');
  fetch('/api/news?region='+NEWSREGION+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=agriFilter(j.items||[]);
