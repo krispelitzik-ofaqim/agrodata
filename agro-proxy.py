@@ -1098,6 +1098,12 @@ WBC = {
   "us_yield": ("AG.YLD.CREL.KG", "USA", "יבול דגנים · ארה\"ב",   "ק\"ג/הקטר"),
   "cn_land":  ("AG.LND.AGRI.ZS", "CHN", "שטח חקלאי · סין",       "% משטח"),
   "br_land":  ("AG.LND.AGRI.ZS", "BRA", "שטח חקלאי · ברזיל",     "% משטח"),
+  # global aggregates (whole world) — FAO-sourced via World Bank
+  "wld_yield": ("AG.YLD.CREL.KG", "WLD", "יבול דגנים · עולם",        "ק\"ג/הקטר"),
+  "wld_land":  ("AG.LND.AGRI.ZS", "WLD", "שטח חקלאי · עולם",         "% משטח היבשה"),
+  "wld_fert":  ("AG.CON.FERT.ZS", "WLD", "צריכת דשן · עולם",         "ק\"ג/הקטר"),
+  "wld_water": ("ER.H2O.FWAG.ZS", "WLD", "צריכת מים לחקלאות · עולם", "% מכלל המים"),
+  "wld_food":  ("AG.PRD.FOOD.XD", "WLD", "מדד ייצור מזון · עולם",    "אינדקס (2015=100)"),
 }
 def _wb(ind, country="ISR"):
     url = ("https://api.worldbank.org/v2/country/" + country + "/indicator/" + ind +
