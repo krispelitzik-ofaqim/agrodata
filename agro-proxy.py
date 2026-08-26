@@ -1016,6 +1016,7 @@ def fetch_research(q, frm, scope="il"):
                     break
             url = w.get("doi") or (w.get("primary_location", {}) or {}).get("landing_page_url") or w.get("id") or ""
             out.append({"title": title, "authors": authors, "year": w.get("publication_year"),
+                        "date": w.get("publication_date", ""),
                         "inst": inst, "country": country, "type": w.get("type", ""), "url": url})
         return {"items": out, "count": d.get("meta", {}).get("count")}
     except Exception as e:

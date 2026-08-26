@@ -329,8 +329,8 @@ a{color:inherit}
       <div class="two" id="expo"></div>
       <div class="secbar teal">🪴 חקלאות ביתית</div>
       <div class="two" id="homeag"></div>
-      <div class="secbar gold">✍️ דעות וטורים</div>
-      <div class="op3" id="opinion"></div>
+      <div class="secbar gold">🔬 מחקרים אחרונים</div>
+      <div class="op3" id="research"></div>
     </div>
     <div class="aside">
       <a class="vidban" href="https://www.agrodata.co.il/deck.html"><span class="glow"></span><span class="vbk">Ofakim · Agri-Tech Arena</span><span class="vbbrand">Agro<b>Data</b></span><span class="vbplay">▶</span><span class="vbs">צפו בסרטון הפתיחה</span><span class="vbtag">▶ WATCH THE INTRO</span></a>
@@ -633,22 +633,25 @@ function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.
  document.getElementById('albh').textContent=S.alb;document.getElementById('grh').textContent=S.gr;document.getElementById('hah').textContent=S.ha;document.getElementById('habtn').textContent=S.hab;
  document.getElementById('pbh').textContent=S.bh;document.getElementById('pbs').textContent=S.bs;document.getElementById('poh').textContent=S.oh;document.getElementById('pos').textContent=S.os;
  document.getElementById('wxl').textContent=S.wl;document.getElementById('footline').textContent=S.foot;
- loadOpinion();
+ loadResearch();
  var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
 }
 var NEWSREGION='il';
 function nregPaint(){var a=document.getElementById('nreg_il'),b=document.getElementById('nreg_world');function p(el,act){if(!el)return;el.style.background=act?'#1e5137':'#fff';el.style.color=act?'#fff':'#1e5137';}p(a,NEWSREGION==='il');p(b,NEWSREGION==='world');}
-function setNewsRegion(r){NEWSREGION=r;nregPaint();loadNews();loadOpinion();}
-function loadOpinion(){
- var box=document.getElementById('opinion');if(!box)return;
- var qil='(חקלאות OR אגרוטק OR חקלאי OR פודטק OR "אגרו טק" OR סביבה) (דעה OR טור OR פרשנות OR עמדה OR "זווית")';
- var qw='agriculture OR agritech OR "food tech" (opinion OR "op-ed" OR column OR commentary)';
- var q=(NEWSREGION==='il')?qil:qw;
+function setNewsRegion(r){NEWSREGION=r;nregPaint();loadNews();loadResearch();}
+var RES_FB=['img/agrolabs.jpg','img/experfarm.jpg','img/innovation.jpg','img/urbanfarm.jpg','img/inv-greenhouse.jpg','img/campus.jpg'];
+function loadResearch(){
+ var box=document.getElementById('research');if(!box)return;
+ var scope=(NEWSREGION==='il')?'il':'world';
+ var dd=new Date();dd.setTime(dd.getTime()-90*864e5);var frm=dd.toISOString().slice(0,10);
  box.innerHTML='<div class="load">…</div>';
- fetch('/api/news?region='+NEWSREGION+'&q='+encodeURIComponent(q)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
-  var it=agriFilter(j.items||[]).slice(0,3);
-  if(!it.length){box.innerHTML='<div class="load">—</div>';return;}
-  box.innerHTML=it.map(function(n){return '<a class="op" href="'+n.link+'" target="_blank" rel="noopener" style="text-decoration:none;display:block"><div class="who" style="padding-top:14px"><span class="av">✍️</span><span class="nm">'+esc(n.source||'טור')+'</span></div><div class="t">'+esc(n.title)+'</div></a>';}).join('');
+ fetch('/api/research?scope='+scope+'&from='+frm+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var seen={},it=(j.items||[]).filter(function(w){if(!w.url||!w.date||w.date<frm)return false;var k=(w.title||'').slice(0,40);if(seen[k])return false;seen[k]=1;return true;}).slice(0,3);
+  if(!it.length){box.innerHTML='<div class="load">אין מחקרים חדשים ב-90 הימים האחרונים.</div>';return;}
+  it.forEach(function(w,i){w.image=RES_FB[i%RES_FB.length];});
+  box.innerHTML=it.map(function(w,i){return '<a class="op" href="'+w.url+'" target="_blank" rel="noopener" style="text-decoration:none;display:block"><img id="rimg'+i+'" class="opimg" src="'+w.image+'" alt="" loading="lazy" onerror="this.src=\''+RES_FB[i%RES_FB.length]+'\'"><div class="who" style="padding-top:12px"><span class="av">🔬</span><span class="nm">'+esc(w.inst||'מחקר')+'</span></div><div class="t">'+esc(w.title)+'</div><div class="src" style="padding:0 14px 14px;color:var(--mut);font-size:12.5px">📅 '+esc((w.date||'').slice(0,10))+'</div></a>';}).join('');
+  // upgrade to the paper's real image where the publisher exposes one
+  it.forEach(function(w,i){fetch('/api/ogimage?url='+encodeURIComponent(w.url),{cache:'no-store'}).then(function(r){return r.json();}).then(function(g){if(g&&g.image){var im=document.getElementById('rimg'+i);if(im)im.src=g.image;}}).catch(function(){});});
  }).catch(function(){box.innerHTML='<div class="load">—</div>';});
 }
 function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';nregPaint();
