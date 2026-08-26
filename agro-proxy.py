@@ -699,6 +699,18 @@ def ask_claude(q, history=None):
             return {"answer": txt or "—", "demo": False, "model": ANTHROPIC_MODEL, "engine": "claude"}
         except Exception as e:
             last = str(getattr(e, "code", "")) or type(e).__name__
+    # Claude failed (bad key/model/credits) → graceful fallback to Gemini so AgroMind still answers
+    try:
+        gq = q
+        if history:
+            ctx = "\n".join((("משתמש: " if m.get("role") != "assistant" else "AgroMind: ") + str(m.get("content") or "")) for m in history[-6:])
+            gq = "המשך שיחה. ההקשר עד כה:\n" + ctx + "\n\nשאלה: " + q
+        g = ask_gemini(gq)
+        if g and not g.get("demo"):
+            g["fallback"] = "claude->gemini"
+            return g
+    except Exception:
+        pass
     return {"answer": "שגיאת חיבור ל-Claude (" + last + "). ודא שהמפתח תקין ושיש קרדיטים.", "demo": True}
 
 def ask_gemini(q):
