@@ -627,7 +627,11 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <div class="social">
       <button class="sbtn" style="opacity:.5;cursor:not-allowed"><b style="color:#4285F4">G</b> <span>Google</span> <span style="font-size:11px;background:var(--bg);color:#5c6a5e;border-radius:0;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
     </div>
-    <p style="text-align:center;color:var(--mut);font-size:13px;margin-top:14px;line-height:1.6">התחברות מאובטחת עם Google / Facebook — בקרוב.<br>אם נרשמת, באותו מכשיר אתה מחובר אוטומטית.</p>
+    <p style="text-align:center;color:var(--mut);font-size:12px;margin:14px 0 8px">— או התחברו עם המייל שאיתו נרשמתם —</p>
+    <input id="loginEmail" type="email" inputmode="email" dir="ltr" placeholder="you@email.com" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:0;font-size:15px;text-align:left" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="cta" style="width:100%;margin-top:10px" onclick="doLogin()">כניסה</button>
+    <p id="loginErr" style="display:none;text-align:center;color:#c4562e;font-size:13px;margin-top:10px"></p>
+    <p style="text-align:center;color:var(--mut);font-size:12.5px;margin-top:12px;line-height:1.6">התחברות מאובטחת עם Google תיפתח בקרוב.<br>נרשמת באותו מכשיר? אתה מחובר אוטומטית.</p>
     <p style="text-align:center;color:var(--mut);font-size:14px;margin-top:14px"><span class="lsub">אין חשבון?</span> <a style="color:var(--green);font-weight:700;cursor:pointer" onclick="closeLogin();openReg()">הרשמה</a></p>
   </div>
 </div>
@@ -801,6 +805,18 @@ function doRegister(provider){
   };
   fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
+}
+function doLogin(){
+  var em=_val('loginEmail'); var err=document.getElementById('loginErr');
+  if(err){err.style.display='none';}
+  if(!em||em.indexOf('@')<0){if(err){err.textContent='נא להזין כתובת מייל תקינה';err.style.display='block';}return;}
+  fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:'email',email:em,login:1})})
+    .then(function(r){return r.json();}).then(function(d){
+      if(!d||d.notfound){if(err){err.textContent='המייל לא נמצא. אולי עדיין לא נרשמת?';err.style.display='block';}return;}
+      var role=(d.role)?d.role:'regular';
+      try{localStorage.setItem('agro_sub', role==='admin'?'admin':'regular'); if(d.id)localStorage.setItem('agro_sub_id',d.id); localStorage.setItem('agro_role',role); if(d.name)localStorage.setItem('agro_name',d.name);}catch(e){}
+      closeLogin(); renderSubs(d); renderHello();
+    }).catch(function(){if(err){err.textContent='שגיאת חיבור, נסו שוב';err.style.display='block';}});
 }
 function upgradePremium(){location.href='pricing.html';}
 function payPremium(){ /* demo payment -> premium */

@@ -2206,17 +2206,38 @@ class H(http.server.SimpleHTTPRequestHandler):
                         for r in reversed(_SUBS):
                             if r.get("plan") != "premium": r["plan"] = "premium"; break
                 else:
-                    new_id = "s%d_%d" % (len(_SUBS) + 1, int(time.time()))
-                    new_role = "admin" if _s("email").lower() in ADMIN_EMAILS else "user"
-                    _SUBS.append({"id": new_id,
-                                  "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
-                                  "provider": _s("provider"), "name": _s("name"), "email": _s("email"),
-                                  "org": _s("org"), "field": _s("field"),
-                                  "plan": "premium" if new_role == "admin" else "regular", "role": new_role})
+                    em = _s("email").lower()
+                    existing = None
+                    if em:
+                        for r in _SUBS:
+                            if (r.get("email") or "").lower() == em:
+                                existing = r; break
+                    if existing:
+                        # returning user (login from another device) — recognize, DON'T duplicate
+                        new_id = existing.get("id", ""); new_role = existing.get("role", "user")
+                        new_name = existing.get("name", "") or _s("name")
+                        if not existing.get("name") and _s("name"): existing["name"] = _s("name")
+                    elif data.get("login"):
+                        # login-only: email not found → don't create a record
+                        body = json.dumps({"ok": False, "notfound": True}).encode("utf-8")
+                        self.send_response(200)
+                        self.send_header("Content-Type", "application/json; charset=utf-8")
+                        self.send_header("Access-Control-Allow-Origin", "*")
+                        self.send_header("Cache-Control", "no-store")
+                        self.end_headers(); self.wfile.write(body); return
+                    else:
+                        new_id = "s%d_%d" % (len(_SUBS) + 1, int(time.time()))
+                        new_role = "admin" if em in ADMIN_EMAILS else "user"
+                        new_name = _s("name")
+                        _SUBS.append({"id": new_id,
+                                      "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                      "provider": _s("provider"), "name": _s("name"), "email": _s("email"),
+                                      "org": _s("org"), "field": _s("field"),
+                                      "plan": "premium" if new_role == "admin" else "regular", "role": new_role})
                 _save_subs()
                 reg, prem = _subs_counts()
                 out = {"ok": True, "regular": reg, "premium": prem}
-                if new_id: out["id"] = new_id; out["role"] = new_role
+                if new_id: out["id"] = new_id; out["role"] = new_role; out["name"] = new_name; out["returning"] = bool(existing) if not self.path.startswith("/api/upgrade") else False
             body = json.dumps(out).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
