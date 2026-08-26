@@ -307,6 +307,10 @@ a{color:inherit}
   <!-- NEWS PORTAL -->
   <div class="panel on" id="p_news"><div class="ynmain">
     <div class="colmain">
+      <div id="nregtog" style="display:flex;gap:8px;margin-bottom:14px">
+        <button id="nreg_il" onclick="setNewsRegion('il')" style="font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;border-radius:0;padding:8px 16px;border:1px solid var(--green,#1e5137)">🇮🇱 ישראל</button>
+        <button id="nreg_world" onclick="setNewsRegion('world')" style="font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;border-radius:0;padding:8px 16px;border:1px solid var(--green,#1e5137)">🌍 עולם</button>
+      </div>
       <div id="lead"></div>
       <div class="blocks" id="blocks"></div>
       <a class="admash" href="https://www.agromashovgroup.com/" target="_blank" rel="noopener"><div class="adcarpet"><div class="rug">תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · תערוכת אגרו-משוב · </div></div><div class="adshine"></div><div class="admtxt"><div class="adleft"><b>תערוכת אגרו-משוב</b><span class="addate">📅 30/11 – 01/12</span><span class="adofa">אופקים · <b>בירת האגרו-טק</b> של ישראל</span></div><span class="adcta">פרטים והרשמה כאן ↗</span></div><span class="adtag">פרסומת</span></a>
@@ -632,8 +636,12 @@ function applyStr(){var S=STR[LANG];document.documentElement.dir=S.dir;document.
  var O=LANG==='he'?OP_he:OP_en;document.getElementById('opinion').innerHTML=O.map(function(o){return '<div class="op"><img class="opimg" src="'+o[3]+'" alt="" loading="lazy"><div class="who"><span class="av">'+o[0]+'</span><span class="nm">'+esc(o[1])+'</span></div><div class="t">'+esc(o[2])+'</div></div>';}).join('');
  var G=LANG==='he'?GR_he:GR_en;document.getElementById('groups').innerHTML=G.map(function(g){return '<div class="gcard"><div class="em">'+g[0]+'</div><h3>'+g[1]+'</h3><div class="meta">👥 '+g[2]+'</div></div>';}).join('');
 }
-function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';
- fetch('/api/news?region='+S.region+'&q='+encodeURIComponent(S.qmain||'')).then(function(r){return r.json();}).then(function(j){var it=agriFilter(j.items||[]);
+var NEWSREGION='il';
+function nregPaint(){var a=document.getElementById('nreg_il'),b=document.getElementById('nreg_world');function p(el,act){if(!el)return;el.style.background=act?'#1e5137':'#fff';el.style.color=act?'#fff':'#1e5137';}p(a,NEWSREGION==='il');p(b,NEWSREGION==='world');}
+function setNewsRegion(r){NEWSREGION=r;nregPaint();loadNews();}
+function loadNews(){var S=STR[LANG];document.getElementById('lead').innerHTML='<div class="load">…</div>';nregPaint();
+ var q=(NEWSREGION==='il')?(STR.he.qmain||''):(STR.en.qmain||'');
+ fetch('/api/news?region='+NEWSREGION+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){var it=agriFilter(j.items||[]);
   if(!it.length){document.getElementById('lead').innerHTML='<div class="load">—</div>';return;}
   var L=it[0];
   document.getElementById('lead').innerHTML='<a class="lead" href="'+L.link+'" target="_blank" rel="noopener">'+ogThumb(L,EMO[0],'thumb')+'<div class="in"><span class="badge">'+S.live.toUpperCase()+'</span><div class="t">'+esc(L.title)+'</div><div class="src">'+esc(L.source||'')+' · '+esc((L.date||'').slice(0,16))+'</div></div></a>';
