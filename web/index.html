@@ -95,8 +95,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 .brainbox-big{width:100%;max-width:760px;height:520px;margin:6px auto -30px}
 .brainbox-big svg{width:100%;height:100%}
 /* search */
-.search{display:flex;align-items:center;flex-wrap:wrap;gap:10px;background:#faf6ec;border:1.6px solid #e0d7c2;border-radius:0;padding:14px 16px;box-shadow:0 18px 44px rgba(20,38,28,.12)}
-.search .searchnote{flex-basis:100%;width:100%;text-align:center;color:var(--mut);font-size:14px;line-height:1.6;border-top:1px solid #e6ddc9;padding-top:11px;margin-top:3px}
+.search{display:flex;align-items:center;gap:10px;background:#faf6ec;border:1.6px solid #e0d7c2;border-radius:0;padding:14px 16px;box-shadow:0 18px 44px rgba(20,38,28,.12)}
 .search-c{width:100%;max-width:900px}
 .liveline{display:inline-flex;align-items:center;gap:11px;margin:20px auto 0;font-family:'Plex Mono';font-size:17px;font-weight:700;color:var(--green-d)}
 .liveline b{color:var(--green);font-weight:800;letter-spacing:.08em;font-size:16px}
@@ -382,9 +381,8 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
   <div class="search search-c" style="margin-top:30px">
     <button class="plus" onclick="toggleTopics()" title="כל הנושאים">+</button>
     <button class="aibtn" onclick="toggleAI()" title="חיפוש קולי AI" aria-label="חיפוש קולי AI">AI</button>
-    <input id="q" placeholder="שאל: מהו המשקל הסגולי האופטימלי להשקיה בעגבניות באזור הערבה?" onkeydown="if(event.key==='Enter')doSearch()">
+    <input id="q" placeholder="שאל כל שאלה — התשובה מנתחת 32 מנועי דאטה ואת הרשת. למשל: המשקל הסגולי להשקיית עגבניות בערבה?" onkeydown="if(event.key==='Enter')doSearch()">
     <button class="go" onclick="doSearch()">חפש</button>
-    <div class="searchnote">התשובות נשענות על <b style="color:var(--green)">ניתוח חי של 32 מנועי הדאטה</b> של הזירה — ומן הרשת. מחקר, נתונים ותובנות במקום אחד.</div>
   </div>
   <div id="aivoice" class="aivoice search-c"><div class="aivoice-in">
     <button id="micBtn" class="micbig" onclick="micToggle()" aria-label="דבר">🎤</button>
