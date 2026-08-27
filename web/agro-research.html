@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כלי המחקר הסינתטי · AgroResearch</title>
+<style>
+@font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
+@font-face{font-family:Heebo;src:url('fonts/Heebo.ttf');font-weight:300 900}
+@font-face{font-family:'Space Grotesk';src:url('fonts/SpaceGrotesk.ttf');font-weight:300 700}
+@font-face{font-family:'Plex Mono';src:url('fonts/IBMPlexMono.ttf')}
+:root{--green:#1e5137;--green-d:#0f2a1e;--lime:#2e7d52;--gold:#a5824a;--ink:#1a2118;--mut:#5c6a5e;--line:#e0d7c2;--bg:#ebe4cf;--bg2:#f0ead9;--tint:#e6ddc9;--card:#faf6ec}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Heebo,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.wm{font-family:'Space Grotesk';font-weight:700}
+.mono{font-family:'Plex Mono',monospace}
+.top{background:linear-gradient(135deg,#0f2a1e,#1e5137);border-bottom:2px solid var(--gold)}
+.nav{max-width:1180px;margin:0 auto;padding:15px 34px;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.nav a{color:rgba(255,255,255,.85);text-decoration:none;font-weight:600;font-size:14px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 34px}
+.hero{text-align:center;padding:34px 0 8px}
+.kick{font-family:'Plex Mono';font-size:13px;color:var(--gold);letter-spacing:.14em}
+h1{font-family:Rubik;font-size:44px;font-weight:800;margin:6px 0 8px}h1 b{color:var(--lime)}
+.sub{color:var(--mut);font-size:16px;max-width:720px;margin:0 auto;line-height:1.6}
+.ask{background:var(--card);border:1px solid var(--line);padding:22px;margin:26px 0;box-shadow:0 10px 26px rgba(20,38,28,.06)}
+.ask label{display:block;font-family:Rubik;font-weight:800;font-size:15px;color:var(--green-d);margin-bottom:9px}
+.qrow{display:flex;gap:10px;flex-wrap:wrap}
+#q{flex:1;min-width:280px;padding:14px 16px;border:1px solid var(--line);background:#fff;font-family:inherit;font-size:16px;border-radius:0}
+.go{background:var(--green);color:#fff;border:0;font-family:Rubik;font-weight:800;font-size:16px;padding:0 28px;cursor:pointer;border-radius:0}
+.go:hover{background:var(--green-d)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.chip{background:var(--tint);border:1px solid var(--line);color:var(--green-d);font-size:13px;font-weight:600;padding:7px 13px;cursor:pointer;border-radius:0}
+.chip:hover{background:var(--gold);color:#fff;border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:40px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}h1{font-size:34px}}
+.panel{background:var(--card);border:1px solid var(--line);padding:22px;box-shadow:0 8px 22px rgba(20,38,28,.05);min-height:120px}
+.panel h2{font-family:Rubik;font-size:18px;font-weight:800;color:var(--green-d);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.panel .lead{font-size:13px;color:var(--mut);margin-bottom:16px}
+.plan-load,.reg-load{color:var(--mut);font-size:14px;padding:14px 0}
+.step{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .n{width:26px;height:26px;flex:0 0 auto;background:var(--green);color:#fff;font-family:Rubik;font-weight:800;font-size:13px;display:grid;place-items:center;border-radius:50%}
+.step .b{font-size:14.5px;line-height:1.55}
+.step .b b{color:var(--green-d)}
+.selrow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.selrow .f{flex:1;min-width:180px}
+.selrow .f span{display:block;font-size:12px;color:var(--mut);margin-bottom:5px;font-weight:700}
+select{width:100%;padding:10px 12px;border:1px solid var(--line);background:#fff;font-family:inherit;font-size:14px;border-radius:0}
+.runreg{width:100%;background:var(--gold);color:#3a2c06;border:0;font-family:Rubik;font-weight:800;font-size:15px;padding:12px;cursor:pointer;border-radius:0;margin-bottom:14px}
+.runreg:hover{background:var(--green);color:#fff}
+.chartbox{background:#fff;border:1px solid var(--line);padding:8px}
+svg{width:100%;height:auto;display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.stat{background:var(--bg2);border:1px solid var(--line);padding:11px 8px;text-align:center}
+.stat .v{font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d);line-height:1}
+.stat .k{font-size:11px;color:var(--mut);margin-top:5px}
+.interp{margin-top:14px;background:var(--tint);border-inline-start:3px solid var(--gold);padding:13px 15px;font-size:14px;line-height:1.6}
+.interp b{color:var(--green-d)}
+.src{margin-top:12px;font-size:12px;color:var(--mut)}
+.footbar{background:linear-gradient(135deg,#0f2a1e,#1e5137);color:rgba(255,255,255,.8);text-align:center;font-size:13px;padding:16px;margin-top:20px}
+.badge{display:inline-block;background:var(--gold);color:#3a2c06;font-family:Rubik;font-weight:800;font-size:11px;padding:2px 9px;border-radius:0;margin-inline-start:8px}
+.uprow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.upbtn{background:var(--tint);border:1px dashed var(--gold);color:var(--green-d);font-weight:700;font-size:14px;padding:11px 18px;cursor:pointer;border-radius:0}
+.upbtn:hover{background:var(--gold);color:#fff}
+.upinfo{font-size:13px;color:var(--mut)}
+.upinfo b{color:var(--green-d)}
+.paper{background:var(--card);border:1px solid var(--line);padding:14px 34px 34px;margin-bottom:40px;box-shadow:0 10px 26px rgba(20,38,28,.06)}
+.sech{font-family:Rubik;font-size:20px;font-weight:800;color:var(--green-d);display:flex;align-items:center;gap:11px;margin:30px 0 6px;padding-top:20px;border-top:1px solid var(--line)}
+.sech:first-of-type{border-top:0;padding-top:6px}
+.sech .sn{width:30px;height:30px;flex:0 0 auto;background:var(--green);color:#fff;font-size:15px;display:grid;place-items:center;border-radius:50%}
+.seclead{font-size:13px;color:var(--mut);margin:0 0 14px 41px}
+.modes{display:flex;gap:0;justify-content:center;margin-top:20px}
+.modebtn{font-family:Rubik;font-weight:800;font-size:15px;padding:11px 26px;cursor:pointer;border:1px solid var(--green);background:#fff;color:var(--green)}
+.modebtn.on{background:var(--green);color:#fff}
+.rtbl th,.rtbl td{border:1px solid var(--line);padding:6px 9px;text-align:right}
+.rtbl th{background:var(--bg2);font-family:Rubik;font-weight:700;color:var(--green-d)}
+.rtbl input{width:100%;min-width:70px;border:0;background:transparent;font-family:inherit;font-size:13.5px;text-align:right}
+.qb-row{display:flex;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.qb-row input.qt{flex:1;padding:9px 12px;border:1px solid var(--line);font-family:inherit;font-size:14px}
+.qb-row select{padding:9px;border:1px solid var(--line);font-family:inherit;font-size:13px}
+.qb-row .del{background:none;border:0;color:#c4562e;cursor:pointer;font-size:16px}
+.qstat{background:var(--bg2);border:1px solid var(--line);padding:14px;margin-bottom:12px}
+.qstat h4{font-family:Rubik;font-size:15px;color:var(--green-d);margin-bottom:8px}
+.bar{height:9px;background:var(--lime);border-radius:0;display:inline-block}
+</style>
+</head>
+<body>
+<div class="top"><div class="nav">
+  <a href="index.html" style="text-decoration:none"><span class="wm" style="font-size:22px;color:#fff">Agro<b style="color:#8fe6ad">Research</b></span></a>
+  <a href="index.html">→ חזרה לזירה</a>
+</div></div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="kick">SYNTHETIC RESEARCH WORKBENCH</div>
+    <h1>כלי המחקר <b>הסינתטי</b></h1>
+    <div class="sub">שאל שאלת מחקר — הכלי בונה תוכנית מחקר, שואב נתונים אמיתיים מכל מנועי AgroData, ומריץ ניתוח סטטיסטי כדי לענות עליה.</div>
+    <div class="modes">
+      <button class="modebtn on" id="mb_data" onclick="setMode('data')">📊 מחקר מידע</button>
+      <button class="modebtn" id="mb_survey" onclick="setMode('survey')">📋 מחקר שאלונים</button>
+    </div>
+  </div>
+
+  <div id="modeData">
+  <div class="ask">
+    <label>שאלת המחקר שלך</label>
+    <div class="qrow">
+      <input id="q" placeholder="לדוגמה: האם עלייה בצריכת דשן מסבירה את יבול הדגנים בעולם?" value="האם עלייה בצריכת דשן מסבירה את יבול הדגנים בעולם?">
+      <button class="go" onclick="runAll()">חקור →</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="ask" style="margin-top:-8px">
+    <label>📎 העלה חומרים משלך <span style="font-weight:400;color:var(--mut);font-size:13px">(אופציונלי — הנתונים נכנסים לניתוח והמאמרים לביבליוגרפיה)</span></label>
+    <div class="uprow">
+      <label class="upbtn">📊 קבצי נתונים · CSV<input type="file" id="dataFile" accept=".csv,.txt" multiple hidden></label>
+      <label class="upbtn">📄 מאמרים · PDF<input type="file" id="pdfFile" accept=".pdf" multiple hidden></label>
+      <button class="upbtn" id="saveDataBtn" style="display:none;border-style:solid;background:var(--green);color:#fff;border-color:var(--green)" onclick="saveDatasets()">💾 שמור לאזור האישי</button>
+      <span class="upinfo" id="upinfo">לא הועלו קבצים — הכלי משתמש בנתוני AgroData.</span>
+    </div>
+    <div class="upinfo" id="myinfo" style="margin-top:8px"></div>
+  </div>
+
+  <div class="paper">
+    <div class="sech"><span class="sn">1</span> תקציר <span class="badge">AI</span></div>
+    <div class="seclead">סיכום השאלה, השיטה והממצא העיקרי</div>
+    <div id="abstract"><div class="plan-load">יופק אחרי "חקור".</div></div>
+
+    <div class="sech"><span class="sn">2</span> מבוא וסקירת ספרות <span class="badge">אמיתי · OpenAlex</span></div>
+    <div class="seclead">מאמרים אקדמיים רלוונטיים לשאלת המחקר</div>
+    <div id="biblio"><div class="plan-load">—</div></div>
+
+    <div class="sech"><span class="sn">3</span> מקרים קרובים ועבודות קשורות</div>
+    <div class="seclead">תקדימים בשטח (חדשות) ומחקרים קודמים שלך באותו נושא</div>
+    <div id="related"><div class="plan-load">יופק אחרי "חקור".</div></div>
+
+    <div class="sech"><span class="sn">4</span> שיטת המחקר <span class="badge">AI</span></div>
+    <div class="seclead">השערה, משתנים, מקורות נתונים ושיטה סטטיסטית</div>
+    <div id="plan"><div class="plan-load">יופק אחרי "חקור".</div></div>
+
+    <div class="sech"><span class="sn">5</span> תכנון ניסוי <span class="badge">AI</span></div>
+    <div class="seclead">ניסוי שדה מבוקר לבחינת ההשערה</div>
+    <div id="experiment"><div class="plan-load">יופק אחרי "חקור".</div></div>
+
+    <div class="sech"><span class="sn">6</span> תוצאות · ניתוח סטטיסטי</div>
+    <div class="seclead">רגרסיה לינארית (OLS) על נתונים אמיתיים — בחר שני משתנים</div>
+    <div class="selrow">
+      <div class="f"><span>משתנה מסביר (X)</span><select id="xsel"></select></div>
+      <div class="f"><span>משתנה מוסבר (Y)</span><select id="ysel"></select></div>
+    </div>
+    <button class="runreg" onclick="runReg()">הרץ רגרסיה על הנתונים ←</button>
+    <div id="reg"><div class="reg-load">בחר שני משתנים והרץ.</div></div>
+
+    <div class="sech"><span class="sn">7</span> דיון וניבוי</div>
+    <div class="seclead">פרשנות הממצא ותחזית לפי המגמה</div>
+    <div id="forecast"><div class="reg-load">יופק אחרי הרצת הרגרסיה.</div></div>
+
+    <div class="sech"><span class="sn">8</span> מסקנות</div>
+    <div class="seclead">סיכום והמלצות להמשך</div>
+    <div id="conclusion"><div class="reg-load">יופק אחרי הרצת הרגרסיה.</div></div>
+  </div>
+  </div><!-- /modeData -->
+
+  <div id="modeSurvey" style="display:none">
+    <div class="ask">
+      <label>שאלת מחקר השאלון</label>
+      <div class="qrow">
+        <input id="sq" placeholder="לדוגמה: מהם החסמים לאימוץ טכנולוגיית השקיה חכמה בקרב מגדלים?">
+        <button class="go" onclick="analyzeSurvey()">נתח שאלון →</button>
+      </div>
+    </div>
+
+    <div class="paper">
+      <div class="sech"><span class="sn">1</span> בניית השאלון</div>
+      <div class="seclead">הוסף את שאלות השאלון וסוג התשובה לכל שאלה</div>
+      <div id="qbuilder"></div>
+      <button class="upbtn" style="margin-top:12px;border-style:solid;background:var(--tint)" onclick="addQuestion()">➕ הוסף שאלה</button>
+
+      <div class="sech"><span class="sn">2</span> תשובות הנשאלים</div>
+      <div class="seclead">הזן ידנית, או העלה קובץ שבו כל עמודה = שאלה וכל שורה = נשאל (CSV או Excel)</div>
+      <div class="uprow" style="margin-bottom:12px">
+        <label class="upbtn">📊 העלה תשובות · CSV/Excel<input type="file" id="respFile" accept=".csv,.txt,.xlsx,.xls" hidden></label>
+        <button class="upbtn" onclick="addRespondent()">➕ הוסף נשאל (שורה)</button>
+        <span class="upinfo" id="respinfo">אין תשובות עדיין.</span>
+      </div>
+      <div style="overflow-x:auto"><table id="respTable" class="rtbl" style="min-width:100%;border-collapse:collapse;font-size:13.5px"></table></div>
+
+      <div class="sech"><span class="sn">3</span> ניתוח השאלון</div>
+      <div class="seclead">סטטיסטיקה תיאורית לכל שאלה + מתאמים בין שאלות</div>
+      <div id="surveyAnalysis"><div class="reg-load">בנה שאלון, הזן/העלה תשובות ולחץ "נתח שאלון".</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footbar">Ofakim <span class="wm">Agro<b>Data</b></span> · כלי מחקר סינתטי · דמו · <span class="mono">data & survey research</span></div>
+<script src="vendor/xlsx.full.min.js"></script>
+
+<script>
+// datasets available for regression (real AgroLake series)
+var VARS=[
+ ['wld_fert','צריכת דשן · עולם (ק"ג/הקטר)'],
+ ['wld_yield','יבול דגנים · עולם (ק"ג/הקטר)'],
+ ['wld_land','שטח חקלאי · עולם (%)'],
+ ['wld_water','צריכת מים לחקלאות · עולם (%)'],
+ ['wld_food','מדד ייצור מזון · עולם'],
+ ['yield','יבול דגנים · ישראל (ק"ג/הקטר)'],
+ ['land','שטח חקלאי · ישראל (%)'],
+ ['water','צריכת מים לחקלאות · ישראל (%)'],
+ ['foodprod','מדד ייצור מזון · ישראל'],
+ ['cropprod','מדד ייצור צומח · ישראל']
+];
+var EXAMPLES=[
+ 'האם עלייה בצריכת דשן מסבירה את יבול הדגנים בעולם?',
+ 'האם צמצום שטח חקלאי בעולם פוגע בייצור המזון?',
+ 'האם צריכת המים לחקלאות בישראל קשורה ליבול?',
+ 'האם מדד ייצור הצומח בישראל עולה עם השנים?'
+];
+document.getElementById('chips').innerHTML=EXAMPLES.map(function(e){return '<span class="chip" onclick="document.getElementById(\'q\').value=this.textContent">'+e+'</span>';}).join('');
+var xs=document.getElementById('xsel'),ys=document.getElementById('ysel');
+xs.innerHTML=VARS.map(function(v){return '<option value="'+v[0]+'">'+v[1]+'</option>';}).join('');
+ys.innerHTML=VARS.map(function(v){return '<option value="'+v[0]+'">'+v[1]+'</option>';}).join('');
+xs.value='wld_fert';ys.value='wld_yield';
+
+// ---- uploaded materials ----
+var UPLOAD={cols:{}}, UPREFS=[], MYSETS=[], MYPROJ=[];
+var SUBID=''; try{SUBID=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+function refreshVarSelect(){
+ var opts=VARS.map(function(v){return '<option value="'+v[0]+'">'+v[1]+'</option>';});
+ var up=Object.keys(UPLOAD.cols);
+ if(up.length){opts.push('<option disabled>── שהעלית עכשיו ──</option>');up.forEach(function(c){opts.push('<option value="up:'+c+'">📁 '+esc(c)+'</option>');});}
+ MYSETS.forEach(function(ds,di){var cs=Object.keys(ds.cols||{});if(cs.length){opts.push('<option disabled>── '+esc(ds.name)+' (שלי) ──</option>');cs.forEach(function(c){opts.push('<option value="my:'+di+':'+c+'">🗂️ '+esc(c)+'</option>');});}});
+ var xv=xs.value,yv=ys.value;
+ xs.innerHTML=opts.join('');ys.innerHTML=opts.join('');
+ xs.value=xv;ys.value=yv;
+}
+function loadMyData(){
+ if(!SUBID){document.getElementById('myinfo').innerHTML='<span style="color:var(--mut)">התחבר כמנוי כדי לשמור ולשלוף נתונים אישיים.</span>';return;}
+ fetch('/api/mydata?id='+encodeURIComponent(SUBID)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  MYSETS=(j.datasets||[]);MYPROJ=(j.projects||[]);refreshVarSelect();
+  var mi=document.getElementById('myinfo');
+  var np=(j.projects||[]).length;
+  mi.innerHTML='🗂️ <b>'+MYSETS.length+'</b> מאגרים שמורים · <b>'+np+'</b> פרויקטי מחקר באזור האישי'+(MYSETS.length?' — זמינים בתפריט הרגרסיה':'');
+ }).catch(function(){});
+}
+function parseCSV(txt){
+ var lines=txt.replace(/\r/g,'').split('\n').filter(function(l){return l.trim();});
+ if(lines.length<2)return null;
+ var sep=(lines[0].indexOf('\t')>-1)?'\t':',';
+ var head=lines[0].split(sep).map(function(h){return h.trim();});
+ var cols={};head.forEach(function(h){cols[h]=[];});
+ for(var i=1;i<lines.length;i++){var c=lines[i].split(sep);head.forEach(function(h,j){var v=parseFloat((c[j]||'').replace(/[^0-9.\-]/g,''));cols[h].push(isNaN(v)?null:v);});}
+ var num={};Object.keys(cols).forEach(function(h){var vals=cols[h].filter(function(v){return v!=null;});if(vals.length>=Math.max(3,cols[h].length*0.5))num[h]=cols[h];});
+ return {cols:num,rows:lines.length-1,allcols:head};
+}
+var UPFILES=[];
+document.getElementById('dataFile').addEventListener('change',function(e){
+ var files=[].slice.call(e.target.files);if(!files.length)return;
+ var info=document.getElementById('upinfo');var done=0,added=0;
+ files.forEach(function(f){var rd=new FileReader();
+  rd.onload=function(){var p=parseCSV(rd.result);
+   if(p&&Object.keys(p.cols).length){var tag=(files.length>1)?(f.name.replace(/\.[^.]+$/,'').slice(0,8)+'·'):'';
+    Object.keys(p.cols).forEach(function(c){var key=tag+c;UPLOAD.cols[key]=p.cols[c];});UPFILES.push(f.name);added++;}
+   done++;
+   if(done===files.length){refreshVarSelect();var names=Object.keys(UPLOAD.cols);
+    info.innerHTML='<b>'+UPFILES.length+'</b> קבצים · '+names.length+' משתנים מספריים — נוספו לתפריט הרגרסיה 📁';
+    document.getElementById('saveDataBtn').style.display=SUBID?'inline-block':'none';
+    if(names.length>=2){xs.value='up:'+names[names.length-2];ys.value='up:'+names[names.length-1];}}
+  };rd.readAsText(f);
+ });
+});
+document.getElementById('pdfFile').addEventListener('change',function(e){
+ var files=[].slice.call(e.target.files);if(!files.length)return;
+ files.forEach(function(f){UPREFS.unshift(f.name);});
+ document.getElementById('upinfo').innerHTML='<b>'+files.length+'</b> מאמרים נוספו לביבליוגרפיה 📄';
+ loadBiblio();
+});
+function saveDatasets(){
+ if(!SUBID){alert('התחבר כמנוי כדי לשמור.');return;}
+ var name=(UPFILES[0]||'נתונים')+(UPFILES.length>1?(' +'+(UPFILES.length-1)):'' );
+ fetch('/api/mydata-save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:SUBID,kind:'dataset',item:{name:name,cols:UPLOAD.cols,rows:(UPLOAD.cols[Object.keys(UPLOAD.cols)[0]]||[]).length}})})
+  .then(function(r){return r.json();}).then(function(d){if(d&&d.ok){document.getElementById('upinfo').innerHTML='✓ נשמר לאזור האישי';loadMyData();}else alert('שמירה נכשלה');}).catch(function(){alert('שגיאת חיבור');});
+}
+function secText(id){var el=document.getElementById(id);if(!el)return '';return (el.innerText||el.textContent||'').replace(/\s+\n/g,'\n').trim();}
+function saveProject(){
+ if(!SUBID){alert('התחבר כמנוי כדי לשמור פרויקט.');return;}
+ var q=document.getElementById('q').value.trim();
+ var biblio=[].slice.call(document.querySelectorAll('#biblio a')).map(function(a){return {title:a.textContent,url:a.href};});
+ // full documented research record — every step, reproducible
+ var doc={
+  title:q, question:q,
+  sections:{
+   abstract:secText('abstract'),
+   literature:secText('biblio'),
+   relatedCases:secText('related'),
+   methodology:secText('plan'),
+   experiment:secText('experiment'),
+   results:secText('reg'),
+   discussion:secText('forecast'),
+   conclusion:secText('conclusion')
+  },
+  bibliography:biblio,
+  uploaded:{files:UPFILES.slice(),pdfs:UPREFS.slice()},
+  regression:LASTREG,
+  summary:secText('conclusion').slice(0,400)
+ };
+ fetch('/api/mydata-save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:SUBID,kind:'project',item:doc})})
+  .then(function(r){return r.json();}).then(function(d){if(d&&d.ok){var b=document.getElementById('saveProjWrap');if(b)b.innerHTML='<span style="color:var(--green);font-weight:700">✓ המחקר המלא נשמר לאזור האישי (כל הסעיפים + פרמטרי הרגרסיה + הביבליוגרפיה)</span>';loadMyData();}else alert('שמירה נכשלה');}).catch(function(){alert('שגיאת חיבור');});
+}
+
+function runAll(){makeAbstract();makePlan();loadBiblio();loadRelated();proposeExperiment();runReg();}
+
+function loadRelated(){
+ var q=document.getElementById('q').value.trim();var box=document.getElementById('related');
+ box.innerHTML='<div class="plan-load">🔎 מאתר מקרים קרובים…</div>';
+ // similar past projects of this user (keyword overlap)
+ var qw=(kw(q)||'').split(/\s+/).filter(function(w){return w.length>2;});
+ var mine=MYPROJ.filter(function(p){var t=(p.title||p.question||'');return qw.some(function(w){return t.indexOf(w)>-1;});}).slice(0,3);
+ function pull(qq){return fetch('/api/news?region=il&q='+encodeURIComponent(qq)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){return j.items||[];});}
+ pull(kw(q)||'חקלאות').then(function(a){return a.length>=2?a:pull('חקלאות OR אגרוטק OR פודטק');}).then(function(items){
+  var news=(items||[]).slice(0,4);
+  var html='';
+  if(mine.length){html+='<div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:2px 0 8px">🔬 מחקרים קודמים שלך</div>'+mine.map(function(p){return '<div class="step"><div class="n" style="background:var(--gold);color:#3a2c06">🔬</div><div class="b"><b style="color:var(--green-d)">'+esc(p.title||p.question)+'</b>'+(p.regression?' <span class="mono" style="font-size:12px;color:var(--mut)">R²='+p.regression.r2+'</span>':'')+'</div></div>';}).join('');}
+  html+='<div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:14px 0 8px">📰 תקדימים בשטח</div>';
+  html+=news.length?news.map(function(nw,i){return '<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><a href="'+nw.link+'" target="_blank" rel="noopener" style="color:var(--green-d);font-weight:700;text-decoration:none">'+esc(nw.title)+'</a><div class="mono" style="font-size:12px;color:var(--mut);margin-top:3px">'+esc(nw.source||'')+(nw.date?' · '+esc((nw.date||'').slice(0,10)):'')+'</div></div></div>';}).join(''):'<div class="plan-load">לא נמצאו תקדימים.</div>';
+  box.innerHTML=html;
+ }).catch(function(){box.innerHTML='<div class="plan-load">שגיאת חיבור.</div>';});
+}
+
+function makeAbstract(){
+ var q=document.getElementById('q').value.trim();var box=document.getElementById('abstract');
+ if(!q)return;
+ box.innerHTML='<div class="plan-load">✍️ מנסח תקציר…</div>';
+ var fb='<div class="step" style="border:0"><div class="b" style="font-size:15px;line-height:1.7">מחקר זה בוחן את השאלה: <b>"'+esc(q)+'"</b>. לשם כך נאספו נתונים אמיתיים ממאגרי AgroData (World Bank·FAO ונתוני המשתמש), נערכה סקירת ספרות עדכנית (OpenAlex), והורץ ניתוח רגרסיה לינארית (OLS) לכימות הקשר. בנוסף מוצעת מסגרת לניסוי שדה מבוקר לאימות הממצאים. התוצאות והדיון מובאים להלן.</div></div>';
+ var prompt='כתוב תקציר מחקרי אקדמי קצר בעברית (3-4 משפטים, ללא כותרת) לשאלת המחקר הבאה, בסגנון תקציר של מאמר מדעי: '+q;
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+  var a=((d&&d.answer)||'').trim();
+  if((d&&d.demo)||a.length<20){box.innerHTML=fb;return;}
+  box.innerHTML='<div class="step" style="border:0"><div class="b" style="font-size:15px;line-height:1.7">'+esc(a)+'</div></div>';
+ }).catch(function(){box.innerHTML=fb;});
+}
+
+function fillConclusion(pts,a0,b,r2,r,xi,yi){
+ var box=document.getElementById('conclusion');if(!box)return;
+ var dir=b>=0?'חיובי':'שלילי';var strength=r2>=0.7?'חזק מאוד':r2>=0.4?'בינוני':r2>=0.15?'חלש':'זניח';
+ var c1='נמצא קשר '+dir+' '+strength+' בין '+esc(lname(xi).split(' · ')[0])+' ל-'+esc(lname(yi).split(' · ')[0])+' (R²='+r2.toFixed(2)+', r='+(r>=0?'+':'')+r.toFixed(2)+', n='+pts.length+').';
+ var c2=r2>=0.4?'הממצא תומך בהשערת קיום קשר בין המשתנים, אך אינו מוכיח סיבתיות.':'עוצמת הקשר מוגבלת — נדרשת זהירות בפרשנות וייתכנו משתנים מתערבים.';
+ var c3='מומלץ: (א) אימות בניסוי שדה מבוקר כמוצע בסעיף 4; (ב) הרחבת המדגם ובחינת רגרסיה מרובת-משתנים; (ג) הצלבה מול הספרות בסעיף 2.';
+ box.innerHTML='<div class="step"><div class="n">✓</div><div class="b" style="font-size:15px;line-height:1.7">'+c1+' '+c2+'<br><b style="color:var(--green-d)">המלצות להמשך:</b> '+c3+'</div></div>'+
+  '<div id="saveProjWrap" style="margin-top:16px"><button class="runreg" style="width:auto;padding:11px 22px" onclick="saveProject()">💾 שמור פרויקט מחקר לאזור האישי</button></div>';
+}
+
+function kw(q){ // crude keyword line for the paper search
+ return q.replace(/[?？.,]/g,' ').replace(/\b(האם|יש|קשר|בין|של|על|מה|כדי|את|עם|לעשות|צריך)\b/g,' ').trim();
+}
+function loadBiblio(){
+ var q=document.getElementById('q').value.trim();var box=document.getElementById('biblio');
+ box.innerHTML='<div class="plan-load">📚 מאתר מאמרים…</div>';
+ var dd=new Date();dd.setTime(dd.getTime()-2000*864e5);var frm=dd.toISOString().slice(0,10);
+ fetch('/api/research?scope=world&from='+frm+'&q='+encodeURIComponent(kw(q)||'agriculture')+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var it=(j.items||[]).filter(function(w){return w.title;}).slice(0,5);
+  var own=UPREFS.map(function(f,i){return '<div class="step"><div class="n" style="background:var(--gold);color:#3a2c06">📄</div><div class="b"><b style="color:var(--green-d)">'+esc(f)+'</b><div style="font-size:12px;color:var(--mut);margin-top:3px" class="mono">מקור שהעלית · ממתין לקריאה</div></div></div>';}).join('');
+  if(!it.length&&!own){box.innerHTML='<div class="plan-load">לא נמצאו מאמרים.</div>';return;}
+  box.innerHTML=own+it.map(function(w,i){var au=(w.authors||'').split(',')[0]||'';return '<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><a href="'+w.url+'" target="_blank" rel="noopener" style="color:var(--green-d);font-weight:700;text-decoration:none">'+esc(w.title)+'</a><div style="font-size:12px;color:var(--mut);margin-top:3px" class="mono">'+esc(au)+(w.year?' · '+w.year:'')+(w.inst?' · '+esc(w.inst):'')+'</div></div></div>';}).join('');
+ }).catch(function(){box.innerHTML='<div class="plan-load">שגיאת חיבור.</div>';});
+}
+
+function proposeExperiment(){
+ var q=document.getElementById('q').value.trim();var box=document.getElementById('experiment');
+ if(!q){return;}
+ box.innerHTML='<div class="plan-load">🧪 מתכנן ניסוי…</div>';
+ var prompt='אתה חוקר חקלאי. הצע תכנון ניסוי שדה מבוקר לבחינת ההשערה שבשאלה. החזר בעברית בדיוק 6 שורות קצרות בפורמט: מטרה | טיפולים (קבוצות) | קבוצת בקרה | מספר חזרות ותכנון (בלוקים אקראיים) | משתנים נמדדים | משך וניתוח סטטיסטי. שאלה: '+q;
+ var LB=['מטרה','טיפולים','בקרה','חזרות ותכנון','משתנים נמדדים','משך וניתוח'];
+ var FB=['לבחון בתנאי שדה מבוקרים את ההשערה שעלתה מהנתונים.','3–4 רמות של המשתנה המסביר (למשל מנות דשן עולות).','חלקות ביקורת ללא טיפול, באותם תנאי גידול.','4 חזרות בתכנון בלוקים שלמים אקראיים (RCBD).','המשתנה המוסבר (יבול/תפוקה) + לחות קרקע, אקלים ופרמטרים נלווים.','עונת גידול אחת; ניתוח ANOVA והשוואות מרובות (Tukey).'];
+ function paintExp(lines,demo){box.innerHTML=(demo?'<div class="src" style="margin:0 0 8px">◦ דוגמה — ה-AI לא מחובר מקומית; בשרת החי יופק אוטומטית</div>':'')+'<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 22px">'+lines.slice(0,6).map(function(s,i){return '<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><b>'+(LB[i]||'')+':</b> '+esc(s)+'</div></div>';}).join('')+'</div>';}
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+  var a=(d&&d.answer)||'';var lines=a.split('\n').map(function(s){return s.replace(/^[\s\-\*\d\.\)|]+/,'').trim();}).filter(function(s){return s.length>2;});
+  if((d&&d.demo)||lines.length<2){paintExp(FB,true);return;}
+  paintExp(lines,false);
+ }).catch(function(){paintExp(FB,true);});
+}
+
+function makePlan(){
+ var q=document.getElementById('q').value.trim();var box=document.getElementById('plan');
+ if(!q){box.innerHTML='<div class="plan-load">נא להזין שאלה.</div>';return;}
+ box.innerHTML='<div class="plan-load">🧠 בונה תוכנית מחקר…</div>';
+ var prompt='אתה יועץ מחקר. עבור שאלת המחקר הבאה, החזר תוכנית מחקר תמציתית בעברית ב-5 שלבים בדיוק, כל שלב שורה אחת קצרה, בפורמט: השערה | משתנים (תלוי ובלתי-תלוי) | מקורות נתונים | שיטה סטטיסטית (כולל רגרסיה אם רלוונטי) | מגבלות. שאלה: '+q;
+ var LB=['השערה','משתנים','מקורות נתונים','שיטה','מגבלות'];
+ var FB=['קיים קשר מובהק בין המשתנה המסביר למשתנה המוסבר.','בלתי-תלוי = המשתנה המסביר (X); תלוי = המשתנה המוסבר (Y).','AgroLake (World Bank/FAO), נתונים שהועלו, ומאמרים מ-OpenAlex.','רגרסיה לינארית (OLS), מתאם Pearson ובדיקת מובהקות; שקילת רגרסיה מרובת-משתנים.','מתאם אינו סיבתיות; מדגם שנתי מוגבל; ייתכנו משתנים מתערבים.'];
+ function paintPlan(lines,demo){box.innerHTML=(demo?'<div class="src" style="margin:0 0 8px">◦ דוגמה — ה-AI לא מחובר מקומית; בשרת החי יופק אוטומטית</div>':'')+lines.slice(0,6).map(function(s,i){return '<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><b>'+(LB[i]||'')+':</b> '+esc(s)+'</div></div>';}).join('');}
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+  var a=(d&&d.answer)||'';
+  var lines=a.split('\n').map(function(s){return s.replace(/^[\s\-\*\d\.\)|]+/,'').trim();}).filter(function(s){return s.length>2;});
+  if((d&&d.demo)||lines.length<2){paintPlan(FB,true);return;}
+  paintPlan(lines,false);
+ }).catch(function(){paintPlan(FB,true);});
+}
+
+function esc(s){return String(s||'').replace(/[&<>]/g,function(x){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[x];});}
+function lname(id){if(id.indexOf('up:')===0)return '📁 '+id.slice(3);for(var i=0;i<VARS.length;i++)if(VARS[i][0]===id)return VARS[i][1];return id;}
+function getSeries(id){
+ if(id.indexOf('up:')===0){var nm=id.slice(3),arr=UPLOAD.cols[nm]||[],map={};arr.forEach(function(v,i){if(v!=null)map['#'+i]=v;});return Promise.resolve({ok:true,map:map});}
+ if(id.indexOf('my:')===0){var pp=id.split(':'),ds=MYSETS[+pp[1]]||{cols:{}},arr2=(ds.cols||{})[pp[2]]||[],map2={};arr2.forEach(function(v,i){if(v!=null)map2['#'+i]=v;});return Promise.resolve({ok:true,map:map2});}
+ return fetch('/api/lake?ds='+id+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){var map={};if(j.ok)j.labels.forEach(function(l,i){if(j.series[0].data[i]!=null)map[l]=j.series[0].data[i];});return {ok:j.ok,map:map};});
+}
+
+function runReg(){
+ var xi=xs.value,yi=ys.value,box=document.getElementById('reg');
+ if(xi===yi){box.innerHTML='<div class="reg-load">בחר שני משתנים שונים.</div>';return;}
+ box.innerHTML='<div class="reg-load">📊 שואב נתונים ומריץ רגרסיה…</div>';
+ Promise.all([getSeries(xi),getSeries(yi)]).then(function(a){
+  var X=a[0],Y=a[1];
+  if(!X.ok||!Y.ok){box.innerHTML='<div class="reg-load">שגיאת שאיבת נתונים.</div>';return;}
+  var mx=X.map,my=Y.map;
+  var pts=[];Object.keys(mx).forEach(function(l){if(my[l]!=null&&mx[l]!=null&&!isNaN(mx[l])&&!isNaN(my[l]))pts.push([+mx[l],+my[l],l.replace('#','שורה ')]);});
+  pts.sort(function(a,b){return a[0]-b[0];});
+  if(pts.length<4){box.innerHTML='<div class="reg-load">אין מספיק תצפיות חופפות לשני המשתנים (צריך 4+). אם מדובר בנתונים שהעלית — ודא שהעמודות באותו קובץ.</div>';return;}
+  var n=pts.length,sx=0,sy=0,sxx=0,sxy=0,syy=0;
+  pts.forEach(function(p){sx+=p[0];sy+=p[1];sxx+=p[0]*p[0];sxy+=p[0]*p[1];syy+=p[1]*p[1];});
+  var mxb=sx/n,myb=sy/n;
+  var b=(sxy-n*mxb*myb)/(sxx-n*mxb*mxb);
+  var a0=myb-b*mxb;
+  var r=(sxy-n*mxb*myb)/Math.sqrt((sxx-n*mxb*mxb)*(syy-n*myb*myb));
+  var r2=r*r;
+  drawReg(box,pts,a0,b,r,r2,n,xi,yi);
+ }).catch(function(){box.innerHTML='<div class="reg-load">שגיאת חיבור.</div>';});
+}
+
+var LASTREG=null;
+function drawReg(box,pts,a0,b,r,r2,n,xi,yi){
+ LASTREG={x:lname(xi),y:lname(yi),n:n,intercept:+a0.toFixed(4),slope:+b.toFixed(4),r:+r.toFixed(4),r2:+r2.toFixed(4),points:pts.map(function(p){return {label:p[2],x:p[0],y:p[1]};})};
+ var W=520,H=320,pad=44;
+ var xsv=pts.map(function(p){return p[0];}),ysv=pts.map(function(p){return p[1];});
+ var xmin=Math.min.apply(null,xsv),xmax=Math.max.apply(null,xsv),ymin=Math.min.apply(null,ysv),ymax=Math.max.apply(null,ysv);
+ var xr=(xmax-xmin)||1,yr=(ymax-ymin)||1;xmin-=xr*0.06;xmax+=xr*0.06;ymin-=yr*0.08;ymax+=yr*0.08;
+ function px(x){return pad+(x-xmin)/(xmax-xmin)*(W-pad-12);}
+ function py(y){return H-pad-(y-ymin)/(ymax-ymin)*(H-pad-14);}
+ var dots=pts.map(function(p){return '<circle cx="'+px(p[0]).toFixed(1)+'" cy="'+py(p[1]).toFixed(1)+'" r="4.2" fill="#2e7d52" stroke="#fff" stroke-width="1"><title>'+p[2]+': ('+p[0]+', '+p[1]+')</title></circle>';}).join('');
+ var lx1=xmin,lx2=xmax,ly1=a0+b*lx1,ly2=a0+b*lx2;
+ var line='<line x1="'+px(lx1).toFixed(1)+'" y1="'+py(ly1).toFixed(1)+'" x2="'+px(lx2).toFixed(1)+'" y2="'+py(ly2).toFixed(1)+'" stroke="#a5824a" stroke-width="2.4"/>';
+ var axes='<line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-12)+'" y2="'+(H-pad)+'" stroke="#d8ccb0"/><line x1="'+pad+'" y1="14" x2="'+pad+'" y2="'+(H-pad)+'" stroke="#d8ccb0"/>';
+ var lbl='<text x="'+(W/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="#5c6a5e" font-family="Heebo">'+esc(lname(xi))+'</text>';
+ var svg='<svg viewBox="0 0 '+W+' '+H+'">'+axes+line+dots+lbl+'</svg>';
+ var dir=b>=0?'עולה':'יורד';var strength=r2>=0.7?'חזק מאוד':r2>=0.4?'בינוני':r2>=0.15?'חלש':'זניח';
+ var interp='<b>ממצא:</b> קשר '+dir+' ו'+strength+' בין '+esc(lname(xi))+' ל-'+esc(lname(yi))+'. '+
+   'המודל: Y = '+a0.toFixed(2)+' + '+b.toFixed(3)+'·X. '+
+   'כ-<b>'+(r2*100).toFixed(0)+'%</b> מהשונות ב-'+esc(lname(yi).split(' · ')[0])+' מוסברת על ידי המשתנה המסביר (R²='+r2.toFixed(2)+', n='+n+' שנים). '+
+   (r2<0.15?'הקשר זניח — כנראה אין השפעה ליניארית.':'')+
+   ' <b>שים לב:</b> מתאם אינו סיבתיות.';
+ box.innerHTML='<div class="chartbox">'+svg+'</div>'+
+  '<div class="stats"><div class="stat"><div class="v">'+r2.toFixed(2)+'</div><div class="k">R² · טיב ההתאמה</div></div>'+
+  '<div class="stat"><div class="v">'+(r>=0?'+':'')+r.toFixed(2)+'</div><div class="k">מתאם r</div></div>'+
+  '<div class="stat"><div class="v">'+b.toFixed(2)+'</div><div class="k">שיפוע (β)</div></div>'+
+  '<div class="stat"><div class="v">'+n+'</div><div class="k">שנים (n)</div></div></div>'+
+  '<div class="interp">'+interp+'</div>'+
+  '<div class="src">◦ מקור: AgroLake · World Bank / FAO · חישוב רגרסיה בצד הלקוח (OLS)</div>';
+ drawForecast(pts,a0,b,r2,xi,yi);
+ fillConclusion(pts,a0,b,r2,r,xi,yi);
+}
+
+function drawForecast(pts,a0,b,r2,xi,yi){
+ var box=document.getElementById('forecast');
+ var xsv=pts.map(function(p){return p[0];});
+ var xmax=Math.max.apply(null,xsv),xmin=Math.min.apply(null,xsv);
+ var scen=[0.05,0.10,0.15];
+ var rows=scen.map(function(s){var xf=xmax*(1+s);var yf=a0+b*xf;return '<div class="step"><div class="n">+'+(s*100)+'%</div><div class="b">אם '+esc(lname(xi).split(' · ')[0])+' יעלה ב-'+(s*100)+'% (ל-'+xf.toFixed(1)+'), המודל צופה '+esc(lname(yi).split(' · ')[0])+' ≈ <b>'+yf.toFixed(1)+'</b></div></div>';}).join('');
+ var conf=r2>=0.4?'ברמת ביטחון סבירה':r2>=0.15?'בזהירות (התאמה חלשה)':'בזהירות רבה — הקשר זניח';
+ box.innerHTML=rows+'<div class="interp" style="margin-top:12px"><b>הערכת ביטחון:</b> הניבוי '+conf+' (R²='+r2.toFixed(2)+'). מבוסס אקסטרפולציה ליניארית — תקף רק בטווח קרוב.</div>';
+}
+
+// ================= SURVEY RESEARCH MODE =================
+function setMode(m){
+ document.getElementById('modeData').style.display=(m==='data')?'block':'none';
+ document.getElementById('modeSurvey').style.display=(m==='survey')?'block':'none';
+ document.getElementById('mb_data').classList.toggle('on',m==='data');
+ document.getElementById('mb_survey').classList.toggle('on',m==='survey');
+}
+var QTYPES=[['scale','סולם 1–5'],['num','מספרי'],['choice','בחירה'],['text','טקסט']];
+var QLIST=[{text:'מהו גודל השטח שלך (דונם)?',type:'num'},{text:'עד כמה אתה מרוצה מטכנולוגיית ההשקיה? (1–5)',type:'scale'},{text:'עד כמה אתה מוכן לאמץ טכנולוגיה חדשה? (1–5)',type:'scale'}];
+var RESP=[[50,4,5],[120,2,2],[30,5,4],[200,3,3],[80,4,4]];
+function qtypeSel(i,cur){return '<select onchange="QLIST['+i+'].type=this.value;renderRespTable()">'+QTYPES.map(function(t){return '<option value="'+t[0]+'"'+(t[0]===cur?' selected':'')+'>'+t[1]+'</option>';}).join('')+'</select>';}
+function renderQB(){
+ document.getElementById('qbuilder').innerHTML=QLIST.map(function(q,i){return '<div class="qb-row"><span style="font-family:Rubik;font-weight:800;color:var(--green-d);width:20px">'+(i+1)+'</span><input class="qt" value="'+esc(q.text)+'" oninput="QLIST['+i+'].text=this.value;renderRespTable()" placeholder="נסח שאלה…">'+qtypeSel(i,q.type)+'<button class="del" onclick="delQuestion('+i+')" title="מחק">🗑️</button></div>';}).join('');
+ renderRespTable();
+}
+function addQuestion(){QLIST.push({text:'',type:'scale'});RESP.forEach(function(r){r.push('');});renderQB();}
+function delQuestion(i){QLIST.splice(i,1);RESP.forEach(function(r){r.splice(i,1);});renderQB();}
+function addRespondent(){var r=[];for(var i=0;i<QLIST.length;i++)r.push('');RESP.push(r);renderRespTable();}
+function renderRespTable(){
+ var t=document.getElementById('respTable');if(!t)return;
+ var head='<tr><th>#</th>'+QLIST.map(function(q){return '<th>'+esc((q.text||'שאלה').slice(0,26))+'</th>';}).join('')+'</tr>';
+ var body=RESP.map(function(row,ri){return '<tr><td>'+(ri+1)+'</td>'+QLIST.map(function(q,qi){return '<td><input value="'+esc(row[qi]!=null?String(row[qi]):'')+'" oninput="RESP['+ri+']['+qi+']=this.value"></td>';}).join('')+'</tr>';}).join('');
+ t.innerHTML=head+body;
+ document.getElementById('respinfo').innerHTML='<b>'+RESP.length+'</b> נשאלים · <b>'+QLIST.length+'</b> שאלות';
+}
+document.getElementById('respFile').addEventListener('change',function(e){
+ var f=e.target.files[0];if(!f)return;var ext=(f.name.split('.').pop()||'').toLowerCase();var rd=new FileReader();
+ rd.onload=function(){var rows;
+  try{
+   if(ext==='xlsx'||ext==='xls'){if(typeof XLSX==='undefined'){alert('ספריית Excel עדיין נטענת, נסה שוב עוד רגע.');return;}
+    var wb=XLSX.read(new Uint8Array(rd.result),{type:'array'});rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1});
+   } else {var sep=(rd.result.indexOf('\t')>-1)?'\t':',';rows=rd.result.replace(/\r/g,'').split('\n').filter(function(l){return l.trim();}).map(function(l){return l.split(sep);});}
+  }catch(err){alert('קריאת הקובץ נכשלה');return;}
+  if(!rows||rows.length<2){alert('הקובץ ריק או ללא נתונים.');return;}
+  var header=rows[0].map(function(h){return String(h==null?'':h).trim();});
+  QLIST=header.map(function(h){return {text:h,type:'num'};});
+  RESP=rows.slice(1).map(function(r){return header.map(function(_,i){return r[i]!=null?r[i]:'';});});
+  renderQB();
+  document.getElementById('respinfo').innerHTML='<b>'+esc(f.name)+'</b> · '+RESP.length+' נשאלים · '+QLIST.length+' שאלות (מהקובץ)';
+ };
+ if(ext==='xlsx'||ext==='xls')rd.readAsArrayBuffer(f);else rd.readAsText(f);
+});
+function analyzeSurvey(){
+ var box=document.getElementById('surveyAnalysis');
+ var cols=QLIST.map(function(q,qi){return {q:q,vals:RESP.map(function(r){return parseFloat(r[qi]);}).filter(function(v){return !isNaN(v);})};});
+ var num=cols.filter(function(c){return (c.q.type==='num'||c.q.type==='scale')&&c.vals.length>=2;});
+ if(!num.length){box.innerHTML='<div class="reg-load">אין שאלות מספריות עם תשובות. הגדר שאלה כ"מספרי"/"סולם" והזן ערכים.</div>';return;}
+ var html=num.map(function(c){
+  var v=c.vals,n=v.length,mean=v.reduce(function(a,b){return a+b;},0)/n;
+  var sd=Math.sqrt(v.reduce(function(a,b){return a+(b-mean)*(b-mean);},0)/Math.max(1,n-1));
+  var mn=Math.min.apply(null,v),mx=Math.max.apply(null,v);
+  var bins={};v.forEach(function(x){var k=Math.round(x);bins[k]=(bins[k]||0)+1;});
+  var maxb=Math.max.apply(null,Object.keys(bins).map(function(k){return bins[k];}));
+  var dist=Object.keys(bins).sort(function(a,b){return a-b;}).map(function(k){return '<div style="display:flex;align-items:center;gap:8px;margin:2px 0"><span class="mono" style="width:34px;font-size:12px">'+k+'</span><span class="bar" style="width:'+(bins[k]/maxb*140)+'px"></span><span class="mono" style="font-size:12px;color:var(--mut)">'+bins[k]+'</span></div>';}).join('');
+  return '<div class="qstat"><h4>'+esc(c.q.text)+'</h4><div class="stats" style="margin:0 0 10px"><div class="stat"><div class="v">'+mean.toFixed(2)+'</div><div class="k">ממוצע</div></div><div class="stat"><div class="v">'+sd.toFixed(2)+'</div><div class="k">ס"ת</div></div><div class="stat"><div class="v">'+mn+'–'+mx+'</div><div class="k">טווח</div></div><div class="stat"><div class="v">'+n+'</div><div class="k">n</div></div></div>'+dist+'</div>';
+ }).join('');
+ if(num.length>=2){
+  var m='<div class="qstat"><h4>מטריצת מתאמים (Pearson r)</h4><div style="overflow-x:auto"><table class="rtbl" style="min-width:100%;border-collapse:collapse"><tr><th></th>'+num.map(function(c,i){return '<th>Q'+(cols.indexOf(c)+1)+'</th>';}).join('')+'</tr>';
+  num.forEach(function(a,i){m+='<tr><th>Q'+(cols.indexOf(a)+1)+'</th>'+num.map(function(b,j){var r=pear(a.vals,b.vals);var col=Math.abs(r)>=0.6?'var(--green)':Math.abs(r)>=0.3?'var(--gold)':'var(--mut)';return '<td style="text-align:center;color:'+col+';font-weight:700">'+(i===j?'1.00':r.toFixed(2))+'</td>';}).join('')+'</tr>';});
+  m+='</table></div><div class="src" style="margin-top:8px">◦ ירוק = מתאם חזק (|r|≥0.6) · זהב = בינוני</div></div>';
+  html+=m;
+ }
+ box.innerHTML=html;
+}
+function pear(a,b){var n=Math.min(a.length,b.length);if(n<2)return 0;var sx=0,sy=0,sxx=0,syy=0,sxy=0;for(var i=0;i<n;i++){sx+=a[i];sy+=b[i];sxx+=a[i]*a[i];syy+=b[i]*b[i];sxy+=a[i]*b[i];}var d=Math.sqrt((n*sxx-sx*sx)*(n*syy-sy*sy));return d?(n*sxy-sx*sy)/d:0;}
+
+// auto-run the flagship example on load
+window.addEventListener('load',function(){loadMyData();renderQB();setTimeout(runAll,300);});
+</script>
+</body></html>

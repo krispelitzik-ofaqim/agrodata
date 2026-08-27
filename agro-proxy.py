@@ -828,6 +828,30 @@ def _subs_counts():   # admins are excluded from customer counts
         else: reg += 1
     return reg, prem
 
+# ---- per-subscriber research workspace (datasets + saved research projects) ----
+USERDATA_FILE = os.path.join(DATA_DIR, "userdata.json")
+_UD_LOCK = threading.Lock()
+def _load_userdata():
+    try:
+        with open(USERDATA_FILE, "r", encoding="utf-8") as f:
+            d = json.load(f)
+            return d if isinstance(d, dict) else {}
+    except Exception:
+        return {}
+_USERDATA = _load_userdata()   # { subId: {"datasets":[...], "projects":[...]} }
+def _save_userdata():
+    try:
+        with open(USERDATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(_USERDATA, f, ensure_ascii=False)
+    except Exception as e:
+        print("save userdata fail:", e)
+def _ud_bucket(uid):
+    b = _USERDATA.get(uid)
+    if not isinstance(b, dict):
+        b = {"datasets": [], "projects": []}; _USERDATA[uid] = b
+    b.setdefault("datasets", []); b.setdefault("projects", [])
+    return b
+
 _TR_LANGS = {"en":"English","de":"German","fr":"French","zh":"Simplified Chinese","ar":"Arabic","hi":"Hindi","ru":"Russian","es":"Spanish","pt":"Portuguese"}
 _TR_CACHE = {}   # (lang, text) -> translation, in-memory
 
@@ -2118,6 +2142,18 @@ class H(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-store")
             self.end_headers(); self.wfile.write(body); return
+        if self.path.startswith("/api/mydata"):
+            qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            uid = (qs.get("id", [""])[0] or "").strip()
+            with _UD_LOCK:
+                b = _ud_bucket(uid) if uid else {"datasets": [], "projects": []}
+                out = {"ok": True, "datasets": b.get("datasets", []), "projects": b.get("projects", [])}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/stats"):
             with _VISITS_LOCK:
                 out = {"ok": True, "total": _VISITS_TOTAL, "today": _VISITS_TODAY,
@@ -2143,6 +2179,32 @@ class H(http.server.SimpleHTTPRequestHandler):
             except Exception: pass
         return super().do_GET()
     def do_POST(self):
+        if self.path.startswith("/api/mydata-save"):
+            try:
+                n = int(self.headers.get("Content-Length", 0))
+                data = json.loads(self.rfile.read(n).decode("utf-8")) if n else {}
+            except Exception:
+                data = {}
+            uid = str(data.get("id") or "").strip()
+            kind = str(data.get("kind") or "")
+            item = data.get("item") or {}
+            if not uid or kind not in ("dataset", "project") or not isinstance(item, dict):
+                out = {"ok": False, "error": "bad-request"}
+            else:
+                item["ts"] = il_now().strftime("%Y-%m-%d %H:%M")
+                with _UD_LOCK:
+                    b = _ud_bucket(uid)
+                    key = "datasets" if kind == "dataset" else "projects"
+                    b[key].insert(0, item)
+                    del b[key][40:]   # cap history
+                    _save_userdata()
+                out = {"ok": True}
+            body = json.dumps(out, ensure_ascii=False).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers(); self.wfile.write(body); return
         if self.path.startswith("/api/tohe"):
             try:
                 n = int(self.headers.get("Content-Length", 0))

@@ -303,6 +303,9 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
         <div class="note"><div class="nt">🐛 טיפול B הפחית נזק ב-31% מול טיפול A</div><div class="nd">נשמר · 3 אוג׳</div></div>
         <div class="note"><div class="nt">☀️ הסולארי כיסה 62% מצריכת המשאבות</div><div class="nd">נשמר · 28 יולי</div></div>
 
+        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:18px 0 6px">🔬 המחקרים שלי · <a href="agro-research.html" style="color:var(--green,#1e5137);text-decoration:none">כלי המחקר ↗</a></div>
+        <div id="myResearch"><div class="hist" style="opacity:.6">טוען…</div></div>
+
         <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:18px 0 6px">היסטוריית שאילתות · נשמר מהמנועים</div>
         <div id="realHist"></div>
       </div>
@@ -511,6 +514,21 @@ function answerFor(q){
    var q=esc2(h.q||h.title||'שאילתה');
    return '<div class="hist" title="'+esc2(h.kind||'')+'">'+q+'<span class="ha">'+dd+'</span></div>';
  }).join('');
+})();
+
+// ---- my research projects + datasets (from server, per subscriber) ----
+(function(){
+ var id=''; try{id=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+ var el=document.getElementById('myResearch'); if(!el)return;
+ function esc3(x){return (x||'').replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+ if(!id){el.innerHTML='<div class="hist" style="opacity:.6">התחבר כדי לראות את המחקרים שלך.</div>';return;}
+ fetch('/api/mydata?id='+encodeURIComponent(id)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+  var pr=(j.projects||[]),ds=(j.datasets||[]);
+  if(!pr.length&&!ds.length){el.innerHTML='<div class="hist" style="opacity:.6">אין עדיין מחקרים — פתח שאלה ב<a href="agro-research.html" style="color:var(--green,#1e5137)">כלי המחקר</a> ושמור.</div>';return;}
+  var h=pr.slice(0,10).map(function(p){var reg=p.regression?(' · R²='+(p.regression.r2!=null?p.regression.r2:'')):''; return '<div class="hist" title="'+esc3((p.summary||''))+'">🔬 '+esc3(p.title||p.question||'מחקר')+reg+'<span class="ha">'+esc3((p.ts||'').slice(5,10))+'</span></div>';}).join('');
+  if(ds.length)h+='<div class="hist" style="opacity:.75">🗂️ '+ds.length+' מאגרי נתונים שמורים</div>';
+  el.innerHTML=h;
+ }).catch(function(){el.innerHTML='<div class="hist" style="opacity:.6">שגיאת טעינה.</div>';});
 })();
 
 </script>
