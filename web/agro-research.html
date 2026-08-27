@@ -81,6 +81,16 @@ svg{width:100%;height:auto;display:block}
 .qstat{background:var(--bg2);border:1px solid var(--line);padding:14px;margin-bottom:12px}
 .qstat h4{font-family:Rubik;font-size:15px;color:var(--green-d);margin-bottom:8px}
 .bar{height:9px;background:var(--lime);border-radius:0;display:inline-block}
+@media print{
+ body{background:#fff}
+ .top,.modes,.ask,.exporttb,.footbar,.selrow,.runreg,#saveProjWrap,.chips{display:none!important}
+ .paper{border:0;box-shadow:none;padding:0;margin:0}
+ .hero{padding:6px 0}
+ h1{font-size:30px}
+ .sech{break-after:avoid;border-top:1px solid #ccc}
+ .qstat,.step,.interp,.chartbox{break-inside:avoid}
+ a{color:#134a30!important;text-decoration:none}
+}
 </style>
 </head>
 <body>
@@ -122,6 +132,10 @@ svg{width:100%;height:auto;display:block}
   </div>
 
   <div class="paper">
+    <div class="exporttb" style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;padding-bottom:6px">
+      <button class="upbtn" style="border-style:solid;background:var(--green);color:#fff;border-color:var(--green)" onclick="exportPDF()">⬇️ ייצוא PDF</button>
+      <button class="upbtn" style="border-style:solid" onclick="exportBib()">⬇️ ביבליוגרפיה · BibTeX</button>
+    </div>
     <div class="sech"><span class="sn">1</span> תקציר <span class="badge">AI</span></div>
     <div class="seclead">סיכום השאלה, השיטה והממצא העיקרי</div>
     <div id="abstract"><div class="plan-load">יופק אחרי "חקור".</div></div>
@@ -307,6 +321,21 @@ function saveProject(){
   .then(function(r){return r.json();}).then(function(d){if(d&&d.ok){var b=document.getElementById('saveProjWrap');if(b)b.innerHTML='<span style="color:var(--green);font-weight:700">✓ המחקר המלא נשמר לאזור האישי (כל הסעיפים + פרמטרי הרגרסיה + הביבליוגרפיה)</span>';loadMyData();}else alert('שמירה נכשלה');}).catch(function(){alert('שגיאת חיבור');});
 }
 
+var BIBITEMS=[];
+function exportPDF(){window.print();}
+function exportBib(){
+ var items=BIBITEMS||[];
+ if(!items.length){alert('אין עדיין ביבליוגרפיה — לחץ "חקור" קודם.');return;}
+ var bib=items.map(function(w,i){
+  var au=(w.authors||'').split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var last=(au[0]||'Unknown').split(' ').slice(-1)[0].replace(/[^A-Za-z]/g,'')||'ref';
+  var key=last+(w.year||'')+String.fromCharCode(97+i);
+  var authStr=au.join(' and ')||'Unknown';
+  return '@article{'+key+',\n  title   = {'+(w.title||'')+'},\n  author  = {'+authStr+'},\n  year    = {'+(w.year||'')+'},\n'+(w.inst?'  institution = {'+w.inst+'},\n':'')+'  url     = {'+(w.url||'')+'}\n}';
+ }).join('\n\n');
+ var blob=new Blob([bib],{type:'text/x-bibtex;charset=utf-8'});
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='agroresearch-references.bib';document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
 function runAll(){makeAbstract();makePlan();loadBiblio();loadRelated();proposeExperiment();runReg();}
 
 function loadRelated(){
@@ -358,6 +387,7 @@ function loadBiblio(){
  var dd=new Date();dd.setTime(dd.getTime()-2000*864e5);var frm=dd.toISOString().slice(0,10);
  fetch('/api/research?scope=world&from='+frm+'&q='+encodeURIComponent(kw(q)||'agriculture')+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
   var it=(j.items||[]).filter(function(w){return w.title;}).slice(0,5);
+  BIBITEMS=it;
   var own=UPREFS.map(function(f,i){return '<div class="step"><div class="n" style="background:var(--gold);color:#3a2c06">📄</div><div class="b"><b style="color:var(--green-d)">'+esc(f)+'</b><div style="font-size:12px;color:var(--mut);margin-top:3px" class="mono">מקור שהעלית · ממתין לקריאה</div></div></div>';}).join('');
   if(!it.length&&!own){box.innerHTML='<div class="plan-load">לא נמצאו מאמרים.</div>';return;}
   box.innerHTML=own+it.map(function(w,i){var au=(w.authors||'').split(',')[0]||'';return '<div class="step"><div class="n">'+(i+1)+'</div><div class="b"><a href="'+w.url+'" target="_blank" rel="noopener" style="color:var(--green-d);font-weight:700;text-decoration:none">'+esc(w.title)+'</a><div style="font-size:12px;color:var(--mut);margin-top:3px" class="mono">'+esc(au)+(w.year?' · '+w.year:'')+(w.inst?' · '+esc(w.inst):'')+'</div></div></div>';}).join('');
