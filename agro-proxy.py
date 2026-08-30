@@ -703,7 +703,7 @@ def ask_claude(q, history=None):
     body = json.dumps({"model": ANTHROPIC_MODEL, "max_tokens": 1600,
                        "messages": msgs}).encode("utf-8")
     last = ""
-    for attempt in range(2):
+    for attempt in range(3):
         req = urllib.request.Request("https://api.anthropic.com/v1/messages", data=body,
                                      headers={"x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json"})
         try:
@@ -711,7 +711,12 @@ def ask_claude(q, history=None):
             txt = "".join(b.get("text", "") for b in d.get("content", []) if b.get("type") == "text").strip()
             return {"answer": txt or "—", "demo": False, "model": ANTHROPIC_MODEL, "engine": "claude"}
         except Exception as e:
-            last = str(getattr(e, "code", "")) or type(e).__name__
+            code = getattr(e, "code", None)
+            last = str(code) if code else type(e).__name__
+            if code in (401, 403):
+                break                                  # bad key/permission — retrying won't help
+            if attempt < 2:
+                time.sleep(0.8 * (attempt + 1))        # transient (429/5xx/timeout) — back off and retry
     # Claude failed (bad key/model/credits) → graceful fallback to Gemini so AgroMind still answers
     try:
         gq = q
@@ -733,20 +738,26 @@ def ask_gemini(q):
     url = "https://generativelanguage.googleapis.com/v1beta/models/" + GEMINI_MODEL + ":generateContent?key=" + GEMINI_KEY
     body = json.dumps({"contents": [{"parts": [{"text": prompt}]}],
                        "generationConfig": {"temperature": 0.4, "maxOutputTokens": 2048, "thinkingConfig": {"thinkingBudget": 0}}}).encode("utf-8")
-    req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
-    try:
-        d = json.load(urllib.request.urlopen(req, timeout=30))
-        txt = d["candidates"][0]["content"]["parts"][0]["text"]
-        return {"answer": txt.strip(), "demo": False, "model": GEMINI_MODEL, "engine": "gemini"}
-    except Exception as e:
-        code = getattr(e, "code", None)
-        if code == 429:
-            msg = "מנוע ה-AI זמנית אינו זמין (המכסה נגמרה או שאין דרגה חינמית לפרויקט). לחיבור מלא נדרש מפתח Gemini עם חשבון חיוב פעיל."
-        elif code in (401, 403):
-            msg = "בעיית הרשאה — ודא שמפתח ה-Gemini תקין ושה-Generative Language API מופעל בפרויקט."
-        else:
-            msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
-        return {"answer": msg, "demo": True, "err": code}
+    code = None
+    for attempt in range(3):
+        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json"})
+        try:
+            d = json.load(urllib.request.urlopen(req, timeout=30))
+            txt = d["candidates"][0]["content"]["parts"][0]["text"]
+            return {"answer": txt.strip(), "demo": False, "model": GEMINI_MODEL, "engine": "gemini"}
+        except Exception as e:
+            code = getattr(e, "code", None)
+            if code in (401, 403):
+                break                                  # bad key/permission — retrying won't help
+            if attempt < 2:
+                time.sleep(0.8 * (attempt + 1))        # transient (429/5xx/timeout) — back off and retry
+    if code == 429:
+        msg = "מנוע ה-AI זמנית אינו זמין (המכסה נגמרה או שאין דרגה חינמית לפרויקט). לחיבור מלא נדרש מפתח Gemini עם חשבון חיוב פעיל."
+    elif code in (401, 403):
+        msg = "בעיית הרשאה — ודא שמפתח ה-Gemini תקין ושה-Generative Language API מופעל בפרויקט."
+    else:
+        msg = "שגיאת חיבור זמנית למנוע ה-AI. נסו שוב בעוד רגע."
+    return {"answer": msg, "demo": True, "err": code}
 
 # --- auto-translation via Gemini (cached) ---
 # ---- subscribers — real persistent records (details + plan) for traffic/valuation ----
