@@ -512,7 +512,8 @@ function answerFor(q){
    el.innerHTML=arr.slice(0,20).map(function(h){
      var d=new Date(h.ts||h.t); var dd=isNaN(d)?((h.ts||'').slice(5,10)):(d.getDate()+'/'+(d.getMonth()+1));
      var q=esc2(h.title||h.q||'שאילתה');
-     return '<div class="hist" title="'+esc2((h.kind||'')+(h.a?' — '+(h.a||'').slice(0,140):''))+'">'+q+'<span class="ha">'+dd+'</span></div>';
+     var qq=encodeURIComponent(h.q||h.title||'');
+     return '<a class="hist" href="search-results.html?q='+qq+'" style="text-decoration:none;color:inherit;cursor:pointer" title="'+esc2((h.kind||'')+(h.a?' — '+(h.a||'').slice(0,140):''))+'">'+q+'<span class="ha">'+dd+'</span></a>';
    }).join('');
  }
  var id=''; try{id=localStorage.getItem('agro_sub_id')||'';}catch(e){}
