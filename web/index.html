@@ -937,7 +937,7 @@ function micToggle(){
 function aiAsk(q){
  var st=document.getElementById('aiStatus'),ans=document.getElementById('aiAns'),lb=document.getElementById('aiListenBtn');
  st.textContent='רגע, חושב על התשובה…';ans.style.display='block';ans.textContent='…';lb.style.display='none';
- fetch('/api/ask?engine=claude&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(q)+'&kind=query&page=home&title='+encodeURIComponent(q)+'&uid='+encodeURIComponent(localStorage.getItem('agro_sub_id')||'')).then(function(r){return r.json();}).then(function(d){
   var a=_aiMd((d&&d.answer)||'לא התקבלה תשובה.');window._aiLast=a;ans.textContent=a;st.textContent='תשובה מ-AgroMind';lb.style.display='inline-block';aiSpeak();
  }).catch(function(){ans.textContent='שגיאה בחיבור. נסו שוב.';st.textContent='';});
 }

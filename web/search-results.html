@@ -297,10 +297,10 @@ function reorder(){
  boxes.sort(function(x,y){return (+y.dataset.len)-(+x.dataset.len);});
  boxes.forEach(function(el){g.appendChild(el);});
 }
-function ask(engine,ansEl,badgeEl,q,label){
+function ask(engine,ansEl,badgeEl,q,label,save){
  var a=document.getElementById(ansEl),b=document.getElementById(badgeEl);
  a.textContent='🔎 מנתח את השאלה מעל מאגר AgroData…';
- fetch('/api/ask?engine='+engine+'&q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+ fetch('/api/ask?engine='+engine+'&q='+encodeURIComponent(q)+(save?('&kind=query&page=search&title='+encodeURIComponent(q)+'&uid='+encodeURIComponent(localStorage.getItem('agro_sub_id')||'')):'')).then(function(r){return r.json();}).then(function(j){
   var txt=j.answer||'—';setAnswer(a,txt);
   b.textContent='✦ תשובת AgroMind';
   var box=a.closest('.ai');if(box){box.dataset.len=txt.length;reorder();}
@@ -385,7 +385,7 @@ function askSummary(q){
 }
 function askAI(q){
  askSummary(q);
- ask('claude','claudeAnswer','claudeBadge',q,'קלוד · Claude');
+ ask('claude','claudeAnswer','claudeBadge',q,'קלוד · Claude',true);
  ask('gemini','geminiAnswer','geminiBadge',q,'Gemini');
 }
 /* free-tier quota: 5 searches per ACCOUNT (server-side, IP-proof), then upgrade */
