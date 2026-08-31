@@ -859,9 +859,29 @@ def _save_userdata():
 def _ud_bucket(uid):
     b = _USERDATA.get(uid)
     if not isinstance(b, dict):
-        b = {"datasets": [], "projects": []}; _USERDATA[uid] = b
-    b.setdefault("datasets", []); b.setdefault("projects", [])
+        b = {"datasets": [], "projects": [], "history": []}; _USERDATA[uid] = b
+    b.setdefault("datasets", []); b.setdefault("projects", []); b.setdefault("history", [])
     return b
+
+def _log_history(uid, kind, title, q, a, page=""):
+    """Append an AI query / research the user did, to their personal history (NotebookLM-style)."""
+    if not uid:
+        return
+    try:
+        with _UD_LOCK:
+            b = _ud_bucket(uid)
+            b["history"].insert(0, {
+                "kind": kind or "query",
+                "title": (title or q or "")[:180],
+                "q": (q or "")[:2000],
+                "a": (a or "")[:6000],
+                "page": page or "",
+                "ts": il_now().strftime("%Y-%m-%d %H:%M"),
+            })
+            del b["history"][300:]   # cap
+            _save_userdata()
+    except Exception as e:
+        print("log history fail:", e)
 
 _TR_LANGS = {"en":"English","de":"German","fr":"French","zh":"Simplified Chinese","ar":"Arabic","hi":"Hindi","ru":"Russian","es":"Spanish","pt":"Portuguese"}
 _TR_CACHE = {}   # (lang, text) -> translation, in-memory
@@ -1819,9 +1839,12 @@ class H(http.server.SimpleHTTPRequestHandler):
         if self.path.startswith("/api/ask"):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             q = qs.get("q", [""])[0]; eng = qs.get("engine", ["gemini"])[0]
+            uid = qs.get("uid", [""])[0].strip(); page = qs.get("page", [""])[0]
             if not q.strip(): out = {"answer": "נא להזין שאלה.", "demo": True}
             elif eng == "claude": out = ask_claude(q)
             else: out = ask_gemini(q)
+            if uid and q.strip() and not out.get("demo"):
+                _log_history(uid, qs.get("kind", ["query"])[0], qs.get("title", [""])[0] or q, q, out.get("answer", ""), page)
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -2157,8 +2180,8 @@ class H(http.server.SimpleHTTPRequestHandler):
             qs = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             uid = (qs.get("id", [""])[0] or "").strip()
             with _UD_LOCK:
-                b = _ud_bucket(uid) if uid else {"datasets": [], "projects": []}
-                out = {"ok": True, "datasets": b.get("datasets", []), "projects": b.get("projects", [])}
+                b = _ud_bucket(uid) if uid else {"datasets": [], "projects": [], "history": []}
+                out = {"ok": True, "datasets": b.get("datasets", []), "projects": b.get("projects", []), "history": b.get("history", [])}
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -2483,6 +2506,9 @@ class H(http.server.SimpleHTTPRequestHandler):
                 out = ask_claude(q, history)          # history → follow-up context
             else:
                 out = ask_gemini(q)
+            _uid = str(data.get("uid") or "").strip()
+            if _uid and q and not out.get("demo"):
+                _log_history(_uid, data.get("kind") or "query", data.get("title") or (data.get("q") or ""), data.get("q") or "", out.get("answer", ""), data.get("page") or "")
             body = json.dumps(out, ensure_ascii=False).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")

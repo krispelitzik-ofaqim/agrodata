@@ -505,15 +505,24 @@ function answerFor(q){
 }
 
 (function(){
- var arr=[]; try{arr=JSON.parse(localStorage.getItem('agro_threads')||'[]');}catch(e){}
  var el=document.getElementById('realHist'); if(!el)return;
- if(!arr.length){el.innerHTML='<div class="hist" style="opacity:.6">אין עדיין שיחות שמורות — שאלו במנוע החדשנות/האנליטי והן יופיעו כאן.</div>';return;}
  function esc2(x){return (x||'').replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
- el.innerHTML=arr.slice(0,15).map(function(h){
-   var d=new Date(h.t); var dd=isNaN(d)?'':(d.getDate()+'/'+(d.getMonth()+1));
-   var q=esc2(h.q||h.title||'שאילתה');
-   return '<div class="hist" title="'+esc2(h.kind||'')+'">'+q+'<span class="ha">'+dd+'</span></div>';
- }).join('');
+ function renderList(arr){
+   if(!arr||!arr.length){el.innerHTML='<div class="hist" style="opacity:.6">אין עדיין שיחות שמורות — שאלו במנוע החדשנות/האנליטי והן יופיעו כאן.</div>';return;}
+   el.innerHTML=arr.slice(0,20).map(function(h){
+     var d=new Date(h.ts||h.t); var dd=isNaN(d)?((h.ts||'').slice(5,10)):(d.getDate()+'/'+(d.getMonth()+1));
+     var q=esc2(h.title||h.q||'שאילתה');
+     return '<div class="hist" title="'+esc2((h.kind||'')+(h.a?' — '+(h.a||'').slice(0,140):''))+'">'+q+'<span class="ha">'+dd+'</span></div>';
+   }).join('');
+ }
+ var id=''; try{id=localStorage.getItem('agro_sub_id')||'';}catch(e){}
+ var local=[]; try{local=JSON.parse(localStorage.getItem('agro_threads')||'[]');}catch(e){}
+ if(!id){renderList(local);return;}
+ // Server history (per user, all devices) — falls back to local threads if empty/unavailable.
+ fetch('/api/mydata?id='+encodeURIComponent(id)+'&_='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+   var hist=(j.history||[]);
+   renderList(hist.length?hist:local);
+ }).catch(function(){renderList(local);});
 })();
 
 // ---- my research projects + datasets (from server, per subscriber) ----

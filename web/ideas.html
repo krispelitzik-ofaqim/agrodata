@@ -394,7 +394,7 @@ function renderIdeas(){
  if(!isPremium()){box.innerHTML=gate();return;}
  thinking('המוח חושב ומייצר רעיונות');
  var prompt='אתה מנוע החדשנות של AgroMind. בהתבסס על האתגר הבא באגרו-טק, הצע בדיוק 4 רעיונות לסטארטאפים חדשים. לכל רעיון תן שורה בפורמט המדויק הזה (בעברית):\n[שם הרעיון] | הבעיה: ... | הפתרון: ... | שוק יעד: ...\nרעיון אחד בכל שורה, ללא מספור, ללא טקסט נוסף. האתגר: '+CURQ;
- fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)).then(function(r){return r.json();}).then(function(j){
+ fetch('/api/ask?engine=claude&q='+encodeURIComponent(prompt)+'&kind=idea&page=ideas&title='+encodeURIComponent('רעיונות · '+CURQ)+'&uid='+encodeURIComponent(localStorage.getItem('agro_sub_id')||'')).then(function(r){return r.json();}).then(function(j){
   var txt=j.answer||'';
   var lines=txt.split('\n').filter(function(l){return l.indexOf('|')>0;});
   if(!lines.length){box.innerHTML='<div class="bankempty">'+txt.slice(0,400)+'</div>';return;}
@@ -445,7 +445,7 @@ function askIFollow(){
   var think=ifAdd('a think','המנוע חושב…');
   IFU.push({role:'user',content:q});
   fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({engine:'claude',q:q,history:IFU.slice(0,-1)})})
+    body:JSON.stringify({engine:'claude',q:q,history:IFU.slice(0,-1),uid:(localStorage.getItem('agro_sub_id')||''),kind:'חדשנות',title:CURTITLE,page:'ideas'})})
    .then(function(r){return r.json();}).then(function(j){
     var a=j.answer||'—';think.className='ifmsg a';think.innerHTML=_ifMd(a);
     IFU.push({role:'assistant',content:a});
