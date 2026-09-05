@@ -1,7 +1,19 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18239819893"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18239819893');   // Google Ads conversions
+  gtag('config', 'G-JHP4XEC37Q');      // Google Analytics 4
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>האזור האישי לחקלאי · AgroData</title>
 <style>
 @font-face{font-family:Rubik;src:url('fonts/Rubik.ttf');font-weight:300 900}
@@ -40,8 +52,7 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
 .plan.premium{background:linear-gradient(135deg,#fbf1d4,#f6e6b0);color:#8a6a12;border:1px solid #e6cf86}
 .plan.expired{background:#fdecec;color:#b23b3b;border:1px solid #f0c4c4}
 /* minimal risk cubes */
-.riskrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 2px}
-@media(max-width:640px){.riskrow{grid-template-columns:1fr}}
+/* Inside the plot column now, so one per row rather than three across. */
 .riskcube{background:#fff;border:1px solid var(--line);border-radius:0;padding:13px 15px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 20px rgba(20,38,28,.04)}
 .riskcube .rc-ic{width:40px;height:40px;border-radius:0;background:var(--tint);display:flex;align-items:center;justify-content:center;font-size:20px;flex:0 0 auto}
 .riskcube .rc-lbl{font-family:Rubik;font-weight:800;font-size:14px;color:var(--green-d)}
@@ -63,7 +74,8 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
 .consent .cx{margin-inline-start:auto;background:var(--green);color:#fff;border:0;border-radius:0;padding:9px 16px;font-family:Heebo;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap}
 
 /* 4-col notebook */
-.book{display:grid;grid-template-columns:290px 1fr 250px 280px;gap:18px;margin:20px 0 46px}
+.book{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0 46px}
+@media(max-width:900px){.book{grid-template-columns:1fr}}
 @media(max-width:1280px){.book{grid-template-columns:260px 1fr 260px}.col.plot{grid-column:1/-1}}
 @media(max-width:1080px){.book{grid-template-columns:1fr;}.col.plot{grid-column:auto}}
 .col{background:#fff;border:1px solid var(--line);border-radius:0;box-shadow:0 10px 26px rgba(20,38,28,.05);display:flex;flex-direction:column;overflow:hidden}
@@ -134,8 +146,6 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
 .ndvi-leg span{display:inline-flex;align-items:center;gap:5px}
 .ndvi-leg i{width:12px;height:12px;border-radius:0;display:inline-block}
 /* modal */
-.pmodal{position:fixed;inset:0;background:rgba(15,30,22,.6);display:none;align-items:center;justify-content:center;z-index:70;padding:24px}
-.pmodal.open{display:flex}
 .psheet{background:#fff;border-radius:0;max-width:640px;width:100%;padding:24px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
 .mtabs{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}
 .mtab{background:#fff;border:1px solid var(--line);border-radius:0;padding:6px 13px;font-family:Heebo;font-weight:700;font-size:12.5px;color:var(--mut);cursor:pointer}
@@ -163,10 +173,8 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
     <div class="psub" id="pSub">טוען את פרטי המנוי…</div>
     <div id="pPlan" style="margin-top:9px"></div>
   </div>
-  <div class="pstats">
-    <div class="pstat"><b>6</b><span>מקורות</span></div>
-    <div class="pstat"><b>23</b><span>שאילתות</span></div>
-    <div class="pstat"><b>2</b><span>שיתפתי</span></div>
+  <div class="pstats" id="pStats" style="display:none">
+    <div class="pstat"><b id="stQueries">0</b><span>שאילתות</span></div>
   </div>
 </div></div></div>
 
@@ -176,92 +184,32 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
     <button class="cx" onclick="this.parentElement.style.display='none'">הבנתי</button>
   </div>
 
-  <div class="riskrow">
-    <div class="riskcube" id="rcWeather">
-      <div class="rc-ic" id="rcwIc">🌡️</div>
-      <div style="flex:1"><div class="rc-lbl">מזג אוויר</div><div class="rc-st"><span class="rc-dot"></span><span id="rcwSt">בודק…</span></div></div>
-    </div>
-    <div class="riskcube" id="rcFire">
-      <div class="rc-ic">🔥</div>
-      <div style="flex:1"><div class="rc-lbl">שריפות</div><div class="rc-st"><span class="rc-dot"></span><span>אין מוקדים באזור</span></div></div>
-      <span class="rc-soon">NASA FIRMS</span>
-    </div>
-    <div class="riskcube" id="rcPest">
-      <div class="rc-ic">🐛</div>
-      <div style="flex:1"><div class="rc-lbl">מזיקים</div><div class="rc-st"><span class="rc-dot"></span><span>אין התרעה פעילה</span></div></div>
-      <span class="rc-soon">EPPO</span>
-    </div>
-  </div>
 
   <div class="book">
 
     <!-- ===== SOURCES (right in RTL) ===== -->
     <div class="col">
-      <div class="col-h"><span class="ic">📂</span><h3>המקורות שלי</h3><span class="cnt">6</span></div>
+      <div class="col-h"><span class="ic">📂</span><h3>המקורות שלי</h3><span class="cnt" id="srcCount" style="display:none">0</span></div>
       <div class="col-b">
+        <div style="font-family:Rubik;font-size:12px;color:var(--mut);margin:2px 0 12px;line-height:1.6">הקבצים שלכם — יומני השקייה, הדברה, יבול, נתוני חיישנים. הם נשמרים כאן, ואפשר לשאול אותם שאלות בשפה חופשית.</div>
         <div class="drop" onclick="alert('דמו — כאן ייפתח חלון העלאה')">
           <span class="big">⬆️</span>
           גרור לכאן קובץ או לחץ להעלאה
           <small>CSV · Excel · PDF · תמונות · נתוני חיישנים</small>
         </div>
 
-        <div style="margin-top:14px">
-          <div class="src">
-            <div class="sic">💧</div>
-            <div style="flex:1">
-              <div class="sname">יומן השקייה 2026</div>
-              <div class="smeta">irrigation_2026.csv · 128KB</div>
-              <div class="share"><button class="on">פרטי</button><button>אנונימי</button><button class="pub-btn">פתוח</button></div>
-            </div>
-          </div>
-          <div class="src">
-            <div class="sic">🐛</div>
-            <div style="flex:1">
-              <div class="sname">טיפולי הדברה — אביב</div>
-              <div class="smeta">pest_spring.xlsx · 64KB</div>
-              <div class="share"><button>פרטי</button><button class="on">אנונימי</button><button class="pub-btn">פתוח</button></div>
-            </div>
-          </div>
-          <div class="src">
-            <div class="sic">☀️</div>
-            <div style="flex:1">
-              <div class="sname">צריכת אנרגיה — מערכת סולארית</div>
-              <div class="smeta">solar_kwh.csv · 92KB</div>
-              <div class="share"><button class="on">פרטי</button><button>אנונימי</button><button class="pub-btn">פתוח</button></div>
-            </div>
-          </div>
-          <div class="src">
-            <div class="sic">🌱</div>
-            <div style="flex:1">
-              <div class="sname">ניסוי זני עגבנייה</div>
-              <div class="smeta">tomato_trial.pdf · 1.2MB</div>
-              <div class="share"><button>פרטי</button><button>אנונימי</button><button class="on pub">פתוח</button></div>
-            </div>
-          </div>
-          <div class="src">
-            <div class="sic">📡</div>
-            <div style="flex:1">
-              <div class="sname">חיישני לחות קרקע</div>
-              <div class="smeta">soil_sensors.json · 340KB</div>
-              <div class="share"><button class="on">פרטי</button><button>אנונימי</button><button class="pub-btn">פתוח</button></div>
-            </div>
-          </div>
-          <div class="src">
-            <div class="sic">🌾</div>
-            <div style="flex:1">
-              <div class="sname">נתוני יבול לפי חלקה</div>
-              <div class="smeta">yield_by_plot.xlsx · 78KB</div>
-              <div class="share"><button>פרטי</button><button class="on">אנונימי</button><button class="pub-btn">פתוח</button></div>
-            </div>
-          </div>
+        <div id="srcList" style="margin-top:14px">
+          <div class="hist" style="opacity:.6">עדיין לא העלית קבצים. העלה קובץ ראשון ותוכל לשאול אותו שאלות.</div>
         </div>
-      </div>
-    </div>
 
-    <!-- ===== CHAT / ASK (center) ===== -->
-    <div class="col">
-      <div class="col-h"><span class="ic">💬</span><h3>שאל את הנתונים שלי</h3></div>
-      <div class="col-b" id="chat">
+        <!-- Asking the data is the second half of the same job, so it lives with
+             the files rather than in a column of its own. -->
+        <div class="col-h" style="margin-top:22px;padding-inline:0"><span class="ic">💬</span><h3>שאל את המקורות שלי</h3></div>
+        <div class="askbar" style="border-top:0;border-bottom:1px solid var(--line);padding:14px 0">
+          <input id="q" placeholder="שאל בשפה חופשית על הנתונים שלך…" onkeydown="if(event.key==='Enter')ask()">
+          <button onclick="ask()">➤</button>
+        </div>
+        <div id="chat">
         <div class="chips">
           <span class="chip" onclick="ask(this.textContent)">מתי השקיתי הכי הרבה?</span>
           <span class="chip" onclick="ask(this.textContent)">איזה טיפול הדברה עבד?</span>
@@ -269,95 +217,38 @@ body{font-family:Heebo,Arial,sans-serif;background:#fbfaf8;color:var(--ink)}
           <span class="chip" onclick="ask(this.textContent)">מה שלום החלקה בלוויין?</span>
         </div>
 
-        <div class="msg">
-          <div class="who">אתה</div>
-          <div class="bub q">כמה מים צרכתי בקיץ מול הממוצע באזור?</div>
-        </div>
-        <div class="msg">
-          <div class="who">🌾 AgroData</div>
-          <div class="bub a">
-            בקיץ 2026 צרכת <b>4,180 מ״ק</b> לדונם. זה <b>19% יותר</b> מהממוצע בחלקות דומות ברמת נגב.
-            עיקר הפער ביולי — 3 ימים של השקיית-יתר אחרי גל החום.
-            <div class="compare">
-              <div style="display:flex;justify-content:space-between"><span>אתה</span><b>4,180 מ״ק/דונם</b></div>
-              <div class="bar you"><i style="width:100%"></i></div>
-              <div style="display:flex;justify-content:space-between"><span>ממוצע אזורי</span><b>3,510 מ״ק/דונם</b></div>
-              <div class="bar"><i style="width:84%"></i></div>
-            </div>
-            <span class="cite">מקור: יומן השקייה שלך + ממוצע אנונימי (11 חלקות)</span>
-          </div>
-        </div>
       </div>
-      <div class="askbar">
-        <input id="q" placeholder="שאל בשפה חופשית על הנתונים שלך…" onkeydown="if(event.key==='Enter')ask()">
-        <button onclick="ask()">➤</button>
       </div>
     </div>
+
 
     <!-- ===== NOTEBOOK / SAVED (left) ===== -->
     <div class="col">
-      <div class="col-h"><span class="ic">📓</span><h3>המחברת</h3></div>
+      <div class="col-h"><span class="ic">💡</span><h3>התשובות שקיבלתי</h3></div>
       <div class="col-b">
-        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin-bottom:9px">תובנות שמורות</div>
-        <div class="note"><div class="nt">💧 השקיית-יתר ביולי — לכייל טפטפות אחרי גלי חום</div><div class="nd">נשמר · 12 אוג׳</div></div>
-        <div class="note"><div class="nt">🐛 טיפול B הפחית נזק ב-31% מול טיפול A</div><div class="nd">נשמר · 3 אוג׳</div></div>
-        <div class="note"><div class="nt">☀️ הסולארי כיסה 62% מצריכת המשאבות</div><div class="nd">נשמר · 28 יולי</div></div>
+        <div style="font-family:Rubik;font-size:12px;color:var(--mut);margin:2px 0 9px">תשובות שהמערכת נתנה על הקבצים שלכם — נשמרות כאן להמשך</div>
+        <div id="ansList"><div class="hist" style="opacity:.6">התשובות שתקבלו על הקבצים שלכם יישמרו כאן.</div></div>
 
-        <div style="font-family:Rubik;font-weight:800;font-size:13px;color:var(--mut);margin:18px 0 6px">🔬 המחקרים שלי · <a href="agro-research.html" style="color:var(--green,#1e5137);text-decoration:none">כלי המחקר ↗</a></div>
-        <div id="myResearch"><div class="hist" style="opacity:.6">טוען…</div></div>
-
-        <div class="col-h" style="margin-top:22px"><span class="ic">🔎</span><h3>היסטוריית השאילתות שלי</h3></div>
-        <div style="font-family:Rubik;font-size:12px;color:var(--mut);margin:2px 0 9px">כל מה ששאלת — נשמר אוטומטית · לחצו על שאילתה לפתיחה מחדש בחיפוש</div>
+        <div class="col-h" style="margin-top:22px;padding-inline:0"><span class="ic">🔎</span><h3>החיפושים שלי</h3></div>
+        <div style="font-family:Rubik;font-size:12px;color:var(--mut);margin:2px 0 9px">כל מה שחיפשת באתר — נשמר אוטומטית · לחצו על שורה לפתיחה מחדש</div>
         <div id="realHist"></div>
+
+        <div class="col-h" style="margin-top:22px;padding-inline:0"><span class="ic">🔬</span><h3>המחקרים שלי</h3></div>
+        <div style="font-family:Rubik;font-size:12px;color:var(--mut);margin:2px 0 9px">המחקרים שהרצת באתר — אפשר לפתוח כמה נושאים במקביל</div>
+        <!-- Start one without leaving the page; a farmer may run several topics at once. -->
+        <div class="askbar" style="border-top:0;border-bottom:1px solid var(--line);padding:12px 0;margin-bottom:10px">
+          <input id="newResearch" placeholder="נושא למחקר חדש — למשל: השפעת מליחות על יבול עגבנייה"
+                 onkeydown="if(event.key==='Enter')startResearch()">
+          <button onclick="startResearch()" title="פתח מחקר חדש">＋</button>
+        </div>
+        <div id="myResearch"><div class="hist" style="opacity:.6">טוען…</div></div>
       </div>
     </div>
 
-    <!-- ===== SATELLITE / MY PLOT (4th col) ===== -->
-    <div class="col plot">
-      <div class="col-h"><span class="ic">🛰️</span><h3>החלקה שלי</h3><span class="cnt">NDVI</span></div>
-      <div class="col-b">
-        <div class="field">
-          <div class="ndvi-badge">בריאות · 14 אוג׳</div>
-          <div id="fieldSvg"></div>
-        </div>
-        <div class="hscore">
-          <div class="hnum">0.71</div>
-          <div class="hlbl">בריאות גידול <b>טובה</b><br>מדד צמחייה NDVI</div>
-        </div>
-        <div class="trend" id="trend"></div>
-        <div class="tlbls"><span>מרץ</span><span>אפר׳</span><span>מאי</span><span>יוני</span><span>יולי</span><span>אוג׳</span></div>
-        <div class="alertline">⚠️ אזור צפוני — עקה קלה (NDVI 0.52). בדוק השקייה/דישון.</div>
-        <button class="plotbtn" onclick="openPlot()">🗺️ מפה מלאה + היסטוריה ←</button>
-      </div>
-    </div>
 
   </div>
 </div>
 
-<!-- plot modal -->
-<div class="pmodal" id="pmodal" onclick="if(event.target===this)closePlot()">
-  <div class="psheet">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <div>
-        <div class="pkick" style="color:var(--lime)">🛰️ מפת לוויין · Sentinel-2</div>
-        <div style="font-family:Rubik;font-weight:800;font-size:22px;color:var(--green-d)">בריאות החלקה — מטעים רמת נגב</div>
-      </div>
-      <button class="x" style="background:var(--bg2);border:1px solid var(--line);border-radius:0;width:38px;height:38px;font-size:18px;cursor:pointer;color:var(--mut)" onclick="closePlot()">✕</button>
-    </div>
-    <div class="mtabs" id="mtabs"></div>
-    <div class="field" style="aspect-ratio:16/10;margin-top:4px"><div id="fieldBig"></div></div>
-    <div class="ndvi-leg">
-      <span><i style="background:#c0392b"></i>עקה 0.2</span>
-      <span><i style="background:#e6b93a"></i>בינוני 0.5</span>
-      <span><i style="background:#2e9e63"></i>טוב 0.7</span>
-      <span><i style="background:#134a30"></i>מצוין 0.9</span>
-    </div>
-    <div style="background:var(--bg2);border:1px solid var(--line);border-radius:0;padding:13px 15px;margin-top:14px;font-size:14px;line-height:1.6;color:var(--ink)">
-      <b>סיכום AI:</b> בריאות כללית טובה ויציבה. זוהתה ירידה מקומית בפינה הצפונית מאז יולי — תואם את השקיית-היתר שזוהתה ביומן. מומלץ לכייל את קו הטפטוף הצפוני.
-    </div>
-    <div style="font-size:11.5px;color:var(--mut);font-family:'Plex Mono';margin-top:10px;text-align:center">מקור: Copernicus Sentinel-2 · עדכון כל 5 ימים · דמו</div>
-  </div>
-</div>
 
 <div class="footbar"><div class="wrap"><div class="foot">Ofakim <span class="wm">Agro<b>Data</b></span> Center · האזור האישי · <span class="mono">private research workspace</span></div></div></div>
 
@@ -381,7 +272,9 @@ function renderPlan(rec){
   var subline = [];
   if(rec && rec.org) subline.push(rec.org);
   if(rec && rec.field) subline.push(rec.field);
-  document.getElementById('pSub').textContent = subline.join(' · ') || 'חבר AgroData';
+  var sub = document.getElementById('pSub');
+  sub.textContent = subline.join(' · ');
+  sub.style.display = subline.length ? '' : 'none';
   var pi = planInfo(rec && rec.plan, rec && rec.role);
   var html = '<span class="plan '+pi.cls+'">'+pi.label;
   if(pi.days && rec && rec.ts){
@@ -399,15 +292,20 @@ function renderPlan(rec){
   document.getElementById('pPlan').innerHTML = html;
 }
 (function loadMe(){
-  var id=''; try{ id=localStorage.getItem('agro_sub_id')||''; }catch(e){}
-  if(!id){ // not logged in / demo
-    renderPlan({name:'יוסי כהן', org:'חלקת מטעים · רמת נגב', field:'42 דונם', plan:'premium', ts:'2026-08-10 09:00'});
-    return;
-  }
+  var id='', nm='', role='', plan='';
+  try{
+    id=localStorage.getItem('agro_sub_id')||'';
+    nm=localStorage.getItem('agro_name')||'';
+    role=localStorage.getItem('agro_role')||'';
+    plan=localStorage.getItem('agro_sub')||'';
+  }catch(e){}
+  // Whatever the server says, the name saved at signup is the one to greet with.
+  var fallback = {name: nm || 'חקלאי', plan: plan || 'regular', role: role, ts:''};
+  if(!id){ renderPlan(fallback); return; }
   fetch('/api/me?id='+encodeURIComponent(id)).then(function(r){return r.json();}).then(function(d){
-    if(d && d.found) renderPlan(d);
-    else renderPlan({name:'חקלאי', plan:'regular', ts:''});
-  }).catch(function(){ renderPlan({name:'חקלאי', plan:'regular', ts:''}); });
+    if(d && d.found) renderPlan({name: d.name || nm || 'חקלאי', org:d.org, field:d.field, plan:d.plan, role:d.role, ts:d.ts});
+    else renderPlan(fallback);
+  }).catch(function(){ renderPlan(fallback); });
 })();
 
 function esc(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
@@ -493,8 +391,6 @@ function renderBig(m){
     return '<button class="mtab '+(x===m?'on':'')+'" onclick="renderBig(\''+x+'\')">'+x+' 2026</button>';
   }).join('');
 }
-function openPlot(){renderBig('אוגוסט');document.getElementById('pmodal').classList.add('open');}
-function closePlot(){document.getElementById('pmodal').classList.remove('open');}
 
 function answerFor(q){
   if(/לוו|לווין|לוויין|חלק|NDVI|בריאות|צמחי/.test(q))return 'לפי לוויין Sentinel-2, בריאות החלקה <b>0.71 (טובה)</b>. יש עקה קלה בפינה הצפונית (0.52) מאז יולי — כדאי לבדוק את קו הטפטוף שם.';
@@ -510,6 +406,8 @@ function answerFor(q){
  function esc2(x){return (x||'').replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
  function renderList(arr){
    if(!arr||!arr.length){el.innerHTML='<div class="hist" style="opacity:.6">אין עדיין שיחות שמורות — שאלו במנוע החדשנות/האנליטי והן יופיעו כאן.</div>';return;}
+   var st=document.getElementById('stQueries'), box=document.getElementById('pStats');
+   if(st&&box){ st.textContent=arr.length; box.style.display=arr.length?'':'none'; }
    el.innerHTML=arr.slice(0,20).map(function(h){
      var d=new Date(h.ts||h.t); var dd=isNaN(d)?((h.ts||'').slice(5,10)):(d.getDate()+'/'+(d.getMonth()+1));
      var q=esc2(h.title||h.q||'שאילתה');
@@ -526,6 +424,12 @@ function answerFor(q){
    renderList(hist.length?hist:local);
  }).catch(function(){renderList(local);});
 })();
+
+function startResearch(){
+  var i=document.getElementById('newResearch');
+  var q=(i&&i.value||'').trim();
+  location.href='agro-research.html'+(q?('?q='+encodeURIComponent(q)):'');
+}
 
 // ---- my research projects + datasets (from server, per subscriber) ----
 (function(){

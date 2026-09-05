@@ -1,7 +1,19 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18239819893"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18239819893');   // Google Ads conversions
+  gtag('config', 'G-JHP4XEC37Q');      // Google Analytics 4
+</script>
+
+<meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache"><meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){try{var m=/Mobi|Android|iPhone|iPod/i.test(navigator.userAgent);var noredir=location.search.indexOf('desktop')>-1;if(m&&!noredir){location.replace('mobile.html'+location.search);}}catch(e){}})();</script>
 <meta name="theme-color" content="#0f2a1e">
 <link rel="manifest" href="/manifest.json">
@@ -843,7 +855,7 @@ document.addEventListener('click',function(ev){
   if(!t.closest('button,a,[onclick],.cta,.plus,.go,.links span,.scope a,input,select'))return;
   ev.preventDefault();ev.stopPropagation();openReg();
 },true);
-window.addEventListener('load',function(){ loadSubs(); renderHello(); var _dev=(location.search.indexOf('dev')>-1); if(_dev){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'); if(subGated()&&!_local&&!_dev)setTimeout(openReg,350); });
+window.addEventListener('load',function(){ loadSubs(); renderHello(); var _dev=(location.search.indexOf('dev')>-1); if(_dev){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:'); if(subGated()&&!_local&&!_dev)setTimeout(openReg,350); });
 function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
 const DICT={
 "מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",
