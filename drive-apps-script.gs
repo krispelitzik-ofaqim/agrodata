@@ -15,6 +15,13 @@ function doPost(e) {
       return _json({ ok: true });
     }
 
+    if (d.action === 'visits_add') {
+      var p = PropertiesService.getScriptProperties();
+      var total = Number(p.getProperty('visits') || 0) + Number(d.n || 1);
+      p.setProperty('visits', String(total));
+      return _json({ ok: true, total: total });
+    }
+
     var title = (d.title && String(d.title).trim()) || ('AgroData deliverable ' + _today());
     var doc = DocumentApp.create(title);
     var body = doc.getBody();
@@ -37,6 +44,12 @@ function doPost(e) {
 
 function doGet(e) {
   try {
+    // visit counter total
+    if (e && e.parameter && e.parameter.stats) {
+      var pv = PropertiesService.getScriptProperties();
+      return _json({ ok: true, total: Number(pv.getProperty('visits') || 0) });
+    }
+
     // single doc's text content (for pulling back into the analysis)
     var id = e && e.parameter && e.parameter.id;
     if (id) {

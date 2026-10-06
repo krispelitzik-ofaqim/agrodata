@@ -386,7 +386,7 @@ function gRegister(){
  var name=(document.getElementById('gName').value||'').trim(),email=(document.getElementById('gEmail').value||'').trim();
  if(!name||!email){alert('נא למלא שם ואימייל');return;}
  if(!document.getElementById('gConsent').checked){alert('יש לאשר את מדיניות הפרטיות');return;}
- function done(d){var role=(d&&d.role)?d.role:'regular';try{localStorage.setItem('agro_sub',role==='admin'?'admin':'regular');if(d&&d.id)localStorage.setItem('agro_sub_id',d.id);localStorage.setItem('agro_role',role);localStorage.setItem('agro_name',name);}catch(e){}document.getElementById('gate').classList.remove('open');}
+ function done(d){try{if(typeof gtag==='function')gtag('event','conversion',{'send_to':'AW-18239819893/eiaoCNzr9-4cEPWgtvlD','value':1.0,'currency':'ILS','transaction_id':(d&&d.id)?String(d.id):''});}catch(e){}var role=(d&&d.role)?d.role:'regular';try{localStorage.setItem('agro_sub',role==='admin'?'admin':'regular');if(d&&d.id)localStorage.setItem('agro_sub_id',d.id);localStorage.setItem('agro_role',role);localStorage.setItem('agro_name',name);}catch(e){}document.getElementById('gate').classList.remove('open');}
  fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({provider:'email',name:name,email:email,org:'',field:''})})
   .then(function(r){return r.json();}).then(done).catch(function(){done(null);});
 }

@@ -371,14 +371,13 @@ function checkInnovQuota(cb){
 }
 function innovGate(){
   return '<div class="lock"><div class="lockic">⭐</div><div class="lockt">הגעת ל-5 ניסיונות החינם במנוע החדשנות</div>'
-   +'<div class="lockp">שדרגו למנוי פרימיום לרעיונות ללא הגבלה, מכל נתוני הזירה.</div>'
-   +'<div class="lockb"><a class="lbtn" href="pricing.html">🚀 שדרגו למנוי →</a></div></div>';
+   +'<div class="lockp">נסו שוב מחר.</div></div>';
 }
 function unlock(){try{localStorage.setItem('agroPremium','1');}catch(e){}location.reload();}
 function gate(){
  return '<div class="lock"><div class="lockic">🔒</div><div class="lockt">בנק הרעיונות פתוח למנויי <b>Professional</b> ומעלה</div>'
   +'<div class="lockp">קבלו רעיונות סטארטאפ בלתי-מוגבלים, שנשאבים מכל נתוני הזירה — בעיה → פתרון → שוק יעד.</div>'
-  +'<div class="lockb"><a class="lbtn" href="pricing.html">🚀 שדרגו למנוי →</a><button class="lbtn ghost" onclick="unlock()">יש לי מנוי · כניסה</button></div></div>';
+  +'<div class="lockb"><button class="lbtn ghost" onclick="unlock()">יש לי מנוי · כניסה</button></div></div>';
 }
 function idSpeak(btn){
  var t=(btn.getAttribute('data-say')||'').replace(/&quot;/g,'"');

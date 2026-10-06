@@ -354,7 +354,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
         <span class="wm" style="font-size:19px;color:#fff;align-self:flex-end;font-weight:600;letter-spacing:.01em">Center</span>
       </div>
     </div>
-    <div class="links"><span onclick="location.href='about.html'">מי אנחנו</span><span onclick="location.href='pricing.html'">מנויים</span><span onclick="location.href='mailto:krispelitzik@gmail.com'">צור קשר</span><span onclick="location.href='privacy.html'">מדיניות פרטיות</span><span onclick="location.href='terms.html'">תקנון</span><span style="color:#c6a875;font-weight:800;cursor:pointer" onclick="location.href='ofakim.html'">אופקים</span></div>
+    <div class="links"><span onclick="location.href='about.html'">מי אנחנו</span><span onclick="location.href='mailto:krispelitzik@gmail.com'">צור קשר</span><span onclick="location.href='privacy.html'">מדיניות פרטיות</span><span onclick="location.href='terms.html'">תקנון</span><span style="color:#c6a875;font-weight:800;cursor:pointer" onclick="location.href='ofakim.html'">אופקים</span></div>
     <div class="navright" style="flex-direction:column;align-items:flex-end;gap:8px">
       <div style="display:flex;align-items:center;gap:14px">
       <div class="lang">
@@ -628,7 +628,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
 </div>
 
 <!-- PREMIUM / PAYMENT MODAL -->
-<div id="premmodal" class="modal" onclick="if(event.target===this)this.classList.remove('open')">
+<div id="premmodal" class="modal" hidden onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal-card">
     <button class="modal-x" onclick="document.getElementById('premmodal').classList.remove('open')">×</button>
     <div class="kicker">Premium</div>
@@ -822,6 +822,14 @@ function doRegister(provider){
     var c=document.getElementById('regConsent'); if(c&&!c.checked){alert('יש לאשר את מדיניות הפרטיות');return;}
   }
   var done=function(d){
+    /* a completed signup is the conversion this site has — there is nothing to
+       buy. Fired once, only after the server answered. */
+    try {
+      if (typeof gtag === 'function') gtag('event', 'conversion', {
+        'send_to': 'AW-18239819893/eiaoCNzr9-4cEPWgtvlD',
+        'value': 1.0, 'currency': 'ILS', 'transaction_id': (d && d.id) ? String(d.id) : ''
+      });
+    } catch (e) {}
     var role=(d&&d.role)?d.role:'regular';
     try{localStorage.setItem('agro_sub', role==='admin'?'admin':'regular'); if(d&&d.id)localStorage.setItem('agro_sub_id',d.id); localStorage.setItem('agro_role',role); if(payload.name)localStorage.setItem('agro_name',payload.name);}catch(e){}
     closeReg(); if(d)renderSubs(d); else loadSubs(); renderHello();
@@ -841,7 +849,9 @@ function doLogin(){
       closeLogin(); renderSubs(d); renderHello();
     }).catch(function(){if(err){err.textContent='שגיאת חיבור, נסו שוב';err.style.display='block';}});
 }
-function upgradePremium(){location.href='pricing.html';}
+/* paid plans are off for now; the server side is untouched and this
+   comes back by restoring this one line. */
+function upgradePremium(){}
 function payPremium(){ /* demo payment -> premium */
   var id=''; try{id=localStorage.getItem('agro_sub_id')||'';}catch(e){}
   fetch('/api/upgrade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})})
