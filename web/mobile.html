@@ -227,7 +227,7 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
 <div class="phone">
   <div class="appbar">
     <div class="brand">agro<b>Data</b></div>
-    <div class="r"><button class="iconbtn" id="ag-globe" title="שפה / Language" aria-label="שפה">🌐</button><button class="iconbtn" onclick="openEngs()">☰</button></div>
+    <div class="r"><button class="iconbtn" id="regBtn" onclick="document.getElementById('gate').classList.add('open')" style="width:auto;padding:0 10px;font-size:13px;font-weight:700">הרשמה</button><button class="iconbtn" id="ag-globe" title="שפה / Language" aria-label="שפה">🌐</button><button class="iconbtn" onclick="openEngs()">☰</button></div>
   </div>
   <div class="hi" id="hi">שלום 👋 · הזירה של האגרו-טק בכיס שלך</div>
 
@@ -299,9 +299,10 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
     <a class="tab" href="index.html"><span class="i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg></span>עוד</a>
   </div>
 </div>
-<div class="gate" id="gate">
+<div class="gate" id="gate" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="sheet">
     <div class="grab"></div>
+    <div id="gNudge" style="display:none;background:#f6f1e1;border-inline-start:3px solid #c9a84c;padding:10px 12px;font-size:14px;margin:0 0 10px;line-height:1.6;text-align:right">אתם מגיעים לכאן כבר כמה פעמים — אולי כדאי להירשם?<br><b>מבטיחים: בלי ספאם.</b></div>
     <h3>כניסה חינם לזירה 🌱</h3>
     <div class="ssub">הרשמה מהירה — דאטה, מחקר וחדשנות אגרו-טק</div>
     <div class="soc"><button onclick="gSoon()">Google</button><button onclick="gSoon()">Facebook</button><button onclick="gSoon()">Apple</button></div>
@@ -312,6 +313,7 @@ body{font-family:Heebo,Arial,sans-serif;background:#d7e6db;color:var(--ink)}
     <button class="gbtn" onclick="gRegister()">הרשמה חינם →</button>
     <button class="gappbtn" onclick="installApp()">📲 הפוך לאפליקציה</button>
     <div class="gnote" id="gNote">התחברות חברתית — בקרוב. נא להירשם במייל.</div>
+    <button type="button" onclick="document.getElementById('gate').classList.remove('open')" style="display:block;margin:12px auto 0;background:none;border:0;color:#7a857c;font:inherit;font-size:14px;text-decoration:underline;cursor:pointer">לא עכשיו</button>
   </div>
 </div>
 <div class="ioshint" id="ioshint">להתקנה כאפליקציה: לחצו על <b>שיתוף ⬆️</b> למטה, ואז בחרו <b>"הוסף למסך הבית"</b><br><button onclick="document.getElementById('ioshint').classList.remove('show')" style="margin-top:10px;background:var(--green);color:#fff;border:0;border-radius:9px;padding:7px 18px;font-family:Rubik;font-weight:700;cursor:pointer">הבנתי</button></div>
@@ -380,7 +382,12 @@ function openEngs(){renderEngList();document.getElementById('engs').classList.ad
 function closeEngs(){document.getElementById('engs').classList.remove('open');}
 function toggleInnov(){var b=document.getElementById('innovBtn'),p=document.getElementById('innovPanel');var open=b.classList.toggle('open');p.style.maxHeight=open?p.scrollHeight+'px':'0px';}
 renderGrid();
-(function(){var _dev=(location.search.indexOf('dev')>-1);var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1');if(_dev||_local)return;var has=false;try{has=!!localStorage.getItem('agro_sub');}catch(e){}if(!has)document.getElementById('gate').classList.add('open');})();
+try{if(localStorage.getItem('agro_sub'))document.getElementById('regBtn').style.display='none';}catch(e){}
+/* registration is open, not forced: asked on the third visit, then every fifth (same rule as the home page) */
+(function(){var has=false,n=0;try{has=!!localStorage.getItem('agro_sub');if(has)return;
+  if(sessionStorage.getItem('agro_seen'))return;sessionStorage.setItem('agro_seen','1');
+  n=(parseInt(localStorage.getItem('agro_visits')||'0',10)||0)+1;localStorage.setItem('agro_visits',String(n));}catch(e){return;}
+  if(n===3||(n>3&&(n-3)%5===0))setTimeout(function(){document.getElementById('gNudge').style.display='block';document.getElementById('gate').classList.add('open');},1200);})();
 function gSoon(){var n=document.getElementById('gNote');if(n)n.style.display='block';var e=document.getElementById('gName');if(e)e.focus();}
 function gRegister(){
  var name=(document.getElementById('gName').value||'').trim(),email=(document.getElementById('gEmail').value||'').trim();

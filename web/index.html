@@ -609,6 +609,7 @@ h1,h2,h3,.rk{font-family:Rubik,Arial,sans-serif}
     <button class="modal-x" onclick="closeReg()">×</button>
     <div class="kicker">Sign Up</div>
     <h2 class="rk" style="font-size:26px;color:var(--green-d);margin:2px 0 4px">הרשמה לפלטפורמה</h2>
+    <p id="regNudge" style="display:none;background:#f6f1e1;border-inline-start:3px solid #c9a84c;padding:10px 12px;font-size:14px;color:var(--green-d);margin:4px 0 12px;line-height:1.6">אתם מגיעים לכאן כבר כמה פעמים — אולי כדאי להירשם?<br><b>מבטיחים: בלי ספאם.</b></p>
     <p style="color:var(--mut);font-size:14px;margin-bottom:18px">פתחו חשבון וקבלו גישה למאגר, לחיפוש ולמחקר.</p>
     <div class="social">
       <button class="sbtn" onclick="soonMsg()" style="opacity:.5;cursor:not-allowed"><b style="color:#4285F4">G</b> <span>Google</span> <span style="font-size:11px;background:var(--bg);color:#5c6a5e;border-radius:0;padding:1px 7px;margin-inline-start:auto">בקרוב</span></button>
@@ -785,8 +786,8 @@ bAuthRender();
 function scrollTopics(d){const t=document.querySelector('.topicbar .track');if(t)t.scrollBy({left:d*220,behavior:'smooth'});}
 /* admin gate — username + 3 passwords (reads saved creds from admin panel, falls back to defaults) */
 function openAdmin(){location.href='admin.html';}
-function openReg(){var m=document.getElementById('regmodal');m.classList.add('open');var x=m.querySelector('.modal-x');if(x)x.style.display=subGated()?'none':'';}
-function closeReg(){if(subGated())return;document.getElementById('regmodal').classList.remove('open')}
+function openReg(nudge){var m=document.getElementById('regmodal');m.classList.add('open');var n=document.getElementById('regNudge');if(n)n.style.display=nudge?'block':'none';}
+function closeReg(){document.getElementById('regmodal').classList.remove('open')}
 function openLogin(){document.getElementById('loginmodal').classList.add('open')}
 function closeLogin(){document.getElementById('loginmodal').classList.remove('open')}
 
@@ -857,15 +858,19 @@ function payPremium(){ /* demo payment -> premium */
   fetch('/api/upgrade',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})})
     .then(function(r){return r.json();}).then(function(d){try{localStorage.setItem('agro_sub','premium');}catch(e){} document.getElementById('premmodal').classList.remove('open'); renderSubs(d);}).catch(function(){});
 }
-/* lock: until registered, every action routes to the mandatory registration window */
-document.addEventListener('click',function(ev){
-  if(!subGated()||location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.search.indexOf('dev')>-1)return;
-  var t=ev.target; if(!t||!t.closest)return;
-  if(t.closest('#regmodal')||t.closest('#loginmodal')||t.closest('.lang'))return; // allow the modal itself + language switch
-  if(!t.closest('button,a,[onclick],.cta,.plus,.go,.links span,.scope a,input,select'))return;
-  ev.preventDefault();ev.stopPropagation();openReg();
-},true);
-window.addEventListener('load',function(){ loadSubs(); renderHello(); var _dev=(location.search.indexOf('dev')>-1); if(_dev){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} var _local=(location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:'); if(subGated()&&!_local&&!_dev)setTimeout(openReg,350); });
+/* Registration is open, not forced. A visitor who has come back three times
+   is asked once, gently; if they close it, the question comes back only every
+   fifth visit after that. A visit is a new browser session, not a page view. */
+function regVisitNudge(){
+  if(!subGated())return;
+  var n=0; try{
+    if(!sessionStorage.getItem('agro_seen')){sessionStorage.setItem('agro_seen','1');
+      n=(parseInt(localStorage.getItem('agro_visits')||'0',10)||0)+1;localStorage.setItem('agro_visits',String(n));}
+    else return;
+  }catch(e){return;}
+  if(n===3||(n>3&&(n-3)%5===0))setTimeout(function(){openReg(true);},1200);
+}
+window.addEventListener('load',function(){ loadSubs(); renderHello(); var _dev=(location.search.indexOf('dev')>-1); if(_dev){try{localStorage.setItem('agro_sub','regular');localStorage.setItem('agro_name','Itzik');}catch(e){}} regVisitNudge(); });
 function toggleLang(e){e.stopPropagation();document.querySelector('.langmenu').classList.toggle('open');}
 const DICT={
 "מי אנחנו":"About","מנויים":"Subscriptions","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תקנון":"Terms","אופקים":"Ofakim",
